@@ -1,0 +1,222 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+/* Import Variables */
+@import './variables.css';
+
+/* Import Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========== Global Reset ========== */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans text-base text-charcoal bg-white leading-relaxed antialiased;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold leading-tight text-charcoal;
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+  h5 { @apply text-lg; }
+  h6 { @apply text-base; }
+
+  p {
+    @apply mb-4;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+/* ========== Scrollbar Styling ========== */
+@layer utilities {
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold-dark;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gold) var(--bg-secondary);
+  }
+}
+
+/* ========== Selection ========== */
+::selection {
+  @apply bg-gold-light text-charcoal;
+}
+
+::-moz-selection {
+  @apply bg-gold-light text-charcoal;
+}
+
+/* ========== Focus Styles ========== */
+*:focus {
+  @apply outline-gold outline-2 outline-offset-2;
+}
+
+*:focus:not(:focus-visible) {
+  @apply outline-none;
+}
+
+/* ========== Custom Components ========== */
+@layer components {
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-lg border border-gray-200 shadow-sm transition-shadow duration-300;
+  }
+
+  .card:hover {
+    @apply shadow-md;
+  }
+
+  .card-gold {
+    @apply border-gold shadow-gold;
+  }
+
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-2 text-base font-medium rounded-md border-none cursor-pointer transition-all duration-300;
+  }
+
+  .btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Gold Button */
+  .btn-gold {
+    @apply bg-gold text-white hover:bg-gold-dark hover:shadow-gold hover:-translate-y-0.5;
+  }
+
+  /* Outline Gold Button */
+  .btn-gold-outline {
+    @apply bg-transparent text-gold border-2 border-gold hover:bg-gold hover:text-white;
+  }
+
+  /* Dark Button */
+  .btn-dark {
+    @apply bg-charcoal text-white hover:bg-charcoal-dark;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply w-full px-4 py-2 text-base text-charcoal bg-white border border-gray-300 rounded-md transition-all duration-200;
+  }
+
+  .input:focus {
+    @apply border-gold ring-4 ring-gold/10 outline-none;
+  }
+
+  .input::placeholder {
+    @apply text-gray-400;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-block px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider;
+  }
+
+  .badge-gold {
+    @apply bg-gold-light text-charcoal;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-700;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-700;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-700;
+  }
+
+  .badge-info {
+    @apply bg-blue-100 text-blue-700;
+  }
+}
+
+/* ========== Utility Classes ========== */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .shimmer-gold {
+    background: linear-gradient(
+      90deg,
+      var(--color-gold-dark) 0%,
+      var(--color-gold) 50%,
+      var(--color-gold-dark) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+}
+
+/* ========== Animations ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* ========== Responsive Utilities ========== */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
