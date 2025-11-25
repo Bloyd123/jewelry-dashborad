@@ -1,0 +1,12 @@
+/* import { UserRole, isSuperAdmin } from '@/types/auth.types';
+
+function Dashboard() {
+  const user = useSelector((state: RootState) => state.auth.user);
+  
+  return (
+    <div>
+      {isSuperAdmin(user) && <SuperAdminPanel />}
+      {user?.role === UserRole.SHOP_ADMIN && <ShopAdminPanel />}
+    </div>
+  );
+} */
