@@ -1,0 +1,87 @@
+// ============================================================================
+// FILE: src/api/interceptors/authInterceptor.ts
+// Request interceptor to attach authentication token
+// ============================================================================
+
+import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+
+// ============================================================================
+// AUTH INTERCEPTOR
+// ============================================================================
+
+/**
+ * Setup authentication interceptor
+ * Attaches JWT token to all outgoing requests
+ */
+export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
+  axiosInstance.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+      // Get token from localStorage
+      const token = localStorage.getItem('accessToken');
+
+      // Add Authorization header if token exists
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      // Log request in development mode
+      if (import.meta.env.DEV) {
+        console.log('📤 API Request:', {
+          method: config.method?.toUpperCase(),
+          url: config.url,
+          baseURL: config.baseURL,
+          fullURL: `${config.baseURL}${config.url}`,
+          headers: config.headers,
+          data: config.data,
+          params: config.params,
+        });
+      }
+
+      return config;
+    },
+    (error: AxiosError) => {
+      // Log request error in development
+      if (import.meta.env.DEV) {
+        console.error('❌ Request Error:', error);
+      }
+      return Promise.reject(error);
+    }
+  );
+};
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Set authentication token manually
+ */
+export const setAuthToken = (token: string | null): void => {
+  if (token) {
+    localStorage.setItem('accessToken', token);
+  } else {
+    localStorage.removeItem('accessToken');
+  }
+};
+
+/**
+ * Get current authentication token
+ */
+export const getAuthToken = (): string | null => {
+  return localStorage.getItem('accessToken');
+};
+
+/**
+ * Clear authentication token
+ */
+export const clearAuthToken = (): void => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+};
+
+/**
+ * Check if user is authenticated
+ */
+export const isAuthenticated = (): boolean => {
+  return !!getAuthToken();
+};
