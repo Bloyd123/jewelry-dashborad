@@ -3,13 +3,13 @@
 // Token management service for JWT tokens
 // ============================================================================
 
-import { setItem, getItem, removeItem } from '../storage/localStorageService';
+import * as storage from '../storage/localStorageService';
 import { api } from '@/api/axios';
 import { API_ENDPOINTS } from '@/api/endpoints';
 import type { ApiResponse } from '@/types';
 
 // ============================================================================
-// STORAGE KEYS
+// CONSTANTS
 // ============================================================================
 
 const TOKEN_KEYS = {
@@ -23,27 +23,20 @@ const TOKEN_KEYS = {
 
 /**
  * Save access token to localStorage
- * @param token - JWT access token
- * @returns true if successful
  */
 export const saveAccessToken = (token: string): boolean => {
-  return setItem(TOKEN_KEYS.ACCESS_TOKEN, token);
+  return storage.setItem(TOKEN_KEYS.ACCESS_TOKEN, token);
 };
 
 /**
  * Save refresh token to localStorage
- * @param token - JWT refresh token
- * @returns true if successful
  */
 export const saveRefreshToken = (token: string): boolean => {
-  return setItem(TOKEN_KEYS.REFRESH_TOKEN, token);
+  return storage.setItem(TOKEN_KEYS.REFRESH_TOKEN, token);
 };
 
 /**
  * Save both tokens at once
- * @param accessToken - JWT access token
- * @param refreshToken - JWT refresh token
- * @returns true if both saved successfully
  */
 export const saveTokens = (accessToken: string, refreshToken: string): boolean => {
   const accessSaved = saveAccessToken(accessToken);
@@ -53,39 +46,34 @@ export const saveTokens = (accessToken: string, refreshToken: string): boolean =
 
 /**
  * Get access token from localStorage
- * @returns Access token or null
  */
 export const getAccessToken = (): string | null => {
-  return getItem<string>(TOKEN_KEYS.ACCESS_TOKEN);
+  return storage.getItem<string>(TOKEN_KEYS.ACCESS_TOKEN);
 };
 
 /**
  * Get refresh token from localStorage
- * @returns Refresh token or null
  */
 export const getRefreshToken = (): string | null => {
-  return getItem<string>(TOKEN_KEYS.REFRESH_TOKEN);
+  return storage.getItem<string>(TOKEN_KEYS.REFRESH_TOKEN);
 };
 
 /**
  * Remove access token from localStorage
- * @returns true if successful
  */
 export const removeAccessToken = (): boolean => {
-  return removeItem(TOKEN_KEYS.ACCESS_TOKEN);
+  return storage.removeItem(TOKEN_KEYS.ACCESS_TOKEN);
 };
 
 /**
  * Remove refresh token from localStorage
- * @returns true if successful
  */
 export const removeRefreshToken = (): boolean => {
-  return removeItem(TOKEN_KEYS.REFRESH_TOKEN);
+  return storage.removeItem(TOKEN_KEYS.REFRESH_TOKEN);
 };
 
 /**
  * Remove both tokens
- * @returns true if both removed successfully
  */
 export const removeTokens = (): boolean => {
   const accessRemoved = removeAccessToken();
@@ -99,8 +87,6 @@ export const removeTokens = (): boolean => {
 
 /**
  * Decode JWT token (without verification)
- * @param token - JWT token
- * @returns Decoded payload or null
  */
 export const decodeToken = (token: string): any | null => {
   try {
@@ -121,8 +107,6 @@ export const decodeToken = (token: string): any | null => {
 
 /**
  * Check if token is expired
- * @param token - JWT token
- * @returns true if expired
  */
 export const isTokenExpired = (token: string): boolean => {
   try {
@@ -131,7 +115,6 @@ export const isTokenExpired = (token: string): boolean => {
       return true;
     }
     
-    // exp is in seconds, Date.now() is in milliseconds
     const currentTime = Date.now() / 1000;
     return decoded.exp < currentTime;
   } catch (error) {
@@ -142,7 +125,6 @@ export const isTokenExpired = (token: string): boolean => {
 
 /**
  * Check if access token is valid (exists and not expired)
- * @returns true if valid
  */
 export const isAccessTokenValid = (): boolean => {
   const token = getAccessToken();
@@ -152,7 +134,6 @@ export const isAccessTokenValid = (): boolean => {
 
 /**
  * Check if refresh token is valid (exists and not expired)
- * @returns true if valid
  */
 export const isRefreshTokenValid = (): boolean => {
   const token = getRefreshToken();
@@ -162,8 +143,6 @@ export const isRefreshTokenValid = (): boolean => {
 
 /**
  * Get token expiration time
- * @param token - JWT token
- * @returns Expiration date or null
  */
 export const getTokenExpiration = (token: string): Date | null => {
   try {
@@ -180,8 +159,6 @@ export const getTokenExpiration = (token: string): Date | null => {
 
 /**
  * Get time until token expires (in seconds)
- * @param token - JWT token
- * @returns Seconds until expiration, or 0 if expired
  */
 export const getTimeUntilExpiration = (token: string): number => {
   try {
@@ -205,7 +182,6 @@ export const getTimeUntilExpiration = (token: string): number => {
 
 /**
  * Refresh access token using refresh token
- * @returns New access token or null if failed
  */
 export const refreshAccessToken = async (): Promise<string | null> => {
   try {
@@ -222,7 +198,6 @@ export const refreshAccessToken = async (): Promise<string | null> => {
       return null;
     }
     
-    // Call refresh token API
     const response = await api.post<ApiResponse>(
       API_ENDPOINTS.AUTH.REFRESH_TOKEN,
       { refreshToken }
@@ -230,7 +205,6 @@ export const refreshAccessToken = async (): Promise<string | null> => {
     
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
     
-    // Save new tokens
     saveAccessToken(accessToken);
     if (newRefreshToken) {
       saveRefreshToken(newRefreshToken);
@@ -246,8 +220,6 @@ export const refreshAccessToken = async (): Promise<string | null> => {
 
 /**
  * Auto refresh token if it's about to expire
- * @param thresholdSeconds - Refresh if token expires within this many seconds (default: 5 minutes)
- * @returns true if refreshed successfully or no refresh needed
  */
 export const autoRefreshToken = async (thresholdSeconds: number = 300): Promise<boolean> => {
   try {
@@ -259,13 +231,11 @@ export const autoRefreshToken = async (thresholdSeconds: number = 300): Promise<
     
     const timeLeft = getTimeUntilExpiration(token);
     
-    // If token expires within threshold, refresh it
     if (timeLeft < thresholdSeconds && timeLeft > 0) {
       const newToken = await refreshAccessToken();
       return newToken !== null;
     }
     
-    // Token is still valid for more than threshold
     return true;
   } catch (error) {
     console.error('Error in auto refresh:', error);
@@ -279,7 +249,6 @@ export const autoRefreshToken = async (thresholdSeconds: number = 300): Promise<
 
 /**
  * Get user ID from access token
- * @returns User ID or null
  */
 export const getUserIdFromToken = (): string | null => {
   const token = getAccessToken();
@@ -291,7 +260,6 @@ export const getUserIdFromToken = (): string | null => {
 
 /**
  * Get user role from access token
- * @returns User role or null
  */
 export const getUserRoleFromToken = (): string | null => {
   const token = getAccessToken();
@@ -303,7 +271,6 @@ export const getUserRoleFromToken = (): string | null => {
 
 /**
  * Get token payload
- * @returns Token payload or null
  */
 export const getTokenPayload = (): any | null => {
   const token = getAccessToken();
@@ -317,7 +284,6 @@ export const getTokenPayload = (): any | null => {
 // ============================================================================
 
 export default {
-  // Save/Get/Remove
   saveAccessToken,
   saveRefreshToken,
   saveTokens,
@@ -326,20 +292,14 @@ export default {
   removeAccessToken,
   removeRefreshToken,
   removeTokens,
-  
-  // Validation
   decodeToken,
   isTokenExpired,
   isAccessTokenValid,
   isRefreshTokenValid,
   getTokenExpiration,
   getTimeUntilExpiration,
-  
-  // Refresh
   refreshAccessToken,
   autoRefreshToken,
-  
-  // Info
   getUserIdFromToken,
   getUserRoleFromToken,
   getTokenPayload,

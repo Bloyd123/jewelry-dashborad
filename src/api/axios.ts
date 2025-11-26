@@ -93,57 +93,6 @@ export const retryRequest = async <T>(
 };
 
 // ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-/**
- * Create URL with path parameters replaced
- * Example: replacePathParams('/shops/:shopId/products/:id', { shopId: '123', id: '456' })
- * Returns: '/shops/123/products/456'
- */
-export const replacePathParams = (path: string, params: Record<string, string | number>): string => {
-  let result = path;
-  Object.entries(params).forEach(([key, value]) => {
-    result = result.replace(`:${key}`, String(value));
-  });
-  return result;
-};
-
-/**
- * Build query string from object
- */
-export const buildQueryString = (params: Record<string, any>): string => {
-  const filtered = Object.entries(params).filter(([_, value]) => value !== undefined && value !== null);
-  if (filtered.length === 0) return '';
-  
-  const searchParams = new URLSearchParams();
-  filtered.forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      value.forEach(v => searchParams.append(key, String(v)));
-    } else {
-      searchParams.append(key, String(value));
-    }
-  });
-  
-  return `?${searchParams.toString()}`;
-};
-
-/**
- * Check if axios instance is properly configured
- */
-export const checkAxiosConfig = (): void => {
-  console.log('📡 Axios Configuration:', {
-    baseURL: axiosInstance.defaults.baseURL,
-    timeout: axiosInstance.defaults.timeout,
-    headers: axiosInstance.defaults.headers,
-    hasInterceptors: {
-      request: true,
-      response: true,
-    },
-  });
-};
-
-// ============================================================================
 // EXPORT
 // ============================================================================
 
@@ -152,19 +101,19 @@ export default axiosInstance;
 // Named export for convenience
 export { axiosInstance as api };
 
-// Export helper functions
-export {
-  setAuthToken,
-  getAuthToken,
-  clearAuthToken,
-  isAuthenticated,
-} from './interceptors/authInterceptor';
+// Export interceptor helpers
+// export { isAuthenticated } from './interceptors/authInterceptor';
 
-export {
-  getErrorMessage,
-  getValidationErrors,
-  isAuthError,
-  isPermissionError,
-  isValidationError,
-  isNetworkError,
-} from './interceptors/errorInterceptor';
+// export {
+//   getErrorMessage,
+//   getValidationErrors,
+//   isAuthError,
+//   isPermissionError,
+//   isValidationError,
+//   isNetworkError,
+// } from './interceptors/errorInterceptor';
+
+// Export utility functions
+// export { buildQueryString } from '@/utils/api/buildQueryString';
+// export { replacePathParams } from '@/utils/api/replacePathParams';
+// export { checkAxiosConfig } from '@/utils/api/checkAxiosConfig';

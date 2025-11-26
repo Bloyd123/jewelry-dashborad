@@ -4,7 +4,13 @@
 // ============================================================================
 
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import type { ApiResponse, ApiError } from '@/types';
+import type { ApiResponse, ApiError as ApiErrorType } from '@/types';
+import {
+  getRefreshToken,
+  saveAccessToken,
+  saveRefreshToken,
+} from '@/services/auth/tokenService';
+import { clearSession } from '@/services/auth/sessionService';
 
 // ============================================================================
 // ERROR INTERCEPTOR
@@ -32,7 +38,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
     },
 
     // Error response handler
-    async (error: AxiosError<ApiError>) => {
+    async (error: AxiosError<ApiErrorType>) => {
       const originalRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean;
       };
@@ -55,7 +61,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
         originalRequest._retry = true;
 
         try {
-          const refreshToken = localStorage.getItem('refreshToken');
+          const refreshToken = getRefreshToken();
 
           // No refresh token available
           if (!refreshToken) {
@@ -76,10 +82,10 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
 
           const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
-          // Store new tokens
-          localStorage.setItem('accessToken', accessToken);
+          // Store new tokens using token service
+          saveAccessToken(accessToken);
           if (newRefreshToken) {
-            localStorage.setItem('refreshToken', newRefreshToken);
+            saveRefreshToken(newRefreshToken);
           }
 
           // Update Authorization header in original request
@@ -90,10 +96,8 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
           // Retry original request with new token
           return axiosInstance(originalRequest);
         } catch (refreshError) {
-          // Token refresh failed - clear storage and redirect to login
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
-          localStorage.removeItem('user');
+          // Token refresh failed - clear all session data
+          clearSession();
 
           // Show notification (if toast system is available)
           if (typeof window !== 'undefined') {
@@ -112,13 +116,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       // ========================================
       if (error.response?.status === 403) {
         const message = error.response.data?.message || 'Access denied. You do not have permission to perform this action.';
-        
         console.error('🚫 Permission Denied:', message);
-        
-        // Show notification (if toast system is available)
-        if (typeof window !== 'undefined') {
-          // toast.error(message);
-        }
       }
 
       // ========================================
@@ -135,13 +133,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       if (error.response?.status === 422) {
         const message = error.response.data?.message || 'Validation failed.';
         const validationErrors = error.response.data?.errors || [];
-        
         console.error('⚠️ Validation Error:', message, validationErrors);
-        
-        // Show notification with validation errors
-        if (typeof window !== 'undefined') {
-          // toast.error(message);
-        }
       }
 
       // ========================================
@@ -150,11 +142,6 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       if (error.response?.status === 429) {
         const message = error.response.data?.message || 'Too many requests. Please try again later.';
         console.error('⏱️ Rate Limited:', message);
-        
-        // Show notification
-        if (typeof window !== 'undefined') {
-          // toast.error(message);
-        }
       }
 
       // ========================================
@@ -163,11 +150,6 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       if (error.response?.status === 500) {
         const message = error.response.data?.message || 'Internal server error. Please try again later.';
         console.error('💥 Server Error:', message);
-        
-        // Show notification
-        if (typeof window !== 'undefined') {
-          // toast.error('Something went wrong. Please try again later.');
-        }
       }
 
       // ========================================
@@ -176,11 +158,6 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       if (error.response?.status === 503) {
         const message = error.response.data?.message || 'Service temporarily unavailable. Please try again later.';
         console.error('🔧 Service Unavailable:', message);
-        
-        // Show notification
-        if (typeof window !== 'undefined') {
-          // toast.error(message);
-        }
       }
 
       // ========================================
@@ -188,11 +165,6 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
       // ========================================
       if (!error.response) {
         console.error('🌐 Network Error:', error.message);
-        
-        // Show notification
-        if (typeof window !== 'undefined') {
-          // toast.error('Network error. Please check your internet connection.');
-        }
       }
 
       // Reject with original error
@@ -277,4 +249,14 @@ export const isNetworkError = (error: unknown): boolean => {
     return !error.response && error.code === 'ERR_NETWORK';
   }
   return false;
+};
+
+export default {
+  setupErrorInterceptor,
+  getErrorMessage,
+  getValidationErrors,
+  isAuthError,
+  isPermissionError,
+  isValidationError,
+  isNetworkError,
 };
