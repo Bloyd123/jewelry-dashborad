@@ -4,7 +4,7 @@
 // ============================================================================
 
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import type { ApiResponse, ApiError as ApiErrorType } from '@/types';
+import type { ApiResponse, ApiErrorResponse  as ApiErrorType } from '@/types';
 import {
   getRefreshToken,
   saveAccessToken,

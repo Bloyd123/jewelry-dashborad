@@ -41,7 +41,7 @@ export const AUTH_ENDPOINTS = {
   
   // Session Management
   SESSIONS: `${AUTH_BASE}/sessions`,
-  REVOKE_SESSION: `${AUTH_BASE}/sessions/:tokenId`,
+  REVOKE_SESSION: (tokenId: string) => `${AUTH_BASE}/sessions/${tokenId}`
 };
 
 // ============================================================================

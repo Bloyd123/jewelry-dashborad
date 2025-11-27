@@ -57,7 +57,10 @@ export const getAccessToken = (): string | null => {
 export const getRefreshToken = (): string | null => {
   return storage.getItem<string>(TOKEN_KEYS.REFRESH_TOKEN);
 };
-
+export const clearTokens = (): void => {
+  removeAccessToken();
+  removeRefreshToken();
+};
 /**
  * Remove access token from localStorage
  */
@@ -288,6 +291,7 @@ export default {
   saveRefreshToken,
   saveTokens,
   getAccessToken,
+  clearTokens ,
   getRefreshToken,
   removeAccessToken,
   removeRefreshToken,

@@ -1,80 +1,89 @@
 // ============================================================================
-// FILE: src/store/slices/authSlice.ts
-// Authentication Redux Slice
+// FILE: store/slices/authSlice.ts
+// Authentication State Management
 // ============================================================================
 
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
+import * as authService from '@/api/services/authService';
+import * as tokenService from '@/services/auth/tokenService';
 import type {
-  AuthState,
+  User,
   LoginRequest,
   RegisterRequest,
+  LoginResponse,
   ChangePasswordRequest,
-  User,
+  UpdateProfileRequest,
   UserShopAccess,
-  UserShopAccessWithRelations,
   ShopPermissions,
   PermissionKey,
 } from '@/types';
-import * as authService from '@/api/services/authService';
-import * as sessionService from '@/services/auth/sessionService';
-import * as tokenService from '@/services/auth/tokenService';
+
+// ============================================================================
+// STATE INTERFACE
+// ============================================================================
+
+interface AuthState {
+  // User & Authentication
+  user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  tokenId: string | null;
+  isAuthenticated: boolean;
+
+  // Loading States
+  isLoading: boolean;
+  isInitializing: boolean;
+  isRefreshing: boolean;
+
+  // Error State
+  error: string | null;
+
+  // Shop Access & Permissions
+  shopAccesses: UserShopAccess[];
+  currentShop: string | null;
+  currentShopAccess: UserShopAccess | null;
+  permissions: ShopPermissions | null;
+
+  // Two-Factor
+  requires2FA: boolean;
+  twoFactorEnabled: boolean;
+
+  // Last Activity
+  lastActivity: number | null;
+}
 
 // ============================================================================
 // INITIAL STATE
 // ============================================================================
 
 const initialState: AuthState = {
-  // User & Authentication
-  user: sessionService.getUser(),
-  accessToken: tokenService.getAccessToken(),
-  refreshToken: tokenService.getRefreshToken(),
+  user: null,
+  accessToken: null,
+  refreshToken: null,
   tokenId: null,
-  isAuthenticated: sessionService.isAuthenticated(),
-  
-  // Loading States
+  isAuthenticated: false,
+
   isLoading: false,
   isInitializing: true,
   isRefreshing: false,
-  
-  // Error State
+
   error: null,
-  
-  // Shop Access & Permissions
+
   shopAccesses: [],
-  currentShop: sessionService.getCurrentShopId(),
+  currentShop: null,
   currentShopAccess: null,
-  permissions: sessionService.getPermissions(),
-  
-  // Session Management
-  sessions: [],
-  
-  // Two-Factor
+  permissions: null,
+
   requires2FA: false,
   twoFactorEnabled: false,
-  
-  // Last Activity
+
   lastActivity: null,
 };
 
 // ============================================================================
 // ASYNC THUNKS
 // ============================================================================
-
-/**
- * Register new user
- */
-export const register = createAsyncThunk(
-  'auth/register',
-  async (data: RegisterRequest, { rejectWithValue }) => {
-    try {
-      const response = await authService.register(data);
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Registration failed');
-    }
-  }
-);
 
 /**
  * Login user
@@ -84,13 +93,7 @@ export const login = createAsyncThunk(
   async (credentials: LoginRequest, { rejectWithValue }) => {
     try {
       const response = await authService.login(credentials);
-      const { user, accessToken, refreshToken, tokenId, shopAccesses } = response.data;
-      
-      // Save tokens and session
-      tokenService.saveTokens(accessToken, refreshToken);
-      sessionService.saveSession(user);
-      
-      return { user, accessToken, refreshToken, tokenId, shopAccesses };
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Login failed');
     }
@@ -98,36 +101,16 @@ export const login = createAsyncThunk(
 );
 
 /**
- * Logout user
+ * Register user
  */
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (_, { rejectWithValue }) => {
+export const register = createAsyncThunk(
+  'auth/register',
+  async (userData: RegisterRequest, { rejectWithValue }) => {
     try {
-      await authService.logout();
-      sessionService.clearSession();
-      return true;
+      const response = await authService.register(userData);
+      return response.data;
     } catch (error: any) {
-      // Clear session even if API call fails
-      sessionService.clearSession();
-      return rejectWithValue(error.response?.data?.message || 'Logout failed');
-    }
-  }
-);
-
-/**
- * Logout from all devices
- */
-export const logoutAll = createAsyncThunk(
-  'auth/logoutAll',
-  async (_, { rejectWithValue }) => {
-    try {
-      await authService.logoutAll();
-      sessionService.clearSession();
-      return true;
-    } catch (error: any) {
-      sessionService.clearSession();
-      return rejectWithValue(error.response?.data?.message || 'Logout all failed');
+      return rejectWithValue(error.response?.data?.message || 'Registration failed');
     }
   }
 );
@@ -140,12 +123,7 @@ export const getCurrentUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await authService.getCurrentUser();
-      const { user, shopAccesses } = response.data;
-      
-      // Update session
-      sessionService.saveUser(user);
-      
-      return { user, shopAccesses };
+      return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Failed to fetch user');
     }
@@ -157,17 +135,12 @@ export const getCurrentUser = createAsyncThunk(
  */
 export const updateProfile = createAsyncThunk(
   'auth/updateProfile',
-  async (data: any, { rejectWithValue }) => {
+  async (updates: UpdateProfileRequest, { rejectWithValue }) => {
     try {
-      const response = await authService.updateProfile(data);
-      const { user } = response.data;
-      
-      // Update session
-      sessionService.saveUser(user);
-      
-      return user;
+      const response = await authService.updateProfile(updates);
+      return response.data.user;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to update profile');
+      return rejectWithValue(error.response?.data?.message || 'Profile update failed');
     }
   }
 );
@@ -177,12 +150,54 @@ export const updateProfile = createAsyncThunk(
  */
 export const changePassword = createAsyncThunk(
   'auth/changePassword',
-  async (data: ChangePasswordRequest, { rejectWithValue }) => {
+  async (data: ChangePasswordRequest, { rejectWithValue, dispatch }) => {
     try {
-      const response = await authService.changePassword(data);
-      return response.data;
+      await authService.changePassword(data);
+      // After password change, user needs to login again
+      dispatch(logout());
+      return;
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to change password');
+      return rejectWithValue(error.response?.data?.message || 'Password change failed');
+    }
+  }
+);
+
+/**
+ * Logout user
+ */
+export const logout = createAsyncThunk('auth/logout', async (_, { getState, rejectWithValue }) => {
+  try {
+    const state = getState() as RootState;
+    const { refreshToken, accessToken } = state.auth;
+
+    if (refreshToken) {
+      await authService.logout(refreshToken, accessToken || '');
+    }
+
+    // Clear tokens from storage
+    tokenService.clearTokens();
+
+    return;
+  } catch (error: any) {
+    // Even if API call fails, clear local state
+    tokenService.clearTokens();
+    return rejectWithValue(error.response?.data?.message || 'Logout failed');
+  }
+});
+
+/**
+ * Logout from all devices
+ */
+export const logoutAll = createAsyncThunk(
+  'auth/logoutAll',
+  async (_, { rejectWithValue }) => {
+    try {
+      await authService.logoutAllDevices();
+      tokenService.clearTokens();
+      return;
+    } catch (error: any) {
+      tokenService.clearTokens();
+      return rejectWithValue(error.response?.data?.message || 'Logout all failed');
     }
   }
 );
@@ -191,104 +206,53 @@ export const changePassword = createAsyncThunk(
  * Refresh access token
  */
 export const refreshAccessToken = createAsyncThunk(
-  'auth/refreshAccessToken',
-  async (_, { rejectWithValue }) => {
+  'auth/refreshToken',
+  async (_, { getState, rejectWithValue }) => {
     try {
-      const response = await authService.refreshToken();
-      const { accessToken, refreshToken, tokenId } = response.data;
-      
-      // Save new tokens
-      tokenService.saveTokens(accessToken, refreshToken);
-      
-      return { accessToken, refreshToken, tokenId };
+      const state = getState() as RootState;
+      const { refreshToken } = state.auth;
+
+      if (!refreshToken) {
+        throw new Error('No refresh token available');
+      }
+
+      const response = await authService.refreshToken(refreshToken);
+      return response.data;
     } catch (error: any) {
-      // Clear session on refresh failure
-      sessionService.clearSession();
       return rejectWithValue(error.response?.data?.message || 'Token refresh failed');
     }
   }
 );
 
 /**
- * Get active sessions
- */
-export const getSessions = createAsyncThunk(
-  'auth/getSessions',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await authService.getSessions();
-      return response.data.sessions;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to fetch sessions');
-    }
-  }
-);
-
-/**
- * Revoke a session
- */
-export const revokeSession = createAsyncThunk(
-  'auth/revokeSession',
-  async (tokenId: string, { rejectWithValue }) => {
-    try {
-      await authService.revokeSession(tokenId);
-      return tokenId;
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Failed to revoke session');
-    }
-  }
-);
-
-/**
- * Initialize auth (check existing session)
+ * Initialize auth state from stored tokens
  */
 export const initializeAuth = createAsyncThunk(
   'auth/initialize',
   async (_, { rejectWithValue }) => {
     try {
-      // Check if we have valid tokens
-      if (!tokenService.isAccessTokenValid()) {
-        // Try to refresh
-        if (tokenService.isRefreshTokenValid()) {
-          const response = await authService.refreshToken();
-          const { accessToken, refreshToken, tokenId } = response.data;
-          tokenService.saveTokens(accessToken, refreshToken);
-        } else {
-          // No valid tokens
-          sessionService.clearSession();
-          return { authenticated: false };
-        }
+      const accessToken = tokenService.getAccessToken();
+      const refreshToken = tokenService.getRefreshToken();
+
+      if (!accessToken || !refreshToken) {
+        return null;
       }
-      
-      // Get current user
+
+      // Verify token is still valid by fetching current user
       const response = await authService.getCurrentUser();
-      const { user, shopAccesses } = response.data;
-      
-      sessionService.saveUser(user);
-      
-      return { authenticated: true, user, shopAccesses };
+      return {
+        user: response.data.user,
+        shopAccesses: response.data.shopAccesses || [],
+        accessToken,
+        refreshToken,
+      };
     } catch (error: any) {
-      sessionService.clearSession();
-      return rejectWithValue(error.response?.data?.message || 'Initialization failed');
+      // Token invalid - clear storage
+      tokenService.clearTokens();
+      return rejectWithValue(error.response?.data?.message || 'Session expired');
     }
   }
 );
-
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-/**
- * Helper to get shop ID from shop access (handles both populated and unpopulated)
- */
-const getShopId = (shopAccess: UserShopAccess | UserShopAccessWithRelations): string => {
-  // Check if shop is populated (UserShopAccessWithRelations)
-  if ('shop' in shopAccess && shopAccess.shop && typeof shopAccess.shop === 'object') {
-    return String((shopAccess.shop as any)._id);
-  }
-  // Otherwise use shopId directly
-  return String(shopAccess.shopId);
-};
 
 // ============================================================================
 // SLICE
@@ -301,64 +265,67 @@ const authSlice = createSlice({
     // Set current shop
     setCurrentShop: (state, action: PayloadAction<string>) => {
       state.currentShop = action.payload;
-      sessionService.saveCurrentShopId(action.payload);
-      
-      // Find and set current shop access
       const shopAccess = state.shopAccesses.find(
-        (access) => getShopId(access) === action.payload
+        (access) => access.shopId === action.payload
       );
-      
-      if (shopAccess) {
-        state.currentShopAccess = shopAccess;
-        state.permissions = shopAccess.permissions;
-        sessionService.savePermissions(shopAccess.permissions);
-      }
+      state.currentShopAccess = shopAccess || null;
+      state.permissions = shopAccess?.permissions || null;
+
+      // Store in localStorage for persistence
+      localStorage.setItem('currentShop', action.payload);
     },
-    
+
+    // Clear current shop
+    clearCurrentShop: (state) => {
+      state.currentShop = null;
+      state.currentShopAccess = null;
+      state.permissions = null;
+      localStorage.removeItem('currentShop');
+    },
+
+    // Update last activity
+    updateLastActivity: (state) => {
+      state.lastActivity = Date.now();
+    },
+
     // Clear error
     clearError: (state) => {
       state.error = null;
     },
-    
-    // Update last activity
-    updateLastActivity: (state) => {
-      state.lastActivity = new Date();
+
+    // Set error
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     },
-    
-    // Set shop accesses
-    setShopAccesses: (state, action: PayloadAction<UserShopAccess[]>) => {
-      state.shopAccesses = action.payload;
+
+    // Update user (for real-time updates)
+    updateUser: (state, action: PayloadAction<Partial<User>>) => {
+      if (state.user) {
+        state.user = { ...state.user, ...action.payload };
+      }
     },
-    
-    // Reset auth state
-    resetAuth: (state) => {
+
+    // Set 2FA requirement
+    setRequires2FA: (state, action: PayloadAction<boolean>) => {
+      state.requires2FA = action.payload;
+    },
+
+    // Reset state (for logout)
+    resetAuthState: (state) => {
       Object.assign(state, initialState);
       state.isInitializing = false;
     },
   },
   extraReducers: (builder) => {
-    // Register
-    builder
-      .addCase(register.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(register.fulfilled, (state) => {
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(register.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Login
+    // ========================================
+    // LOGIN
+    // ========================================
     builder
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action: PayloadAction<LoginResponse['data']>) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
@@ -366,25 +333,114 @@ const authSlice = createSlice({
         state.tokenId = action.payload.tokenId;
         state.isAuthenticated = true;
         state.shopAccesses = action.payload.shopAccesses || [];
-        state.error = null;
-        
-        // Set first shop as current if available
+        state.requires2FA = action.payload.requires2FA || false;
+        state.lastActivity = Date.now();
+
+        // Store tokens
+        tokenService.saveAccessToken(action.payload.accessToken);
+        tokenService.saveRefreshToken(action.payload.refreshToken);
+
+        // Set current shop if user has shop accesses
         if (state.shopAccesses.length > 0) {
-          const firstShop = state.shopAccesses[0];
-          const shopId = getShopId(firstShop);
-          state.currentShop = shopId;
-          state.currentShopAccess = firstShop;
-          state.permissions = firstShop.permissions;
-          sessionService.saveCurrentShopId(shopId);
-          sessionService.savePermissions(firstShop.permissions);
+          const storedShop = localStorage.getItem('currentShop');
+          const shopExists = state.shopAccesses.some(
+            (access) => access.shopId === storedShop
+          );
+          
+          if (storedShop && shopExists) {
+            state.currentShop = storedShop;
+          } else {
+            state.currentShop = state.shopAccesses[0].shopId;
+          }
+
+          const shopAccess = state.shopAccesses.find(
+            (access) => access.shopId === state.currentShop
+          );
+          state.currentShopAccess = shopAccess || null;
+          state.permissions = shopAccess?.permissions || null;
         }
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
+        state.isAuthenticated = false;
       });
-    
-    // Logout
+
+    // ========================================
+    // REGISTER
+    // ========================================
+    builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state, _action) => {
+        state.isLoading = false;
+        // Usually don't auto-login after registration
+        // User needs to verify email first
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    // ========================================
+    // GET CURRENT USER
+    // ========================================
+    builder
+      .addCase(getCurrentUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+        state.shopAccesses = action.payload.shopAccesses || [];
+        state.isAuthenticated = true;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+        state.isAuthenticated = false;
+      });
+
+    // ========================================
+    // UPDATE PROFILE
+    // ========================================
+    builder
+      .addCase(updateProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action: PayloadAction<User>) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    // ========================================
+    // CHANGE PASSWORD
+    // ========================================
+    builder
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(changePassword.fulfilled, (state) => {
+        state.isLoading = false;
+        // State will be reset by logout action
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      });
+
+    // ========================================
+    // LOGOUT
+    // ========================================
     builder
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -394,11 +450,14 @@ const authSlice = createSlice({
         state.isInitializing = false;
       })
       .addCase(logout.rejected, (state) => {
+        // Clear state even on error
         Object.assign(state, initialState);
         state.isInitializing = false;
       });
-    
-    // Logout All
+
+    // ========================================
+    // LOGOUT ALL
+    // ========================================
     builder
       .addCase(logoutAll.pending, (state) => {
         state.isLoading = true;
@@ -411,56 +470,10 @@ const authSlice = createSlice({
         Object.assign(state, initialState);
         state.isInitializing = false;
       });
-    
-    // Get Current User
-    builder
-      .addCase(getCurrentUser.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getCurrentUser.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.user;
-        state.shopAccesses = action.payload.shopAccesses || [];
-        state.error = null;
-      })
-      .addCase(getCurrentUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Update Profile
-    builder
-      .addCase(updateProfile.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateProfile.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload;
-        state.error = null;
-      })
-      .addCase(updateProfile.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Change Password
-    builder
-      .addCase(changePassword.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(changePassword.fulfilled, (state) => {
-        state.isLoading = false;
-        state.error = null;
-      })
-      .addCase(changePassword.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Refresh Token
+
+    // ========================================
+    // REFRESH TOKEN
+    // ========================================
     builder
       .addCase(refreshAccessToken.pending, (state) => {
         state.isRefreshing = true;
@@ -470,73 +483,43 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.tokenId = action.payload.tokenId;
+
+        // Update stored tokens
+        tokenService.saveAccessToken(action.payload.accessToken);
+        tokenService.saveRefreshToken(action.payload.refreshToken);
       })
       .addCase(refreshAccessToken.rejected, (state) => {
         state.isRefreshing = false;
+        // Clear auth state on refresh failure
         Object.assign(state, initialState);
         state.isInitializing = false;
+        tokenService.clearTokens();
       });
-    
-    // Get Sessions
-    builder
-      .addCase(getSessions.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(getSessions.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.sessions = action.payload;
-        state.error = null;
-      })
-      .addCase(getSessions.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Revoke Session
-    builder
-      .addCase(revokeSession.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(revokeSession.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.sessions = state.sessions.filter(
-          (session: any) => session.tokenId !== action.payload
-        );
-        state.error = null;
-      })
-      .addCase(revokeSession.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload as string;
-      });
-    
-    // Initialize Auth
+
+    // ========================================
+    // INITIALIZE AUTH
+    // ========================================
     builder
       .addCase(initializeAuth.pending, (state) => {
         state.isInitializing = true;
       })
       .addCase(initializeAuth.fulfilled, (state, action) => {
         state.isInitializing = false;
-        
-        if (action.payload.authenticated) {
+        if (action.payload) {
           state.user = action.payload.user;
-          state.shopAccesses = action.payload.shopAccesses || [];
+          state.shopAccesses = action.payload.shopAccesses;
+          state.accessToken = action.payload.accessToken;
+          state.refreshToken = action.payload.refreshToken;
           state.isAuthenticated = true;
-          
-          // Restore current shop if available
-          if (state.currentShop && state.shopAccesses.length > 0) {
-            const shopAccess = state.shopAccesses.find(
-              (access) => getShopId(access) === state.currentShop
-            );
-            
-            if (shopAccess) {
-              state.currentShopAccess = shopAccess;
-              state.permissions = shopAccess.permissions;
-            }
+
+          // Restore current shop
+          const storedShop = localStorage.getItem('currentShop');
+          if (storedShop && state.shopAccesses.some((a) => a.shopId === storedShop)) {
+            state.currentShop = storedShop;
+            const shopAccess = state.shopAccesses.find((a) => a.shopId === storedShop);
+            state.currentShopAccess = shopAccess || null;
+            state.permissions = shopAccess?.permissions || null;
           }
-        } else {
-          state.isAuthenticated = false;
         }
       })
       .addCase(initializeAuth.rejected, (state) => {
@@ -552,38 +535,55 @@ const authSlice = createSlice({
 
 export const {
   setCurrentShop,
-  clearError,
+  clearCurrentShop,
   updateLastActivity,
-  setShopAccesses,
-  resetAuth,
+  clearError,
+  setError,
+  updateUser,
+  setRequires2FA,
+  resetAuthState,
 } = authSlice.actions;
 
 // ============================================================================
 // SELECTORS
 // ============================================================================
 
+// Basic selectors
 export const selectAuth = (state: RootState) => state.auth;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
 export const selectError = (state: RootState) => state.auth.error;
-export const selectShopAccesses = (state: RootState) => state.auth.shopAccesses;
 export const selectCurrentShop = (state: RootState) => state.auth.currentShop;
-export const selectCurrentShopAccess = (state: RootState) => state.auth.currentShopAccess;
 export const selectPermissions = (state: RootState) => state.auth.permissions;
-export const selectSessions = (state: RootState) => state.auth.sessions;
+export const selectShopAccesses = (state: RootState) => state.auth.shopAccesses;
 
-// Permission checker selectors
+// Permission checker selector
 export const selectHasPermission = (state: RootState, permission: PermissionKey): boolean => {
-  return state.auth.permissions?.[permission] || false;
+  if (!state.auth.permissions) return false;
+  return state.auth.permissions[permission] === true;
 };
 
-export const selectHasAnyPermission = (state: RootState, permissions: PermissionKey[]): boolean => {
-  return permissions.some(permission => state.auth.permissions?.[permission]);
+// Role checker selector
+export const selectHasRole = (state: RootState, role: string): boolean => {
+  return state.auth.user?.role === role;
 };
 
-export const selectHasAllPermissions = (state: RootState, permissions: PermissionKey[]): boolean => {
-  return permissions.every(permission => state.auth.permissions?.[permission]);
+// Multiple permissions checker
+export const selectHasAnyPermission = (
+  state: RootState,
+  permissions: PermissionKey[]
+): boolean => {
+  if (!state.auth.permissions) return false;
+  return permissions.some((perm) => state.auth.permissions![perm] === true);
+};
+
+export const selectHasAllPermissions = (
+  state: RootState,
+  permissions: PermissionKey[]
+): boolean => {
+  if (!state.auth.permissions) return false;
+  return permissions.every((perm) => state.auth.permissions![perm] === true);
 };
 
 // ============================================================================

@@ -1,44 +1,74 @@
 // ============================================================================
-// FILE: src/store/index.ts
+// FILE: store/index.ts
 // Redux Store Configuration
 // ============================================================================
 
-import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 
-// Import all slices
+// Import reducers
 import authReducer from './slices/authSlice';
-import uiReducer from './slices/uiSlice';
-import notificationReducer from './slices/notificationSlice';
+// import userReducer from './slices/userSlice';
 // import shopReducer from './slices/shopSlice';
+// import notificationReducer from './slices/notificationSlice';
+// ... other reducers
 
 // ============================================================================
-// CONFIGURE STORE
+// ROOT REDUCER
 // ============================================================================
 
-export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    ui: uiReducer,
-    notification: notificationReducer,
-    // shop: shopReducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore these action types for non-serializable values
-        ignoredActions: ['notification/showNotification'],
-        // Ignore these field paths in all actions
-        ignoredActionPaths: ['payload.timestamp'],
-        // Ignore these paths in the state
-        ignoredPaths: ['notification.notifications'],
-      },
-    }),
-  devTools: process.env.NODE_ENV !== 'production', // Enable Redux DevTools in development
+const rootReducer = combineReducers({
+  auth: authReducer,
+  // user: userReducer,
+  // shop: shopReducer,
+  // notification: notificationReducer,
+  // ... other reducers
 });
 
 // ============================================================================
-// EXPORT TYPES
+// PERSIST CONFIGURATION
+// ============================================================================
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+  whitelist: ['auth'], // Only persist auth state
+  // blacklist: ['notification'], // Don't persist notification state
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// ============================================================================
+// STORE CONFIGURATION
+// ============================================================================
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore redux-persist actions
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+  devTools: import.meta.env.DEV, // Enable Redux DevTools in development
+});
+
+export const persistor = persistStore(store);
+
+// ============================================================================
+// TYPES
 // ============================================================================
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
@@ -46,15 +76,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 // ============================================================================
-// TYPED HOOKS (Use these instead of plain useDispatch and useSelector)
-// ============================================================================
-
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
-export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-// ============================================================================
-// EXPORT STORE
+// EXPORTS
 // ============================================================================
 
 export default store;

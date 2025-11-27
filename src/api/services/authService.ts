@@ -1,175 +1,186 @@
 // ============================================================================
-// FILE: src/services/auth/authService.ts
+// FILE: services/api/authAPI.ts
 // Authentication API Service
 // ============================================================================
 
 import { api } from '@/api/axios';
-import { API_ENDPOINTS } from '@/api/endpoints';
 import type {
-  RegisterRequest,
-  RegisterResponse,
+  ApiResponse,
   LoginRequest,
   LoginResponse,
-  LogoutResponse,
-  LogoutAllResponse,
+  RegisterRequest,
+  RegisterResponse,
   ChangePasswordRequest,
   ChangePasswordResponse,
-  ForgotPasswordRequest,
   ForgotPasswordResponse,
   ResetPasswordRequest,
   ResetPasswordResponse,
-  VerifyEmailRequest,
   VerifyEmailResponse,
-  RefreshTokenRequest,
-  RefreshTokenResponse,
   GetProfileResponse,
+  UpdateProfileRequest,
   UpdateProfileResponse,
+  LogoutResponse,
+  LogoutAllResponse,
+  RefreshTokenResponse,
   GetSessionsResponse,
   RevokeSessionResponse,
-  ApiResponse,
 } from '@/types';
+import { API_ENDPOINTS } from '@/api/endpoints';
 
 // ============================================================================
-// REGISTRATION
+// PUBLIC ENDPOINTS (No Auth Required)
 // ============================================================================
 
 /**
- * Register a new user
+ * Register super admin (first user)
  */
-export const register = async (data: RegisterRequest): Promise<ApiResponse<RegisterResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.REGISTER, data);
+export const registerSuperAdmin = async (
+  userData: RegisterRequest
+): Promise<ApiResponse<RegisterResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.REGISTER_SUPER_ADMIN, userData);
+  return response.data;
 };
 
 /**
- * Register super admin (only if no super admin exists)
+ * Register new user (requires authentication)
  */
-export const registerSuperAdmin = async (data: RegisterRequest): Promise<ApiResponse<RegisterResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.REGISTER_SUPER_ADMIN, data);
+export const register = async (userData: RegisterRequest): Promise<ApiResponse<RegisterResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.REGISTER, userData);
+  return response.data;
 };
-
-// ============================================================================
-// LOGIN / LOGOUT
-// ============================================================================
 
 /**
  * Login user
  */
-export const login = async (credentials: LoginRequest): Promise<ApiResponse<LoginResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
+export const login = async (
+  credentials: LoginRequest
+): Promise<ApiResponse<LoginResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
+  return response.data;
 };
 
 /**
- * Logout current user
+ * Refresh access token
  */
-export const logout = async (): Promise<ApiResponse<LogoutResponse>> => {
-  return api.post(API_ENDPOINTS.AUTH.LOGOUT);
+export const refreshToken = async (
+  refreshToken: string
+): Promise<ApiResponse<RefreshTokenResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.REFRESH_TOKEN, { refreshToken });
+  return response.data;
 };
 
 /**
- * Logout from all devices
+ * Forgot password - Request reset link
  */
-export const logoutAll = async (): Promise<ApiResponse<LogoutAllResponse>> => {
-  return api.post(API_ENDPOINTS.AUTH.LOGOUT_ALL);
+export const forgotPassword = async (
+  email: string
+): Promise<ApiResponse<ForgotPasswordResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email });
+  return response.data;
+};
+
+/**
+ * Reset password using token
+ */
+export const resetPassword = async (
+  data: ResetPasswordRequest
+): Promise<ApiResponse<ResetPasswordResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data);
+  return response.data;
+};
+
+/**
+ * Verify email address
+ */
+export const verifyEmail = async (
+  token: string
+): Promise<ApiResponse<VerifyEmailResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.VERIFY_EMAIL, { token });
+  return response.data;
 };
 
 // ============================================================================
-// USER PROFILE
+// PROTECTED ENDPOINTS (Auth Required)
 // ============================================================================
 
 /**
  * Get current user profile
  */
 export const getCurrentUser = async (): Promise<ApiResponse<GetProfileResponse['data']>> => {
-  return api.get(API_ENDPOINTS.AUTH.ME);
+  const response = await api.get(API_ENDPOINTS.AUTH.ME);
+  return response.data;
 };
 
 /**
  * Update user profile
  */
-export const updateProfile = async (data: any): Promise<ApiResponse<UpdateProfileResponse['data']>> => {
-  return api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE, data);
+export const updateProfile = async (
+  updates: UpdateProfileRequest
+): Promise<ApiResponse<UpdateProfileResponse['data']>> => {
+  const response = await api.put(API_ENDPOINTS.AUTH.UPDATE_PROFILE, updates);
+  return response.data;
 };
 
-// ============================================================================
-// PASSWORD MANAGEMENT
-// ============================================================================
+/**
+ * Logout current session
+ */
+export const logout = async (
+  refreshToken: string,
+  accessToken: string
+): Promise<ApiResponse<LogoutResponse>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.LOGOUT, {
+    refreshToken,
+    accessToken,
+  });
+  return response.data;
+};
+
+/**
+ * Logout from all devices
+ */
+export const logoutAllDevices = async (): Promise<ApiResponse<LogoutAllResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.LOGOUT_ALL);
+  return response.data;
+};
 
 /**
  * Change password
  */
-export const changePassword = async (data: ChangePasswordRequest): Promise<ApiResponse<ChangePasswordResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data);
+export const changePassword = async (
+  data: ChangePasswordRequest
+): Promise<ApiResponse<ChangePasswordResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data);
+  return response.data;
 };
 
 /**
- * Request password reset
+ * Resend email verification link
  */
-export const forgotPassword = async (data: ForgotPasswordRequest): Promise<ApiResponse<ForgotPasswordResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, data);
+export const resendVerificationEmail = async (): Promise<ApiResponse<{ success: boolean }>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.RESEND_VERIFICATION);
+  return response.data;
 };
-
-/**
- * Reset password with token
- */
-export const resetPassword = async (data: ResetPasswordRequest): Promise<ApiResponse<ResetPasswordResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data);
-};
-
-// ============================================================================
-// EMAIL VERIFICATION
-// ============================================================================
-
-/**
- * Verify email with token
- */
-export const verifyEmail = async (data: VerifyEmailRequest): Promise<ApiResponse<VerifyEmailResponse['data']>> => {
-  return api.post(API_ENDPOINTS.AUTH.VERIFY_EMAIL, data);
-};
-
-/**
- * Resend verification email
- */
-export const resendVerification = async (): Promise<ApiResponse> => {
-  return api.post(API_ENDPOINTS.AUTH.RESEND_VERIFICATION);
-};
-
-// ============================================================================
-// TOKEN MANAGEMENT
-// ============================================================================
-
-/**
- * Refresh access token
- */
-export const refreshToken = async (): Promise<ApiResponse<RefreshTokenResponse['data']>> => {
-  const refreshToken = localStorage.getItem('refreshToken');
-  
-  if (!refreshToken) {
-    throw new Error('No refresh token available');
-  }
-  
-  return api.post(API_ENDPOINTS.AUTH.REFRESH_TOKEN, { refreshToken });
-};
-
-// ============================================================================
-// SESSION MANAGEMENT
-// ============================================================================
 
 /**
  * Get all active sessions
  */
-export const getSessions = async (): Promise<ApiResponse<GetSessionsResponse['data']>> => {
-  return api.get(API_ENDPOINTS.AUTH.SESSIONS);
+export const getActiveSessions = async (): Promise<ApiResponse<GetSessionsResponse['data']>> => {
+  const response = await api.get(API_ENDPOINTS.AUTH.SESSIONS);
+  return response.data;
 };
 
 /**
  * Revoke a specific session
  */
-export const revokeSession = async (tokenId: string): Promise<ApiResponse<RevokeSessionResponse>> => {
-  return api.delete(API_ENDPOINTS.AUTH.REVOKE_SESSION.replace(':tokenId', tokenId));
+export const revokeSession = async (
+  tokenId: string
+): Promise<ApiResponse<RevokeSessionResponse['data']>> => {
+  const response = await api.delete(API_ENDPOINTS.AUTH.REVOKE_SESSION(tokenId));
+  return response.data;
 };
 
 // ============================================================================
-// UTILITIES
+// HELPER FUNCTIONS
 // ============================================================================
 
 /**
@@ -177,9 +188,7 @@ export const revokeSession = async (tokenId: string): Promise<ApiResponse<Revoke
  */
 export const checkEmailAvailability = async (email: string): Promise<boolean> => {
   try {
-    const response = await api.get(`${API_ENDPOINTS.AUTH.ME}/check-email`, {
-      params: { email },
-    });
+    const response = await api.post('/auth/check-email', { email });
     return response.data.data.available;
   } catch (error) {
     return false;
@@ -191,9 +200,7 @@ export const checkEmailAvailability = async (email: string): Promise<boolean> =>
  */
 export const checkUsernameAvailability = async (username: string): Promise<boolean> => {
   try {
-    const response = await api.get(`${API_ENDPOINTS.AUTH.ME}/check-username`, {
-      params: { username },
-    });
+    const response = await api.post('/auth/check-username', { username });
     return response.data.data.available;
   } catch (error) {
     return false;
@@ -201,25 +208,30 @@ export const checkUsernameAvailability = async (username: string): Promise<boole
 };
 
 // ============================================================================
-// DEFAULT EXPORT
+// EXPORTS
 // ============================================================================
 
 export default {
-  register,
+  // Public
   registerSuperAdmin,
+  register,
   login,
-  logout,
-  logoutAll,
-  getCurrentUser,
-  updateProfile,
-  changePassword,
+  refreshToken,
   forgotPassword,
   resetPassword,
   verifyEmail,
-  resendVerification,
-  refreshToken,
-  getSessions,
+
+  // Protected
+  getCurrentUser,
+  updateProfile,
+  logout,
+  logoutAllDevices,
+  changePassword,
+  resendVerificationEmail,
+  getActiveSessions,
   revokeSession,
+
+  // Helpers
   checkEmailAvailability,
   checkUsernameAvailability,
 };
