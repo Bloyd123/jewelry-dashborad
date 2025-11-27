@@ -1,235 +1,18 @@
 // ============================================================================
-// FILE: src/types/auth.types.ts
-// Authentication & User related TypeScript types (Backend matched)
+// FILE: auth.types.ts
+// Authentication Request/Response Types
 // ============================================================================
 
-import { ID, Timestamp } from './common.types';
+import { User, UserRole, Department } from './user.types';
+import { RefreshToken, DeviceInfo } from './refreshToken.types';
+import { UserShopAccess, ShopPermissions, PermissionKey } from './userShopAccess.types';
 
 // ============================================================================
-// USER ENUMS
-// ============================================================================
-
-/**
- * User Role Enum (matches backend exactly)
- */
-export enum UserRole {
-  SUPER_ADMIN = 'super_admin',
-  ORG_ADMIN = 'org_admin',
-  SHOP_ADMIN = 'shop_admin',
-  MANAGER = 'manager',
-  STAFF = 'staff',
-  ACCOUNTANT = 'accountant',
-  VIEWER = 'viewer',
-}
-
-/**
- * User Department Enum (matches backend)
- */
-export enum UserDepartment {
-  SALES = 'sales',
-  PURCHASE = 'purchase',
-  INVENTORY = 'inventory',
-  ACCOUNTS = 'accounts',
-  MANAGEMENT = 'management',
-  WORKSHOP = 'workshop',
-  QUALITY_CHECK = 'quality_check',
-  CUSTOMER_SERVICE = 'customer_service',
-  OTHER = 'other',
-}
-
-/**
- * Language Options (matches backend)
- */
-export enum Language {
-  EN = 'en',
-  HI = 'hi',
-  MR = 'mr',
-  GU = 'gu',
-  TA = 'ta',
-  TE = 'te',
-}
-
-/**
- * Currency Options (matches backend)
- */
-export enum Currency {
-  INR = 'INR',
-  USD = 'USD',
-  EUR = 'EUR',
-  GBP = 'GBP',
-  AED = 'AED',
-}
-
-/**
- * Date Format Options (matches backend)
- */
-export enum DateFormat {
-  DD_MM_YYYY = 'DD/MM/YYYY',
-  MM_DD_YYYY = 'MM/DD/YYYY',
-  YYYY_MM_DD = 'YYYY-MM-DD',
-}
-
-/**
- * Theme Options (matches backend)
- */
-export enum Theme {
-  LIGHT = 'light',
-  DARK = 'dark',
-  AUTO = 'auto',
-}
-
-// ============================================================================
-// USER PREFERENCES
+// AUTH REQUEST TYPES
 // ============================================================================
 
 /**
- * User Preferences (matches backend exactly)
- */
-export interface UserPreferences {
-  language: Language;
-  timezone: string;
-  currency: Currency;
-  dateFormat: DateFormat;
-  theme: Theme;
-  notificationsEnabled: boolean;
-}
-
-/**
- * Default User Preferences
- */
-export const DEFAULT_USER_PREFERENCES: UserPreferences = {
-  language: Language.EN,
-  timezone: 'Asia/Kolkata',
-  currency: Currency.INR,
-  dateFormat: DateFormat.DD_MM_YYYY,
-  theme: Theme.LIGHT,
-  notificationsEnabled: true,
-};
-
-// ============================================================================
-// USER INTERFACE (matches backend User model)
-// ============================================================================
-
-/**
- * Complete User Interface (matches backend User model)
- */
-export interface User {
-  // Basic Information
-  _id: ID;
-  username: string;
-  email: string;
-  firstName: string;
-  lastName?: string;
-  phone?: string;
-  profileImage?: string;
-  
-  // SaaS Multi-tenant Fields
-  organizationId?: ID;
-  
-  // Role-based Access Control
-  role: UserRole;
-  
-  // Primary Shop (Default working location)
-  primaryShop?: ID;
-  
-  // User Status
-  isActive: boolean;
-  isEmailVerified: boolean;
-  isPhoneVerified: boolean;
-  
-  // Security (not included in JSON response but type for reference)
-  lastLogin?: Timestamp;
-  lastLoginIP?: string;
-  
-  // Two-Factor Authentication
-  twoFactorEnabled: boolean;
-  
-  // Additional Fields for Jewelry Business
-  designation?: string;
-  department?: UserDepartment;
-  employeeId?: string;
-  joiningDate?: Timestamp;
-  
-  // Sales Performance & Incentives
-  salesTarget?: number;
-  commissionRate?: number;
-  
-  // User Preferences
-  preferences: UserPreferences;
-  
-  // Tracking fields
-  createdBy?: ID;
-  updatedBy?: ID;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  
-  // Virtual fields (computed on frontend or from backend)
-  fullName?: string;
-  isSuperAdmin?: boolean;
-  isOrgAdmin?: boolean;
-}
-
-/**
- * User with populated relations
- */
-export interface UserWithRelations extends User {
-  organization?: {
-    _id: ID;
-    name: string;
-    logo?: string;
-    isActive: boolean;
-  };
-  primaryShopDetails?: {
-    _id: ID;
-    name: string;
-    code: string;
-    address?: string;
-  };
-  shopAccesses?: ShopAccess[];
-  createdByUser?: {
-    _id: ID;
-    firstName: string;
-    lastName?: string;
-  };
-}
-
-// ============================================================================
-// SHOP ACCESS INTERFACE
-// ============================================================================
-
-/**
- * User Shop Access (for multi-shop users)
- */
-export interface ShopAccess {
-  _id: ID;
-  userId: ID;
-  shopId: ID;
-  organizationId: ID;
-  role: UserRole;
-  permissions: Record<string, boolean>;
-  isActive: boolean;
-  grantedBy?: ID;
-  grantedAt: Timestamp;
-  revokedAt?: Timestamp;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
-  deletedAt?: Timestamp;
-  
-  // Populated fields
-  shop?: {
-    _id: ID;
-    name: string;
-    code: string;
-    address?: string;
-  };
-}
-
-// ============================================================================
-// AUTHENTICATION REQUEST TYPES
-// ============================================================================
-
-/**
- * Register Request (matches backend validation)
+ * Register Request
  */
 export interface RegisterRequest {
   username: string;
@@ -238,24 +21,23 @@ export interface RegisterRequest {
   firstName: string;
   lastName?: string;
   phone?: string;
-  organizationId?: ID;
+  organizationId?: string;
   role: UserRole;
-  primaryShop?: ID;
-  department?: UserDepartment;
-  designation?: string;
-  employeeId?: string;
+  primaryShop?: string;
+  department?: Department;
 }
 
 /**
- * Login Request (matches backend validation)
+ * Login Request
  */
 export interface LoginRequest {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 /**
- * Change Password Request (matches backend validation)
+ * Change Password Request
  */
 export interface ChangePasswordRequest {
   currentPassword: string;
@@ -264,14 +46,14 @@ export interface ChangePasswordRequest {
 }
 
 /**
- * Forgot Password Request (matches backend validation)
+ * Forgot Password Request
  */
 export interface ForgotPasswordRequest {
   email: string;
 }
 
 /**
- * Reset Password Request (matches backend validation)
+ * Reset Password Request
  */
 export interface ResetPasswordRequest {
   token: string;
@@ -280,564 +62,620 @@ export interface ResetPasswordRequest {
 }
 
 /**
- * Verify Email Request (matches backend validation)
+ * Verify Email Request
  */
 export interface VerifyEmailRequest {
   token: string;
 }
 
 /**
- * Refresh Token Request (matches backend validation)
+ * Refresh Token Request
  */
 export interface RefreshTokenRequest {
   refreshToken: string;
 }
 
 /**
- * Update Profile Request (matches backend validation)
+ * Resend Verification Email Request
  */
-export interface UpdateProfileRequest {
-  firstName?: string;
-  lastName?: string;
-  phone?: string;
-  profileImage?: string;
-  designation?: string;
-  preferences?: Partial<UserPreferences>;
+export interface ResendVerificationRequest {
+  email: string;
 }
 
 /**
- * Logout Request (matches backend)
+ * Enable Two-Factor Request
  */
-export interface LogoutRequest {
-  refreshToken: string;
+export interface EnableTwoFactorRequest {
+  password: string;
+}
+
+/**
+ * Verify Two-Factor Request
+ */
+export interface VerifyTwoFactorRequest {
+  token: string;
+  code: string;
+}
+
+/**
+ * Disable Two-Factor Request
+ */
+export interface DisableTwoFactorRequest {
+  password: string;
+  code: string;
+}
+
+/**
+ * Two-Factor Login Request
+ */
+export interface TwoFactorLoginRequest {
+  email: string;
+  password: string;
+  code: string;
+}
+
+/**
+ * Verify Backup Code Request
+ */
+export interface VerifyBackupCodeRequest {
+  email: string;
+  backupCode: string;
 }
 
 // ============================================================================
-// AUTHENTICATION RESPONSE TYPES
+// AUTH RESPONSE TYPES
 // ============================================================================
 
 /**
- * Token Pair (from backend tokenManager)
- */
-export interface TokenPair {
-  accessToken: string;
-  refreshToken: string;
-}
-
-/**
- * Login Response (matches backend auth.service response)
- */
-export interface LoginResponse {
-  user: User;
-  accessToken: string;
-  refreshToken: string;
-}
-
-/**
- * Register Response (matches backend auth.service response)
+ * Register Response
  */
 export interface RegisterResponse {
-  user: User;
-  accessToken: string;
-  refreshToken: string;
+  success: boolean;
+  message: string;
+  data: {
+    user: User;
+    verificationRequired: boolean;
+    verificationEmailSent: boolean;
+  };
+}
+
+/**
+ * Login Response
+ */
+export interface LoginResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: User;
+    accessToken: string;
+    refreshToken: string;
+    tokenId: string;
+    expiresIn: number;
+    shopAccesses?: UserShopAccess[];
+    requires2FA?: boolean;
+  };
+}
+
+/**
+ * Two-Factor Challenge Response
+ */
+export interface TwoFactorChallengeResponse {
+  success: boolean;
+  message: string;
+  data: {
+    requires2FA: true;
+    tempToken: string;
+    methods: Array<'app' | 'sms' | 'email'>;
+  };
+}
+
+/**
+ * Logout Response
+ */
+export interface LogoutResponse {
+  success: boolean;
+  message: string;
+}
+
+/**
+ * Logout All Response
+ */
+export interface LogoutAllResponse {
+  success: boolean;
+  message: string;
+  data: {
+    revokedCount: number;
+  };
 }
 
 /**
  * Refresh Token Response
  */
 export interface RefreshTokenResponse {
-  accessToken: string;
-  refreshToken: string;
-}
-
-/**
- * Current User Response (from /me endpoint)
- */
-export interface CurrentUserResponse extends User {
-  permissions?: Record<string, boolean>;
-  shopAccesses?: ShopAccess[];
-}
-
-/**
- * Password Changed Response
- */
-export interface PasswordChangedResponse {
   success: boolean;
   message: string;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    tokenId: string;
+    expiresIn: number;
+  };
 }
 
 /**
- * Email Verification Response
+ * Change Password Response
  */
-export interface EmailVerificationResponse {
+export interface ChangePasswordResponse {
   success: boolean;
-  alreadyVerified?: boolean;
   message: string;
+  data: {
+    passwordChanged: boolean;
+    allSessionsRevoked: boolean;
+  };
 }
 
-// ============================================================================
-// SESSION TYPES (matches backend)
-// ============================================================================
-
 /**
- * Active Session (matches backend getActiveSessions response)
+ * Forgot Password Response
  */
-export interface ActiveSession {
-  id: string;
-  device: string;
-  ipAddress: string;
-  lastUsed: Timestamp;
-  createdAt: Timestamp;
-  expiresAt: Timestamp;
-  isCurrent: boolean;
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message: string;
+  data: {
+    emailSent: boolean;
+    expiresIn: number; // minutes
+  };
 }
 
 /**
- * Sessions List Response
+ * Reset Password Response
  */
-export interface SessionsListResponse {
-  sessions: ActiveSession[];
+export interface ResetPasswordResponse {
+  success: boolean;
+  message: string;
+  data: {
+    passwordReset: boolean;
+  };
+}
+
+/**
+ * Verify Email Response
+ */
+export interface VerifyEmailResponse {
+  success: boolean;
+  message: string;
+  data: {
+    verified: boolean;
+    user: User;
+  };
+}
+
+/**
+ * Get Profile Response
+ */
+export interface GetProfileResponse {
+  success: boolean;
+  data: {
+    user: User;
+    shopAccesses: UserShopAccess[];
+    activeShops: number;
+  };
+}
+
+/**
+ * Update Profile Response
+ */
+export interface UpdateProfileResponse {
+  success: boolean;
+  message: string;
+  data: {
+    user: User;
+  };
+}
+
+/**
+ * Enable Two-Factor Response
+ */
+export interface EnableTwoFactorResponse {
+  success: boolean;
+  message: string;
+  data: {
+    secret: string;
+    qrCode: string;
+    backupCodes: string[];
+  };
+}
+
+/**
+ * Verify Two-Factor Response
+ */
+export interface VerifyTwoFactorResponse {
+  success: boolean;
+  message: string;
+  data: {
+    verified: boolean;
+    enabled: boolean;
+  };
+}
+
+/**
+ * Disable Two-Factor Response
+ */
+export interface DisableTwoFactorResponse {
+  success: boolean;
+  message: string;
+  data: {
+    disabled: boolean;
+  };
+}
+
+/**
+ * Get Sessions Response
+ */
+export interface GetSessionsResponse {
+  success: boolean;
+  data: {
+    sessions: Array<{
+      tokenId: string;
+      device: DeviceInfo;
+      ipAddress?: string;
+      lastUsedAt: Date | string;
+      createdAt: Date | string;
+      expiresAt: Date | string;
+      isCurrent: boolean;
+    }>;
+    total: number;
+  };
+}
+
+/**
+ * Revoke Session Response
+ */
+export interface RevokeSessionResponse {
+  success: boolean;
+  message: string;
+  data: {
+    revoked: boolean;
+    tokenId: string;
+  };
+}
+
+/**
+ * Check Email Availability Response
+ */
+export interface CheckEmailResponse {
+  success: boolean;
+  data: {
+    available: boolean;
+  };
+}
+
+/**
+ * Check Username Availability Response
+ */
+export interface CheckUsernameResponse {
+  success: boolean;
+  data: {
+    available: boolean;
+  };
+}
+
+/**
+ * Validate Token Response
+ */
+export interface ValidateTokenResponse {
+  success: boolean;
+  data: {
+    valid: boolean;
+    user?: User;
+    expiresAt?: Date | string;
+  };
 }
 
 // ============================================================================
-// AUTHENTICATION STATE (for Redux/Context)
+// AUTH STATE TYPES (for Frontend State Management)
 // ============================================================================
 
 /**
- * Auth State for Redux store or Context
+ * Auth State
  */
 export interface AuthState {
-  // User data
+  // User & Authentication
   user: User | null;
-  
-  // Tokens
   accessToken: string | null;
   refreshToken: string | null;
-  
-  // Status
+  tokenId: string | null;
   isAuthenticated: boolean;
-  isLoading: boolean;
-  isInitialized: boolean;
   
-  // Error
+  // Loading States
+  isLoading: boolean;
+  isInitializing: boolean;
+  isRefreshing: boolean;
+  
+  // Error State
   error: string | null;
   
-  // Additional info
-  permissions?: Record<string, boolean>;
-  shopAccess?: ShopAccess[];
-  currentShopId?: ID;
+  // Shop Access & Permissions
+  shopAccesses: UserShopAccess[];
+  currentShop: string | null;
+  currentShopAccess: UserShopAccess | null;
+  permissions: ShopPermissions | null;
+  
+  // Session Management
+  sessions: RefreshToken[];
+  
+  // Two-Factor
+  requires2FA: boolean;
+  twoFactorEnabled: boolean;
+  
+  // Last Activity
+  lastActivity: Date | null;
 }
 
 /**
- * Initial Auth State
+ * Auth Context Value
  */
-export const initialAuthState: AuthState = {
-  user: null,
-  accessToken: null,
-  refreshToken: null,
-  isAuthenticated: false,
-  isLoading: false,
-  isInitialized: false,
-  error: null,
-  permissions: {},
-  shopAccess: [],
-  currentShopId: undefined,
-};
+export interface AuthContextValue {
+  // State
+  state: AuthState;
+  
+  // Auth Actions
+  login: (credentials: LoginRequest) => Promise<void>;
+  register: (data: RegisterRequest) => Promise<void>;
+  logout: () => Promise<void>;
+  logoutAll: () => Promise<void>;
+  refreshAccessToken: () => Promise<void>;
+  
+  // Profile Actions
+  updateProfile: (data: any) => Promise<void>;
+  changePassword: (data: ChangePasswordRequest) => Promise<void>;
+  
+  // Email & Password Recovery
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (data: ResetPasswordRequest) => Promise<void>;
+  verifyEmail: (token: string) => Promise<void>;
+  resendVerification: (email: string) => Promise<void>;
+  
+  // Two-Factor
+  enableTwoFactor: (password: string) => Promise<{ secret: string; qrCode: string; backupCodes: string[] }>;
+  verifyTwoFactor: (token: string, code: string) => Promise<void>;
+  disableTwoFactor: (password: string, code: string) => Promise<void>;
+  
+  // Shop Selection & Permissions
+  setCurrentShop: (shopId: string) => void;
+  hasPermission: (permission: PermissionKey) => boolean;
+  hasAnyPermission: (permissions: PermissionKey[]) => boolean;
+  hasAllPermissions: (permissions: PermissionKey[]) => boolean;
+  hasRole: (role: UserRole) => boolean;
+  hasShopRole: (role: string) => boolean;
+  
+  // Session Management
+  getSessions: () => Promise<void>;
+  revokeSession: (tokenId: string) => Promise<void>;
+  
+  // Utility
+  checkAuth: () => Promise<void>;
+  clearError: () => void;
+  updateLastActivity: () => void;
+}
+
+/**
+ * Protected Route Props
+ */
+export interface ProtectedRouteProps {
+  children: React.ReactNode;
+  
+  // Role-based Protection
+  requiredRole?: UserRole;
+  requiredRoles?: UserRole[];
+  
+  // Permission-based Protection
+  requiredPermission?: PermissionKey;
+  requiredPermissions?: PermissionKey[];
+  requireAll?: boolean; // If true, user must have all permissions
+  
+  // Shop-based Protection
+  requireShopAccess?: boolean;
+  specificShop?: string;
+  
+  // Email Verification
+  requireVerifiedEmail?: boolean;
+  
+  // Redirect Options
+  redirectTo?: string;
+  fallback?: React.ReactNode;
+}
+
+/**
+ * Public Route Props (redirects authenticated users)
+ */
+export interface PublicRouteProps {
+  children: React.ReactNode;
+  restricted?: boolean; // If true, authenticated users can't access
+  redirectTo?: string;
+}
+
+/**
+ * Auth Guard Props
+ */
+export interface AuthGuardProps {
+  children: React.ReactNode;
+  loading?: React.ReactNode;
+}
 
 // ============================================================================
-// FORM TYPES (for React Hook Form)
+// FORM STATE TYPES
 // ============================================================================
 
 /**
- * Login Form Values (matches backend validation)
+ * Login Form State
  */
-export interface LoginFormValues {
+export interface LoginFormState {
   email: string;
   password: string;
-  rememberMe?: boolean;
+  rememberMe: boolean;
 }
 
 /**
- * Register Form Values (matches backend validation exactly)
+ * Register Form State
  */
-export interface RegisterFormValues {
+export interface RegisterFormState {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
   firstName: string;
-  lastName?: string;
-  phone?: string;
+  lastName: string;
+  phone: string;
+  organizationId: string;
   role: UserRole;
-  organizationId?: string;
-  primaryShop?: string;
-  department?: UserDepartment;
-  designation?: string;
-  acceptTerms: boolean;
+  primaryShop: string;
+  department: Department;
+  agreeToTerms: boolean;
 }
 
 /**
- * Change Password Form Values (matches backend validation)
+ * Change Password Form State
  */
-export interface ChangePasswordFormValues {
+export interface ChangePasswordFormState {
   currentPassword: string;
   newPassword: string;
   confirmPassword: string;
 }
 
 /**
- * Forgot Password Form Values
+ * Forgot Password Form State
  */
-export interface ForgotPasswordFormValues {
+export interface ForgotPasswordFormState {
   email: string;
 }
 
 /**
- * Reset Password Form Values
+ * Reset Password Form State
  */
-export interface ResetPasswordFormValues {
-  password: string;
+export interface ResetPasswordFormState {
+  newPassword: string;
   confirmPassword: string;
 }
 
 /**
- * Update Profile Form Values (matches backend validation)
+ * Two-Factor Setup Form State
  */
-export interface UpdateProfileFormValues {
-  firstName: string;
-  lastName?: string;
-  phone?: string;
-  designation?: string;
-  profileImage?: string;
-  preferences?: Partial<UserPreferences>;
+export interface TwoFactorSetupFormState {
+  password: string;
+  verificationCode: string;
+}
+
+/**
+ * Two-Factor Login Form State
+ */
+export interface TwoFactorLoginFormState {
+  code: string;
+  useBackupCode: boolean;
 }
 
 // ============================================================================
-// VALIDATION ERROR TYPES
+// VALIDATION TYPES
 // ============================================================================
 
 /**
- * Field Validation Error (matches backend validation response)
+ * Field Error
  */
 export interface FieldError {
   field: string;
   message: string;
+  value?: any;
 }
 
 /**
- * Auth Validation Error Response (matches backend error format)
+ * Validation Result
  */
-export interface AuthValidationError {
-  success: false;
-  statusCode: 400 | 422;
-  message: string;
+export interface ValidationResult {
+  isValid: boolean;
   errors: FieldError[];
-  timestamp: string;
-}
-
-// ============================================================================
-// PERMISSION TYPES
-// ============================================================================
-
-/**
- * Permission string format
- * Example: "sales:create", "inventory:view", "reports:export"
- */
-export type Permission = string;
-
-/**
- * Permission Checker Function Type
- */
-export type PermissionChecker = (permission: Permission | Permission[]) => boolean;
-
-/**
- * Role Permission Map
- */
-export interface RolePermissions {
-  [key: string]: Permission[];
-}
-
-// ============================================================================
-// UTILITY TYPES
-// ============================================================================
-
-/**
- * Check if user has specific role
- */
-export type HasRole = (role: UserRole | UserRole[]) => boolean;
-
-/**
- * Check if user has permission
- */
-export type HasPermission = (permission: Permission | Permission[]) => boolean;
-
-/**
- * Get user's full name
- */
-export type GetFullName = (user: User) => string;
-
-// ============================================================================
-// HELPER FUNCTIONS (Type Guards & Utilities)
-// ============================================================================
-
-/**
- * Check if user is authenticated
- */
-export function isAuthenticated(state: AuthState): state is AuthState & { user: User } {
-  return state.isAuthenticated && state.user !== null;
 }
 
 /**
- * Check if response is login response
+ * Password Strength
  */
-export function isLoginResponse(response: any): response is LoginResponse {
-  return (
-    response &&
-    typeof response === 'object' &&
-    response.user &&
-    response.accessToken &&
-    response.refreshToken
-  );
+export interface PasswordStrength {
+  score: number; // 0-4
+  strength: 'weak' | 'fair' | 'good' | 'strong' | 'very strong';
+  feedback: string[];
+  hasUpperCase: boolean;
+  hasLowerCase: boolean;
+  hasNumber: boolean;
+  hasSpecialChar: boolean;
+  minLength: boolean;
 }
 
-/**
- * Check if error is auth validation error
- */
-export function isAuthValidationError(error: any): error is AuthValidationError {
-  return (
-    error &&
-    error.success === false &&
-    Array.isArray(error.errors) &&
-    error.errors.length > 0
-  );
-}
+// ============================================================================
+// AUTH EVENT TYPES
+// ============================================================================
 
 /**
- * Get user's display name (matches backend virtual fullName)
+ * Auth Event Type
  */
-export function getUserDisplayName(user: User | null): string {
-  if (!user) return 'Guest';
+export type AuthEventType = 
+  | 'login'
+  | 'logout'
+  | 'logout_all'
+  | 'register'
+  | 'password_change'
+  | 'password_reset'
+  | 'email_verify'
+  | 'token_refresh'
+  | '2fa_enable'
+  | '2fa_disable'
+  | 'session_revoke';
+
+/**
+ * Auth Event
+ */
+export interface AuthEvent {
+  type: AuthEventType;
+  userId?: string;
+  timestamp: Date;
+  ipAddress?: string;
+  userAgent?: string;
+  metadata?: Record<string, any>;
+}
+
+// ============================================================================
+// AUTH CONFIGURATION
+// ============================================================================
+
+/**
+ * Auth Configuration
+ */
+export interface AuthConfig {
+  // API Endpoints
+  apiBaseUrl: string;
+  loginEndpoint: string;
+  registerEndpoint: string;
+  logoutEndpoint: string;
+  refreshEndpoint: string;
   
-  if (user.fullName) return user.fullName;
+  // Token Settings
+  tokenKey: string;
+  refreshTokenKey: string;
+  tokenExpiryBuffer: number; // minutes before expiry to refresh
   
-  return user.firstName && user.lastName 
-    ? `${user.firstName} ${user.lastName}`.trim()
-    : user.firstName || user.username;
-}
-
-/**
- * Get user's initials
- */
-export function getUserInitials(user: User | null): string {
-  if (!user) return '?';
+  // Session Settings
+  sessionTimeout: number; // minutes
+  absoluteTimeout: number; // hours
+  inactivityTimeout: number; // minutes
   
-  const first = user.firstName?.[0] || '';
-  const last = user.lastName?.[0] || '';
-  const initials = (first + last).toUpperCase();
+  // Redirect URLs
+  loginRedirect: string;
+  logoutRedirect: string;
+  unauthorizedRedirect: string;
   
-  return initials || user.username?.[0]?.toUpperCase() || '?';
-}
-
-/**
- * Check if user is super admin (matches backend virtual)
- */
-export function isSuperAdmin(user: User | null): boolean {
-  return user?.role === UserRole.SUPER_ADMIN;
-}
-
-/**
- * Check if user is org admin (matches backend virtual)
- */
-export function isOrgAdmin(user: User | null): boolean {
-  return user?.role === UserRole.ORG_ADMIN || user?.role === UserRole.SUPER_ADMIN;
-}
-
-/**
- * Check if user is shop admin
- */
-export function isShopAdmin(user: User | null): boolean {
-  return user?.role === UserRole.SHOP_ADMIN;
-}
-
-/**
- * Check if user has manager role or higher
- */
-export function isManagerOrAbove(user: User | null): boolean {
-  if (!user) return false;
+  // Features
+  enableRememberMe: boolean;
+  enable2FA: boolean;
+  enableEmailVerification: boolean;
   
-  return [
-    UserRole.SUPER_ADMIN,
-    UserRole.ORG_ADMIN,
-    UserRole.SHOP_ADMIN,
-    UserRole.MANAGER,
-  ].includes(user.role);
+  // Security
+  maxLoginAttempts: number;
+  lockoutDuration: number; // minutes
 }
-
-/**
- * Check if user is staff level (lowest privilege)
- */
-export function isStaffLevel(user: User | null): boolean {
-  if (!user) return false;
-  
-  return [
-    UserRole.STAFF,
-    UserRole.ACCOUNTANT,
-    UserRole.VIEWER,
-  ].includes(user.role);
-}
-
-/**
- * Check if user can access shop (has shop access)
- */
-export function canAccessShop(user: User | null, shopId: ID): boolean {
-  if (!user) return false;
-  if (isSuperAdmin(user)) return true; // Super admin has access to all shops
-  if (user.primaryShop === shopId) return true;
-  return false;
-}
-
-/**
- * Get role hierarchy level (for comparison)
- */
-export function getRoleLevel(role: UserRole): number {
-  const levels: Record<UserRole, number> = {
-    [UserRole.SUPER_ADMIN]: 7,
-    [UserRole.ORG_ADMIN]: 6,
-    [UserRole.SHOP_ADMIN]: 5,
-    [UserRole.MANAGER]: 4,
-    [UserRole.STAFF]: 3,
-    [UserRole.ACCOUNTANT]: 2,
-    [UserRole.VIEWER]: 1,
-  };
-  return levels[role] || 0;
-}
-
-/**
- * Check if user has higher or equal role
- */
-export function hasHigherOrEqualRole(user: User | null, role: UserRole): boolean {
-  if (!user) return false;
-  return getRoleLevel(user.role) >= getRoleLevel(role);
-}
-
-// ============================================================================
-// CONSTANTS
-// ============================================================================
-
-/**
- * Role Labels (for UI display)
- */
-export const ROLE_LABELS: Record<UserRole, string> = {
-  [UserRole.SUPER_ADMIN]: 'Super Admin',
-  [UserRole.ORG_ADMIN]: 'Organization Admin',
-  [UserRole.SHOP_ADMIN]: 'Shop Admin',
-  [UserRole.MANAGER]: 'Manager',
-  [UserRole.STAFF]: 'Staff',
-  [UserRole.ACCOUNTANT]: 'Accountant',
-  [UserRole.VIEWER]: 'Viewer',
-};
-
-/**
- * Department Labels (for UI display)
- */
-export const DEPARTMENT_LABELS: Record<UserDepartment, string> = {
-  [UserDepartment.SALES]: 'Sales',
-  [UserDepartment.PURCHASE]: 'Purchase',
-  [UserDepartment.INVENTORY]: 'Inventory',
-  [UserDepartment.ACCOUNTS]: 'Accounts',
-  [UserDepartment.MANAGEMENT]: 'Management',
-  [UserDepartment.WORKSHOP]: 'Workshop',
-  [UserDepartment.QUALITY_CHECK]: 'Quality Check',
-  [UserDepartment.CUSTOMER_SERVICE]: 'Customer Service',
-  [UserDepartment.OTHER]: 'Other',
-};
-
-/**
- * Language Labels (for UI display)
- */
-export const LANGUAGE_LABELS: Record<Language, string> = {
-  [Language.EN]: 'English',
-  [Language.HI]: 'हिन्दी (Hindi)',
-  [Language.MR]: 'मराठी (Marathi)',
-  [Language.GU]: 'ગુજરાતી (Gujarati)',
-  [Language.TA]: 'தமிழ் (Tamil)',
-  [Language.TE]: 'తెలుగు (Telugu)',
-};
-
-/**
- * Role Colors (for badges)
- */
-export const ROLE_COLORS: Record<UserRole, string> = {
-  [UserRole.SUPER_ADMIN]: 'red',
-  [UserRole.ORG_ADMIN]: 'purple',
-  [UserRole.SHOP_ADMIN]: 'blue',
-  [UserRole.MANAGER]: 'green',
-  [UserRole.STAFF]: 'gray',
-  [UserRole.ACCOUNTANT]: 'yellow',
-  [UserRole.VIEWER]: 'gray',
-};
-
-/**
- * Validation Regex (matches backend)
- */
-export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-export const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-export const PHONE_REGEX = /^[0-9]{10}$/;
-export const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,30}$/;
-
-/**
- * Field Length Constraints (matches backend)
- */
-export const USERNAME_MIN_LENGTH = 3;
-export const USERNAME_MAX_LENGTH = 30;
-export const PASSWORD_MIN_LENGTH = 6;
-export const FIRST_NAME_MAX_LENGTH = 50;
-export const LAST_NAME_MAX_LENGTH = 50;
-export const DESIGNATION_MAX_LENGTH = 100;
-
-// ============================================================================
-// EXPORT ALL
-// ============================================================================
-
-export default {
-  // Enums
-  UserRole,
-  UserDepartment,
-  Language,
-  Currency,
-  DateFormat,
-  Theme,
-  
-  // Constants
-  DEFAULT_USER_PREFERENCES,
-  initialAuthState,
-  ROLE_LABELS,
-  DEPARTMENT_LABELS,
-  LANGUAGE_LABELS,
-  ROLE_COLORS,
-  PASSWORD_REGEX,
-  EMAIL_REGEX,
-  PHONE_REGEX,
-  USERNAME_REGEX,
-  USERNAME_MIN_LENGTH,
-  USERNAME_MAX_LENGTH,
-  PASSWORD_MIN_LENGTH,
-  FIRST_NAME_MAX_LENGTH,
-  LAST_NAME_MAX_LENGTH,
-  DESIGNATION_MAX_LENGTH,
-  
-  // Helper Functions
-  isAuthenticated,
-  isLoginResponse,
-  isAuthValidationError,
-  getUserDisplayName,
-  getUserInitials,
-  isSuperAdmin,
-  isOrgAdmin,
-  isShopAdmin,
-  isManagerOrAbove,
-  isStaffLevel,
-  canAccessShop,
-  getRoleLevel,
-  hasHigherOrEqualRole,
-};

@@ -1,14 +1,40 @@
-import { BrowserRouter } from 'react-router-dom'
-// import AppRouter from '@/router/AppRouter'
+// ============================================================================
+// FILE: src/App.tsx
+// Root Application Component
+// ============================================================================
+
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from './store'
+import { getCurrentUserAction } from './store/slices/authSlice'
+import { setTheme } from './store/slices/uiSlice'
+// import AppRouter from './router/AppRouter'
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-gold">
-        <h1>Hiiii</h1>
-        {/* <AppRouter /> */}
-      </div>
-    </BrowserRouter>
+  const dispatch = useAppDispatch()
+  const { isAuthenticated } = useAppSelector((state) => state.auth)
+  const { theme } = useAppSelector((state) => state.ui)
+
+  // ============================================
+  // INITIALIZE APP
+  // ============================================
+  useEffect(() => {
+    // Check if user is already logged in (on app load)
+    if (isAuthenticated) {
+      dispatch(getCurrentUserAction())
+    }
+
+    // Apply saved theme
+    dispatch(setTheme(theme))
+  }, [])
+
+  // ============================================
+  // RENDER
+  // ============================================
+  // return <AppRouter />
+  return(
+    <>
+    <h1>Hello</h1>
+    </>
   )
 }
 
