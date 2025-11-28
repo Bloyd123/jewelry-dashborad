@@ -16,6 +16,8 @@ interface UIState {
   isLoading: boolean;
   loadingMessage: string | null;
   mobileMenuOpen: boolean;
+  accentColor: string;
+  appearance: 'default' | 'compact' | 'comfortable';
 }
 
 // ============================================================================
@@ -37,6 +39,8 @@ const initialState: UIState = {
   isLoading: false,
   loadingMessage: null,
   mobileMenuOpen: false,
+    accentColor: localStorage.getItem('accentColor') || '#D97706', 
+  appearance: (localStorage.getItem('appearance') as any) || 'default',
 };
 
 // ============================================================================
@@ -93,7 +97,15 @@ const uiSlice = createSlice({
         }
       }
     },
-    
+    setAccentColor: (state, action: PayloadAction<string>) => {
+  state.accentColor = action.payload;
+  localStorage.setItem('accentColor', action.payload);
+},
+setAppearance: (state, action: PayloadAction<'default' | 'compact' | 'comfortable'>) => {
+  state.appearance = action.payload;
+  localStorage.setItem('appearance', action.payload);
+},
+
     toggleTheme: (state) => {
       const newTheme = state.theme === 'light' ? 'dark' : 'light';
       state.theme = newTheme;
@@ -149,6 +161,8 @@ export const {
   setLoading,
   setLoadingWithMessage,
   resetUI,
+    setAccentColor,
+  setAppearance,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

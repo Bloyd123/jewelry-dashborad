@@ -16,6 +16,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 import shopReducer from './slices/shopSlice';
+import uiReducer from './slices/uiSlice'; 
 
 // Import reducers
 import authReducer from './slices/authSlice';
@@ -23,6 +24,11 @@ import authReducer from './slices/authSlice';
 // import shopReducer from './slices/shopSlice';
 // import notificationReducer from './slices/notificationSlice';
 // ... other reducers
+const uiPersistConfig = {
+  key: 'ui-preferences',
+  storage,
+  whitelist: ['theme', 'accentColor', 'appearance'],
+};
 
 // ============================================================================
 // ROOT REDUCER
@@ -31,6 +37,7 @@ import authReducer from './slices/authSlice';
 const rootReducer = combineReducers({
   auth: authReducer,
     shop: shopReducer, 
+      ui: persistReducer(uiPersistConfig, uiReducer),
   // user: userReducer,
   // shop: shopReducer,
   // notification: notificationReducer,

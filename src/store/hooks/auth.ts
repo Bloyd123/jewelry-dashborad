@@ -1,29 +1,12 @@
 // ============================================================================
-// FILE: store/hooks.ts
-// Redux Hooks - Typed hooks for TypeScript
+// FILE: store/hooks/auth.ts
+// Auth-specific Redux Hooks
 // ============================================================================
 
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import type { RootState, AppDispatch } from './index';
+import { useAppSelector } from './base';
 
 // ============================================================================
-// TYPED HOOKS
-// ============================================================================
-
-/**
- * Typed useDispatch hook
- * Use throughout your app instead of plain `useDispatch`
- */
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-/**
- * Typed useSelector hook
- * Use throughout your app instead of plain `useSelector`
- */
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
-
-// ============================================================================
-// CONVENIENCE HOOKS
+// AUTH STATE HOOKS
 // ============================================================================
 
 /**
@@ -54,6 +37,7 @@ export const useCurrentShop = () => {
   return useAppSelector((state) => state.auth.currentShop);
 };
 
+
 /**
  * Hook to get permissions
  */
@@ -67,6 +51,10 @@ export const usePermissions = () => {
 export const useShopAccesses = () => {
   return useAppSelector((state) => state.auth.shopAccesses);
 };
+
+// ============================================================================
+// PERMISSION HOOKS
+// ============================================================================
 
 /**
  * Hook to check if user has specific permission
@@ -97,6 +85,10 @@ export const useHasAllPermissions = (permissions: string[]): boolean => {
     return permissions.every((perm) => (state.auth.permissions as any)[perm] === true);
   });
 };
+
+// ============================================================================
+// ROLE HOOKS
+// ============================================================================
 
 /**
  * Hook to check if user has specific role
@@ -129,6 +121,11 @@ export const useIsShopAdmin = (): boolean => {
   return useAppSelector((state) => state.auth.currentShopAccess?.role === 'shop_admin');
 };
 
+
+// ============================================================================
+// LOADING STATE HOOKS
+// ============================================================================
+
 /**
  * Hook to get loading state
  */
@@ -140,6 +137,13 @@ export const useAuthLoading = () => {
   }));
 };
 
+
+
+
+// ============================================================================
+// ERROR HOOKS
+// ============================================================================
+
 /**
  * Hook to get auth error
  */
@@ -147,26 +151,35 @@ export const useAuthError = () => {
   return useAppSelector((state) => state.auth.error);
 };
 
+
 // ============================================================================
 // EXPORTS
 // ============================================================================
 
 export default {
-  useAppDispatch,
-  useAppSelector,
+  // Auth State
   useAuth,
   useIsAuthenticated,
   useCurrentUser,
   useCurrentShop,
   usePermissions,
   useShopAccesses,
+
+  // Permissions
   useHasPermission,
   useHasAnyPermission,
   useHasAllPermissions,
+
+  // Roles
   useHasRole,
   useIsSuperAdmin,
   useIsOrgAdmin,
   useIsShopAdmin,
+
+  // Loading States
   useAuthLoading,
+
+  // Errors
   useAuthError,
+
 };
