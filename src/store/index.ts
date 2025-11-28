@@ -15,6 +15,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
+import shopReducer from './slices/shopSlice';
 
 // Import reducers
 import authReducer from './slices/authSlice';
@@ -29,6 +30,7 @@ import authReducer from './slices/authSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+    shop: shopReducer, 
   // user: userReducer,
   // shop: shopReducer,
   // notification: notificationReducer,
@@ -43,7 +45,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['auth'], // Only persist auth state
+  whitelist: ['auth', 'shop'], // Only persist auth state
   // blacklist: ['notification'], // Don't persist notification state
 };
 

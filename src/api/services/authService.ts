@@ -4,6 +4,7 @@
 // ============================================================================
 
 import { api } from '@/api/axios';
+import { replacePathParams } from '@/utils/api';
 import type {
   ApiResponse,
   LoginRequest,
@@ -175,7 +176,8 @@ export const getActiveSessions = async (): Promise<ApiResponse<GetSessionsRespon
 export const revokeSession = async (
   tokenId: string
 ): Promise<ApiResponse<RevokeSessionResponse['data']>> => {
-  const response = await api.delete(API_ENDPOINTS.AUTH.REVOKE_SESSION(tokenId));
+  const url = replacePathParams(API_ENDPOINTS.AUTH.REVOKE_SESSION, { tokenId });
+  const response = await api.delete(url);
   return response.data;
 };
 

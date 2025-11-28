@@ -1,228 +1,83 @@
-// // ============================================================================
-// // FILE: src/api/services/shopService.ts
-// // Shop API Service
-// // ============================================================================
+// FILE: services/api/shopAPI.ts
 
-// import { api } from '@/api/axios';
-// import { API_ENDPOINTS } from '@/api/endpoints';
-// import { buildQueryString, replacePathParams } from '@/utils/api';
-// import type { 
-//   ApiResponse, 
-//   Shop, 
-//   ShopSettings,
-//   MetalRates,
-//   ShopStatistics,
-//   PaginatedResponse
-// } from '@/types';
+import { api } from '@/api/axios';
+import { replacePathParams } from '@/utils/api';
+import type {
+  ApiResponse,
+  PaginatedResponse,
+  JewelryShop,
+  CreateShopRequest,
+  UpdateShopRequest,
+  UpdateShopSettingsRequest,
+  UpdateMetalRatesRequest,
+  ShopQueryParams,
+} from '@/types';
+import { API_ENDPOINTS } from '@/api/endpoints';
 
-// // ============================================================================
-// // TYPES
-// // ============================================================================
+// Get all shops
+export const getAllShops = async (params?: ShopQueryParams): Promise<PaginatedResponse<JewelryShop>> => {
+  const response = await api.get(API_ENDPOINTS.SHOPS.BASE, { params });
+  return response.data;
+};
 
-// interface CreateShopRequest {
-//   name: string;
-//   displayName?: string;
-//   email?: string;
-//   phone: string;
-//   alternatePhone?: string;
-//   whatsappNumber?: string;
-//   address: {
-//     street: string;
-//     city: string;
-//     state: string;
-//     country?: string;
-//     pincode: string;
-//     location?: {
-//       type: 'Point';
-//       coordinates: [number, number]; // [longitude, latitude]
-//     };
-//   };
-//   gstNumber?: string;
-//   panNumber?: string;
-//   shopType?: 'retail' | 'wholesale' | 'manufacturing' | 'showroom' | 'workshop' | 'warehouse' | 'online';
-//   category?: 'jewelry' | 'gold' | 'silver' | 'diamond' | 'gemstone' | 'pearls' | 'platinum' | 'mixed';
-//   establishedYear?: number;
-//   managerId?: string;
-//   organizationId?: string;
-//   copySettingsFromShopId?: string;
-//   bankDetails?: Array<{
-//     bankName: string;
-//     accountNumber: string;
-//     ifscCode: string;
-//     accountHolderName: string;
-//     accountType?: string;
-//     branchName?: string;
-//     isPrimary?: boolean;
-//   }>;
-//   upiDetails?: Array<{
-//     upiId: string;
-//     provider?: string;
-//     isPrimary?: boolean;
-//   }>;
-// }
+// Get shop by ID
+export const getShopById = async (shopId: string): Promise<ApiResponse<JewelryShop>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
+  const response = await api.get(url);
+  return response.data;
+};
 
-// interface UpdateShopRequest extends Partial<CreateShopRequest> {}
+// Create shop
+export const createShop = async (data: CreateShopRequest): Promise<ApiResponse<JewelryShop>> => {
+  const response = await api.post(API_ENDPOINTS.SHOPS.BASE, data);
+  return response.data;
+};
 
-// interface GetShopsParams {
-//   page?: number;
-//   limit?: number;
-//   sort?: string;
-//   fields?: string;
-//   search?: string;
-//   isActive?: boolean;
-//   isVerified?: boolean;
-//   shopType?: string;
-//   category?: string;
-//   city?: string;
-//   state?: string;
-//   organizationId?: string;
-// }
+// Update shop
+export const updateShop = async (shopId: string, data: UpdateShopRequest): Promise<ApiResponse<JewelryShop>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
+  const response = await api.put(url, data);
+  return response.data;
+};
 
-// // ============================================================================
-// // SHOP SERVICE
-// // ============================================================================
+// Update shop settings
+export const updateShopSettings = async (shopId: string, data: UpdateShopSettingsRequest): Promise<ApiResponse<JewelryShop>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.SETTINGS, { id: shopId });
+  const response = await api.patch(url, data);
+  return response.data;
+};
 
-// class ShopService {
-//   /**
-//    * Create a new shop
-//    */
-//   async create(shopData: CreateShopRequest): Promise<ApiResponse<Shop>> {
-//     const response = await api.post<ApiResponse<Shop>>(
-//       API_ENDPOINTS.SHOPS.BASE,
-//       shopData
-//     );
-//     return response.data;
-//   }
+// Update metal rates
 
-//   /**
-//    * Get all shops with filtering and pagination
-//    */
-//   async getAll(params?: GetShopsParams): Promise<ApiResponse<PaginatedResponse<Shop>>> {
-//     const queryString = params ? buildQueryString(params) : '';
-//     const response = await api.get<ApiResponse<PaginatedResponse<Shop>>>(
-//       `${API_ENDPOINTS.SHOPS.BASE}${queryString}`
-//     );
-//     return response.data;
-//   }
+export const updateMetalRates = async (shopId: string, data: UpdateMetalRatesRequest): Promise<ApiResponse<JewelryShop>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.METAL_RATES, { id: shopId });
+  const response = await api.patch(url, data);
+  return response.data;
+};
 
-//   /**
-//    * Get single shop by ID
-//    */
-//   async getById(shopId: string, includeSettings = false): Promise<ApiResponse<Shop>> {
-//     const queryString = buildQueryString({ includeSettings });
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
-//     const response = await api.get<ApiResponse<Shop>>(
-//       `${url}${queryString}`
-//     );
-//     return response.data;
-//   }
+// Delete shop
+export const deleteShop = async (shopId: string): Promise<ApiResponse<void>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
+  const response = await api.delete(url);
+  return response.data;
+};
 
-//   /**
-//    * Update shop details
-//    */
-//   async update(shopId: string, updateData: UpdateShopRequest): Promise<ApiResponse<Shop>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
-//     const response = await api.put<ApiResponse<Shop>>(
-//       url,
-//       updateData
-//     );
-//     return response.data;
-//   }
+// Get shop statistics
 
-//   /**
-//    * Delete shop (soft delete)
-//    */
-//   async delete(shopId: string): Promise<ApiResponse<{ success: boolean; message: string }>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.BY_ID, { id: shopId });
-//     const response = await api.delete<ApiResponse<{ success: boolean; message: string }>>(
-//       url
-//     );
-//     return response.data;
-//   }
+export const getShopStatistics = async (shopId: string): Promise<ApiResponse<any>> => {
+  const url = replacePathParams(API_ENDPOINTS.SHOPS.STATISTICS, { id: shopId });
+  const response = await api.get(url);
+  return response.data;
 
-//   /**
-//    * Update shop settings
-//    */
-//   async updateSettings(shopId: string, settings: Partial<ShopSettings>): Promise<ApiResponse<Shop>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.SETTINGS, { id: shopId });
-//     const response = await api.patch<ApiResponse<Shop>>(
-//       url,
-//       { settings }
-//     );
-//     return response.data;
-//   }
+};
 
-//   /**
-//    * Update metal rates
-//    */
-//   async updateMetalRates(shopId: string, rates: MetalRates): Promise<ApiResponse<Shop>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.METAL_RATES, { id: shopId });
-//     const response = await api.patch<ApiResponse<Shop>>(
-//       url,
-//       rates
-//     );
-//     return response.data;
-//   }
-
-//   /**
-//    * Get shop statistics
-//    */
-//   async getStatistics(shopId: string): Promise<ApiResponse<ShopStatistics>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.STATISTICS, { id: shopId });
-//     const response = await api.get<ApiResponse<ShopStatistics>>(
-//       url
-//     );
-//     return response.data;
-//   }
-
-//   /**
-//    * Get shops for dropdown/select (simplified response)
-//    */
-//   async getShopsForDropdown(): Promise<ApiResponse<Array<{ _id: string; name: string; code: string }>>> {
-//     const response = await api.get<ApiResponse<PaginatedResponse<Shop>>>(
-//       `${API_ENDPOINTS.SHOPS.BASE}?fields=name,code&limit=100`
-//     );
-    
-//     // Transform to simplified format
-//     const shops = response.data.data.map(shop => ({
-//       _id: shop._id,
-//       name: shop.name,
-//       code: shop.code
-//     }));
-    
-//     return {
-//       ...response.data,
-//       data: shops
-//     };
-//   }
-
-//   /**
-//    * Transfer inventory between shops
-//    */
-//   async transferInventory(
-//     shopId: string,
-//     transferData: {
-//       toShopId: string;
-//       items: Array<{
-//         productId: string;
-//         quantity: number;
-//         notes?: string;
-//       }>;
-//       notes?: string;
-//     }
-//   ): Promise<ApiResponse<any>> {
-//     const url = replacePathParams(API_ENDPOINTS.SHOPS.TRANSFER_INVENTORY, { id: shopId });
-//     const response = await api.post<ApiResponse<any>>(
-//       url,
-//       transferData
-//     );
-//     return response.data;
-//   }
-// }
-
-// // ============================================================================
-// // EXPORT SINGLETON INSTANCE
-// // ============================================================================
-
-// export const shopService = new ShopService();
-// export default shopService;
+export default {
+  getAllShops,
+  getShopById,
+  createShop,
+  updateShop,
+  updateShopSettings,
+  updateMetalRates,
+  deleteShop,
+  getShopStatistics,
+};
