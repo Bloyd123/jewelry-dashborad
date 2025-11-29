@@ -22,7 +22,7 @@ import uiReducer from './slices/uiSlice';
 import authReducer from './slices/authSlice';
 // import userReducer from './slices/userSlice';
 // import shopReducer from './slices/shopSlice';
-// import notificationReducer from './slices/notificationSlice';
+import notificationReducer from './slices/notificationSlice';
 // ... other reducers
 const uiPersistConfig = {
   key: 'ui-preferences',
@@ -40,7 +40,7 @@ const rootReducer = combineReducers({
       ui: persistReducer(uiPersistConfig, uiReducer),
   // user: userReducer,
   // shop: shopReducer,
-  // notification: notificationReducer,
+  notification: notificationReducer,
   // ... other reducers
 });
 
@@ -53,7 +53,7 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ['auth', 'shop'], // Only persist auth state
-  // blacklist: ['notification'], // Don't persist notification state
+  blacklist: ['notification'], // Don't persist notification state
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

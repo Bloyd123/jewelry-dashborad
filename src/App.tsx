@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { initializeAuth } from './store/slices/authSlice';
 import { setTheme } from './store/slices/uiSlice';
+import { NotificationProvider } from './context/NotificationContext';
+import ToastContainer from './components/common/ToastContainer';
 
 // // Layouts
 // import MainLayout from './layouts/MainLayout';
@@ -80,6 +82,7 @@ function App() {
   // Render Routes
   // ========================================
   return (
+    
     // <BrowserRouter>
     //   <Routes>
     //     {/* ========================================
@@ -148,7 +151,10 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
     <>
-    <h1>Hello</h1>
+       <NotificationProvider>
+          <h1>Hello</h1>
+          <ToastContainer />
+       </NotificationProvider>
     </>
   );
 }
