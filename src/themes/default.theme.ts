@@ -3,86 +3,86 @@
 // Default Theme Configuration
 // ============================================================================
 
-import { colors } from './colors';
+import { colors } from './colors'
 
 export interface Theme {
-  mode: 'light' | 'dark';
+  mode: 'light' | 'dark'
   colors: {
     // Backgrounds
     background: {
-      primary: string;
-      secondary: string;
-      tertiary: string;
-    };
+      primary: string
+      secondary: string
+      tertiary: string
+    }
     // Text
     text: {
-      primary: string;
-      secondary: string;
-      tertiary: string;
-      accent: string;
-    };
+      primary: string
+      secondary: string
+      tertiary: string
+      accent: string
+    }
     // Borders
     border: {
-      primary: string;
-      secondary: string;
-    };
+      primary: string
+      secondary: string
+    }
     // Status
     status: {
-      success: string;
-      warning: string;
-      error: string;
-      info: string;
-    };
+      success: string
+      warning: string
+      error: string
+      info: string
+    }
     // Primary/Accent
-    primary: string;
-    accent: string;
-  };
+    primary: string
+    accent: string
+  }
   // Spacing (based on appearance mode)
   spacing: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
+    xs: string
+    sm: string
+    md: string
+    lg: string
+    xl: string
+  }
   // Border Radius
   borderRadius: {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    full: string;
-  };
+    sm: string
+    md: string
+    lg: string
+    xl: string
+    full: string
+  }
   // Shadows
   shadows: {
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
+    sm: string
+    md: string
+    lg: string
+    xl: string
+  }
   // Typography
   typography: {
     fontFamily: {
-      sans: string;
-      mono: string;
-    };
+      sans: string
+      mono: string
+    }
     fontSize: {
-      xs: string;
-      sm: string;
-      base: string;
-      lg: string;
-      xl: string;
-      '2xl': string;
-      '3xl': string;
-      '4xl': string;
-    };
+      xs: string
+      sm: string
+      base: string
+      lg: string
+      xl: string
+      '2xl': string
+      '3xl': string
+      '4xl': string
+    }
     fontWeight: {
-      normal: number;
-      medium: number;
-      semibold: number;
-      bold: number;
-    };
-  };
+      normal: number
+      medium: number
+      semibold: number
+      bold: number
+    }
+  }
 }
 
 // Light Theme
@@ -155,7 +155,7 @@ export const lightTheme: Theme = {
       bold: 700,
     },
   },
-};
+}
 
 // Dark Theme
 export const darkTheme: Theme = {
@@ -192,15 +192,15 @@ export const darkTheme: Theme = {
     lg: '0 10px 15px -3px rgba(0, 0, 0, 0.5)',
     xl: '0 20px 25px -5px rgba(0, 0, 0, 0.6)',
   },
-};
+}
 
 // Helper to get theme based on mode
 export const getTheme = (mode: 'light' | 'dark'): Theme => {
-  return mode === 'dark' ? darkTheme : lightTheme;
-};
+  return mode === 'dark' ? darkTheme : lightTheme
+}
 
 export default {
   light: lightTheme,
   dark: darkTheme,
   getTheme,
-};
+}

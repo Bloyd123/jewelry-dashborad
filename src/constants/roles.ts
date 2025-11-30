@@ -29,7 +29,7 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   [UserRole.STAFF]: 'Staff',
   [UserRole.ACCOUNTANT]: 'Accountant',
   [UserRole.VIEWER]: 'Viewer',
-};
+}
 
 /**
  * 🎯 ROLE DESCRIPTIONS
@@ -43,7 +43,7 @@ export const ROLE_DESCRIPTIONS: Record<UserRole, string> = {
   [UserRole.STAFF]: 'POS operations and customer service',
   [UserRole.ACCOUNTANT]: 'Financial reports and billing management',
   [UserRole.VIEWER]: 'Read-only access to view data',
-};
+}
 
 /**
  * 🎯 ROLE HIERARCHY
@@ -58,7 +58,7 @@ export const ROLE_HIERARCHY: Record<UserRole, number> = {
   [UserRole.ACCOUNTANT]: 30,
   [UserRole.STAFF]: 20,
   [UserRole.VIEWER]: 10,
-};
+}
 
 /**
  * 🎯 ROLES THAT CAN CREATE OTHER ROLES
@@ -91,7 +91,7 @@ export const ROLE_CREATION_MATRIX: Record<UserRole, UserRole[]> = {
   [UserRole.ACCOUNTANT]: [],
   [UserRole.STAFF]: [],
   [UserRole.VIEWER]: [],
-};
+}
 
 /**
  * 🎯 ADMIN ROLES (for quick checks)
@@ -100,7 +100,7 @@ export const ADMIN_ROLES = [
   UserRole.SUPER_ADMIN,
   UserRole.ORG_ADMIN,
   UserRole.SHOP_ADMIN,
-];
+]
 
 /**
  * 🎯 OPERATIONAL ROLES (day-to-day business)
@@ -109,7 +109,7 @@ export const OPERATIONAL_ROLES = [
   UserRole.MANAGER,
   UserRole.STAFF,
   UserRole.ACCOUNTANT,
-];
+]
 
 /**
  * 🎯 SHOP-LEVEL ROLES (need shop assignment)
@@ -120,7 +120,7 @@ export const SHOP_LEVEL_ROLES = [
   UserRole.STAFF,
   UserRole.ACCOUNTANT,
   UserRole.VIEWER,
-];
+]
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -132,8 +132,8 @@ export const SHOP_LEVEL_ROLES = [
  * @returns boolean
  */
 export const isAdmin = (role: UserRole): boolean => {
-  return ADMIN_ROLES.includes(role);
-};
+  return ADMIN_ROLES.includes(role)
+}
 
 /**
  * Check if user is super admin
@@ -141,8 +141,8 @@ export const isAdmin = (role: UserRole): boolean => {
  * @returns boolean
  */
 export const isSuperAdmin = (role: UserRole): boolean => {
-  return role === UserRole.SUPER_ADMIN;
-};
+  return role === UserRole.SUPER_ADMIN
+}
 
 /**
  * Check if user is organization admin
@@ -150,8 +150,8 @@ export const isSuperAdmin = (role: UserRole): boolean => {
  * @returns boolean
  */
 export const isOrgAdmin = (role: UserRole): boolean => {
-  return role === UserRole.ORG_ADMIN;
-};
+  return role === UserRole.ORG_ADMIN
+}
 
 /**
  * Check if user is shop admin
@@ -159,8 +159,8 @@ export const isOrgAdmin = (role: UserRole): boolean => {
  * @returns boolean
  */
 export const isShopAdmin = (role: UserRole): boolean => {
-  return role === UserRole.SHOP_ADMIN;
-};
+  return role === UserRole.SHOP_ADMIN
+}
 
 /**
  * Check if user has specific role
@@ -168,9 +168,12 @@ export const isShopAdmin = (role: UserRole): boolean => {
  * @param requiredRole - Role to check against
  * @returns boolean
  */
-export const hasRole = (userRole: UserRole, requiredRole: UserRole): boolean => {
-  return userRole === requiredRole;
-};
+export const hasRole = (
+  userRole: UserRole,
+  requiredRole: UserRole
+): boolean => {
+  return userRole === requiredRole
+}
 
 /**
  * Check if user has any of the specified roles
@@ -182,8 +185,8 @@ export const hasAnyRole = (
   userRole: UserRole,
   allowedRoles: UserRole[]
 ): boolean => {
-  return allowedRoles.includes(userRole);
-};
+  return allowedRoles.includes(userRole)
+}
 
 /**
  * Check if user's role is higher than another role
@@ -196,8 +199,8 @@ export const isRoleHigher = (
   userRole: UserRole,
   targetRole: UserRole
 ): boolean => {
-  return ROLE_HIERARCHY[userRole] > ROLE_HIERARCHY[targetRole];
-};
+  return ROLE_HIERARCHY[userRole] > ROLE_HIERARCHY[targetRole]
+}
 
 /**
  * Check if user can create another role
@@ -209,8 +212,8 @@ export const canCreateRole = (
   userRole: UserRole,
   targetRole: UserRole
 ): boolean => {
-  return ROLE_CREATION_MATRIX[userRole]?.includes(targetRole) || false;
-};
+  return ROLE_CREATION_MATRIX[userRole]?.includes(targetRole) || false
+}
 
 /**
  * Get roles that a user can create
@@ -218,8 +221,8 @@ export const canCreateRole = (
  * @returns Array of roles
  */
 export const getAllowedRolesToCreate = (userRole: UserRole): UserRole[] => {
-  return ROLE_CREATION_MATRIX[userRole] || [];
-};
+  return ROLE_CREATION_MATRIX[userRole] || []
+}
 
 /**
  * Check if role requires shop assignment
@@ -227,8 +230,8 @@ export const getAllowedRolesToCreate = (userRole: UserRole): UserRole[] => {
  * @returns boolean
  */
 export const requiresShopAssignment = (role: UserRole): boolean => {
-  return SHOP_LEVEL_ROLES.includes(role);
-};
+  return SHOP_LEVEL_ROLES.includes(role)
+}
 
 /**
  * Get role label for display
@@ -236,8 +239,8 @@ export const requiresShopAssignment = (role: UserRole): boolean => {
  * @returns string
  */
 export const getRoleLabel = (role: UserRole): string => {
-  return ROLE_LABELS[role] || 'Unknown Role';
-};
+  return ROLE_LABELS[role] || 'Unknown Role'
+}
 
 /**
  * Get role description
@@ -245,8 +248,8 @@ export const getRoleLabel = (role: UserRole): string => {
  * @returns string
  */
 export const getRoleDescription = (role: UserRole): string => {
-  return ROLE_DESCRIPTIONS[role] || '';
-};
+  return ROLE_DESCRIPTIONS[role] || ''
+}
 
 /**
  * Get role badge color (for UI)
@@ -262,10 +265,10 @@ export const getRoleBadgeColor = (role: UserRole): string => {
     [UserRole.ACCOUNTANT]: 'bg-yellow-100 text-yellow-800 border-yellow-200',
     [UserRole.STAFF]: 'bg-gray-100 text-gray-800 border-gray-200',
     [UserRole.VIEWER]: 'bg-slate-100 text-slate-800 border-slate-200',
-  };
+  }
 
-  return colorMap[role] || 'bg-gray-100 text-gray-800 border-gray-200';
-};
+  return colorMap[role] || 'bg-gray-100 text-gray-800 border-gray-200'
+}
 
 /**
  * Convert role string to UserRole enum (with validation)
@@ -273,34 +276,34 @@ export const getRoleBadgeColor = (role: UserRole): string => {
  * @returns UserRole or null
  */
 export const parseRole = (roleString: string): UserRole | null => {
-  const normalizedRole = roleString.toLowerCase();
-  const roleValues = Object.values(UserRole);
+  const normalizedRole = roleString.toLowerCase()
+  const roleValues = Object.values(UserRole)
 
   if (roleValues.includes(normalizedRole as UserRole)) {
-    return normalizedRole as UserRole;
+    return normalizedRole as UserRole
   }
 
-  return null;
-};
+  return null
+}
 
 /**
  * Get all roles as array (for dropdowns)
  * @returns Array of roles
  */
 export const getAllRoles = (): UserRole[] => {
-  return Object.values(UserRole);
-};
+  return Object.values(UserRole)
+}
 
 /**
  * Get all roles with labels (for select options)
  * @returns Array of {value, label}
  */
 export const getRoleOptions = () => {
-  return getAllRoles().map((role) => ({
+  return getAllRoles().map(role => ({
     value: role,
     label: ROLE_LABELS[role],
-  }));
-};
+  }))
+}
 
 /**
  * Get allowed role options for a user (for user creation form)
@@ -308,13 +311,13 @@ export const getRoleOptions = () => {
  * @returns Array of {value, label}
  */
 export const getAllowedRoleOptions = (userRole: UserRole) => {
-  const allowedRoles = getAllowedRolesToCreate(userRole);
-  return allowedRoles.map((role) => ({
+  const allowedRoles = getAllowedRolesToCreate(userRole)
+  return allowedRoles.map(role => ({
     value: role,
     label: ROLE_LABELS[role],
     description: ROLE_DESCRIPTIONS[role],
-  }));
-};
+  }))
+}
 
 /**
  * Validate if role is valid
@@ -322,8 +325,8 @@ export const getAllowedRoleOptions = (userRole: UserRole) => {
  * @returns boolean
  */
 export const isValidRole = (role: string): boolean => {
-  return getAllRoles().includes(role as UserRole);
-};
+  return getAllRoles().includes(role as UserRole)
+}
 
 // ============================================================================
 // EXPORTS
@@ -338,7 +341,7 @@ export default {
   ADMIN_ROLES,
   OPERATIONAL_ROLES,
   SHOP_LEVEL_ROLES,
-  
+
   // Helper functions
   isAdmin,
   isSuperAdmin,
@@ -358,4 +361,4 @@ export default {
   getRoleOptions,
   getAllowedRoleOptions,
   isValidRole,
-};
+}

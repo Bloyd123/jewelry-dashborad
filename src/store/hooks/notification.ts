@@ -3,8 +3,10 @@
 // Custom Hooks for Notifications
 // ============================================================================
 
-import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
+import { useCallback } from 'react'
+
+import { useDispatch } from 'react-redux'
+
 import {
   showNotification,
   showInfoNotification,
@@ -14,60 +16,61 @@ import {
   hideNotification,
   clearAllNotifications,
   type ShowNotificationPayload,
-} from '../slices/notificationSlice';
-import type { AppDispatch } from '../index';
+} from '../slices/notificationSlice'
+
+import type { AppDispatch } from '../index'
 
 /**
  * Custom hook for notification actions
  */
 export const useNotification = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
 
   const notify = useCallback(
     (payload: ShowNotificationPayload) => {
-      dispatch(showNotification(payload));
+      dispatch(showNotification(payload))
     },
     [dispatch]
-  );
+  )
 
   const notifyInfo = useCallback(
     (message: string, title?: string) => {
-      dispatch(showInfoNotification({ message, title }));
+      dispatch(showInfoNotification({ message, title }))
     },
     [dispatch]
-  );
+  )
 
   const notifySuccess = useCallback(
     (message: string, title?: string) => {
-      dispatch(showSuccessNotification({ message, title }));
+      dispatch(showSuccessNotification({ message, title }))
     },
     [dispatch]
-  );
+  )
 
   const notifyWarning = useCallback(
     (message: string, title?: string) => {
-      dispatch(showWarningNotification({ message, title }));
+      dispatch(showWarningNotification({ message, title }))
     },
     [dispatch]
-  );
+  )
 
   const notifyError = useCallback(
     (message: string, title?: string) => {
-      dispatch(showErrorNotification({ message, title }));
+      dispatch(showErrorNotification({ message, title }))
     },
     [dispatch]
-  );
+  )
 
   const dismiss = useCallback(
     (id: string) => {
-      dispatch(hideNotification(id));
+      dispatch(hideNotification(id))
     },
     [dispatch]
-  );
+  )
 
   const dismissAll = useCallback(() => {
-    dispatch(clearAllNotifications());
-  }, [dispatch]);
+    dispatch(clearAllNotifications())
+  }, [dispatch])
 
   return {
     notify,
@@ -77,5 +80,5 @@ export const useNotification = () => {
     notifyError,
     dismiss,
     dismissAll,
-  };
-};
+  }
+}

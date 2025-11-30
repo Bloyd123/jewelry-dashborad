@@ -3,12 +3,16 @@
 // Export all API utility functions
 // ============================================================================
 
-export { buildQueryString } from './buildQueryString';
-export { replacePathParams } from './replacePathParams';
-export { checkAxiosConfig } from './checkAxiosConfig';
+export { buildQueryString } from './buildQueryString'
+export { replacePathParams } from './replacePathParams'
+export { checkAxiosConfig } from './checkAxiosConfig'
+
+import { buildQueryString } from './buildQueryString'
+import { checkAxiosConfig } from './checkAxiosConfig'
+import { replacePathParams } from './replacePathParams'
 
 export default {
-  buildQueryString: require('./buildQueryString').buildQueryString,
-  replacePathParams: require('./replacePathParams').replacePathParams,
-  checkAxiosConfig: require('./checkAxiosConfig').checkAxiosConfig,
-};
+  buildQueryString,
+  replacePathParams,
+  checkAxiosConfig,
+}

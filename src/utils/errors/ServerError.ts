@@ -3,25 +3,25 @@
 // Server error class
 // ============================================================================
 
-import { ApiError } from './ApiError';
+import { ApiError } from './ApiError'
 
 /**
  * Server Error class
  * For 500 Internal Server Error and 503 Service Unavailable
  */
 export class ServerError extends ApiError {
-  public readonly isServerError = true;
+  public readonly isServerError = true
 
   constructor(
     message: string = 'Internal server error. Please try again later.',
     statusCode: number = 500,
     errors?: any[]
   ) {
-    super(message, statusCode, errors);
-    this.name = 'ServerError';
+    super(message, statusCode, errors)
+    this.name = 'ServerError'
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ServerError);
+      Error.captureStackTrace(this, ServerError)
     }
   }
 
@@ -34,8 +34,8 @@ export class ServerError extends ApiError {
       (error.isServerError === true ||
         error.statusCode === 500 ||
         error.statusCode === 503)
-    );
+    )
   }
 }
 
-export default ServerError;
+export default ServerError

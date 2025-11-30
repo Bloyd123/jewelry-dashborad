@@ -3,14 +3,16 @@
 // Main Application Component
 // ============================================================================
 
-import { useEffect } from 'react';
-// import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { initializeAuth } from './store/slices/authSlice';
-import { setTheme } from './store/slices/uiSlice';
-import { NotificationProvider } from './context/NotificationContext';
-import ToastContainer from './components/common/ToastContainer';
+import { useEffect } from 'react'
 
+import { BrowserRouter } from 'react-router-dom'
+
+import LoginPage from './components/auth/login'
+import ToastContainer from './components/common/ToastContainer'
+import { NotificationProvider } from './context/NotificationContext'
+import { useAppDispatch, useAppSelector } from './store/hooks'
+import { initializeAuth } from './store/slices/authSlice'
+import { setTheme } from './store/slices/uiSlice'
 // // Layouts
 // import MainLayout from './layouts/MainLayout';
 // import AuthLayout from './layouts/AuthLayout';
@@ -41,35 +43,35 @@ import ToastContainer from './components/common/ToastContainer';
 // ============================================================================
 
 function App() {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   // const { isInitializing, isAuthenticated } = useAppSelector((state) => state.auth);
-  const { theme } = useAppSelector((state) => state.ui);
+  const { theme } = useAppSelector(state => state.ui)
 
   // ========================================
   // Initialize App
   // ========================================
   useEffect(() => {
     // Initialize authentication state
-    dispatch(initializeAuth());
+    dispatch(initializeAuth())
 
     // Apply theme
-    dispatch(setTheme(theme));
+    dispatch(setTheme(theme))
 
     // Handle system theme changes in auto mode
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const handleThemeChange = (e: MediaQueryListEvent) => {
       if (theme === 'auto') {
         if (e.matches) {
-          document.documentElement.classList.add('dark');
+          document.documentElement.classList.add('dark')
         } else {
-          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.remove('dark')
         }
       }
-    };
+    }
 
-    mediaQuery.addEventListener('change', handleThemeChange);
-    return () => mediaQuery.removeEventListener('change', handleThemeChange);
-  }, [dispatch, theme]);
+    mediaQuery.addEventListener('change', handleThemeChange)
+    return () => mediaQuery.removeEventListener('change', handleThemeChange)
+  }, [dispatch, theme])
 
   // ========================================
   // Show Loading Screen During Initialization
@@ -82,7 +84,6 @@ function App() {
   // Render Routes
   // ========================================
   return (
-    
     // <BrowserRouter>
     //   <Routes>
     //     {/* ========================================
@@ -151,12 +152,14 @@ function App() {
     //   </Routes>
     // </BrowserRouter>
     <>
-       <NotificationProvider>
-          <h1>Hello</h1>
+      <BrowserRouter>
+        <NotificationProvider>
+          <LoginPage />
           <ToastContainer />
-       </NotificationProvider>
+        </NotificationProvider>
+      </BrowserRouter>
     </>
-  );
+  )
 }
 
-export default App;
+export default App

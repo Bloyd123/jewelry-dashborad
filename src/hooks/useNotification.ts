@@ -1,8 +1,9 @@
-import { useCallback } from 'react';
-import { useNotificationContext } from '../context/NotificationContext';
+import { useCallback } from 'react'
+
+import { useNotificationContext } from '../context/NotificationContext'
 
 export const useNotification = () => {
-  const { addNotification, removeNotification } = useNotificationContext();
+  const { addNotification, removeNotification } = useNotificationContext()
 
   const showSuccess = useCallback(
     (message: string, title?: string, duration?: number) => {
@@ -11,10 +12,10 @@ export const useNotification = () => {
         title,
         variant: 'success',
         duration,
-      });
+      })
     },
     [addNotification]
-  );
+  )
 
   const showError = useCallback(
     (message: string, title?: string, duration?: number) => {
@@ -23,10 +24,10 @@ export const useNotification = () => {
         title,
         variant: 'error',
         duration,
-      });
+      })
     },
     [addNotification]
-  );
+  )
 
   const showWarning = useCallback(
     (message: string, title?: string, duration?: number) => {
@@ -35,10 +36,10 @@ export const useNotification = () => {
         title,
         variant: 'warning',
         duration,
-      });
+      })
     },
     [addNotification]
-  );
+  )
 
   const showInfo = useCallback(
     (message: string, title?: string, duration?: number) => {
@@ -47,17 +48,17 @@ export const useNotification = () => {
         title,
         variant: 'info',
         duration,
-      });
+      })
     },
     [addNotification]
-  );
+  )
 
   const dismiss = useCallback(
     (id: string) => {
-      removeNotification(id);
+      removeNotification(id)
     },
     [removeNotification]
-  );
+  )
 
   return {
     showSuccess,
@@ -65,5 +66,5 @@ export const useNotification = () => {
     showWarning,
     showInfo,
     dismiss,
-  };
-};
+  }
+}

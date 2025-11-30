@@ -4,7 +4,7 @@
 // ============================================================================
 
 // Re-export base hooks
-export { useAppDispatch, useAppSelector } from './base';
+export { useAppDispatch, useAppSelector } from './base'
 
 // Re-export all auth hooks
 export {
@@ -23,7 +23,7 @@ export {
   useIsShopAdmin,
   useAuthLoading,
   useAuthError,
-} from './auth.ts';
+} from './auth.ts'
 
 // Re-export all shop hooks
 export {
@@ -60,4 +60,4 @@ export {
   useShopsSummary,
   useShopsData,
   useShopData,
-} from './shop.ts';
+} from './shop.ts'

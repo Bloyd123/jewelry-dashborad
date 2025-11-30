@@ -11,20 +11,20 @@
 export const buildQueryString = (params: Record<string, any>): string => {
   const filtered = Object.entries(params).filter(
     ([_, value]) => value !== undefined && value !== null
-  );
-  
-  if (filtered.length === 0) return '';
-  
-  const searchParams = new URLSearchParams();
+  )
+
+  if (filtered.length === 0) return ''
+
+  const searchParams = new URLSearchParams()
   filtered.forEach(([key, value]) => {
     if (Array.isArray(value)) {
-      value.forEach(v => searchParams.append(key, String(v)));
+      value.forEach(v => searchParams.append(key, String(v)))
     } else {
-      searchParams.append(key, String(value));
+      searchParams.append(key, String(value))
     }
-  });
-  
-  return `?${searchParams.toString()}`;
-};
+  })
 
-export default buildQueryString;
+  return `?${searchParams.toString()}`
+}
+
+export default buildQueryString

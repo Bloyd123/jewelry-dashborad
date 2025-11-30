@@ -3,8 +3,9 @@
 // Dark Theme Specific Overrides
 // ============================================================================
 
-import { darkTheme } from './default.theme';
-import type { Theme } from './default.theme';
+import { darkTheme } from './default.theme'
+
+import type { Theme } from './default.theme'
 
 // You can create custom dark theme variations here
 export const darkThemeCustom: Theme = {
@@ -19,6 +20,6 @@ export const darkThemeCustom: Theme = {
       tertiary: '#1F2937',
     },
   },
-};
+}
 
-export default darkThemeCustom;
+export default darkThemeCustom

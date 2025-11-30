@@ -3,7 +3,7 @@
 // Notification State Management - Redux Toolkit Slice
 // ============================================================================
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // ============================================================================
 // TYPES
@@ -12,67 +12,63 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 /**
  * Notification Type
  */
-export type NotificationVariant = 
-  | 'info' 
-  | 'success' 
-  | 'warning' 
-  | 'error';
+export type NotificationVariant = 'info' | 'success' | 'warning' | 'error'
 
 /**
  * Notification Position
  */
-export type NotificationPosition = 
-  | 'top-left' 
-  | 'top-center' 
-  | 'top-right' 
-  | 'bottom-left' 
-  | 'bottom-center' 
-  | 'bottom-right';
+export type NotificationPosition =
+  | 'top-left'
+  | 'top-center'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-center'
+  | 'bottom-right'
 
 /**
  * Notification Item
  */
 export interface NotificationItem {
-  id: string;
-  variant: NotificationVariant;
-  title?: string;
-  message: string;
-  duration?: number; // milliseconds, 0 = infinite
-  position?: NotificationPosition;
-  dismissible?: boolean;
+  id: string
+  variant: NotificationVariant
+  title?: string
+  message: string
+  duration?: number // milliseconds, 0 = infinite
+  position?: NotificationPosition
+  dismissible?: boolean
   action?: {
-    label: string;
-    onClick: () => void;
-  };
-  icon?: string;
-  timestamp: number;
+    label: string
+    onClick: () => void
+  }
+  icon?: string
+  timestamp: number
 }
 
 /**
  * Notification State
  */
 export interface NotificationState {
-  notifications: NotificationItem[];
-  defaultDuration: number;
-  defaultPosition: NotificationPosition;
-  maxNotifications: number;
+  notifications: NotificationItem[]
+  defaultDuration: number
+  defaultPosition: NotificationPosition
+  maxNotifications: number
 }
 
 /**
  * Show Notification Payload
  */
 export interface ShowNotificationPayload {
-  variant?: NotificationVariant;
-  title?: string;
-  message: string;
-  duration?: number;
-  position?: NotificationPosition;
-  dismissible?: boolean;
+  variant?: NotificationVariant
+  title?: string
+  message: string
+  duration?: number
+  position?: NotificationPosition
+  dismissible?: boolean
   action?: {
-    label: string;
-    onClick: () => void;
-  };
-  icon?: string;
+    label: string
+    onClick: () => void
+  }
+  icon?: string
 }
 
 // ============================================================================
@@ -84,7 +80,7 @@ const initialState: NotificationState = {
   defaultDuration: 5000, // 5 seconds
   defaultPosition: 'top-right',
   maxNotifications: 5, // Maximum simultaneous notifications
-};
+}
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -94,8 +90,8 @@ const initialState: NotificationState = {
  * Generate unique notification ID
  */
 const generateNotificationId = (): string => {
-  return `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-};
+  return `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+}
 
 /**
  * Get notification icon based on variant
@@ -106,9 +102,9 @@ const getDefaultIcon = (variant: NotificationVariant): string => {
     success: '✅',
     warning: '⚠️',
     error: '❌',
-  };
-  return iconMap[variant] || 'ℹ️';
-};
+  }
+  return iconMap[variant] || 'ℹ️'
+}
 
 // ============================================================================
 // SLICE
@@ -134,7 +130,7 @@ const notificationSlice = createSlice({
         dismissible = true,
         action: notificationAction,
         icon,
-      } = action.payload;
+      } = action.payload
 
       // Create notification item
       const notification: NotificationItem = {
@@ -148,14 +144,14 @@ const notificationSlice = createSlice({
         action: notificationAction,
         icon: icon || getDefaultIcon(variant),
         timestamp: Date.now(),
-      };
+      }
 
       // Add to notifications array
-      state.notifications.push(notification);
+      state.notifications.push(notification)
 
       // If max notifications exceeded, remove oldest
       if (state.notifications.length > state.maxNotifications) {
-        state.notifications.shift();
+        state.notifications.shift()
       }
     },
 
@@ -177,12 +173,12 @@ const notificationSlice = createSlice({
         action: action.payload.action,
         icon: action.payload.icon ?? getDefaultIcon('info'),
         timestamp: Date.now(),
-      };
+      }
 
-      state.notifications.push(notification);
+      state.notifications.push(notification)
 
       if (state.notifications.length > state.maxNotifications) {
-        state.notifications.shift();
+        state.notifications.shift()
       }
     },
 
@@ -204,12 +200,12 @@ const notificationSlice = createSlice({
         action: action.payload.action,
         icon: action.payload.icon ?? getDefaultIcon('success'),
         timestamp: Date.now(),
-      };
+      }
 
-      state.notifications.push(notification);
+      state.notifications.push(notification)
 
       if (state.notifications.length > state.maxNotifications) {
-        state.notifications.shift();
+        state.notifications.shift()
       }
     },
 
@@ -231,12 +227,12 @@ const notificationSlice = createSlice({
         action: action.payload.action,
         icon: action.payload.icon ?? getDefaultIcon('warning'),
         timestamp: Date.now(),
-      };
+      }
 
-      state.notifications.push(notification);
+      state.notifications.push(notification)
 
       if (state.notifications.length > state.maxNotifications) {
-        state.notifications.shift();
+        state.notifications.shift()
       }
     },
 
@@ -258,12 +254,12 @@ const notificationSlice = createSlice({
         action: action.payload.action,
         icon: action.payload.icon ?? getDefaultIcon('error'),
         timestamp: Date.now(),
-      };
+      }
 
-      state.notifications.push(notification);
+      state.notifications.push(notification)
 
       if (state.notifications.length > state.maxNotifications) {
-        state.notifications.shift();
+        state.notifications.shift()
       }
     },
 
@@ -272,15 +268,15 @@ const notificationSlice = createSlice({
      */
     hideNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter(
-        (notification) => notification.id !== action.payload
-      );
+        notification => notification.id !== action.payload
+      )
     },
 
     /**
      * Clear All Notifications
      */
-    clearAllNotifications: (state) => {
-      state.notifications = [];
+    clearAllNotifications: state => {
+      state.notifications = []
     },
 
     /**
@@ -291,53 +287,56 @@ const notificationSlice = createSlice({
       action: PayloadAction<NotificationVariant>
     ) => {
       state.notifications = state.notifications.filter(
-        (notification) => notification.variant !== action.payload
-      );
+        notification => notification.variant !== action.payload
+      )
     },
 
     /**
      * Update Default Duration
      */
     setDefaultDuration: (state, action: PayloadAction<number>) => {
-      state.defaultDuration = action.payload;
+      state.defaultDuration = action.payload
     },
 
     /**
      * Update Default Position
      */
-    setDefaultPosition: (state, action: PayloadAction<NotificationPosition>) => {
-      state.defaultPosition = action.payload;
+    setDefaultPosition: (
+      state,
+      action: PayloadAction<NotificationPosition>
+    ) => {
+      state.defaultPosition = action.payload
     },
 
     /**
      * Update Max Notifications
      */
     setMaxNotifications: (state, action: PayloadAction<number>) => {
-      state.maxNotifications = action.payload;
-      
+      state.maxNotifications = action.payload
+
       // If current notifications exceed new limit, remove oldest
       if (state.notifications.length > state.maxNotifications) {
         state.notifications = state.notifications.slice(
           state.notifications.length - state.maxNotifications
-        );
+        )
       }
     },
 
     /**
      * Remove Expired Notifications
      */
-    removeExpiredNotifications: (state) => {
-      const now = Date.now();
-      state.notifications = state.notifications.filter((notification) => {
+    removeExpiredNotifications: state => {
+      const now = Date.now()
+      state.notifications = state.notifications.filter(notification => {
         // Keep notifications with duration 0 (infinite) or undefined
-        if (!notification.duration || notification.duration === 0) return true;
-        
+        if (!notification.duration || notification.duration === 0) return true
+
         // Remove if expired
-        return now - notification.timestamp < notification.duration;
-      });
+        return now - notification.timestamp < notification.duration
+      })
     },
   },
-});
+})
 
 // ============================================================================
 // ACTIONS
@@ -356,7 +355,7 @@ export const {
   setDefaultPosition,
   setMaxNotifications,
   removeExpiredNotifications,
-} = notificationSlice.actions;
+} = notificationSlice.actions
 
 // ============================================================================
 // SELECTORS
@@ -365,8 +364,9 @@ export const {
 /**
  * Select all notifications
  */
-export const selectNotifications = (state: { notification: NotificationState }) =>
-  state.notification.notifications;
+export const selectNotifications = (state: {
+  notification: NotificationState
+}) => state.notification.notifications
 
 /**
  * Select notifications by variant
@@ -374,7 +374,7 @@ export const selectNotifications = (state: { notification: NotificationState }) 
 export const selectNotificationsByVariant = (
   state: { notification: NotificationState },
   variant: NotificationVariant
-) => state.notification.notifications.filter((n) => n.variant === variant);
+) => state.notification.notifications.filter(n => n.variant === variant)
 
 /**
  * Select notifications by position
@@ -382,46 +382,55 @@ export const selectNotificationsByVariant = (
 export const selectNotificationsByPosition = (
   state: { notification: NotificationState },
   position: NotificationPosition
-) => state.notification.notifications.filter((n) => n.position === position);
+) => state.notification.notifications.filter(n => n.position === position)
 
 /**
  * Select notification count
  */
-export const selectNotificationCount = (state: { notification: NotificationState }) =>
-  state.notification.notifications.length;
+export const selectNotificationCount = (state: {
+  notification: NotificationState
+}) => state.notification.notifications.length
 
 /**
  * Select notification settings
  */
-export const selectNotificationSettings = (state: { notification: NotificationState }) => ({
+export const selectNotificationSettings = (state: {
+  notification: NotificationState
+}) => ({
   defaultDuration: state.notification.defaultDuration,
   defaultPosition: state.notification.defaultPosition,
   maxNotifications: state.notification.maxNotifications,
-});
+})
 
 /**
  * Select latest notification
  */
-export const selectLatestNotification = (state: { notification: NotificationState }) =>
-  state.notification.notifications[state.notification.notifications.length - 1] ?? null;
+export const selectLatestNotification = (state: {
+  notification: NotificationState
+}) =>
+  state.notification.notifications[
+    state.notification.notifications.length - 1
+  ] ?? null
 
 /**
  * Check if has notifications
  */
-export const selectHasNotifications = (state: { notification: NotificationState }) =>
-  state.notification.notifications.length > 0;
+export const selectHasNotifications = (state: {
+  notification: NotificationState
+}) => state.notification.notifications.length > 0
 
 /**
  * Check if has error notifications
  */
-export const selectHasErrorNotifications = (state: { notification: NotificationState }) =>
-  state.notification.notifications.some((n) => n.variant === 'error');
+export const selectHasErrorNotifications = (state: {
+  notification: NotificationState
+}) => state.notification.notifications.some(n => n.variant === 'error')
 
 // ============================================================================
 // REDUCER
 // ============================================================================
 
-export default notificationSlice.reducer;
+export default notificationSlice.reducer
 
 // ============================================================================
 // THUNK ACTIONS (Optional - for complex scenarios)
@@ -435,21 +444,21 @@ export const showNotificationWithAutoDismiss = (
   payload: ShowNotificationPayload
 ) => {
   return (dispatch: any) => {
-    const notification = dispatch(showNotification(payload));
-    
+    const notification = dispatch(showNotification(payload))
+
     // Auto-dismiss after duration (if not infinite)
-    const duration = payload.duration ?? 5000;
+    const duration = payload.duration ?? 5000
     if (duration > 0) {
       setTimeout(() => {
         // Get the notification ID from the generated notification
-        const notificationId = notification.payload?.id;
+        const notificationId = notification.payload?.id
         if (notificationId) {
-          dispatch(hideNotification(notificationId));
+          dispatch(hideNotification(notificationId))
         }
-      }, duration);
+      }, duration)
     }
-  };
-};
+  }
+}
 
 // ============================================================================
 // USAGE EXAMPLES
@@ -457,32 +466,32 @@ export const showNotificationWithAutoDismiss = (
 
 /**
  * EXAMPLE 1: Basic Usage in Component
- * 
+ *
  * import { useDispatch } from 'react-redux';
  * import { showNotification } from '@/store/slices/notificationSlice';
- * 
+ *
  * const MyComponent = () => {
  *   const dispatch = useDispatch();
- * 
+ *
  *   const handleClick = () => {
  *     dispatch(showNotification({
  *       variant: 'success',
  *       message: 'Operation completed successfully!',
  *     }));
  *   };
- * 
+ *
  *   return <button onClick={handleClick}>Show Notification</button>;
  * };
  */
 
 /**
  * EXAMPLE 2: Using Shortcut Actions
- * 
+ *
  * dispatch(showSuccessNotification({
  *   title: 'Success',
  *   message: 'Shop created successfully!',
  * }));
- * 
+ *
  * dispatch(showErrorNotification({
  *   title: 'Error',
  *   message: 'Failed to save data',
@@ -492,7 +501,7 @@ export const showNotificationWithAutoDismiss = (
 
 /**
  * EXAMPLE 3: With Action Button
- * 
+ *
  * dispatch(showNotification({
  *   variant: 'info',
  *   message: 'You have unsaved changes',
@@ -505,14 +514,14 @@ export const showNotificationWithAutoDismiss = (
 
 /**
  * EXAMPLE 4: In Notification Container Component
- * 
+ *
  * import { useSelector, useDispatch } from 'react-redux';
  * import { selectNotifications, hideNotification } from '@/store/slices/notificationSlice';
- * 
+ *
  * const NotificationContainer = () => {
  *   const notifications = useSelector(selectNotifications);
  *   const dispatch = useDispatch();
- * 
+ *
  *   return (
  *     <div className="notification-container">
  *       {notifications.map((notification) => (
@@ -529,7 +538,7 @@ export const showNotificationWithAutoDismiss = (
 
 /**
  * EXAMPLE 5: Handling API Errors
- * 
+ *
  * try {
  *   await api.createShop(data);
  *   dispatch(showSuccessNotification({

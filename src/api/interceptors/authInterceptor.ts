@@ -3,8 +3,9 @@
 // Request interceptor to attach authentication token
 // ============================================================================
 
-import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { getAccessToken } from '@/services/auth/tokenService';
+import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
+
+import { getAccessToken } from '@/services/auth/tokenService'
 
 // ============================================================================
 // AUTH INTERCEPTOR
@@ -18,11 +19,11 @@ export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
   axiosInstance.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
       // Get token from token service (which uses localStorage)
-      const token = getAccessToken();
+      const token = getAccessToken()
 
       // Add Authorization header if token exists
       if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
+        config.headers.Authorization = `Bearer ${token}`
       }
 
       // Log request in development mode
@@ -35,20 +36,20 @@ export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
           headers: config.headers,
           data: config.data,
           params: config.params,
-        });
+        })
       }
 
-      return config;
+      return config
     },
     (error: AxiosError) => {
       // Log request error in development
       if (import.meta.env.DEV) {
-        console.error('❌ Request Error:', error);
+        console.error('❌ Request Error:', error)
       }
-      return Promise.reject(error);
+      return Promise.reject(error)
     }
-  );
-};
+  )
+}
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -58,10 +59,10 @@ export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
  * Check if user is authenticated (has valid token)
  */
 export const isAuthenticated = (): boolean => {
-  return !!getAccessToken();
-};
+  return !!getAccessToken()
+}
 
 export default {
   setupAuthInterceptor,
   isAuthenticated,
-};
+}

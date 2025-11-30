@@ -3,8 +3,13 @@
 // Permission checking service for user authorization
 // ============================================================================
 
-import { getPermissions, getUserRole, isSuperAdmin as checkSuperAdmin } from './sessionService';
-import type { UserRole } from '@/types';
+import type { UserRole } from '@/types'
+
+import {
+  getPermissions,
+  getUserRole,
+  isSuperAdmin as checkSuperAdmin,
+} from './sessionService'
 
 // ============================================================================
 // PERMISSION CHECKING
@@ -19,16 +24,16 @@ export const hasPermission = (permission: string): boolean => {
   try {
     // Super admin has all permissions
     if (checkSuperAdmin()) {
-      return true;
+      return true
     }
-    
-    const permissions = getPermissions();
-    return permissions[permission] === true;
+
+    const permissions = getPermissions()
+    return permissions[permission] === true
   } catch (error) {
-    console.error('Error checking permission:', error);
-    return false;
+    console.error('Error checking permission:', error)
+    return false
   }
-};
+}
 
 /**
  * Check if user has any of the specified permissions
@@ -39,15 +44,15 @@ export const hasAnyPermission = (permissions: string[]): boolean => {
   try {
     // Super admin has all permissions
     if (checkSuperAdmin()) {
-      return true;
+      return true
     }
-    
-    return permissions.some(permission => hasPermission(permission));
+
+    return permissions.some(permission => hasPermission(permission))
   } catch (error) {
-    console.error('Error checking any permission:', error);
-    return false;
+    console.error('Error checking any permission:', error)
+    return false
   }
-};
+}
 
 /**
  * Check if user has all of the specified permissions
@@ -58,15 +63,15 @@ export const hasAllPermissions = (permissions: string[]): boolean => {
   try {
     // Super admin has all permissions
     if (checkSuperAdmin()) {
-      return true;
+      return true
     }
-    
-    return permissions.every(permission => hasPermission(permission));
+
+    return permissions.every(permission => hasPermission(permission))
   } catch (error) {
-    console.error('Error checking all permissions:', error);
-    return false;
+    console.error('Error checking all permissions:', error)
+    return false
   }
-};
+}
 
 /**
  * Check if user can access a specific shop
@@ -77,25 +82,25 @@ export const canAccessShop = (shopId: string): boolean => {
   try {
     // Super admin can access all shops
     if (checkSuperAdmin()) {
-      return true;
+      return true
     }
-    
+
     // Org admin can access all shops in their organization
-    const role = getUserRole();
+    const role = getUserRole()
     if (role === 'org_admin') {
-      return true;
+      return true
     }
-    
+
     // Check if user has access to this specific shop
     // This would typically check against user's shop access list
     // For now, we'll check if it matches their primary shop
-    const permissions = getPermissions();
-    return permissions[`shop:${shopId}`] === true;
+    const permissions = getPermissions()
+    return permissions[`shop:${shopId}`] === true
   } catch (error) {
-    console.error('Error checking shop access:', error);
-    return false;
+    console.error('Error checking shop access:', error)
+    return false
   }
-};
+}
 
 /**
  * Check if user can access multiple shops
@@ -103,8 +108,8 @@ export const canAccessShop = (shopId: string): boolean => {
  * @returns true if user can access all shops
  */
 export const canAccessAllShops = (shopIds: string[]): boolean => {
-  return shopIds.every(shopId => canAccessShop(shopId));
-};
+  return shopIds.every(shopId => canAccessShop(shopId))
+}
 
 /**
  * Check if user can access any of the shops
@@ -112,8 +117,8 @@ export const canAccessAllShops = (shopIds: string[]): boolean => {
  * @returns true if user can access at least one shop
  */
 export const canAccessAnyShop = (shopIds: string[]): boolean => {
-  return shopIds.some(shopId => canAccessShop(shopId));
-};
+  return shopIds.some(shopId => canAccessShop(shopId))
+}
 
 // ============================================================================
 // ROLE-BASED PERMISSIONS
@@ -125,9 +130,9 @@ export const canAccessAnyShop = (shopIds: string[]): boolean => {
  * @returns true if user's role is equal or higher
  */
 export const hasRoleLevel = (requiredRole: UserRole): boolean => {
-  const role = getUserRole();
-  if (!role) return false;
-  
+  const role = getUserRole()
+  if (!role) return false
+
   const roleHierarchy: Record<string, number> = {
     super_admin: 7,
     org_admin: 6,
@@ -136,37 +141,37 @@ export const hasRoleLevel = (requiredRole: UserRole): boolean => {
     staff: 3,
     accountant: 2,
     viewer: 1,
-  };
-  
-  const userLevel = roleHierarchy[role] || 0;
-  const requiredLevel = roleHierarchy[requiredRole] || 0;
-  
-  return userLevel >= requiredLevel;
-};
+  }
+
+  const userLevel = roleHierarchy[role] || 0
+  const requiredLevel = roleHierarchy[requiredRole] || 0
+
+  return userLevel >= requiredLevel
+}
 
 /**
  * Check if user is at least a manager
  * @returns true if manager or higher
  */
 export const isManagerOrHigher = (): boolean => {
-  return hasRoleLevel('manager' as UserRole);
-};
+  return hasRoleLevel('manager' as UserRole)
+}
 
 /**
  * Check if user is at least a shop admin
  * @returns true if shop admin or higher
  */
 export const isShopAdminOrHigher = (): boolean => {
-  return hasRoleLevel('shop_admin' as UserRole);
-};
+  return hasRoleLevel('shop_admin' as UserRole)
+}
 
 /**
  * Check if user is at least an org admin
  * @returns true if org admin or higher
  */
 export const isOrgAdminOrHigher = (): boolean => {
-  return hasRoleLevel('org_admin' as UserRole);
-};
+  return hasRoleLevel('org_admin' as UserRole)
+}
 
 // ============================================================================
 // MODULE-SPECIFIC PERMISSIONS
@@ -181,76 +186,72 @@ export const canManageProducts = (): boolean => {
     'canManageProducts',
     'canManageInventory',
     'canEditInventory',
-  ]);
-};
+  ])
+}
 
 /**
  * Check if user can view products
  * @returns true if user can view products
  */
 export const canViewProducts = (): boolean => {
-  return hasPermission('canViewInventory');
-};
+  return hasPermission('canViewInventory')
+}
 
 /**
  * Check if user can create products
  * @returns true if user can create products
  */
 export const canCreateProducts = (): boolean => {
-  return hasPermission('canManageProducts');
-};
+  return hasPermission('canManageProducts')
+}
 
 /**
  * Check if user can delete products
  * @returns true if user can delete products
  */
 export const canDeleteProducts = (): boolean => {
-  return hasPermission('canDeleteProducts');
-};
+  return hasPermission('canDeleteProducts')
+}
 
 /**
  * Check if user can manage sales
  * @returns true if user can manage sales
  */
 export const canManageSales = (): boolean => {
-  return hasAnyPermission([
-    'canManageSales',
-    'canCreateSales',
-    'canEditSales',
-  ]);
-};
+  return hasAnyPermission(['canManageSales', 'canCreateSales', 'canEditSales'])
+}
 
 /**
  * Check if user can view sales
  * @returns true if user can view sales
  */
 export const canViewSales = (): boolean => {
-  return hasPermission('canViewSales');
-};
+  return hasPermission('canViewSales')
+}
 
 /**
  * Check if user can create sales
  * @returns true if user can create sales
  */
 export const canCreateSales = (): boolean => {
-  return hasPermission('canCreateSales');
-};
+  return hasPermission('canCreateSales')
+}
 
 /**
  * Check if user can delete sales
  * @returns true if user can delete sales
  */
 export const canDeleteSales = (): boolean => {
-  return hasPermission('canDeleteSales');
-};
+  return hasPermission('canDeleteSales')
+}
 
 /**
  * Check if user can apply discounts
  * @returns true if user can apply discounts
  */
 export const canApplyDiscounts = (): boolean => {
-  return hasPermission('canApplyDiscounts');
-};
+  return hasPermission('canApplyDiscounts')
+}
 
 /**
  * Check if user can manage purchases
@@ -261,120 +262,120 @@ export const canManagePurchases = (): boolean => {
     'canManagePurchases',
     'canCreatePurchases',
     'canEditPurchases',
-  ]);
-};
+  ])
+}
 
 /**
  * Check if user can view purchases
  * @returns true if user can view purchases
  */
 export const canViewPurchases = (): boolean => {
-  return hasPermission('canViewPurchases');
-};
+  return hasPermission('canViewPurchases')
+}
 
 /**
  * Check if user can manage customers
  * @returns true if user can manage customers
  */
 export const canManageCustomers = (): boolean => {
-  return hasPermission('canManageCustomers');
-};
+  return hasPermission('canManageCustomers')
+}
 
 /**
  * Check if user can view customers
  * @returns true if user can view customers
  */
 export const canViewCustomers = (): boolean => {
-  return hasPermission('canViewCustomers');
-};
+  return hasPermission('canViewCustomers')
+}
 
 /**
  * Check if user can manage suppliers
  * @returns true if user can manage suppliers
  */
 export const canManageSuppliers = (): boolean => {
-  return hasPermission('canManageSuppliers');
-};
+  return hasPermission('canManageSuppliers')
+}
 
 /**
  * Check if user can view suppliers
  * @returns true if user can view suppliers
  */
 export const canViewSuppliers = (): boolean => {
-  return hasPermission('canViewSuppliers');
-};
+  return hasPermission('canViewSuppliers')
+}
 
 /**
  * Check if user can view reports
  * @returns true if user can view reports
  */
 export const canViewReports = (): boolean => {
-  return hasPermission('canViewReports');
-};
+  return hasPermission('canViewReports')
+}
 
 /**
  * Check if user can generate reports
  * @returns true if user can generate reports
  */
 export const canGenerateReports = (): boolean => {
-  return hasPermission('canGenerateReports');
-};
+  return hasPermission('canGenerateReports')
+}
 
 /**
  * Check if user can export reports
  * @returns true if user can export reports
  */
 export const canExportReports = (): boolean => {
-  return hasPermission('canExportReports');
-};
+  return hasPermission('canExportReports')
+}
 
 /**
  * Check if user can manage users
  * @returns true if user can manage users
  */
 export const canManageUsers = (): boolean => {
-  return hasPermission('canManageUsers');
-};
+  return hasPermission('canManageUsers')
+}
 
 /**
  * Check if user can view users
  * @returns true if user can view users
  */
 export const canViewUsers = (): boolean => {
-  return hasPermission('canViewUsers');
-};
+  return hasPermission('canViewUsers')
+}
 
 /**
  * Check if user can manage shop settings
  * @returns true if user can manage settings
  */
 export const canManageShopSettings = (): boolean => {
-  return hasPermission('canManageShopSettings');
-};
+  return hasPermission('canManageShopSettings')
+}
 
 /**
  * Check if user can update metal rates
  * @returns true if user can update metal rates
  */
 export const canUpdateMetalRates = (): boolean => {
-  return hasPermission('canUpdateMetalRates');
-};
+  return hasPermission('canUpdateMetalRates')
+}
 
 /**
  * Check if user can view financials
  * @returns true if user can view financials
  */
 export const canViewFinancials = (): boolean => {
-  return hasPermission('canViewFinancials');
-};
+  return hasPermission('canViewFinancials')
+}
 
 /**
  * Check if user can view profit/loss
  * @returns true if user can view profit/loss
  */
 export const canViewProfitLoss = (): boolean => {
-  return hasPermission('canViewProfitLoss');
-};
+  return hasPermission('canViewProfitLoss')
+}
 
 // ============================================================================
 // PERMISSION UTILITIES
@@ -385,42 +386,42 @@ export const canViewProfitLoss = (): boolean => {
  * @returns Object with all permissions
  */
 export const getAllPermissions = (): Record<string, boolean> => {
-  return getPermissions();
-};
+  return getPermissions()
+}
 
 /**
  * Get granted permissions (only those set to true)
  * @returns Array of granted permission names
  */
 export const getGrantedPermissions = (): string[] => {
-  const permissions = getPermissions();
-  return Object.keys(permissions).filter(key => permissions[key] === true);
-};
+  const permissions = getPermissions()
+  return Object.keys(permissions).filter(key => permissions[key] === true)
+}
 
 /**
  * Get denied permissions (only those set to false)
  * @returns Array of denied permission names
  */
 export const getDeniedPermissions = (): string[] => {
-  const permissions = getPermissions();
-  return Object.keys(permissions).filter(key => permissions[key] === false);
-};
+  const permissions = getPermissions()
+  return Object.keys(permissions).filter(key => permissions[key] === false)
+}
 
 /**
  * Count total permissions
  * @returns Number of permissions
  */
 export const countPermissions = (): number => {
-  return Object.keys(getPermissions()).length;
-};
+  return Object.keys(getPermissions()).length
+}
 
 /**
  * Count granted permissions
  * @returns Number of granted permissions
  */
 export const countGrantedPermissions = (): number => {
-  return getGrantedPermissions().length;
-};
+  return getGrantedPermissions().length
+}
 
 // ============================================================================
 // PERMISSION GROUPS
@@ -436,8 +437,8 @@ export const hasFullInventoryAccess = (): boolean => {
     'canManageInventory',
     'canManageProducts',
     'canDeleteProducts',
-  ]);
-};
+  ])
+}
 
 /**
  * Check if user has full sales permissions
@@ -450,8 +451,8 @@ export const hasFullSalesAccess = (): boolean => {
     'canCreateSales',
     'canDeleteSales',
     'canGenerateInvoices',
-  ]);
-};
+  ])
+}
 
 /**
  * Check if user has full purchase permissions
@@ -463,8 +464,8 @@ export const hasFullPurchaseAccess = (): boolean => {
     'canManagePurchases',
     'canCreatePurchases',
     'canDeletePurchases',
-  ]);
-};
+  ])
+}
 
 /**
  * Check if user has financial access
@@ -475,8 +476,8 @@ export const hasFinancialAccess = (): boolean => {
     'canViewFinancials',
     'canViewProfitLoss',
     'canViewPayments',
-  ]);
-};
+  ])
+}
 
 // ============================================================================
 // DEFAULT EXPORT
@@ -487,18 +488,18 @@ export default {
   hasPermission,
   hasAnyPermission,
   hasAllPermissions,
-  
+
   // Shop Access
   canAccessShop,
   canAccessAllShops,
   canAccessAnyShop,
-  
+
   // Role-Based
   hasRoleLevel,
   isManagerOrHigher,
   isShopAdminOrHigher,
   isOrgAdminOrHigher,
-  
+
   // Module-Specific
   canManageProducts,
   canViewProducts,
@@ -524,17 +525,17 @@ export default {
   canUpdateMetalRates,
   canViewFinancials,
   canViewProfitLoss,
-  
+
   // Utilities
   getAllPermissions,
   getGrantedPermissions,
   getDeniedPermissions,
   countPermissions,
   countGrantedPermissions,
-  
+
   // Permission Groups
   hasFullInventoryAccess,
   hasFullSalesAccess,
   hasFullPurchaseAccess,
   hasFinancialAccess,
-};
+}

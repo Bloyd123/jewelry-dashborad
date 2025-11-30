@@ -3,7 +3,7 @@
 // Check and log axios configuration
 // ============================================================================
 
-import { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios'
 
 /**
  * Check if axios instance is properly configured and log details
@@ -11,8 +11,8 @@ import { AxiosInstance } from 'axios';
  */
 export const checkAxiosConfig = (axiosInstance: AxiosInstance): void => {
   // Type assertion to access internal handlers property
-  const requestHandlers = (axiosInstance.interceptors.request as any).handlers;
-  const responseHandlers = (axiosInstance.interceptors.response as any).handlers;
+  const requestHandlers = (axiosInstance.interceptors.request as any).handlers
+  const responseHandlers = (axiosInstance.interceptors.response as any).handlers
 
   console.log('📡 Axios Configuration:', {
     baseURL: axiosInstance.defaults.baseURL,
@@ -22,7 +22,7 @@ export const checkAxiosConfig = (axiosInstance: AxiosInstance): void => {
       request: Array.isArray(requestHandlers) && requestHandlers.length > 0,
       response: Array.isArray(responseHandlers) && responseHandlers.length > 0,
     },
-  });
-};
+  })
+}
 
-export default checkAxiosConfig;
+export default checkAxiosConfig

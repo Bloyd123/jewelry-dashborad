@@ -16,7 +16,8 @@ export const AUTH_MESSAGES = {
   EMAIL_VERIFIED: 'Email verified successfully! You can now login.',
   PASSWORD_CHANGED: 'Password changed successfully. Please login again.',
   PASSWORD_RESET_SENT: 'Password reset link has been sent to your email.',
-  PASSWORD_RESET_SUCCESS: 'Password reset successful! Please login with your new password.',
+  PASSWORD_RESET_SUCCESS:
+    'Password reset successful! Please login with your new password.',
   VERIFICATION_EMAIL_SENT: 'Verification email sent successfully.',
   PROFILE_UPDATED: 'Profile updated successfully.',
   SESSION_REVOKED: 'Session revoked successfully.',
@@ -46,7 +47,7 @@ export const AUTH_MESSAGES = {
   // Info
   LOGOUT_CONFIRM: 'Are you sure you want to logout?',
   LOGOUT_ALL_CONFIRM: 'This will logout from all devices. Continue?',
-} as const;
+} as const
 
 // ============================================================================
 // USER MANAGEMENT MESSAGES
@@ -75,7 +76,7 @@ export const USER_MESSAGES = {
   DELETE_USER_CONFIRM: 'Are you sure you want to delete this user?',
   DEACTIVATE_USER_CONFIRM: 'Are you sure you want to deactivate this user?',
   SUSPEND_USER_CONFIRM: 'Are you sure you want to suspend this user?',
-} as const;
+} as const
 
 // ============================================================================
 // SALES MESSAGES
@@ -103,9 +104,10 @@ export const SALES_MESSAGES = {
 
   // Confirmation
   DELETE_SALE_CONFIRM: 'Are you sure you want to delete this sale?',
-  CANCEL_SALE_CONFIRM: 'Are you sure you want to cancel this sale? This action cannot be undone.',
+  CANCEL_SALE_CONFIRM:
+    'Are you sure you want to cancel this sale? This action cannot be undone.',
   SEND_INVOICE_CONFIRM: 'Send invoice to customer via email?',
-} as const;
+} as const
 
 // ============================================================================
 // PURCHASE MESSAGES
@@ -129,7 +131,7 @@ export const PURCHASE_MESSAGES = {
   // Confirmation
   DELETE_PURCHASE_CONFIRM: 'Are you sure you want to delete this purchase?',
   CANCEL_PURCHASE_CONFIRM: 'Are you sure you want to cancel this purchase?',
-} as const;
+} as const
 
 // ============================================================================
 // INVENTORY MESSAGES
@@ -163,7 +165,7 @@ export const INVENTORY_MESSAGES = {
   // Info
   LOW_STOCK_WARNING: 'Stock is running low for some products.',
   OUT_OF_STOCK_WARNING: 'Some products are out of stock.',
-} as const;
+} as const
 
 // ============================================================================
 // PARTY (CUSTOMER/SUPPLIER) MESSAGES
@@ -190,7 +192,7 @@ export const PARTY_MESSAGES = {
   // Confirmation
   DELETE_CUSTOMER_CONFIRM: 'Are you sure you want to delete this customer?',
   DELETE_SUPPLIER_CONFIRM: 'Are you sure you want to delete this supplier?',
-} as const;
+} as const
 
 // ============================================================================
 // SCHEME MESSAGES
@@ -209,11 +211,12 @@ export const SCHEME_MESSAGES = {
   SCHEME_ALREADY_CLOSED: 'Scheme is already closed.',
   INVALID_INSTALLMENT_AMOUNT: 'Invalid installment amount.',
   SCHEME_NOT_MATURED: 'Scheme has not matured yet.',
-  CANNOT_CLOSE_ACTIVE_SCHEME: 'Cannot close an active scheme with pending installments.',
+  CANNOT_CLOSE_ACTIVE_SCHEME:
+    'Cannot close an active scheme with pending installments.',
 
   // Confirmation
   CLOSE_SCHEME_CONFIRM: 'Are you sure you want to close this scheme?',
-} as const;
+} as const
 
 // ============================================================================
 // PAYMENT MESSAGES
@@ -237,7 +240,7 @@ export const PAYMENT_MESSAGES = {
   // Confirmation
   RECORD_PAYMENT_CONFIRM: 'Confirm payment recording?',
   PROCESS_REFUND_CONFIRM: 'Are you sure you want to process this refund?',
-} as const;
+} as const
 
 // ============================================================================
 // MASTER DATA MESSAGES
@@ -264,7 +267,7 @@ export const MASTER_MESSAGES = {
   // Confirmation
   DELETE_CATEGORY_CONFIRM: 'Are you sure you want to delete this category?',
   UPDATE_METAL_RATE_CONFIRM: 'Update metal rates for today?',
-} as const;
+} as const
 
 // ============================================================================
 // REPORT MESSAGES
@@ -287,7 +290,7 @@ export const REPORT_MESSAGES = {
   // Info
   GENERATING_REPORT: 'Generating report... Please wait.',
   REPORT_READY: 'Your report is ready for download.',
-} as const;
+} as const
 
 // ============================================================================
 // ORGANIZATION/SHOP MESSAGES
@@ -308,14 +311,16 @@ export const ORGANIZATION_MESSAGES = {
   ORGANIZATION_NOT_FOUND: 'Organization not found.',
   SHOP_NOT_FOUND: 'Shop not found.',
   SHOP_CODE_EXISTS: 'Shop code already exists.',
-  SUBSCRIPTION_EXPIRED: 'Your subscription has expired. Please renew to continue.',
+  SUBSCRIPTION_EXPIRED:
+    'Your subscription has expired. Please renew to continue.',
   SUBSCRIPTION_LIMIT_REACHED: 'You have reached your subscription limit.',
   CANNOT_DELETE_LAST_SHOP: 'Cannot delete the only shop.',
 
   // Confirmation
-  DELETE_ORGANIZATION_CONFIRM: 'Are you sure you want to delete this organization? All data will be lost.',
+  DELETE_ORGANIZATION_CONFIRM:
+    'Are you sure you want to delete this organization? All data will be lost.',
   DELETE_SHOP_CONFIRM: 'Are you sure you want to delete this shop?',
-} as const;
+} as const
 
 // ============================================================================
 // GENERAL MESSAGES
@@ -341,7 +346,7 @@ export const GENERAL_MESSAGES = {
   INVALID_FORMAT: 'Invalid format.',
   FILE_TOO_LARGE: 'File size is too large. Maximum size is 5MB.',
   INVALID_FILE_TYPE: 'Invalid file type. Please upload a valid file.',
-  
+
   // Confirmation
   CONFIRM_DELETE: 'Are you sure you want to delete this?',
   CONFIRM_CANCEL: 'Are you sure you want to cancel?',
@@ -357,7 +362,7 @@ export const GENERAL_MESSAGES = {
   SEARCH_EMPTY: 'No results found for your search.',
   COMING_SOON: 'This feature is coming soon.',
   UNDER_MAINTENANCE: 'System is under maintenance. Please try again later.',
-} as const;
+} as const
 
 // ============================================================================
 // VALIDATION MESSAGES
@@ -370,7 +375,7 @@ export const VALIDATION_MESSAGES = {
   PASSWORD_REQUIRED: 'Password is required.',
   NAME_REQUIRED: 'Name is required.',
   PHONE_REQUIRED: 'Phone number is required.',
-  
+
   // Format Validation
   INVALID_EMAIL: 'Please enter a valid email address.',
   INVALID_PHONE: 'Please enter a valid phone number (10 digits).',
@@ -378,26 +383,25 @@ export const VALIDATION_MESSAGES = {
   INVALID_DATE: 'Please enter a valid date.',
   INVALID_NUMBER: 'Please enter a valid number.',
   INVALID_URL: 'Please enter a valid URL.',
-  
+
   // Length Validation
-  MIN_LENGTH: (field: string, length: number) => 
+  MIN_LENGTH: (field: string, length: number) =>
     `${field} must be at least ${length} characters.`,
-  MAX_LENGTH: (field: string, length: number) => 
+  MAX_LENGTH: (field: string, length: number) =>
     `${field} cannot exceed ${length} characters.`,
-  
+
   // Range Validation
-  MIN_VALUE: (field: string, min: number) => 
+  MIN_VALUE: (field: string, min: number) =>
     `${field} must be at least ${min}.`,
-  MAX_VALUE: (field: string, max: number) => 
-    `${field} cannot exceed ${max}.`,
-  OUT_OF_RANGE: (field: string, min: number, max: number) => 
+  MAX_VALUE: (field: string, max: number) => `${field} cannot exceed ${max}.`,
+  OUT_OF_RANGE: (field: string, min: number, max: number) =>
     `${field} must be between ${min} and ${max}.`,
-  
+
   // Password Validation
   PASSWORD_MIN_LENGTH: 'Password must be at least 6 characters.',
   PASSWORD_WEAK: 'Password must contain uppercase, lowercase, and numbers.',
   PASSWORD_MISMATCH: 'Passwords do not match.',
-  
+
   // Custom Validation
   POSITIVE_NUMBER: 'Value must be a positive number.',
   GREATER_THAN_ZERO: 'Value must be greater than zero.',
@@ -406,7 +410,7 @@ export const VALIDATION_MESSAGES = {
   INVALID_PRICE: 'Please enter a valid price.',
   FUTURE_DATE_NOT_ALLOWED: 'Future date is not allowed.',
   PAST_DATE_NOT_ALLOWED: 'Past date is not allowed.',
-} as const;
+} as const
 
 // ============================================================================
 // NOTIFICATION MESSAGES
@@ -421,7 +425,7 @@ export const NOTIFICATION_MESSAGES = {
   SUBSCRIPTION_EXPIRED: 'Your subscription has expired',
   NEW_USER_REGISTERED: 'New user registered',
   METAL_RATE_UPDATED: 'Metal rates updated',
-} as const;
+} as const
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -431,42 +435,42 @@ export const NOTIFICATION_MESSAGES = {
  * Get confirmation message
  */
 export function getConfirmMessage(action: string, entity: string): string {
-  return `Are you sure you want to ${action} this ${entity}?`;
+  return `Are you sure you want to ${action} this ${entity}?`
 }
 
 /**
  * Get success message
  */
 export function getSuccessMessage(action: string, entity: string): string {
-  return `${entity} ${action} successfully.`;
+  return `${entity} ${action} successfully.`
 }
 
 /**
  * Get error message
  */
 export function getErrorMessage(entity: string): string {
-  return `Failed to process ${entity}. Please try again.`;
+  return `Failed to process ${entity}. Please try again.`
 }
 
 /**
  * Get not found message
  */
 export function getNotFoundMessage(entity: string): string {
-  return `${entity} not found.`;
+  return `${entity} not found.`
 }
 
 /**
  * Get validation message for required field
  */
 export function getRequiredMessage(field: string): string {
-  return `${field} is required.`;
+  return `${field} is required.`
 }
 
 /**
  * Get duplicate error message
  */
 export function getDuplicateMessage(field: string): string {
-  return `${field} already exists.`;
+  return `${field} already exists.`
 }
 
 // ============================================================================
@@ -488,10 +492,10 @@ export const MESSAGES = {
   GENERAL: GENERAL_MESSAGES,
   VALIDATION: VALIDATION_MESSAGES,
   NOTIFICATION: NOTIFICATION_MESSAGES,
-} as const;
+} as const
 
 // ============================================================================
 // EXPORT ALL
 // ============================================================================
 
-export default MESSAGES;
+export default MESSAGES

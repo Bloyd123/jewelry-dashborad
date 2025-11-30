@@ -3,52 +3,52 @@
 // API Endpoints Configuration
 // ============================================================================
 
-const API_BASE = '/api';
-const API_VERSION = '/v1';
-const BASE_URL = `${API_BASE}${API_VERSION}`;
+const API_BASE = '/api'
+const API_VERSION = '/v1'
+const BASE_URL = `${API_BASE}${API_VERSION}`
 
 // ============================================================================
 // AUTHENTICATION ENDPOINTS
 // ============================================================================
 
-const AUTH_BASE = `${BASE_URL}/auth`;
+const AUTH_BASE = `${BASE_URL}/auth`
 
 export const AUTH_ENDPOINTS = {
   // Registration
   REGISTER: `${AUTH_BASE}/register`,
   REGISTER_SUPER_ADMIN: `${AUTH_BASE}/register/super-admin`,
-  
+
   // Login/Logout
   LOGIN: `${AUTH_BASE}/login`,
   LOGOUT: `${AUTH_BASE}/logout`,
   LOGOUT_ALL: `${AUTH_BASE}/logout-all`,
-  
+
   // User Profile
   ME: `${AUTH_BASE}/me`,
   UPDATE_PROFILE: `${AUTH_BASE}/profile`,
-  
+
   // Password Management
   CHANGE_PASSWORD: `${AUTH_BASE}/change-password`,
   FORGOT_PASSWORD: `${AUTH_BASE}/forgot-password`,
   RESET_PASSWORD: `${AUTH_BASE}/reset-password`,
-  
+
   // Email Verification
   VERIFY_EMAIL: `${AUTH_BASE}/verify-email`,
   RESEND_VERIFICATION: `${AUTH_BASE}/resend-verification`,
-  
+
   // Token Management
   REFRESH_TOKEN: `${AUTH_BASE}/refresh-token`,
-  
+
   // Session Management
   SESSIONS: `${AUTH_BASE}/sessions`,
-REVOKE_SESSION: `${AUTH_BASE}/sessions/:tokenId`
-};
+  REVOKE_SESSION: `${AUTH_BASE}/sessions/:tokenId`,
+}
 
 // ============================================================================
 // SHOP ENDPOINTS
 // ============================================================================
 
-const SHOPS_BASE = `${BASE_URL}/shops`;
+const SHOPS_BASE = `${BASE_URL}/shops`
 
 export const SHOPS_ENDPOINTS = {
   BASE: SHOPS_BASE,
@@ -57,13 +57,13 @@ export const SHOPS_ENDPOINTS = {
   METAL_RATES: `${SHOPS_BASE}/:id/metal-rates`,
   STATISTICS: `${SHOPS_BASE}/:id/statistics`,
   TRANSFER_INVENTORY: `${SHOPS_BASE}/:id/transfer-inventory`,
-};
+}
 
 // ============================================================================
 // ORGANIZATION ENDPOINTS
 // ============================================================================
 
-const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`;
+const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`
 
 export const ORGANIZATIONS_ENDPOINTS = {
   BASE: ORGANIZATIONS_BASE,
@@ -72,13 +72,13 @@ export const ORGANIZATIONS_ENDPOINTS = {
   SHOPS: `${ORGANIZATIONS_BASE}/:id/shops`,
   STATISTICS: `${ORGANIZATIONS_BASE}/:id/statistics`,
   SUBSCRIPTION: `${ORGANIZATIONS_BASE}/:id/subscription`,
-};
+}
 
 // ============================================================================
 // USER ENDPOINTS
 // ============================================================================
 
-const USERS_BASE = `${BASE_URL}/users`;
+const USERS_BASE = `${BASE_URL}/users`
 
 export const USERS_ENDPOINTS = {
   BASE: USERS_BASE,
@@ -89,13 +89,13 @@ export const USERS_ENDPOINTS = {
   UPDATE_ROLE: `${USERS_BASE}/:id/role`,
   PERMISSIONS: `${USERS_BASE}/:id/permissions`,
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
-};
+}
 
 // ============================================================================
 // PRODUCT ENDPOINTS
 // ============================================================================
 
-const PRODUCTS_BASE = `${BASE_URL}/products`;
+const PRODUCTS_BASE = `${BASE_URL}/products`
 
 export const PRODUCTS_ENDPOINTS = {
   BASE: PRODUCTS_BASE,
@@ -104,13 +104,13 @@ export const PRODUCTS_ENDPOINTS = {
   EXPORT: `${PRODUCTS_BASE}/export`,
   CATEGORIES: `${PRODUCTS_BASE}/categories`,
   TAGS: `${PRODUCTS_BASE}/tags`,
-};
+}
 
 // ============================================================================
 // INVENTORY ENDPOINTS
 // ============================================================================
 
-const INVENTORY_BASE = `${BASE_URL}/inventory`;
+const INVENTORY_BASE = `${BASE_URL}/inventory`
 
 export const INVENTORY_ENDPOINTS = {
   BASE: INVENTORY_BASE,
@@ -120,13 +120,13 @@ export const INVENTORY_ENDPOINTS = {
   TRANSFER: `${INVENTORY_BASE}/transfer`,
   ADJUSTMENT: `${INVENTORY_BASE}/adjustment`,
   HISTORY: `${INVENTORY_BASE}/:id/history`,
-};
+}
 
 // ============================================================================
 // SALES ENDPOINTS
 // ============================================================================
 
-const SALES_BASE = `${BASE_URL}/sales`;
+const SALES_BASE = `${BASE_URL}/sales`
 
 export const SALES_ENDPOINTS = {
   BASE: SALES_BASE,
@@ -138,13 +138,13 @@ export const SALES_ENDPOINTS = {
   CONVERT_ESTIMATE: `${SALES_BASE}/estimates/:id/convert`,
   RETURNS: `${SALES_BASE}/returns`,
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
-};
+}
 
 // ============================================================================
 // CUSTOMER ENDPOINTS
 // ============================================================================
 
-const CUSTOMERS_BASE = `${BASE_URL}/customers`;
+const CUSTOMERS_BASE = `${BASE_URL}/customers`
 
 export const CUSTOMERS_ENDPOINTS = {
   BASE: CUSTOMERS_BASE,
@@ -152,13 +152,13 @@ export const CUSTOMERS_ENDPOINTS = {
   ORDERS: `${CUSTOMERS_BASE}/:id/orders`,
   TRANSACTIONS: `${CUSTOMERS_BASE}/:id/transactions`,
   LOYALTY: `${CUSTOMERS_BASE}/:id/loyalty`,
-};
+}
 
 // ============================================================================
 // REPORTS ENDPOINTS
 // ============================================================================
 
-const REPORTS_BASE = `${BASE_URL}/reports`;
+const REPORTS_BASE = `${BASE_URL}/reports`
 
 export const REPORTS_ENDPOINTS = {
   SALES: `${REPORTS_BASE}/sales`,
@@ -167,7 +167,7 @@ export const REPORTS_ENDPOINTS = {
   FINANCIAL: `${REPORTS_BASE}/financial`,
   PRODUCT_PERFORMANCE: `${REPORTS_BASE}/product-performance`,
   DASHBOARD: `${REPORTS_BASE}/dashboard`,
-};
+}
 
 // ============================================================================
 // CONSOLIDATED EXPORT
@@ -183,6 +183,6 @@ export const API_ENDPOINTS = {
   SALES: SALES_ENDPOINTS,
   CUSTOMERS: CUSTOMERS_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
-};
+}
 
-export default API_ENDPOINTS;
+export default API_ENDPOINTS

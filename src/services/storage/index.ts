@@ -3,10 +3,10 @@
 // Export all storage services
 // ============================================================================
 
-import localStorageService from './localStorageService';
-import sessionStorageService from './sessionStorageService';
+import localStorageService from './localStorageService'
+import sessionStorageService from './sessionStorageService'
 
-export { localStorageService, sessionStorageService };
+export { localStorageService, sessionStorageService }
 
 // Named exports for localStorage
 export {
@@ -20,7 +20,7 @@ export {
   hasKey as hasLocalKey,
   setItemWithExpiry as setLocalItemWithExpiry,
   getItemWithExpiry as getLocalItemWithExpiry,
-} from './localStorageService';
+} from './localStorageService'
 
 // Named exports for sessionStorage
 export {
@@ -32,9 +32,9 @@ export {
   getAllKeys as getAllSessionKeys,
   getSize as getSessionSize,
   hasKey as hasSessionKey,
-} from './sessionStorageService';
+} from './sessionStorageService'
 
 export default {
   local: localStorageService,
   session: sessionStorageService,
-};
+}

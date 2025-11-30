@@ -45,9 +45,9 @@ export const colors = {
   // Dark Mode Specific
   dark: {
     bg: {
-      primary: '#0F172A',    // Main background
-      secondary: '#1E293B',  // Card background
-      tertiary: '#334155',   // Hover states
+      primary: '#0F172A', // Main background
+      secondary: '#1E293B', // Card background
+      tertiary: '#334155', // Hover states
     },
     text: {
       primary: '#F1F5F9',
@@ -99,13 +99,13 @@ export const colors = {
     platinum: '#E5E4E2',
     rose: '#B76E79',
   },
-};
+}
 
-export type AccentColor = keyof typeof colors.accent;
+export type AccentColor = keyof typeof colors.accent
 
 // Helper function to get accent color
 export const getAccentColor = (accent: string): string => {
-  return colors.accent[accent as AccentColor] || colors.accent.amber;
-};
+  return colors.accent[accent as AccentColor] || colors.accent.amber
+}
 
-export default colors;
+export default colors

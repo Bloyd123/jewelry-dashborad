@@ -3,21 +3,21 @@
 // Authentication error class
 // ============================================================================
 
-import { ApiError } from './ApiError';
+import { ApiError } from './ApiError'
 
 /**
  * Authentication Error class
  * For 401 Unauthorized errors
  */
 export class AuthError extends ApiError {
-  public readonly isAuthError = true;
+  public readonly isAuthError = true
 
   constructor(message: string = 'Authentication failed', errors?: any[]) {
-    super(message, 401, errors);
-    this.name = 'AuthError';
+    super(message, 401, errors)
+    this.name = 'AuthError'
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, AuthError);
+      Error.captureStackTrace(this, AuthError)
     }
   }
 
@@ -25,8 +25,8 @@ export class AuthError extends ApiError {
    * Check if error is an auth error
    */
   static isAuthError(error: any): error is AuthError {
-    return error && (error.isAuthError === true || error.statusCode === 401);
+    return error && (error.isAuthError === true || error.statusCode === 401)
   }
 }
 
-export default AuthError;
+export default AuthError

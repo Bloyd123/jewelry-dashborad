@@ -27,7 +27,7 @@ export const USER_STATUS_LABELS: Record<UserStatus, string> = {
   [UserStatus.SUSPENDED]: 'Suspended',
   [UserStatus.PENDING_VERIFICATION]: 'Pending Verification',
   [UserStatus.LOCKED]: 'Locked',
-};
+}
 
 /**
  * User Status Colors (for badges)
@@ -38,7 +38,7 @@ export const USER_STATUS_COLORS: Record<UserStatus, string> = {
   [UserStatus.SUSPENDED]: 'red',
   [UserStatus.PENDING_VERIFICATION]: 'yellow',
   [UserStatus.LOCKED]: 'orange',
-};
+}
 
 // ============================================================================
 // ORDER/SALE STATUS
@@ -74,7 +74,7 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   [OrderStatus.CANCELLED]: 'Cancelled',
   [OrderStatus.RETURNED]: 'Returned',
   [OrderStatus.REFUNDED]: 'Refunded',
-};
+}
 
 /**
  * Order Status Colors
@@ -90,7 +90,7 @@ export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
   [OrderStatus.CANCELLED]: 'red',
   [OrderStatus.RETURNED]: 'orange',
   [OrderStatus.REFUNDED]: 'pink',
-};
+}
 
 /**
  * Order Status Flow (for progress tracking)
@@ -103,7 +103,7 @@ export const ORDER_STATUS_FLOW = [
   OrderStatus.READY,
   OrderStatus.DELIVERED,
   OrderStatus.COMPLETED,
-] as const;
+] as const
 
 // ============================================================================
 // PAYMENT STATUS
@@ -137,7 +137,7 @@ export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
   [PaymentStatus.PENDING]: 'Pending',
   [PaymentStatus.PROCESSING]: 'Processing',
   [PaymentStatus.CANCELLED]: 'Cancelled',
-};
+}
 
 /**
  * Payment Status Colors
@@ -152,7 +152,7 @@ export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
   [PaymentStatus.PENDING]: 'orange',
   [PaymentStatus.PROCESSING]: 'blue',
   [PaymentStatus.CANCELLED]: 'gray',
-};
+}
 
 // ============================================================================
 // PRODUCT/INVENTORY STATUS
@@ -184,7 +184,7 @@ export const PRODUCT_STATUS_LABELS: Record<ProductStatus, string> = {
   [ProductStatus.DRAFT]: 'Draft',
   [ProductStatus.ACTIVE]: 'Active',
   [ProductStatus.INACTIVE]: 'Inactive',
-};
+}
 
 /**
  * Product Status Colors
@@ -198,7 +198,7 @@ export const PRODUCT_STATUS_COLORS: Record<ProductStatus, string> = {
   [ProductStatus.DRAFT]: 'gray',
   [ProductStatus.ACTIVE]: 'green',
   [ProductStatus.INACTIVE]: 'red',
-};
+}
 
 // ============================================================================
 // INVOICE STATUS
@@ -232,7 +232,7 @@ export const INVOICE_STATUS_LABELS: Record<InvoiceStatus, string> = {
   [InvoiceStatus.OVERDUE]: 'Overdue',
   [InvoiceStatus.CANCELLED]: 'Cancelled',
   [InvoiceStatus.REFUNDED]: 'Refunded',
-};
+}
 
 /**
  * Invoice Status Colors
@@ -247,7 +247,7 @@ export const INVOICE_STATUS_COLORS: Record<InvoiceStatus, string> = {
   [InvoiceStatus.OVERDUE]: 'red',
   [InvoiceStatus.CANCELLED]: 'gray',
   [InvoiceStatus.REFUNDED]: 'purple',
-};
+}
 
 // ============================================================================
 // SCHEME STATUS (Jewelry Schemes)
@@ -275,7 +275,7 @@ export const SCHEME_STATUS_LABELS: Record<SchemeStatus, string> = {
   [SchemeStatus.CANCELLED]: 'Cancelled',
   [SchemeStatus.MATURED]: 'Matured',
   [SchemeStatus.CLOSED]: 'Closed',
-};
+}
 
 /**
  * Scheme Status Colors
@@ -287,7 +287,7 @@ export const SCHEME_STATUS_COLORS: Record<SchemeStatus, string> = {
   [SchemeStatus.CANCELLED]: 'red',
   [SchemeStatus.MATURED]: 'purple',
   [SchemeStatus.CLOSED]: 'gray',
-};
+}
 
 // ============================================================================
 // ORGANIZATION/SHOP STATUS
@@ -315,7 +315,7 @@ export const ORGANIZATION_STATUS_LABELS: Record<OrganizationStatus, string> = {
   [OrganizationStatus.TRIAL]: 'Trial',
   [OrganizationStatus.EXPIRED]: 'Expired',
   [OrganizationStatus.PENDING]: 'Pending',
-};
+}
 
 /**
  * Organization Status Colors
@@ -327,7 +327,7 @@ export const ORGANIZATION_STATUS_COLORS: Record<OrganizationStatus, string> = {
   [OrganizationStatus.TRIAL]: 'blue',
   [OrganizationStatus.EXPIRED]: 'orange',
   [OrganizationStatus.PENDING]: 'yellow',
-};
+}
 
 /**
  * Shop Status
@@ -347,7 +347,7 @@ export const SHOP_STATUS_LABELS: Record<ShopStatus, string> = {
   [ShopStatus.INACTIVE]: 'Inactive',
   [ShopStatus.CLOSED]: 'Closed',
   [ShopStatus.MAINTENANCE]: 'Under Maintenance',
-};
+}
 
 /**
  * Shop Status Colors
@@ -357,7 +357,7 @@ export const SHOP_STATUS_COLORS: Record<ShopStatus, string> = {
   [ShopStatus.INACTIVE]: 'gray',
   [ShopStatus.CLOSED]: 'red',
   [ShopStatus.MAINTENANCE]: 'yellow',
-};
+}
 
 // ============================================================================
 // SUBSCRIPTION STATUS
@@ -387,7 +387,7 @@ export const SUBSCRIPTION_STATUS_LABELS: Record<SubscriptionStatus, string> = {
   [SubscriptionStatus.SUSPENDED]: 'Suspended',
   [SubscriptionStatus.PAST_DUE]: 'Past Due',
   [SubscriptionStatus.PENDING]: 'Pending',
-};
+}
 
 /**
  * Subscription Status Colors
@@ -400,7 +400,7 @@ export const SUBSCRIPTION_STATUS_COLORS: Record<SubscriptionStatus, string> = {
   [SubscriptionStatus.SUSPENDED]: 'orange',
   [SubscriptionStatus.PAST_DUE]: 'yellow',
   [SubscriptionStatus.PENDING]: 'blue',
-};
+}
 
 // ============================================================================
 // TRANSACTION STATUS
@@ -428,7 +428,7 @@ export const TRANSACTION_STATUS_LABELS: Record<TransactionStatus, string> = {
   [TransactionStatus.FAILED]: 'Failed',
   [TransactionStatus.CANCELLED]: 'Cancelled',
   [TransactionStatus.REFUNDED]: 'Refunded',
-};
+}
 
 /**
  * Transaction Status Colors
@@ -440,7 +440,7 @@ export const TRANSACTION_STATUS_COLORS: Record<TransactionStatus, string> = {
   [TransactionStatus.FAILED]: 'red',
   [TransactionStatus.CANCELLED]: 'gray',
   [TransactionStatus.REFUNDED]: 'purple',
-};
+}
 
 // ============================================================================
 // NOTIFICATION STATUS
@@ -462,7 +462,7 @@ export const NOTIFICATION_STATUS_LABELS: Record<NotificationStatus, string> = {
   [NotificationStatus.UNREAD]: 'Unread',
   [NotificationStatus.READ]: 'Read',
   [NotificationStatus.ARCHIVED]: 'Archived',
-};
+}
 
 // ============================================================================
 // ACTIVITY LOG STATUS
@@ -486,7 +486,7 @@ export const ACTIVITY_STATUS_LABELS: Record<ActivityStatus, string> = {
   [ActivityStatus.FAILED]: 'Failed',
   [ActivityStatus.PENDING]: 'Pending',
   [ActivityStatus.WARNING]: 'Warning',
-};
+}
 
 /**
  * Activity Status Colors
@@ -496,7 +496,7 @@ export const ACTIVITY_STATUS_COLORS: Record<ActivityStatus, string> = {
   [ActivityStatus.FAILED]: 'red',
   [ActivityStatus.PENDING]: 'yellow',
   [ActivityStatus.WARNING]: 'orange',
-};
+}
 
 // ============================================================================
 // APPROVAL STATUS
@@ -520,7 +520,7 @@ export const APPROVAL_STATUS_LABELS: Record<ApprovalStatus, string> = {
   [ApprovalStatus.APPROVED]: 'Approved',
   [ApprovalStatus.REJECTED]: 'Rejected',
   [ApprovalStatus.REVISION_REQUIRED]: 'Revision Required',
-};
+}
 
 /**
  * Approval Status Colors
@@ -530,7 +530,7 @@ export const APPROVAL_STATUS_COLORS: Record<ApprovalStatus, string> = {
   [ApprovalStatus.APPROVED]: 'green',
   [ApprovalStatus.REJECTED]: 'red',
   [ApprovalStatus.REVISION_REQUIRED]: 'orange',
-};
+}
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -554,9 +554,9 @@ export function getStatusLabel(status: string, type: string): string {
     notification: NOTIFICATION_STATUS_LABELS,
     activity: ACTIVITY_STATUS_LABELS,
     approval: APPROVAL_STATUS_LABELS,
-  };
+  }
 
-  return labelMaps[type]?.[status] || status;
+  return labelMaps[type]?.[status] || status
 }
 
 /**
@@ -576,9 +576,9 @@ export function getStatusColor(status: string, type: string): string {
     transaction: TRANSACTION_STATUS_COLORS,
     activity: ACTIVITY_STATUS_COLORS,
     approval: APPROVAL_STATUS_COLORS,
-  };
+  }
 
-  return colorMaps[type]?.[status] || 'gray';
+  return colorMaps[type]?.[status] || 'gray'
 }
 
 /**
@@ -598,9 +598,9 @@ export function isActiveStatus(status: string): boolean {
     TransactionStatus.COMPLETED,
     ActivityStatus.SUCCESS,
     ApprovalStatus.APPROVED,
-  ];
+  ]
 
-  return activeStatuses.includes(status as any);
+  return activeStatuses.includes(status as any)
 }
 
 /**
@@ -621,9 +621,9 @@ export function isErrorStatus(status: string): boolean {
     TransactionStatus.FAILED,
     ActivityStatus.FAILED,
     ApprovalStatus.REJECTED,
-  ];
+  ]
 
-  return errorStatuses.includes(status as any);
+  return errorStatuses.includes(status as any)
 }
 
 /**
@@ -642,9 +642,9 @@ export function isPendingStatus(status: string): boolean {
     TransactionStatus.PENDING,
     ActivityStatus.PENDING,
     ApprovalStatus.PENDING,
-  ];
+  ]
 
-  return pendingStatuses.includes(status as any);
+  return pendingStatuses.includes(status as any)
 }
 
 // ============================================================================
@@ -702,4 +702,4 @@ export default {
   isActiveStatus,
   isErrorStatus,
   isPendingStatus,
-};
+}

@@ -6,17 +6,18 @@
 /**
  * Base API URL - should come from environment variables
  */
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
 
 /**
  * API version prefix
  */
-export const API_VERSION = '/api/v1';
+export const API_VERSION = '/api/v1'
 
 /**
  * Complete base URL with version
  */
-export const API_URL = `${API_BASE_URL}${API_VERSION}`;
+export const API_URL = `${API_BASE_URL}${API_VERSION}`
 
 // ============================================================================
 // AUTHENTICATION ENDPOINTS
@@ -49,7 +50,7 @@ export const AUTH_ENDPOINTS = {
   // Sessions
   GET_SESSIONS: `${API_URL}/auth/sessions`,
   REVOKE_SESSION: (tokenId: string) => `${API_URL}/auth/sessions/${tokenId}`,
-} as const;
+} as const
 
 // ============================================================================
 // ORGANIZATION ENDPOINTS
@@ -58,7 +59,7 @@ export const AUTH_ENDPOINTS = {
 export const ORGANIZATION_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/organizations`,
-  
+
   // CRUD Operations
   LIST: `${API_URL}/organizations`,
   CREATE: `${API_URL}/organizations`,
@@ -72,12 +73,13 @@ export const ORGANIZATION_ENDPOINTS = {
   GET_USERS: (id: string) => `${API_URL}/organizations/${id}/users`,
 
   // Subscription & Billing
-  UPDATE_SUBSCRIPTION: (id: string) => `${API_URL}/organizations/${id}/subscription`,
+  UPDATE_SUBSCRIPTION: (id: string) =>
+    `${API_URL}/organizations/${id}/subscription`,
   GET_USAGE_STATS: (id: string) => `${API_URL}/organizations/${id}/usage`,
-  
+
   // Settings
   UPDATE_SETTINGS: (id: string) => `${API_URL}/organizations/${id}/settings`,
-} as const;
+} as const
 
 // ============================================================================
 // SHOP ENDPOINTS
@@ -86,7 +88,7 @@ export const ORGANIZATION_ENDPOINTS = {
 export const SHOP_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/shops`,
-  
+
   // CRUD Operations
   LIST: `${API_URL}/shops`,
   CREATE: `${API_URL}/shops`,
@@ -99,10 +101,10 @@ export const SHOP_ENDPOINTS = {
   GET_STATS: (id: string) => `${API_URL}/shops/${id}/stats`,
   GET_USERS: (id: string) => `${API_URL}/shops/${id}/users`,
   GET_INVENTORY: (id: string) => `${API_URL}/shops/${id}/inventory`,
-  
+
   // Settings
   UPDATE_SETTINGS: (id: string) => `${API_URL}/shops/${id}/settings`,
-} as const;
+} as const
 
 // ============================================================================
 // USER ENDPOINTS
@@ -111,27 +113,27 @@ export const SHOP_ENDPOINTS = {
 export const USER_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/users`,
-  
+
   // CRUD Operations
   LIST: `${API_URL}/users`,
   CREATE: `${API_URL}/users`,
   GET_BY_ID: (id: string) => `${API_URL}/users/${id}`,
   UPDATE: (id: string) => `${API_URL}/users/${id}`,
   DELETE: (id: string) => `${API_URL}/users/${id}`,
-  
+
   // User Management
   ACTIVATE: (id: string) => `${API_URL}/users/${id}/activate`,
   DEACTIVATE: (id: string) => `${API_URL}/users/${id}/deactivate`,
   RESET_PASSWORD: (id: string) => `${API_URL}/users/${id}/reset-password`,
-  
+
   // Access Management
   GET_SHOP_ACCESS: (id: string) => `${API_URL}/users/${id}/shop-access`,
   GRANT_SHOP_ACCESS: (id: string) => `${API_URL}/users/${id}/shop-access`,
-  REVOKE_SHOP_ACCESS: (id: string, accessId: string) => 
+  REVOKE_SHOP_ACCESS: (id: string, accessId: string) =>
     `${API_URL}/users/${id}/shop-access/${accessId}`,
-  UPDATE_PERMISSIONS: (id: string, accessId: string) => 
+  UPDATE_PERMISSIONS: (id: string, accessId: string) =>
     `${API_URL}/users/${id}/shop-access/${accessId}/permissions`,
-} as const;
+} as const
 
 // ============================================================================
 // CUSTOMER ENDPOINTS
@@ -140,29 +142,29 @@ export const USER_ENDPOINTS = {
 export const CUSTOMER_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/customers`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/customers`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/customers`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}`,
-  DELETE: (shopId: string, id: string) => 
+  DELETE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}`,
-  
+
   // Customer Management
-  GET_ORDERS: (shopId: string, id: string) => 
+  GET_ORDERS: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}/orders`,
-  GET_TRANSACTIONS: (shopId: string, id: string) => 
+  GET_TRANSACTIONS: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}/transactions`,
-  GET_SCHEMES: (shopId: string, id: string) => 
+  GET_SCHEMES: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/customers/${id}/schemes`,
-  
+
   // Search & Filter
   SEARCH: (shopId: string) => `${API_URL}/shops/${shopId}/customers/search`,
   EXPORT: (shopId: string) => `${API_URL}/shops/${shopId}/customers/export`,
-} as const;
+} as const
 
 // ============================================================================
 // SUPPLIER ENDPOINTS
@@ -171,23 +173,23 @@ export const CUSTOMER_ENDPOINTS = {
 export const SUPPLIER_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/suppliers`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/suppliers`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/suppliers`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/suppliers/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/suppliers/${id}`,
-  DELETE: (shopId: string, id: string) => 
+  DELETE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/suppliers/${id}`,
-  
+
   // Supplier Management
-  GET_PURCHASES: (shopId: string, id: string) => 
+  GET_PURCHASES: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/suppliers/${id}/purchases`,
-  GET_PAYMENTS: (shopId: string, id: string) => 
+  GET_PAYMENTS: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/suppliers/${id}/payments`,
-} as const;
+} as const
 
 // ============================================================================
 // PRODUCT/INVENTORY ENDPOINTS
@@ -196,34 +198,37 @@ export const SUPPLIER_ENDPOINTS = {
 export const PRODUCT_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/products`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/products`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/products`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}`,
-  DELETE: (shopId: string, id: string) => 
+  DELETE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}`,
-  
+
   // Inventory Management
-  ADJUST_STOCK: (shopId: string, id: string) => 
+  ADJUST_STOCK: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}/adjust-stock`,
-  TRANSFER_STOCK: (shopId: string, id: string) => 
+  TRANSFER_STOCK: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}/transfer`,
-  GET_STOCK_HISTORY: (shopId: string, id: string) => 
+  GET_STOCK_HISTORY: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/products/${id}/stock-history`,
-  
+
   // Bulk Operations
-  BULK_IMPORT: (shopId: string) => `${API_URL}/shops/${shopId}/products/bulk-import`,
-  BULK_UPDATE: (shopId: string) => `${API_URL}/shops/${shopId}/products/bulk-update`,
+  BULK_IMPORT: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/products/bulk-import`,
+  BULK_UPDATE: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/products/bulk-update`,
   EXPORT: (shopId: string) => `${API_URL}/shops/${shopId}/products/export`,
-  
+
   // Search & Filter
   SEARCH: (shopId: string) => `${API_URL}/shops/${shopId}/products/search`,
-  LOW_STOCK: (shopId: string) => `${API_URL}/shops/${shopId}/products/low-stock`,
-} as const;
+  LOW_STOCK: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/products/low-stock`,
+} as const
 
 // ============================================================================
 // SALES ENDPOINTS
@@ -232,30 +237,33 @@ export const PRODUCT_ENDPOINTS = {
 export const SALE_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/sales`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/sales`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/sales`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}`,
-  CANCEL: (shopId: string, id: string) => 
+  CANCEL: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}/cancel`,
-  
+
   // Invoice Management
-  GET_INVOICE: (shopId: string, id: string) => 
+  GET_INVOICE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}/invoice`,
-  DOWNLOAD_INVOICE: (shopId: string, id: string) => 
+  DOWNLOAD_INVOICE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}/invoice/download`,
-  EMAIL_INVOICE: (shopId: string, id: string) => 
+  EMAIL_INVOICE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/sales/${id}/invoice/email`,
-  
+
   // Reports
-  DAILY_REPORT: (shopId: string) => `${API_URL}/shops/${shopId}/sales/reports/daily`,
-  MONTHLY_REPORT: (shopId: string) => `${API_URL}/shops/${shopId}/sales/reports/monthly`,
-  CUSTOM_REPORT: (shopId: string) => `${API_URL}/shops/${shopId}/sales/reports/custom`,
-} as const;
+  DAILY_REPORT: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/sales/reports/daily`,
+  MONTHLY_REPORT: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/sales/reports/monthly`,
+  CUSTOM_REPORT: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/sales/reports/custom`,
+} as const
 
 // ============================================================================
 // PURCHASE ENDPOINTS
@@ -264,20 +272,20 @@ export const SALE_ENDPOINTS = {
 export const PURCHASE_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/purchases`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/purchases`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/purchases`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/purchases/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/purchases/${id}`,
-  CANCEL: (shopId: string, id: string) => 
+  CANCEL: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/purchases/${id}/cancel`,
-  
+
   // Reports
   REPORTS: (shopId: string) => `${API_URL}/shops/${shopId}/purchases/reports`,
-} as const;
+} as const
 
 // ============================================================================
 // PAYMENT ENDPOINTS
@@ -286,23 +294,23 @@ export const PURCHASE_ENDPOINTS = {
 export const PAYMENT_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/payments`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/payments`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/payments`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/payments/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/payments/${id}`,
-  DELETE: (shopId: string, id: string) => 
+  DELETE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/payments/${id}`,
-  
+
   // Payment Management
-  VERIFY: (shopId: string, id: string) => 
+  VERIFY: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/payments/${id}/verify`,
-  GET_RECEIPT: (shopId: string, id: string) => 
+  GET_RECEIPT: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/payments/${id}/receipt`,
-} as const;
+} as const
 
 // ============================================================================
 // ORDER/SCHEME ENDPOINTS
@@ -311,44 +319,44 @@ export const PAYMENT_ENDPOINTS = {
 export const ORDER_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/orders`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/orders`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/orders`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/orders/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/orders/${id}`,
-  CANCEL: (shopId: string, id: string) => 
+  CANCEL: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/orders/${id}/cancel`,
-  
+
   // Order Status
-  UPDATE_STATUS: (shopId: string, id: string) => 
+  UPDATE_STATUS: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/orders/${id}/status`,
-  TRACK: (shopId: string, id: string) => 
+  TRACK: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/orders/${id}/track`,
-} as const;
+} as const
 
 export const SCHEME_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/schemes`,
-  
+
   // CRUD Operations
   LIST: (shopId: string) => `${API_URL}/shops/${shopId}/schemes`,
   CREATE: (shopId: string) => `${API_URL}/shops/${shopId}/schemes`,
-  GET_BY_ID: (shopId: string, id: string) => 
+  GET_BY_ID: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/schemes/${id}`,
-  UPDATE: (shopId: string, id: string) => 
+  UPDATE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/schemes/${id}`,
-  CLOSE: (shopId: string, id: string) => 
+  CLOSE: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/schemes/${id}/close`,
-  
+
   // Installments
-  ADD_INSTALLMENT: (shopId: string, id: string) => 
+  ADD_INSTALLMENT: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/schemes/${id}/installments`,
-  GET_INSTALLMENTS: (shopId: string, id: string) => 
+  GET_INSTALLMENTS: (shopId: string, id: string) =>
     `${API_URL}/shops/${shopId}/schemes/${id}/installments`,
-} as const;
+} as const
 
 // ============================================================================
 // METAL RATE ENDPOINTS
@@ -357,16 +365,18 @@ export const SCHEME_ENDPOINTS = {
 export const METAL_RATE_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/metal-rates`,
-  
+
   // Current Rates
-  GET_CURRENT: (shopId: string) => `${API_URL}/shops/${shopId}/metal-rates/current`,
+  GET_CURRENT: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/metal-rates/current`,
   UPDATE_RATES: (shopId: string) => `${API_URL}/shops/${shopId}/metal-rates`,
-  
+
   // History
-  GET_HISTORY: (shopId: string) => `${API_URL}/shops/${shopId}/metal-rates/history`,
-  GET_BY_DATE: (shopId: string, date: string) => 
+  GET_HISTORY: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/metal-rates/history`,
+  GET_BY_DATE: (shopId: string, date: string) =>
     `${API_URL}/shops/${shopId}/metal-rates/date/${date}`,
-} as const;
+} as const
 
 // ============================================================================
 // REPORTS & ANALYTICS ENDPOINTS
@@ -374,29 +384,39 @@ export const METAL_RATE_ENDPOINTS = {
 
 export const REPORT_ENDPOINTS = {
   // Dashboard
-  DASHBOARD_STATS: (shopId: string) => `${API_URL}/shops/${shopId}/reports/dashboard`,
-  
+  DASHBOARD_STATS: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/dashboard`,
+
   // Sales Reports
-  SALES_SUMMARY: (shopId: string) => `${API_URL}/shops/${shopId}/reports/sales/summary`,
-  SALES_BY_CATEGORY: (shopId: string) => `${API_URL}/shops/${shopId}/reports/sales/by-category`,
-  SALES_BY_CUSTOMER: (shopId: string) => `${API_URL}/shops/${shopId}/reports/sales/by-customer`,
-  
+  SALES_SUMMARY: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/sales/summary`,
+  SALES_BY_CATEGORY: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/sales/by-category`,
+  SALES_BY_CUSTOMER: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/sales/by-customer`,
+
   // Purchase Reports
-  PURCHASE_SUMMARY: (shopId: string) => `${API_URL}/shops/${shopId}/reports/purchase/summary`,
-  
+  PURCHASE_SUMMARY: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/purchase/summary`,
+
   // Inventory Reports
-  INVENTORY_SUMMARY: (shopId: string) => `${API_URL}/shops/${shopId}/reports/inventory/summary`,
-  STOCK_VALUATION: (shopId: string) => `${API_URL}/shops/${shopId}/reports/inventory/valuation`,
-  
+  INVENTORY_SUMMARY: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/inventory/summary`,
+  STOCK_VALUATION: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/inventory/valuation`,
+
   // Financial Reports
-  PROFIT_LOSS: (shopId: string) => `${API_URL}/shops/${shopId}/reports/financial/profit-loss`,
-  BALANCE_SHEET: (shopId: string) => `${API_URL}/shops/${shopId}/reports/financial/balance-sheet`,
-  CASH_FLOW: (shopId: string) => `${API_URL}/shops/${shopId}/reports/financial/cash-flow`,
-  
+  PROFIT_LOSS: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/financial/profit-loss`,
+  BALANCE_SHEET: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/financial/balance-sheet`,
+  CASH_FLOW: (shopId: string) =>
+    `${API_URL}/shops/${shopId}/reports/financial/cash-flow`,
+
   // Custom Reports
   CUSTOM: (shopId: string) => `${API_URL}/shops/${shopId}/reports/custom`,
   EXPORT: (shopId: string) => `${API_URL}/shops/${shopId}/reports/export`,
-} as const;
+} as const
 
 // ============================================================================
 // ACTIVITY LOG ENDPOINTS
@@ -405,15 +425,16 @@ export const REPORT_ENDPOINTS = {
 export const ACTIVITY_LOG_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/activity-logs`,
-  
+
   // Get Logs
   GET_SHOP_LOGS: (shopId: string) => `${API_URL}/shops/${shopId}/activity-logs`,
   GET_USER_LOGS: (userId: string) => `${API_URL}/users/${userId}/activity-logs`,
-  GET_ORGANIZATION_LOGS: (orgId: string) => `${API_URL}/organizations/${orgId}/activity-logs`,
-  
+  GET_ORGANIZATION_LOGS: (orgId: string) =>
+    `${API_URL}/organizations/${orgId}/activity-logs`,
+
   // Export
   EXPORT: (shopId: string) => `${API_URL}/shops/${shopId}/activity-logs/export`,
-} as const;
+} as const
 
 // ============================================================================
 // NOTIFICATION ENDPOINTS
@@ -422,20 +443,20 @@ export const ACTIVITY_LOG_ENDPOINTS = {
 export const NOTIFICATION_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/notifications`,
-  
+
   // Get Notifications
   LIST: `${API_URL}/notifications`,
   GET_UNREAD: `${API_URL}/notifications/unread`,
   GET_UNREAD_COUNT: `${API_URL}/notifications/unread/count`,
-  
+
   // Mark as Read
   MARK_AS_READ: (id: string) => `${API_URL}/notifications/${id}/read`,
   MARK_ALL_AS_READ: `${API_URL}/notifications/read-all`,
-  
+
   // Delete
   DELETE: (id: string) => `${API_URL}/notifications/${id}`,
   DELETE_ALL: `${API_URL}/notifications/delete-all`,
-} as const;
+} as const
 
 // ============================================================================
 // FILE UPLOAD ENDPOINTS
@@ -444,15 +465,15 @@ export const NOTIFICATION_ENDPOINTS = {
 export const UPLOAD_ENDPOINTS = {
   // Base
   BASE: `${API_URL}/upload`,
-  
+
   // Upload Types
   IMAGE: `${API_URL}/upload/image`,
   DOCUMENT: `${API_URL}/upload/document`,
   BULK_CSV: `${API_URL}/upload/bulk-csv`,
-  
+
   // Delete
   DELETE: (fileId: string) => `${API_URL}/upload/${fileId}`,
-} as const;
+} as const
 
 // ============================================================================
 // EXPORT ALL ENDPOINTS
@@ -476,16 +497,16 @@ export const API_ENDPOINTS = {
   ACTIVITY_LOG: ACTIVITY_LOG_ENDPOINTS,
   NOTIFICATION: NOTIFICATION_ENDPOINTS,
   UPLOAD: UPLOAD_ENDPOINTS,
-} as const;
+} as const
 
 // ============================================================================
 // TYPE EXPORTS FOR TYPESCRIPT
 // ============================================================================
 
-export type ApiEndpoints = typeof API_ENDPOINTS;
-export type AuthEndpoints = typeof AUTH_ENDPOINTS;
-export type OrganizationEndpoints = typeof ORGANIZATION_ENDPOINTS;
-export type ShopEndpoints = typeof SHOP_ENDPOINTS;
-export type UserEndpoints = typeof USER_ENDPOINTS;
+export type ApiEndpoints = typeof API_ENDPOINTS
+export type AuthEndpoints = typeof AUTH_ENDPOINTS
+export type OrganizationEndpoints = typeof ORGANIZATION_ENDPOINTS
+export type ShopEndpoints = typeof SHOP_ENDPOINTS
+export type UserEndpoints = typeof USER_ENDPOINTS
 
-export default API_ENDPOINTS;
+export default API_ENDPOINTS

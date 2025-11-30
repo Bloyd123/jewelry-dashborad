@@ -3,9 +3,9 @@
 // Session storage service instance
 // ============================================================================
 
-import createStorageService from './storageService';
+import createStorageService from './storageService'
 
-const sessionStorageService = createStorageService(sessionStorage);
+const sessionStorageService = createStorageService(sessionStorage)
 
 export const {
   setItem,
@@ -18,6 +18,6 @@ export const {
   hasKey,
   setItemWithExpiry,
   getItemWithExpiry,
-} = sessionStorageService;
+} = sessionStorageService
 
-export default sessionStorageService;
+export default sessionStorageService

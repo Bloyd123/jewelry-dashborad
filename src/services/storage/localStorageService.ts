@@ -3,9 +3,9 @@
 // Local storage service instance
 // ============================================================================
 
-import createStorageService from './storageService';
+import createStorageService from './storageService'
 
-const localStorageService = createStorageService(localStorage);
+const localStorageService = createStorageService(localStorage)
 
 export const {
   setItem,
@@ -18,6 +18,6 @@ export const {
   hasKey,
   setItemWithExpiry,
   getItemWithExpiry,
-} = localStorageService;
+} = localStorageService
 
-export default localStorageService;
+export default localStorageService

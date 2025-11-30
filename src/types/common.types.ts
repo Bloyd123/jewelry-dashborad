@@ -10,114 +10,115 @@
 /**
  * Common ID type used throughout the application
  */
-export type ID = string;
+export type ID = string
 
 /**
  * Common timestamp types
  */
-export type Timestamp = Date | string;
+export type Timestamp = Date | string
 
 /**
  * Common nullable type
  */
-export type Nullable<T> = T | null;
+export type Nullable<T> = T | null
 
 /**
  * Common optional type
  */
-export type Optional<T> = T | undefined;
+export type Optional<T> = T | undefined
 
 /**
  * Make all properties of T optional recursively
  */
 export type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P]
+}
 
 /**
  * Make all properties of T required recursively
  */
 export type DeepRequired<T> = {
-  [P in keyof T]-?: T[P] extends object ? DeepRequired<T[P]> : T[P];
-};
+  [P in keyof T]-?: T[P] extends object ? DeepRequired<T[P]> : T[P]
+}
 
 /**
  * Extract keys from T that are of type U
  */
 export type KeysOfType<T, U> = {
-  [K in keyof T]: T[K] extends U ? K : never;
-}[keyof T];
+  [K in keyof T]: T[K] extends U ? K : never
+}[keyof T]
 
 /**
  * Omit keys K from T recursively
  */
 export type DeepOmit<T, K extends keyof any> = T extends object
   ? {
-      [P in Exclude<keyof T, K>]: DeepOmit<T[P], K>;
+      [P in Exclude<keyof T, K>]: DeepOmit<T[P], K>
     }
-  : T;
+  : T
 
 /**
  * Pick keys K from T recursively
  */
 export type DeepPick<T, K extends keyof any> = T extends object
   ? {
-      [P in Extract<keyof T, K>]: DeepPick<T[P], K>;
+      [P in Extract<keyof T, K>]: DeepPick<T[P], K>
     }
-  : T;
+  : T
 
 /**
  * Make specific keys K of T required
  */
-export type RequireKeys<T, K extends keyof T> = T & Required<Pick<T, K>>;
+export type RequireKeys<T, K extends keyof T> = T & Required<Pick<T, K>>
 
 /**
  * Make specific keys K of T optional
  */
-export type OptionalKeys<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+export type OptionalKeys<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>
 
 /**
  * Extract all string literal keys from T
  */
-export type StringKeys<T> = Extract<keyof T, string>;
+export type StringKeys<T> = Extract<keyof T, string>
 
 /**
  * Extract all number literal keys from T
  */
-export type NumberKeys<T> = Extract<keyof T, number>;
+export type NumberKeys<T> = Extract<keyof T, number>
 
 /**
  * Merge two types, with properties from B overriding A
  */
-export type Merge<A, B> = Omit<A, keyof B> & B;
+export type Merge<A, B> = Omit<A, keyof B> & B
 
 /**
  * Create a union of all values in an object type
  */
-export type ValueOf<T> = T[keyof T];
+export type ValueOf<T> = T[keyof T]
 
 /**
  * Create a type with all properties of T set to never
  */
 export type Never<T> = {
-  [P in keyof T]?: never;
-};
+  [P in keyof T]?: never
+}
 
 /**
  * XOR type - either A or B but not both
  */
-export type XOR<A, B> = (A | B) extends object
+export type XOR<A, B> = A | B extends object
   ? (Without<A, B> & B) | (Without<B, A> & A)
-  : A | B;
+  : A | B
 
-type Without<A, B> = { [P in Exclude<keyof A, keyof B>]?: never };
+type Without<A, B> = { [P in Exclude<keyof A, keyof B>]?: never }
 
 /**
  * Prettify type - expands type for better IDE display
  */
 export type Prettify<T> = {
-  [K in keyof T]: T[K];
-} & {};
+  [K in keyof T]: T[K]
+} & {}
 
 // ============================================================================
 // UTILITY TYPES FOR FORMS
@@ -131,46 +132,46 @@ export type FormValues<T> = {
     ? FormValues<T[P]>
     : T[P] extends (infer U)[]
       ? string
-      : string;
-};
+      : string
+}
 
 /**
  * Form field state
  */
 export interface FormField<T = string> {
-  value: T;
-  error?: string;
-  touched: boolean;
-  dirty: boolean;
+  value: T
+  error?: string
+  touched: boolean
+  dirty: boolean
 }
 
 /**
  * Form state wrapper
  */
 export type FormState<T> = {
-  [P in keyof T]: FormField<T[P]>;
-};
+  [P in keyof T]: FormField<T[P]>
+}
 
 /**
  * Form field errors
  */
 export type FormErrors<T> = {
-  [P in keyof T]?: T[P] extends object ? FormErrors<T[P]> : string;
-};
+  [P in keyof T]?: T[P] extends object ? FormErrors<T[P]> : string
+}
 
 /**
  * Form touched state
  */
 export type FormTouched<T> = {
-  [P in keyof T]?: T[P] extends object ? FormTouched<T[P]> : boolean;
-};
+  [P in keyof T]?: T[P] extends object ? FormTouched<T[P]> : boolean
+}
 
 /**
  * Form validation result
  */
 export interface FormValidationResult<T = any> {
-  isValid: boolean;
-  errors: FormErrors<T>;
+  isValid: boolean
+  errors: FormErrors<T>
 }
 
 // ============================================================================
@@ -181,45 +182,43 @@ export interface FormValidationResult<T = any> {
  * Success response wrapper
  */
 export type SuccessApiResponse<T> = {
-  success: true;
-  data: T;
-  message?: string;
-  timestamp?: string;
-};
+  success: true
+  data: T
+  message?: string
+  timestamp?: string
+}
 
 /**
  * Error response wrapper
  */
 export type ErrorApiResponse = {
-  success: false;
-  message: string;
-  error?: string;
+  success: false
+  message: string
+  error?: string
   errors?: Array<{
-    field: string;
-    message: string;
-    value?: any;
-  }>;
-  timestamp?: string;
-};
+    field: string
+    message: string
+    value?: any
+  }>
+  timestamp?: string
+}
 
 /**
  * Union of success and error responses
  */
-export type ApiResponseUnion<T> = SuccessApiResponse<T> | ErrorApiResponse;
+export type ApiResponseUnion<T> = SuccessApiResponse<T> | ErrorApiResponse
 
 /**
  * Async function return type
  */
-export type AsyncReturnType<T extends (...args: any) => Promise<any>> = T extends (
-  ...args: any
-) => Promise<infer R>
-  ? R
-  : never;
+export type AsyncReturnType<T extends (...args: any) => Promise<any>> =
+  T extends (...args: any) => Promise<infer R> ? R : never
 
 /**
  * Promise return type
  */
-export type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
+export type PromiseType<T extends Promise<any>> =
+  T extends Promise<infer U> ? U : never
 
 // ============================================================================
 // UTILITY TYPES FOR STATE MANAGEMENT
@@ -229,75 +228,75 @@ export type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U
  * Loading state
  */
 export interface LoadingState {
-  isLoading: boolean;
-  error?: string | null;
+  isLoading: boolean
+  error?: string | null
 }
 
 /**
  * Async state wrapper
  */
 export interface AsyncState<T> extends LoadingState {
-  data: T | null;
+  data: T | null
 }
 
 /**
  * Pagination state
  */
 export interface PaginationState {
-  page: number;
-  limit: number;
-  total: number;
-  pages: number;
-  hasNextPage?: boolean;
-  hasPrevPage?: boolean;
+  page: number
+  limit: number
+  total: number
+  pages: number
+  hasNextPage?: boolean
+  hasPrevPage?: boolean
 }
 
 /**
  * List state with pagination
  */
 export interface ListState<T> extends AsyncState<T[]> {
-  pagination: PaginationState;
+  pagination: PaginationState
 }
 
 /**
  * Filter state
  */
 export interface FilterState<T = any> {
-  filters: T;
-  search: string;
-  sort: string;
-  order: 'asc' | 'desc';
+  filters: T
+  search: string
+  sort: string
+  order: 'asc' | 'desc'
 }
 
 /**
  * Entity state (for Redux/state management)
  */
 export interface EntityState<T> {
-  ids: string[];
-  entities: Record<string, T>;
-  loading: boolean;
-  error: string | null;
-  selectedId: string | null;
+  ids: string[]
+  entities: Record<string, T>
+  loading: boolean
+  error: string | null
+  selectedId: string | null
 }
 
 /**
  * Request state (for tracking API requests)
  */
 export interface RequestState {
-  loading: boolean;
-  error: string | null;
-  success: boolean;
-  timestamp?: number;
+  loading: boolean
+  error: string | null
+  success: boolean
+  timestamp?: number
 }
 
 /**
  * Cache state
  */
 export interface CacheState<T> {
-  data: T | null;
-  timestamp: number;
-  expiresAt: number;
-  isStale: boolean;
+  data: T | null
+  timestamp: number
+  expiresAt: number
+  isStale: boolean
 }
 
 // ============================================================================
@@ -313,12 +312,12 @@ export const HTTP_STATUS = {
   CREATED: 201,
   ACCEPTED: 202,
   NO_CONTENT: 204,
-  
+
   // Redirection
   MOVED_PERMANENTLY: 301,
   FOUND: 302,
   NOT_MODIFIED: 304,
-  
+
   // Client Errors
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
@@ -329,20 +328,19 @@ export const HTTP_STATUS = {
   GONE: 410,
   UNPROCESSABLE_ENTITY: 422,
   TOO_MANY_REQUESTS: 429,
-  
+
   // Server Errors
   INTERNAL_SERVER_ERROR: 500,
   NOT_IMPLEMENTED: 501,
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
   GATEWAY_TIMEOUT: 504,
-} as const;
+} as const
 
 /**
  * HTTP status code type
  */
-export type HttpStatusCode = typeof HTTP_STATUS[keyof typeof HTTP_STATUS];
-
+export type HttpStatusCode = (typeof HTTP_STATUS)[keyof typeof HTTP_STATUS]
 
 /**
  * Default pagination values
@@ -352,7 +350,7 @@ export const DEFAULT_PAGINATION = {
   LIMIT: 10,
   MAX_LIMIT: 100,
   MIN_LIMIT: 1,
-} as const;
+} as const
 
 /**
  * Date format constants
@@ -367,12 +365,12 @@ export const DATE_FORMATS = {
   ISO: 'YYYY-MM-DDTHH:mm:ss.SSSZ',
   MONTH_YEAR: 'MM/YYYY',
   YEAR: 'YYYY',
-} as const;
+} as const
 
 /**
  * Date format type
  */
-export type DateFormatType = typeof DATE_FORMATS[keyof typeof DATE_FORMATS];
+export type DateFormatType = (typeof DATE_FORMATS)[keyof typeof DATE_FORMATS]
 
 /**
  * Storage keys (for localStorage/sessionStorage)
@@ -387,12 +385,12 @@ export const STORAGE_KEYS = {
   PREFERENCES: 'preferences',
   SIDEBAR_COLLAPSED: 'sidebar_collapsed',
   RECENT_SEARCHES: 'recent_searches',
-} as const;
+} as const
 
 /**
  * Storage key type
  */
-export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS]
 
 /**
  * HTTP methods
@@ -405,12 +403,12 @@ export const HTTP_METHODS = {
   DELETE: 'DELETE',
   OPTIONS: 'OPTIONS',
   HEAD: 'HEAD',
-} as const;
+} as const
 
 /**
  * HTTP method type
  */
-export type HttpMethod = typeof HTTP_METHODS[keyof typeof HTTP_METHODS];
+export type HttpMethod = (typeof HTTP_METHODS)[keyof typeof HTTP_METHODS]
 
 /**
  * Sort order constants
@@ -420,12 +418,12 @@ export const SORT_ORDER = {
   DESC: 'desc',
   ASCENDING: '1',
   DESCENDING: '-1',
-} as const;
+} as const
 
 /**
  * Sort order type
  */
-export type SortOrder = typeof SORT_ORDER[keyof typeof SORT_ORDER];
+export type SortOrder = (typeof SORT_ORDER)[keyof typeof SORT_ORDER]
 
 /**
  * File size limits (in bytes)
@@ -435,17 +433,25 @@ export const FILE_SIZE_LIMITS = {
   DOCUMENT: 10 * 1024 * 1024, // 10MB
   VIDEO: 100 * 1024 * 1024, // 100MB
   EXCEL: 20 * 1024 * 1024, // 20MB
-} as const;
+} as const
 
 /**
  * Accepted file types
  */
 export const ACCEPTED_FILE_TYPES = {
   IMAGES: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
-  DOCUMENTS: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-  SPREADSHEETS: ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'],
+  DOCUMENTS: [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  ],
+  SPREADSHEETS: [
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'text/csv',
+  ],
   ALL: ['*/*'],
-} as const;
+} as const
 
 /**
  * Regex patterns
@@ -463,7 +469,7 @@ export const REGEX_PATTERNS = {
   ALPHA: /^[a-zA-Z]+$/,
   NUMERIC: /^[0-9]+$/,
   PASSWORD: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-} as const;
+} as const
 
 /**
  * Debounce delay constants (in milliseconds)
@@ -473,7 +479,7 @@ export const DEBOUNCE_DELAYS = {
   INPUT: 500,
   RESIZE: 200,
   SCROLL: 100,
-} as const;
+} as const
 
 /**
  * Animation duration constants (in milliseconds)
@@ -483,7 +489,7 @@ export const ANIMATION_DURATION = {
   NORMAL: 300,
   SLOW: 500,
   VERY_SLOW: 1000,
-} as const;
+} as const
 
 /**
  * Breakpoints for responsive design
@@ -495,7 +501,7 @@ export const BREAKPOINTS = {
   LG: 1024,
   XL: 1280,
   XXL: 1536,
-} as const;
+} as const
 
 /**
  * Z-index layers
@@ -509,7 +515,7 @@ export const Z_INDEX = {
   POPOVER: 1060,
   TOOLTIP: 1070,
   NOTIFICATION: 1080,
-} as const;
+} as const
 
 // ============================================================================
 // TYPE GUARD UTILITIES
@@ -519,70 +525,70 @@ export const Z_INDEX = {
  * Check if value is defined (not null or undefined)
  */
 export function isDefined<T>(value: T | null | undefined): value is T {
-  return value !== null && value !== undefined;
+  return value !== null && value !== undefined
 }
 
 /**
  * Check if value is null or undefined
  */
 export function isNullOrUndefined(value: any): value is null | undefined {
-  return value === null || value === undefined;
+  return value === null || value === undefined
 }
 
 /**
  * Check if value is a string
  */
 export function isString(value: any): value is string {
-  return typeof value === 'string';
+  return typeof value === 'string'
 }
 
 /**
  * Check if value is a number
  */
 export function isNumber(value: any): value is number {
-  return typeof value === 'number' && !isNaN(value);
+  return typeof value === 'number' && !isNaN(value)
 }
 
 /**
  * Check if value is a boolean
  */
 export function isBoolean(value: any): value is boolean {
-  return typeof value === 'boolean';
+  return typeof value === 'boolean'
 }
 
 /**
  * Check if value is an object
  */
 export function isObject(value: any): value is object {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
+  return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
 
 /**
  * Check if value is an array
  */
 export function isArray<T = any>(value: any): value is T[] {
-  return Array.isArray(value);
+  return Array.isArray(value)
 }
 
 /**
  * Check if array has items
  */
 export function hasItems<T>(arr: T[] | null | undefined): arr is T[] {
-  return Array.isArray(arr) && arr.length > 0;
+  return Array.isArray(arr) && arr.length > 0
 }
 
 /**
  * Check if object is empty
  */
 export function isEmptyObject(obj: any): boolean {
-  return isObject(obj) && Object.keys(obj).length === 0;
+  return isObject(obj) && Object.keys(obj).length === 0
 }
 
 /**
  * Check if string is empty or whitespace
  */
 export function isEmptyString(str: any): boolean {
-  return !isString(str) || str.trim().length === 0;
+  return !isString(str) || str.trim().length === 0
 }
 
 /**
@@ -592,55 +598,56 @@ export function hasOwnProperty<T extends object>(
   obj: T,
   key: PropertyKey
 ): key is keyof T {
-  return Object.prototype.hasOwnProperty.call(obj, key);
+  return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
 /**
  * Check if value is a function
  */
 export function isFunction(value: any): value is Function {
-  return typeof value === 'function';
+  return typeof value === 'function'
 }
 
 /**
  * Check if value is a Promise
  */
 export function isPromise<T = any>(value: any): value is Promise<T> {
-  return value instanceof Promise || (
-    value !== null &&
-    typeof value === 'object' &&
-    typeof value.then === 'function'
-  );
+  return (
+    value instanceof Promise ||
+    (value !== null &&
+      typeof value === 'object' &&
+      typeof value.then === 'function')
+  )
 }
 
 /**
  * Check if value is a Date
  */
 export function isDate(value: any): value is Date {
-  return value instanceof Date && !isNaN(value.getTime());
+  return value instanceof Date && !isNaN(value.getTime())
 }
 
 /**
  * Check if value is a valid ISO date string
  */
 export function isISODateString(value: any): boolean {
-  if (!isString(value)) return false;
-  const date = new Date(value);
-  return isDate(date) && date.toISOString() === value;
+  if (!isString(value)) return false
+  const date = new Date(value)
+  return isDate(date) && date.toISOString() === value
 }
 
 /**
  * Check if value is a RegExp
  */
 export function isRegExp(value: any): value is RegExp {
-  return value instanceof RegExp;
+  return value instanceof RegExp
 }
 
 /**
  * Check if value is an Error
  */
 export function isError(value: any): value is Error {
-  return value instanceof Error;
+  return value instanceof Error
 }
 
 // ============================================================================
@@ -651,33 +658,33 @@ export function isError(value: any): value is Error {
  * Sleep/delay function
  */
 export function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**
  * Generate unique ID
  */
 export function generateId(prefix: string = 'id'): string {
-  return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
 }
 
 /**
  * Deep clone an object
  */
 export function deepClone<T>(obj: T): T {
-  if (obj === null || typeof obj !== 'object') return obj;
-  if (obj instanceof Date) return new Date(obj.getTime()) as any;
-  if (obj instanceof Array) return obj.map(item => deepClone(item)) as any;
+  if (obj === null || typeof obj !== 'object') return obj
+  if (obj instanceof Date) return new Date(obj.getTime()) as any
+  if (obj instanceof Array) return obj.map(item => deepClone(item)) as any
   if (obj instanceof Object) {
-    const clonedObj = {} as T;
+    const clonedObj = {} as T
     for (const key in obj) {
       if (hasOwnProperty(obj, key)) {
-        clonedObj[key] = deepClone(obj[key]);
+        clonedObj[key] = deepClone(obj[key])
       }
     }
-    return clonedObj;
+    return clonedObj
   }
-  return obj;
+  return obj
 }
 
 /**
@@ -687,22 +694,22 @@ export function deepMerge<T extends object, U extends object>(
   target: T,
   source: U
 ): T & U {
-  const result = { ...target } as T & U;
-  
+  const result = { ...target } as T & U
+
   for (const key in source) {
     if (hasOwnProperty(source, key)) {
-      const sourceValue = source[key];
-      const targetValue = (target as any)[key];
-      
+      const sourceValue = source[key]
+      const targetValue = (target as any)[key]
+
       if (isObject(sourceValue) && isObject(targetValue)) {
-        (result as any)[key] = deepMerge(targetValue, sourceValue);
+        ;(result as any)[key] = deepMerge(targetValue, sourceValue)
       } else {
-        (result as any)[key] = sourceValue;
+        ;(result as any)[key] = sourceValue
       }
     }
   }
-  
-  return result;
+
+  return result
 }
 
 /**
@@ -712,9 +719,9 @@ export function omit<T extends object, K extends keyof T>(
   obj: T,
   keys: K[]
 ): Omit<T, K> {
-  const result = { ...obj };
-  keys.forEach(key => delete result[key]);
-  return result;
+  const result = { ...obj }
+  keys.forEach(key => delete result[key])
+  return result
 }
 
 /**
@@ -724,13 +731,13 @@ export function pick<T extends object, K extends keyof T>(
   obj: T,
   keys: K[]
 ): Pick<T, K> {
-  const result = {} as Pick<T, K>;
+  const result = {} as Pick<T, K>
   keys.forEach(key => {
     if (hasOwnProperty(obj, key)) {
-      result[key] = obj[key];
+      result[key] = obj[key]
     }
-  });
-  return result;
+  })
+  return result
 }
 
 /**
@@ -741,15 +748,15 @@ export function getNestedProperty<T = any>(
   path: string,
   defaultValue?: T
 ): T | undefined {
-  const keys = path.split('.');
-  let result = obj;
-  
+  const keys = path.split('.')
+  let result = obj
+
   for (const key of keys) {
     if (result === null || result === undefined) {
-      return defaultValue;
+      return defaultValue
     }
-    result = result[key];
+    result = result[key]
   }
-  
-  return result === undefined ? defaultValue : result;
+
+  return result === undefined ? defaultValue : result
 }

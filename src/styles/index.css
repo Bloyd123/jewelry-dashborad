@@ -12,7 +12,7 @@
 /* ========== Global Reset ========== */
 @layer base {
   * {
-    @apply m-0 p-0 box-border;
+    @apply m-0 box-border p-0;
   }
 
   html {
@@ -20,20 +20,37 @@
   }
 
   body {
-    @apply font-sans text-base text-charcoal bg-white leading-relaxed antialiased;
+    @apply bg-white font-sans text-base leading-relaxed text-charcoal antialiased;
   }
 
   /* Typography */
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-heading font-bold leading-tight text-charcoal;
   }
 
-  h1 { @apply text-4xl; }
-  h2 { @apply text-3xl; }
-  h3 { @apply text-2xl; }
-  h4 { @apply text-xl; }
-  h5 { @apply text-lg; }
-  h6 { @apply text-base; }
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    @apply text-2xl;
+  }
+  h4 {
+    @apply text-xl;
+  }
+  h5 {
+    @apply text-lg;
+  }
+  h6 {
+    @apply text-base;
+  }
 
   p {
     @apply mb-4;
@@ -48,7 +65,7 @@
 @layer utilities {
   /* Webkit browsers (Chrome, Safari, Edge) */
   ::-webkit-scrollbar {
-    @apply w-2 h-2;
+    @apply h-2 w-2;
   }
 
   ::-webkit-scrollbar-track {
@@ -56,7 +73,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-gold rounded-full;
+    @apply rounded-full bg-gold;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -81,7 +98,7 @@
 
 /* ========== Focus Styles ========== */
 *:focus {
-  @apply outline-gold outline-2 outline-offset-2;
+  @apply outline-2 outline-offset-2 outline-gold;
 }
 
 *:focus:not(:focus-visible) {
@@ -92,7 +109,7 @@
 @layer components {
   /* Card Styles */
   .card {
-    @apply bg-white rounded-lg border border-gray-200 shadow-sm transition-shadow duration-300;
+    @apply rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow duration-300;
   }
 
   .card:hover {
@@ -105,21 +122,21 @@
 
   /* Button Styles */
   .btn {
-    @apply inline-flex items-center justify-center px-6 py-2 text-base font-medium rounded-md border-none cursor-pointer transition-all duration-300;
+    @apply inline-flex cursor-pointer items-center justify-center rounded-md border-none px-6 py-2 text-base font-medium transition-all duration-300;
   }
 
   .btn:disabled {
-    @apply opacity-50 cursor-not-allowed;
+    @apply cursor-not-allowed opacity-50;
   }
 
   /* Gold Button */
   .btn-gold {
-    @apply bg-gold text-white hover:bg-gold-dark hover:shadow-gold hover:-translate-y-0.5;
+    @apply bg-gold text-white hover:-translate-y-0.5 hover:bg-gold-dark hover:shadow-gold;
   }
 
   /* Outline Gold Button */
   .btn-gold-outline {
-    @apply bg-transparent text-gold border-2 border-gold hover:bg-gold hover:text-white;
+    @apply border-2 border-gold bg-transparent text-gold hover:bg-gold hover:text-white;
   }
 
   /* Dark Button */
@@ -129,11 +146,11 @@
 
   /* Input Styles */
   .input {
-    @apply w-full px-4 py-2 text-base text-charcoal bg-white border border-gray-300 rounded-md transition-all duration-200;
+    @apply w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-charcoal transition-all duration-200;
   }
 
   .input:focus {
-    @apply border-gold ring-4 ring-gold/10 outline-none;
+    @apply border-gold outline-none ring-4 ring-gold/10;
   }
 
   .input::placeholder {
@@ -142,7 +159,7 @@
 
   /* Badge Styles */
   .badge {
-    @apply inline-block px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider;
+    @apply inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider;
   }
 
   .badge-gold {
@@ -194,8 +211,12 @@
 
 /* ========== Animations ========== */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
@@ -210,8 +231,12 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 /* ========== Responsive Utilities ========== */

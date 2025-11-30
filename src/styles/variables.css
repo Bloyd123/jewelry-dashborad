@@ -1,59 +1,59 @@
 :root {
   /* ========== Brand Colors (Gold Theme) ========== */
-  --color-gold: #D4AF37;
-  --color-gold-light: #E5C158;
-  --color-gold-dark: #B8960F;
-  
+  --color-gold: #d4af37;
+  --color-gold-light: #e5c158;
+  --color-gold-dark: #b8960f;
+
   /* ========== Neutral Colors ========== */
-  --color-charcoal: #2C3E50;
+  --color-charcoal: #2c3e50;
   --color-dark-gray: #495057;
-  --color-light-gray: #E9ECEF;
-  --color-white: #FFFFFF;
-  --color-black: #1A1A1A;
-  
+  --color-light-gray: #e9ecef;
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+
   /* ========== Background Colors ========== */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8F9FA;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
   --bg-dark: var(--color-charcoal);
   --bg-accent: var(--color-gold-light);
-  
+
   /* ========== Text Colors ========== */
   --text-primary: var(--color-charcoal);
   --text-secondary: var(--color-dark-gray);
-  --text-light: #6C757D;
-  --text-white: #FFFFFF;
+  --text-light: #6c757d;
+  --text-white: #ffffff;
   --text-gold: var(--color-gold);
-  
+
   /* ========== Border Colors ========== */
-  --border-light: #DEE2E6;
-  --border-medium: #CED4DA;
+  --border-light: #dee2e6;
+  --border-medium: #ced4da;
   --border-dark: var(--color-dark-gray);
   --border-gold: var(--color-gold);
-  
+
   /* ========== Status Colors ========== */
-  --color-success: #28A745;
-  --color-success-light: #D4EDDA;
-  --color-danger: #DC3545;
-  --color-danger-light: #F8D7DA;
-  --color-warning: #FFC107;
-  --color-warning-light: #FFF3CD;
-  --color-info: #17A2B8;
-  --color-info-light: #D1ECF1;
-  
+  --color-success: #28a745;
+  --color-success-light: #d4edda;
+  --color-danger: #dc3545;
+  --color-danger-light: #f8d7da;
+  --color-warning: #ffc107;
+  --color-warning-light: #fff3cd;
+  --color-info: #17a2b8;
+  --color-info-light: #d1ecf1;
+
   /* ========== Shadows ========== */
   --shadow-sm: 0 2px 4px rgba(44, 62, 80, 0.08);
   --shadow-md: 0 4px 6px rgba(44, 62, 80, 0.12);
   --shadow-lg: 0 10px 20px rgba(44, 62, 80, 0.15);
   --shadow-xl: 0 20px 40px rgba(44, 62, 80, 0.2);
   --shadow-gold: 0 4px 12px rgba(212, 175, 55, 0.3);
-  
+
   /* ========== Border Radius ========== */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
-  
+
   /* ========== Spacing ========== */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -61,11 +61,12 @@
   --spacing-lg: 24px;
   --spacing-xl: 32px;
   --spacing-2xl: 48px;
-  
+
   /* ========== Typography ========== */
-  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-primary:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-heading: 'Playfair Display', Georgia, serif;
-  
+
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -74,17 +75,17 @@
   --font-size-2xl: 24px;
   --font-size-3xl: 30px;
   --font-size-4xl: 36px;
-  
+
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
-  
+
   /* ========== Transitions ========== */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
-  
+
   /* ========== Z-index Layers ========== */
   --z-dropdown: 1000;
   --z-sticky: 1020;
@@ -96,16 +97,16 @@
 }
 
 /* ========== Dark Mode Variables ========== */
-[data-theme="dark"] {
-  --bg-primary: #1A1A1A;
-  --bg-secondary: #2C2C2C;
-  --bg-dark: #0F0F0F;
-  
-  --text-primary: #E9ECEF;
-  --text-secondary: #CED4DA;
-  --text-light: #ADB5BD;
-  
-  --border-light: #3A3A3A;
-  --border-medium: #4A4A4A;
-  --border-dark: #5A5A5A;
+[data-theme='dark'] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2c2c2c;
+  --bg-dark: #0f0f0f;
+
+  --text-primary: #e9ecef;
+  --text-secondary: #ced4da;
+  --text-light: #adb5bd;
+
+  --border-light: #3a3a3a;
+  --border-medium: #4a4a4a;
+  --border-dark: #5a5a5a;
 }

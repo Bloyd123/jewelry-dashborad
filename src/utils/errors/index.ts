@@ -3,15 +3,14 @@
 // Export all error classes
 // ============================================================================
 
-import { ApiError } from './ApiError';
-import { AuthError } from './AuthError';
-import { PermissionError } from './PermissionError';
-import { ValidationError } from './ValidationError';
-import { NetworkError } from './NetworkError';
-import { NotFoundError } from './NotFoundError';
-import { ServerError } from './ServerError';
-import { RateLimitError } from './RateLimitError';
-
+import { ApiError } from './ApiError'
+import { AuthError } from './AuthError'
+import { NetworkError } from './NetworkError'
+import { NotFoundError } from './NotFoundError'
+import { PermissionError } from './PermissionError'
+import { RateLimitError } from './RateLimitError'
+import { ServerError } from './ServerError'
+import { ValidationError } from './ValidationError'
 
 export default {
   ApiError,
@@ -22,4 +21,4 @@ export default {
   NotFoundError,
   ServerError,
   RateLimitError,
-};
+}

@@ -3,27 +3,27 @@
 // Validation error class
 // ============================================================================
 
-import { ApiError } from './ApiError';
+import { ApiError } from './ApiError'
 
 /**
  * Validation Error class
  * For 422 Unprocessable Entity or 400 Bad Request errors
  */
 export class ValidationError extends ApiError {
-  public readonly isValidationError = true;
-  public readonly validationErrors: Record<string, string>;
+  public readonly isValidationError = true
+  public readonly validationErrors: Record<string, string>
 
   constructor(
     message: string = 'Validation failed',
     errors?: any[],
     validationErrors: Record<string, string> = {}
   ) {
-    super(message, 422, errors);
-    this.name = 'ValidationError';
-    this.validationErrors = validationErrors;
+    super(message, 422, errors)
+    this.name = 'ValidationError'
+    this.validationErrors = validationErrors
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, ValidationError);
+      Error.captureStackTrace(this, ValidationError)
     }
   }
 
@@ -34,7 +34,7 @@ export class ValidationError extends ApiError {
     return {
       ...super.toJSON(),
       validationErrors: this.validationErrors,
-    };
+    }
   }
 
   /**
@@ -46,8 +46,8 @@ export class ValidationError extends ApiError {
       (error.isValidationError === true ||
         error.statusCode === 422 ||
         error.statusCode === 400)
-    );
+    )
   }
 }
 
-export default ValidationError;
+export default ValidationError

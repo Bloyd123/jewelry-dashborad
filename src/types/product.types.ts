@@ -219,186 +219,186 @@ export enum LifecycleAction {
 // ============================================
 
 export interface IMetal {
-  type: MetalType;
-  purity: MetalPurity;
-  purityPercentage?: number;
-  color: MetalColor;
+  type: MetalType
+  purity: MetalPurity
+  purityPercentage?: number
+  color: MetalColor
 }
 
 export interface IWastage {
-  percentage: number;
-  weight: number;
+  percentage: number
+  weight: number
 }
 
 export interface IWeight {
-  grossWeight: number;
-  stoneWeight: number;
-  netWeight?: number;
-  wastage: IWastage;
-  unit: WeightUnit;
+  grossWeight: number
+  stoneWeight: number
+  netWeight?: number
+  wastage: IWastage
+  unit: WeightUnit
 }
 
 export interface IStoneCertificate {
-  certificateNumber?: string;
-  certificateUrl?: string;
-  issuedBy?: string;
+  certificateNumber?: string
+  certificateUrl?: string
+  issuedBy?: string
 }
 
 export interface IStone {
-  stoneType: StoneType;
-  stoneName?: string;
-  stoneQuality?: StoneQuality;
-  stoneColor?: string;
-  stoneShape?: StoneShape;
-  stoneCut?: StoneCut;
-  stoneClarity?: string;
-  caratWeight?: number;
-  stoneWeight?: number;
-  pieceCount: number;
-  stonePrice: number;
-  totalStonePrice: number;
-  stoneCertificate?: IStoneCertificate;
+  stoneType: StoneType
+  stoneName?: string
+  stoneQuality?: StoneQuality
+  stoneColor?: string
+  stoneShape?: StoneShape
+  stoneCut?: StoneCut
+  stoneClarity?: string
+  caratWeight?: number
+  stoneWeight?: number
+  pieceCount: number
+  stonePrice: number
+  totalStonePrice: number
+  stoneCertificate?: IStoneCertificate
 }
 
 export interface IMakingCharges {
-  type: MakingChargesType;
-  value: number;
-  amount: number;
+  type: MakingChargesType
+  value: number
+  amount: number
 }
 
 export interface IGST {
-  percentage: number;
-  amount: number;
+  percentage: number
+  amount: number
 }
 
 export interface IDiscount {
-  type: DiscountType;
-  value: number;
-  amount: number;
+  type: DiscountType
+  value: number
+  amount: number
 }
 
 export interface IPricing {
-  metalRate: number;
-  metalValue: number;
-  stoneValue: number;
-  makingCharges: number;
-  otherCharges: number;
-  subtotal: number;
-  gst: IGST;
-  totalPrice: number;
-  costPrice: number;
-  sellingPrice: number;
-  mrp: number;
-  discount: IDiscount;
+  metalRate: number
+  metalValue: number
+  stoneValue: number
+  makingCharges: number
+  otherCharges: number
+  subtotal: number
+  gst: IGST
+  totalPrice: number
+  costPrice: number
+  sellingPrice: number
+  mrp: number
+  discount: IDiscount
 }
 
 export interface ISize {
-  value?: string;
-  unit: DimensionUnit;
+  value?: string
+  unit: DimensionUnit
 }
 
 export interface IDimensions {
-  length?: number;
-  width?: number;
-  height?: number;
-  unit: DimensionUnit;
+  length?: number
+  width?: number
+  height?: number
+  unit: DimensionUnit
 }
 
 export interface IHallmarking {
-  isHallmarked: boolean;
-  hallmarkNumber?: string;
-  hallmarkingCenter?: string;
-  bisLicenseNumber?: string;
-  huid?: string;
-  hallmarkDate?: Date;
+  isHallmarked: boolean
+  hallmarkNumber?: string
+  hallmarkingCenter?: string
+  bisLicenseNumber?: string
+  huid?: string
+  hallmarkDate?: Date
 }
 
 export interface IStockLocation {
-  warehouse?: string;
-  rack?: string;
-  shelf?: string;
-  bin?: string;
+  warehouse?: string
+  rack?: string
+  shelf?: string
+  bin?: string
 }
 
 export interface IStock {
-  quantity: number;
-  unit: StockUnit;
-  minStockLevel: number;
-  maxStockLevel: number;
-  reorderLevel: number;
-  location: IStockLocation;
+  quantity: number
+  unit: StockUnit
+  minStockLevel: number
+  maxStockLevel: number
+  reorderLevel: number
+  location: IStockLocation
 }
 
 export interface ISupplierDetails {
-  supplierName?: string;
-  supplierCode?: string;
-  purchaseDate?: Date;
-  purchasePrice?: number;
-  invoiceNumber?: string;
+  supplierName?: string
+  supplierCode?: string
+  purchaseDate?: Date
+  purchasePrice?: number
+  invoiceNumber?: string
 }
 
 export interface IProductImage {
-  url: string;
-  isPrimary: boolean;
-  caption?: string;
-  uploadedAt: Date;
+  url: string
+  isPrimary: boolean
+  caption?: string
+  uploadedAt: Date
 }
 
 export interface IDesign {
-  designNumber?: string;
-  designer?: string;
-  collection?: string;
-  style?: DesignStyle;
-  pattern?: string;
+  designNumber?: string
+  designer?: string
+  collection?: string
+  style?: DesignStyle
+  pattern?: string
 }
 
 export interface IWarranty {
-  hasWarranty: boolean;
-  warrantyPeriod: number;
-  warrantyType: WarrantyType;
-  warrantyTerms?: string;
+  hasWarranty: boolean
+  warrantyPeriod: number
+  warrantyType: WarrantyType
+  warrantyTerms?: string
 }
 
 export interface ICertificate {
-  certificateType: CertificateType;
-  certificateNumber?: string;
-  issuedBy?: string;
-  issueDate?: Date;
-  expiryDate?: Date;
-  certificateUrl?: string;
+  certificateType: CertificateType
+  certificateNumber?: string
+  issuedBy?: string
+  issueDate?: Date
+  expiryDate?: Date
+  certificateUrl?: string
 }
 
 export interface IReservedFor {
-  customerId: string;
-  reservedDate: Date;
-  expiryDate: Date;
+  customerId: string
+  reservedDate: Date
+  expiryDate: Date
 }
 
 export interface ICustomField {
-  fieldName: string;
-  fieldValue: any;
+  fieldName: string
+  fieldValue: any
 }
 
 export interface ILifecycleHistory {
-  action: LifecycleAction | string;
-  fromShop?: string;
-  toShop?: string;
-  user?: string;
-  date: Date;
-  notes?: string;
+  action: LifecycleAction | string
+  fromShop?: string
+  toShop?: string
+  user?: string
+  date: Date
+  notes?: string
 }
 
 export interface IRepair {
-  status: RepairStatus;
-  sentAt?: Date;
-  completedAt?: Date;
-  repairNotes?: string;
+  status: RepairStatus
+  sentAt?: Date
+  completedAt?: Date
+  repairNotes?: string
 }
 
 export interface IReturnDetails {
-  returnedAt?: Date;
-  reason?: string;
-  refundAmount?: number;
+  returnedAt?: Date
+  reason?: string
+  refundAmount?: number
 }
 
 // ============================================
@@ -407,112 +407,112 @@ export interface IReturnDetails {
 
 export interface IProduct {
   // Multi-tenant
-  organizationId: string;
-  shopId: string;
+  organizationId: string
+  shopId: string
 
   // Product Identification
-  productCode: string;
-  barcode?: string;
-  sku?: string;
-  huid?: string;
+  productCode: string
+  barcode?: string
+  sku?: string
+  huid?: string
 
   // Basic Information
-  name: string;
-  description?: string;
+  name: string
+  description?: string
 
   // Category & Type
-  category: ProductCategory;
-  subCategory?: string;
-  productType: ProductType;
+  category: ProductCategory
+  subCategory?: string
+  productType: ProductType
 
   // Metal Details
-  metal: IMetal;
+  metal: IMetal
 
   // Weight Details
-  weight: IWeight;
+  weight: IWeight
 
   // Stones/Diamonds Details
-  stones: IStone[];
+  stones: IStone[]
 
   // Making/Labor Charges
-  makingCharges: IMakingCharges;
+  makingCharges: IMakingCharges
 
   // Pricing
-  pricing: IPricing;
+  pricing: IPricing
 
   // Size & Dimensions
-  size?: ISize;
-  dimensions?: IDimensions;
+  size?: ISize
+  dimensions?: IDimensions
 
   // Hallmarking Details
-  hallmarking: IHallmarking;
+  hallmarking: IHallmarking
 
   // Stock/Inventory
-  stock: IStock;
+  stock: IStock
 
   // Supplier Information
-  supplierId?: string;
-  supplierDetails?: ISupplierDetails;
+  supplierId?: string
+  supplierDetails?: ISupplierDetails
 
   // Images
-  images: IProductImage[];
-  primaryImage?: string;
+  images: IProductImage[]
+  primaryImage?: string
 
   // Gender & Occasion
-  gender: Gender;
-  occasion: Occasion[];
+  gender: Gender
+  occasion: Occasion[]
 
   // Design Details
-  design?: IDesign;
+  design?: IDesign
 
   // Warranty & Certificate
-  warranty: IWarranty;
-  certificates: ICertificate[];
+  warranty: IWarranty
+  certificates: ICertificate[]
 
   // Status
-  status: ProductStatus;
-  isActive: boolean;
-  isFeatured: boolean;
-  isNewArrival: boolean;
-  isBestseller: boolean;
+  status: ProductStatus
+  isActive: boolean
+  isFeatured: boolean
+  isNewArrival: boolean
+  isBestseller: boolean
 
   // Sale Status
-  saleStatus: SaleStatus;
-  soldDate?: Date;
-  soldTo?: string;
-  reservedFor?: IReservedFor;
+  saleStatus: SaleStatus
+  soldDate?: Date
+  soldTo?: string
+  reservedFor?: IReservedFor
 
   // Tags & Search
-  tags: string[];
-  keywords: string[];
-  searchTerms?: string;
+  tags: string[]
+  keywords: string[]
+  searchTerms?: string
 
   // Custom Fields
-  customFields: ICustomField[];
+  customFields: ICustomField[]
 
   // Lifecycle & Repair
-  lifecycleHistory: ILifecycleHistory[];
-  repair: IRepair;
-  returnDetails?: IReturnDetails;
+  lifecycleHistory: ILifecycleHistory[]
+  repair: IRepair
+  returnDetails?: IReturnDetails
 
   // Notes
-  notes?: string;
-  internalNotes?: string;
+  notes?: string
+  internalNotes?: string
 
   // Audit Trail
-  createdBy?: string;
-  updatedBy?: string;
-  deletedAt?: Date;
+  createdBy?: string
+  updatedBy?: string
+  deletedAt?: Date
 
   // Timestamps
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date
+  updatedAt: Date
 
   // Virtual Fields
-  profitMargin?: number;
-  isLowStock?: boolean;
-  isOutOfStock?: boolean;
-  totalStoneCount?: number;
+  profitMargin?: number
+  isLowStock?: boolean
+  isOutOfStock?: boolean
+  totalStoneCount?: number
 }
 
 // ============================================
@@ -520,93 +520,93 @@ export interface IProduct {
 // ============================================
 
 export interface ICreateProductDTO {
-  name: string;
-  description?: string;
-  category: ProductCategory;
-  subCategory?: string;
-  productType?: ProductType;
-  metal: IMetal;
-  weight: Partial<IWeight>;
-  stones?: Partial<IStone>[];
-  makingCharges?: Partial<IMakingCharges>;
-  pricing: Partial<IPricing>;
-  size?: ISize;
-  dimensions?: IDimensions;
-  hallmarking?: Partial<IHallmarking>;
-  stock?: Partial<IStock>;
-  supplierId?: string;
-  supplierDetails?: ISupplierDetails;
-  images?: Partial<IProductImage>[];
-  gender?: Gender;
-  occasion?: Occasion[];
-  design?: IDesign;
-  warranty?: Partial<IWarranty>;
-  certificates?: ICertificate[];
-  tags?: string[];
-  keywords?: string[];
-  notes?: string;
-  internalNotes?: string;
+  name: string
+  description?: string
+  category: ProductCategory
+  subCategory?: string
+  productType?: ProductType
+  metal: IMetal
+  weight: Partial<IWeight>
+  stones?: Partial<IStone>[]
+  makingCharges?: Partial<IMakingCharges>
+  pricing: Partial<IPricing>
+  size?: ISize
+  dimensions?: IDimensions
+  hallmarking?: Partial<IHallmarking>
+  stock?: Partial<IStock>
+  supplierId?: string
+  supplierDetails?: ISupplierDetails
+  images?: Partial<IProductImage>[]
+  gender?: Gender
+  occasion?: Occasion[]
+  design?: IDesign
+  warranty?: Partial<IWarranty>
+  certificates?: ICertificate[]
+  tags?: string[]
+  keywords?: string[]
+  notes?: string
+  internalNotes?: string
 }
 
 export interface IUpdateProductDTO extends Partial<ICreateProductDTO> {
-  isActive?: boolean;
-  isFeatured?: boolean;
-  isNewArrival?: boolean;
-  isBestseller?: boolean;
-  status?: ProductStatus;
-  saleStatus?: SaleStatus;
+  isActive?: boolean
+  isFeatured?: boolean
+  isNewArrival?: boolean
+  isBestseller?: boolean
+  status?: ProductStatus
+  saleStatus?: SaleStatus
 }
 
 export interface IProductFilters {
-  category?: ProductCategory;
-  metalType?: MetalType;
-  purity?: MetalPurity;
-  status?: ProductStatus;
-  saleStatus?: SaleStatus;
-  minPrice?: number;
-  maxPrice?: number;
-  search?: string;
-  gender?: Gender;
-  isActive?: boolean;
-  isFeatured?: boolean;
-  isLowStock?: boolean;
-  supplierId?: string;
+  category?: ProductCategory
+  metalType?: MetalType
+  purity?: MetalPurity
+  status?: ProductStatus
+  saleStatus?: SaleStatus
+  minPrice?: number
+  maxPrice?: number
+  search?: string
+  gender?: Gender
+  isActive?: boolean
+  isFeatured?: boolean
+  isLowStock?: boolean
+  supplierId?: string
 }
 
 export interface IProductQueryParams extends IProductFilters {
-  page?: number;
-  limit?: number;
-  sort?: string;
-  fields?: string;
+  page?: number
+  limit?: number
+  sort?: string
+  fields?: string
 }
 
 export interface IStockUpdateDTO {
-  operation: 'add' | 'subtract' | 'set';
-  quantity: number;
-  reason?: string;
-  referenceType?: string;
-  referenceId?: string;
+  operation: 'add' | 'subtract' | 'set'
+  quantity: number
+  reason?: string
+  referenceType?: string
+  referenceId?: string
 }
 
 export interface IReserveProductDTO {
-  customerId: string;
-  reservationDays?: number;
-  notes?: string;
+  customerId: string
+  reservationDays?: number
+  notes?: string
 }
 
 export interface IMarkAsSoldDTO {
-  customerId: string;
-  saleId?: string;
+  customerId: string
+  saleId?: string
 }
 
 export interface ICalculatePriceDTO {
-  useCurrentRate?: boolean;
-  customRate?: number;
+  useCurrentRate?: boolean
+  customRate?: number
 }
 
 export interface IBulkOperationDTO {
-  productIds: string[];
-  status?: ProductStatus;
+  productIds: string[]
+  status?: ProductStatus
 }
 
 // ============================================
@@ -614,29 +614,29 @@ export interface IBulkOperationDTO {
 // ============================================
 
 export interface IMetalRate {
-  organizationId: string;
-  shopId?: string;
-  metalType: MetalType;
-  purity: MetalPurity;
-  buyingRate: number;
-  sellingRate: number;
-  unit: WeightUnit;
-  effectiveFrom: Date;
-  effectiveTo?: Date;
-  isActive: boolean;
-  updatedBy: string;
-  createdAt: Date;
-  updatedAt: Date;
+  organizationId: string
+  shopId?: string
+  metalType: MetalType
+  purity: MetalPurity
+  buyingRate: number
+  sellingRate: number
+  unit: WeightUnit
+  effectiveFrom: Date
+  effectiveTo?: Date
+  isActive: boolean
+  updatedBy: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface IMetalRateDTO {
-  metalType: MetalType;
-  purity: MetalPurity;
-  buyingRate: number;
-  sellingRate: number;
-  unit?: WeightUnit;
-  effectiveFrom?: Date;
-  effectiveTo?: Date;
+  metalType: MetalType
+  purity: MetalPurity
+  buyingRate: number
+  sellingRate: number
+  unit?: WeightUnit
+  effectiveFrom?: Date
+  effectiveTo?: Date
 }
 
 // ============================================
@@ -644,15 +644,15 @@ export interface IMetalRateDTO {
 // ============================================
 
 export interface ICategoryConfig {
-  name: ProductCategory;
-  displayName: string;
-  description?: string;
-  icon?: string;
-  isActive: boolean;
-  sortOrder: number;
-  subCategories?: string[];
-  defaultMakingCharges?: IMakingCharges;
-  defaultWastagePercentage?: number;
+  name: ProductCategory
+  displayName: string
+  description?: string
+  icon?: string
+  isActive: boolean
+  sortOrder: number
+  subCategories?: string[]
+  defaultMakingCharges?: IMakingCharges
+  defaultWastagePercentage?: number
 }
 
 // ============================================
@@ -660,12 +660,12 @@ export interface ICategoryConfig {
 // ============================================
 
 export interface IPurityConfig {
-  name: MetalPurity;
-  displayName: string;
-  percentage: number;
-  metalType: MetalType;
-  isActive: boolean;
-  sortOrder: number;
+  name: MetalPurity
+  displayName: string
+  percentage: number
+  metalType: MetalType
+  isActive: boolean
+  sortOrder: number
 }
 
 // ============================================
@@ -673,22 +673,22 @@ export interface IPurityConfig {
 // ============================================
 
 export interface IProductStatistics {
-  totalProducts: number;
-  activeProducts: number;
-  inStockProducts: number;
-  lowStockProducts: number;
-  outOfStockProducts: number;
-  totalValue: number;
+  totalProducts: number
+  activeProducts: number
+  inStockProducts: number
+  lowStockProducts: number
+  outOfStockProducts: number
+  totalValue: number
   categoryWise: {
-    category: ProductCategory;
-    count: number;
-    value: number;
-  }[];
+    category: ProductCategory
+    count: number
+    value: number
+  }[]
   metalWise: {
-    metalType: MetalType;
-    count: number;
-    value: number;
-  }[];
+    metalType: MetalType
+    count: number
+    value: number
+  }[]
 }
 
 // ============================================
@@ -711,4 +711,4 @@ export type {
   ICategoryConfig as CategoryConfig,
   IPurityConfig as PurityConfig,
   IProductStatistics as ProductStatistics,
-};
+}
