@@ -15,7 +15,7 @@ import {
   saveAccessToken,
   saveRefreshToken,
 } from '@/services/auth/tokenService'
-import type { ApiResponse, ApiErrorResponse as ApiErrorType } from '@/types'
+import type { ApiResponse, ApiErrorResponse  } from '@/types'
 
 // ============================================================================
 // ERROR INTERCEPTOR
@@ -43,7 +43,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
     },
 
     // Error response handler
-    async (error: AxiosError<ApiErrorType>) => {
+    async (error: AxiosError<ApiErrorResponse>) => {
       const originalRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean
       }
@@ -58,6 +58,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
           errors: error.response?.data?.errors,
         })
       }
+      
 
       // ========================================
       // HANDLE 401 UNAUTHORIZED (Token Expired)
@@ -116,6 +117,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
           return Promise.reject(refreshError)
         }
       }
+      
 
       // ========================================
       // HANDLE 403 FORBIDDEN (Permission Denied)

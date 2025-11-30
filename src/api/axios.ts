@@ -110,20 +110,3 @@ export default axiosInstance
 
 // Named export for convenience
 export { axiosInstance as api }
-
-// Export interceptor helpers
-// export { isAuthenticated } from './interceptors/authInterceptor';
-
-// export {
-//   getErrorMessage,
-//   getValidationErrors,
-//   isAuthError,
-//   isPermissionError,
-//   isValidationError,
-//   isNetworkError,
-// } from './interceptors/errorInterceptor';
-
-// Export utility functions
-// export { buildQueryString } from '@/utils/api/buildQueryString';
-// export { replacePathParams } from '@/utils/api/replacePathParams';
-// export { checkAxiosConfig } from '@/utils/api/checkAxiosConfig';

@@ -36,8 +36,6 @@ export const AUTH_MESSAGES = {
   ALREADY_LOGGED_IN: 'You are already logged in.',
 
   // Validation
-  EMAIL_REQUIRED: 'Email is required.',
-  PASSWORD_REQUIRED: 'Password is required.',
   INVALID_EMAIL: 'Please enter a valid email address.',
   PASSWORD_TOO_SHORT: 'Password must be at least 6 characters long.',
   PASSWORD_MISMATCH: 'Passwords do not match.',
@@ -371,8 +369,6 @@ export const GENERAL_MESSAGES = {
 export const VALIDATION_MESSAGES = {
   // Required Fields
   FIELD_REQUIRED: (field: string) => `${field} is required.`,
-  EMAIL_REQUIRED: 'Email is required.',
-  PASSWORD_REQUIRED: 'Password is required.',
   NAME_REQUIRED: 'Name is required.',
   PHONE_REQUIRED: 'Phone number is required.',
 

@@ -64,7 +64,8 @@ export const useAuth = () => {
         const result = await dispatch(loginAction(credentials)).unwrap()
         return { success: true, data: result }
       } catch (error: any) {
-        return { success: false, error: error || 'Login failed' }
+        // return { success: false, error: error || 'Login failed' }
+         throw error
       }
     },
     [dispatch]

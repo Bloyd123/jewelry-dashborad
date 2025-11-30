@@ -11,6 +11,9 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
 import type { LoginRequest, LoginFormState } from '@/types/auth.types'
+import { validateLoginForm } from '@/validators/loginValidation';
+import { ValidationError,AuthError,ApiError } from '@/utils/errors'
+
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate()
@@ -29,27 +32,12 @@ const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  // Validation
+
   const validateForm = useCallback((): boolean => {
-    const newErrors: Record<string, string> = {}
-
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format'
-    }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = 'Password is required'
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters'
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }, [formData])
+  const result = validateLoginForm(formData);
+  setErrors(result.errors);
+  return result.isValid;
+}, [formData]);
 
   // Handle Input Change
   const handleInputChange = useCallback(
@@ -75,57 +63,63 @@ const LoginForm: React.FC = () => {
   )
 
   // Handle Submit
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault()
+const handleSubmit = useCallback(
+  async (e: React.FormEvent) => {
+    e.preventDefault();
 
-      // Validate form
-      if (!validateForm()) {
-        showError('Please fix the form errors')
-        return
+    if (!validateForm()) {
+      showError("Please fix the form errors");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const loginData: LoginRequest = {
+        email: formData.email.trim(),
+        password: formData.password,
+        rememberMe: formData.rememberMe,
+      };
+
+      await login(loginData);
+
+      showSuccess("Login successful!", "Welcome back");
+      navigate("/dashboard");
+    } catch (error: any) {
+      
+
+      // Validation errors (422)
+      if (error instanceof ValidationError) {
+        setErrors(error.validationErrors);
+        showError(error.message, "Validation Failed");
+        return;
       }
 
-      setLoading(true)
-
-      try {
-        // Prepare login request
-        const loginData: LoginRequest = {
-          email: formData.email.trim(),
-          password: formData.password,
-          rememberMe: formData.rememberMe,
-        }
-
-        // Call login from auth context/hook
-        await login(loginData)
-
-        // Success
-        showSuccess('Login successful!', 'Welcome back')
-
-        // Navigate to dashboard
-        navigate('/dashboard')
-      } catch (error: any) {
-        console.error('Login error:', error)
-
-        // Handle specific error types
-        if (error.response?.status === 401) {
-          showError('Invalid email or password', 'Login Failed')
-          setErrors({
-            email: 'Invalid credentials',
-            password: 'Invalid credentials',
-          })
-        } else if (error.response?.status === 403) {
-          showError('Account is locked or disabled', 'Access Denied')
-        } else if (error.response?.data?.message) {
-          showError(error.response.data.message, 'Login Failed')
-        } else {
-          showError('Network error. Please try again.', 'Connection Failed')
-        }
-      } finally {
-        setLoading(false)
+      // Invalid credentials (401)
+      if (error instanceof AuthError) {
+        showError(error.message, "Login Failed");
+        setErrors({
+          email: error.message,
+          password: error.message,
+        });
+        return;
       }
-    },
-    [formData, validateForm, login, showSuccess, showError, navigate]
-  )
+
+      // Generic API error
+      if (error instanceof ApiError) {
+        showError(error.message, "Error");
+        return;
+      }
+
+      // Fallback (network, unknown)
+      showError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  },
+  [formData, validateForm, login, showSuccess, showError, navigate]
+);
+
 
   // Handle Forgot Password
   const handleForgotPassword = useCallback(() => {
