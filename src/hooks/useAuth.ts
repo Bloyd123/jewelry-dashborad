@@ -26,7 +26,9 @@ import {
   selectUser,
   selectIsAuthenticated,
   selectIsLoading,
+  forgotPassword as forgotPasswordAction,
   selectError,
+  resetPassword as resetPasswordAction,
   selectCurrentShop,
   selectPermissions,
   selectShopAccesses,
@@ -39,8 +41,10 @@ import type {
   LoginRequest,
   RegisterRequest,
   UpdateProfileRequest,
+  ResetPasswordRequest,
   ChangePasswordRequest,
   PermissionKey,
+  ForgetRequest,
 } from '@/types'
 
 // ============================================================================
@@ -70,7 +74,34 @@ export const useAuth = () => {
     },
     [dispatch]
   )
-
+// ========================================
+// FORGOT PASSWORD
+// ========================================
+const forgotPassword = useCallback(
+  async (credentials: ForgetRequest) => {
+    try {
+      const result = await dispatch(forgotPasswordAction(credentials)).unwrap()
+      return { success: true, data: result }
+    } catch (error: any) {
+      throw error
+    }
+  },
+  [dispatch]
+)
+// ========================================
+// RESET PASSWORD
+// ========================================
+const resetPassword = useCallback(
+  async (credentials: ResetPasswordRequest) => {
+    try {
+      const result = await dispatch(resetPasswordAction(credentials)).unwrap()
+      return { success: true, data: result }
+    } catch (error: any) {
+      throw error
+    }
+  },
+  [dispatch]
+)
   // ========================================
   // REGISTER
   // ========================================
@@ -122,6 +153,7 @@ export const useAuth = () => {
       return { success: false, error: error || 'Failed to fetch user' }
     }
   }, [dispatch])
+
 
   // ========================================
   // UPDATE PROFILE
@@ -236,6 +268,8 @@ export const useAuth = () => {
     getUser,
     updateProfile,
     changePassword,
+     resetPassword,
+  forgotPassword,
     refreshToken,
     initialize,
 

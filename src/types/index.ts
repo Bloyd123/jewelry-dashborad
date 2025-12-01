@@ -172,6 +172,7 @@ export type {
   // Request Types
   RegisterRequest,
   LoginRequest,
+  ForgetRequest,
   ChangePasswordRequest,
   ForgotPasswordRequest,
   ResetPasswordRequest,

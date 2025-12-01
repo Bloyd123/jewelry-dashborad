@@ -10,6 +10,8 @@ import * as tokenService from '@/services/auth/tokenService'
 import type {
   User,
   LoginRequest,
+  ResetPasswordRequest,
+  ForgotPasswordRequest,
   RegisterRequest,
   LoginResponse,
   ChangePasswordRequest,
@@ -98,6 +100,38 @@ export const login = createAsyncThunk(
       return response.data
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Login failed')
+    }
+  }
+)
+/**
+ * Forgot Password
+ */
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (credentials: ForgotPasswordRequest, { rejectWithValue }) => {
+    try {
+      const response = await authService.forgotPassword(credentials.email)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to send reset link'
+      )
+    }
+  }
+)
+/**
+ * Reset Password
+ */
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async (credentials: ResetPasswordRequest, { rejectWithValue }) => {
+    try {
+      const response = await authService.resetPassword(credentials)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Password reset failed'
+      )
     }
   }
 )
@@ -385,7 +419,21 @@ const authSlice = createSlice({
         state.error = action.payload as string
         state.isAuthenticated = false
       })
-
+// ========================================
+// FORGOT PASSWORD
+// ========================================
+builder
+  .addCase(forgotPassword.pending, state => {
+    state.isLoading = true
+    state.error = null
+  })
+  .addCase(forgotPassword.fulfilled, state => {
+    state.isLoading = false
+  })
+  .addCase(forgotPassword.rejected, (state, action) => {
+    state.isLoading = false
+    state.error = action.payload as string
+  })
     // ========================================
     // REGISTER
     // ========================================
@@ -423,6 +471,21 @@ const authSlice = createSlice({
         state.error = action.payload as string
         state.isAuthenticated = false
       })
+      // ========================================
+// RESET PASSWORD
+// ========================================
+builder
+  .addCase(resetPassword.pending, state => {
+    state.isLoading = true
+    state.error = null
+  })
+  .addCase(resetPassword.fulfilled, state => {
+    state.isLoading = false
+  })
+  .addCase(resetPassword.rejected, (state, action) => {
+    state.isLoading = false
+    state.error = action.payload as string
+  })
 
     // ========================================
     // UPDATE PROFILE

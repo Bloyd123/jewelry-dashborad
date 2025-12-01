@@ -39,7 +39,9 @@ export interface LoginRequest {
   password: string
   rememberMe?: boolean
 }
-
+export interface ForgetRequest{
+  email:string
+}
 /**
  * Change Password Request
  */
@@ -559,6 +561,7 @@ export interface ForgotPasswordFormState {
  * Reset Password Form State
  */
 export interface ResetPasswordFormState {
+   token: string
   newPassword: string
   confirmPassword: string
 }
