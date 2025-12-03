@@ -2,7 +2,6 @@
 // FILE: locales/index.ts
 // ============================================================================
 
-export { default } from './en'       // default language
-export { default as en } from './en'
-export { default as hi } from './hi'
-export { default as mr } from './mr'
+export { default as english } from './en'
+export { default as hindi } from './hi'
+export { default as marathi } from './mr'

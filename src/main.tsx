@@ -12,6 +12,7 @@ import App from './App.tsx'
 import { store } from './store'
 import './styles/index.css'
 
+import '@/lib/i18n'
 // ============================================================================
 // RENDER APPLICATION
 // ============================================================================

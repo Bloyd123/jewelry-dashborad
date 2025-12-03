@@ -8,9 +8,10 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
 // Import translations
-import enTranslations from '@/locales'
-import hiTranslations from '@/locales'
-import mrTranslations from '@/locales'
+// CORRECT — import each language properly
+import { english, hindi, marathi } from '@/locales'
+
+
 
 // ============================================================================
 // RESOURCES
@@ -18,13 +19,13 @@ import mrTranslations from '@/locales'
 
 const resources = {
   en: {
-    translation: enTranslations,
+    translation: english,
   },
   hi: {
-    translation: hiTranslations,
+    translation: hindi,
   },
   mr: {
-    translation: mrTranslations,
+    translation: marathi,
   },
 }
 

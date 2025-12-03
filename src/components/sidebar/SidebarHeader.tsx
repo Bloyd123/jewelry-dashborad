@@ -5,7 +5,7 @@
 
 import { useSidebar } from '@/hooks/useSidebar'
 import { Menu, X } from 'lucide-react'
-
+import logo from "@/assets/images/logo.png"
 export const SidebarHeader = () => {
   const { isCollapsed, toggleCollapse } = useSidebar()
 
@@ -14,9 +14,13 @@ export const SidebarHeader = () => {
       {/* Logo & Brand */}
       {!isCollapsed && (
         <div className="flex items-center gap-3">
-          <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
+           <img
+        src={logo}
+        alt="Logo"
+        style={{ width: 32, height: 32 }}
+      />
           <span className="text-lg font-semibold text-sidebar-text">
-            Your Brand
+            Karat Log
           </span>
         </div>
       )}

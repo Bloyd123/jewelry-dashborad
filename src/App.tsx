@@ -15,7 +15,8 @@ import { useAppDispatch} from './store/hooks'
 import { initializeAuth } from './store/slices/authSlice'
 import ResetPasswordPage from './components/auth/resetpassword'
 import { useThemeSync } from './hooks/useThemeSync'
-
+import { DashboardLayout } from './layouts/DashboardLayout'
+import Dashboard from './pages/dashboard'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -44,6 +45,12 @@ function App() {
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
           <Route path='/auth/signup' element={<ResetPasswordPage/>}/>
+                    {/* Protected Routes with Layout */}
+          <Route path="/" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="/dashboard" replace />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Route>
         </Routes>
         <ToastContainer />
       </NotificationProvider>

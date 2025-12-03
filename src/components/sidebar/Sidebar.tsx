@@ -10,12 +10,14 @@ import { SidebarCollapse } from './SidebarCollapse'
 import { SidebarFooter } from './SidebarFooter'
 import { getMenuItems } from '@/config/sidebar-menu'
 import { useSidebar } from '@/hooks/useSidebar'
+import { useMemo } from 'react'
 
 export const Sidebar = () => {
   const { isCollapsed } = useSidebar()
-  const { t } = useTranslation() // If using i18n
+    const { t, i18n } = useTranslation() 
 
-  const menuItems = getMenuItems(t) // Get translated menu items
+  // const menuItems = getMenuItems(t) // Get translated menu items
+    const menuItems = useMemo(() => getMenuItems(t), [t, i18n.language])
 
   return (
     <aside

@@ -1,12 +1,6 @@
-
-
 // ============================================================================
-// FILE: locales/hi/index.ts
+// FILE: layouts/index.ts
+// Layout Exports
 // ============================================================================
 
-import common from './common.json'
-
-export default {
-  ...common,
-
-}
+export { DashboardLayout } from './DashboardLayout'
