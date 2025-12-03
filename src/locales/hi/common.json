@@ -1,0 +1,26 @@
+{
+  "sidebar": {
+    "dashboard": "डैशबोर्ड",
+    "stock": "स्टॉक",
+    "payments": "भुगतान",
+    "paymentHistory": "भुगतान इतिहास",
+    "paymentEntry": "भुगतान प्रविष्टि",
+    "purchases": "खरीद",
+    "allPurchases": "सभी खरीद",
+    "addPurchase": "खरीद जोड़ें",
+    "suppliers": "आपूर्तिकर्ता",
+    "sales": "बिक्री",
+    "allSales": "सभी बिक्री",
+    "addSale": "बिक्री जोड़ें",
+    "customers": "ग्राहक",
+    "reports": "रिपोर्ट",
+    "oldGold": "पुराना सोना",
+    "allOldGoldPurchases": "सभी पुराने सोने की खरीद",
+    "addOldGoldPurchase": "पुराना सोना खरीद जोड़ें",
+    "products": "उत्पाद",
+    "allProducts": "सभी उत्पाद",
+    "addProduct": "उत्पाद जोड़ें",
+    "customOrders": "कस्टम ऑर्डर",
+    "allCustomOrders": "सभी कस्टम ऑर्डर"
+  }
+}

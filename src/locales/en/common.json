@@ -1,0 +1,26 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "stock": "Stock",
+    "payments": "Payments",
+    "paymentHistory": "Payment History",
+    "paymentEntry": "Payment Entry",
+    "purchases": "Purchases",
+    "allPurchases": "All Purchases",
+    "addPurchase": "Add Purchase",
+    "suppliers": "Suppliers",
+    "sales": "Sales",
+    "allSales": "All Sales",
+    "addSale": "Add Sale",
+    "customers": "Customers",
+    "reports": "Reports",
+    "oldGold": "Old Gold",
+    "allOldGoldPurchases": "All Old Gold Purchases",
+    "addOldGoldPurchase": "Add Old Gold Purchase",
+    "products": "Products",
+    "allProducts": "All Products",
+    "addProduct": "Add Product",
+    "customOrders": "Custom Orders",
+    "allCustomOrders": "All Custom Orders"
+  }
+}

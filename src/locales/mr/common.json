@@ -1,0 +1,26 @@
+{
+  "sidebar": {
+    "dashboard": "डॅशबोर्ड",
+    "stock": "साठा",
+    "payments": "देयके",
+    "paymentHistory": "देयक इतिहास",
+    "paymentEntry": "देयक नोंद",
+    "purchases": "खरेदी",
+    "allPurchases": "सर्व खरेदी",
+    "addPurchase": "खरेदी जोडा",
+    "suppliers": "पुरवठादार",
+    "sales": "विक्री",
+    "allSales": "सर्व विक्री",
+    "addSale": "विक्री जोडा",
+    "customers": "ग्राहक",
+    "reports": "अहवाल",
+    "oldGold": "जुने सोने",
+    "allOldGoldPurchases": "सर्व जुने सोने खरेदी",
+    "addOldGoldPurchase": "जुने सोने खरेदी जोडा",
+    "products": "उत्पादने",
+    "allProducts": "सर्व उत्पादने",
+    "addProduct": "उत्पादन जोडा",
+    "customOrders": "कस्टम ऑर्डर्स",
+    "allCustomOrders": "सर्व कस्टम ऑर्डर्स"
+  }
+}

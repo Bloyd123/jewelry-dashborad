@@ -1,25 +1,20 @@
-// hooks/useTheme.ts
+// ============================================================================
+// FILE: hooks/useTheme.ts
+// Theme Hook - Get Current Theme
+// ============================================================================
+
 import { useAppSelector } from '@/store/hooks'
-import { getAccentColor } from '@/themes/colors'
-import { getTheme } from '@/themes/default.theme'
+import { getThemeByName } from '@/themes/presets'
 
 export const useTheme = () => {
-  const { theme, accentColor } = useAppSelector(state => state.ui)
+  const { themeName, accentColor } = useAppSelector(state => state.ui)
 
-  // Determine actual theme (handle 'auto' mode)
-  const actualTheme =
-    theme === 'auto'
-      ? window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      : theme
-
-  const currentTheme = getTheme(actualTheme)
-  const currentAccent = getAccentColor(accentColor)
+  const currentTheme = getThemeByName(themeName)
 
   return {
     theme: currentTheme,
-    accentColor: currentAccent,
-    mode: actualTheme,
+    themeName,
+    accentColor,
+    mode: currentTheme.mode,
   }
 }

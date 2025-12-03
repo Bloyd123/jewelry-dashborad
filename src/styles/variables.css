@@ -1,80 +1,83 @@
-:root {
-  /* ========== Brand Colors (Gold Theme) ========== */
-  --color-gold: #d4af37;
-  --color-gold-light: #e5c158;
-  --color-gold-dark: #b8960f;
+/* ============================================================================
+   FILE: styles/variables.css
+   CSS Variables - Theme Colors
+   ============================================================================ */
 
-  /* ========== Neutral Colors ========== */
-  --color-charcoal: #2c3e50;
-  --color-dark-gray: #495057;
-  --color-light-gray: #e9ecef;
-  --color-white: #ffffff;
-  --color-black: #1a1a1a;
+:root {
+  /* ========== Header Colors ========== */
+  --header-primary: #ffffff;
+  --header-secondary: #ea580c;
 
   /* ========== Background Colors ========== */
   --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-dark: var(--color-charcoal);
-  --bg-accent: var(--color-gold-light);
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
 
   /* ========== Text Colors ========== */
-  --text-primary: var(--color-charcoal);
-  --text-secondary: var(--color-dark-gray);
-  --text-light: #6c757d;
-  --text-white: #ffffff;
-  --text-gold: var(--color-gold);
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
+  --text-accent: #ea580c;
 
   /* ========== Border Colors ========== */
-  --border-light: #dee2e6;
-  --border-medium: #ced4da;
-  --border-dark: var(--color-dark-gray);
-  --border-gold: var(--color-gold);
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
 
   /* ========== Status Colors ========== */
-  --color-success: #28a745;
-  --color-success-light: #d4edda;
-  --color-danger: #dc3545;
-  --color-danger-light: #f8d7da;
-  --color-warning: #ffc107;
-  --color-warning-light: #fff3cd;
-  --color-info: #17a2b8;
-  --color-info-light: #d1ecf1;
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-error: #ef4444;
+  --status-info: #3b82f6;
 
-  /* ========== Shadows ========== */
-  --shadow-sm: 0 2px 4px rgba(44, 62, 80, 0.08);
-  --shadow-md: 0 4px 6px rgba(44, 62, 80, 0.12);
-  --shadow-lg: 0 10px 20px rgba(44, 62, 80, 0.15);
-  --shadow-xl: 0 20px 40px rgba(44, 62, 80, 0.2);
-  --shadow-gold: 0 4px 12px rgba(212, 175, 55, 0.3);
+  /* ========== Primary/Accent ========== */
+  --primary-color: #ea580c;
+  --accent-color: #d97706;
+
+  /* ========== Sidebar Colors ========== */
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #111827;
+  --sidebar-text-muted: #6b7280;
+  --sidebar-hover: #f3f4f6;
+  --sidebar-active: #ea580c;
+  --sidebar-border: #e5e7eb;
+
+  /* ========== Sidebar Dimensions ========== */
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 80px;
 
   /* ========== Border Radius ========== */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
   --radius-full: 9999px;
 
   /* ========== Spacing ========== */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* ========== Shadows ========== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 
   /* ========== Typography ========== */
-  --font-primary:
-    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-base: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 30px;
-  --font-size-4xl: 36px;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -96,17 +99,42 @@
   --z-tooltip: 1070;
 }
 
-/* ========== Dark Mode Variables ========== */
-[data-theme='dark'] {
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #2c2c2c;
-  --bg-dark: #0f0f0f;
+/* ============================================================================
+   Dark Mode Override (Fallback)
+   Note: These will be overridden by useThemeSync hook
+   ============================================================================ */
+[data-mode='dark'] {
+  --header-primary: #1e293b;
+  --header-secondary: #f97316;
 
-  --text-primary: #e9ecef;
-  --text-secondary: #ced4da;
-  --text-light: #adb5bd;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
 
-  --border-light: #3a3a3a;
-  --border-medium: #4a4a4a;
-  --border-dark: #5a5a5a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+  --text-accent: #f97316;
+
+  --border-primary: #334155;
+  --border-secondary: #475569;
+
+  --status-success: #34d399;
+  --status-warning: #fbbf24;
+  --status-error: #f87171;
+  --status-info: #60a5fa;
+
+  --primary-color: #f97316;
+
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #f1f5f9;
+  --sidebar-text-muted: #94a3b8;
+  --sidebar-hover: #334155;
+  --sidebar-active: #f97316;
+  --sidebar-border: #334155;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
 }

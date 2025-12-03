@@ -5,16 +5,16 @@
 
 import { useEffect } from 'react'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route,Navigate  } from 'react-router-dom'
 
 import LoginPage from './components/auth/login'
 import ForgotPasswordPage from './components/auth/forgotpassword'
 import ToastContainer from './components/common/ToastContainer'
 import { NotificationProvider } from './context/NotificationContext'
-import { useAppDispatch, useAppSelector } from './store/hooks'
+import { useAppDispatch} from './store/hooks'
 import { initializeAuth } from './store/slices/authSlice'
-import { setTheme } from './store/slices/uiSlice'
 import ResetPasswordPage from './components/auth/resetpassword'
+import { useThemeSync } from './hooks/useThemeSync'
 
 // ============================================================================
 // APP COMPONENT
@@ -22,7 +22,8 @@ import ResetPasswordPage from './components/auth/resetpassword'
 
 function App() {
   const dispatch = useAppDispatch()
-  const { theme } = useAppSelector(state => state.ui)
+    useThemeSync()
+
 
   // ========================================
   // Initialize App
@@ -30,25 +31,7 @@ function App() {
   useEffect(() => {
     // Initialize authentication state
     dispatch(initializeAuth())
-
-    // Apply theme
-    dispatch(setTheme(theme))
-
-    // Handle system theme changes in auto mode
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const handleThemeChange = (e: MediaQueryListEvent) => {
-      if (theme === 'auto') {
-        if (e.matches) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
-      }
-    }
-
-    mediaQuery.addEventListener('change', handleThemeChange)
-    return () => mediaQuery.removeEventListener('change', handleThemeChange)
-  }, [dispatch, theme])
+  }, [dispatch])
 
   // ========================================
   // Render Routes
@@ -57,6 +40,7 @@ function App() {
     <BrowserRouter>
       <NotificationProvider>
         <Routes>
+        <Route path="/" element={<Navigate to="/auth/login" replace />} />
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
           <Route path='/auth/signup' element={<ResetPasswordPage/>}/>

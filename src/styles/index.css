@@ -1,13 +1,16 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+/* ============================================================================
+   FILE: styles/index.css
+   Main Entry Point - Global Styles
+   ============================================================================ */
 
-/* Import Variables */
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Import CSS Variables */
 @import './variables.css';
 
 /* Import Tailwind */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import './tailwind.css';
 
 /* ========== Global Reset ========== */
 @layer base {
@@ -20,7 +23,10 @@
   }
 
   body {
-    @apply bg-white font-sans text-base leading-relaxed text-charcoal antialiased;
+    @apply bg-bg-primary text-text-primary antialiased;
+    font-family: var(--font-sans);
+    transition: background-color var(--transition-normal),
+      color var(--transition-normal);
   }
 
   /* Typography */
@@ -30,7 +36,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-bold leading-tight text-charcoal;
+    @apply font-semibold leading-tight text-text-primary;
   }
 
   h1 {
@@ -53,11 +59,30 @@
   }
 
   p {
-    @apply mb-4;
+    @apply mb-4 text-text-secondary;
   }
 
   a {
-    @apply transition-colors duration-200;
+    @apply text-accent transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply opacity-80;
+  }
+
+  /* Form Elements */
+  input,
+  textarea,
+  select {
+    @apply bg-bg-primary text-text-primary;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
   }
 }
 
@@ -69,179 +94,121 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-gray-100;
+    background: var(--bg-secondary);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gold;
+    @apply rounded-full;
+    background: var(--accent-color);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gold-dark;
+    background: var(--primary-color);
   }
 
   /* Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-gold) var(--bg-secondary);
+    scrollbar-color: var(--accent-color) var(--bg-secondary);
   }
 }
 
 /* ========== Selection ========== */
 ::selection {
-  @apply bg-gold-light text-charcoal;
+  background: var(--accent-color);
+  color: white;
 }
 
 ::-moz-selection {
-  @apply bg-gold-light text-charcoal;
+  background: var(--accent-color);
+  color: white;
 }
 
 /* ========== Focus Styles ========== */
-*:focus {
-  @apply outline-2 outline-offset-2 outline-gold;
+*:focus-visible {
+  @apply outline-2 outline-offset-2;
+  outline-color: var(--accent-color);
 }
 
-*:focus:not(:focus-visible) {
-  @apply outline-none;
-}
-
-/* ========== Custom Components ========== */
+/* ========== Custom Component Styles ========== */
 @layer components {
-  /* Card Styles */
+  /* Card */
   .card {
-    @apply rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow duration-300;
+    @apply rounded-lg border bg-bg-secondary p-4 shadow-sm transition-shadow duration-300;
+    border-color: var(--border-primary);
   }
 
   .card:hover {
-    @apply shadow-md;
+    box-shadow: var(--shadow-md);
   }
 
-  .card-gold {
-    @apply border-gold shadow-gold;
-  }
-
-  /* Button Styles */
+  /* Button Base */
   .btn {
-    @apply inline-flex cursor-pointer items-center justify-center rounded-md border-none px-6 py-2 text-base font-medium transition-all duration-300;
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all duration-200;
   }
 
-  .btn:disabled {
-    @apply cursor-not-allowed opacity-50;
+  /* Button Primary */
+  .btn-primary {
+    @apply btn text-white;
+    background-color: var(--primary-color);
   }
 
-  /* Gold Button */
-  .btn-gold {
-    @apply bg-gold text-white hover:-translate-y-0.5 hover:bg-gold-dark hover:shadow-gold;
+  .btn-primary:hover {
+    @apply opacity-90;
   }
 
-  /* Outline Gold Button */
-  .btn-gold-outline {
-    @apply border-2 border-gold bg-transparent text-gold hover:bg-gold hover:text-white;
+  /* Button Secondary */
+  .btn-secondary {
+    @apply btn border;
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
   }
 
-  /* Dark Button */
-  .btn-dark {
-    @apply bg-charcoal text-white hover:bg-charcoal-dark;
+  .btn-secondary:hover {
+    background-color: var(--bg-tertiary);
   }
 
-  /* Input Styles */
+  /* Input */
   .input {
-    @apply w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-base text-charcoal transition-all duration-200;
+    @apply w-full rounded-md border px-4 py-2 text-sm transition-all duration-200;
+    background-color: var(--bg-primary);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
   }
 
   .input:focus {
-    @apply border-gold outline-none ring-4 ring-gold/10;
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.1);
   }
 
   .input::placeholder {
-    @apply text-gray-400;
+    color: var(--text-tertiary);
   }
 
-  /* Badge Styles */
+  /* Badge */
   .badge {
-    @apply inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider;
-  }
-
-  .badge-gold {
-    @apply bg-gold-light text-charcoal;
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
   }
 
   .badge-success {
-    @apply bg-green-100 text-green-700;
-  }
-
-  .badge-danger {
-    @apply bg-red-100 text-red-700;
+    background-color: var(--status-success);
+    @apply text-white;
   }
 
   .badge-warning {
-    @apply bg-yellow-100 text-yellow-700;
+    background-color: var(--status-warning);
+    @apply text-white;
+  }
+
+  .badge-error {
+    background-color: var(--status-error);
+    @apply text-white;
   }
 
   .badge-info {
-    @apply bg-blue-100 text-blue-700;
-  }
-}
-
-/* ========== Utility Classes ========== */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 0.3s ease-in-out;
-  }
-
-  .animate-slideUp {
-    animation: slideUp 0.4s ease-out;
-  }
-
-  .shimmer-gold {
-    background: linear-gradient(
-      90deg,
-      var(--color-gold-dark) 0%,
-      var(--color-gold) 50%,
-      var(--color-gold-dark) 100%
-    );
-    background-size: 1000px 100%;
-    animation: shimmer 2s infinite;
-  }
-}
-
-/* ========== Animations ========== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-/* ========== Responsive Utilities ========== */
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
+    background-color: var(--status-info);
+    @apply text-white;
   }
 }

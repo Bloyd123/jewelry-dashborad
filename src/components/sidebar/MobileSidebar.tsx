@@ -1,0 +1,28 @@
+// ============================================================================
+// FILE: components/sidebar/MobileSidebar.tsx
+// Mobile Sidebar with Overlay
+// ============================================================================
+
+import { Sidebar } from './Sidebar'
+import { useSidebar } from '@/hooks/useSidebar'
+
+export const MobileSidebar = () => {
+  const { isOpen, closeSidebar } = useSidebar()
+
+  if (!isOpen) return null
+
+  return (
+    <>
+      {/* Overlay */}
+      <div
+        className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        onClick={closeSidebar}
+      />
+
+      {/* Sidebar */}
+      <div className="fixed inset-y-0 left-0 z-50 lg:hidden animate-slideInLeft">
+        <Sidebar />
+      </div>
+    </>
+  )
+}

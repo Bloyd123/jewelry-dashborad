@@ -1,9 +1,10 @@
 // ============================================================================
-// FILE: src/store/slices/uiSlice.ts
+// FILE: store/slices/uiSlice.ts
 // UI State Management (Sidebar, Theme, Loading)
 // ============================================================================
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import type { ThemeName } from '@/themes/presets'
 
 // ============================================================================
 // STATE INTERFACE
@@ -12,7 +13,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 interface UIState {
   sidebarOpen: boolean
   sidebarCollapsed: boolean
-  theme: 'light' | 'dark' | 'auto'
+  themeName: ThemeName // ✅ CHANGED: from 'theme' to 'themeName'
   isLoading: boolean
   loadingMessage: string | null
   mobileMenuOpen: boolean
@@ -24,26 +25,36 @@ interface UIState {
 // INITIAL STATE
 // ============================================================================
 
-const getInitialTheme = (): 'light' | 'dark' | 'auto' => {
-  const savedTheme = localStorage.getItem('theme')
-  if (
-    savedTheme === 'light' ||
-    savedTheme === 'dark' ||
-    savedTheme === 'auto'
-  ) {
-    return savedTheme
+const getInitialTheme = (): ThemeName => {
+  const savedTheme = localStorage.getItem('themeName')
+  
+  // ✅ NEW: Check if it's a valid theme name
+  const validThemes: ThemeName[] = [
+    'default',
+    'defaultDark',
+    'legacy',
+    'light',
+    'light2',
+    'light3',
+    'light4',
+    'light5',
+  ]
+  
+  if (savedTheme && validThemes.includes(savedTheme as ThemeName)) {
+    return savedTheme as ThemeName
   }
-  return 'light'
+  
+  return 'default'
 }
 
 const initialState: UIState = {
   sidebarOpen: true,
   sidebarCollapsed: false,
-  theme: getInitialTheme(),
+  themeName: getInitialTheme(), // ✅ CHANGED
   isLoading: false,
   loadingMessage: null,
   mobileMenuOpen: false,
-  accentColor: localStorage.getItem('accentColor') || '#D97706',
+  accentColor: localStorage.getItem('accentColor') || 'amber',
   appearance: (localStorage.getItem('appearance') as any) || 'default',
 }
 
@@ -81,30 +92,36 @@ const uiSlice = createSlice({
       state.mobileMenuOpen = action.payload
     },
 
-    // Theme
-    setTheme: (state, action: PayloadAction<'light' | 'dark' | 'auto'>) => {
-      state.theme = action.payload
-      localStorage.setItem('theme', action.payload)
-
-      // Apply theme to document
-      if (action.payload === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else if (action.payload === 'light') {
-        document.documentElement.classList.remove('dark')
-      } else {
-        // Auto mode - check system preference
-        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        if (isDark) {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
-      }
+    // ✅ CHANGED: Theme now accepts ThemeName
+    setTheme: (state, action: PayloadAction<ThemeName>) => {
+      state.themeName = action.payload
+      localStorage.setItem('themeName', action.payload)
+      // Note: CSS variables will be updated by useThemeSync hook
     },
+
+    // ✅ NEW: Cycle through themes
+    cycleTheme: state => {
+      const themes: ThemeName[] = [
+        'default',
+        'defaultDark',
+        'legacy',
+        'light',
+        'light2',
+        'light3',
+        'light4',
+        'light5',
+      ]
+      const currentIndex = themes.indexOf(state.themeName)
+      const nextIndex = (currentIndex + 1) % themes.length
+      state.themeName = themes[nextIndex]
+      localStorage.setItem('themeName', themes[nextIndex])
+    },
+
     setAccentColor: (state, action: PayloadAction<string>) => {
       state.accentColor = action.payload
       localStorage.setItem('accentColor', action.payload)
     },
+
     setAppearance: (
       state,
       action: PayloadAction<'default' | 'compact' | 'comfortable'>
@@ -113,17 +130,7 @@ const uiSlice = createSlice({
       localStorage.setItem('appearance', action.payload)
     },
 
-    toggleTheme: state => {
-      const newTheme = state.theme === 'light' ? 'dark' : 'light'
-      state.theme = newTheme
-      localStorage.setItem('theme', newTheme)
-
-      if (newTheme === 'dark') {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-    },
+    // ✅ REMOVED: toggleTheme (no longer needed with multi-theme)
 
     // Loading
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -164,7 +171,7 @@ export const {
   toggleMobileMenu,
   setMobileMenuOpen,
   setTheme,
-  toggleTheme,
+  cycleTheme, // ✅ NEW
   setLoading,
   setLoadingWithMessage,
   resetUI,
