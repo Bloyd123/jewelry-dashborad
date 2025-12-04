@@ -17,6 +17,7 @@ import ResetPasswordPage from './components/auth/resetpassword'
 import { useThemeSync } from './hooks/useThemeSync'
 import { DashboardLayout } from './layouts/DashboardLayout'
 import Dashboard from './pages/dashboard'
+import { NoInternetWrapper } from './components/common'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -38,6 +39,7 @@ function App() {
   // Render Routes
   // ========================================
   return (
+    <NoInternetWrapper> 
     <BrowserRouter>
       <NotificationProvider>
         <Routes>
@@ -55,6 +57,7 @@ function App() {
         <ToastContainer />
       </NotificationProvider>
     </BrowserRouter>
+    </NoInternetWrapper>
   )
 }
 

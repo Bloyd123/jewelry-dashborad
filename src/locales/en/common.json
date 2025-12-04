@@ -22,5 +22,10 @@
     "addProduct": "Add Product",
     "customOrders": "Custom Orders",
     "allCustomOrders": "All Custom Orders"
+  },
+    "noInternet": {                          
+    "title": "No Internet Connection",
+    "description": "Please check your internet connection and try again.",
+    "retryButton": "Retry Connection"
   }
 }
