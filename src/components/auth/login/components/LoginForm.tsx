@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
 import type { LoginRequest, LoginFormState } from '@/types/auth.types'
 import { validateLoginForm } from '@/validators/loginValidation';
-import { ValidationError,AuthError,ApiError } from '@/utils/errors'
+import { ValidationError, AuthError, ApiError, NetworkError } from '@/utils/errors'
 
 
 const LoginForm: React.FC = () => {
@@ -88,31 +88,50 @@ const handleSubmit = useCallback(
     } catch (error: any) {
       
 
-      // Validation errors (422)
-      if (error instanceof ValidationError) {
-        setErrors(error.validationErrors);
-        showError(error.message, "Validation Failed");
-        return;
+  // ========================================
+      // HANDLE VALIDATION ERROR (400/422)
+      // ========================================
+      if (ValidationError.isValidationError(error)) {
+        setErrors(error.validationErrors)
+        showError(error.message, 'Validation Failed')
+        return
       }
 
-      // Invalid credentials (401)
-      if (error instanceof AuthError) {
-        showError(error.message, "Login Failed");
+      // ========================================
+      // HANDLE AUTH ERROR (401)
+      // ========================================
+      if (AuthError.isAuthError(error)) {
+        showError(error.message, 'Login Failed')
         setErrors({
-          email: error.message,
-          password: error.message,
-        });
-        return;
+          email: 'Invalid email or password',
+          password: 'Invalid email or password',
+        })
+        return
       }
 
-      // Generic API error
-      if (error instanceof ApiError) {
-        showError(error.message, "Error");
-        return;
+      // ========================================
+      // HANDLE NETWORK ERROR
+      // ========================================
+      if (NetworkError.isNetworkError(error)) {
+        showError(
+          'Unable to connect to server. Please check your internet connection.',
+          'Network Error'
+        )
+        return
       }
 
-      // Fallback (network, unknown)
-      showError("Something went wrong. Please try again.");
+      // ========================================
+      // HANDLE GENERIC API ERROR
+      // ========================================
+      if (ApiError.isApiError(error)) {
+        showError(error.message, 'Error')
+        return
+      }
+
+      // ========================================
+      // FALLBACK (Unknown error)
+      // ========================================
+      showError('Something went wrong. Please try again.', 'Error')
     } finally {
       setLoading(false);
     }

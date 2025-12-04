@@ -68,7 +68,7 @@ export const useAuth = () => {
         const result = await dispatch(loginAction(credentials)).unwrap()
         return { success: true, data: result }
       } catch (error: any) {
-        // return { success: false, error: error || 'Login failed' }
+        // ✅ Just throw - LoginForm will catch and handle
          throw error
       }
     },

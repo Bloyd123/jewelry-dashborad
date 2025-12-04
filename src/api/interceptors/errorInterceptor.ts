@@ -15,7 +15,17 @@ import {
   saveAccessToken,
   saveRefreshToken,
 } from '@/services/auth/tokenService'
-import type { ApiResponse, ApiErrorResponse  } from '@/types'
+import type { ApiResponse, ApiErrorResponse } from '@/types'
+import {
+  ApiError,
+  AuthError,
+  ValidationError,
+  PermissionError,
+  NotFoundError,
+  ServerError,
+  RateLimitError,
+  NetworkError,
+} from '@/utils/errors'
 
 // ============================================================================
 // ERROR INTERCEPTOR
@@ -44,36 +54,55 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
 
     // Error response handler
     async (error: AxiosError<ApiErrorResponse>) => {
+      // ========================================
+      // NETWORK ERROR (No Response)
+      // ========================================
+      if (!error.response || error.code === 'ERR_NETWORK') {
+        if (import.meta.env.DEV) {
+          console.error('🌐 Network Error:', error.message)
+        }
+        return Promise.reject(
+          new NetworkError(
+            error.message || 'Network error. Please check your connection.',
+            error.code
+          )
+        )
+      }
+
       const originalRequest = error.config as InternalAxiosRequestConfig & {
         _retry?: boolean
       }
+      const status = error.response.status
+      const message = error.response.data?.message || 'Something went wrong'
+      const errors = error.response.data?.errors
 
       // Log error in development mode
       if (import.meta.env.DEV) {
         console.error('❌ API Error:', {
-          status: error.response?.status,
-          statusText: error.response?.statusText,
+          status,
+          statusText: error.response.statusText,
           url: error.config?.url,
-          message: error.response?.data?.message || error.message,
-          errors: error.response?.data?.errors,
+          message,
+          errors,
         })
       }
-      
 
       // ========================================
-      // HANDLE 401 UNAUTHORIZED (Token Expired)
+      // HANDLE 401 UNAUTHORIZED (Token Refresh)
       // ========================================
-      if (error.response?.status === 401 && !originalRequest._retry) {
+      if (status === 401 && !originalRequest._retry) {
         originalRequest._retry = true
 
+        // Check if refresh token exists
+        const refreshToken = getRefreshToken()
+
+        // No refresh token = user not logged in (e.g., login failed)
+        if (!refreshToken) {
+          return Promise.reject(new AuthError(message, errors))
+        }
+
+        // Has refresh token = try to refresh
         try {
-          const refreshToken = getRefreshToken()
-
-          // No refresh token available
-          if (!refreshToken) {
-            throw new Error('No refresh token available')
-          }
-
           // Call refresh token endpoint
           const API_BASE_URL = axiosInstance.defaults.baseURL || ''
           const response = await axios.post<ApiResponse>(
@@ -89,7 +118,7 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
           const { accessToken, refreshToken: newRefreshToken } =
             response.data.data
 
-          // Store new tokens using token service
+          // Store new tokens
           saveAccessToken(accessToken)
           if (newRefreshToken) {
             saveRefreshToken(newRefreshToken)
@@ -103,88 +132,68 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
           // Retry original request with new token
           return axiosInstance(originalRequest)
         } catch (refreshError) {
-          // Token refresh failed - clear all session data
+          // Token refresh failed - clear session and redirect
           clearSession()
 
-          // Show notification (if toast system is available)
-          if (typeof window !== 'undefined') {
+          if (import.meta.env.DEV) {
             console.error('🔐 Session expired. Please login again.')
           }
 
           // Redirect to login page
-          window.location.href = '/login'
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login'
+          }
 
-          return Promise.reject(refreshError)
+          return Promise.reject(
+            new AuthError('Session expired. Please login again.')
+          )
         }
       }
-      
 
       // ========================================
-      // HANDLE 403 FORBIDDEN (Permission Denied)
+      // HANDLE OTHER STATUS CODES
       // ========================================
-      if (error.response?.status === 403) {
-        const message =
-          error.response.data?.message ||
-          'Access denied. You do not have permission to perform this action.'
-        console.error('🚫 Permission Denied:', message)
+      switch (status) {
+        case 400:
+        case 422: {
+          // Extract validation errors
+          const validationErrors: Record<string, string> = {}
+          if (Array.isArray(errors)) {
+            errors.forEach((err: any) => {
+              if (err.field) {
+                validationErrors[err.field] = err.message
+              }
+            })
+          }
+          return Promise.reject(
+            new ValidationError(message, errors, validationErrors)
+          )
+        }
+
+        case 403:
+          return Promise.reject(new PermissionError(message, errors))
+
+        case 404:
+          return Promise.reject(new NotFoundError(message, errors))
+
+        case 429: {
+          const retryAfter = error.response.headers['retry-after']
+          return Promise.reject(
+            new RateLimitError(
+              message,
+              retryAfter ? parseInt(retryAfter) : undefined,
+              errors
+            )
+          )
+        }
+
+        case 500:
+        case 503:
+          return Promise.reject(new ServerError(message, status, errors))
+
+        default:
+          return Promise.reject(new ApiError(message, status, errors))
       }
-
-      // ========================================
-      // HANDLE 404 NOT FOUND
-      // ========================================
-      if (error.response?.status === 404) {
-        const message = error.response.data?.message || 'Resource not found.'
-        console.error('🔍 Not Found:', message)
-      }
-
-      // ========================================
-      // HANDLE 422 VALIDATION ERROR
-      // ========================================
-      if (error.response?.status === 422) {
-        const message = error.response.data?.message || 'Validation failed.'
-        const validationErrors = error.response.data?.errors || []
-        console.error('⚠️ Validation Error:', message, validationErrors)
-      }
-
-      // ========================================
-      // HANDLE 429 TOO MANY REQUESTS
-      // ========================================
-      if (error.response?.status === 429) {
-        const message =
-          error.response.data?.message ||
-          'Too many requests. Please try again later.'
-        console.error('⏱️ Rate Limited:', message)
-      }
-
-      // ========================================
-      // HANDLE 500 INTERNAL SERVER ERROR
-      // ========================================
-      if (error.response?.status === 500) {
-        const message =
-          error.response.data?.message ||
-          'Internal server error. Please try again later.'
-        console.error('💥 Server Error:', message)
-      }
-
-      // ========================================
-      // HANDLE 503 SERVICE UNAVAILABLE
-      // ========================================
-      if (error.response?.status === 503) {
-        const message =
-          error.response.data?.message ||
-          'Service temporarily unavailable. Please try again later.'
-        console.error('🔧 Service Unavailable:', message)
-      }
-
-      // ========================================
-      // HANDLE NETWORK ERROR (No Response)
-      // ========================================
-      if (!error.response) {
-        console.error('🌐 Network Error:', error.message)
-      }
-
-      // Reject with original error
-      return Promise.reject(error)
     }
   )
 }
@@ -197,6 +206,12 @@ export const setupErrorInterceptor = (axiosInstance: AxiosInstance): void => {
  * Extract error message from API error
  */
 export const getErrorMessage = (error: unknown): string => {
+  if (ApiError.isApiError(error)) {
+    return error.message
+  }
+  if (NetworkError.isNetworkError(error)) {
+    return error.message
+  }
   if (axios.isAxiosError(error)) {
     return error.response?.data?.message || error.message || 'An error occurred'
   }
@@ -210,6 +225,9 @@ export const getErrorMessage = (error: unknown): string => {
  * Extract validation errors from API error
  */
 export const getValidationErrors = (error: unknown): Record<string, string> => {
+  if (ValidationError.isValidationError(error)) {
+    return error.validationErrors
+  }
   if (axios.isAxiosError(error) && error.response?.data?.errors) {
     const errors: Record<string, string> = {}
     const apiErrors = error.response.data.errors
@@ -231,40 +249,28 @@ export const getValidationErrors = (error: unknown): Record<string, string> => {
  * Check if error is authentication error
  */
 export const isAuthError = (error: unknown): boolean => {
-  if (axios.isAxiosError(error)) {
-    return error.response?.status === 401
-  }
-  return false
+  return AuthError.isAuthError(error)
 }
 
 /**
  * Check if error is permission error
  */
 export const isPermissionError = (error: unknown): boolean => {
-  if (axios.isAxiosError(error)) {
-    return error.response?.status === 403
-  }
-  return false
+  return PermissionError.isPermissionError(error)
 }
 
 /**
  * Check if error is validation error
  */
 export const isValidationError = (error: unknown): boolean => {
-  if (axios.isAxiosError(error)) {
-    return error.response?.status === 422 || error.response?.status === 400
-  }
-  return false
+  return ValidationError.isValidationError(error)
 }
 
 /**
  * Check if error is network error
  */
 export const isNetworkError = (error: unknown): boolean => {
-  if (axios.isAxiosError(error)) {
-    return !error.response && error.code === 'ERR_NETWORK'
-  }
-  return false
+  return NetworkError.isNetworkError(error)
 }
 
 export default {

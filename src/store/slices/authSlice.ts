@@ -99,7 +99,8 @@ export const login = createAsyncThunk(
       const response = await authService.login(credentials)
       return response.data
     } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed')
+    // ✅ Just pass the error as-is (already custom error from interceptor)
+      return rejectWithValue(error)
     }
   }
 )
