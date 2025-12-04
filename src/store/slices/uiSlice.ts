@@ -19,6 +19,7 @@ interface UIState {
   mobileMenuOpen: boolean
   accentColor: string
   appearance: 'default' | 'compact' | 'comfortable'
+   language: 'en' | 'hi' | 'mr'
 }
 
 // ============================================================================
@@ -56,6 +57,7 @@ const initialState: UIState = {
   mobileMenuOpen: false,
   accentColor: localStorage.getItem('accentColor') || 'amber',
   appearance: (localStorage.getItem('appearance') as any) || 'default',
+  language: (localStorage.getItem('language') as 'en' | 'hi' | 'mr') || 'en',
 }
 
 // ============================================================================
@@ -139,6 +141,10 @@ const uiSlice = createSlice({
         state.loadingMessage = null
       }
     },
+    setLanguage: (state, action: PayloadAction<'en' | 'hi'>) => {
+  state.language = action.payload
+  localStorage.setItem('language', action.payload)
+},
 
     setLoadingWithMessage: (
       state,
@@ -177,6 +183,7 @@ export const {
   resetUI,
   setAccentColor,
   setAppearance,
+  setLanguage,
 } = uiSlice.actions
 
 export default uiSlice.reducer

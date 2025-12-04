@@ -28,7 +28,7 @@ import uiReducer from './slices/uiSlice'
 const uiPersistConfig = {
   key: 'ui-preferences',
   storage,
-  whitelist: ['themeName', 'accentColor', 'appearance'],
+  whitelist: ['themeName', 'accentColor', 'appearance', 'language'],
 }
 
 // ============================================================================

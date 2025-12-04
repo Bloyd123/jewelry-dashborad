@@ -3,18 +3,19 @@
 // Desktop Navbar with Theme Picker Modal
 // ============================================================================
 
-import { Bell, Search, Settings, User, Moon, Sun, Palette} from 'lucide-react'
+import { Bell, Search, Settings, User, Moon, Sun, Palette, Languages } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { useAppDispatch } from '@/store/hooks'
 import { cycleTheme } from '@/store/slices/uiSlice'
 import { useState } from 'react'
 import { ThemePickerModal } from './ThemePickerModal'
-
+import { LanguageDropdown } from './LanguageDropdown'
 export const DesktopNavbar = () => {
   const { mode } = useTheme()
   const dispatch = useAppDispatch()
   const [showSearch, setShowSearch] = useState(false)
-  const [showThemePicker, setShowThemePicker] = useState(false) // ✅ NEW
+  const [showThemePicker, setShowThemePicker] = useState(false) 
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false) 
 
   const handleThemeCycle = () => {
     dispatch(cycleTheme())
@@ -71,7 +72,21 @@ export const DesktopNavbar = () => {
           >
             <Palette size={20} />
           </button>
-
+{/* Language Switcher */}  {/* ✅ ADD THIS WHOLE SECTION */}
+<div className="relative">
+  <button
+    onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+    className="p-2 rounded-lg hover:bg-bg-secondary text-text-secondary hover:text-accent transition-colors"
+    title="Change language"
+  >
+    <Languages size={20} />
+  </button>
+  
+  {/* Language Dropdown */}
+  {showLanguageMenu && (
+    <LanguageDropdown onClose={() => setShowLanguageMenu(false)} />
+  )}
+</div>
           {/* Notifications */}
           <button className="relative p-2 rounded-lg hover:bg-bg-secondary text-text-secondary hover:text-accent transition-colors">
             <Bell size={20} />
