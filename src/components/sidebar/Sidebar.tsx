@@ -4,10 +4,10 @@
 // ============================================================================
 
 import { useTranslation } from 'react-i18next' // If using i18n
-import { SidebarHeader } from './SidebarHeader'
-import { SidebarItem } from './SidebarItem'
-import { SidebarCollapse } from './SidebarCollapse'
-import { SidebarFooter } from './SidebarFooter'
+import { SidebarHeader } from '../layout/sidebar/SidebarHeader'
+import { SidebarItem } from '../layout/sidebar/SidebarItem'
+import { SidebarCollapse } from '../layout/sidebar/SidebarCollapse'
+import { SidebarFooter } from '../layout/sidebar/SidebarFooter'
 import { getMenuItems } from '@/config/sidebar-menu'
 import { useSidebar } from '@/hooks/useSidebar'
 import { useMemo } from 'react'

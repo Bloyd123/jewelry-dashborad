@@ -6,7 +6,7 @@ import React from 'react'
 import { Shield } from 'lucide-react'
 
 import ResetPasswordForm from './ResetPasswordForm'
-import resetPasswordImage from '../../../assets/images/Loginimage.png'
+import resetPasswordImage from '../../../../assets/images/Loginimage.png'
 
 const ResetPasswordDesktop: React.FC = () => {
     

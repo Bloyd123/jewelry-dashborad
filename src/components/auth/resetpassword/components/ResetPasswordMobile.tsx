@@ -5,7 +5,7 @@
 import React from 'react'
 import { Shield } from 'lucide-react'
 
-import ResetPasswordForm from './ResetPasswordForm'
+import ResetPasswordForm from '../components/ResetPasswordForm'
 
 const ResetPasswordMobile: React.FC = () => {
   return (

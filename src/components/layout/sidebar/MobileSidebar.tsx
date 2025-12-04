@@ -3,7 +3,7 @@
 // Mobile Sidebar with Overlay
 // ============================================================================
 
-import { Sidebar } from './Sidebar'
+import { Sidebar } from '../../sidebar/Sidebar'
 import { useSidebar } from '@/hooks/useSidebar'
 
 export const MobileSidebar = () => {

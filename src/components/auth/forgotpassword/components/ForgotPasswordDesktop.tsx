@@ -1,20 +1,20 @@
 // ============================================================================
-// FILE: components/auth/login/LoginDesktop.tsx
+// FILE: components/auth/forgotpassword/ForgotPasswordDesktop.tsx
 // ============================================================================
 
 import React from 'react'
 
-import loginImage from '../../../assets/images/Loginimage.png'
+import forgotPasswordImage from '../../../../assets/images/Loginimage.png'
 
-import LoginForm from './LoginForm'
+import ForgotPasswordForm from './ForgotPasswordForm'
 
-const LoginDesktop: React.FC = () => {
+const ForgotPasswordDesktop: React.FC = () => {
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Image Section */}
       <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
-          src={loginImage}
+          src={forgotPasswordImage}
           alt="Jewelry crafting"
           className="h-full w-full object-cover"
         />
@@ -22,7 +22,7 @@ const LoginDesktop: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-transparent"></div>
       </div>
 
-      {/* Right Side - Login Form Section */}
+      {/* Right Side - Forgot Password Form Section */}
       <div className="flex w-full items-center justify-center bg-stone-50 px-8 py-12 transition-colors duration-200 dark:bg-gray-900 lg:w-1/2">
         <div className="w-full max-w-md">
           {/* Logo & Brand Section */}
@@ -32,21 +32,21 @@ const LoginDesktop: React.FC = () => {
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                 KaratLog
               </h1>
-              {/* Welcome Header */}
+              {/* Forgot Password Header */}
               <div className="mb-10 text-center">
                 <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  Welcome Back
+                  Forgot Your Password?
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400">
-                  Log in to manage your business.
+                  Enter your email below to receive a password reset link.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Login Form */}
+          {/* Forgot Password Form */}
           <div className="rounded-2xl p-8 transition-colors duration-200 dark:bg-gray-800">
-            <LoginForm />
+            <ForgotPasswordForm />
           </div>
 
           {/* Footer */}
@@ -61,4 +61,4 @@ const LoginDesktop: React.FC = () => {
   )
 }
 
-export default LoginDesktop
+export default ForgotPasswordDesktop

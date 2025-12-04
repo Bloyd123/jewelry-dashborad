@@ -3,7 +3,7 @@
 // Navbar Exports
 // ============================================================================
 
-export { Navbar } from './Navbar'
+export { Navbar } from '../../navbar/Navbar'
 export { DesktopNavbar } from './DesktopNavbar'
 export { MobileNavbar } from './MobileNavbar'
 export { ThemePickerModal } from './ThemePickerModal'

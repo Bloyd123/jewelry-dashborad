@@ -1,13 +1,13 @@
 // ============================================================================
-// FILE: components/auth/resetpassword/index.tsx
+// FILE 1: components/auth/login/index.tsx
 // ============================================================================
 
 import React, { useEffect, useState } from 'react'
 
-import ResetPasswordDesktop from './ResetPasswordDesktop'
-import ResetPasswordMobile from './ResetPasswordMobile'
+import LoginDesktop from '../components/LoginDesktop'
+import LoginMobile from '../components/LoginMobile'
 
-const ResetPasswordPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const ResetPasswordPage: React.FC = () => {
     return () => window.removeEventListener('resize', checkScreenSize)
   }, [])
 
-  return isMobile ? <ResetPasswordMobile /> : <ResetPasswordDesktop />
+  return isMobile ? <LoginMobile /> : <LoginDesktop />
 }
 
-export default ResetPasswordPage
+export default LoginPage

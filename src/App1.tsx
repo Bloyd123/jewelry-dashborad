@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 
 import { BrowserRouter } from 'react-router-dom'
 
-import LoginPage from './components/auth/login'
+import LoginPage from './components/auth/login/pages'
 import ToastContainer from './components/common/ToastContainer'
 import { NotificationProvider } from './context/NotificationContext'
 import { useAppDispatch, useAppSelector } from './store/hooks'

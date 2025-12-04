@@ -7,15 +7,15 @@ import { useEffect } from 'react'
 
 import { BrowserRouter, Routes, Route,Navigate  } from 'react-router-dom'
 
-import LoginPage from './components/auth/login'
-import ForgotPasswordPage from './components/auth/forgotpassword'
+import LoginPage from './components/auth/login/pages'
+import ForgotPasswordPage from './components/auth/forgotpassword/pages'
 import ToastContainer from './components/common/ToastContainer'
 import { NotificationProvider } from './context/NotificationContext'
 import { useAppDispatch} from './store/hooks'
 import { initializeAuth } from './store/slices/authSlice'
-import ResetPasswordPage from './components/auth/resetpassword'
+import ResetPasswordPage from './components/auth/resetpassword/pages'
 import { useThemeSync } from './hooks/useThemeSync'
-import { DashboardLayout } from './layouts/DashboardLayout'
+import { MainLayout } from './components/layout/MainLayout/MainLayout'
 import Dashboard from './pages/dashboard'
 import { NoInternetWrapper } from './components/common'
 // ============================================================================
@@ -48,7 +48,7 @@ function App() {
           <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
           <Route path='/auth/signup' element={<ResetPasswordPage/>}/>
                     {/* Protected Routes with Layout */}
-          <Route path="/" element={<DashboardLayout />}>
+          <Route path="/" element={<MainLayout />}>
             <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />

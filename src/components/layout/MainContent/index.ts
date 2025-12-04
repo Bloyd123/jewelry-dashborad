@@ -3,4 +3,4 @@
 // Layout Exports
 // ============================================================================
 
-export { DashboardLayout } from './DashboardLayout'
+export { MainLayout } from '../MainLayout/MainLayout'

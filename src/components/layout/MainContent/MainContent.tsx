@@ -4,13 +4,13 @@
 // ============================================================================
 
 import { Outlet } from 'react-router-dom'
-import { Sidebar, MobileSidebar } from '@/components/sidebar'
-import { Navbar } from '@/components/navbar'
+import { Sidebar, MobileSidebar } from '@/components/layout/sidebar'
+import { Navbar } from '@/components/layout/navbar'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { SidebarProvider } from '@/context/SidebarContext'
+
 import { useSidebar } from '@/hooks/useSidebar'
 
-const DashboardContent = () => {
+export const MainContent = () => {
   const { isCollapsed } = useSidebar()
   const isMobile = useMediaQuery('(max-width: 1024px)')
 
@@ -40,10 +40,3 @@ const DashboardContent = () => {
   )
 }
 
-export const DashboardLayout = () => {
-  return (
-    <SidebarProvider>
-      <DashboardContent />
-    </SidebarProvider>
-  )
-}

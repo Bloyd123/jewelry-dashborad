@@ -3,7 +3,7 @@
 // Sidebar Exports
 // ============================================================================
 
-export { Sidebar } from './Sidebar'
+export { Sidebar } from '../../sidebar/Sidebar'
 export { SidebarHeader } from './SidebarHeader'
 export { SidebarItem } from './SidebarItem'
 export { SidebarCollapse } from './SidebarCollapse'
