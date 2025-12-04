@@ -6,6 +6,8 @@
 import { useSidebar } from '@/hooks/useSidebar'
 import { Menu, X } from 'lucide-react'
 import logo from "@/assets/images/logo.png"
+import { APP_CONFIG } from '@/config/app.config'
+
 export const SidebarHeader = () => {
   const { isCollapsed, toggleCollapse } = useSidebar()
 
@@ -20,7 +22,7 @@ export const SidebarHeader = () => {
         style={{ width: 32, height: 32 }}
       />
           <span className="text-lg font-semibold text-sidebar-text">
-            Karat Log
+            {APP_CONFIG.NAME}
           </span>
         </div>
       )}

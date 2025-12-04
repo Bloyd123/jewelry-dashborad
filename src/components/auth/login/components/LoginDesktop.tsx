@@ -5,6 +5,7 @@
 import React from 'react'
 
 import loginImage from '../../../../assets/images/Loginimage.png'
+import { APP_CONFIG } from '@/config/app.config'
 
 import LoginForm from './LoginForm'
 
@@ -52,7 +53,7 @@ const LoginDesktop: React.FC = () => {
           {/* Footer */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              © {new Date().getFullYear()} Karat Log. All rights reserved.
+              © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights reserved.
             </p>
           </div>
         </div>

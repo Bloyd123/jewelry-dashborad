@@ -19,7 +19,7 @@ export const SidebarItem = ({ item }: SidebarItemProps) => {
 
   return (
     <NavLink
-      to={`/${item.url}`}
+      to={`${item.url}`}
       className={({ isActive }) =>
         `flex items-center gap-3 px-4 py-3 text-sidebar-text 
         transition-all duration-200 group

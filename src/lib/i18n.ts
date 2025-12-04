@@ -6,7 +6,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-
+import { APP_CONFIG } from '@/config/app.config'
 // Import translations
 // CORRECT — import each language properly
 import { english, hindi, marathi } from '@/locales'
@@ -34,7 +34,8 @@ const resources = {
 // ============================================================================
 
 // Get saved language from memory (since localStorage is not available)
-let savedLanguage = 'en'
+
+let savedLanguage: string = APP_CONFIG.DEFAULT_LANGUAGE  
 
 i18n
   // Detect user language
@@ -44,7 +45,7 @@ i18n
   // Initialize i18next
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: APP_CONFIG.DEFAULT_LANGUAGE,
     lng: savedLanguage,
     debug: false,
     
@@ -78,12 +79,13 @@ export default i18n
 
 // Change language (store in memory)
 export const changeLanguage = (lng: string) => {
-  savedLanguage = lng
-  i18n.changeLanguage(lng)
+  if (APP_CONFIG.SUPPORTED_LANGUAGES.includes(lng as any)) {
+    savedLanguage = lng
+    i18n.changeLanguage(lng)
+  }
 }
-
 // Get current language
 export const getCurrentLanguage = () => i18n.language
 
 // Get available languages
-export const getAvailableLanguages = () => Object.keys(resources)
+export const getAvailableLanguages = () => APP_CONFIG.SUPPORTED_LANGUAGES

@@ -6,7 +6,7 @@
 import { useEffect } from 'react'
 
 import { BrowserRouter, Routes, Route,Navigate  } from 'react-router-dom'
-
+import { ROUTES } from './config/routes.config'
 import LoginPage from './components/auth/login/pages'
 import ForgotPasswordPage from './components/auth/forgotpassword/pages'
 import ToastContainer from './components/common/ToastContainer'
@@ -43,15 +43,15 @@ function App() {
     <BrowserRouter>
       <NotificationProvider>
         <Routes>
-        <Route path="/" element={<Navigate to="/auth/login" replace />} />
-          <Route path="/auth/login" element={<LoginPage />} />
-          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path='/auth/signup' element={<ResetPasswordPage/>}/>
+        <Route path="/" element={<Navigate to={ROUTES.login} replace />} />
+          <Route path={ROUTES.login} element={<LoginPage />} />
+          <Route path={ROUTES.forgotPassword}  element={<ForgotPasswordPage />} />
+          <Route path={ROUTES.resetPassword} element={<ResetPasswordPage/>}/>
                     {/* Protected Routes with Layout */}
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route index element={<Navigate to={ROUTES.dashboard}  replace />} />
+            <Route path={ROUTES.dashboard}  element={<Dashboard />} />
+            <Route path="*" element={<Navigate to={ROUTES.dashboard}  replace />} />
           </Route>
         </Routes>
         <ToastContainer />

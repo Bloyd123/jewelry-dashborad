@@ -70,7 +70,7 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
           {item.items.map(subItem => (
             <NavLink
               key={subItem.url}
-              to={`/${subItem.url}`}
+              to={`${subItem.url}`}
               className={({ isActive }) =>
                 `flex items-center gap-3 pl-12 pr-4 py-2.5 text-sm
                 text-sidebar-muted transition-colors duration-200

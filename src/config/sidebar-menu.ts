@@ -14,7 +14,7 @@ import {
   Wrench,
 } from 'lucide-react'
 import type { MenuItem } from '@/types/menu'
-
+import { ROUTES } from '@/config/routes.config'
 // ============================================================================
 // MENU ITEMS FUNCTION (For i18n support)
 // ============================================================================
@@ -22,62 +22,62 @@ import type { MenuItem } from '@/types/menu'
 export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
   {
     title: t('sidebar.dashboard'),
-    url: 'dashboard',
+    url: ROUTES.dashboard,
     icon: LayoutDashboard,
   },
   {
     title: t('sidebar.stock'),
-    url: 'stock',
+    url: ROUTES.stock,
     icon: Package,
   },
   {
     title: t('sidebar.payments'),
     icon: Wallet,
     items: [
-      { title: t('sidebar.paymentHistory'), url: 'payments/history' },
-      { title: t('sidebar.paymentEntry'), url: 'payments/entry' },
+      { title: t('sidebar.paymentHistory'), url: ROUTES.paymentHistory },
+      { title: t('sidebar.paymentEntry'), url: ROUTES.paymentEntry },
     ],
   },
   {
     title: t('sidebar.purchases'),
     icon: ShoppingCart,
     items: [
-      { title: t('sidebar.allPurchases'), url: 'purchases' },
-      { title: t('sidebar.addPurchase'), url: 'purchases/add' },
-      { title: t('sidebar.suppliers'), url: 'suppliers' },
-      { title: t('sidebar.reports'), url: 'purchases/reports' },
+      { title: t('sidebar.allPurchases'), url: ROUTES.purchases  },
+      { title: t('sidebar.addPurchase'), url: ROUTES.addPurchase },
+      { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
+      { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
     ],
   },
   {
     title: t('sidebar.sales'),
     icon: Store,
     items: [
-      { title: t('sidebar.allSales'), url: 'sales' },
-      { title: t('sidebar.addSale'), url: 'sales/add' },
-      { title: t('sidebar.customers'), url: 'customers' },
-      { title: t('sidebar.reports'), url: 'sales/reports' },
+      { title: t('sidebar.allSales'), url: ROUTES.sales  },
+      { title: t('sidebar.addSale'), url: ROUTES.addSale },
+      { title: t('sidebar.customers'), url: ROUTES.customers },
+      { title: t('sidebar.reports'), url: ROUTES.salesReports },
     ],
   },
   {
     title: t('sidebar.oldGold'),
     icon: Coins,
     items: [
-      { title: t('sidebar.allOldGoldPurchases'), url: 'purchases/old-gold' },
-      { title: t('sidebar.addOldGoldPurchase'), url: 'purchases/old-gold/add' },
+      { title: t('sidebar.allOldGoldPurchases'), url: ROUTES.oldGoldPurchases },
+      { title: t('sidebar.addOldGoldPurchase'), url: ROUTES.addOldGoldPurchase },
     ],
   },
   {
     title: t('sidebar.products'),
     icon: Package2,
     items: [
-      { title: t('sidebar.allProducts'), url: 'products' },
-      { title: t('sidebar.addProduct'), url: 'products/add' },
+      { title: t('sidebar.allProducts'), url:  ROUTES.products },
+      { title: t('sidebar.addProduct'), url:  ROUTES.addProduct },
     ],
   },
   {
     title: t('sidebar.customOrders'),
     icon: Wrench,
-    items: [{ title: t('sidebar.allCustomOrders'), url: 'custom-orders' }],
+    items: [{ title: t('sidebar.allCustomOrders'), url: ROUTES.customOrders }],
   },
 ]
 
@@ -85,16 +85,16 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
 // STATIC VERSION (If no i18n)
 // ============================================================================
 
-export const menuItems: MenuItem[] = [
-  {
-    title: 'Dashboard',
-    url: 'dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'Stock',
-    url: 'stock',
-    icon: Package,
-  },
-  // ... rest
-]
+// export const menuItems: MenuItem[] = [
+//   {
+//     title: 'Dashboard',
+//     url: ROUTES.dashboard,
+//     icon: LayoutDashboard,
+//   },
+//   {
+//     title: 'Stock',
+//     url: ROUTES.stock,
+//     icon: Package,
+//   },
+//   // ... rest
+// ]

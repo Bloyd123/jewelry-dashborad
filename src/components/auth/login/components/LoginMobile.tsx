@@ -5,6 +5,7 @@
 import React from 'react'
 
 import LoginForm from './LoginForm'
+import { APP_CONFIG } from '@/config/app.config'
 
 const LoginMobile: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const LoginMobile: React.FC = () => {
       <div className="flex-none px-6 pb-8 pt-12">
         {/* Brand Name with elegant spacing */}
         <h1 className="mb-8 mt-8 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Karat Log
+          {APP_CONFIG.NAME}
         </h1>
 
         {/* Welcome Text with refined spacing */}
@@ -38,7 +39,7 @@ const LoginMobile: React.FC = () => {
       {/* Footer - Fixed at bottom */}
       <div className="flex-none bg-white px-6 py-3 text-center transition-colors duration-200 dark:bg-gray-800">
         <p className="text-xs text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} Karat Log. All rights reserved.
+          © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights reserved.
         </p>
       </div>
     </div>

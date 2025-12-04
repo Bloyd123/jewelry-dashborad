@@ -7,6 +7,7 @@ import React from 'react'
 import forgotPasswordImage from '../../../../assets/images/Loginimage.png'
 
 import ForgotPasswordForm from './ForgotPasswordForm'
+import { APP_CONFIG } from '@/config/app.config'
 
 const ForgotPasswordDesktop: React.FC = () => {
   return (
@@ -52,7 +53,7 @@ const ForgotPasswordDesktop: React.FC = () => {
           {/* Footer */}
           <div className="mt-8 text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              © {new Date().getFullYear()} Karat Log. All rights reserved.
+              © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights reserved.
             </p>
           </div>
         </div>

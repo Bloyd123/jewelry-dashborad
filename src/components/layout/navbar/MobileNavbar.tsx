@@ -8,6 +8,7 @@ import { useSidebar } from '@/hooks/useSidebar'
 import { useState } from 'react'
 import { ThemePickerModal } from './ThemePickerModal'
 import logo from "@/assets/images/logo.png"
+import { APP_CONFIG } from '@/config/app.config'
 export const MobileNavbar = () => {
   const { toggleSidebar } = useSidebar()
   const [showThemePicker, setShowThemePicker] = useState(false)
@@ -30,7 +31,7 @@ export const MobileNavbar = () => {
         alt="Logo"
         style={{ width: 32, height: 32 }}
       />
-          <span className="text-lg font-semibold text-text-primary">Karat Log</span>
+          <span className="text-lg font-semibold text-text-primary">{APP_CONFIG.NAME}</span>
         </div>
 
         {/* Right - Actions */}

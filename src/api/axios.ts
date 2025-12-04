@@ -7,22 +7,15 @@ import axios, { AxiosInstance } from 'axios'
 
 import { setupAuthInterceptor } from './interceptors/authInterceptor'
 import { setupErrorInterceptor } from './interceptors/errorInterceptor'
-
-// ============================================================================
-// CONFIGURATION
-// ============================================================================
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1'
-const API_TIMEOUT = 30000 // 30 seconds
+import { APP_CONFIG } from '@/config/app.config'
 
 // ============================================================================
 // CREATE AXIOS INSTANCE
 // ============================================================================
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: API_TIMEOUT,
+  baseURL: APP_CONFIG.API.BASE_URL,
+  timeout: APP_CONFIG.API.TIMEOUT,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

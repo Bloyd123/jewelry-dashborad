@@ -5,6 +5,7 @@
 import React from 'react'
 
 import ForgotPasswordForm from './ForgotPasswordForm'
+import { APP_CONFIG } from '@/config/app.config'
 
 const ForgotPasswordMobile: React.FC = () => {
   return (
@@ -37,7 +38,7 @@ const ForgotPasswordMobile: React.FC = () => {
         {/* Footer */}
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} Karat Log. All rights reserved.
+            © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights reserved.
           </p>
         </div>
       </div>
