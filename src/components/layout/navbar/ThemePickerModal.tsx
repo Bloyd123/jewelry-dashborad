@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/navbar/ThemePickerModal.tsx
+// FILE: layout/navbar/ThemePickerModal.tsx
 // Theme Picker Modal Component
 // ============================================================================
 

@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: layouts/DashboardLayout.tsx
+// FILE: layouts/MainContent/MainContent.tsx
 // Dashboard Layout with Sidebar + Navbar (FIXED)
 // ============================================================================
 

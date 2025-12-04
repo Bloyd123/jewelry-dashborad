@@ -1,6 +1,6 @@
 // ============================================================================
-// FILE: layouts/MainContent/index.ts
-// Layout Exports
+// FILE: components/dashboard/pages/index.tsx
+// Dashboard Page
 // ============================================================================
 
-export { MainLayout } from '../MainLayout/MainLayout'
+export {Dashboard} from './Dashboard'

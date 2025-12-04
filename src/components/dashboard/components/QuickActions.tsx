@@ -1,9 +1,9 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/QuickActions.tsx
+// FILE: componens/dashboard/components/QuickActions.tsx
 // Quick Action Buttons
 // ============================================================================
 
-import { Plus, Upload, Download, FileText } from 'lucide-react'
+import { Plus, Upload, FileText } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 export const QuickActions = () => {

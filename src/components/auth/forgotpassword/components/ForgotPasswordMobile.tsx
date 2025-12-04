@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/forgotpassword/ForgotPasswordMobile.tsx
+// FILE: components/auth/forgotpassword/components/ForgotPasswordMobile.tsx
 // ============================================================================
 
 import React from 'react'

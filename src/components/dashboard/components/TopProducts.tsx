@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/TopProducts.tsx
+// FILE: componens/dashboard/components/TopProducts.tsx
 // Top Selling Products
 // ============================================================================
 

@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/forgotpassword/ForgotPasswordForm.tsx
+// FILE: components/auth/forgotpassword/components/ForgotPasswordForm.tsx
 // ============================================================================
 
 import React, { useState, useCallback } from 'react'

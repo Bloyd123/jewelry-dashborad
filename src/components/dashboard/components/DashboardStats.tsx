@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/DashboardStats.tsx
+// FILE: componens/Dashboard/components/DashboardStats.tsx
 // Stats Cards Component
 // ============================================================================
 

@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/sidebar/MobileSidebar.tsx
+// FILE: layout/sidebar/MobileSidebar.tsx
 // Mobile Sidebar with Overlay
 // ============================================================================
 

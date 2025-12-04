@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/sidebar/SidebarFooter.tsx
+// FILE: layout/sidebar/SidebarFooter.tsx
 // Sidebar Footer - User Info, Settings, Logout
 // ============================================================================
 

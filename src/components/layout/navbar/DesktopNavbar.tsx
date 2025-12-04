@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/navbar/DesktopNavbar.tsx
+// FILE: layout/navbar/DesktopNavbar.tsx
 // Desktop Navbar with Theme Picker Modal
 // ============================================================================
 

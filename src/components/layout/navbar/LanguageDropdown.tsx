@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/navbar/LanguageDropdown.tsx
+// FILE: layout/navbar/LanguageDropdown.tsx
 // Language Selection Dropdown Component
 // ============================================================================
 

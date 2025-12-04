@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/navbar/MobileNavbar.tsx
+// FILE: layout/navbar/MobileNavbar.tsx
 // Mobile Navbar with Theme Picker
 // ============================================================================
 

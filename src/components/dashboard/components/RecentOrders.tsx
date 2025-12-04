@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/RecentOrders.tsx
+// FILE: componens/dashboard/components/RecentOrders.tsx
 // Recent Orders Table
 // ============================================================================
 

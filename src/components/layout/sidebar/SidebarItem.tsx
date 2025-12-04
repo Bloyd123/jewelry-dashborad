@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/sidebar/SidebarItem.tsx
+// FILE: layout/sidebar/SidebarItem.tsx
 // Single Sidebar Menu Item (No children)
 // ============================================================================
 

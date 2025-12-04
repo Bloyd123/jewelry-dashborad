@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE 3: components/auth/login/LoginMobile.tsx
+// FILE 3: components/auth/login/components/LoginMobile.tsx
 // ============================================================================
 
 import React from 'react'

@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/resetpassword/ResetPasswordDesktop.tsx
+// FILE: components/auth/resetpassword/components/ResetPasswordDesktop.tsx
 // ============================================================================
 
 import React from 'react'

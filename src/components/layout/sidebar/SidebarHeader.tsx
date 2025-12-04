@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/sidebar/SidebarHeader.tsx
+// FILE: layout/sidebar/SidebarHeader.tsx
 // Sidebar Header - Logo & Brand
 // ============================================================================
 

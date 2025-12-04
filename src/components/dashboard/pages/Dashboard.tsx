@@ -1,16 +1,15 @@
 // ============================================================================
-// FILE: pages/Dashboard/index.tsx
-// Dashboard Page
+// FILE: components/dashboard/pages/Dashboard.tsx
+// Dashboard 
 // ============================================================================
 
-import { DashboardStats } from './components/DashboardStats'
-import { SalesChart } from './components/SalesChart'
-import { RecentOrders } from './components/RecentOrders'
-import { QuickActions } from './components/QuickActions'
-import { StockAlerts } from './components/StockAlerts'
-import { TopProducts } from './components/TopProducts'
-
-export default function Dashboard() {
+import { DashboardStats } from '../components/DashboardStats'
+import { SalesChart } from '../components/SalesChart'
+import { RecentOrders } from '../components/RecentOrders'
+import { QuickActions } from '../components/QuickActions'
+import { StockAlerts } from '../components/StockAlerts'
+import { TopProducts } from '../components/TopProducts'
+export const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Page Header */}

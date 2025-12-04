@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/login/LoginDesktop.tsx
+// FILE: components/auth/login/components/LoginDesktop.tsx
 // ============================================================================
 
 import React from 'react'

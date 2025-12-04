@@ -16,7 +16,7 @@ import { initializeAuth } from './store/slices/authSlice'
 import ResetPasswordPage from './components/auth/resetpassword/pages'
 import { useThemeSync } from './hooks/useThemeSync'
 import { MainLayout } from './components/layout/MainLayout/MainLayout'
-import Dashboard from './pages/dashboard'
+import {Dashboard }from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 // ============================================================================
 // APP COMPONENT

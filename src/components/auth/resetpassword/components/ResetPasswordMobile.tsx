@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/resetpassword/ResetPasswordMobile.tsx
+// FILE: components/auth/resetpassword/components/ResetPasswordMobile.tsx
 // ============================================================================
 
 import React from 'react'

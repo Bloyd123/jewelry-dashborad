@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/SalesChart.tsx
+// FILE: componens/dashboard/components/SalesChart.tsx
 // Sales Chart Component
 // ============================================================================
 

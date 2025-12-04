@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE 4: components/auth/login/LoginForm.tsx
+// FILE 4: components/auth/login/components/LoginForm.tsx
 // ============================================================================
 
 import React, { useState, useCallback } from 'react'

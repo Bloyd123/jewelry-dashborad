@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/sidebar/SidebarCollapse.tsx
+// FILE: layout/sidebar/SidebarCollapse.tsx
 // Collapsible Sidebar Menu Item (With children)
 // ============================================================================
 

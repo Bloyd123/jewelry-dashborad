@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: components/auth/resetpassword/index.tsx
+// FILE: components/auth/resetpassword/pages/index.tsx
 // ============================================================================
 
 import React, { useEffect, useState } from 'react'

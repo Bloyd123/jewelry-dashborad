@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: pages/Dashboard/components/StockAlerts.tsx
+// FILE: componens/dashboard/components/StockAlerts.tsx
 // Low Stock Alerts
 // ============================================================================
 
