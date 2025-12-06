@@ -6,6 +6,7 @@
 
 // import auth from './auth.json'
 import common from './common.json'
+import error from './errors.json'
 // import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
@@ -19,6 +20,7 @@ import common from './common.json'
 export default {
 //   ...auth,
   ...common,
+  ...error
 //   ...dashboard,
 //   ...inventory,
 //   ...masters,

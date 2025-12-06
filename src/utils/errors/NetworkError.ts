@@ -7,15 +7,17 @@
  * Network Error class
  * For network-related errors (no response from server)
  */
+import { ERROR_KEYS } from './errorMessages'   
 export class NetworkError extends Error {
   public readonly isNetworkError = true
   public readonly code?: string
-
+public readonly messageKey: string
   constructor(
-    message: string = 'Network error. Please check your internet connection.',
+      messageKey: string = ERROR_KEYS.API.NETWORK,
     code?: string
   ) {
-    super(message)
+    super('Network error')    
+      this.messageKey = messageKey
     this.name = 'NetworkError'
     this.code = code
 
@@ -30,6 +32,7 @@ export class NetworkError extends Error {
   toJSON() {
     return {
       name: this.name,
+       messageKey: this.messageKey, 
       message: this.message,
       code: this.code,
     }

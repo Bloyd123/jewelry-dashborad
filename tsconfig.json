@@ -19,6 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+      "types": ["jest", "node"],
 
     /* Path Aliases */
     "baseUrl": ".",
@@ -38,6 +39,6 @@
       "@config/*": ["src/config/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "tests", "**/*.test.ts", "**/*.test.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

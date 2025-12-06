@@ -11,12 +11,13 @@ export class ApiError extends Error {
   public readonly statusCode: number
   public readonly errors?: any[]
   public readonly isApiError = true
-
-  constructor(message: string, statusCode: number, errors?: any[]) {
-    super(message)
+ public readonly messageKey: string 
+  constructor(messageKey: string, statusCode: number, errors?: any[],fallbackMessage?: string  ) {
+     super(fallbackMessage || messageKey)    
     this.name = 'ApiError'
     this.statusCode = statusCode
     this.errors = errors
+     this.messageKey = messageKey    
 
     // Maintains proper stack trace for where error was thrown (V8 only)
     if (Error.captureStackTrace) {
@@ -31,6 +32,7 @@ export class ApiError extends Error {
     return {
       name: this.name,
       message: this.message,
+        messageKey: this.messageKey, 
       statusCode: this.statusCode,
       errors: this.errors,
     }

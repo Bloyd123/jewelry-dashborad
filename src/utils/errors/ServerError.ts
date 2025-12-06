@@ -4,6 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
+import { ERROR_KEYS } from './errorMessages'
 
 /**
  * Server Error class
@@ -13,11 +14,11 @@ export class ServerError extends ApiError {
   public readonly isServerError = true
 
   constructor(
-    message: string = 'Internal server error. Please try again later.',
+    messageKey: string = ERROR_KEYS.API.SERVER,
     statusCode: number = 500,
     errors?: any[]
   ) {
-    super(message, statusCode, errors)
+     super(messageKey, statusCode, errors, 'Internal server error')
     this.name = 'ServerError'
 
     if (Error.captureStackTrace) {

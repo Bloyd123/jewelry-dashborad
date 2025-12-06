@@ -12,15 +12,16 @@ import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
 import type { LoginRequest, LoginFormState } from '@/types/auth.types'
 import { validateLoginForm } from '@/validators/loginValidation';
-import { ValidationError, AuthError, ApiError, NetworkError } from '@/utils/errors'
-
+import { useErrorHandler } from '@/hooks/useErrorHandler'
+import { useTranslation } from 'react-i18next'
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate()
   //   const { accentColor, mode } = useTheme();
   const { showSuccess, showError } = useNotification()
   const { login } = useAuth()
-
+  const { t } = useTranslation()
+  const { handleError } = useErrorHandler()
   // Form State
   const [formData, setFormData] = useState<LoginFormState>({
     email: '',
@@ -68,7 +69,7 @@ const handleSubmit = useCallback(
     e.preventDefault();
 
     if (!validateForm()) {
-      showError("Please fix the form errors");
+       showError(t('errors.validation.fixFormErrors'))
       return;
     }
 
@@ -83,55 +84,10 @@ const handleSubmit = useCallback(
 
       await login(loginData);
 
-      showSuccess("Login successful!", "Welcome back");
+      showSuccess(t('auth.login.success'),  t('auth.login.welcomeBack'));
       navigate("/dashboard");
     } catch (error: any) {
-      
-
-  // ========================================
-      // HANDLE VALIDATION ERROR (400/422)
-      // ========================================
-      if (ValidationError.isValidationError(error)) {
-        setErrors(error.validationErrors)
-        showError(error.message, 'Validation Failed')
-        return
-      }
-
-      // ========================================
-      // HANDLE AUTH ERROR (401)
-      // ========================================
-      if (AuthError.isAuthError(error)) {
-        showError(error.message, 'Login Failed')
-        setErrors({
-          email: 'Invalid email or password',
-          password: 'Invalid email or password',
-        })
-        return
-      }
-
-      // ========================================
-      // HANDLE NETWORK ERROR
-      // ========================================
-      if (NetworkError.isNetworkError(error)) {
-        showError(
-          'Unable to connect to server. Please check your internet connection.',
-          'Network Error'
-        )
-        return
-      }
-
-      // ========================================
-      // HANDLE GENERIC API ERROR
-      // ========================================
-      if (ApiError.isApiError(error)) {
-        showError(error.message, 'Error')
-        return
-      }
-
-      // ========================================
-      // FALLBACK (Unknown error)
-      // ========================================
-      showError('Something went wrong. Please try again.', 'Error')
+      handleError(error, setErrors) 
     } finally {
       setLoading(false);
     }

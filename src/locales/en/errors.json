@@ -1,0 +1,64 @@
+{
+  "errors": {
+    "api": {
+      "generic": "Something went wrong. Please try again.",
+      "network": "Unable to connect to server. Please check your internet connection.",
+      "server": "Internal server error. Please try again later.",
+      "timeout": "Request timeout. Please try again."
+    },
+    "auth": {
+      "title": "Login Failed",
+      "failed": "Authentication failed",
+      "invalidCredentials": "Invalid email or password",
+      "sessionExpired": "Your session has expired. Please login again.",
+      "unauthorized": "You are not authorized to access this resource"
+    },
+    "validation": {
+      "title": "Validation Failed",
+      "failed": "Please check the form and fix the errors",
+      "fixFormErrors": "Please fix the form errors",
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "invalidPassword": "Password must be at least 8 characters"
+    },
+    "permission": {
+      "title": "Access Denied",
+      "denied": "You do not have permission to perform this action",
+      "insufficientRights": "Insufficient rights to access this resource"
+    },
+    "notFound": {
+      "title": "Not Found",
+      "resource": "The requested resource was not found",
+      "page": "Page not found"
+    },
+    "rateLimit": {
+      "title": "Too Many Requests",
+      "exceeded": "Too many requests. Please try again later.",
+      "retryAfter": "Please wait {{seconds}} seconds before trying again"
+    },
+    "server": {
+      "title": "Server Error",
+      "message": "Internal server error. Please try again later."
+    },
+    "network": {
+      "title": "Network Error",
+      "message": "Unable to connect to server. Please check your internet connection."
+    },
+    "unknown": {
+      "title": "Error",
+      "message": "An unexpected error occurred"
+    }
+  },
+  "auth": {
+    "login": {
+      "success": "Login successful!",
+      "welcomeBack": "Welcome back"
+    },
+    "logout": {
+      "success": "Logged out successfully"
+    },
+    "register": {
+      "success": "Registration successful!"
+    }
+  }
+}

@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
-
+import { ERROR_KEYS } from './errorMessages'
 /**
  * Rate Limit Error class
  * For 429 Too Many Requests errors
@@ -14,11 +14,11 @@ export class RateLimitError extends ApiError {
   public readonly retryAfter?: number
 
   constructor(
-    message: string = 'Too many requests. Please try again later.',
+   messageKey: string = ERROR_KEYS.RATE_LIMIT.EXCEEDED,
     retryAfter?: number,
     errors?: any[]
   ) {
-    super(message, 429, errors)
+   super(messageKey, 429, errors, 'Too many requests') 
     this.name = 'RateLimitError'
     this.retryAfter = retryAfter
 

@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
-
+import { ERROR_KEYS } from './errorMessages'
 /**
  * Authentication Error class
  * For 401 Unauthorized errors
@@ -12,8 +12,8 @@ import { ApiError } from './ApiError'
 export class AuthError extends ApiError {
   public readonly isAuthError = true
 
-  constructor(message: string = 'Authentication failed', errors?: any[]) {
-    super(message, 401, errors)
+  constructor(messageKey: string = ERROR_KEYS.AUTH.FAILED, errors?: any[]) {
+   super(messageKey, 401, errors, 'Authentication failed')
     this.name = 'AuthError'
 
     if (Error.captureStackTrace) {

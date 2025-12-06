@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
-
+import { ERROR_KEYS } from './errorMessages'
 /**
  * Not Found Error class
  * For 404 Not Found errors
@@ -12,8 +12,8 @@ import { ApiError } from './ApiError'
 export class NotFoundError extends ApiError {
   public readonly isNotFoundError = true
 
-  constructor(message: string = 'Resource not found', errors?: any[]) {
-    super(message, 404, errors)
+  constructor( messageKey: string = ERROR_KEYS.NOT_FOUND.RESOURCE, errors?: any[]) {
+   super(messageKey, 404, errors, 'Resource not found')
     this.name = 'NotFoundError'
 
     if (Error.captureStackTrace) {

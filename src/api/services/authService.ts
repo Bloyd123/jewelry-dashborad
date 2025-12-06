@@ -133,11 +133,13 @@ export const updateProfile = async (
 
 /**
  * Logout current session
+ * Throws custom error classes from interceptor
  */
 export const logout = async (
   refreshToken: string,
   accessToken: string
 ): Promise<ApiResponse<LogoutResponse>> => {
+  // Will throw ServerError, NetworkError, etc. from interceptor
   const response = await api.post(API_ENDPOINTS.AUTH.LOGOUT, {
     refreshToken,
     accessToken,

@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
-
+import { ERROR_KEYS } from './errorMessages'
 /**
  * Permission Error class
  * For 403 Forbidden errors
@@ -13,10 +13,10 @@ export class PermissionError extends ApiError {
   public readonly isPermissionError = true
 
   constructor(
-    message: string = 'Access denied. You do not have permission to perform this action.',
+    messageKey: string = ERROR_KEYS.PERMISSION.DENIED,
     errors?: any[]
   ) {
-    super(message, 403, errors)
+    super(messageKey, 403, errors, 'Access denied')
     this.name = 'PermissionError'
 
     if (Error.captureStackTrace) {

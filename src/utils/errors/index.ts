@@ -10,4 +10,6 @@ export { NetworkError } from './NetworkError';
 export { NotFoundError } from './NotFoundError';
 export { ServerError } from './ServerError';
 export { RateLimitError } from './RateLimitError';
+export { ERROR_KEYS, getErrorKeyByStatus } from './errorMessages' 
+export type { ErrorKey } from './errorMessages' 
 

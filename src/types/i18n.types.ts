@@ -284,6 +284,79 @@ export interface Translations {
     to: string
     generate: string
     download: string
+  },
+  errors: {
+    api: {
+      generic: string
+      network: string
+      server: string
+      timeout: string
+    }
+
+    auth: {
+      title: string
+      failed: string
+      invalidCredentials: string
+      sessionExpired: string
+      unauthorized: string
+    }
+
+    validation: {
+      title: string
+      failed: string
+      fixFormErrors: string
+      required: string
+      invalidEmail: string
+      invalidPassword: string
+    }
+
+    permission: {
+      title: string
+      denied: string
+      insufficientRights: string
+    }
+
+    notFound: {
+      title: string
+      resource: string
+      page: string
+    }
+
+    rateLimit: {
+      title: string
+      exceeded: string
+      retryAfter: string
+    }
+
+    server: {
+      title: string
+      message: string
+    }
+
+    network: {
+      title: string
+      message: string
+    }
+
+    unknown: {
+      title: string
+      message: string
+    }
+  }
+
+  auth: {
+    login: {
+      success: string
+      welcomeBack: string
+    }
+
+    logout: {
+      success: string
+    }
+
+    register: {
+      success: string
+    }
   }
 }
 
