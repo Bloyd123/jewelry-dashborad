@@ -27,5 +27,9 @@
     "title": "No Internet Connection",
     "description": "Please check your internet connection and try again.",
     "retryButton": "Retry Connection"
-  }
+  },
+    "common": { 
+  "loading": "Loading...",
+  "cancel": "Cancel"
+}
 }

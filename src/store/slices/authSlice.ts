@@ -104,6 +104,33 @@ export const login = createAsyncThunk(
     }
   }
 )
+
+/**
+ * Logout user
+ */
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      const state = getState() as RootState
+      const { refreshToken, accessToken } = state.auth
+
+      if (refreshToken) {
+        await authService.logout(refreshToken, accessToken || '')
+      }
+
+      // Clear tokens from storage
+      tokenService.clearTokens()
+
+     return { success: true } 
+    } catch (error: any) {
+      // Even if API call fails, clear local state
+      tokenService.clearTokens()
+         // ✅ Pass the error as-is (already custom error from interceptor)
+      return rejectWithValue(error)
+    }
+  }
+)
 /**
  * Forgot Password
  */
@@ -207,31 +234,6 @@ export const changePassword = createAsyncThunk(
   }
 )
 
-/**
- * Logout user
- */
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async (_, { getState, rejectWithValue }) => {
-    try {
-      const state = getState() as RootState
-      const { refreshToken, accessToken } = state.auth
-
-      if (refreshToken) {
-        await authService.logout(refreshToken, accessToken || '')
-      }
-
-      // Clear tokens from storage
-      tokenService.clearTokens()
-
-      return
-    } catch (error: any) {
-      // Even if API call fails, clear local state
-      tokenService.clearTokens()
-      return rejectWithValue(error.response?.data?.message || 'Logout failed')
-    }
-  }
-)
 
 /**
  * Logout from all devices

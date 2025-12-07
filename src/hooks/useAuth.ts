@@ -125,8 +125,9 @@ const resetPassword = useCallback(
       await dispatch(logoutAction()).unwrap()
       return { success: true }
     } catch (error: any) {
-      // Even on error, we logged out locally
-      return { success: true }
+        //  Throw error for component to handle with useErrorHandler
+        // Note: User is still logged out locally (tokens cleared in thunk)
+         throw error
     }
   }, [dispatch])
 

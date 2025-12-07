@@ -55,7 +55,14 @@
       "welcomeBack": "Welcome back"
     },
     "logout": {
-      "success": "Logged out successfully"
+      "button": "Logout",
+      "title": "Logout",
+      "success": "Logged out successfully",
+      "failed": "Logout failed",
+      "sessionCleared": "Your session has been cleared",
+      "confirmTitle": "Confirm Logout",
+      "confirmMessage": "Are you sure you want to logout?",
+      "confirm": "Yes, Logout"
     },
     "register": {
       "success": "Registration successful!"

@@ -3,7 +3,7 @@
 // Authentication API Service
 // ============================================================================
 
-import { api } from '@/api/axios'
+import api, { retryRequest } from '@/api/axios'
 import { API_ENDPOINTS } from '@/api/endpoints'
 import type {
   ApiResponse,
@@ -132,18 +132,25 @@ export const updateProfile = async (
 }
 
 /**
- * Logout current session
- * Throws custom error classes from interceptor
+ *  Logout with automatic retry on network failure
+ * Features:
+ * - Retries up to 2 times on network/server errors
+ * - Exponential backoff (1s, 2s)
+ * - No retry on client errors (4xx)
  */
 export const logout = async (
   refreshToken: string,
   accessToken: string
 ): Promise<ApiResponse<LogoutResponse>> => {
   // Will throw ServerError, NetworkError, etc. from interceptor
-  const response = await api.post(API_ENDPOINTS.AUTH.LOGOUT, {
-    refreshToken,
-    accessToken,
-  })
+  const response = await retryRequest(
+    () => api.post(API_ENDPOINTS.AUTH.LOGOUT, {
+      refreshToken,
+      accessToken,
+    }),
+    2,  
+    1000  // delay: 1 second initial delay
+  )
   return response.data
 }
 
