@@ -97,7 +97,11 @@ export const forgotPassword = async (
 export const resetPassword = async (
   data: ResetPasswordRequest
 ): Promise<ApiResponse<ResetPasswordResponse['data']>> => {
-  const response = await api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data)
+  const response =  await retryRequest(
+    () => api.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data),
+    2,    
+    1000  
+  )
   return response.data
 }
 

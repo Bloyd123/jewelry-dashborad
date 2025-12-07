@@ -155,10 +155,8 @@ export const resetPassword = createAsyncThunk(
       const response = await authService.resetPassword(credentials)
       return response.data
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || 'Password reset failed'
-      )
-    }
+        return rejectWithValue(error) // Pass error object
+      }
   }
 )
 

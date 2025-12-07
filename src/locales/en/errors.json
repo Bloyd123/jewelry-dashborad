@@ -70,6 +70,12 @@
       "checkEmail": "Check your email",
       "failed": "Failed to send reset link"
     },
+    "resetPassword": {
+      "title": "Reset Password",
+      "success": "Password reset successful!",
+      "successDescription": "You can now login with your new password",
+      "failed": "Password reset failed"
+    },
     "register": {
       "success": "Registration successful!"
     }

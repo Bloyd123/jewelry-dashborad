@@ -4,8 +4,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { Eye, EyeOff, Lock, Shield } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
 import type {
@@ -13,21 +13,32 @@ import type {
   ResetPasswordFormState,
 } from '@/types/auth.types'
 import { validateResetPasswordForm } from '@/validators/resetPasswordValidation'
-import { ValidationError, ApiError } from '@/utils/errors'
-
+import { useTranslation } from 'react-i18next'
 const ResetPasswordForm: React.FC = () => {
   const navigate = useNavigate()
-  const { token } = useParams<{ token: string }>()
+  const searchParams = new URLSearchParams(window.location.search)
   const { showSuccess, showError } = useNotification()
   const { resetPassword } = useAuth()
-
+  const { handleError } = useErrorHandler()
+  const { t } = useTranslation()
+  
   // Form State
+
+  const queryToken = searchParams.get("token")
+  useEffect(() => {
+  if (queryToken) {
+    setFormData(prev => ({
+      ...prev,
+      token: queryToken
+    }))
+  }
+}, [queryToken])
   const [formData, setFormData] = useState<ResetPasswordFormState>({
-    token: token || '',
+    token: queryToken || '',
     newPassword: '',
     confirmPassword: '',
   })
-
+  
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -38,10 +49,10 @@ const ResetPasswordForm: React.FC = () => {
 
   // Update token if URL parameter changes
   useEffect(() => {
-    if (token) {
-      setFormData(prev => ({ ...prev, token }))
+    if (queryToken) {
+      setFormData(prev => ({ ...prev, queryToken }))
     }
-  }, [token])
+  }, [queryToken])
 
   // Password strength calculator
   const calculatePasswordStrength = useCallback((password: string) => {
@@ -102,11 +113,15 @@ const ResetPasswordForm: React.FC = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
+      
+  const result = validateResetPasswordForm(formData)
+  setErrors(result.errors)
 
-      if (!validateForm()) {
-        showError('Please fix the form errors')
-        return
-      }
+  if (!result.isValid) {
+    showError(t('errors.validation.fixFormErrors'))
+    return
+  }
+
 
       setLoading(true)
 
@@ -119,31 +134,14 @@ const ResetPasswordForm: React.FC = () => {
 
         await resetPassword(resetData)
 
-        showSuccess(
-          'Password reset successful!',
-          'You can now login with your new password'
-        )
+    showSuccess( t('auth.resetPassword.success'), t('auth.resetPassword.successDescription'))
 
         // Navigate to login after short delay
         setTimeout(() => {
           navigate('/auth/login')
         }, 2000)
       } catch (error: any) {
-        // Validation errors (422)
-        if (error instanceof ValidationError) {
-          setErrors(error.validationErrors)
-          showError(error.message, 'Validation Failed')
-          return
-        }
-
-        // Generic API error
-        if (error instanceof ApiError) {
-          showError(error.message, 'Error')
-          return
-        }
-
-        // Fallback (network, unknown)
-        showError('Something went wrong. Please try again.')
+        handleError(error, setErrors) //  Single line!
       } finally {
         setLoading(false)
       }

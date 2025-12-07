@@ -23,6 +23,7 @@ export const ERROR_KEYS = {
     FORGOT_PASSWORD_FAILED: 'auth.forgotPassword.failed',
     INVALID_CREDENTIALS: 'errors.auth.invalidCredentials',
     SESSION_EXPIRED: 'errors.auth.sessionExpired',
+    RESET_PASSWORD_FAILED: 'auth.resetPassword.failed',
     UNAUTHORIZED: 'errors.auth.unauthorized',
   },
 
@@ -60,6 +61,7 @@ export const ERROR_KEYS = {
     LOGOUT_SESSION_CLEARED: 'auth.logout.sessionCleared',
      FORGOT_PASSWORD: 'auth.forgotPassword.success',
     REGISTER: 'auth.register.success',
+    RESET_PASSWORD: 'auth.resetPassword.success',
   },
 } as const
 
