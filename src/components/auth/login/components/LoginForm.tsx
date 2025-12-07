@@ -101,7 +101,7 @@ const LoginForm: React.FC = () => {
 
   // Handle Sign Up
   const handleSignUp = useCallback(() => {
-    navigate('/auth/signup')
+    navigate(ROUTES.signup)
   }, [navigate])
 
   return (

@@ -9,7 +9,7 @@ import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/hooks/useAuth'
-
+import { ROUTES } from '@/config/routes.config'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
 import { Spinner } from '@/components/ui/loader'
@@ -29,12 +29,12 @@ export const SidebarFooter = () => {
       await logout()
       showSuccess(t('auth.logout.success'), t('auth.logout.title'))
 
-      navigate('/login')
+      navigate(ROUTES.login)
     } catch (error: any) {
       handleError(error)
       showSuccess(t('auth.logout.sessionCleared'), t('auth.logout.title'))
 
-      navigate('/login')
+      navigate(ROUTES.login)
     } finally {
       setLoading(false)
     }

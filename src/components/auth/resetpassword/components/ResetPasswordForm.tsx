@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
+import { ROUTES } from '@/config/routes.config'
 import type {
   ResetPasswordRequest,
   ResetPasswordFormState,
@@ -138,7 +139,7 @@ const ResetPasswordForm: React.FC = () => {
 
         // Navigate to login after short delay
         setTimeout(() => {
-          navigate('/auth/login')
+          navigate(ROUTES.login)
         }, 2000)
       } catch (error: any) {
         handleError(error, setErrors) //  Single line!

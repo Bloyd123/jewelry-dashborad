@@ -7,6 +7,7 @@ export const ROUTES = {
   login: '/login',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
+  signup:'/signup',
   
   // Main
   dashboard: '/dashboard',
