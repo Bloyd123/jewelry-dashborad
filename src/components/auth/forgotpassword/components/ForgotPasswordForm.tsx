@@ -5,21 +5,24 @@
 import React, { useState, useCallback } from 'react'
 import { Mail, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-
+import { ROUTES } from '@/config/routes.config'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
+import { useTranslation } from 'react-i18next'
 import type {
   ForgotPasswordFormState,
   ForgotPasswordRequest,
 } from '@/types/auth.types'
 import { validateForgotPasswordForm } from '@/validators/forgotPasswordValidation'
-import { ValidationError, ApiError } from '@/utils/errors'
 
 const ForgotPasswordForm: React.FC = () => {
   const navigate = useNavigate()
   const { showSuccess, showError } = useNotification()
   const { forgotPassword } = useAuth()
 
+const { handleError } = useErrorHandler()
+const { t } = useTranslation()
   // Form State
   const [formData, setFormData] = useState<ForgotPasswordFormState>({
     email: '',
@@ -72,27 +75,11 @@ const ForgotPasswordForm: React.FC = () => {
         const forgotPasswordData: ForgotPasswordRequest = {
           email: formData.email.trim(),
         }
-
         await forgotPassword(forgotPasswordData)
-
-        showSuccess('Password reset link sent!', 'Check your email')
-        navigate('/auth/login')
+        showSuccess(  t('auth.forgotPassword.success'), t('auth.forgotPassword.title'))
+        navigate(ROUTES.login)
       } catch (error: any) {
-        // Validation errors (422)
-        if (error instanceof ValidationError) {
-          setErrors(error.validationErrors)
-          showError(error.message, 'Validation Failed')
-          return
-        }
-
-        // Generic API error
-        if (error instanceof ApiError) {
-          showError(error.message, 'Error')
-          return
-        }
-
-        // Fallback (network, unknown)
-        showError('Something went wrong. Please try again.')
+        handleError(error, setErrors) 
       } finally {
         setLoading(false)
       }
@@ -102,7 +89,7 @@ const ForgotPasswordForm: React.FC = () => {
 
   // Handle Back to Login
   const handleBackToLogin = useCallback(() => {
-    navigate('/auth/login')
+    navigate(ROUTES.login)
   }, [navigate])
 
   return (

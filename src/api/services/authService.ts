@@ -83,7 +83,11 @@ export const refreshToken = async (
 export const forgotPassword = async (
   email: string
 ): Promise<ApiResponse<ForgotPasswordResponse['data']>> => {
-  const response = await api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email })
+  const response = await  retryRequest(
+    () => api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email }),
+    2,    // 2 retries
+    1000  // 1s delay
+  )
   return response.data
 }
 

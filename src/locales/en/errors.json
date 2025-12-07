@@ -64,6 +64,12 @@
       "confirmMessage": "Are you sure you want to logout?",
       "confirm": "Yes, Logout"
     },
+    "forgotPassword": {
+      "title": "Password Reset",
+      "success": "Password reset link sent!",
+      "checkEmail": "Check your email",
+      "failed": "Failed to send reset link"
+    },
     "register": {
       "success": "Registration successful!"
     }

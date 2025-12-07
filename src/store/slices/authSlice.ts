@@ -141,10 +141,8 @@ export const forgotPassword = createAsyncThunk(
       const response = await authService.forgotPassword(credentials.email)
       return response.data
     } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || 'Failed to send reset link'
-      )
-    }
+      return rejectWithValue(error) 
+  }
   }
 )
 /**

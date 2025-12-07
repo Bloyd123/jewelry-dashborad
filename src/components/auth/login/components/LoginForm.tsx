@@ -6,7 +6,7 @@ import React, { useState, useCallback } from 'react'
 
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-
+import { ROUTES } from '@/config/routes.config'
 // import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
@@ -84,7 +84,7 @@ const LoginForm: React.FC = () => {
         await login(loginData)
 
         showSuccess(t('auth.login.success'), t('auth.login.welcomeBack'))
-        navigate('/dashboard')
+        navigate(ROUTES.dashboard)
       } catch (error: any) {
         handleError(error, setErrors)
       } finally {
@@ -96,7 +96,7 @@ const LoginForm: React.FC = () => {
 
   // Handle Forgot Password
   const handleForgotPassword = useCallback(() => {
-    navigate('/auth/forgot-password')
+    navigate(ROUTES.forgotPassword)
   }, [navigate])
 
   // Handle Sign Up
