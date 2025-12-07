@@ -19,7 +19,7 @@ interface UIState {
   mobileMenuOpen: boolean
   accentColor: string
   appearance: 'default' | 'compact' | 'comfortable'
-   language: 'en' | 'hi' | 'mr'
+  language: 'en' | 'hi' | 'mr'
 }
 
 // ============================================================================
@@ -28,7 +28,7 @@ interface UIState {
 
 const getInitialTheme = (): ThemeName => {
   const savedTheme = localStorage.getItem('themeName')
-  
+
   // ✅ NEW: Check if it's a valid theme name
   const validThemes: ThemeName[] = [
     'default',
@@ -40,11 +40,11 @@ const getInitialTheme = (): ThemeName => {
     'light4',
     'light5',
   ]
-  
+
   if (savedTheme && validThemes.includes(savedTheme as ThemeName)) {
     return savedTheme as ThemeName
   }
-  
+
   return 'default'
 }
 
@@ -142,9 +142,9 @@ const uiSlice = createSlice({
       }
     },
     setLanguage: (state, action: PayloadAction<'en' | 'hi'>) => {
-  state.language = action.payload
-  localStorage.setItem('language', action.payload)
-},
+      state.language = action.payload
+      localStorage.setItem('language', action.payload)
+    },
 
     setLoadingWithMessage: (
       state,

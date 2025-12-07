@@ -38,7 +38,8 @@ const ForgotPasswordMobile: React.FC = () => {
         {/* Footer */}
         <div className="mt-6 text-center">
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights reserved.
+            © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights
+            reserved.
           </p>
         </div>
       </div>

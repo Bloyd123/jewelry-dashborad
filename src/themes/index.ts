@@ -12,11 +12,7 @@ export { lightTheme, darkTheme, getTheme } from './default.theme'
 export type { Theme } from './default.theme'
 
 // Export dark theme variations
-export {
-  darkThemeCustom,
-  darkBlueTheme,
-  darkEmeraldTheme,
-} from './dark.theme'
+export { darkThemeCustom, darkBlueTheme, darkEmeraldTheme } from './dark.theme'
 
 // Export all theme presets
 export {

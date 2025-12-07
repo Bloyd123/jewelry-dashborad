@@ -18,7 +18,7 @@ export class ServerError extends ApiError {
     statusCode: number = 500,
     errors?: any[]
   ) {
-     super(messageKey, statusCode, errors, 'Internal server error')
+    super(messageKey, statusCode, errors, 'Internal server error')
     this.name = 'ServerError'
 
     if (Error.captureStackTrace) {

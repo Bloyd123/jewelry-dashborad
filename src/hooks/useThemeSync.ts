@@ -79,13 +79,21 @@ export const useThemeSync = () => {
     root.style.setProperty('--radius-full', currentTheme.borderRadius.full)
 
     // ========== Typography ==========
-    root.style.setProperty('--font-sans', currentTheme.typography.fontFamily.sans)
-    root.style.setProperty('--font-mono', currentTheme.typography.fontFamily.mono)
+    root.style.setProperty(
+      '--font-sans',
+      currentTheme.typography.fontFamily.sans
+    )
+    root.style.setProperty(
+      '--font-mono',
+      currentTheme.typography.fontFamily.mono
+    )
 
     // ========== Transitions ==========
     root.style.setProperty('--transition-fast', currentTheme.transitions.fast)
-    root.style.setProperty('--transition-normal', currentTheme.transitions.normal)
+    root.style.setProperty(
+      '--transition-normal',
+      currentTheme.transitions.normal
+    )
     root.style.setProperty('--transition-slow', currentTheme.transitions.slow)
-
   }, [themeName])
 }

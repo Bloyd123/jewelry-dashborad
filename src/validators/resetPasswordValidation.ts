@@ -34,12 +34,11 @@ export function validateResetPasswordForm(
 
     // Minimum length check
     if (password.length < 6) {
-      errors.newPassword = VALIDATION_MESSAGES.MIN_VALUE('Password',6)
+      errors.newPassword = VALIDATION_MESSAGES.MIN_VALUE('Password', 6)
     }
     // Password strength check (uppercase, lowercase, number)
     else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      errors.newPassword =VALIDATION_MESSAGES.PASSWORD_WEAK
-        
+      errors.newPassword = VALIDATION_MESSAGES.PASSWORD_WEAK
     }
   }
 

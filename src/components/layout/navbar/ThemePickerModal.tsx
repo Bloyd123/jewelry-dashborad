@@ -9,7 +9,7 @@ import { setTheme } from '@/store/slices/uiSlice'
 import { themes, type ThemeName } from '@/themes/presets'
 import { useEffect } from 'react'
 
-import {  Moon, Sun } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 interface ThemePickerModalProps {
   isOpen: boolean
   onClose: () => void
@@ -22,17 +22,32 @@ interface ThemeInfo {
 }
 
 const themeList: ThemeInfo[] = [
-  { name: 'default', label: 'Default', description: 'Light with orange accent' },
-  { name: 'defaultDark', label: 'Default Dark', description: 'Dark with orange accent' },
+  {
+    name: 'default',
+    label: 'Default',
+    description: 'Light with orange accent',
+  },
+  {
+    name: 'defaultDark',
+    label: 'Default Dark',
+    description: 'Dark with orange accent',
+  },
   { name: 'legacy', label: 'Legacy', description: 'Classic gold theme' },
   { name: 'light', label: 'Night', description: 'Dark blue-gray with emerald' },
   { name: 'light2', label: 'Sunshine', description: 'Warm yellow theme' },
-  { name: 'light3', label: 'Purple Night', description: 'Deep indigo and purple' },
+  {
+    name: 'light3',
+    label: 'Purple Night',
+    description: 'Deep indigo and purple',
+  },
   { name: 'light4', label: 'Ocean', description: 'Clean blue theme' },
   { name: 'light5', label: 'Forest', description: 'Teal dark theme' },
 ]
 
-export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => {
+export const ThemePickerModal = ({
+  isOpen,
+  onClose,
+}: ThemePickerModalProps) => {
   const dispatch = useAppDispatch()
   const { themeName } = useAppSelector(state => state.ui)
 
@@ -59,35 +74,37 @@ export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => 
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 animate-fadeIn"
+        className="animate-fadeIn fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+      <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="bg-bg-secondary rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden pointer-events-auto animate-slideUp"
-          onClick={(e) => e.stopPropagation()}
+          className="animate-slideUp pointer-events-auto max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-xl bg-bg-secondary shadow-2xl"
+          onClick={e => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border-primary">
+          <div className="flex items-center justify-between border-b border-border-primary px-6 py-4">
             <div>
-              <h2 className="text-2xl font-bold text-text-primary">Choose Theme</h2>
-              <p className="text-sm text-text-secondary mt-1">
+              <h2 className="text-2xl font-bold text-text-primary">
+                Choose Theme
+              </h2>
+              <p className="mt-1 text-sm text-text-secondary">
                 Select your preferred color theme
               </p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 rounded-lg hover:bg-bg-tertiary text-text-secondary hover:text-text-primary transition-colors"
+              className="rounded-lg p-2 text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
             >
               <X size={20} />
             </button>
           </div>
 
           {/* Theme Grid */}
-          <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="max-h-[calc(90vh-120px)] overflow-y-auto p-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {themeList.map(({ name, label, description }) => {
                 const theme = themes[name]
                 const isActive = themeName === name
@@ -96,52 +113,60 @@ export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => 
                   <button
                     key={name}
                     onClick={() => handleThemeChange(name)}
-                    className={`
-                      relative rounded-lg border-2 p-4 text-left transition-all duration-200
-                      hover:scale-105 hover:shadow-lg
-                      ${
-                        isActive
-                          ? 'border-accent shadow-lg ring-2 ring-accent/20'
-                          : 'border-border-primary hover:border-accent/50'
-                      }
-                    `}
+                    className={`relative rounded-lg border-2 p-4 text-left transition-all duration-200 hover:scale-105 hover:shadow-lg ${
+                      isActive
+                        ? 'ring-accent/20 border-accent shadow-lg ring-2'
+                        : 'hover:border-accent/50 border-border-primary'
+                    } `}
                   >
                     {/* Active Indicator */}
                     {isActive && (
-                      <div className="absolute top-3 right-3 w-6 h-6 bg-accent rounded-full flex items-center justify-center shadow-md">
-                        <Check className="w-4 h-4 text-white" />
+                      <div className="absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent shadow-md">
+                        <Check className="h-4 w-4 text-white" />
                       </div>
                     )}
 
                     {/* Theme Preview */}
-                    <div className="space-y-2 mb-3">
+                    <div className="mb-3 space-y-2">
                       {/* Header Preview */}
                       <div
-                        className="h-8 rounded flex items-center px-3 shadow-sm"
+                        className="flex h-8 items-center rounded px-3 shadow-sm"
                         style={{ backgroundColor: theme.colors.header.primary }}
                       >
                         <div
-                          className="w-16 h-2 rounded-full"
-                          style={{ backgroundColor: theme.colors.header.secondary }}
+                          className="h-2 w-16 rounded-full"
+                          style={{
+                            backgroundColor: theme.colors.header.secondary,
+                          }}
                         />
                       </div>
 
                       {/* Body Preview */}
                       <div
-                        className="h-20 rounded p-2 space-y-1 shadow-sm"
-                        style={{ backgroundColor: theme.colors.background.primary }}
+                        className="h-20 space-y-1 rounded p-2 shadow-sm"
+                        style={{
+                          backgroundColor: theme.colors.background.primary,
+                        }}
                       >
                         <div
-                          className="h-full rounded p-2 space-y-1"
-                          style={{ backgroundColor: theme.colors.background.secondary }}
+                          className="h-full space-y-1 rounded p-2"
+                          style={{
+                            backgroundColor: theme.colors.background.secondary,
+                          }}
                         >
                           <div
-                            className="w-full h-2 rounded"
-                            style={{ backgroundColor: theme.colors.text.primary, opacity: 0.8 }}
+                            className="h-2 w-full rounded"
+                            style={{
+                              backgroundColor: theme.colors.text.primary,
+                              opacity: 0.8,
+                            }}
                           />
                           <div
-                            className="w-3/4 h-2 rounded"
-                            style={{ backgroundColor: theme.colors.text.secondary, opacity: 0.6 }}
+                            className="h-2 w-3/4 rounded"
+                            style={{
+                              backgroundColor: theme.colors.text.secondary,
+                              opacity: 0.6,
+                            }}
                           />
                         </div>
                       </div>
@@ -149,23 +174,28 @@ export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => 
 
                     {/* Theme Info */}
                     <div>
-                      <h3 className="font-semibold text-text-primary mb-1">{label}</h3>
-                      <p className="text-xs text-text-tertiary">{description}</p>
+                      <h3 className="mb-1 font-semibold text-text-primary">
+                        {label}
+                      </h3>
+                      <p className="text-xs text-text-tertiary">
+                        {description}
+                      </p>
                     </div>
 
                     {/* Mode Badge */}
                     <div className="mt-3">
                       <span
-                        className={`
-                          inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                          ${
-                            theme.mode === 'dark'
-                              ? 'bg-gray-800 text-gray-200'
-                              : 'bg-gray-200 text-gray-800'
-                          }
-                        `}
+                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
+                          theme.mode === 'dark'
+                            ? 'bg-gray-800 text-gray-200'
+                            : 'bg-gray-200 text-gray-800'
+                        } `}
                       >
-                         {theme.mode === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
+                        {theme.mode === 'dark' ? (
+                          <Moon size={20} />
+                        ) : (
+                          <Sun size={20} />
+                        )}
                       </span>
                     </div>
                   </button>
@@ -175,7 +205,7 @@ export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => 
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-4 border-t border-border-primary bg-bg-primary">
+          <div className="border-t border-border-primary bg-bg-primary px-6 py-4">
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-4 text-text-secondary">
                 <span>
@@ -187,7 +217,7 @@ export const ThemePickerModal = ({ isOpen, onClose }: ThemePickerModalProps) => 
               </div>
               <button
                 onClick={onClose}
-                className="px-4 py-2 bg-accent hover:bg-accent/90 text-white rounded-lg transition-colors"
+                className="hover:bg-accent/90 rounded-lg bg-accent px-4 py-2 text-white transition-colors"
               >
                 Done
               </button>

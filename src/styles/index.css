@@ -25,7 +25,8 @@
   body {
     @apply bg-bg-primary text-text-primary antialiased;
     font-family: var(--font-sans);
-    transition: background-color var(--transition-normal),
+    transition:
+      background-color var(--transition-normal),
       color var(--transition-normal);
   }
 

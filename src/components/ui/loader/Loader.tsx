@@ -12,15 +12,14 @@ export const Loader = ({
   text,
   fullScreen = false,
   overlay = false,
-  color = 'accent'
+  color = 'accent',
 }: LoaderProps) => {
-
   const sizeClasses = {
     xs: 'w-4 h-4',
     sm: 'w-6 h-6',
     md: 'w-8 h-8',
     lg: 'w-12 h-12',
-    xl: 'w-16 h-16'
+    xl: 'w-16 h-16',
   }
 
   const colorClasses = {
@@ -28,7 +27,7 @@ export const Loader = ({
     accent: 'text-accent',
     success: 'text-status-success',
     warning: 'text-status-warning',
-    error: 'text-status-error'
+    error: 'text-status-error',
   }
 
   const dotSizes = {
@@ -36,28 +35,28 @@ export const Loader = ({
     sm: 'w-2 h-2',
     md: 'w-3 h-3',
     lg: 'w-4 h-4',
-    xl: 'w-5 h-5'
+    xl: 'w-5 h-5',
   }
 
   const renderLoader = () => {
     switch (variant) {
       case 'spinner':
         return (
-          <Loader2 
-            className={`${sizeClasses[size]} ${colorClasses[color]} animate-spin`} 
+          <Loader2
+            className={`${sizeClasses[size]} ${colorClasses[color]} animate-spin`}
           />
         )
 
       case 'dots':
         return (
           <div className="flex gap-2">
-            {[0, 1, 2].map((i) => (
+            {[0, 1, 2].map(i => (
               <div
                 key={i}
                 className={`${dotSizes[size]} rounded-full bg-current ${colorClasses[color]}`}
                 style={{
                   animation: 'bounce 1.4s ease-in-out infinite',
-                  animationDelay: `${i * 0.16}s`
+                  animationDelay: `${i * 0.16}s`,
                 }}
               />
             ))}
@@ -67,8 +66,10 @@ export const Loader = ({
       case 'pulse':
         return (
           <div className="relative">
-            <div className={`${sizeClasses[size]} rounded-full border-4 border-current ${colorClasses[color]} opacity-25`} />
-            <div 
+            <div
+              className={`${sizeClasses[size]} rounded-full border-4 border-current ${colorClasses[color]} opacity-25`}
+            />
+            <div
               className={`absolute inset-0 ${sizeClasses[size]} rounded-full border-4 border-current ${colorClasses[color]} animate-ping`}
             />
           </div>
@@ -76,15 +77,24 @@ export const Loader = ({
 
       case 'bars':
         return (
-          <div className="flex gap-1 items-end">
-            {[0, 1, 2, 3].map((i) => (
+          <div className="flex items-end gap-1">
+            {[0, 1, 2, 3].map(i => (
               <div
                 key={i}
                 className={`w-1 bg-current ${colorClasses[color]}`}
                 style={{
-                  height: size === 'xs' ? '12px' : size === 'sm' ? '16px' : size === 'md' ? '20px' : size === 'lg' ? '24px' : '32px',
+                  height:
+                    size === 'xs'
+                      ? '12px'
+                      : size === 'sm'
+                        ? '16px'
+                        : size === 'md'
+                          ? '20px'
+                          : size === 'lg'
+                            ? '24px'
+                            : '32px',
                   animation: 'pulse 1.2s ease-in-out infinite',
-                  animationDelay: `${i * 0.15}s`
+                  animationDelay: `${i * 0.15}s`,
                 }}
               />
             ))}
@@ -100,7 +110,9 @@ export const Loader = ({
     <div className="flex flex-col items-center justify-center gap-3">
       {renderLoader()}
       {text && (
-        <p className={`text-text-secondary ${size === 'xs' || size === 'sm' ? 'text-xs' : 'text-sm'}`}>
+        <p
+          className={`text-text-secondary ${size === 'xs' || size === 'sm' ? 'text-xs' : 'text-sm'}`}
+        >
           {text}
         </p>
       )}
@@ -109,7 +121,7 @@ export const Loader = ({
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-bg-primary flex items-center justify-center z-50">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-bg-primary">
         {loaderContent}
       </div>
     )
@@ -117,7 +129,7 @@ export const Loader = ({
 
   if (overlay) {
     return (
-      <div className="absolute inset-0 bg-bg-primary/80 backdrop-blur-sm flex items-center justify-center z-40">
+      <div className="bg-bg-primary/80 absolute inset-0 z-40 flex items-center justify-center backdrop-blur-sm">
         {loaderContent}
       </div>
     )

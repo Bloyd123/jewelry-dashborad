@@ -17,16 +17,13 @@ export const MainContent = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-bg-primary">
       {/* Sidebar - Fixed Position */}
-      <div className="fixed top-0 left-0 h-screen z-30">
+      <div className="fixed left-0 top-0 z-30 h-screen">
         {isMobile ? <MobileSidebar /> : <Sidebar />}
       </div>
 
       {/* Main Content Area - With Dynamic Margin */}
-      <div 
-        className={`
-          flex-1 flex flex-col overflow-hidden transition-all duration-300
-          ${isMobile ? 'ml-0' : (isCollapsed ? 'ml-20' : 'ml-64')}
-        `}
+      <div
+        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${isMobile ? 'ml-0' : isCollapsed ? 'ml-20' : 'ml-64'} `}
       >
         {/* Navbar */}
         <Navbar />
@@ -39,4 +36,3 @@ export const MainContent = () => {
     </div>
   )
 }
-

@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { ApiError } from './ApiError'
-import { ERROR_KEYS } from './errorMessages' 
+import { ERROR_KEYS } from './errorMessages'
 /**
  * Validation Error class
  * For 422 Unprocessable Entity or 400 Bad Request errors
@@ -14,7 +14,7 @@ export class ValidationError extends ApiError {
   public readonly validationErrors: Record<string, string>
 
   constructor(
-    messageKey: string =  ERROR_KEYS.VALIDATION.FAILED,
+    messageKey: string = ERROR_KEYS.VALIDATION.FAILED,
     errors?: any[],
     validationErrors: Record<string, string> = {}
   ) {

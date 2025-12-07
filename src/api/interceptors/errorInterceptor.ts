@@ -3,7 +3,7 @@
 // Axios error interceptor with i18n error keys
 // ============================================================================
 
-import  { AxiosError,AxiosInstance  } from 'axios'
+import { AxiosError, AxiosInstance } from 'axios'
 import {
   ApiError,
   AuthError,
@@ -34,7 +34,7 @@ export const errorInterceptor = (error: AxiosError<any>) => {
   // Extract message key
   const messageKey =
     data?.messageKey ||
-    data?.message ||        // fallback if backend still sends message
+    data?.message || // fallback if backend still sends message
     getErrorKeyByStatus(status)
 
   const errors = data?.errors
@@ -77,7 +77,7 @@ export const errorInterceptor = (error: AxiosError<any>) => {
  */
 export const setupErrorInterceptor = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use(
-    (response) => response,
+    response => response,
     errorInterceptor
   )
 }

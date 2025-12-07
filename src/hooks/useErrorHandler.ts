@@ -23,8 +23,8 @@ import {
  * @returns Object with handleError function
  */
 export const useErrorHandler = () => {
-  const { t } = useTranslation() 
-    const {  showError } = useNotification()
+  const { t } = useTranslation()
+  const { showError } = useNotification()
 
   /**
    * Handle any error with automatic translation and appropriate UI feedback
@@ -43,7 +43,7 @@ export const useErrorHandler = () => {
         const message = t(error.messageKey || ERROR_KEYS.VALIDATION.FAILED)
         const title = t('errors.validation.title')
         showError(message, title)
-        
+
         if (setErrors && error.validationErrors) {
           // Translate validation errors if they are i18n keys
           const translatedErrors: Record<string, string> = {}
@@ -66,7 +66,7 @@ export const useErrorHandler = () => {
         const message = t(error.messageKey || ERROR_KEYS.AUTH.FAILED)
         const title = t('errors.auth.title')
         showError(message, title)
-        
+
         if (setErrors) {
           const invalidCreds = t(ERROR_KEYS.AUTH.INVALID_CREDENTIALS)
           setErrors({

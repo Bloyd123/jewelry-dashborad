@@ -69,39 +69,41 @@ export const useAuth = () => {
         return { success: true, data: result }
       } catch (error: any) {
         // ✅ Just throw - LoginForm will catch and handle
-         throw error
+        throw error
       }
     },
     [dispatch]
   )
-// ========================================
-// FORGOT PASSWORD
-// ========================================
-const forgotPassword = useCallback(
-  async (credentials: ForgetRequest) => {
-    try {
-      const result = await dispatch(forgotPasswordAction(credentials)).unwrap()
-      return { success: true, data: result }
-    } catch (error: any) {
-      throw error
-    }
-  },
-  [dispatch]
-)
-// ========================================
-// RESET PASSWORD
-// ========================================
-const resetPassword = useCallback(
-  async (credentials: ResetPasswordRequest) => {
-    try {
-      const result = await dispatch(resetPasswordAction(credentials)).unwrap()
-      return { success: true, data: result }
-    } catch (error: any) {
-      throw error
-    }
-  },
-  [dispatch]
-)
+  // ========================================
+  // FORGOT PASSWORD
+  // ========================================
+  const forgotPassword = useCallback(
+    async (credentials: ForgetRequest) => {
+      try {
+        const result = await dispatch(
+          forgotPasswordAction(credentials)
+        ).unwrap()
+        return { success: true, data: result }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    [dispatch]
+  )
+  // ========================================
+  // RESET PASSWORD
+  // ========================================
+  const resetPassword = useCallback(
+    async (credentials: ResetPasswordRequest) => {
+      try {
+        const result = await dispatch(resetPasswordAction(credentials)).unwrap()
+        return { success: true, data: result }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    [dispatch]
+  )
   // ========================================
   // REGISTER
   // ========================================
@@ -125,9 +127,9 @@ const resetPassword = useCallback(
       await dispatch(logoutAction()).unwrap()
       return { success: true }
     } catch (error: any) {
-        //  Throw error for component to handle with useErrorHandler
-        // Note: User is still logged out locally (tokens cleared in thunk)
-         throw error
+      //  Throw error for component to handle with useErrorHandler
+      // Note: User is still logged out locally (tokens cleared in thunk)
+      throw error
     }
   }, [dispatch])
 
@@ -154,7 +156,6 @@ const resetPassword = useCallback(
       return { success: false, error: error || 'Failed to fetch user' }
     }
   }, [dispatch])
-
 
   // ========================================
   // UPDATE PROFILE
@@ -269,8 +270,8 @@ const resetPassword = useCallback(
     getUser,
     updateProfile,
     changePassword,
-     resetPassword,
-  forgotPassword,
+    resetPassword,
+    forgotPassword,
     refreshToken,
     initialize,
 

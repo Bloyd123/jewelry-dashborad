@@ -8,7 +8,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
-import type { ResetPasswordRequest, ResetPasswordFormState } from '@/types/auth.types'
+import type {
+  ResetPasswordRequest,
+  ResetPasswordFormState,
+} from '@/types/auth.types'
 import { validateResetPasswordForm } from '@/validators/resetPasswordValidation'
 import { ValidationError, ApiError } from '@/utils/errors'
 
@@ -29,7 +32,9 @@ const ResetPasswordForm: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [passwordStrength, setPasswordStrength] = useState<'weak' | 'medium' | 'strong'>('weak')
+  const [passwordStrength, setPasswordStrength] = useState<
+    'weak' | 'medium' | 'strong'
+  >('weak')
 
   // Update token if URL parameter changes
   useEffect(() => {
@@ -41,19 +46,19 @@ const ResetPasswordForm: React.FC = () => {
   // Password strength calculator
   const calculatePasswordStrength = useCallback((password: string) => {
     if (password.length === 0) return 'weak'
-    
+
     let strength = 0
-    
+
     // Length check
     if (password.length >= 8) strength++
     if (password.length >= 12) strength++
-    
+
     // Character variety checks
     if (/[a-z]/.test(password)) strength++
     if (/[A-Z]/.test(password)) strength++
     if (/\d/.test(password)) strength++
     if (/[^a-zA-Z0-9]/.test(password)) strength++
-    
+
     if (strength <= 2) return 'weak'
     if (strength <= 4) return 'medium'
     return 'strong'
@@ -114,8 +119,11 @@ const ResetPasswordForm: React.FC = () => {
 
         await resetPassword(resetData)
 
-        showSuccess('Password reset successful!', 'You can now login with your new password')
-        
+        showSuccess(
+          'Password reset successful!',
+          'You can now login with your new password'
+        )
+
         // Navigate to login after short delay
         setTimeout(() => {
           navigate('/auth/login')
@@ -142,8 +150,6 @@ const ResetPasswordForm: React.FC = () => {
     },
     [formData, validateForm, resetPassword, showSuccess, showError, navigate]
   )
-
-
 
   // Get password strength color and label
   const getStrengthColor = () => {
@@ -187,7 +193,6 @@ const ResetPasswordForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-
       {/* New Password Field */}
       <div>
         <label
@@ -232,8 +237,8 @@ const ResetPasswordForm: React.FC = () => {
         {/* Password Strength Indicator */}
         {formData.newPassword && (
           <div className="mt-2">
-            <div className="flex items-center justify-between mb-1">
-              <div className="h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700">
+            <div className="mb-1 flex items-center justify-between">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
                 <div
                   className={`h-full transition-all duration-300 ${getStrengthColor()} ${getStrengthWidth()}`}
                 ></div>
@@ -319,7 +324,6 @@ const ResetPasswordForm: React.FC = () => {
           </div>
         )}
       </button>
-
     </form>
   )
 }

@@ -42,7 +42,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     title: t('sidebar.purchases'),
     icon: ShoppingCart,
     items: [
-      { title: t('sidebar.allPurchases'), url: ROUTES.purchases  },
+      { title: t('sidebar.allPurchases'), url: ROUTES.purchases },
       { title: t('sidebar.addPurchase'), url: ROUTES.addPurchase },
       { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
       { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
@@ -52,7 +52,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     title: t('sidebar.sales'),
     icon: Store,
     items: [
-      { title: t('sidebar.allSales'), url: ROUTES.sales  },
+      { title: t('sidebar.allSales'), url: ROUTES.sales },
       { title: t('sidebar.addSale'), url: ROUTES.addSale },
       { title: t('sidebar.customers'), url: ROUTES.customers },
       { title: t('sidebar.reports'), url: ROUTES.salesReports },
@@ -63,15 +63,18 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     icon: Coins,
     items: [
       { title: t('sidebar.allOldGoldPurchases'), url: ROUTES.oldGoldPurchases },
-      { title: t('sidebar.addOldGoldPurchase'), url: ROUTES.addOldGoldPurchase },
+      {
+        title: t('sidebar.addOldGoldPurchase'),
+        url: ROUTES.addOldGoldPurchase,
+      },
     ],
   },
   {
     title: t('sidebar.products'),
     icon: Package2,
     items: [
-      { title: t('sidebar.allProducts'), url:  ROUTES.products },
-      { title: t('sidebar.addProduct'), url:  ROUTES.addProduct },
+      { title: t('sidebar.allProducts'), url: ROUTES.products },
+      { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
     ],
   },
   {

@@ -15,16 +15,16 @@ export const ERROR_KEYS = {
     SERVER: 'errors.api.server',
     TIMEOUT: 'errors.api.timeout',
   },
-  
+
   // Authentication Errors
   AUTH: {
     FAILED: 'errors.auth.failed',
-     LOGOUT_FAILED: 'errors.auth.logout.failed',
+    LOGOUT_FAILED: 'errors.auth.logout.failed',
     INVALID_CREDENTIALS: 'errors.auth.invalidCredentials',
     SESSION_EXPIRED: 'errors.auth.sessionExpired',
     UNAUTHORIZED: 'errors.auth.unauthorized',
   },
-  
+
   // Validation Errors
   VALIDATION: {
     FAILED: 'errors.validation.failed',
@@ -33,30 +33,30 @@ export const ERROR_KEYS = {
     INVALID_PASSWORD: 'errors.validation.invalidPassword',
     FIX_FORM_ERRORS: 'errors.validation.fixFormErrors',
   },
-  
+
   // Permission Errors
   PERMISSION: {
     DENIED: 'errors.permission.denied',
     INSUFFICIENT_RIGHTS: 'errors.permission.insufficientRights',
   },
-  
+
   // Not Found Errors
   NOT_FOUND: {
     RESOURCE: 'errors.notFound.resource',
     PAGE: 'errors.notFound.page',
   },
-  
+
   // Rate Limit Errors
   RATE_LIMIT: {
     EXCEEDED: 'errors.rateLimit.exceeded',
     RETRY_AFTER: 'errors.rateLimit.retryAfter',
   },
-  
+
   // Success Messages
   SUCCESS: {
     LOGIN: 'auth.login.success',
     LOGOUT: 'auth.logout.success',
-     LOGOUT_SESSION_CLEARED: 'auth.logout.sessionCleared',
+    LOGOUT_SESSION_CLEARED: 'auth.logout.sessionCleared',
     REGISTER: 'auth.register.success',
   },
 } as const
@@ -90,4 +90,5 @@ export const getErrorKeyByStatus = (statusCode: number): string => {
 /**
  * Type for error message keys
  */
-export type ErrorKey = typeof ERROR_KEYS[keyof typeof ERROR_KEYS][keyof typeof ERROR_KEYS[keyof typeof ERROR_KEYS]]
+export type ErrorKey =
+  (typeof ERROR_KEYS)[keyof typeof ERROR_KEYS][keyof (typeof ERROR_KEYS)[keyof typeof ERROR_KEYS]]

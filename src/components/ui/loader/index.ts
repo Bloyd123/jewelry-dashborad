@@ -6,13 +6,13 @@
 export { Loader } from './Loader'
 export { Skeleton } from './Skeleton'
 export { Spinner } from './Spinner'
-export type { 
-  LoaderProps, 
-  LoaderSize, 
-  LoaderVariant, 
+export type {
+  LoaderProps,
+  LoaderSize,
+  LoaderVariant,
   LoaderColor,
-  SkeletonProps, 
+  SkeletonProps,
   SkeletonVariant,
   SpinnerProps,
-  SpinnerSize
+  SpinnerSize,
 } from '@/types/loader.types'

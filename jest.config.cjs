@@ -3,10 +3,10 @@ export default {
   testEnvironment: 'jsdom',
 
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
 
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
 
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 }

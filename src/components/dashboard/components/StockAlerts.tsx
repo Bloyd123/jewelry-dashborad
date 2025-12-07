@@ -20,24 +20,35 @@ const alerts: StockAlert[] = [
 export const StockAlerts = () => {
   return (
     <div className="card border-l-4 border-status-warning">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="mb-4 flex items-center gap-2">
         <AlertTriangle size={20} className="text-status-warning" />
-        <h3 className="text-lg font-semibold text-text-primary">Low Stock Alerts</h3>
+        <h3 className="text-lg font-semibold text-text-primary">
+          Low Stock Alerts
+        </h3>
       </div>
 
       <div className="space-y-3">
         {alerts.map(alert => (
-          <div key={alert.product} className="p-3 bg-status-warning/5 rounded-lg">
-            <p className="text-sm font-medium text-text-primary mb-1">{alert.product}</p>
+          <div
+            key={alert.product}
+            className="bg-status-warning/5 rounded-lg p-3"
+          >
+            <p className="mb-1 text-sm font-medium text-text-primary">
+              {alert.product}
+            </p>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-text-tertiary">Current: {alert.current}</span>
-              <span className="text-status-warning font-medium">Min: {alert.minimum}</span>
+              <span className="text-text-tertiary">
+                Current: {alert.current}
+              </span>
+              <span className="font-medium text-status-warning">
+                Min: {alert.minimum}
+              </span>
             </div>
           </div>
         ))}
       </div>
 
-      <button className="w-full mt-4 px-4 py-2 bg-status-warning/10 hover:bg-status-warning/20 text-status-warning rounded-lg text-sm font-medium transition-colors">
+      <button className="bg-status-warning/10 hover:bg-status-warning/20 mt-4 w-full rounded-lg px-4 py-2 text-sm font-medium text-status-warning transition-colors">
         Restock Items
       </button>
     </div>

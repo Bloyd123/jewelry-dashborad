@@ -3,7 +3,14 @@
 // Stats Cards Component
 // ============================================================================
 
-import { TrendingUp, TrendingDown, DollarSign, Package, Users, ShoppingBag } from 'lucide-react'
+import {
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+  Package,
+  Users,
+  ShoppingBag,
+} from 'lucide-react'
 
 interface StatCardProps {
   title: string
@@ -15,14 +22,14 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, change, icon, trend }: StatCardProps) => {
   const isPositive = trend === 'up'
-  
+
   return (
-    <div className="card hover:shadow-md transition-shadow">
+    <div className="card transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm text-text-tertiary mb-1">{title}</p>
-          <h3 className="text-2xl font-bold text-text-primary mb-2">{value}</h3>
-          
+          <p className="mb-1 text-sm text-text-tertiary">{title}</p>
+          <h3 className="mb-2 text-2xl font-bold text-text-primary">{value}</h3>
+
           {/* Trend */}
           <div className="flex items-center gap-1">
             {isPositive ? (
@@ -30,15 +37,19 @@ const StatCard = ({ title, value, change, icon, trend }: StatCardProps) => {
             ) : (
               <TrendingDown size={16} className="text-status-error" />
             )}
-            <span className={`text-sm font-medium ${isPositive ? 'text-status-success' : 'text-status-error'}`}>
+            <span
+              className={`text-sm font-medium ${isPositive ? 'text-status-success' : 'text-status-error'}`}
+            >
               {Math.abs(change)}%
             </span>
-            <span className="text-xs text-text-tertiary ml-1">vs last month</span>
+            <span className="ml-1 text-xs text-text-tertiary">
+              vs last month
+            </span>
           </div>
         </div>
-        
+
         {/* Icon */}
-        <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+        <div className="bg-accent/10 flex h-12 w-12 items-center justify-center rounded-lg text-accent">
           {icon}
         </div>
       </div>
@@ -79,7 +90,7 @@ export const DashboardStats = () => {
   ]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map(stat => (
         <StatCard key={stat.title} {...stat} />
       ))}

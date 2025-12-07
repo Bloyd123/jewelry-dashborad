@@ -11,7 +11,7 @@ export const Skeleton = ({
   height = variant === 'text' ? '1rem' : '100%',
   className = '',
   count = 1,
-  animate = true
+  animate = true,
 }: SkeletonProps) => {
   const baseClasses = `bg-bg-tertiary ${animate ? 'animate-pulse' : ''}`
 
@@ -19,7 +19,7 @@ export const Skeleton = ({
     text: 'rounded',
     circular: 'rounded-full',
     rectangular: '',
-    rounded: 'rounded-lg'
+    rounded: 'rounded-lg',
   }
 
   const skeletonElement = (

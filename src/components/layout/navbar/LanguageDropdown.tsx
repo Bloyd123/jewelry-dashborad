@@ -14,9 +14,9 @@ interface Language {
 }
 
 const languages: Language[] = [
-  { code: 'en', name: 'English', nativeName: 'English'},
+  { code: 'en', name: 'English', nativeName: 'English' },
   { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
- { code: 'mr', name: 'marathi', nativeName: 'मराठी' },
+  { code: 'mr', name: 'marathi', nativeName: 'मराठी' },
 ]
 
 interface LanguageDropdownProps {
@@ -27,11 +27,13 @@ export const LanguageDropdown = ({ onClose }: LanguageDropdownProps) => {
   const { i18n } = useTranslation()
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         onClose()
       }
     }
@@ -49,25 +51,20 @@ export const LanguageDropdown = ({ onClose }: LanguageDropdownProps) => {
   }
 
   return (
-    <div 
+    <div
       ref={dropdownRef}
-      className="absolute right-0 mt-2 w-56 bg-bg-secondary border border-border rounded-lg shadow-lg overflow-hidden z-50"
+      className="border-border absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-lg border bg-bg-secondary shadow-lg"
     >
       <div className="py-1">
-        {languages.map((language) => {
+        {languages.map(language => {
           const isSelected = language.code === i18n.language
 
           return (
             <button
               key={language.code}
               onClick={() => handleLanguageChange(language.code)}
-              className={`
-                w-full flex items-center gap-3 px-4 py-3 
-                hover:bg-bg-tertiary transition-colors duration-150
-                ${isSelected ? 'bg-accent/10' : ''}
-              `}
+              className={`flex w-full items-center gap-3 px-4 py-3 transition-colors duration-150 hover:bg-bg-tertiary ${isSelected ? 'bg-accent/10' : ''} `}
             >
-
               {/* Language Names */}
               <div className="flex-1 text-left">
                 <div className="text-sm font-medium text-text-primary">
@@ -79,9 +76,7 @@ export const LanguageDropdown = ({ onClose }: LanguageDropdownProps) => {
               </div>
 
               {/* Check Icon for Selected */}
-              {isSelected && (
-                <Check size={18} className="text-accent" />
-              )}
+              {isSelected && <Check size={18} className="text-accent" />}
             </button>
           )
         })}

@@ -91,7 +91,9 @@ const Toast: React.FC<ToastProps> = ({
 
       {/* Content */}
       <div className="min-w-0 flex-1">
-        {title && <h4 className="mb-1 text-sm font-semibold text-gray-900">{title}</h4>}
+        {title && (
+          <h4 className="mb-1 text-sm font-semibold text-gray-900">{title}</h4>
+        )}
         <p className="text-sm text-gray-900">{message}</p>
       </div>
 

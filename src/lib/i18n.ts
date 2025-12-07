@@ -11,8 +11,6 @@ import { APP_CONFIG } from '@/config/app.config'
 // CORRECT — import each language properly
 import { english, hindi, marathi } from '@/locales'
 
-
-
 // ============================================================================
 // RESOURCES
 // ============================================================================
@@ -35,7 +33,7 @@ const resources = {
 
 // Get saved language from memory (since localStorage is not available)
 
-let savedLanguage: string = APP_CONFIG.DEFAULT_LANGUAGE  
+let savedLanguage: string = APP_CONFIG.DEFAULT_LANGUAGE
 
 i18n
   // Detect user language
@@ -48,7 +46,7 @@ i18n
     fallbackLng: APP_CONFIG.DEFAULT_LANGUAGE,
     lng: savedLanguage,
     debug: false,
-    
+
     interpolation: {
       escapeValue: false, // React already escapes
     },
@@ -64,7 +62,7 @@ i18n
 
     // Keys handling
     keySeparator: '.', // Use dots for nested keys
-    
+
     // React options
     react: {
       useSuspense: true,

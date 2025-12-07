@@ -284,7 +284,7 @@ export interface Translations {
     to: string
     generate: string
     download: string
-  },
+  }
   errors: {
     api: {
       generic: string

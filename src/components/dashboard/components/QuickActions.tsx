@@ -38,14 +38,16 @@ export const QuickActions = () => {
 
   return (
     <div className="card">
-      <h3 className="text-lg font-semibold text-text-primary mb-4">Quick Actions</h3>
-      
+      <h3 className="mb-4 text-lg font-semibold text-text-primary">
+        Quick Actions
+      </h3>
+
       <div className="space-y-2">
         {actions.map(action => (
           <button
             key={action.label}
             onClick={action.onClick}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-white transition-colors ${action.color}`}
+            className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-white transition-colors ${action.color}`}
           >
             {action.icon}
             <span className="font-medium">{action.label}</span>

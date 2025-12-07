@@ -1,5 +1,3 @@
-
-
 // ============================================================================
 // FILE: locales/hi/index.ts
 // ============================================================================
@@ -18,16 +16,16 @@ import error from './errors.json'
 // import validation from './validation.json'
 
 export default {
-//   ...auth,
+  //   ...auth,
   ...common,
-  ...error
-//   ...dashboard,
-//   ...inventory,
-//   ...masters,
-//   ...parties,
-//   ...purchase,
-//   ...reports,
-//   ...sales,
-//   ...settings,
-//   ...validation,
+  ...error,
+  //   ...dashboard,
+  //   ...inventory,
+  //   ...masters,
+  //   ...parties,
+  //   ...purchase,
+  //   ...reports,
+  //   ...sales,
+  //   ...settings,
+  //   ...validation,
 }

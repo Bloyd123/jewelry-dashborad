@@ -22,15 +22,17 @@ export const SalesChart = () => {
   return (
     <div className="card">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
             <BarChart3 size={20} className="text-accent" />
             Sales Overview
           </h3>
-          <p className="text-sm text-text-tertiary mt-1">Weekly sales performance</p>
+          <p className="mt-1 text-sm text-text-tertiary">
+            Weekly sales performance
+          </p>
         </div>
-        
+
         <button className="text-sm text-accent hover:underline">
           View All
         </button>
@@ -40,13 +42,13 @@ export const SalesChart = () => {
       <div className="space-y-2">
         {data.map(item => (
           <div key={item.day} className="flex items-center gap-3">
-            <span className="text-sm text-text-secondary w-12">{item.day}</span>
-            <div className="flex-1 bg-bg-secondary rounded-full h-8 overflow-hidden">
+            <span className="w-12 text-sm text-text-secondary">{item.day}</span>
+            <div className="h-8 flex-1 overflow-hidden rounded-full bg-bg-secondary">
               <div
-                className="h-full bg-accent rounded-full flex items-center justify-end px-3"
+                className="flex h-full items-center justify-end rounded-full bg-accent px-3"
                 style={{ width: `${(item.sales / maxSales) * 100}%` }}
               >
-                <span className="text-xs text-white font-medium">
+                <span className="text-xs font-medium text-white">
                   ₹{item.sales}k
                 </span>
               </div>
@@ -56,7 +58,7 @@ export const SalesChart = () => {
       </div>
 
       {/* Summary */}
-      <div className="mt-6 pt-4 border-t border-border-primary flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between border-t border-border-primary pt-4">
         <div>
           <p className="text-sm text-text-tertiary">Total This Week</p>
           <p className="text-xl font-bold text-text-primary">₹5,23,000</p>

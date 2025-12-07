@@ -10,13 +10,12 @@ import ResetPasswordForm from '../components/ResetPasswordForm'
 const ResetPasswordMobile: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col bg-white transition-colors duration-200 dark:bg-gray-950">
-      
       {/* Mobile Header - SAME AS LOGIN */}
       <div className="flex-none px-6 pb-8 pt-12">
         {/* Icon */}
-        <div className="flex justify-center mb-6 mt-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full dark:bg-amber-900">
-            <Shield className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+        <div className="mb-6 mt-6 flex justify-center">
+          <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900">
+            <Shield className="h-8 w-8 text-amber-600 dark:text-amber-400" />
           </div>
         </div>
 
@@ -53,4 +52,4 @@ const ResetPasswordMobile: React.FC = () => {
   )
 }
 
-export default ResetPasswordMobile;
+export default ResetPasswordMobile

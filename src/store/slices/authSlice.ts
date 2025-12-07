@@ -99,7 +99,7 @@ export const login = createAsyncThunk(
       const response = await authService.login(credentials)
       return response.data
     } catch (error: any) {
-    // ✅ Just pass the error as-is (already custom error from interceptor)
+      // ✅ Just pass the error as-is (already custom error from interceptor)
       return rejectWithValue(error)
     }
   }
@@ -122,11 +122,11 @@ export const logout = createAsyncThunk(
       // Clear tokens from storage
       tokenService.clearTokens()
 
-     return { success: true } 
+      return { success: true }
     } catch (error: any) {
       // Even if API call fails, clear local state
       tokenService.clearTokens()
-         // ✅ Pass the error as-is (already custom error from interceptor)
+      // ✅ Pass the error as-is (already custom error from interceptor)
       return rejectWithValue(error)
     }
   }
@@ -233,7 +233,6 @@ export const changePassword = createAsyncThunk(
     }
   }
 )
-
 
 /**
  * Logout from all devices
@@ -422,21 +421,21 @@ const authSlice = createSlice({
         state.error = action.payload as string
         state.isAuthenticated = false
       })
-// ========================================
-// FORGOT PASSWORD
-// ========================================
-builder
-  .addCase(forgotPassword.pending, state => {
-    state.isLoading = true
-    state.error = null
-  })
-  .addCase(forgotPassword.fulfilled, state => {
-    state.isLoading = false
-  })
-  .addCase(forgotPassword.rejected, (state, action) => {
-    state.isLoading = false
-    state.error = action.payload as string
-  })
+    // ========================================
+    // FORGOT PASSWORD
+    // ========================================
+    builder
+      .addCase(forgotPassword.pending, state => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(forgotPassword.fulfilled, state => {
+        state.isLoading = false
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
     // ========================================
     // REGISTER
     // ========================================
@@ -474,21 +473,21 @@ builder
         state.error = action.payload as string
         state.isAuthenticated = false
       })
-      // ========================================
-// RESET PASSWORD
-// ========================================
-builder
-  .addCase(resetPassword.pending, state => {
-    state.isLoading = true
-    state.error = null
-  })
-  .addCase(resetPassword.fulfilled, state => {
-    state.isLoading = false
-  })
-  .addCase(resetPassword.rejected, (state, action) => {
-    state.isLoading = false
-    state.error = action.payload as string
-  })
+    // ========================================
+    // RESET PASSWORD
+    // ========================================
+    builder
+      .addCase(resetPassword.pending, state => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(resetPassword.fulfilled, state => {
+        state.isLoading = false
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
 
     // ========================================
     // UPDATE PROFILE

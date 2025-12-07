@@ -394,7 +394,8 @@ export const VALIDATION_MESSAGES = {
     `${field} must be between ${min} and ${max}.`,
 
   // Password Validation
-  PASSWORD_WEAK: 'Password must contain at least one uppercase letter, one lowercase letter, and one number.',
+  PASSWORD_WEAK:
+    'Password must contain at least one uppercase letter, one lowercase letter, and one number.',
   PASSWORD_MISMATCH: 'Passwords do not match.',
 
   // Custom Validation

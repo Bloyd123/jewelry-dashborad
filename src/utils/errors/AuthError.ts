@@ -13,7 +13,7 @@ export class AuthError extends ApiError {
   public readonly isAuthError = true
 
   constructor(messageKey: string = ERROR_KEYS.AUTH.FAILED, errors?: any[]) {
-   super(messageKey, 401, errors, 'Authentication failed')
+    super(messageKey, 401, errors, 'Authentication failed')
     this.name = 'AuthError'
 
     if (Error.captureStackTrace) {

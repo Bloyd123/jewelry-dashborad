@@ -14,11 +14,11 @@ export class RateLimitError extends ApiError {
   public readonly retryAfter?: number
 
   constructor(
-   messageKey: string = ERROR_KEYS.RATE_LIMIT.EXCEEDED,
+    messageKey: string = ERROR_KEYS.RATE_LIMIT.EXCEEDED,
     retryAfter?: number,
     errors?: any[]
   ) {
-   super(messageKey, 429, errors, 'Too many requests') 
+    super(messageKey, 429, errors, 'Too many requests')
     this.name = 'RateLimitError'
     this.retryAfter = retryAfter
 

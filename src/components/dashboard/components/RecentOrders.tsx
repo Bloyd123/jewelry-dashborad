@@ -59,15 +59,15 @@ export const RecentOrders = () => {
   return (
     <div className="card">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="mb-6 flex items-center justify-between">
         <div>
-          <h3 className="text-lg font-semibold text-text-primary flex items-center gap-2">
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
             <Package size={20} className="text-accent" />
             Recent Orders
           </h3>
-          <p className="text-sm text-text-tertiary mt-1">Latest transactions</p>
+          <p className="mt-1 text-sm text-text-tertiary">Latest transactions</p>
         </div>
-        
+
         <button className="text-sm text-accent hover:underline">
           View All Orders
         </button>
@@ -78,30 +78,60 @@ export const RecentOrders = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border-primary">
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Order ID</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Customer</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Product</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Amount</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Status</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Date</th>
-              <th className="text-left py-3 px-4 text-sm font-semibold text-text-secondary">Action</th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Order ID
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Customer
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Product
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Amount
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Date
+              </th>
+              <th className="px-4 py-3 text-left text-sm font-semibold text-text-secondary">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             {orders.map(order => (
-              <tr key={order.id} className="border-b border-border-primary hover:bg-bg-secondary transition-colors">
-                <td className="py-3 px-4 text-sm font-medium text-text-primary">{order.id}</td>
-                <td className="py-3 px-4 text-sm text-text-secondary">{order.customer}</td>
-                <td className="py-3 px-4 text-sm text-text-secondary">{order.product}</td>
-                <td className="py-3 px-4 text-sm font-medium text-text-primary">{order.amount}</td>
-                <td className="py-3 px-4">
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${statusColors[order.status]}`}>
-                    {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+              <tr
+                key={order.id}
+                className="border-b border-border-primary transition-colors hover:bg-bg-secondary"
+              >
+                <td className="px-4 py-3 text-sm font-medium text-text-primary">
+                  {order.id}
+                </td>
+                <td className="px-4 py-3 text-sm text-text-secondary">
+                  {order.customer}
+                </td>
+                <td className="px-4 py-3 text-sm text-text-secondary">
+                  {order.product}
+                </td>
+                <td className="px-4 py-3 text-sm font-medium text-text-primary">
+                  {order.amount}
+                </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium ${statusColors[order.status]}`}
+                  >
+                    {order.status.charAt(0).toUpperCase() +
+                      order.status.slice(1)}
                   </span>
                 </td>
-                <td className="py-3 px-4 text-sm text-text-tertiary">{order.date}</td>
-                <td className="py-3 px-4">
-                  <button className="p-1.5 rounded hover:bg-bg-tertiary text-text-secondary hover:text-accent transition-colors">
+                <td className="px-4 py-3 text-sm text-text-tertiary">
+                  {order.date}
+                </td>
+                <td className="px-4 py-3">
+                  <button className="rounded p-1.5 text-text-secondary transition-colors hover:bg-bg-tertiary hover:text-accent">
                     <Eye size={16} />
                   </button>
                 </td>

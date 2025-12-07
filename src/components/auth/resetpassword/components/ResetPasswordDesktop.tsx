@@ -9,11 +9,10 @@ import ResetPasswordForm from './ResetPasswordForm'
 import resetPasswordImage from '../../../../assets/images/Loginimage.png'
 
 const ResetPasswordDesktop: React.FC = () => {
-    
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Full Image (Like LoginDesktop) */}
-          <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
+      <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
           src={resetPasswordImage}
           alt="Reset Password"
@@ -25,11 +24,10 @@ const ResetPasswordDesktop: React.FC = () => {
       {/* Right Side - Form + Heading */}
       <div className="flex w-full items-center justify-center bg-white p-8 dark:bg-gray-950 lg:w-1/2">
         <div className="w-full max-w-md">
-          
           {/* ⭐ Top Header (shifted from form to desktop) */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4 dark:bg-amber-900">
-              <Shield className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+          <div className="mb-8 text-center">
+            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900">
+              <Shield className="h-8 w-8 text-amber-600 dark:text-amber-400" />
             </div>
 
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -37,8 +35,8 @@ const ResetPasswordDesktop: React.FC = () => {
             </h2>
 
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              Your new password must be at least 6 characters long and include an uppercase
-              letter, lowercase letter, and a number.
+              Your new password must be at least 6 characters long and include
+              an uppercase letter, lowercase letter, and a number.
             </p>
           </div>
 

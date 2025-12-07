@@ -144,12 +144,13 @@ export const logout = async (
 ): Promise<ApiResponse<LogoutResponse>> => {
   // Will throw ServerError, NetworkError, etc. from interceptor
   const response = await retryRequest(
-    () => api.post(API_ENDPOINTS.AUTH.LOGOUT, {
-      refreshToken,
-      accessToken,
-    }),
-    2,  
-    1000  // delay: 1 second initial delay
+    () =>
+      api.post(API_ENDPOINTS.AUTH.LOGOUT, {
+        refreshToken,
+        accessToken,
+      }),
+    2,
+    1000 // delay: 1 second initial delay
   )
   return response.data
 }

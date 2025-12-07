@@ -8,7 +8,10 @@ import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
-import type { ForgotPasswordFormState, ForgotPasswordRequest } from '@/types/auth.types'
+import type {
+  ForgotPasswordFormState,
+  ForgotPasswordRequest,
+} from '@/types/auth.types'
 import { validateForgotPasswordForm } from '@/validators/forgotPasswordValidation'
 import { ValidationError, ApiError } from '@/utils/errors'
 

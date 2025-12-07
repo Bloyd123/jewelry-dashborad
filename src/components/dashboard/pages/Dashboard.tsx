@@ -1,6 +1,6 @@
 // ============================================================================
 // FILE: components/dashboard/pages/Dashboard.tsx
-// Dashboard 
+// Dashboard
 // ============================================================================
 
 import { DashboardStats } from '../components/DashboardStats'
@@ -16,11 +16,11 @@ export const Dashboard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-text-primary">Dashboard</h1>
-          <p className="text-text-secondary mt-1">
+          <p className="mt-1 text-text-secondary">
             Welcome back! Here's what's happening today.
           </p>
         </div>
-        
+
         {/* Date Range Selector */}
         <select className="input max-w-xs">
           <option>Last 7 days</option>
@@ -34,15 +34,15 @@ export const Dashboard = () => {
       <DashboardStats />
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <SalesChart />
         <TopProducts />
       </div>
 
       {/* Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Column - Takes 2/3 */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           <RecentOrders />
         </div>
 

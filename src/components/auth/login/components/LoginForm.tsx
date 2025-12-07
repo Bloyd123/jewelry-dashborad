@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
 import type { LoginRequest, LoginFormState } from '@/types/auth.types'
-import { validateLoginForm } from '@/validators/loginValidation';
+import { validateLoginForm } from '@/validators/loginValidation'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
 
@@ -33,12 +33,11 @@ const LoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-
   const validateForm = useCallback((): boolean => {
-  const result = validateLoginForm(formData);
-  setErrors(result.errors);
-  return result.isValid;
-}, [formData]);
+    const result = validateLoginForm(formData)
+    setErrors(result.errors)
+    return result.isValid
+  }, [formData])
 
   // Handle Input Change
   const handleInputChange = useCallback(
@@ -64,37 +63,36 @@ const LoginForm: React.FC = () => {
   )
 
   // Handle Submit
-const handleSubmit = useCallback(
-  async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault()
 
-    if (!validateForm()) {
-       showError(t('errors.validation.fixFormErrors'))
-      return;
-    }
+      if (!validateForm()) {
+        showError(t('errors.validation.fixFormErrors'))
+        return
+      }
 
-    setLoading(true);
+      setLoading(true)
 
-    try {
-      const loginData: LoginRequest = {
-        email: formData.email.trim(),
-        password: formData.password,
-        rememberMe: formData.rememberMe,
-      };
+      try {
+        const loginData: LoginRequest = {
+          email: formData.email.trim(),
+          password: formData.password,
+          rememberMe: formData.rememberMe,
+        }
 
-      await login(loginData);
+        await login(loginData)
 
-      showSuccess(t('auth.login.success'),  t('auth.login.welcomeBack'));
-      navigate("/dashboard");
-    } catch (error: any) {
-      handleError(error, setErrors) 
-    } finally {
-      setLoading(false);
-    }
-  },
-  [formData, validateForm, login, showSuccess, showError, navigate]
-);
-
+        showSuccess(t('auth.login.success'), t('auth.login.welcomeBack'))
+        navigate('/dashboard')
+      } catch (error: any) {
+        handleError(error, setErrors)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [formData, validateForm, login, showSuccess, showError, navigate]
+  )
 
   // Handle Forgot Password
   const handleForgotPassword = useCallback(() => {

@@ -15,12 +15,12 @@ export const MobileSidebar = () => {
     <>
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        className="fixed inset-0 z-40 bg-black/50 lg:hidden"
         onClick={closeSidebar}
       />
 
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 z-50 lg:hidden animate-slideInLeft">
+      <div className="animate-slideInLeft fixed inset-y-0 left-0 z-50 lg:hidden">
         <Sidebar />
       </div>
     </>

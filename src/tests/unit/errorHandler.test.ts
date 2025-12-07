@@ -8,10 +8,10 @@ describe('useErrorHandler', () => {
   it('should handle ValidationError correctly', () => {
     const { result } = renderHook(() => useErrorHandler())
     const error = new ValidationError(ERROR_KEYS.VALIDATION.FAILED)
-    
+
     const setErrors = jest.fn()
     result.current.handleError(error, setErrors)
-    
+
     // Assert toast was shown
     // Assert setErrors was called
   })
@@ -19,10 +19,10 @@ describe('useErrorHandler', () => {
   it('should handle AuthError correctly', () => {
     const { result } = renderHook(() => useErrorHandler())
     const error = new AuthError(ERROR_KEYS.AUTH.FAILED)
-    
+
     const setErrors = jest.fn()
     result.current.handleError(error, setErrors)
-    
+
     // Assert correct error messages
   })
 })

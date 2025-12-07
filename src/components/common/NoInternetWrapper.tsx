@@ -58,5 +58,9 @@ export const NoInternetWrapper = ({ children }: NoInternetWrapperProps) => {
     return null
   }
 
-  return isOnline ? <>{children}</> : <NoInternet checkInternetConnection={checkInternetConnection} />
+  return isOnline ? (
+    <>{children}</>
+  ) : (
+    <NoInternet checkInternetConnection={checkInternetConnection} />
+  )
 }

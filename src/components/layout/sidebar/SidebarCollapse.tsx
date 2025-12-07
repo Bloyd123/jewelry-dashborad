@@ -32,13 +32,7 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
       {/* Parent Item */}
       <button
         onClick={toggleOpen}
-        className={`
-          w-full flex items-center justify-between gap-3 px-4 py-3
-          text-sidebar-text transition-all duration-200 group
-          hover:bg-sidebar-hover hover:text-accent
-          ${isAnyChildActive ? 'text-accent' : ''}
-          ${isCollapsed ? 'justify-center' : ''}
-        `}
+        className={`group flex w-full items-center justify-between gap-3 px-4 py-3 text-sidebar-text transition-all duration-200 hover:bg-sidebar-hover hover:text-accent ${isAnyChildActive ? 'text-accent' : ''} ${isCollapsed ? 'justify-center' : ''} `}
       >
         <div className="flex items-center gap-3">
           <Icon size={20} className="shrink-0" />
@@ -58,7 +52,7 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
 
         {/* Tooltip for collapsed state */}
         {isCollapsed && (
-          <span className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50">
+          <span className="pointer-events-none absolute left-full z-50 ml-2 whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100">
             {item.title}
           </span>
         )}
@@ -72,14 +66,10 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
               key={subItem.url}
               to={`${subItem.url}`}
               className={({ isActive }) =>
-                `flex items-center gap-3 pl-12 pr-4 py-2.5 text-sm
-                text-sidebar-muted transition-colors duration-200
-                hover:bg-sidebar-hover hover:text-accent
-                ${isActive ? 'text-accent bg-sidebar-hover' : ''}
-                `
+                `flex items-center gap-3 py-2.5 pl-12 pr-4 text-sm text-sidebar-muted transition-colors duration-200 hover:bg-sidebar-hover hover:text-accent ${isActive ? 'bg-sidebar-hover text-accent' : ''} `
               }
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-current" />
+              <span className="h-1.5 w-1.5 rounded-full bg-current" />
               <span className="truncate">{subItem.title}</span>
             </NavLink>
           ))}
