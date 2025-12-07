@@ -22,24 +22,24 @@ const ResetPasswordForm: React.FC = () => {
   const { resetPassword } = useAuth()
   const { handleError } = useErrorHandler()
   const { t } = useTranslation()
-  
+
   // Form State
 
-  const queryToken = searchParams.get("token")
+  const queryToken = searchParams.get('token')
   useEffect(() => {
-  if (queryToken) {
-    setFormData(prev => ({
-      ...prev,
-      token: queryToken
-    }))
-  }
-}, [queryToken])
+    if (queryToken) {
+      setFormData(prev => ({
+        ...prev,
+        token: queryToken,
+      }))
+    }
+  }, [queryToken])
   const [formData, setFormData] = useState<ResetPasswordFormState>({
     token: queryToken || '',
     newPassword: '',
     confirmPassword: '',
   })
-  
+
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -114,15 +114,14 @@ const ResetPasswordForm: React.FC = () => {
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
-      
-  const result = validateResetPasswordForm(formData)
-  setErrors(result.errors)
 
-  if (!result.isValid) {
-    showError(t('errors.validation.fixFormErrors'))
-    return
-  }
+      const result = validateResetPasswordForm(formData)
+      setErrors(result.errors)
 
+      if (!result.isValid) {
+        showError(t('errors.validation.fixFormErrors'))
+        return
+      }
 
       setLoading(true)
 
@@ -135,7 +134,10 @@ const ResetPasswordForm: React.FC = () => {
 
         await resetPassword(resetData)
 
-    showSuccess( t('auth.resetPassword.success'), t('auth.resetPassword.successDescription'))
+        showSuccess(
+          t('auth.resetPassword.success'),
+          t('auth.resetPassword.successDescription')
+        )
 
         // Navigate to login after short delay
         setTimeout(() => {

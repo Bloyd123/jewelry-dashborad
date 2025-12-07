@@ -47,6 +47,147 @@ export const AUTH_MESSAGES = {
   LOGOUT_ALL_CONFIRM: 'This will logout from all devices. Continue?',
 } as const
 
+export const CUSTOMER_MESSAGES = {
+  // Success
+  CUSTOMER_CREATED: 'Customer created successfully.',
+  CUSTOMER_UPDATED: 'Customer updated successfully.',
+  CUSTOMER_DELETED: 'Customer deleted successfully.',
+  CUSTOMER_ACTIVATED: 'Customer activated successfully.',
+  CUSTOMER_DEACTIVATED: 'Customer deactivated successfully.',
+  CUSTOMER_BLACKLISTED: 'Customer blacklisted successfully.',
+  CUSTOMER_UNBLACKLISTED: 'Customer removed from blacklist successfully.',
+  LOYALTY_POINTS_ADDED: 'Loyalty points added successfully.',
+  LOYALTY_POINTS_REDEEMED: 'Loyalty points redeemed successfully.',
+  CUSTOMER_IMPORTED: 'Customers imported successfully.',
+  CUSTOMER_EXPORTED: 'Customers exported successfully.',
+  CUSTOMER_MERGED: 'Customers merged successfully.',
+  MEMBERSHIP_UPGRADED: 'Membership upgraded successfully.',
+
+  // Errors
+  CUSTOMER_NOT_FOUND: 'Customer not found.',
+  CUSTOMER_ALREADY_EXISTS: 'Customer with this phone number already exists.',
+  PHONE_ALREADY_EXISTS: 'Phone number already exists.',
+  EMAIL_ALREADY_EXISTS: 'Email already exists.',
+  CUSTOMER_CODE_EXISTS: 'Customer code already exists.',
+  AADHAR_ALREADY_EXISTS: 'Aadhar number already registered.',
+  PAN_ALREADY_EXISTS: 'PAN number already registered.',
+  GST_ALREADY_EXISTS: 'GST number already registered.',
+  INSUFFICIENT_LOYALTY_POINTS: 'Insufficient loyalty points.',
+  INVALID_CUSTOMER_TYPE: 'Invalid customer type.',
+  INVALID_CUSTOMER_CATEGORY: 'Invalid customer category.',
+  CANNOT_DELETE_CUSTOMER_WITH_ORDERS:
+    'Cannot delete customer with existing orders.',
+  CANNOT_BLACKLIST_VIP_CUSTOMER: 'Cannot blacklist VIP customers.',
+  CREDIT_LIMIT_EXCEEDED: 'Customer credit limit exceeded.',
+  DUPLICATE_CUSTOMER_DETECTED: 'Duplicate customer detected. Please verify.',
+
+  // Validation
+  FIRST_NAME_REQUIRED: 'First name is required.',
+  PHONE_REQUIRED: 'Phone number is required.',
+  INVALID_PHONE_FORMAT:
+    'Invalid phone number format (must be 10 digits starting with 6-9).',
+  INVALID_EMAIL_FORMAT: 'Invalid email format.',
+  INVALID_AADHAR: 'Invalid Aadhar number (must be 12 digits).',
+  INVALID_PAN: 'Invalid PAN format (e.g., ABCDE1234F).',
+  INVALID_GST: 'Invalid GST number format.',
+  INVALID_PINCODE: 'Invalid pincode (must be 6 digits).',
+  AGE_VALIDATION_FAILED: 'Customer must be between 18 and 120 years old.',
+  FIRST_NAME_MIN_LENGTH: 'First name must be at least 2 characters.',
+  FIRST_NAME_MAX_LENGTH: 'First name cannot exceed 50 characters.',
+  FIRST_NAME_LETTERS_ONLY: 'First name can only contain letters.',
+  LAST_NAME_MAX_LENGTH: 'Last name cannot exceed 50 characters.',
+  STREET_MAX_LENGTH: 'Street address cannot exceed 200 characters.',
+  CITY_MAX_LENGTH: 'City name cannot exceed 50 characters.',
+  STATE_MAX_LENGTH: 'State name cannot exceed 50 characters.',
+  NOTES_MAX_LENGTH: 'Notes cannot exceed 1000 characters.',
+  TAG_MAX_LENGTH: 'Each tag cannot exceed 50 characters.',
+  BLACKLIST_REASON_REQUIRED: 'Blacklist reason is required.',
+  BLACKLIST_REASON_MIN_LENGTH: 'Reason must be at least 10 characters.',
+  BLACKLIST_REASON_MAX_LENGTH: 'Reason cannot exceed 500 characters.',
+  INVALID_CREDIT_LIMIT: 'Credit limit must be a positive number.',
+  INVALID_LOYALTY_POINTS: 'Invalid loyalty points value.',
+  POINTS_MUST_BE_POSITIVE: 'Points must be a positive integer.',
+
+  // Confirmation
+  DELETE_CUSTOMER_CONFIRM: 'Are you sure you want to delete this customer?',
+  BLACKLIST_CUSTOMER_CONFIRM:
+    'Are you sure you want to blacklist this customer?',
+  UNBLACKLIST_CUSTOMER_CONFIRM:
+    'Are you sure you want to remove this customer from blacklist?',
+  DEACTIVATE_CUSTOMER_CONFIRM:
+    'Are you sure you want to deactivate this customer?',
+  MERGE_CUSTOMERS_CONFIRM:
+    'Are you sure you want to merge these customers? This action cannot be undone.',
+  BULK_DELETE_CONFIRM: (count: number) =>
+    `Are you sure you want to delete ${count} customers?`,
+  BULK_BLACKLIST_CONFIRM: (count: number) =>
+    `Are you sure you want to blacklist ${count} customers?`,
+
+  // Info
+  CUSTOMER_DETAILS_LOADING: 'Loading customer details...',
+  SEARCHING_CUSTOMERS: 'Searching customers...',
+  NO_CUSTOMERS_FOUND: 'No customers found.',
+  DUPLICATE_CHECK_WARNING:
+    'A similar customer already exists. Do you want to continue?',
+  VIP_CUSTOMER_NOTICE: 'This is a VIP customer. Handle with care.',
+  CREDIT_LIMIT_WARNING: 'Customer is approaching credit limit.',
+  INACTIVE_CUSTOMER_WARNING: 'This customer is inactive.',
+  BLACKLISTED_WARNING: 'This customer is blacklisted.',
+  LOYALTY_POINTS_EXPIRING: 'Loyalty points expiring soon.',
+  BIRTHDAY_TODAY: 'Customer birthday is today!',
+  ANNIVERSARY_TODAY: 'Customer anniversary is today!',
+  NO_PURCHASE_HISTORY: 'No purchase history available.',
+  TOTAL_CUSTOMERS: (count: number) => `Total customers: ${count}`,
+
+  // Bulk Operations
+  BULK_IMPORT_SUCCESS: (count: number) =>
+    `${count} customers imported successfully.`,
+  BULK_IMPORT_PARTIAL: (success: number, failed: number) =>
+    `${success} customers imported successfully, ${failed} failed.`,
+  BULK_UPDATE_SUCCESS: (count: number) =>
+    `${count} customers updated successfully.`,
+  BULK_DELETE_SUCCESS: (count: number) =>
+    `${count} customers deleted successfully.`,
+  BULK_OPERATION_FAILED: 'Bulk operation failed. Please try again.',
+  IMPORT_FILE_INVALID: 'Invalid import file format.',
+  IMPORT_FILE_TOO_LARGE: 'Import file is too large (max 1000 customers).',
+  EXPORT_PREPARING: 'Preparing customer export...',
+  EXPORT_READY: 'Customer export is ready for download.',
+
+  // Search & Filter
+  SEARCH_BY_NAME_PHONE: 'Search by name, phone, or customer code',
+  FILTER_BY_TYPE: 'Filter by customer type',
+  FILTER_BY_CATEGORY: 'Filter by category',
+  FILTER_BY_STATUS: 'Filter by status',
+  FILTER_BY_DATE: 'Filter by date range',
+  CLEAR_FILTERS: 'Clear all filters',
+  ADVANCED_SEARCH: 'Advanced search options',
+
+  // Membership & Loyalty
+  POINTS_EARNED: (points: number) => `${points} loyalty points earned.`,
+  POINTS_REDEEMED: (points: number) => `${points} loyalty points redeemed.`,
+  CURRENT_POINTS: (points: number) => `Current points: ${points}`,
+  MEMBERSHIP_TIER: (tier: string) => `Membership tier: ${tier}`,
+  TIER_UPGRADE_ELIGIBLE: 'Customer is eligible for tier upgrade.',
+  TIER_DOWNGRADE_WARNING: 'Customer may be downgraded due to inactivity.',
+
+  // Communication
+  EMAIL_SENT: 'Email sent successfully.',
+  SMS_SENT: 'SMS sent successfully.',
+  WHATSAPP_MESSAGE_SENT: 'WhatsApp message sent successfully.',
+  NOTIFICATION_SENT: 'Notification sent successfully.',
+  COMMUNICATION_FAILED: 'Failed to send message. Please try again.',
+  NO_CONTACT_INFO: 'No contact information available.',
+  COMMUNICATION_PREFERENCE_UPDATED: 'Communication preferences updated.',
+
+  // Reports
+  GENERATING_REPORT: 'Generating customer report...',
+  REPORT_GENERATED: 'Customer report generated successfully.',
+  NO_DATA_FOR_REPORT: 'No data available for the selected period.',
+  DOWNLOAD_CUSTOMER_LIST: 'Download customer list',
+  DOWNLOAD_PURCHASE_HISTORY: 'Download purchase history',
+} as const
+
 // ============================================================================
 // USER MANAGEMENT MESSAGES
 // ============================================================================
@@ -379,6 +520,7 @@ export const VALIDATION_MESSAGES = {
   INVALID_DATE: 'Please enter a valid date.',
   INVALID_NUMBER: 'Please enter a valid number.',
   INVALID_URL: 'Please enter a valid URL.',
+  PASSWORD_MIN_LENGTH: 'Password must be at least 6 digit',
 
   // Length Validation
   MIN_LENGTH: (field: string, length: number) =>
@@ -484,6 +626,7 @@ export const MESSAGES = {
   PAYMENT: PAYMENT_MESSAGES,
   MASTER: MASTER_MESSAGES,
   REPORT: REPORT_MESSAGES,
+  CUSTOMER: CUSTOMER_MESSAGES,
   ORGANIZATION: ORGANIZATION_MESSAGES,
   GENERAL: GENERAL_MESSAGES,
   VALIDATION: VALIDATION_MESSAGES,

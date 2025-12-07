@@ -59,7 +59,7 @@ export const ERROR_KEYS = {
     LOGIN: 'auth.login.success',
     LOGOUT: 'auth.logout.success',
     LOGOUT_SESSION_CLEARED: 'auth.logout.sessionCleared',
-     FORGOT_PASSWORD: 'auth.forgotPassword.success',
+    FORGOT_PASSWORD: 'auth.forgotPassword.success',
     REGISTER: 'auth.register.success',
     RESET_PASSWORD: 'auth.resetPassword.success',
   },

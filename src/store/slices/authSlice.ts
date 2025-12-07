@@ -141,8 +141,8 @@ export const forgotPassword = createAsyncThunk(
       const response = await authService.forgotPassword(credentials.email)
       return response.data
     } catch (error: any) {
-      return rejectWithValue(error) 
-  }
+      return rejectWithValue(error)
+    }
   }
 )
 /**
@@ -155,8 +155,8 @@ export const resetPassword = createAsyncThunk(
       const response = await authService.resetPassword(credentials)
       return response.data
     } catch (error: any) {
-        return rejectWithValue(error) // Pass error object
-      }
+      return rejectWithValue(error) // Pass error object
+    }
   }
 )
 

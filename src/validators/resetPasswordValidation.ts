@@ -1,8 +1,9 @@
 // ============================================================================
 // FILE: src/validators/resetPasswordValidation.ts
-// Frontend Reset Password Form Validation
+// Frontend Reset Password Form Validation (with Zod)
 // ============================================================================
 
+import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'
 import type { FormValidationResult } from '@/types'
 
@@ -12,47 +13,53 @@ export interface ResetPasswordFormValues {
   confirmPassword: string
 }
 
+const resetPasswordSchema = z
+  .object({
+    token: z.string().trim().min(1, getRequiredMessage('Reset token')),
+
+    newPassword: z
+      .string()
+      .trim()
+      .min(1, getRequiredMessage('Password'))
+      .min(6, VALIDATION_MESSAGES.MIN_VALUE('Password', 6))
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+        VALIDATION_MESSAGES.PASSWORD_WEAK
+      ),
+
+    confirmPassword: z
+      .string()
+      .trim()
+      .min(1, getRequiredMessage('Confirm password')),
+  })
+  .refine(data => data.newPassword === data.confirmPassword, {
+    message: VALIDATION_MESSAGES.PASSWORD_MISMATCH,
+    path: ['confirmPassword'],
+  })
+
 export function validateResetPasswordForm(
   values: ResetPasswordFormValues
 ): FormValidationResult<ResetPasswordFormValues> {
-  const errors: Record<string, string> = {}
+  const result = resetPasswordSchema.safeParse(values)
 
-  // ---------------------------
-  // TOKEN VALIDATION
-  // ---------------------------
-  if (!values.token?.trim()) {
-    errors.token = getRequiredMessage('Reset token')
-  }
-
-  // ---------------------------
-  // NEW PASSWORD VALIDATION
-  // ---------------------------
-  if (!values.newPassword?.trim()) {
-    errors.newPassword = getRequiredMessage('Password')
-  } else {
-    const password = values.newPassword.trim()
-
-    // Minimum length check
-    if (password.length < 6) {
-      errors.newPassword = VALIDATION_MESSAGES.MIN_VALUE('Password', 6)
-    }
-    // Password strength check (uppercase, lowercase, number)
-    else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(password)) {
-      errors.newPassword = VALIDATION_MESSAGES.PASSWORD_WEAK
+  if (result.success) {
+    return {
+      isValid: true,
+      errors: {},
     }
   }
 
-  // ---------------------------
-  // CONFIRM PASSWORD VALIDATION
-  // ---------------------------
-  if (!values.confirmPassword?.trim()) {
-    errors.confirmPassword = getRequiredMessage('Confirm password')
-  } else if (values.confirmPassword !== values.newPassword) {
-    errors.confirmPassword = VALIDATION_MESSAGES.PASSWORD_MISMATCH
-  }
+  const errors = result.error.issues.reduce(
+    (acc, err) => {
+      const path = err.path.join('.')
+      acc[path] = err.message
+      return acc
+    },
+    {} as Record<string, string>
+  )
 
   return {
-    isValid: Object.keys(errors).length === 0,
+    isValid: false,
     errors: errors as any,
   }
 }

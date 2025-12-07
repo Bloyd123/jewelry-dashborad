@@ -21,8 +21,8 @@ const ForgotPasswordForm: React.FC = () => {
   const { showSuccess, showError } = useNotification()
   const { forgotPassword } = useAuth()
 
-const { handleError } = useErrorHandler()
-const { t } = useTranslation()
+  const { handleError } = useErrorHandler()
+  const { t } = useTranslation()
   // Form State
   const [formData, setFormData] = useState<ForgotPasswordFormState>({
     email: '',
@@ -76,10 +76,13 @@ const { t } = useTranslation()
           email: formData.email.trim(),
         }
         await forgotPassword(forgotPasswordData)
-        showSuccess(  t('auth.forgotPassword.success'), t('auth.forgotPassword.title'))
+        showSuccess(
+          t('auth.forgotPassword.success'),
+          t('auth.forgotPassword.title')
+        )
         navigate(ROUTES.login)
       } catch (error: any) {
-        handleError(error, setErrors) 
+        handleError(error, setErrors)
       } finally {
         setLoading(false)
       }
