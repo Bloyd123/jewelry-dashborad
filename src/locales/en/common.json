@@ -30,6 +30,11 @@
   },
   "common": {
     "loading": "Loading...",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save":"Save",
+    "next":"Next",
+    "previous":"Previous",
+    "step": "Step",
+    "of": "of"
   }
 }

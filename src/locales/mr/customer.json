@@ -1,0 +1,93 @@
+{
+  "customer": {
+    "firstName": "पहिले नाव",
+    "firstNamePlaceholder": "पहिले नाव प्रविष्ट करा",
+    "lastName": "आडनाव",
+    "lastNamePlaceholder": "आडनाव प्रविष्ट करा",
+    "dateOfBirth": "जन्मतारीख",
+    "selectDate": "तारीख निवडा",
+    "selectGender": "लिंग निवडा",
+    "contactInformation": "संपर्क माहिती",
+    "address": "ग्राहकाचा पत्ता",
+    "notesAndTags": "टिपा आणि टॅग",
+    "preferences": "ग्राहक प्राधान्ये",
+    "customersource": "स्रोत",
+    "customergender": "लिंग",
+    "addCustomer": "ग्राहक जोडा",
+    "anniversaryDate": "वर्धापनदिनाची तारीख",
+    "phone": "फोन नंबर",
+    "addCustomerDescription": "त्यांची संपर्क माहिती आणि इतर तपशील प्रविष्ट करून नवीन ग्राहक प्रोफाइल तयार करा.",
+    "basicInformation": "मूलभूत माहिती",
+    "kycDetails": "केवायसी तपशील",
+    "alternatePhone": "पर्यायी फोन",
+    "whatsappNumber": "व्हाट्सअॅप नंबर",
+    "email": "ईमेल",
+    "street": "रस्त्याचा पत्ता",
+    "streetPlaceholder": "रस्त्याचा पत्ता प्रविष्ट करा",
+    "city": "शहर",
+    "cityPlaceholder": "शहर प्रविष्ट करा",
+    "state": "राज्य",
+    "statePlaceholder": "राज्य प्रविष्ट करा",
+    "pincode": "पिनकोड",
+    "aadharNumber": "आधार क्रमांक",
+    "panNumber": "पॅन क्रमांक",
+    "gstNumber": "जीएसटी क्रमांक",
+    "kycDescription": "केवायसी कागदपत्रे पर्यायी आहेत परंतु शिफारस केलेली आहेत",
+    "preferredMetal": "पसंतीचे धातू",
+    "selectMetal": "पसंतीचे धातू निवडा",
+    "communicationPreference": "संप्रेषण प्राधान्य",
+    "selectCommunication": "प्राधान्य निवडा",
+    "selectSource": "स्रोत निवडा",
+    "referredBy": "यांनी संदर्भित केले",
+    "referredByPlaceholder": "संदर्भदाता ग्राहक आयडी प्रविष्ट करा",
+    "customerType": "ग्राहक प्रकार",
+    "selectCustomerType": "प्रकार निवडा",
+    "customerCategory": "ग्राहक श्रेणी",
+    "selectCategory": "श्रेणी निवडा",
+    "creditLimit": "क्रेडिट मर्यादा",
+    "notes": "टिपा",
+    "notesPlaceholder": "ग्राहकाबद्दल कोणत्याही अतिरिक्त टिपा जोडा",
+    "tags": "टॅग",
+    "addTag": "टॅग जोडा",
+    "gender": {
+      "male": "पुरुष",
+      "female": "स्त्री",
+      "other": "इतर"
+    },
+    "metal": {
+      "gold": "सोने",
+      "silver": "चांदी",
+      "platinum": "प्लॅटिनम",
+      "diamond": "हिरा"
+    },
+    "communication": {
+      "email": "ईमेल",
+      "sms": "एसएमएस",
+      "whatsapp": "व्हाट्सअॅप",
+      "call": "फोन कॉल",
+      "none": "काहीही नाही"
+    },
+    "source": {
+      "walkIn": "वॉक इन",
+      "referral": "संदर्भ",
+      "online": "ऑनलाइन",
+      "phone": "फोन",
+      "socialMedia": "सोशल मीडिया",
+      "advertisement": "जाहिरात",
+      "other": "इतर"
+    },
+    "type": {
+      "retail": "किरकोळ",
+      "wholesale": "घाऊक",
+      "vip": "व्हीआयपी",
+      "regular": "नियमित"
+    },
+    "category": {
+      "gold": "सोने",
+      "silver": "चांदी",
+      "diamond": "हिरा",
+      "platinum": "प्लॅटिनम",
+      "mixed": "मिश्र"
+    }
+  }
+}

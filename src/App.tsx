@@ -16,6 +16,8 @@ import { initializeAuth } from './store/slices/authSlice'
 import ResetPasswordPage from './components/auth/resetpassword/pages'
 import { useThemeSync } from './hooks/useThemeSync'
 import { MainLayout } from './components/layout/MainLayout/MainLayout'
+import { CustomerForm } from './components/customer/CustomerForm'
+
 import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 // ============================================================================
@@ -59,6 +61,14 @@ function App() {
                 element={<Navigate to={ROUTES.dashboard} replace />}
               />
               <Route path={ROUTES.dashboard} element={<Dashboard />} />
+              <Route path={ROUTES.customers}   element={
+    <CustomerForm
+      mode="create"
+      onSubmit={(data) => console.log("Create:", data)}
+    />
+  } />
+
+              
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

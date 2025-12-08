@@ -1,0 +1,93 @@
+{
+  "customer": {
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter last name",
+    "dateOfBirth": "Date of Birth",
+    "selectDate": "Select date",
+    "selectGender": "Select gender",
+    "contactInformation":"Contact Information",
+    "address":"Customer Address",
+    "notesAndTags":"Notes and Tags",
+    "preferences":"Customer Preference",
+    "customersource":"source",
+    "customergender":"Gender",
+    "addCustomer":"Add Customer",
+    "anniversaryDate": "Anniversary Date",
+    "phone": "Phone Number",
+    "addCustomerDescription":"Create a new customer profile by entering their contact information and other details.",
+    "basicInformation":"Basic Information",
+    "kycDetails":"Know your Customer",
+    "alternatePhone": "Alternate Phone",
+    "whatsappNumber": "WhatsApp Number",
+    "email": "Email",
+    "street": "Street Address",
+    "streetPlaceholder": "Enter street address",
+    "city": "City",
+    "cityPlaceholder": "Enter city",
+    "state": "State",
+    "statePlaceholder": "Enter state",
+    "pincode": "Pincode",
+    "aadharNumber": "Aadhar Number",
+    "panNumber": "PAN Number",
+    "gstNumber": "GST Number",
+    "kycDescription": "KYC documents are optional but recommended",
+    "preferredMetal": "Preferred Metal",
+    "selectMetal": "Select preferred metal",
+    "communicationPreference": "Communication Preference",
+    "selectCommunication": "Select preference",
+    "selectSource": "Select source",
+    "referredBy": "Referred By",
+    "referredByPlaceholder": "Enter referrer customer ID",
+    "customerType": "Customer Type",
+    "selectCustomerType": "Select type",
+    "customerCategory": "Customer Category",
+    "selectCategory": "Select category",
+    "creditLimit": "Credit Limit",
+    "notes": "Notes",
+    "notesPlaceholder": "Add any additional notes about the customer",
+    "tags": "Tags",
+    "addTag": "Add a tag",
+    "gender": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    },
+    "metal": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "diamond": "Diamond"
+    },
+    "communication": {
+      "email": "Email",
+      "sms": "SMS",
+      "whatsapp": "WhatsApp",
+      "call": "Phone Call",
+      "none": "None"
+    },
+    "source": {
+      "walkIn": "Walk In",
+      "referral": "Referral",
+      "online": "Online",
+      "phone": "Phone",
+      "socialMedia": "Social Media",
+      "advertisement": "Advertisement",
+      "other": "Other"
+    },
+    "type": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "vip": "VIP",
+      "regular": "Regular"
+    },
+    "category": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "platinum": "Platinum",
+      "mixed": "Mixed"
+    }
+  }
+}
