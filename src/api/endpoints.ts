@@ -144,14 +144,20 @@ export const SALES_ENDPOINTS = {
 // CUSTOMER ENDPOINTS
 // ============================================================================
 
-const CUSTOMERS_BASE = `${BASE_URL}/customers`
+const CUSTOMERS_BASE = `${BASE_URL}/shops/:shopId/customers`
 
 export const CUSTOMERS_ENDPOINTS = {
   BASE: CUSTOMERS_BASE,
   BY_ID: `${CUSTOMERS_BASE}/:id`,
+  SEARCH: `${CUSTOMERS_BASE}/search`,
+  ANALYTICS: `${CUSTOMERS_BASE}/analytics`,
   ORDERS: `${CUSTOMERS_BASE}/:id/orders`,
   TRANSACTIONS: `${CUSTOMERS_BASE}/:id/transactions`,
   LOYALTY: `${CUSTOMERS_BASE}/:id/loyalty`,
+  BLACKLIST: `${CUSTOMERS_BASE}/:id/blacklist`,
+  UNBLACKLIST: `${CUSTOMERS_BASE}/:id/unblacklist`,
+  LOYALTY_ADD: `${CUSTOMERS_BASE}/:id/loyalty/add`,
+  LOYALTY_REDEEM: `${CUSTOMERS_BASE}/:id/loyalty/redeem`,
 }
 
 // ============================================================================
