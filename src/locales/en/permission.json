@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "accessDenied": {
+      "title": "Access Denied",
+      "message": "You don't have permission to access this page.",
+      "yourRole": "Your role",
+      "goBack": "Go Back",
+      "goToDashboard": "Go to Dashboard"
+    }
+  },
+  "roles": {
+    "shop_admin": "Shop Admin",
+    "manager": "Manager",
+    "staff": "Staff",
+    "accountant": "Accountant",
+    "viewer": "Viewer"
+  }
+}

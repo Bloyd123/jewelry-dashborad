@@ -7,7 +7,6 @@
 // USER TYPES
 // ============================================================================
 export type {
-  // Enums & Literals
   UserRole,
   Department,
   Language,
@@ -542,6 +541,10 @@ export {
   pick,
   getNestedProperty,
 } from './common.types'
+export type{
+  Permission,
+  PermissionSet,
+} from './permission.types'
 export type {
   Gender,
   CustomerType,

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "accessDenied": {
+      "title": "पहुंच अस्वीकृत",
+      "message": "आपके पास इस पेज तक पहुंचने की अनुमति नहीं है।",
+      "yourRole": "आपकी भूमिका",
+      "goBack": "वापस जाएं",
+      "goToDashboard": "डैशबोर्ड पर जाएं"
+    }
+  },
+  "roles": {
+    "shop_admin": "शॉप एडमिन",
+    "manager": "मैनेजर",
+    "staff": "स्टाफ",
+    "accountant": "अकाउंटेंट",
+    "viewer": "व्यूअर"
+  }
+}

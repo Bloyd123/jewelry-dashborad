@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "accessDenied": {
+      "title": "प्रवेश नाकारला",
+      "message": "आपल्याला या पृष्ठावर प्रवेश करण्याची परवानगी नाही.",
+      "yourRole": "आपली भूमिका",
+      "goBack": "मागे जा",
+      "goToDashboard": "डॅशबोर्डवर जा"
+    }
+  },
+  "roles": {
+    "shop_admin": "दुकान प्रशासक",
+    "manager": "व्यवस्थापक",
+    "staff": "कर्मचारी",
+    "accountant": "लेखापाल",
+    "viewer": "प्रेक्षक"
+  }
+}

@@ -8,9 +8,10 @@ import type { CreateCustomerInput } from '@/validators/customerValidation'
 
 export interface CustomerFormProps {
   initialData?: Partial<CreateCustomerInput>
-  onSubmit: (data: CreateCustomerInput) => void | Promise<void>
   onCancel?: () => void
-  isLoading?: boolean
+    shopId: string // ← ADD
+  customerId?: string // ← ADD (for edit mode)
+  onSuccess?: () => void // ← CHANGE: onSubmit → onSuccess
   mode?: 'create' | 'edit'
 }
 

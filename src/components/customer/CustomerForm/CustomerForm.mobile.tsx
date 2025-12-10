@@ -18,7 +18,10 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-
+import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
+import { toast } from 'sonner'
+import { MESSAGES } from '@/constants/messages'
+import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
   { id: 'contact', label: 'Contact' },
@@ -31,9 +34,10 @@ const STEPS = [
 
 export default function CustomerFormMobile({
   initialData = {},
-  onSubmit,
+  shopId, // ← ADD
+  customerId, // ← ADD
+  onSuccess, // ← CHANGE
   onCancel,
-  isLoading = false,
   mode = 'create',
 }: CustomerFormProps) {
   const { t } = useTranslation()
@@ -41,6 +45,11 @@ export default function CustomerFormMobile({
   const [formData, setFormData] = useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+    // ← ADD: RTK Query mutations
+  const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
+  const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
+  
+  const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -109,8 +118,22 @@ export default function CustomerFormMobile({
       return
     }
 
-    await onSubmit(formData as CreateCustomerInput)
+
+    try {
+      if (mode === 'create') {
+        await createCustomer({ shopId, data: formData as CreateCustomerRequest }).unwrap()
+        toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
+      } else {
+        await updateCustomer({ shopId, customerId: customerId!, data: formData as UpdateCustomerRequest }).unwrap()
+        toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
+      }
+      
+      onSuccess?.()
+    } catch (error: any) {
+      toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
+    }
   }
+  
 
   const renderCurrentStep = () => {
     const sectionProps = {
