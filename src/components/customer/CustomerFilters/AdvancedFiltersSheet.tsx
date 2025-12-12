@@ -6,9 +6,9 @@
 import * as React from 'react'
 import { Filter, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/base/button'
+import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/overlay/Sheet'
-import { Label } from '@/components/ui/base/label'
+import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/layout/Separator'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
