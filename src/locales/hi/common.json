@@ -30,6 +30,50 @@
   },
   "common": {
     "loading": "लोड हो रहा है...",
-    "cancel": "रद्द करें"
+    "cancel": "रद्द करें",
+      "save": "सेव करें",
+  "next": "अगला",
+  "previous": "पिछला",
+  "step": "चरण",
+  "of": "का",
+      "active": "सक्रिय",
+  "inactive": "निष्क्रिय",
+  "search": "खोजें",
+  "all": "सभी",
+  "apply": "लागू करें"
+  },
+  "ui": {
+  "datatable": {
+    "table": "डेटा तालिका",
+    "actions": "क्रियाएँ",
+    "rowActions": "पंक्ति क्रियाएँ",
+    "selectAll": "सभी चुनें",
+    "selectRow": "पंक्ति चुनें",
+    "expandRow": "पंक्ति विस्तार करें",
+    "collapseRow": "पंक्ति संकुचित करें",
+    "noData": "कोई डेटा उपलब्ध नहीं",
+    "loading": "डेटा लोड हो रहा है...",
+    "firstPage": "पहला पृष्ठ",
+    "previousPage": "पिछला पृष्ठ",
+    "nextPage": "अगला पृष्ठ",
+    "lastPage": "अंतिम पृष्ठ",
+    "rowsPerPage": "प्रति पृष्ठ पंक्तियाँ",
+    "showingItems": "{{start}}-{{end}} में से {{total}} दिखा रहा है",
+    "pageOf": "पृष्ठ {{current}} / {{total}}",
+    "search": "खोजें...",
+    "filter": "फ़िल्टर",
+    "clearFilters": "फ़िल्टर साफ़ करें",
+    "sort": "क्रमबद्ध करें",
+    "sortAscending": "आरोही क्रम",
+    "sortDescending": "अवरोही क्रम",
+    "clearSort": "क्रम हटाएँ",
+    "selectedCount": "{{count}} चयनित",
+    "exportSelected": "चयनित निर्यात करें",
+    "deleteSelected": "चयनित हटाएँ",
+    "view": "देखें",
+    "edit": "संपादित करें",
+    "delete": "हटाएँ",
+    "more": "और"
   }
+}
 }

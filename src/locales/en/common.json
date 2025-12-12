@@ -35,6 +35,45 @@
     "next":"Next",
     "previous":"Previous",
     "step": "Step",
-    "of": "of"
+    "of": "of",
+    "active": "Active",
+    "inactive": "Inactive",
+    "search": "Search",
+    "all": "All",
+    "apply": "Apply"
+  },
+  "ui": {
+    "datatable": {
+      "table": "Data Table",
+      "actions": "Actions",
+      "rowActions": "Row Actions",
+      "selectAll": "Select All",
+      "selectRow": "Select Row",
+      "expandRow": "Expand Row",
+      "collapseRow": "Collapse Row",
+      "noData": "No data available",
+      "loading": "Loading data...",
+      "firstPage": "First Page",
+      "previousPage": "Previous Page",
+      "nextPage": "Next Page",
+      "lastPage": "Last Page",
+      "rowsPerPage": "Rows per page",
+      "showingItems": "Showing {{start}}-{{end}} of {{total}}",
+      "pageOf": "Page {{current}} of {{total}}",
+      "search": "Search...",
+      "filter": "Filter",
+      "clearFilters": "Clear Filters",
+      "sort": "Sort",
+      "sortAscending": "Sort Ascending",
+      "sortDescending": "Sort Descending",
+      "clearSort": "Clear Sort",
+      "selectedCount": "{{count}} selected",
+      "exportSelected": "Export Selected",
+      "deleteSelected": "Delete Selected",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "more": "More"
+    }
   }
 }

@@ -88,6 +88,95 @@
       "diamond": "हिरा",
       "platinum": "प्लॅटिनम",
       "mixed": "मिश्र"
-    }
+    },
+      "list": {
+    "title": "ग्राहक",
+    "description": "आपला ग्राहक डेटाबेस व्यवस्थापित करा",
+    "noCustomers": "कोणतेही ग्राहक आढळले नाहीत",
+    "addFirstCustomer": "आपला पहिला ग्राहक जोडा",
+    "error": "ग्राहक लोड करण्यात अयशस्वी"
+  },
+  "actions": {
+    "addCustomer": "ग्राहक जोडा",
+    "view": "तपशील पाहा",
+    "edit": "ग्राहक संपादित करा",
+    "delete": "ग्राहक हटवा",
+    "blacklist": "ग्राहक ब्लॅकलिस्ट करा",
+    "removeBlacklist": "ब्लॅकलिस्ट काढा",
+    "addLoyaltyPoints": "निष्ठा गुण जोडा",
+    "redeemLoyaltyPoints": "गुण रिडीम करा",
+    "call": "ग्राहकाला कॉल करा",
+    "whatsapp": "व्हॉट्सअ‍ॅप पाठवा",
+    "email": "ईमेल पाठवा",
+    "recordPayment": "पेमेंट नोंदवा",
+    "viewOrders": "ऑर्डर्स पाहा",
+    "viewTransactions": "व्यवहार पाहा",
+    "copyDetails": "तपशील कॉपी करा",
+    "markAsVIP": "VIP म्हणून चिन्हांकित करा",
+    "moreActions": "अधिक क्रिया"
+  },
+  "fields": {
+    "customerCode": "ग्राहक कोड",
+    "name": "नाव",
+    "email": "ईमेल",
+    "customerType": "प्रकार",
+    "membershipTier": "सदस्यता स्तर",
+    "loyaltyPoints": "निष्ठा गुण",
+    "totalPurchases": "एकूण खरेदी",
+    "totalDue": "बाकी रक्कम",
+    "lastOrderDate": "शेवटची ऑर्डर",
+    "status": "स्थिती",
+    "createdAt": "जॉईन तारीख",
+    "customer": "ग्राहक",
+    "summary": "सारांश",
+    "points": "गुण",
+    "outstanding": "बाकी",
+    "due": "देय"
+  },
+  "customerTypes": {
+    "retail": "किरकोळ",
+    "wholesale": "घाऊक",
+    "vip": "VIP",
+    "regular": "नियमित"
+  },
+  "membershipTiers": {
+    "standard": "स्टँडर्ड",
+    "silver": "सिल्व्हर",
+    "gold": "गोल्ड",
+    "platinum": "प्लॅटिनम"
+  },
+  "status": {
+    "blacklisted": "ब्लॅकलिस्टेड"
+  },
+  "noOrders": "अजून कोणतीही ऑर्डर नाही"
+},
+"filters": {
+  "searchPlaceholder": "ग्राहक शोधा...",
+  "type": "ग्राहक प्रकार",
+  "tier": "सदस्यता स्तर",
+  "status": "स्थिती",
+  "selectDateRange": "तारीख श्रेणी निवडा",
+  "dateRange": "तारीख श्रेणी",
+  "moreFilters": "अधिक फिल्टर्स",
+  "advancedFilters": "प्रगत फिल्टर्स",
+  "clearAll": "सगळे साफ करा",
+  "customerType": "ग्राहक प्रकार",
+  "membershipTier": "सदस्यता स्तर",
+  "outstandingBalance": "बाकी रक्कम",
+  "showWithBalance": "बाकी असलेले दाखवा",
+  "showAll": "सगळे दाखवा"
+},
+"types": {
+  "retail": "किरकोळ",
+  "wholesale": "घाऊक",
+  "vip": "VIP",
+  "regular": "नियमित"
+},
+"tiers": {
+  "standard": "स्टँडर्ड",
+  "silver": "सिल्व्हर",
+  "gold": "गोल्ड",
+  "platinum": "प्लॅटिनम"
+
   }
 }

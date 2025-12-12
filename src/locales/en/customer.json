@@ -88,6 +88,94 @@
       "diamond": "Diamond",
       "platinum": "Platinum",
       "mixed": "Mixed"
+    },
+    "list": {
+      "title": "Customers",
+      "description": "Manage your customer database",
+      "noCustomers": "No customers found",
+      "addFirstCustomer": "Add your first customer",
+      "error": "Failed to load customers"
+    },
+    "actions": {
+      "addCustomer": "Add Customer",
+      "view": "View Details",
+      "edit": "Edit Customer",
+      "delete": "Delete Customer",
+      "blacklist": "Blacklist Customer",
+      "removeBlacklist": "Remove Blacklist",
+      "addLoyaltyPoints": "Add Loyalty Points",
+      "redeemLoyaltyPoints": "Redeem Points",
+      "call": "Call Customer",
+      "whatsapp": "Send WhatsApp",
+      "email": "Send Email",
+      "recordPayment": "Record Payment",
+      "viewOrders": "View Orders",
+      "viewTransactions": "View Transactions",
+      "copyDetails": "Copy Details",
+      "markAsVIP": "Mark as VIP",
+      "moreActions": "More Actions"
+    },
+    "fields": {
+      "customerCode": "Customer Code",
+      "name": "Name",
+      "email": "Email",
+      "customerType": "Type",
+      "membershipTier": "Tier",
+      "loyaltyPoints": "Loyalty Points",
+      "totalPurchases": "Total Purchases",
+      "totalDue": "Outstanding Due",
+      "lastOrderDate": "Last Order",
+      "status": "Status",
+      "createdAt": "Joined Date",
+      "customer": "Customer",
+      "summary": "Summary",
+      "points": "points",
+      "outstanding": "Outstanding",
+      "due": "Due"
+    },
+    "customerTypes": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "vip": "VIP",
+      "regular": "Regular"
+    },
+    "membershipTiers": {
+      "standard": "Standard",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum"
+    },
+    "status": {
+      "blacklisted": "Blacklisted"
+    },
+    "noOrders": "No orders yet"
+  },
+  "filters": {
+      "searchPlaceholder": "Search customers...",
+      "type": "Customer Type",
+      "tier": "Membership Tier",
+      "status": "Status",
+      "selectDateRange": "Select date range",
+      "dateRange": "Date Range",
+      "moreFilters": "More Filters",
+      "advancedFilters": "Advanced Filters",
+      "clearAll": "Clear All",
+      "customerType": "Customer Type",
+      "membershipTier": "Membership Tier",
+      "outstandingBalance": "Outstanding Balance",
+      "showWithBalance": "With Balance",
+      "showAll": "Show All"
+    },
+    "types": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "vip": "VIP",
+      "regular": "Regular"
+    },
+    "tiers": {
+      "standard": "Standard",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum"
     }
-  }
 }
