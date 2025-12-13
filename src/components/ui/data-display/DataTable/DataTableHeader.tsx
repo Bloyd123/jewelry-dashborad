@@ -158,15 +158,15 @@ export const DataTableHeader = <T,>({
         {/* Selection Column */}
         {selectionEnabled && (
           <th className="w-12 px-4 py-3 text-center bg-bg-secondary border-b border-border-primary">
-            <input
-              type="checkbox"
-              checked={allRowsSelected}
-              ref={(input) => {
-                if (input) {
-                  input.indeterminate = someRowsSelected && !allRowsSelected
-                }
-              }}
-              onChange={onSelectAll}
+              <input
+                type="checkbox"
+                checked={!!allRowsSelected}
+                ref={(input) => {
+                  if (input) {
+                    input.indeterminate = !!someRowsSelected && !allRowsSelected
+                  }
+                }}
+                onChange={onSelectAll}
               className="h-4 w-4 rounded border-border-primary bg-bg-tertiary text-accent focus:ring-accent focus:ring-offset-0 cursor-pointer"
               aria-label={t('ui.datatable.selectAll')}
             />

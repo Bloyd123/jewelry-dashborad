@@ -3,4 +3,5 @@
 // ============================================================================
 
 export { DateRangeFilter } from './DateRangeFilter'
-export type { DateRangeFilterProps, DateRange } from './DateRangeFilter'
+export type { DateRangeFilterProps} from './DateRangeFilter'
+export type { DateRange } from 'react-day-picker'

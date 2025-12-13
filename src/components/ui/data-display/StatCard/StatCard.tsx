@@ -6,7 +6,7 @@
 import * as React from 'react'
 import { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 // ============================================================================
 // TYPES & INTERFACES
@@ -96,7 +96,7 @@ interface TrendIndicatorProps {
 }
 
 const TrendIndicator: React.FC<TrendIndicatorProps> = ({ trend }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   
   const getTrendColor = () => {
     if (trend.direction === 'up') return 'text-status-success'
@@ -145,7 +145,7 @@ export const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
     },
     ref
   ) => {
-    const { t } = useTranslation()
+    // const { t } = useTranslation()
     
     const isClickable = !!onClick
     const styles = sizeStyles[size]

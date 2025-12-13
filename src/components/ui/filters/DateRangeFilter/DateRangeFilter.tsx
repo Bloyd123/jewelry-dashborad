@@ -11,11 +11,12 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import type { DateRange } from 'react-day-picker'
 
-export interface DateRange {
-  from?: Date
-  to?: Date
-}
+// export interface DateRange {
+//   from?: Date
+//   to?: Date
+// }
 
 export interface DateRangeFilterProps {
   value?: DateRange
