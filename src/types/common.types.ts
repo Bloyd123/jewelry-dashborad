@@ -7,10 +7,6 @@
 // COMMON TYPES
 // ============================================================================
 
-/**
- * Common ID type used throughout the application
- */
-export type ID = string
 
 /**
  * Common timestamp types

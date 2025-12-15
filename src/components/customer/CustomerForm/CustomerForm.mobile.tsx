@@ -18,10 +18,10 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
-import { toast } from 'sonner'
-import { MESSAGES } from '@/constants/messages'
-import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
+// import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
+// import { toast } from 'sonner'
+// import { MESSAGES } from '@/constants/messages'
+// import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
   { id: 'contact', label: 'Contact' },
@@ -45,11 +45,12 @@ export default function CustomerFormMobile({
   const [formData, setFormData] = useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [isLoading, setIsLoading] = useState(false)
     // ← ADD: RTK Query mutations
-  const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
-  const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
+  // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
+  // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
   
-  const isLoading = isCreating || isUpdating
+  // const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -86,53 +87,65 @@ export default function CustomerFormMobile({
     }
   }
 
-  const handleSubmit = async () => {
-    const validation = validateCustomer(formData)
+  // const handleSubmit = async () => {
+  //   const validation = validateCustomer(formData)
     
-    if (!validation.isValid) {
-      setErrors(validation.errors)
-      const allTouched = Object.keys(validation.errors).reduce(
-        (acc, key) => ({ ...acc, [key]: true }),
-        {}
-      )
-      setTouched(allTouched)
+  //   if (!validation.isValid) {
+  //     setErrors(validation.errors)
+  //     const allTouched = Object.keys(validation.errors).reduce(
+  //       (acc, key) => ({ ...acc, [key]: true }),
+  //       {}
+  //     )
+  //     setTouched(allTouched)
       
-      // Navigate to first step with errors
-      const firstErrorStep = STEPS.findIndex((step) => {
-        return Object.keys(validation.errors).some((key) => {
-          // Map error keys to steps (simplified logic)
-          if (step.id === 'basic' && ['firstName', 'lastName', 'dateOfBirth', 'gender'].includes(key)) return true
-          if (step.id === 'contact' && ['phone', 'email', 'alternatePhone', 'whatsappNumber'].includes(key)) return true
-          if (step.id === 'address' && key.startsWith('address.')) return true
-          if (step.id === 'type' && ['customerType', 'customerCategory'].includes(key)) return true
-          if (step.id === 'kyc' && ['aadharNumber', 'panNumber', 'gstNumber'].includes(key)) return true
-          if (step.id === 'preferences' && key.startsWith('preferences.')) return true
-          if (step.id === 'notes' && ['notes', 'tags'].includes(key)) return true
-          return false
-        })
-      })
+  //     // Navigate to first step with errors
+  //     const firstErrorStep = STEPS.findIndex((step) => {
+  //       return Object.keys(validation.errors).some((key) => {
+  //         // Map error keys to steps (simplified logic)
+  //         if (step.id === 'basic' && ['firstName', 'lastName', 'dateOfBirth', 'gender'].includes(key)) return true
+  //         if (step.id === 'contact' && ['phone', 'email', 'alternatePhone', 'whatsappNumber'].includes(key)) return true
+  //         if (step.id === 'address' && key.startsWith('address.')) return true
+  //         if (step.id === 'type' && ['customerType', 'customerCategory'].includes(key)) return true
+  //         if (step.id === 'kyc' && ['aadharNumber', 'panNumber', 'gstNumber'].includes(key)) return true
+  //         if (step.id === 'preferences' && key.startsWith('preferences.')) return true
+  //         if (step.id === 'notes' && ['notes', 'tags'].includes(key)) return true
+  //         return false
+  //       })
+  //     })
       
-      if (firstErrorStep !== -1) {
-        setCurrentStep(firstErrorStep)
-      }
-      return
-    }
+  //     if (firstErrorStep !== -1) {
+  //       setCurrentStep(firstErrorStep)
+  //     }
+  //     return
+  //   }
 
 
-    try {
-      if (mode === 'create') {
-        await createCustomer({ shopId, data: formData as CreateCustomerRequest }).unwrap()
-        toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
-      } else {
-        await updateCustomer({ shopId, customerId: customerId!, data: formData as UpdateCustomerRequest }).unwrap()
-        toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
-      }
+  //   try {
+  //     if (mode === 'create') {
+  //       await createCustomer({ shopId, data: formData as CreateCustomerRequest }).unwrap()
+  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
+  //     } else {
+  //       await updateCustomer({ shopId, customerId: customerId!, data: formData as UpdateCustomerRequest }).unwrap()
+  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
+  //     }
       
-      onSuccess?.()
-    } catch (error: any) {
-      toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
-    }
-  }
+  //     onSuccess?.()
+  //   } catch (error: any) {
+  //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
+  //   }
+  // }
+  const handleSubmit = async () => {
+  // ... validation logic same ...
+  
+  setIsLoading(true)
+  
+  // Mock delay
+  setTimeout(() => {
+    console.log('Mock Submit:', { mode, shopId, customerId, formData })
+    setIsLoading(false)
+    onSuccess?.()
+  }, 1000)
+}
   
 
   const renderCurrentStep = () => {

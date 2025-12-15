@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/base/select'
+} from '@/components/ui/select'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setMembershipTierFilter, selectMembershipTierFilter } from '@/store/slices/customerSlice'
 import type { MembershipTier } from '@/types'
@@ -40,10 +40,10 @@ export const MembershipTierFilter: React.FC = () => {
   return (
     <Select value={selectedTier || 'all'} onValueChange={handleChange}>
       <SelectTrigger className="w-full md:w-[180px]">
-        <SelectValue placeholder={t('customer.filters.tier')} />
+        <SelectValue placeholder={t('filters.tier')} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all">{t('common.all')}</SelectItem>
+        <SelectItem value="all">{t('all')}</SelectItem>
         {membershipTiers.map((tier) => (
           <SelectItem key={tier.value} value={tier.value}>
             <div className="flex items-center gap-2">

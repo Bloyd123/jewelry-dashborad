@@ -54,11 +54,11 @@ export const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
     const { t } = useTranslation()
 
     const defaultColors = [
-      'hsl(var(--accent))',
-      'hsl(var(--status-success))',
-      'hsl(var(--status-warning))',
-      'hsl(var(--status-error))',
-      'hsl(var(--status-info))',
+      'var(--accent-color)',
+      'var(--status-success)',
+      'var(--status-warning)',
+      'var(--status-error)',
+      'var(--status-info)',
       '#8884d8',
       '#82ca9d',
       '#ffc658',
@@ -115,19 +115,26 @@ export const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
                 />
               ))}
             </Pie>
-            {showTooltip && (
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'hsl(var(--bg-secondary))',
-                  border: '1px solid hsl(var(--border-primary))',
-                  borderRadius: '0.5rem',
-                  color: 'hsl(var(--text-primary))',
-                }}
-                formatter={formatTooltip}
-              />
-            )}
+        {showTooltip && (
+          <Tooltip
+            contentStyle={{
+              backgroundColor: 'var(--bg-secondary)',
+              border: '1px solid var(--border-primary)',
+              borderRadius: '0.5rem',
+            }}
+            itemStyle={{
+              color: 'var(--text-primary)',
+              fontSize: '0.875rem',
+            }}
+            labelStyle={{
+              color: 'var(--text-secondary)',
+              fontWeight: 500,
+            }}
+          />
+        )}
+
             {showLegend && (
-              <Legend wrapperStyle={{ color: 'hsl(var(--text-secondary))' }} />
+              <Legend wrapperStyle={{ color: 'var(--text-secondary)' }} />
             )}
           </RechartsPieChart>
         </ResponsiveContainer>

@@ -1,34 +1,60 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerFilters/CustomerSearchBar.tsx
-// Customer-Specific SearchBar Wrapper
+// FILE: src/components/customer/CustomerFilters/CustomerSearchBar.tsx
+// Customer Search Wrapper - Uses Reusable SearchBar
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SearchBar } from '@/components/ui/form/SearchBar'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setSearchFilter, selectCustomerSearch } from '@/store/slices/customerSlice'
+import { SearchBar } from '@/components/ui/SearchBar'
 
-export const CustomerSearchBar: React.FC = () => {
-  const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const searchValue = useAppSelector(selectCustomerSearch)
+// ============================================================================
+// TYPES
+// ============================================================================
 
-  const handleSearch = (value: string) => {
-    dispatch(setSearchFilter(value))
-  }
-
-  const handleClear = () => {
-    dispatch(setSearchFilter(''))
-  }
-
-  return (
-    <SearchBar
-      value={searchValue}
-      onChange={handleSearch}
-      onClear={handleClear}
-      placeholder={t('customer.filters.searchPlaceholder')}
-      className="w-full md:w-80"
-    />
-  )
+export interface CustomerSearchBarProps {
+  value: string
+  onChange: (value: string) => void
+  onClear?: () => void
+  className?: string
+  disabled?: boolean
+  autoFocus?: boolean
 }
+
+// ============================================================================
+// CUSTOMER SEARCH BAR COMPONENT
+// ============================================================================
+
+export const CustomerSearchBar = React.forwardRef<
+  HTMLInputElement,
+  CustomerSearchBarProps
+>(
+  (
+    {
+      value,
+      onChange,
+      onClear,
+      className,
+      disabled = false,
+      autoFocus = false,
+    },
+    ref
+  ) => {
+    const { t } = useTranslation()
+
+    return (
+      <SearchBar
+        ref={ref}
+        value={value}
+        onChange={onChange}
+        onClear={onClear}
+        placeholder={t('search.placeholder')}
+        debounceMs={300}
+        disabled={disabled}
+        autoFocus={autoFocus}
+        className={className}
+      />
+    )
+  }
+)
+
+CustomerSearchBar.displayName = 'CustomerSearchBar'

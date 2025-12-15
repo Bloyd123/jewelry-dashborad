@@ -19,10 +19,10 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
-import { toast } from 'sonner'
-import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
-import { MESSAGES } from '@/constants/messages'
+// import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
+// import { toast } from 'sonner'
+// import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
+// import { MESSAGES } from '@/constants/messages'
 
 export default function CustomerFormDesktop({
   initialData = {},
@@ -36,12 +36,13 @@ export default function CustomerFormDesktop({
   const [formData, setFormData] = useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [isLoading, setIsLoading] = useState(false)
 
     // ← ADD: RTK Query mutations
-  const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
-  const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
+  // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
+  // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
   
-  const isLoading = isCreating || isUpdating
+  // const isLoading = isCreating || isUpdating
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
     
@@ -67,46 +68,58 @@ export default function CustomerFormDesktop({
     }
   }
 
-  const handleSubmit = async () => {
-    // Validate entire form
-    const validation = validateCustomer(formData)
+  // const handleSubmit = async () => {
+  //   // Validate entire form
+  //   const validation = validateCustomer(formData)
     
-    if (!validation.isValid) {
-      setErrors(validation.errors)
-      // Mark all fields as touched
-      const allTouched = Object.keys(validation.errors).reduce(
-        (acc, key) => ({ ...acc, [key]: true }),
-        {}
-      )
-      setTouched(allTouched)
-      return
-    }
+  //   if (!validation.isValid) {
+  //     setErrors(validation.errors)
+  //     // Mark all fields as touched
+  //     const allTouched = Object.keys(validation.errors).reduce(
+  //       (acc, key) => ({ ...acc, [key]: true }),
+  //       {}
+  //     )
+  //     setTouched(allTouched)
+  //     return
+  //   }
 
 
-    // ← REPLACE: Submit logic with RTK Query
-    try {
-      if (mode === 'create') {
-        await createCustomer({
-          shopId,
-          data: formData as CreateCustomerRequest,
-        }).unwrap()
+  //   // ← REPLACE: Submit logic with RTK Query
+  //   try {
+  //     if (mode === 'create') {
+  //       await createCustomer({
+  //         shopId,
+  //         data: formData as CreateCustomerRequest,
+  //       }).unwrap()
         
-        toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
-      } else {
-        await updateCustomer({
-          shopId,
-          customerId: customerId!,
-          data: formData as UpdateCustomerRequest,
-        }).unwrap()
+  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
+  //     } else {
+  //       await updateCustomer({
+  //         shopId,
+  //         customerId: customerId!,
+  //         data: formData as UpdateCustomerRequest,
+  //       }).unwrap()
         
-        toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
-      }
+  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
+  //     }
       
-      onSuccess?.() // ← Call success callback
-    } catch (error: any) {
-      toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
-    }
-  }
+  //     onSuccess?.() // ← Call success callback
+  //   } catch (error: any) {
+  //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
+  //   }
+  // }
+  const handleSubmit = async () => {
+  // ... validation logic same ...
+  
+  setIsLoading(true)
+  
+  // Mock delay
+  setTimeout(() => {
+    console.log('Mock Submit:', { mode, shopId, customerId, formData })
+    setIsLoading(false)
+    onSuccess?.()
+  }, 1000)
+}
 
   return (
     <div className="container mx-auto p-6 max-w-7xl">

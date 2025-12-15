@@ -1,6 +1,6 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerTable/CustomerTableActions.tsx
-// Customer Table Row Actions Menu
+// FILE: src/components/features/CustomerTable/CustomerTableActions.tsx
+// Customer Table Row Actions & Bulk Actions
 // ============================================================================
 
 import React from 'react'
@@ -9,345 +9,231 @@ import {
   Eye,
   Edit,
   Trash2,
+  Award,
   Ban,
-  ShieldCheck,
-  Gift,
-  Phone,
-  Mail,
-  MessageSquare,
-  CreditCard,
-  FileText,
-  Copy,
-  Star,
-  AlertCircle,
+  ShieldOff,
+  MoreVertical,
 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import type { RowAction } from '@/components/ui/data-display/DataTable'
-import type { CustomerListItem } from '@/types'
+import type { Customer } from './CustomerTable.types'
 
 // ============================================================================
-// ACTION HANDLERS TYPE
-// ============================================================================
-
-export interface CustomerActionHandlers {
-  onView?: (customer: CustomerListItem) => void
-  onEdit?: (customer: CustomerListItem) => void
-  onDelete?: (customer: CustomerListItem) => void
-  onBlacklist?: (customer: CustomerListItem) => void
-  onRemoveBlacklist?: (customer: CustomerListItem) => void
-  onAddLoyaltyPoints?: (customer: CustomerListItem) => void
-  onRedeemLoyaltyPoints?: (customer: CustomerListItem) => void
-  onCall?: (customer: CustomerListItem) => void
-  onEmail?: (customer: CustomerListItem) => void
-  onWhatsApp?: (customer: CustomerListItem) => void
-  onRecordPayment?: (customer: CustomerListItem) => void
-  onViewOrders?: (customer: CustomerListItem) => void
-  onCopyDetails?: (customer: CustomerListItem) => void
-  onMarkAsVIP?: (customer: CustomerListItem) => void
-  onViewTransactions?: (customer: CustomerListItem) => void
-}
-
-// ============================================================================
-// PERMISSIONS TYPE
-// ============================================================================
-
-export interface CustomerPermissions {
-  canViewCustomers?: boolean
-  canEditCustomers?: boolean
-  canDeleteCustomers?: boolean
-  canManageCustomers?: boolean
-  canBlacklistCustomer?: boolean
-  canRemoveCustomerBlacklist?: boolean
-  canAddLoyaltyPoints?: boolean
-  canRedeemLoyaltyPoints?: boolean
-  canCreateSales?: boolean
-  canCreatePayments?: boolean
-  canViewSales?: boolean
-  canViewTransactions?: boolean
-}
-
-// ============================================================================
-// GET ROW ACTIONS
+// ROW ACTIONS (Individual Customer Actions)
 // ============================================================================
 
 export const getCustomerRowActions = (
-  handlers: CustomerActionHandlers,
-  permissions: CustomerPermissions = {}
-): RowAction<CustomerListItem>[] => {
-  const actions: RowAction<CustomerListItem>[] = []
-
-  // ========================================================================
-  // VIEW CUSTOMER
-  // ========================================================================
-  if (permissions.canViewCustomers && handlers.onView) {
-    actions.push({
-      label: 'customer.actions.view',
-      icon: <Eye className="h-4 w-4" />,
-      onClick: handlers.onView,
-    })
-  }
-
-  // ========================================================================
-  // EDIT CUSTOMER
-  // ========================================================================
-  if (permissions.canEditCustomers && handlers.onEdit) {
-    actions.push({
-      label: 'customer.actions.edit',
-      icon: <Edit className="h-4 w-4" />,
-      onClick: handlers.onEdit,
-      disabled: (row) => row.isBlacklisted,
-    })
-  }
-
-  // ========================================================================
-  // QUICK ACTIONS SEPARATOR
-  // ========================================================================
-  if (handlers.onCall || handlers.onWhatsApp || handlers.onEmail) {
-    // Quick Communication Actions
-    if (handlers.onCall) {
-      actions.push({
-        label: 'customer.actions.call',
-        icon: <Phone className="h-4 w-4" />,
-        onClick: handlers.onCall,
-      })
-    }
-
-    if (handlers.onWhatsApp) {
-      actions.push({
-        label: 'customer.actions.whatsapp',
-        icon: <MessageSquare className="h-4 w-4" />,
-        onClick: handlers.onWhatsApp,
-        hidden: (row) => !row.whatsappNumber && !row.phone,
-      })
-    }
-
-    if (handlers.onEmail) {
-      actions.push({
-        label: 'customer.actions.email',
-        icon: <Mail className="h-4 w-4" />,
-        onClick: handlers.onEmail,
-        hidden: (row) => !row.email,
-      })
-    }
-  }
-
-  // ========================================================================
-  // VIEW ORDERS
-  // ========================================================================
-  if (permissions.canViewSales && handlers.onViewOrders) {
-    actions.push({
-      label: 'customer.actions.viewOrders',
-      icon: <FileText className="h-4 w-4" />,
-      onClick: handlers.onViewOrders,
-    })
-  }
-
-  // ========================================================================
-  // VIEW TRANSACTIONS
-  // ========================================================================
-  if (permissions.canViewTransactions && handlers.onViewTransactions) {
-    actions.push({
-      label: 'customer.actions.viewTransactions',
-      icon: <CreditCard className="h-4 w-4" />,
-      onClick: handlers.onViewTransactions,
-    })
-  }
-
-  // ========================================================================
-  // RECORD PAYMENT
-  // ========================================================================
-  if (permissions.canCreatePayments && handlers.onRecordPayment) {
-    actions.push({
-      label: 'customer.actions.recordPayment',
-      icon: <CreditCard className="h-4 w-4" />,
-      onClick: handlers.onRecordPayment,
-      hidden: (row) => !row.totalDue || row.totalDue <= 0,
-    })
-  }
-
-  // ========================================================================
-  // LOYALTY POINTS ACTIONS
-  // ========================================================================
-  if (permissions.canAddLoyaltyPoints && handlers.onAddLoyaltyPoints) {
-    actions.push({
-      label: 'customer.actions.addLoyaltyPoints',
-      icon: <Gift className="h-4 w-4" />,
-      onClick: handlers.onAddLoyaltyPoints,
-      disabled: (row) => row.isBlacklisted,
-    })
-  }
-
-  if (permissions.canRedeemLoyaltyPoints && handlers.onRedeemLoyaltyPoints) {
-    actions.push({
-      label: 'customer.actions.redeemLoyaltyPoints',
-      icon: <Gift className="h-4 w-4" />,
-      onClick: handlers.onRedeemLoyaltyPoints,
-      disabled: (row) => !row.loyaltyPoints || row.loyaltyPoints <= 0 || row.isBlacklisted,
-    })
-  }
-
-  // ========================================================================
-  // MARK AS VIP
-  // ========================================================================
-  if (permissions.canManageCustomers && handlers.onMarkAsVIP) {
-    actions.push({
-      label: 'customer.actions.markAsVIP',
-      icon: <Star className="h-4 w-4" />,
-      onClick: handlers.onMarkAsVIP,
-      hidden: (row) => row.customerType === 'vip',
-      disabled: (row) => row.isBlacklisted,
-    })
-  }
-
-  // ========================================================================
-  // COPY DETAILS
-  // ========================================================================
-  if (handlers.onCopyDetails) {
-    actions.push({
-      label: 'customer.actions.copyDetails',
-      icon: <Copy className="h-4 w-4" />,
-      onClick: handlers.onCopyDetails,
-    })
-  }
-
-  // ========================================================================
-  // BLACKLIST MANAGEMENT
-  // ========================================================================
-  if (permissions.canBlacklistCustomer && handlers.onBlacklist) {
-    actions.push({
-      label: 'customer.actions.blacklist',
-      icon: <Ban className="h-4 w-4" />,
-      variant: 'destructive',
-      onClick: handlers.onBlacklist,
-      hidden: (row) => row.isBlacklisted,
-    })
-  }
-
-  if (permissions.canRemoveCustomerBlacklist && handlers.onRemoveBlacklist) {
-    actions.push({
-      label: 'customer.actions.removeBlacklist',
-      icon: <ShieldCheck className="h-4 w-4" />,
-      onClick: handlers.onRemoveBlacklist,
-      hidden: (row) => !row.isBlacklisted,
-    })
-  }
-
-  // ========================================================================
-  // DELETE CUSTOMER
-  // ========================================================================
-  if (permissions.canDeleteCustomers && permissions.canManageCustomers && handlers.onDelete) {
-    actions.push({
-      label: 'customer.actions.delete',
-      icon: <Trash2 className="h-4 w-4" />,
-      variant: 'destructive',
-      onClick: handlers.onDelete,
-      disabled: (row) => {
-        // Cannot delete if customer has outstanding balance
-        if (row.totalDue && row.totalDue > 0) return true
-        // Cannot delete if customer has orders
-        if (row.statistics?.totalOrders && row.statistics.totalOrders > 0) return true
-        return false
-      },
-    })
-  }
-
-  return actions
-}
+  onViewDetails: (customer: Customer) => void,
+  onEdit: (customer: Customer) => void,
+  onAddPoints: (customer: Customer) => void,
+  onBlacklist: (customer: Customer) => void,
+  onDelete: (customer: Customer) => void
+): RowAction<Customer>[] => [
+  {
+    label: 'actions.viewDetails',
+    icon: <Eye className="h-4 w-4" />,
+    onClick: onViewDetails,
+    variant: 'default',
+  },
+  {
+    label: 'actions.edit',
+    icon: <Edit className="h-4 w-4" />,
+    onClick: onEdit,
+    variant: 'default',
+  },
+  {
+    label: 'actions.addPoints',
+    icon: <Award className="h-4 w-4" />,
+    onClick: onAddPoints,
+    variant: 'default',
+    hidden: (row) => !row.isActive,
+  },
+  {
+    label: 'actions.blacklist',
+    icon: <Ban className="h-4 w-4" />,
+    onClick: onBlacklist,
+    variant: 'destructive',
+    hidden: (row) => row.isBlacklisted,
+  },
+  {
+    label: 'actions.removeBlacklist',
+    icon: <ShieldOff className="h-4 w-4" />,
+    onClick: onBlacklist,
+    variant: 'default',
+    hidden: (row) => !row.isBlacklisted,
+  },
+  {
+    label: 'actions.delete',
+    icon: <Trash2 className="h-4 w-4" />,
+    onClick: onDelete,
+    variant: 'destructive',
+    disabled: (row) => row.totalDue > 0,
+  },
+]
 
 // ============================================================================
-// SIMPLE ROW ACTIONS (Basic View)
+// BULK ACTIONS BAR (Shows when rows are selected)
 // ============================================================================
 
-export const getSimpleCustomerRowActions = (
-  handlers: CustomerActionHandlers,
-  permissions: CustomerPermissions = {}
-): RowAction<CustomerListItem>[] => {
-  const actions: RowAction<CustomerListItem>[] = []
-
-  // View
-  if (permissions.canViewCustomers && handlers.onView) {
-    actions.push({
-      label: 'customer.actions.view',
-      icon: <Eye className="h-4 w-4" />,
-      onClick: handlers.onView,
-    })
-  }
-
-  // Edit
-  if (permissions.canEditCustomers && handlers.onEdit) {
-    actions.push({
-      label: 'customer.actions.edit',
-      icon: <Edit className="h-4 w-4" />,
-      onClick: handlers.onEdit,
-    })
-  }
-
-  // Delete
-  if (permissions.canDeleteCustomers && handlers.onDelete) {
-    actions.push({
-      label: 'customer.actions.delete',
-      icon: <Trash2 className="h-4 w-4" />,
-      variant: 'destructive',
-      onClick: handlers.onDelete,
-      disabled: (row) => (row.totalDue && row.totalDue > 0) || false,
-    })
-  }
-
-  return actions
+interface BulkActionsBarProps {
+  selectedCount: number
+  selectedCustomers: Customer[]
+  onViewDetails: () => void
+  onEdit: () => void
+  onAddPoints: () => void
+  onBlacklist: () => void
+  onDelete: () => void
+  onClearSelection: () => void
 }
 
-// ============================================================================
-// UTILITY FUNCTIONS
-// ============================================================================
+export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
+  selectedCount,
+  selectedCustomers,
+  onViewDetails,
+  onEdit,
+  onAddPoints,
+  onBlacklist,
+  onDelete,
+  onClearSelection,
+}) => {
+  const { t } = useTranslation()
 
-/**
- * Copy customer details to clipboard
- */
-export const copyCustomerDetails = async (customer: CustomerListItem): Promise<boolean> => {
-  const details = `
-Customer Code: ${customer.customerCode}
-Name: ${customer.firstName} ${customer.lastName || ''}
-Phone: ${customer.phone}
-Email: ${customer.email || 'N/A'}
-Customer Type: ${customer.customerType}
-Total Purchases: ₹${customer.totalPurchases?.toLocaleString() || 0}
-Outstanding Due: ₹${customer.totalDue?.toLocaleString() || 0}
-Loyalty Points: ${customer.loyaltyPoints || 0}
-  `.trim()
+  // Check if any selected customer has outstanding balance
+  const hasOutstandingBalance = selectedCustomers.some((c) => c.totalDue > 0)
 
-  try {
-    await navigator.clipboard.writeText(details)
-    return true
-  } catch (error) {
-    console.error('Failed to copy customer details:', error)
-    return false
-  }
+  // Check if any selected customer is inactive
+  const hasInactive = selectedCustomers.some((c) => !c.isActive)
+
+  // Check if all selected are blacklisted or not
+  const allBlacklisted = selectedCustomers.every((c) => c.isBlacklisted)
+  const someBlacklisted = selectedCustomers.some((c) => c.isBlacklisted)
+
+  return (
+<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 px-4 py-3 bg-accent/10 border-b border-border-primary">
+  {/* Left Section - Selection Info */}
+  <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+    <span className="text-sm font-medium text-text-primary">
+      {t('table.selectedCount', { count: selectedCount })}
+    </span>
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={onClearSelection}
+      className="h-8 text-text-secondary hover:text-text-primary text-xs sm:text-sm"
+    >
+      {t('common.clearSelection')}
+    </Button>
+  </div>
+
+  {/* Right Section - Action Buttons */}
+  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+        {/* View Details - Only if single selection */}
+        {selectedCount === 1 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onViewDetails}
+            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+          >
+          <Eye className="h-4 w-4" />
+          <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
+          </Button>
+        )}
+
+        {/* Edit - Only if single selection */}
+        {selectedCount === 1 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onEdit}
+            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+          >
+ <Edit className="h-4 w-4" />
+  <span className="hidden sm:inline">{t('actions.edit')}</span>
+          </Button>
+        )}
+
+        {/* Add Loyalty Points - Only for active customers */}
+        {!hasInactive && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onAddPoints}
+           className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+          >
+           <Award className="h-4 w-4" />
+  <span className="hidden sm:inline">{t('actions.addPoints')}</span>
+          </Button>
+        )}
+
+        {/* Blacklist/Remove Blacklist */}
+        {!allBlacklisted && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onBlacklist}
+            className="h-9 gap-2 text-status-error border-status-error/20 hover:bg-status-error/10"
+          >
+             <Ban className="h-4 w-4" />
+  <span className="hidden sm:inline">{t('actions.blacklist')}</span>
+          </Button>
+        )}
+
+        {someBlacklisted && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onBlacklist}
+            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+          >
+            <ShieldOff className="h-4 w-4" />
+              <span className="hidden sm:inline"></span>{t('actions.removeBlacklist')}<span/>
+          </Button>
+        )}
+
+        {/* Delete - Disabled if any has outstanding balance */}
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={onDelete}
+          disabled={hasOutstandingBalance}
+          className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+        >
+         <Trash2 className="h-4 w-4" />
+  <span className="hidden sm:inline">{t('actions.delete')}</span>
+        </Button>
+
+        {/* More Actions Dropdown */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon" className="h-9 w-9">
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuItem>
+              {t('actions.exportSelected')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('actions.sendEmail')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('actions.sendSMS')}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-status-error">
+              {t('actions.bulkDelete')}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  )
 }
-
-/**
- * Open phone dialer
- */
-export const openPhoneDialer = (phone: string): void => {
-  window.open(`tel:${phone}`, '_self')
-}
-
-/**
- * Open email client
- */
-export const openEmailClient = (email: string): void => {
-  window.open(`mailto:${email}`, '_blank')
-}
-
-/**
- * Open WhatsApp
- */
-export const openWhatsApp = (phone: string): void => {
-  // Remove +91 and spaces
-  const cleanPhone = phone.replace(/\+91|\s/g, '')
-  window.open(`https://wa.me/91${cleanPhone}`, '_blank')
-}
-
-// ============================================================================
-// EXPORT
-// ============================================================================
-
-export default getCustomerRowActions

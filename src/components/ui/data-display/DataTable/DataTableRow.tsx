@@ -260,7 +260,7 @@ export const DataTableRow = <T,>({
               checked={selected}
               onChange={handleSelectionChange}
               onClick={(e) => e.stopPropagation()}
-              className="h-4 w-4 rounded border-border-primary bg-bg-tertiary text-accent focus:ring-accent focus:ring-offset-0 cursor-pointer"
+            className="h-4 w-4 rounded border-border-primary bg-bg-secondary text-accent  focus:ring-accent focus:ring-offset-0 accent-accent cursor-pointer"
               aria-label={t('ui.datatable.selectRow')}
             />
           </td>

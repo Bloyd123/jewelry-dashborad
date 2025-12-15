@@ -1,3 +1,6 @@
+Here's the **UPDATED Filter Components Guide** with the new FilterSheet structure:
+
+```markdown
 # 🔍 Filter Components - Usage Guide
 
 ## 🎯 Quick Start
@@ -12,7 +15,7 @@ All filter components are located in `src/components/ui/filters/` and are **them
 |-----------|----------|----------|
 | **FilterBar** | Main container | Desktop/Mobile layout management |
 | **FilterGroup** | Label wrapper | Grouping filters with labels |
-| **FilterSheet** | Mobile drawer | Mobile filter UI |
+| **FilterSheet** | Mobile drawer | Mobile filter UI (from overlay/Sheet) |
 | **TypeFilter** | Dropdown selection | Customer type, product type, any category |
 | **StatusFilter** | Status selection | Active/Inactive, order status |
 | **DateRangeFilter** | Date range picker | Created date, order date filtering |
@@ -26,6 +29,7 @@ All filter components are located in `src/components/ui/filters/` and are **them
 
 ```tsx
 // Standard Filter Structure for Any Module
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
 
 <FilterBar 
   hasActiveFilters={hasFilters}
@@ -34,8 +38,16 @@ All filter components are located in `src/components/ui/filters/` and are **them
     <FilterSheet 
       activeFilterCount={count}
       onClearAll={handleClearAll}
+      onApply={handleApply}
+      size="xl"
     >
       {/* Mobile: All filters here */}
+      <FilterGroup label="Type">
+        <TypeFilter {...props} />
+      </FilterGroup>
+      <FilterGroup label="Status">
+        <StatusFilter {...props} />
+      </FilterGroup>
     </FilterSheet>
   }
 >
@@ -66,8 +78,10 @@ import { FilterBar } from '@/components/ui/filters'
 </FilterBar>
 ```
 
-### With Mobile Support
+### With Mobile Support (New FilterSheet)
 ```tsx
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
+
 <FilterBar
   hasActiveFilters={hasFilters}
   onClearAll={handleClear}
@@ -76,6 +90,9 @@ import { FilterBar } from '@/components/ui/filters'
       activeFilterCount={3}
       title="Filter Customers"
       onClearAll={handleClear}
+      onApply={handleApply}
+      size="xl"
+      showTrigger={true}
     >
       <FilterGroup label="Customer Type">
         <TypeFilter {...props} />
@@ -83,16 +100,35 @@ import { FilterBar } from '@/components/ui/filters'
       <FilterGroup label="Status">
         <StatusFilter {...props} />
       </FilterGroup>
+      <FilterGroup label="Date Range">
+        <DateRangeFilter {...props} />
+      </FilterGroup>
     </FilterSheet>
   }
 >
   {/* Desktop filters */}
   <SearchBar />
   <TypeFilter />
+  <StatusFilter />
 </FilterBar>
 ```
 
-### Props
+### FilterSheet Props
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | **Required** | Filter components |
+| `activeFilterCount` | `number` | `0` | Badge count on trigger |
+| `onClearAll` | `() => void` | - | Clear filters callback |
+| `onApply` | `() => void` | - | Apply button callback |
+| `triggerLabel` | `string` | `'More Filters'` | Trigger button text |
+| `title` | `string` | `'Advanced Filters'` | Sheet title |
+| `open` | `boolean` | - | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | - | Control sheet open/close |
+| `showTrigger` | `boolean` | `true` | Show trigger button |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'xl'` | Sheet height |
+| `className` | `string` | - | Body content styling |
+
+### FilterBar Props
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `children` | `ReactNode` | - | Filter components |
@@ -369,12 +405,12 @@ const activeFilters = useMemo(() => {
 import {
   FilterBar,
   FilterGroup,
-  FilterSheet,
   TypeFilter,
   StatusFilter,
   DateRangeFilter,
   FilterChips,
 } from '@/components/ui/filters'
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
 import { SearchBar } from '@/components/ui/form/SearchBar'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
@@ -403,6 +439,11 @@ export const CustomerFilters = () => {
     dispatch(clearFilters())
   }
 
+  const handleApplyFilters = () => {
+    // Optional: Add any apply logic
+    // Filters are already applied via onChange
+  }
+
   const activeFilterCount = useMemo(() => {
     let count = 0
     if (filters.customerType) count++
@@ -421,6 +462,10 @@ export const CustomerFilters = () => {
             <FilterSheet
               activeFilterCount={activeFilterCount}
               onClearAll={handleClearAll}
+              onApply={handleApplyFilters}
+              title="Filter Customers"
+              size="xl"
+              showTrigger={true}
             >
               <FilterGroup label="Customer Type">
                 <TypeFilter
@@ -529,6 +574,13 @@ export const CustomerFilters = () => {
 | **Desktop (≥768px)** | Horizontal bar | All filters visible |
 | **Mobile (<768px)** | Search + Sheet button | Filters in bottom drawer |
 
+**New:** FilterSheet now includes:
+- ✅ Built-in header with clear button
+- ✅ Scrollable body area (SheetBody)
+- ✅ Fixed footer with Cancel/Apply buttons
+- ✅ Configurable size (sm, md, lg, xl, full)
+- ✅ Drag handle for native mobile feel
+
 ---
 
 ## 🔧 Redux Integration Pattern
@@ -588,6 +640,9 @@ export const selectHasActiveFilters = (state) => {
 
 // No Redux integration
 const [type, setType] = useState()  // ❌ Lost on page refresh
+
+// Old FilterSheet import
+import { FilterSheet } from '@/components/ui/filters'  // ❌
 ```
 
 ### ✅ Correct
@@ -604,6 +659,9 @@ const [type, setType] = useState()  // ❌ Lost on page refresh
 // Redux for persistence
 const type = useAppSelector(selectCustomerType)
 dispatch(setCustomerTypeFilter(newType))  // ✅ Persisted
+
+// New FilterSheet import
+import { FilterSheet } from '@/components/ui/overlay/Sheet'  // ✅
 ```
 
 ---
@@ -650,20 +708,39 @@ dispatch(setCustomerTypeFilter(newType))  // ✅ Persisted
    // Same component, just different options! ✅
    ```
 
+6. **FilterSheet has built-in structure:**
+   ```tsx
+   // ✅ Content automatically goes into scrollable body
+   // ✅ Footer with actions is fixed at bottom
+   // ✅ Header with clear button is fixed at top
+   <FilterSheet>
+     {/* Just add your filters, structure is handled! */}
+   </FilterSheet>
+   ```
+
 ---
 
 ## 📦 Import Paths
 
 ```tsx
-// Import from main filters barrel
+// Filter components (from filters)
 import { 
   FilterBar, 
+  FilterGroup,
   TypeFilter, 
-  StatusFilter 
+  StatusFilter,
+  DateRangeFilter,
+  PriceRangeFilter,
+  CategoryFilter,
+  FilterChips
 } from '@/components/ui/filters'
 
-// Or individual imports
+// FilterSheet (from overlay)
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
+
+// Individual imports
 import { TypeFilter } from '@/components/ui/filters/TypeFilter'
+import { FilterSheet } from '@/components/ui/overlay/Sheet/FilterSheet'
 ```
 
 ---
@@ -677,6 +754,9 @@ import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 | Options not displaying | Check `options` array format |
 | Date picker not working | Ensure `date-fns` is installed |
 | Filter state lost | Use Redux, not local state |
+| FilterSheet not found | Import from `@/components/ui/overlay/Sheet` |
+| Footer not showing | FilterSheet auto-includes footer |
+| Content not scrolling | Content in FilterSheet auto-scrolls |
 
 ---
 
@@ -686,17 +766,61 @@ Before deploying filters:
 
 - [ ] All text uses `t('key')` (i18n)
 - [ ] Uses CSS variables (no hardcoded colors)
-- [ ] Mobile FilterSheet implemented
+- [ ] Mobile FilterSheet implemented with new structure
+- [ ] FilterSheet imported from `@/components/ui/overlay/Sheet`
 - [ ] Redux integration complete
 - [ ] Pagination resets on filter change
 - [ ] Active filters show in FilterChips
 - [ ] Clear all button works
 - [ ] TypeScript types defined
 - [ ] Responsive on mobile/desktop
+- [ ] FilterSheet has `onApply` callback
+- [ ] FilterSheet size configured (`xl` for forms)
+
+---
+
+## 🆕 What's New (FilterSheet Update)
+
+### Changed
+- **Import Path**: `@/components/ui/filters/FilterSheet` → `@/components/ui/overlay/Sheet`
+- **Component Structure**: Now uses SheetContent, SheetHeader, SheetBody, SheetFooter
+- **Size Prop**: Added `size` prop with 5 options (sm, md, lg, xl, full)
+
+### Added
+- ✅ `onApply` callback for apply button
+- ✅ `showTrigger` prop to control button visibility
+- ✅ `size` prop for height control
+- ✅ Built-in scrollable body
+- ✅ Fixed footer with actions
+- ✅ Drag handle for mobile feel
+
+### Migration
+```tsx
+// OLD (❌)
+import { FilterSheet } from '@/components/ui/filters'
+<FilterSheet title="Filters">
+  <div className="space-y-4">
+    {/* filters */}
+  </div>
+</FilterSheet>
+
+// NEW (✅)
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
+<FilterSheet 
+  title="Filters"
+  onApply={handleApply}
+  size="xl"
+>
+  {/* filters - auto-wrapped in scrollable body */}
+</FilterSheet>
+```
 
 ---
 
 **Last Updated:** December 2024  
-**Version:** 1.0  
+**Version:** 2.0 (FilterSheet Updated)  
 **Components:** 9 reusable filters  
 **Maintained By:** Development Team
+```
+
+---

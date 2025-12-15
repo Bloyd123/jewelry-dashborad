@@ -54,7 +54,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     items: [
       { title: t('sidebar.allSales'), url: ROUTES.sales },
       { title: t('sidebar.addSale'), url: ROUTES.addSale },
-      { title: t('sidebar.customers'), url: ROUTES.customers },
+      { title: t('sidebar.customers'), url: ROUTES.addcustomers },
       { title: t('sidebar.reports'), url: ROUTES.salesReports },
     ],
   },

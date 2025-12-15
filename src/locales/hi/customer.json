@@ -14,6 +14,8 @@
     "customersource": "स्रोत",
     "customergender": "लिंग",
     "addCustomer": "ग्राहक जोड़ें",
+        "editCustomer": "ग्राहक संपादित करें",
+    "editCustomerDescription": "ग्राहक की जानकारी अपडेट करें",
     "anniversaryDate": "वर्षगांठ की तारीख",
     "phone": "फोन नंबर",
     "addCustomerDescription": "उनकी संपर्क जानकारी और अन्य विवरण दर्ज करके एक नया ग्राहक प्रोफ़ाइल बनाएं।",

@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/base/select'
+} from '@/components/ui/select'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setActiveFilter, selectCustomerFilters } from '@/store/slices/customerSlice'
 import { Badge } from '@/components/ui/data-display/Badge'
@@ -35,21 +35,21 @@ export const StatusFilter: React.FC = () => {
   return (
     <Select value={currentValue} onValueChange={handleChange}>
       <SelectTrigger className="w-full md:w-[160px]">
-        <SelectValue placeholder={t('customer.filters.status')} />
+        <SelectValue placeholder={t('filters.status')} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all">{t('common.all')}</SelectItem>
+        <SelectItem value="all">{t('all')}</SelectItem>
         <SelectItem value="active">
           <div className="flex items-center gap-2">
             <Badge variant="active" dot size="sm">
-              {t('common.status.active')}
+              {t('status.active')}
             </Badge>
           </div>
         </SelectItem>
         <SelectItem value="inactive">
           <div className="flex items-center gap-2">
             <Badge variant="inactive" dot size="sm">
-              {t('common.status.inactive')}
+              {t('status.inactive')}
             </Badge>
           </div>
         </SelectItem>

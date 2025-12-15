@@ -21,7 +21,7 @@ export default {
   //   ...auth,
   ...common,
   ...error,
-  ...customer
+  ...customer,
   ...permissions,
   //   ...dashboard,
   //   ...inventory,

@@ -1,11 +1,15 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerFilters/index.ts
+// FILE: src/components/customer/CustomerFilters/index.ts
+// Export All Customer Filter Components
 // ============================================================================
 
-export { CustomerFilters } from './CustomerFilters'
 export { CustomerSearchBar } from './CustomerSearchBar'
 export { CustomerTypeFilter } from './CustomerTypeFilter'
-export { MembershipTierFilter } from './MembershipTierFilter'
-export { StatusFilter } from './StatusFilter'
-export { DateRangeFilter } from './DateRangeFilter'
-export { AdvancedFiltersSheet } from './AdvancedFiltersSheet'
+export { CustomerMembershipFilter } from './CustomerMembershipFilter'
+export { CustomerStatusFilter } from './CustomerStatusFilter'
+export { CustomerBalanceFilter } from './CustomerBalanceFilter'
+export { CustomerVIPFilter } from './CustomerVIPFilter'
+export { CustomerDateRangeFilter } from './DateRangeFilter'
+// Export types
+export type { CustomerFilterValues } from './CustomerFilters'
+export {CustomerFilters} from './CustomerFilters'

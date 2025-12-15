@@ -1,28 +1,11 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerTable/index.ts
+// FILE: src/components/features/CustomerTable/index.ts
 // CustomerTable Barrel Export
 // ============================================================================
 
 export { CustomerTable } from './CustomerTable'
-export type { CustomerTableProps } from './CustomerTable'
+export { customerTableColumns } from './CustomerTableColumns'
+export { getCustomerRowActions, BulkActionsBar } from './CustomerTableActions'
+export { MOCK_CUSTOMERS } from './CustomerTable.types'
+export type { Customer } from './CustomerTable.types'
 
-export {
-  getCustomerTableColumns,
-  getCompactCustomerTableColumns,
-} from './CustomerTableColumns'
-
-export {
-  getCustomerRowActions,
-  getSimpleCustomerRowActions,
-  copyCustomerDetails,
-  openPhoneDialer,
-  openEmailClient,
-  openWhatsApp,
-} from './CustomerTableActions'
-
-export type {
-  CustomerActionHandlers,
-  CustomerPermissions,
-} from './CustomerTableActions'
-
-export default CustomerTable

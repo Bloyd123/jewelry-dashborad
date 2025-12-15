@@ -60,11 +60,11 @@ export const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
 
     // Default colors using CSS variables
     const defaultColors = [
-      'hsl(var(--accent))',
-      'hsl(var(--status-success))',
-      'hsl(var(--status-warning))',
-      'hsl(var(--status-error))',
-      'hsl(var(--status-info))',
+      'var(--accent)',
+      'var(--status-success)',
+      'var(--status-warning)',
+      'var(--status-error)',
+      'var(--status-info)',
     ]
 
     if (loading) {
@@ -101,36 +101,36 @@ export const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
             {showGrid && (
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="hsl(var(--border-secondary))"
+                stroke="var(--border-secondary))"
               />
             )}
             <XAxis
               dataKey={xAxisKey}
-              tick={{ fill: 'hsl(var(--text-tertiary))' }}
-              tickLine={{ stroke: 'hsl(var(--border-primary))' }}
-              axisLine={{ stroke: 'hsl(var(--border-primary))' }}
+              tick={{ fill: 'var(--text-tertiary)' }}
+              tickLine={{ stroke: 'var(--border-primary)' }}
+              axisLine={{ stroke: 'var(--border-primary)' }}
               tickFormatter={formatXAxis}
             />
             <YAxis
-              tick={{ fill: 'hsl(var(--text-tertiary))' }}
-              tickLine={{ stroke: 'hsl(var(--border-primary))' }}
-              axisLine={{ stroke: 'hsl(var(--border-primary))' }}
+              tick={{ fill: 'var(--text-tertiary)' }}
+              tickLine={{ stroke: 'var(--border-primary)' }}
+              axisLine={{ stroke: 'var(--border-primary)' }}
               tickFormatter={formatYAxis}
             />
             {showTooltip && (
               <Tooltip
                 contentStyle={{
-                  backgroundColor: 'hsl(var(--bg-secondary))',
-                  border: '1px solid hsl(var(--border-primary))',
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-primary)',
                   borderRadius: '0.5rem',
-                  color: 'hsl(var(--text-primary))',
+                  color: 'var(--text-primary)',
                 }}
                 formatter={formatTooltip}
               />
             )}
             {showLegend && (
               <Legend
-                wrapperStyle={{ color: 'hsl(var(--text-secondary))' }}
+                wrapperStyle={{ color: 'var(--text-secondary)' }}
               />
             )}
             {lines.map((line, index) => (

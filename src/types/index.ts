@@ -445,7 +445,6 @@ export type {
 // ============================================================================
 export type {
   // Common Types
-  ID,
   Timestamp,
   Nullable,
   Optional,
@@ -545,24 +544,43 @@ export type{
   Permission,
   PermissionSet,
 } from './permission.types'
-export type {
+export type { 
+  // Core ID type
+  ID,
+  
+  // Enums
   Gender,
   CustomerType,
   CustomerCategory,
-  MembershipTier,
-  CustomerSource,
-  CommunicationPreference,
   PreferredMetal,
+  CommunicationPreference,
+  CustomerSource,
+  
+  // Interfaces
   Address,
   CustomerPreferences,
   Customer,
-  CustomerWithRelations,
-  CustomerListItem,
+  
+  // Request/Response types
   CreateCustomerRequest,
   UpdateCustomerRequest,
-  CustomerQueryParams,
-  CustomerStatistics,
+  
+  // Query/Filter types
+  CustomerSearchParams,
+  CustomerListParams,
+  
+  // Operation types
   BlacklistCustomerRequest,
   LoyaltyPointsRequest,
-  CustomerSearchResult,
+  
+  // Bulk operation types
+  BulkImportCustomerItem,
+  BulkImportRequest,
+  // BulkUpdateRequest,
+  
+  // Export types
+  ExportCustomersParams,
 } from './customer.types'
+
+// Export constants
+export { VALIDATION_RULES, VALIDATION_MESSAGES } from './customer.types'

@@ -6,10 +6,11 @@
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
-import { useGetCustomerQuery } from '@/api/services/customerService'
+// import { useGetCustomerQuery } from '@/api/services/customerService'
 import { CustomerForm } from '@/components/customer/CustomerForm'
-import { Loader2 } from 'lucide-react'
+// import { Loader2 } from 'lucide-react'
 import type { Customer } from '@/types'
+import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 
 // ============================================================================
@@ -24,16 +25,12 @@ const convertCustomerToFormData = (customer: Customer): Partial<CreateCustomerIn
     whatsappNumber: customer.whatsappNumber,
     email: customer.email,
     
-    // ← FIX: Convert Date to string
-    dateOfBirth: customer.dateOfBirth 
-      ? new Date(customer.dateOfBirth).toISOString().split('T')[0] 
-      : undefined,
+    // Dates - Convert to YYYY-MM-DD format
+    dateOfBirth: customer.dateOfBirth?.split('T')[0], 
     
     gender: customer.gender,
     
-    anniversaryDate: customer.anniversaryDate
-      ? new Date(customer.anniversaryDate).toISOString().split('T')[0]
-      : undefined,
+    anniversaryDate: customer.anniversaryDate?.split('T')[0],
     
     address: customer.address,
     
@@ -66,43 +63,69 @@ export default function AddCustomerPage() {
 
   // Get current shop ID from Redux
   const currentShopId = useAppSelector((state) => state.auth.currentShop)
+   const shopId = currentShopId || 'shop_123' 
 
   // Fetch customer data if editing
-  const { data: customerData, isLoading } = useGetCustomerQuery(
-    { shopId: currentShopId!, customerId: customerId! },
-    { skip: !isEditMode || !customerId || !currentShopId }
-  )
+  // const { data: customerData, isLoading } = useGetCustomerQuery(
+  //   { shopId: currentShopId!, customerId: customerId! },
+  //   { skip: !isEditMode || !customerId || !currentShopId }
+  // )
+  const mockCustomer = useMemo(() => {
+  if (!isEditMode || !customerId) return undefined
+  return MOCK_CUSTOMERS.find(c => c._id === customerId)
+}, [customerId, isEditMode])
+
+// ✅ CHANGE: Use mock data
+const initialData = useMemo(() => {
+  if (!mockCustomer) return undefined
+  return convertCustomerToFormData(mockCustomer)
+}, [mockCustomer])
 
   // ← CONVERT: Customer to form data
-  const initialData = useMemo(() => {
-    if (!customerData?.data?.customer) return undefined
-    return convertCustomerToFormData(customerData.data.customer)
-  }, [customerData])
+  // const initialData = useMemo(() => {
+  //   if (!customerData?.data?.customer) return undefined
+  //   return convertCustomerToFormData(customerData.data.customer)
+  // }, [customerData])
 
   // Loading state
-  if (isEditMode && isLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="h-8 w-8 animate-spin text-accent" />
-      </div>
-    )
-  }
+  // if (isEditMode && isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <Loader2 className="h-8 w-8 animate-spin text-accent" />
+  //     </div>
+  //   )
+  // }
 
   // No shop selected
-  if (!currentShopId) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-text-secondary">Please select a shop first</p>
-      </div>
-    )
-  }
+  // if (!currentShopId) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <p className="text-text-secondary">Please select a shop first</p>
+  //     </div>
+  //   )
+  // }
 
-  return (
+  // return (
+  //   <CustomerForm
+  //     shopId={currentShopId}
+  //     customerId={customerId}
+  //     initialData={initialData}
+  //     onSuccess={() => {
+  //       navigate('/customers')
+  //     }}
+  //     onCancel={() => {
+  //       navigate('/customers')
+  //     }}
+  //     mode={isEditMode ? 'edit' : 'create'}
+  //   />
+  // )
+    return (
     <CustomerForm
-      shopId={currentShopId}
+      shopId={shopId}
       customerId={customerId}
       initialData={initialData}
       onSuccess={() => {
+        console.log('Mock Success - Navigate to /customers')
         navigate('/customers')
       }}
       onCancel={() => {
@@ -111,4 +134,5 @@ export default function AddCustomerPage() {
       mode={isEditMode ? 'edit' : 'create'}
     />
   )
+
 }

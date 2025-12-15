@@ -1,19 +1,19 @@
 // ============================================================================
-// FILE: src/components/customer/CustomerFilters/CustomerTypeFilter.tsx
-// Customer Type Filter - Uses Reusable TypeFilter
+// FILE: src/components/customer/CustomerFilters/CustomerBalanceFilter.tsx
+// Customer Balance Filter - Uses Reusable TypeFilter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
-import { Crown, ShoppingBag, Tag, User } from 'lucide-react'
+import { DollarSign, CheckCircle } from 'lucide-react'
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
-interface CustomerTypeFilterProps {
+interface CustomerBalanceFilterProps {
   value?: string
   onChange: (value: string | undefined) => void
   showAllOption?: boolean
@@ -22,12 +22,12 @@ interface CustomerTypeFilterProps {
 }
 
 // ============================================================================
-// CUSTOMER TYPE FILTER COMPONENT
+// CUSTOMER BALANCE FILTER COMPONENT
 // ============================================================================
 
-export const CustomerTypeFilter = React.forwardRef<
+export const CustomerBalanceFilter = React.forwardRef<
   HTMLButtonElement,
-  CustomerTypeFilterProps
+  CustomerBalanceFilterProps
 >(
   (
     {
@@ -41,39 +41,28 @@ export const CustomerTypeFilter = React.forwardRef<
   ) => {
     const { t } = useTranslation()
 
-    // Customer Type Options
-    const customerTypeOptions: FilterOption[] = [
+    const balanceOptions: FilterOption[] = [
       {
-        value: 'vip',
-        label: t('customer.type.vip'),
-        icon: <Crown className="h-4 w-4 text-accent" />,
+        value: 'has_balance',
+        label: t('filters.hasBalance'),
+        icon: <DollarSign className="h-4 w-4 text-status-warning" />,
       },
       {
-        value: 'wholesale',
-        label: t('customer.type.wholesale'),
-        icon: <ShoppingBag className="h-4 w-4 text-status-info" />,
-      },
-      {
-        value: 'retail',
-        label: t('customer.type.retail'),
-        icon: <Tag className="h-4 w-4 text-status-success" />,
-      },
-      {
-        value: 'regular',
-        label: t('customer.type.regular'),
-        icon: <User className="h-4 w-4 text-text-secondary" />,
+        value: 'no_balance',
+        label: t('filters.noBalance'),
+        icon: <CheckCircle className="h-4 w-4 text-status-success" />,
       },
     ]
 
     return (
       <TypeFilter
         ref={ref}
-        options={customerTypeOptions}
+        options={balanceOptions}
         value={value}
         onChange={onChange}
-        placeholder={t('filters.customerType')}
+        placeholder={t('filters.balance')}
         showAllOption={showAllOption}
-        allOptionLabel={t('filters.allTypes')}
+        allOptionLabel={t('filters.allBalances')}
         className={className}
         disabled={disabled}
       />
@@ -81,4 +70,4 @@ export const CustomerTypeFilter = React.forwardRef<
   }
 )
 
-CustomerTypeFilter.displayName = 'CustomerTypeFilter'
+CustomerBalanceFilter.displayName = 'CustomerBalanceFilter'

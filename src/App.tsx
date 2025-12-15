@@ -16,12 +16,11 @@ import { initializeAuth } from './store/slices/authSlice'
 import ResetPasswordPage from './components/auth/resetpassword/pages'
 import { useThemeSync } from './hooks/useThemeSync'
 import { MainLayout } from './components/layout/MainLayout/MainLayout'
-// import { CustomerForm } from './components/customer/CustomerForm'
 import AddCustomerPage from './pages/customer/AddCustomer'
-// import CustomerCard from './components/customer/CustomerCard'
 
 import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
+import { CustomerDetailsPage } from './components/customer'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -63,10 +62,9 @@ function App() {
                 element={<Navigate to={ROUTES.dashboard} replace />}
               />
               <Route path={ROUTES.dashboard} element={<Dashboard />} />
-      {/* ← REPLACE: Customer routes */}
-              {/* <Route path="/customers" element={<CustomerListPage />} /> */}
-              <Route path="/customers/add" element={<AddCustomerPage />} />
-              <Route path="/customers/:customerId/edit" element={<AddCustomerPage />} />
+   <Route path="/customers/add" element={<AddCustomerPage />} />
+<Route path="/customers/edit/:customerId" element={<AddCustomerPage />} />
+              <Route path="/customerdetail" element={<CustomerDetailsPage/>}/>
 
               
               <Route

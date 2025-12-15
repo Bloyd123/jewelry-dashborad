@@ -37,7 +37,8 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
   ) => {
     const { t } = useTranslation()
     const [localValue, setLocalValue] = React.useState(value)
-    const timeoutRef = React.useRef<NodeJS.Timeout>()
+    const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
+
 
     // Sync external value changes
     React.useEffect(() => {

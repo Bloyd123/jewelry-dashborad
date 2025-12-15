@@ -1,77 +1,348 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerFilters/CustomerFilters.tsx
-// Main Filter Bar Container
+// FILE: src/components/customer/CustomerFilters/CustomerFilters.tsx
+// Customer Filters Container - Responsive Desktop & Mobile
 // ============================================================================
 
 import * as React from 'react'
-import { X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { FilterBar } from '@/components/ui/filters/FilterBar'
+import { FilterGroup } from '@/components/ui/filters/FilterGroup'
+import { Drawer } from '@/components/ui/overlay/Drawer'
+import { Button } from '@/components/ui/button'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { Button } from '@/components/ui/base/button'
-import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { clearFilters, selectHasActiveFilters } from '@/store/slices/customerSlice'
-import { CustomerSearchBar } from './CustomerSearchBar'
-import { CustomerTypeFilter } from './CustomerTypeFilter'
-import { MembershipTierFilter } from './MembershipTierFilter'
-import { StatusFilter } from './StatusFilter'
-import { DateRangeFilter } from './DateRangeFilter'
-import { AdvancedFiltersSheet } from './AdvancedFiltersSheet'
+import { SlidersHorizontal } from 'lucide-react'
+import type { DateRange } from 'react-day-picker'
 
-export const CustomerFilters: React.FC = () => {
+import {
+  CustomerSearchBar,
+  CustomerTypeFilter,
+  CustomerMembershipFilter,
+  CustomerStatusFilter,
+  CustomerBalanceFilter,
+  CustomerVIPFilter,
+  CustomerDateRangeFilter,
+} from './index'
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+export interface CustomerFilterValues {
+  search: string
+  customerType?: string
+  membershipTier?: string
+  status?: string
+  balance?: string
+  vipOnly?: string
+  dateRange?: DateRange
+}
+
+interface CustomerFiltersProps {
+  filters: CustomerFilterValues
+  onFiltersChange: (filters: CustomerFilterValues) => void
+  onClearAll: () => void
+}
+
+// ============================================================================
+// CUSTOMER FILTERS COMPONENT
+// ============================================================================
+
+export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
+  filters,
+  onFiltersChange,
+  onClearAll,
+}) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const hasActiveFilters = useAppSelector(selectHasActiveFilters)
   const isDesktop = useMediaQuery('(min-width: 768px)')
+  const [showAdvancedDrawer, setShowAdvancedDrawer] = React.useState(false)
 
-  const handleClearAll = () => {
-    dispatch(clearFilters())
+  // Count active filters (excluding search)
+  const activeFilterCount = React.useMemo(() => {
+    let count = 0
+    if (filters.customerType) count++
+    if (filters.membershipTier) count++
+    if (filters.status) count++
+    if (filters.balance) count++
+    if (filters.vipOnly) count++
+    if (filters.dateRange?.from) count++
+    return count
+  }, [filters])
+
+  // Check if any filter is active
+  const hasActiveFilters = activeFilterCount > 0 || filters.search.length > 0
+
+  // Handler functions
+  const handleSearchChange = (value: string) => {
+    onFiltersChange({ ...filters, search: value })
   }
 
-  return (
-    <div className="space-y-4">
-      {/* Search Bar - Always Visible */}
-      <div className="flex flex-col md:flex-row gap-3">
-        <CustomerSearchBar />
-        
-        {/* Mobile: Show Advanced Filters Button */}
-        {!isDesktop && <AdvancedFiltersSheet />}
-      </div>
+  const handleTypeChange = (value: string | undefined) => {
+    onFiltersChange({ ...filters, customerType: value })
+  }
 
-      {/* Desktop: Show All Filters in Row */}
-      {isDesktop && (
-        <div className="flex flex-wrap items-center gap-3">
-          <CustomerTypeFilter />
-          <MembershipTierFilter />
-          <StatusFilter />
-          <DateRangeFilter />
+  const handleTierChange = (value: string | undefined) => {
+    onFiltersChange({ ...filters, membershipTier: value })
+  }
 
-          {/* Clear All Button */}
-          {hasActiveFilters && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleClearAll}
-              className="ml-auto"
-            >
-              <X className="mr-2 h-4 w-4" />
-              {t('customer.filters.clearAll')}
-            </Button>
-          )}
-        </div>
-      )}
+  const handleStatusChange = (value: string | undefined) => {
+    onFiltersChange({ ...filters, status: value })
+  }
 
-      {/* Mobile: Show Clear All if filters active */}
-      {!isDesktop && hasActiveFilters && (
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleClearAll}
-          className="w-full"
+  const handleBalanceChange = (value: string | undefined) => {
+    onFiltersChange({ ...filters, balance: value })
+  }
+
+  const handleVIPChange = (value: string | undefined) => {
+    onFiltersChange({ ...filters, vipOnly: value })
+  }
+
+  const handleDateRangeChange = (range: DateRange | undefined) => {
+    onFiltersChange({ ...filters, dateRange: range })
+  }
+
+  const handleApplyAdvanced = () => {
+    setShowAdvancedDrawer(false)
+  }
+
+  const handleClearAdvanced = () => {
+    onFiltersChange({
+      ...filters,
+      balance: undefined,
+      vipOnly: undefined,
+      dateRange: undefined,
+    })
+  }
+
+  // Count advanced filters only
+  const advancedFilterCount = React.useMemo(() => {
+    let count = 0
+    if (filters.balance) count++
+    if (filters.vipOnly) count++
+    if (filters.dateRange?.from) count++
+    return count
+  }, [filters])
+
+  // ============================================================================
+  // DESKTOP VIEW
+  // ============================================================================
+  if (isDesktop) {
+    return (
+      <>
+        <FilterBar
+          hasActiveFilters={hasActiveFilters}
+          onClearAll={onClearAll}
+          showClearButton={true}
         >
-          <X className="mr-2 h-4 w-4" />
-          {t('customer.filters.clearAll')}
-        </Button>
-      )}
+          {/* Search Bar - Always Visible */}
+          <CustomerSearchBar
+            value={filters.search}
+            onChange={handleSearchChange}
+            className="w-full md:w-96"
+          />
+
+          {/* Main Filters - Visible on Desktop */}
+          <CustomerTypeFilter
+            value={filters.customerType}
+            onChange={handleTypeChange}
+          />
+
+          <CustomerMembershipFilter
+            value={filters.membershipTier}
+            onChange={handleTierChange}
+          />
+
+          <CustomerStatusFilter
+            value={filters.status}
+            onChange={handleStatusChange}
+          />
+
+          {/* More Filters Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowAdvancedDrawer(true)}
+            className="relative"
+          >
+            <SlidersHorizontal className="h-4 w-4 mr-2" />
+            {t('filters.moreFilters')}
+            {advancedFilterCount > 0 && (
+              <span className="ml-2 px-1.5 py-0.5 text-xs rounded-full bg-accent text-white">
+                {advancedFilterCount}
+              </span>
+            )}
+          </Button>
+        </FilterBar>
+
+        {/* Advanced Filters Drawer */}
+        <Drawer
+          open={showAdvancedDrawer}
+          onOpenChange={setShowAdvancedDrawer}
+          title={t('filters.advancedFilters')}
+          side="right"
+          size="md"
+        >
+          <div className="space-y-6">
+            {/* Balance Filter */}
+            <FilterGroup label={t('filters.balance')}>
+              <CustomerBalanceFilter
+                value={filters.balance}
+                onChange={handleBalanceChange}
+                className="w-full"
+              />
+            </FilterGroup>
+
+            {/* VIP Status Filter */}
+            <FilterGroup label={t('filters.vipStatus')}>
+              <CustomerVIPFilter
+                value={filters.vipOnly}
+                onChange={handleVIPChange}
+                className="w-full"
+              />
+            </FilterGroup>
+
+            {/* Date Range Filter */}
+            <FilterGroup label={t('filters.dateRange')}>
+              <CustomerDateRangeFilter
+                value={filters.dateRange}
+                onChange={handleDateRangeChange}
+                className="w-full"
+              />
+            </FilterGroup>
+
+            {/* Actions */}
+            <div className="flex gap-3 pt-4 border-t border-border-primary">
+              <Button
+                variant="outline"
+                onClick={handleClearAdvanced}
+                className="flex-1"
+                disabled={advancedFilterCount === 0}
+              >
+                {t('filters.clearAdvanced')}
+              </Button>
+              <Button
+                onClick={handleApplyAdvanced}
+                className="flex-1"
+              >
+                {t('common.apply')}
+              </Button>
+            </div>
+          </div>
+        </Drawer>
+      </>
+    )
+  }
+
+// ============================================================================
+// MOBILE VIEW WITH DRAWER
+// ============================================================================
+return (
+  <>
+    <div className="space-y-3">
+      {/* Search Bar - Always Visible on Mobile */}
+      <CustomerSearchBar
+        value={filters.search}
+        onChange={handleSearchChange}
+        className="w-full"
+      />
+
+      {/* Filter Button */}
+      <Button
+        variant="outline"
+        onClick={() => setShowAdvancedDrawer(true)}
+        className="w-full relative"
+      >
+        <SlidersHorizontal className="h-4 w-4 mr-2" />
+        {t('filters.filters')}
+        {activeFilterCount > 0 && (
+          <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-accent text-white">
+            {activeFilterCount}
+          </span>
+        )}
+      </Button>
     </div>
-  )
+
+    {/* Mobile Drawer - Full Width */}
+    <Drawer
+      open={showAdvancedDrawer}
+      onOpenChange={setShowAdvancedDrawer}
+      title={t('filters.title')}
+      side="right"
+      size="full"
+    >
+      <div className="space-y-6">
+        {/* Customer Type */}
+        <FilterGroup label={t('filters.customerType')}>
+          <CustomerTypeFilter
+            value={filters.customerType}
+            onChange={handleTypeChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* Membership Tier */}
+        <FilterGroup label={t('filters.membershipTier')}>
+          <CustomerMembershipFilter
+            value={filters.membershipTier}
+            onChange={handleTierChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* Status */}
+        <FilterGroup label={t('filters.status')}>
+          <CustomerStatusFilter
+            value={filters.status}
+            onChange={handleStatusChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* Balance */}
+        <FilterGroup label={t('filters.balance')}>
+          <CustomerBalanceFilter
+            value={filters.balance}
+            onChange={handleBalanceChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* VIP Status */}
+        <FilterGroup label={t('filters.vipStatus')}>
+          <CustomerVIPFilter
+            value={filters.vipOnly}
+            onChange={handleVIPChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* Date Range */}
+        <FilterGroup label={t('filters.dateRange')}>
+          <CustomerDateRangeFilter
+            value={filters.dateRange}
+            onChange={handleDateRangeChange}
+            className="w-full"
+          />
+        </FilterGroup>
+
+        {/* Actions - WITH CLEAR ALL */}
+        <div className="flex gap-3 pt-4 border-t border-border-primary sticky bottom-0 bg-bg-secondary pb-4">
+          <Button
+            variant="outline"
+            onClick={onClearAll}
+            className="flex-1"
+            disabled={activeFilterCount === 0}
+          >
+            {t('filters.clearAll')}
+          </Button>
+          <Button
+            onClick={handleApplyAdvanced}
+            className="flex-1"
+          >
+            {t('common.apply')}
+          </Button>
+        </div>
+      </div>
+    </Drawer>
+  </>
+)
 }

@@ -29,9 +29,11 @@
     "retryButton": "Retry Connection"
   },
   "common": {
+    "clearSelection": "Clear Selection",
     "loading": "Loading...",
     "cancel": "Cancel",
     "save":"Save",
+    "update": "Update",
     "next":"Next",
     "previous":"Previous",
     "step": "Step",

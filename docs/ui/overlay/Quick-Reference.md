@@ -1,3 +1,6 @@
+
+
+```markdown
 # 📋 Overlay Components - Quick Reference
 
 > **Print & keep on desk!**
@@ -11,7 +14,7 @@
 | **Add/Edit Form** | Modal | `<Modal size="lg">` |
 | **View Details** | Modal | `<Modal size="xl">` |
 | **Delete Confirm** | ConfirmDialog | `<ConfirmDialog variant="danger">` |
-| **Mobile Filters** | Sheet | `<Sheet title="...">` |
+| **Mobile Filters** | Sheet | `<SheetContent size="xl">` |
 | **Settings Panel** | Drawer (right) | `<Drawer side="right">` |
 | **Side Nav** | Drawer (left) | `<Drawer side="left">` |
 | **Alert/Warning** | Dialog | `<Dialog title="...">` |
@@ -54,19 +57,83 @@ const [open, setOpen] = useState(false)
 
 ### Basic Template
 ```typescript
-<Sheet 
-  open={open} 
-  onOpenChange={setOpen}
-  title="filter.title"
->
-  {/* Filters or actions */}
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetHeader, 
+  SheetTitle,
+  SheetBody,
+  SheetFooter,
+  SheetTrigger 
+} from '@/components/ui/overlay/Sheet'
+
+const [open, setOpen] = useState(false)
+
+<Sheet open={open} onOpenChange={setOpen}>
+  <SheetTrigger asChild>
+    <Button>Open Filters</Button>
+  </SheetTrigger>
+  
+  <SheetContent size="xl" showHandle showClose>
+    <SheetHeader>
+      <SheetTitle>Filter Options</SheetTitle>
+    </SheetHeader>
+    
+    <SheetBody>
+      {/* Scrollable content */}
+      <FilterOptions />
+    </SheetBody>
+    
+    <SheetFooter>
+      <Button variant="outline" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+      <Button onClick={handleApply}>Apply</Button>
+    </SheetFooter>
+  </SheetContent>
 </Sheet>
+```
+
+### Sizes
+- `sm` → 30vh (quick actions)
+- `md` → 50vh (default)
+- `lg` → 70vh (filters)
+- `xl` → 85vh (forms)
+- `full` → 95vh (full screen)
+
+### Components
+```typescript
+Sheet              // Root (manages state)
+SheetTrigger       // Trigger button
+SheetContent       // Main container
+SheetHeader        // Header section
+SheetTitle         // Title
+SheetDescription   // Description
+SheetBody          // Scrollable content
+SheetFooter        // Fixed footer
+SheetClose         // Close button
+```
+
+### FilterSheet (Pre-built)
+```typescript
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
+
+<FilterSheet
+  activeFilterCount={3}
+  title="Filter Customers"
+  onClearAll={handleClearAll}
+  onApply={handleApply}
+  size="xl"
+>
+  {/* Your filters */}
+</FilterSheet>
 ```
 
 ### Use For
 - ✅ Mobile filters
 - ✅ Quick actions
 - ✅ Mobile menus
+- ✅ Mobile forms
 - ✅ Bottom selections
 
 ---
@@ -150,13 +217,29 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-### Pattern 3: Mobile Filter
+### Pattern 3: Mobile Filter Sheet
 ```typescript
-<Button onClick={() => setOpen(true)}>Filters</Button>
+<Sheet open={open} onOpenChange={setOpen}>
+  <SheetTrigger asChild>
+    <Button>Filters</Button>
+  </SheetTrigger>
 
-<Sheet open={open} onOpenChange={setOpen} title="Filters">
-  <FilterOptions />
-  <Button onClick={handleApply}>Apply</Button>
+  <SheetContent size="xl">
+    <SheetHeader>
+      <SheetTitle>Filters</SheetTitle>
+    </SheetHeader>
+    
+    <SheetBody>
+      <FilterOptions />
+    </SheetBody>
+    
+    <SheetFooter>
+      <Button variant="outline" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+      <Button onClick={handleApply}>Apply</Button>
+    </SheetFooter>
+  </SheetContent>
 </Sheet>
 ```
 
@@ -187,10 +270,22 @@ forceDesktop?: boolean
 mobileAsSheet?: boolean          // Default: true
 ```
 
-### Sheet Specific:
+### Sheet Specific (SheetContent):
 ```typescript
-showHandle?: boolean             // Default: true (drag handle)
-maxHeight?: string               // Default: '90vh'
+size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'  // Default: 'md'
+showHandle?: boolean                        // Default: true (drag handle)
+showClose?: boolean                         // Default: true (X button)
+preventOutsideClick?: boolean               // Default: false
+```
+
+### FilterSheet Specific:
+```typescript
+activeFilterCount?: number       // Badge count
+onClearAll?: () => void          // Clear filters
+onApply?: () => void             // Apply filters
+triggerLabel?: string            // Custom button text
+showTrigger?: boolean            // Default: true
+size?: SheetSize                 // Default: 'xl'
 ```
 
 ### Drawer Specific:
@@ -217,6 +312,7 @@ showIcon?: boolean               // Default: true
 - [ ] Use Modal for forms (auto-adapts mobile)
 - [ ] Use ConfirmDialog for confirmations
 - [ ] Use Sheet for mobile filters
+- [ ] Use FilterSheet for quick filter implementation
 - [ ] Test on mobile devices
 - [ ] Use i18n keys for all text
 - [ ] Show loading states
@@ -224,6 +320,8 @@ showIcon?: boolean               // Default: true
 - [ ] Don't nest overlays
 - [ ] Handle escape key properly
 - [ ] Prevent body scroll when open
+- [ ] Use SheetBody for scrollable content
+- [ ] Use SheetFooter for fixed actions
 
 ---
 
@@ -237,6 +335,9 @@ showIcon?: boolean               // Default: true
 | Close immediately | Close after success only |
 | Hardcoded sizes | Use size prop |
 | No mobile testing | Test on real devices |
+| `<Sheet><Content /></Sheet>` | `<Sheet><SheetContent>...</SheetContent></Sheet>` |
+| Content outside SheetBody | Put in `<SheetBody>` |
+| Actions outside SheetFooter | Put in `<SheetFooter>` |
 
 ---
 
@@ -247,7 +348,7 @@ Need overlay?
 │
 ├─ Form? → Modal (size="lg")
 ├─ Delete? → ConfirmDialog (variant="danger")
-├─ Mobile filter? → Sheet
+├─ Mobile filter? → Sheet or FilterSheet
 ├─ Settings? → Drawer (side="right")
 ├─ Alert? → Dialog
 └─ Warning? → ConfirmDialog (variant="warning")
@@ -267,6 +368,7 @@ src/components/ui/overlay/
 │   └── index.ts
 ├── Sheet/
 │   ├── Sheet.tsx
+│   ├── FilterSheet.tsx         # Pre-built filter sheet
 │   └── index.ts
 ├── Drawer/
 │   ├── Drawer.tsx
@@ -287,7 +389,18 @@ src/components/ui/overlay/
 import { Modal, ModalHeader, ModalBody, ModalFooter } from '@/components/ui/overlay/Modal'
 
 // Sheet
-import { Sheet } from '@/components/ui/overlay/Sheet'
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetHeader, 
+  SheetTitle,
+  SheetBody,
+  SheetFooter,
+  SheetTrigger 
+} from '@/components/ui/overlay/Sheet'
+
+// FilterSheet (pre-built)
+import { FilterSheet } from '@/components/ui/overlay/Sheet'
 
 // Drawer
 import { Drawer } from '@/components/ui/overlay/Drawer'
@@ -313,12 +426,108 @@ import { Modal, Sheet, Drawer, Dialog, ConfirmDialog } from '@/components/ui/ove
       "confirm": "Confirm",
       "cancel": "Cancel"
     }
+  },
+  "filters": {
+    "moreFilters": "More Filters",
+    "advancedFilters": "Advanced Filters",
+    "clearAll": "Clear All"
+  },
+  "common": {
+    "apply": "Apply",
+    "cancel": "Cancel"
   }
 }
 ```
 
 ---
 
-**Quick Tip:** When in doubt, use **Modal** - it's the most versatile! 🚀
+## 💡 Quick Tips
 
-**Full Guide:** See `guide-overlay-completion.md`
+### When to use what?
+
+**Modal** 
+- ✅ Forms that work on both desktop & mobile
+- ✅ Auto-converts to sheet on mobile
+- ✅ Most versatile option
+
+**Sheet**
+- ✅ Mobile-first experiences
+- ✅ Quick filters and actions
+- ✅ Native mobile feel with drag handle
+- ✅ Use `FilterSheet` for quick implementation
+
+**Drawer**
+- ✅ Desktop side panels
+- ✅ Settings and navigation
+- ✅ Avoid on mobile (use Sheet instead)
+
+**Dialog/ConfirmDialog**
+- ✅ Simple confirmations and alerts
+- ✅ Delete confirmations (use `variant="danger"`)
+- ✅ Quick yes/no decisions
+
+---
+
+## 🚀 Quick Start Examples
+
+### 1. Simple Filter Sheet
+```typescript
+<FilterSheet
+  activeFilterCount={2}
+  onClearAll={() => dispatch(clearFilters())}
+  onApply={() => console.log('Apply clicked')}
+>
+  <TypeFilter options={types} value={type} onChange={setType} />
+  <StatusFilter value={status} onChange={setStatus} />
+</FilterSheet>
+```
+
+### 2. Custom Sheet with Structure
+```typescript
+<Sheet open={open} onOpenChange={setOpen}>
+  <SheetContent size="lg">
+    <SheetHeader>
+      <SheetTitle>Title</SheetTitle>
+    </SheetHeader>
+    <SheetBody>
+      {/* Scrollable content */}
+    </SheetBody>
+    <SheetFooter>
+      <Button>Action</Button>
+    </SheetFooter>
+  </SheetContent>
+</Sheet>
+```
+
+### 3. Form Modal
+```typescript
+<Modal open={open} onOpenChange={setOpen} size="lg">
+  <ModalHeader title="Add Customer" />
+  <ModalBody>
+    <CustomerForm />
+  </ModalBody>
+  <ModalFooter>
+    <Button variant="outline">Cancel</Button>
+    <Button>Save</Button>
+  </ModalFooter>
+</Modal>
+```
+
+### 4. Delete Confirmation
+```typescript
+<ConfirmDialog
+  open={open}
+  onOpenChange={setOpen}
+  variant="danger"
+  title="Delete Customer?"
+  onConfirm={handleDelete}
+/>
+```
+
+---
+
+**Quick Tip:** When in doubt, use **Modal** for forms and **FilterSheet** for mobile filters! 🚀
+
+**Full Guide:** See `guide-overlay-complete.md`
+```
+

@@ -1,19 +1,19 @@
 // ============================================================================
-// FILE: src/components/customer/CustomerFilters/CustomerTypeFilter.tsx
-// Customer Type Filter - Uses Reusable TypeFilter
+// FILE: src/components/customer/CustomerFilters/CustomerMembershipFilter.tsx
+// Customer Membership Tier Filter - Uses Reusable TypeFilter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
-import { Crown, ShoppingBag, Tag, User } from 'lucide-react'
+import { Award, Medal, Trophy, Crown } from 'lucide-react'
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
-interface CustomerTypeFilterProps {
+interface CustomerMembershipFilterProps {
   value?: string
   onChange: (value: string | undefined) => void
   showAllOption?: boolean
@@ -22,12 +22,12 @@ interface CustomerTypeFilterProps {
 }
 
 // ============================================================================
-// CUSTOMER TYPE FILTER COMPONENT
+// CUSTOMER MEMBERSHIP FILTER COMPONENT
 // ============================================================================
 
-export const CustomerTypeFilter = React.forwardRef<
+export const CustomerMembershipFilter = React.forwardRef<
   HTMLButtonElement,
-  CustomerTypeFilterProps
+  CustomerMembershipFilterProps
 >(
   (
     {
@@ -41,39 +41,39 @@ export const CustomerTypeFilter = React.forwardRef<
   ) => {
     const { t } = useTranslation()
 
-    // Customer Type Options
-    const customerTypeOptions: FilterOption[] = [
+    // Membership Tier Options
+    const membershipTierOptions: FilterOption[] = [
       {
-        value: 'vip',
-        label: t('customer.type.vip'),
+        value: 'platinum',
+        label: t('tier.platinum'),
         icon: <Crown className="h-4 w-4 text-accent" />,
       },
       {
-        value: 'wholesale',
-        label: t('customer.type.wholesale'),
-        icon: <ShoppingBag className="h-4 w-4 text-status-info" />,
+        value: 'gold',
+        label: t('tier.gold'),
+        icon: <Trophy className="h-4 w-4 text-status-warning" />,
       },
       {
-        value: 'retail',
-        label: t('customer.type.retail'),
-        icon: <Tag className="h-4 w-4 text-status-success" />,
+        value: 'silver',
+        label: t('tier.silver'),
+        icon: <Medal className="h-4 w-4 text-text-tertiary" />,
       },
       {
-        value: 'regular',
-        label: t('customer.type.regular'),
-        icon: <User className="h-4 w-4 text-text-secondary" />,
+        value: 'standard',
+        label: t('tier.standard'),
+        icon: <Award className="h-4 w-4 text-text-secondary" />,
       },
     ]
 
     return (
       <TypeFilter
         ref={ref}
-        options={customerTypeOptions}
+        options={membershipTierOptions}
         value={value}
         onChange={onChange}
-        placeholder={t('filters.customerType')}
+        placeholder={t('filters.membershipTier')}
         showAllOption={showAllOption}
-        allOptionLabel={t('filters.allTypes')}
+        allOptionLabel={t('filters.allTiers')}
         className={className}
         disabled={disabled}
       />
@@ -81,4 +81,4 @@ export const CustomerTypeFilter = React.forwardRef<
   }
 )
 
-CustomerTypeFilter.displayName = 'CustomerTypeFilter'
+CustomerMembershipFilter.displayName = 'CustomerMembershipFilter'

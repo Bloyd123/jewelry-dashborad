@@ -1,402 +1,240 @@
 // ============================================================================
-// FILE: src/features/customer/components/CustomerTable/CustomerTable.tsx
-// Customer Table Component - Uses DataTable from UI
+// FILE: src/components/features/CustomerTable/CustomerTable.tsx
+// Main Customer Table Component
 // ============================================================================
 
-import React, { useMemo, useCallback } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { DataTable } from '@/components/ui/data-display/DataTable'
-import type { DataTableColumn, RowAction, PaginationState } from '@/components/ui/data-display/DataTable'
-import type { CustomerListItem } from '@/types'
-import {
-  getCustomerTableColumns,
-  getCompactCustomerTableColumns,
-} from './CustomerTableColumns'
-import {
-  getCustomerRowActions,
-  copyCustomerDetails,
-  openPhoneDialer,
-  openEmailClient,
-  openWhatsApp,
-  type CustomerActionHandlers,
-  type CustomerPermissions,
-} from './CustomerTableActions'
-import {
-  selectCustomerPagination,
-  selectSelectedCustomerIds,
-  setCurrentPage,
-  setPageSize,
-  setSorting,
-  toggleCustomerSelection,
-  selectAllCustomers,
-  deselectAllCustomers,
-  openEditForm,
-} from '@/store/slices/customerSlice'
-import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { customerTableColumns } from './CustomerTableColumns'
+import { getCustomerRowActions, BulkActionsBar } from './CustomerTableActions'
+import { MOCK_CUSTOMERS, type Customer } from './CustomerTable.types'
+// ✅ ADD THIS IMPORT
+import { CustomerFilters } from '@/components/customer/CustomerFilters'
+import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
+import { useNavigate } from 'react-router-dom'
 
 // ============================================================================
-// PROPS
+// MAIN COMPONENT
 // ============================================================================
 
-export interface CustomerTableProps {
-  data: CustomerListItem[]
-  isLoading?: boolean
-  error?: string | null
-  permissions?: CustomerPermissions
-  onCustomerClick?: (customer: CustomerListItem) => void
-  onDeleteCustomer?: (customer: CustomerListItem) => void
-  onBlacklistCustomer?: (customer: CustomerListItem) => void
-  onRemoveBlacklist?: (customer: CustomerListItem) => void
-  onAddLoyaltyPoints?: (customer: CustomerListItem) => void
-  onRedeemLoyaltyPoints?: (customer: CustomerListItem) => void
-  onRecordPayment?: (customer: CustomerListItem) => void
-  onMarkAsVIP?: (customer: CustomerListItem) => void
-  compact?: boolean
-  showSelection?: boolean
-  showActions?: boolean
+export const CustomerTable: React.FC = () => {
+  const { t } = useTranslation()
+
+  // ========================================================================
+  // STATE
+  // ========================================================================
+
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
+    // ✅ ADD FILTER STATE
+  const [filters, setFilters] = useState<CustomerFilterValues>({
+    search: '',
+    customerType: undefined,
+    membershipTier: undefined,
+    status: undefined,
+    balance: undefined,
+    vipOnly: undefined,
+    dateRange: undefined,
+  })
+const navigate = useNavigate()
+
+  // ========================================================================
+  // HANDLERS
+  // ========================================================================
+
+  const handleViewDetails = (customer: Customer) => {
+    console.log('View Details:', customer)
+    // TODO: Open customer details modal/drawer
+  }
+
+const handleEdit = (customer: Customer) => {
+  console.log('Edit Customer:', customer)
+  navigate(`/customers/edit/${customer._id}`)  // ✅ Fixed!
 }
 
-// ============================================================================
-// CUSTOMER TABLE COMPONENT
-// ============================================================================
+  const handleAddPoints = (customer: Customer) => {
+    console.log('Add Loyalty Points:', customer)
+    // TODO: Open add points modal
+  }
 
-export const CustomerTable: React.FC<CustomerTableProps> = ({
-  data,
-  isLoading = false,
-  error = null,
-  permissions = {},
-  onCustomerClick,
-  onDeleteCustomer,
-  onBlacklistCustomer,
-  onRemoveBlacklist,
-  onAddLoyaltyPoints,
-  onRedeemLoyaltyPoints,
-  onRecordPayment,
-  onMarkAsVIP,
-  compact = false,
-  showSelection = true,
-  showActions = true,
-}) => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const handleBlacklist = (customer: Customer) => {
+    console.log('Blacklist/Remove Blacklist:', customer)
+    // TODO: Handle blacklist action
+  }
 
-  // Selectors
-  const pagination = useAppSelector(selectCustomerPagination)
-  const selectedCustomerIds = useAppSelector(selectSelectedCustomerIds)
+  const handleDelete = (customer: Customer) => {
+    console.log('Delete Customer:', customer)
+    // TODO: Show confirmation and delete
+  }
 
-  // Responsive
-  const isMobile = useMediaQuery('(max-width: 768px)')
-
-  // ========================================================================
-  // ACTION HANDLERS
-  // ========================================================================
-
-  const handleView = useCallback(
-    (customer: CustomerListItem) => {
-      navigate(`/customers/${customer._id}`)
-    },
-    [navigate]
-  )
-
-  const handleEdit = useCallback(
-    (customer: CustomerListItem) => {
-      dispatch(openEditForm(customer._id))
-    },
-    [dispatch]
-  )
-
-  const handleCall = useCallback((customer: CustomerListItem) => {
-    openPhoneDialer(customer.phone)
-  }, [])
-
-  const handleEmail = useCallback((customer: CustomerListItem) => {
-    if (customer.email) {
-      openEmailClient(customer.email)
+  // Bulk Actions Handlers
+  const handleBulkViewDetails = () => {
+    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    if (selected.length === 1) {
+      handleViewDetails(selected[0])
     }
-  }, [])
+  }
 
-  const handleWhatsApp = useCallback((customer: CustomerListItem) => {
-    const phone = customer.whatsappNumber || customer.phone
-    if (phone) {
-      openWhatsApp(phone)
-    }
-  }, [])
+  // const handleBulkEdit = () => {
+  //   const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+  //   if (selected.length === 1) {
+  //     handleEdit(selected[0])
+  //   }
+  // }
+const handleBulkEdit = () => {
+  if (selectedCustomers.length === 1) {
+    navigate(`/customers/edit/${selectedCustomers[0]._id}`)  // ✅ Fixed!
+  }
+}
 
-  const handleViewOrders = useCallback(
-    (customer: CustomerListItem) => {
-      navigate(`/customers/${customer._id}/orders`)
-    },
-    [navigate]
-  )
+  const handleBulkAddPoints = () => {
+    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    console.log('Bulk Add Points:', selected)
+    // TODO: Open bulk add points modal
+  }
 
-  const handleViewTransactions = useCallback(
-    (customer: CustomerListItem) => {
-      navigate(`/customers/${customer._id}/transactions`)
-    },
-    [navigate]
-  )
+  const handleBulkBlacklist = () => {
+    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    console.log('Bulk Blacklist:', selected)
+    // TODO: Handle bulk blacklist
+  }
 
-  const handleCopyDetails = useCallback(
-    async (customer: CustomerListItem) => {
-      const success = await copyCustomerDetails(customer)
-      if (success) {
-        // Show success toast
-        console.log('Customer details copied to clipboard')
-      }
-    },
-    []
-  )
+  const handleBulkDelete = () => {
+    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    console.log('Bulk Delete:', selected)
+    // TODO: Show confirmation and bulk delete
+  }
+
+  const handleClearSelection = () => {
+    setSelectedRows(new Set())
+  }
+    const handleFiltersChange = (newFilters: CustomerFilterValues) => {
+    setFilters(newFilters)
+    // TODO: Call API with filters or filter MOCK_CUSTOMERS locally
+    console.log('Filters changed:', newFilters)
+  }
+    const handleClearAllFilters = () => {
+    setFilters({
+      search: '',
+      customerType: undefined,
+      membershipTier: undefined,
+      status: undefined,
+      balance: undefined,
+      vipOnly: undefined,
+      dateRange: undefined,
+    })
+  }
 
   // ========================================================================
   // ROW ACTIONS
   // ========================================================================
 
-  const actionHandlers: CustomerActionHandlers = useMemo(
-    () => ({
-      onView: handleView,
-      onEdit: handleEdit,
-      onDelete: onDeleteCustomer,
-      onBlacklist: onBlacklistCustomer,
-      onRemoveBlacklist: onRemoveBlacklist,
-      onAddLoyaltyPoints: onAddLoyaltyPoints,
-      onRedeemLoyaltyPoints: onRedeemLoyaltyPoints,
-      onCall: handleCall,
-      onEmail: handleEmail,
-      onWhatsApp: handleWhatsApp,
-      onRecordPayment: onRecordPayment,
-      onViewOrders: handleViewOrders,
-      onCopyDetails: handleCopyDetails,
-      onMarkAsVIP: onMarkAsVIP,
-      onViewTransactions: handleViewTransactions,
-    }),
-    [
-      handleView,
-      handleEdit,
-      onDeleteCustomer,
-      onBlacklistCustomer,
-      onRemoveBlacklist,
-      onAddLoyaltyPoints,
-      onRedeemLoyaltyPoints,
-      handleCall,
-      handleEmail,
-      handleWhatsApp,
-      onRecordPayment,
-      handleViewOrders,
-      handleCopyDetails,
-      onMarkAsVIP,
-      handleViewTransactions,
-    ]
-  )
-
-  const rowActions: RowAction<CustomerListItem>[] = useMemo(
-    () => getCustomerRowActions(actionHandlers, permissions),
-    [actionHandlers, permissions]
+  const rowActions = useMemo(
+    () =>
+      getCustomerRowActions(
+        handleViewDetails,
+        handleEdit,
+        handleAddPoints,
+        handleBlacklist,
+        handleDelete
+      ),
+    []
   )
 
   // ========================================================================
-  // COLUMNS
+  // SELECTED CUSTOMERS
   // ========================================================================
 
-  const columns: DataTableColumn<CustomerListItem>[] = useMemo(() => {
-    if (compact || isMobile) {
-      return getCompactCustomerTableColumns()
-    }
-    return getCustomerTableColumns()
-  }, [compact, isMobile])
-
-  // ========================================================================
-  // EVENT HANDLERS
-  // ========================================================================
-
-  const handlePaginationChange = useCallback(
-    (newPagination: PaginationState) => {
-      dispatch(setCurrentPage(newPagination.pageIndex))
-      dispatch(setPageSize(newPagination.pageSize))
-    },
-    [dispatch]
-  )
-
-  const handleSortingChange = useCallback(
-    (sorting: any) => {
-      if (sorting && sorting.length > 0) {
-        dispatch(
-          setSorting({
-            sortBy: sorting[0].columnId,
-            sortOrder: sorting[0].direction || 'asc',
-          })
-        )
-      }
-    },
-    [dispatch]
-  )
-
-  const handleSelectionChange = useCallback(
-    (selection: Set<string | number>) => {
-      const currentIds = Array.from(selectedCustomerIds)
-      const newIds = Array.from(selection)
-
-      // Find added and removed IDs
-      const added = newIds.filter((id) => !currentIds.includes(String(id)))
-      const removed = currentIds.filter((id) => !newIds.includes(id))
-
-      // Dispatch actions for changes
-      added.forEach((id) => dispatch(toggleCustomerSelection(String(id))))
-      removed.forEach((id) => dispatch(toggleCustomerSelection(id)))
-    },
-    [dispatch, selectedCustomerIds]
-  )
-
-  const handleRowClick = useCallback(
-    (customer: CustomerListItem) => {
-      if (onCustomerClick) {
-        onCustomerClick(customer)
-      } else {
-        handleView(customer)
-      }
-    },
-    [onCustomerClick, handleView]
-  )
-
-  // ========================================================================
-  // SELECTION STATE
-  // ========================================================================
-
-  const selectedRowsSet = useMemo(
-    () => new Set(selectedCustomerIds),
-    [selectedCustomerIds]
-  )
-
-  // ========================================================================
-  // SORTING STATE
-  // ========================================================================
-
-  const sortingState = useMemo(
-    () => [
-      {
-        columnId: pagination.sortBy,
-        direction: pagination.sortOrder as 'asc' | 'desc',
-      },
-    ],
-    [pagination.sortBy, pagination.sortOrder]
-  )
-
-  // ========================================================================
-  // ERROR STATE
-  // ========================================================================
-
-  if (error) {
-    return (
-      <div className="rounded-lg border border-border-primary bg-bg-secondary p-8 text-center">
-        <p className="text-status-error text-sm">{error}</p>
-      </div>
-    )
-  }
+  const selectedCustomers = useMemo(() => {
+    return MOCK_CUSTOMERS.filter((customer) => selectedRows.has(customer._id))
+  }, [selectedRows])
 
   // ========================================================================
   // RENDER
   // ========================================================================
 
   return (
-    <DataTable
-      data={data}
-      columns={columns}
-      // Sorting
-      sorting={{
-        enabled: true,
-        sortingState,
-        onSortingChange: handleSortingChange,
-      }}
-      // Pagination
-      pagination={{
-        enabled: true,
-        pageIndex: pagination.currentPage,
-        pageSize: pagination.pageSize,
-        pageSizeOptions: [10, 20, 50, 100],
-        totalItems: data.length,
-        onPaginationChange: handlePaginationChange,
-        showPageSizeSelector: true,
-        showPageInfo: true,
-        showFirstLastButtons: !isMobile,
-      }}
-      // Selection
-      selection={
-        showSelection
-          ? {
-              enabled: true,
-              selectedRows: selectedRowsSet,
-              onSelectionChange: handleSelectionChange,
-              getRowId: (row) => row._id,
-              selectAllEnabled: true,
-            }
-          : undefined
-      }
-      // Row Actions
-      rowActions={
-        showActions
-          ? {
-              enabled: true,
-              actions: rowActions,
-              position: 'end',
-              dropdownLabel: t('customer.actions.moreActions'),
-            }
-          : undefined
-      }
-      // Loading State
-      loading={{
-        isLoading,
-        loadingRows: 10,
-      }}
-      // Empty State
-      emptyState={{
-        message: t('customer.list.noCustomers'),
-        action: permissions.canCreateCustomers
-          ? {
-              label: t('customer.list.addFirstCustomer'),
-              onClick: () => navigate('/customers/new'),
-            }
-          : undefined,
-      }}
-      // Styling
-      style={{
-        variant: 'default',
-        size: compact ? 'sm' : 'md',
-        stickyHeader: true,
-        hoverEffect: true,
-        zebraStripes: false,
-        showBorder: true,
-        rounded: true,
-        shadow: false,
-        rowClassName: (row) => {
-          if (row.isBlacklisted) {
-            return 'bg-status-error/5 hover:bg-status-error/10'
-          }
-          if (row.customerType === 'vip') {
-            return 'bg-accent/5 hover:bg-accent/10'
-          }
-          return ''
-        },
-      }}
-      // Row Events
-      onRowClick={handleRowClick}
-      // Misc
-      getRowId={(row) => row._id}
-      testId="customer-table"
-      ariaLabel={t('customer.list.title')}
-    />
+    <div className="w-full space-y-4">
+            <CustomerFilters
+        filters={filters}
+        onFiltersChange={handleFiltersChange}
+        onClearAll={handleClearAllFilters}
+      />
+      {/* Bulk Actions Bar - Shows when rows are selected */}
+      {selectedRows.size > 0 && (
+        <BulkActionsBar
+          selectedCount={selectedRows.size}
+          selectedCustomers={selectedCustomers}
+          onViewDetails={handleBulkViewDetails}
+       onEdit={handleBulkEdit} 
+          onAddPoints={handleBulkAddPoints}
+          onBlacklist={handleBulkBlacklist}
+          onDelete={handleBulkDelete}
+          onClearSelection={handleClearSelection}
+        />
+      )}
+
+      {/* DataTable */}
+      <DataTable
+        data={MOCK_CUSTOMERS}
+        columns={customerTableColumns}
+        // Sorting Configuration
+        sorting={{
+          enabled: true,
+        }}
+        // Pagination Configuration
+        pagination={{
+          enabled: true,
+          pageSize: 10,
+          pageSizeOptions: [10, 20, 50],
+          showPageSizeSelector: true,
+          showPageInfo: true,
+          showFirstLastButtons: true,
+        }}
+        // Selection Configuration
+        selection={{
+          enabled: true,
+          selectedRows,
+          onSelectionChange: setSelectedRows,
+          getRowId: (row) => row._id,
+          selectAllEnabled: true,
+        }}
+        // Row Actions Configuration
+        rowActions={{
+          enabled: true,
+          actions: rowActions,
+          position: 'end',
+        }}
+        // Empty State Configuration
+        emptyState={{
+          message: t('table.noCustomers'),
+        }}
+        // Style Configuration
+        style={{
+          variant: 'default',
+          size: 'md',
+          stickyHeader: true,
+          hoverEffect: true,
+          zebraStripes: false,
+          showBorder: true,
+          rounded: true,
+          shadow: true,
+          fullWidth: true,
+        }}
+        // Row Click Handler
+        onRowClick={(customer) => {
+          console.log('Row clicked:', customer)
+          // Optional: Open details on row click
+          // handleViewDetails(customer)
+        }}
+        // Get Row ID
+        getRowId={(row) => row._id}
+        // Test ID
+        testId="customer-table"
+        ariaLabel={t('table.ariaLabel')}
+      />
+    </div>
   )
 }
 
-// ============================================================================
-// DISPLAY NAME
-// ============================================================================
-
 CustomerTable.displayName = 'CustomerTable'
-
-// ============================================================================
-// EXPORT
-// ============================================================================
-
-export default CustomerTable
