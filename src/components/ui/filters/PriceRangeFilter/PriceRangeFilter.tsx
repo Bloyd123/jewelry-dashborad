@@ -54,7 +54,7 @@ export const PriceRangeFilter = React.forwardRef<HTMLDivElement, PriceRangeFilte
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1">
             <Label className="text-xs text-text-tertiary">
-              {t('filters.minPrice')}
+              {t('shop.filters.minPrice')}
             </Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary">
@@ -74,7 +74,7 @@ export const PriceRangeFilter = React.forwardRef<HTMLDivElement, PriceRangeFilte
 
           <div className="space-y-1">
             <Label className="text-xs text-text-tertiary">
-              {t('filters.maxPrice')}
+              {t('shop.filters.maxPrice')}
             </Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary">

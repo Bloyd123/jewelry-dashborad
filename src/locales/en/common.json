@@ -42,7 +42,15 @@
     "inactive": "Inactive",
     "search": "Search",
     "all": "All",
-    "apply": "Apply"
+    "apply": "Apply",
+        "allStates": "All States",
+    "allCities": "All Cities",
+      "filters":{
+        "minPrice":"Minimum Price",
+      "maxPrice":"Maximum Price",
+         "minYear": "Minimum Year",
+    "maxYear": "Maximum Year"
+  }
   },
   "ui": {
     "datatable": {

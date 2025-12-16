@@ -18,9 +18,12 @@ import { useThemeSync } from './hooks/useThemeSync'
 import { MainLayout } from './components/layout/MainLayout/MainLayout'
 import AddCustomerPage from './pages/customer/AddCustomer'
 
+import { ShopListPage } from '@/pages/shops/ShopsListPage'
+
 import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 import { CustomerDetailsPage } from './components/customer'
+import ShopDetailsPage from './pages/shops/ShopDetailsPage'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -65,6 +68,8 @@ function App() {
    <Route path="/customers/add" element={<AddCustomerPage />} />
 <Route path="/customers/edit/:customerId" element={<AddCustomerPage />} />
               <Route path="/customerdetail" element={<CustomerDetailsPage/>}/>
+              <Route path='/shops' element={ <ShopListPage />}/>
+              <Route path='/shops/:id' element={<ShopDetailsPage/>}/>
 
               
               <Route

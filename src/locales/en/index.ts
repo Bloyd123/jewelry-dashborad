@@ -7,6 +7,7 @@ import common from './common.json'
 import error from './errors.json'
 import customer from './customer.json'
 import permission from './permission.json'
+import shop from './shop.json'
 // import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
@@ -22,7 +23,8 @@ export default {
   ...common,
   ...error,
   ...customer,
-  ...permission
+  ...permission,
+  ...shop
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

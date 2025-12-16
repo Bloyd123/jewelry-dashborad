@@ -239,85 +239,83 @@ export type {
 // SHOP TYPES
 // ============================================================================
 export type {
-  // Enums & Literals
+  // Main Shop Interface
+  Shop,
+  
+  // Address Types
+  ShopAddress,
+  Coordinates,
+  
+  // Bank & Payment Details
+  BankDetail,
+  UpiDetail,
+  
+  // Business Hours
+  BusinessHours,
+  TimeSlot,
+  
+  // Metal Rates
+  MetalRate,
+  SilverRate,
+  PlatinumRate,
+  MetalRates,
+  MetalRateHistory,
+  
+  // Shop Settings
+  ShopSettings,
+  GSTRates,
+  PrintSettings,
+  NotificationSettings,
+  
+  // Shop Features & Statistics
+  ShopFeatures,
+  ShopStatistics,
+  
+  // Compliance
+  Compliance,
+  
+  // References
+  ShopUser,
+  Organization,
+  
+  // Form Data
+  ShopFormData,
+  
+  // Filters & Query
+  ShopFilters,
+  ShopQueryParams,
+  
+  // API Response Types
+  ShopListResponse,
+  ShopDetailResponse,
+  ShopCreateResponse,
+  ShopUpdateResponse,
+  ShopDeleteResponse,
+  ShopStatisticsResponse,
+  ShopPaginationMeta,
+  
+  // Update Payloads
+  MetalRatesUpdatePayload,
+  ShopSettingsUpdatePayload,
+  
+  // UI Component Props
+  ShopTableColumn,
+  ShopCardProps,
+  
+  // Validation
+  ShopValidationError,
+} from './shop.types';
+
+// Export Enums
+export {
   ShopType,
   ShopCategory,
+  ShopStatus,
+  ShopCurrency,
+  ShopLanguage,
   WeightUnit,
-  PurityUnit,
-  MakingChargesType,
-  StoneChargesType,
-  WastageType,
-  AccountType,
-  UpiProvider,
-  BarcodeType,
-  PaperSize,
-  WarehouseUnit,
-
-  // Nested Interfaces
-  LocationCoordinates,
-  ShopAddress,
-  ShopImage,
-  DayBusinessHours,
-  BusinessHours,
-  Holiday,
-  GoldRates,
-  SilverRates,
-  PlatinumRates,
-  MetalRates,
-  GstRates,
-  AcceptedPaymentModes,
-  NotificationSettings,
-  PrintSettings,
-  ShopSettings,
-  BankDetails,
-  UpiDetails,
-  BisCompliance,
-  HallmarkingCompliance,
-  IsoCompliance,
-  FssaiCompliance,
-  ComplianceDetails,
-  WarehouseDetails,
-  ShopStatistics,
-  ShopFeatures,
-  SocialMedia,
-  TemporaryClosure,
-
-  // Main Interface
-  JewelryShop,
-  JewelryShopWithRelations,
-
-  // Request Types
-  CreateShopRequest,
-  UpdateShopRequest,
-  UpdateShopSettingsRequest,
-  UpdateMetalRatesRequest,
-  GenerateShopCodeRequest,
-  TemporaryCloseShopRequest,
-  ShopNearbySearchRequest,
-  ShopVerificationRequest,
-  ShopTransferRequest,
-
-  // Response Types
-  GenerateShopCodeResponse,
-
-  // Query & List Types
-  ShopQueryParams,
-  ShopListItem,
-  ShopStatisticsSummary,
-
-  // Form States
-  ShopFormState,
-  ShopSettingsFormState,
-  MetalRatesFormState,
-  BusinessHoursFormState,
-  BankDetailsFormState,
-  UpiDetailsFormState,
-
-  // Filter & Export
-  ShopFilterOptions,
-  ShopExportData,
-  ShopImportRow,
-} from './shop.types'
+  ShopActionType,
+} from './shop.types';
 
 // ============================================================================
 // API TYPES

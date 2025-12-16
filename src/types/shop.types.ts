@@ -1,1029 +1,579 @@
 // ============================================================================
-// FILE: shop.types.ts
-// Jewelry Shop Types
+// FILE: src/types/shop.types.ts
+// Shop Type Definitions for Frontend
 // ============================================================================
 
-/**
- * Shop Type Options
- */
-export type ShopType =
-  | 'retail'
-  | 'wholesale'
-  | 'manufacturing'
-  | 'showroom'
-  | 'workshop'
-  | 'warehouse'
-  | 'online'
-
-/**
- * Shop Category Options
- */
-export type ShopCategory =
-  | 'jewelry'
-  | 'gold'
-  | 'silver'
-  | 'diamond'
-  | 'gemstone'
-  | 'pearls'
-  | 'platinum'
-  | 'mixed'
-
-/**
- * Weight Unit Options
- */
-export type WeightUnit = 'gram' | 'kg' | 'tola' | 'ounce' | 'carat'
-
-/**
- * Purity Unit Options
- */
-export type PurityUnit = 'karat' | 'percentage' | 'purity_916' | 'purity_999'
-
-/**
- * Making Charges Type
- */
-export type MakingChargesType =
-  | 'per_gram'
-  | 'percentage'
-  | 'fixed'
-  | 'flat'
-  | 'per_piece'
-
-/**
- * Stone Charges Type
- */
-export type StoneChargesType = 'per_piece' | 'per_carat' | 'fixed'
-
-/**
- * Wastage Type
- */
-export type WastageType = 'percentage' | 'fixed_gram'
-
-/**
- * Account Type
- */
-export type AccountType = 'savings' | 'current' | 'overdraft'
-
-/**
- * UPI Provider
- */
-export type UpiProvider = 'googlepay' | 'phonepe' | 'paytm' | 'bhim' | 'other'
-
-/**
- * Barcode Type
- */
-export type BarcodeType = 'CODE128' | 'CODE39' | 'EAN13' | 'QR'
-
-/**
- * Paper Size
- */
-export type PaperSize = 'A4' | 'A5' | 'thermal_80mm' | 'thermal_58mm'
-
-/**
- * Warehouse Unit
- */
-export type WarehouseUnit = 'sqft' | 'sqm'
-
-/**
- * Currency Options
- */
-export type Currency = 'INR' | 'USD' | 'EUR' | 'GBP' | 'AED' | 'SAR'
-
-/**
- * Language Options
- */
-export type Language = 'en' | 'hi' | 'mr' | 'gu' | 'ta' | 'te'
-
 // ============================================================================
-// NESTED INTERFACES
+// ENUMS
 // ============================================================================
 
-/**
- * Location Coordinates
- */
-export interface LocationCoordinates {
-  type: 'Point'
-  coordinates: [number, number] // [longitude, latitude]
+export enum ShopType {
+  RETAIL = 'retail',
+  WHOLESALE = 'wholesale',
+  MANUFACTURING = 'manufacturing',
+  SHOWROOM = 'showroom',
+  WORKSHOP = 'workshop',
+  WAREHOUSE = 'warehouse',
+  ONLINE = 'online',
 }
 
-/**
- * Shop Address
- */
+export enum ShopCategory {
+  JEWELRY = 'jewelry',
+  GOLD = 'gold',
+  SILVER = 'silver',
+  DIAMOND = 'diamond',
+  GEMSTONE = 'gemstone',
+  PEARLS = 'pearls',
+  PLATINUM = 'platinum',
+  MIXED = 'mixed',
+}
+
+export enum ShopStatus {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  SUSPENDED = 'suspended',
+  CLOSED = 'closed',
+}
+
+export enum ShopCurrency {
+  INR = 'INR',
+  USD = 'USD',
+  EUR = 'EUR',
+  GBP = 'GBP',
+  AED = 'AED',
+  SAR = 'SAR',
+}
+
+export enum ShopLanguage {
+  EN = 'en',
+  HI = 'hi',
+  MR = 'mr',
+  GU = 'gu',
+  TA = 'ta',
+  TE = 'te',
+}
+
+export enum WeightUnit {
+  GRAM = 'gram',
+  KG = 'kg',
+  TOLA = 'tola',
+  OUNCE = 'ounce',
+  CARAT = 'carat',
+}
+
+// ============================================================================
+// ADDRESS TYPES
+// ============================================================================
+
+export interface Coordinates {
+  type: 'Point';
+  coordinates: [number, number]; // [longitude, latitude]
+}
+
 export interface ShopAddress {
-  street: string
-  landmark?: string
-  area?: string
-  city: string
-  state: string
-  country: string
-  pincode: string
-  location: LocationCoordinates
+  street: string;
+  city: string;
+  state: string;
+  country?: string;
+  pincode: string;
+  landmark?: string;
+  location?: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
 }
 
-/**
- * Shop Image
- */
-export interface ShopImage {
-  url: string
-  caption?: string
-  isPrimary: boolean
+// ============================================================================
+// BANK & UPI DETAILS
+// ============================================================================
+
+export interface BankDetail {
+  _id?: string;
+  bankName: string;
+  accountNumber: string;
+  ifscCode: string;
+  accountHolderName: string;
+  branchName?: string;
+  accountType?: 'savings' | 'current';
+  isActive?: boolean;
+  isPrimary?: boolean;
 }
 
-/**
- * Day Business Hours
- */
-export interface DayBusinessHours {
-  isOpen: boolean
-  openTime: string // Format: "HH:MM"
-  closeTime: string // Format: "HH:MM"
+export interface UpiDetail {
+  _id?: string;
+  upiId: string;
+  name?: string;
+  isActive?: boolean;
+  isPrimary?: boolean;
 }
 
-/**
- * Business Hours
- */
+// ============================================================================
+// BUSINESS HOURS
+// ============================================================================
+
+export interface TimeSlot {
+  open: string; // Format: "HH:MM" (24-hour)
+  close: string;
+}
+
 export interface BusinessHours {
-  monday: DayBusinessHours
-  tuesday: DayBusinessHours
-  wednesday: DayBusinessHours
-  thursday: DayBusinessHours
-  friday: DayBusinessHours
-  saturday: DayBusinessHours
-  sunday: DayBusinessHours
+  monday?: TimeSlot;
+  tuesday?: TimeSlot;
+  wednesday?: TimeSlot;
+  thursday?: TimeSlot;
+  friday?: TimeSlot;
+  saturday?: TimeSlot;
+  sunday?: TimeSlot;
+  holidays?: string[]; // Array of dates
 }
 
-/**
- * Holiday
- */
-export interface Holiday {
-  date: Date | string
-  occasion: string
-  isRecurring: boolean
+// ============================================================================
+// METAL RATES
+// ============================================================================
+
+export interface MetalRate {
+  rate24K?: number;
+  rate22K?: number;
+  rate18K?: number;
+  rate14K?: number;
 }
 
-/**
- * Metal Rates - Gold
- */
-export interface GoldRates {
-  rate24K: number
-  rate22K: number
-  rate18K: number
-  lastUpdated: Date | string
+export interface SilverRate {
+  rate999?: number;
+  rate925?: number;
+  rate900?: number;
 }
 
-/**
- * Metal Rates - Silver
- */
-export interface SilverRates {
-  rate999: number
-  rate925: number
-  lastUpdated: Date | string
+export interface PlatinumRate {
+  rate?: number;
 }
 
-/**
- * Metal Rates - Platinum
- */
-export interface PlatinumRates {
-  rate: number
-  lastUpdated: Date | string
-}
-
-/**
- * Metal Rates
- */
 export interface MetalRates {
-  gold: GoldRates
-  silver: SilverRates
-  platinum: PlatinumRates
-  updatedBy?: string | null
+  gold?: MetalRate;
+  silver?: SilverRate;
+  platinum?: PlatinumRate;
+  lastUpdated?: Date | string;
+  updatedBy?: string | ShopUser;
 }
 
-/**
- * GST Rates
- */
-export interface GstRates {
-  gold: number
-  silver: number
-  diamond: number
-  platinum: number
-  gemstone: number
-  makingCharges: number
-  stoneCharges: number
-  other: number
+export interface MetalRateHistory {
+  _id: string;
+  gold?: MetalRate;
+  silver?: SilverRate;
+  platinum?: PlatinumRate;
+  updatedBy: string | ShopUser;
+  updatedAt: Date | string;
+  notes?: string;
 }
 
-/**
- * Accepted Payment Modes
- */
-export interface AcceptedPaymentModes {
-  cash: boolean
-  card: boolean
-  upi: boolean
-  netBanking: boolean
-  cheque: boolean
-  emi: boolean
-  goldExchange: boolean
-  silverExchange: boolean
+// ============================================================================
+// SHOP SETTINGS
+// ============================================================================
+
+export interface GSTRates {
+  gold?: number;
+  silver?: number;
+  diamond?: number;
+  making?: number;
+  other?: number;
 }
 
-/**
- * Notification Settings
- */
-export interface NotificationSettings {
-  lowStockAlert: boolean
-  expiryAlert: boolean
-  expiryAlertDays: number
-  smsNotifications: boolean
-  emailNotifications: boolean
-  whatsappNotifications: boolean
-}
-
-/**
- * Print Settings
- */
 export interface PrintSettings {
-  headerText?: string
-  footerText?: string
-  showLogo: boolean
-  showTermsConditions: boolean
-  termsConditions?: string
-  showBankDetails: boolean
-  paperSize: PaperSize
+  invoiceHeader?: string;
+  invoiceFooter?: string;
+  showLogo?: boolean;
+  showQRCode?: boolean;
+  showBankDetails?: boolean;
+  showTermsConditions?: boolean;
+  paperSize?: 'A4' | 'A5' | 'thermal-3inch' | 'thermal-2inch';
 }
 
-/**
- * Shop Settings
- */
+export interface NotificationSettings {
+  emailNotifications?: boolean;
+  smsNotifications?: boolean;
+  whatsappNotifications?: boolean;
+  notifyOnLowStock?: boolean;
+  notifyOnSale?: boolean;
+  notifyOnReturn?: boolean;
+}
+
 export interface ShopSettings {
-  // Regional Settings
-  currency: Currency
-  language: Language
-  timezone: string
-
-  // Weight & Measurement Settings
-  defaultWeightUnit: WeightUnit
-  defaultPurityUnit: PurityUnit
-  enableStoneWeight: boolean
-  enableNetWeight: boolean
-
-  // Pricing Settings
-  enableMakingCharges: boolean
-  makingChargesType: MakingChargesType
-  defaultMakingCharges: number
-
-  // Metal Rates
-  metalRates: MetalRates
-
-  // Stone Settings
-  enableStoneManagement: boolean
-  stoneChargesType: StoneChargesType
-
-  // Wastage Settings
-  enableWastage: boolean
-  wastageType: WastageType
-  defaultWastage: number
-
-  // Invoice Settings
-  invoicePrefix: string
-  invoiceStartNumber: number
-  currentInvoiceNumber: number
-
-  // Estimate/Quotation Settings
-  estimatePrefix: string
-  estimateStartNumber: number
-  quotationPrefix: string
-
-  // Purchase Settings
-  purchasePrefix: string
-  purchaseStartNumber: number
-
-  // Order Settings
-  orderPrefix: string
-  orderStartNumber: number
-
-  // Tax Settings
-  enableGST: boolean
-  gstRates: GstRates
-
-  // Discount Settings
-  allowDiscounts: boolean
-  maxDiscountPercentage: number
-
-  // Hallmarking Settings
-  enableHallmarking: boolean
-  hallmarkingCenter?: string
-  huidPrefix?: string
-
-  // Old Gold Exchange Settings
-  enableOldGoldExchange: boolean
-  oldGoldDeductionPercentage: number
-
-  // Repair Settings
-  enableRepairManagement: boolean
-  repairPrefix: string
-
-  // Barcode Settings
-  enableBarcode: boolean
-  barcodeType: BarcodeType
-
-  // Printing Settings
-  printSettings: PrintSettings
-
-  // Inventory Settings
-  enableLowStockAlerts: boolean
-  lowStockThreshold: number
-  enableBatchTracking: boolean
-  enableSerialNumberTracking: boolean
-
-  // Payment Settings
-  acceptedPaymentModes: AcceptedPaymentModes
-
-  // Notification Settings
-  notifications: NotificationSettings
-
-  // Feature Flags
-  enableSchemes: boolean
-  enableCustomOrderManagement: boolean
-  enableHallmarkingTracking: boolean
-  enableOldGoldPurchase: boolean
-
-  // Multi-currency Support
-  enableMultiCurrency: boolean
-  acceptedCurrencies: Currency[]
+  currency?: ShopCurrency;
+  language?: ShopLanguage;
+  defaultWeightUnit?: WeightUnit;
+  enableGST?: boolean;
+  gstRates?: GSTRates;
+  enableBarcode?: boolean;
+  enableQRCode?: boolean;
+  autoGenerateInvoice?: boolean;
+  invoicePrefix?: string;
+  printSettings?: PrintSettings;
+  metalRates?: MetalRates;
+  metalRateHistory?: MetalRateHistory[];
+  notifications?: NotificationSettings;
+  timezone?: string;
+  dateFormat?: string;
+  timeFormat?: '12h' | '24h';
 }
 
-/**
- * Bank Details
- */
-export interface BankDetails {
-  _id?: string
-  bankName: string
-  accountNumber: string
-  ifscCode: string
-  accountHolderName: string
-  branchName?: string
-  accountType: AccountType
-  isPrimary: boolean
-}
+// ============================================================================
+// SHOP FEATURES
+// ============================================================================
 
-/**
- * UPI Details
- */
-export interface UpiDetails {
-  _id?: string
-  upiId: string
-  upiName?: string
-  provider: UpiProvider
-  qrCode?: string
-  isActive: boolean
-  isPrimary: boolean
-}
-
-/**
- * BIS Compliance
- */
-export interface BisCompliance {
-  certified: boolean
-  certificateNumber?: string
-  expiryDate?: Date | string
-}
-
-/**
- * Hallmarking Compliance
- */
-export interface HallmarkingCompliance {
-  certified: boolean
-  certificateNumber?: string
-  licenseNumber?: string
-  hallmarkingCenter?: string
-  hallmarkingCenterId?: string
-  expiryDate?: Date | string
-}
-
-/**
- * ISO Compliance
- */
-export interface IsoCompliance {
-  certified: boolean
-  certificateNumber?: string
-  expiryDate?: Date | string
-}
-
-/**
- * FSSAI Compliance
- */
-export interface FssaiCompliance {
-  certified: boolean
-  licenseNumber?: string
-  expiryDate?: Date | string
-}
-
-/**
- * Compliance Details
- */
-export interface ComplianceDetails {
-  bis: BisCompliance
-  hallmarking: HallmarkingCompliance
-  iso: IsoCompliance
-  fssai: FssaiCompliance
-}
-
-/**
- * Warehouse Details
- */
-export interface WarehouseDetails {
-  hasWarehouse: boolean
-  warehouseAddress?: string
-  warehouseCapacity: number
-  warehouseUnit: WarehouseUnit
-}
-
-/**
- * Shop Statistics
- */
-export interface ShopStatistics {
-  totalProducts: number
-  totalInventoryValue: number
-  totalSales: number
-  totalPurchases: number
-  totalCustomers: number
-  totalSuppliers: number
-  totalStaff: number
-  lastSaleDate?: Date | string | null
-  lastPurchaseDate?: Date | string | null
-  averageSaleValue: number
-  lastUpdated: Date | string
-}
-
-/**
- * Shop Features
- */
 export interface ShopFeatures {
-  inventoryManagement: boolean
-  purchaseManagement: boolean
-  salesManagement: boolean
-  billingInvoicing: boolean
-  customerManagement: boolean
-  supplierManagement: boolean
-  partyManagement: boolean
-  orderManagement: boolean
-  repairManagement: boolean
-  schemeManagement: boolean
-  hallmarkingManagement: boolean
-  oldGoldExchange: boolean
-  barcodeScanning: boolean
-  reports: boolean
-  analytics: boolean
-}
-
-/**
- * Social Media Links
- */
-export interface SocialMedia {
-  facebook?: string
-  instagram?: string
-  twitter?: string
-  youtube?: string
-  linkedin?: string
-}
-
-/**
- * Temporary Closure
- */
-export interface TemporaryClosure {
-  isClosed: boolean
-  reason?: string
-  closedFrom?: Date | string
-  closedUntil?: Date | string
+  enableInventory?: boolean;
+  enablePOS?: boolean;
+  enableECommerce?: boolean;
+  enableRepairs?: boolean;
+  enableCustomOrders?: boolean;
+  enableSchemes?: boolean;
+  enableLoyalty?: boolean;
+  enableMultiBranch?: boolean;
+  enableWarehouse?: boolean;
 }
 
 // ============================================================================
-// MAIN JEWELRY SHOP INTERFACE
+// SHOP STATISTICS
 // ============================================================================
 
-/**
- * Jewelry Shop - Complete Model
- */
-export interface JewelryShop {
-  _id: string
+export interface ShopStatistics {
+  totalProducts?: number;
+  totalInventoryValue?: number;
+  totalSales?: number;
+  totalSalesAmount?: number;
+  totalCustomers?: number;
+  totalOrders?: number;
+  averageOrderValue?: number;
+  lowStockItems?: number;
+  lastUpdated?: Date | string;
+}
 
-  // Basic Shop Information
-  name: string
-  displayName?: string
-  code: string
+// ============================================================================
+// COMPLIANCE
+// ============================================================================
 
-  // Multi-tenant & Organization
-  organizationId: string
+export interface Compliance {
+  isGSTRegistered?: boolean;
+  gstVerificationDate?: Date | string;
+  panVerificationDate?: Date | string;
+  lastAuditDate?: Date | string;
+  nextAuditDate?: Date | string;
+  licenses?: Array<{
+    name: string;
+    number: string;
+    issuedDate?: Date | string;
+    expiryDate?: Date | string;
+    isActive?: boolean;
+  }>;
+}
 
+// ============================================================================
+// USER REFERENCE (Minimal)
+// ============================================================================
+
+export interface ShopUser {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  profileImage?: string;
+}
+
+// ============================================================================
+// ORGANIZATION REFERENCE (Minimal)
+// ============================================================================
+
+export interface Organization {
+  _id: string;
+  name: string;
+  displayName?: string;
+  email?: string;
+  phone?: string;
+  logo?: string;
+}
+
+// ============================================================================
+// MAIN SHOP INTERFACE
+// ============================================================================
+
+export interface Shop {
+  _id: string;
+  code: string;
+  name: string;
+  displayName?: string;
+  
+  // Organization & Manager
+  organizationId: string | Organization;
+  managerId: string | ShopUser;
+  
   // Contact Information
-  email?: string
-  phone: string
-  alternatePhone?: string
-  fax?: string
-  whatsappNumber?: string
-
+  email?: string;
+  phone: string;
+  alternatePhone?: string;
+  whatsappNumber?: string;
+  website?: string;
+  
   // Address
-  address: ShopAddress
-
+  address: ShopAddress;
+  
   // Business Registration
-  gstNumber?: string
-  panNumber?: string
-  tanNumber?: string
-  udyamNumber?: string
-  fssaiNumber?: string
-  tradeLicenseNumber?: string
-  registrationNumber?: string
-
-  // Shop Type & Category
-  shopType: ShopType
-  category: ShopCategory
-  establishedYear?: number
-
-  // Branding & Media
-  logo?: string | null
-  favicon?: string | null
-  banner?: string | null
-  images: ShopImage[]
-
-  // Shop Manager/Owner
-  managerId: string
-
-  // Business Hours
-  businessHours: BusinessHours
-  holidays: Holiday[]
-
-  // Shop Settings
-  settings: ShopSettings
-
-  // Banking Details
-  bankDetails: BankDetails[]
-
-  // UPI Details
-  upiDetails: UpiDetails[]
-
-  // Compliance & Certifications
-  compliance: ComplianceDetails
-
-  // Warehouse/Storage Info
-  warehouseDetails: WarehouseDetails
-
-  // Shop Statistics
-  statistics: ShopStatistics
-
-  // Features Enabled
-  features: ShopFeatures
-
-  // Social Media & Website
-  socialMedia: SocialMedia
-  website?: string
-
-  // Shop Status
-  isActive: boolean
-  isVerified: boolean
-  verifiedAt?: Date | string | null
-  verifiedBy?: string | null
-
-  // Temporary Closure
-  temporaryClosure: TemporaryClosure
-
-  // Opening/Closing Details
-  openingDate: Date | string
-  closingDate?: Date | string | null
-
-  // Audit Trail
-  createdBy?: string | null
-  updatedBy?: string | null
-
-  // Metadata
-  tags: string[]
-  notes?: string
-  deletedAt?: Date | string | null
-
-  // Timestamps
-  createdAt: Date | string
-  updatedAt: Date | string
-
-  // Virtuals (computed fields)
-  fullAddress?: string
-  isCurrentlyOpen?: boolean
+  gstNumber?: string;
+  panNumber?: string;
+  tanNumber?: string;
+  
+  // Shop Classification
+  shopType?: ShopType;
+  category?: ShopCategory;
+  status?: ShopStatus;
+  
+  // Business Details
+  establishedYear?: number;
+  openingDate?: Date | string;
+  closingDate?: Date | string;
+  
+  // Bank & Payment Details
+  bankDetails?: BankDetail[];
+  upiDetails?: UpiDetail[];
+  
+  // Settings & Configuration
+  settings?: ShopSettings;
+  features?: ShopFeatures;
+  businessHours?: BusinessHours;
+  
+  // Statistics
+  statistics?: ShopStatistics;
+  
+  // Compliance
+  compliance?: Compliance;
+  
+  // Status Flags
+  isActive?: boolean;
+  isVerified?: boolean;
+  isFeatured?: boolean;
+  
+  // Audit Fields
+  createdBy?: string | ShopUser;
+  updatedBy?: string | ShopUser;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  deletedAt?: Date | string;
 }
 
 // ============================================================================
-// POPULATED/EXTENDED INTERFACES
+// SHOP FORM DATA (for Create/Update)
 // ============================================================================
 
-/**
- * Shop with Populated Relations
- */
-export interface JewelryShopWithRelations extends JewelryShop {
-  organization?: any // Organization type
-  manager?: any // User type
-  staff?: any[] // UserShopAccess[]
-  products?: any[] // Product[]
-  customers?: any[] // Party[]
-  suppliers?: any[] // Party[]
-  sales?: any[] // Sale[]
-  purchases?: any[] // Purchase[]
-}
-
-// ============================================================================
-// REQUEST/RESPONSE TYPES
-// ============================================================================
-
-/**
- * Create Shop Request
- */
-export interface CreateShopRequest {
-  // Basic Information
-  name: string
-  displayName?: string
-
-  // Contact Information
-  email?: string
-  phone: string
-  alternatePhone?: string
-  whatsappNumber?: string
-
-  // Address
+export interface ShopFormData {
+  name: string;
+  displayName?: string;
+  email?: string;
+  phone: string;
+  alternatePhone?: string;
+  whatsappNumber?: string;
+  website?: string;
+  
   address: {
-    street: string
-    landmark?: string
-    area?: string
-    city: string
-    state: string
-    country?: string
-    pincode: string
-    location?: {
-      coordinates: [number, number]
-    }
-  }
-
-  // Business Registration
-  gstNumber?: string
-  panNumber?: string
-  tanNumber?: string
-  udyamNumber?: string
-  tradeLicenseNumber?: string
-
-  // Shop Type & Category
-  shopType?: ShopType
-  category?: ShopCategory
-  establishedYear?: number
-
-  // Manager
-  managerId?: string // Optional - defaults to current user
-
-  // Settings
-  copySettingsFromShopId?: string // Copy settings from existing shop
-  settings?: Partial<ShopSettings>
-
-  // Banking & UPI
-  bankDetails?: Omit<BankDetails, '_id'>[]
-  upiDetails?: Omit<UpiDetails, '_id'>[]
-
-  // Additional
-  logo?: string
-  website?: string
-  socialMedia?: SocialMedia
-}
-
-/**
- * Update Shop Request
- */
-export interface UpdateShopRequest {
-  name?: string
-  displayName?: string
-  email?: string
-  phone?: string
-  alternatePhone?: string
-  whatsappNumber?: string
-  address?: Partial<ShopAddress>
-  gstNumber?: string
-  panNumber?: string
-  tanNumber?: string
-  shopType?: ShopType
-  category?: ShopCategory
-  establishedYear?: number
-  managerId?: string
-  logo?: string
-  favicon?: string
-  banner?: string
-  website?: string
-  socialMedia?: Partial<SocialMedia>
-  businessHours?: Partial<BusinessHours>
-  bankDetails?: BankDetails[]
-  upiDetails?: UpiDetails[]
-  compliance?: Partial<ComplianceDetails>
-  warehouseDetails?: Partial<WarehouseDetails>
-  features?: Partial<ShopFeatures>
-  tags?: string[]
-  notes?: string
-}
-
-/**
- * Update Shop Settings Request
- */
-export interface UpdateShopSettingsRequest {
-  settings: Partial<ShopSettings>
-}
-
-/**
- * Update Metal Rates Request
- */
-export interface UpdateMetalRatesRequest {
-  gold?: Partial<Omit<GoldRates, 'lastUpdated'>>
-  silver?: Partial<Omit<SilverRates, 'lastUpdated'>>
-  platinum?: Partial<Omit<PlatinumRates, 'lastUpdated'>>
-}
-
-/**
- * Shop Query Parameters
- */
-export interface ShopQueryParams {
-  page?: number
-  limit?: number
-  sort?: string
-  order?: 'asc' | 'desc'
-  fields?: string
-  search?: string
-  isActive?: boolean
-  isVerified?: boolean
-  shopType?: ShopType
-  category?: ShopCategory
-  city?: string
-  state?: string
-  organizationId?: string
-  managerId?: string
-  includeDeleted?: boolean
-  includeSettings?: boolean
-  populate?: string // Comma-separated: 'manager,organization,staff'
-}
-
-/**
- * Shop List Item (for tables/lists)
- */
-export interface ShopListItem {
-  _id: string
-  name: string
-  code: string
-  phone: string
-  city: string
-  state: string
-  shopType: ShopType
-  category: ShopCategory
-  isActive: boolean
-  isVerified: boolean
-  managerName?: string
-  totalProducts: number
-  totalStaff: number
-  createdAt: Date | string
-}
-
-/**
- * Shop Statistics Summary
- */
-export interface ShopStatisticsSummary extends ShopStatistics {
-  growthMetrics?: {
-    salesGrowth: number // percentage
-    customerGrowth: number // percentage
-    inventoryGrowth: number // percentage
-  }
-}
-
-/**
- * Generate Shop Code Request
- */
-export interface GenerateShopCodeRequest {
-  name: string
-  organizationId: string
-}
-
-/**
- * Generate Shop Code Response
- */
-export interface GenerateShopCodeResponse {
-  success: boolean
-  data: {
-    code: string
-  }
-}
-
-/**
- * Temporary Close Shop Request
- */
-export interface TemporaryCloseShopRequest {
-  reason: string
-  closedFrom?: Date | string
-  closedUntil?: Date | string
-}
-
-/**
- * Shop Nearby Search Request
- */
-export interface ShopNearbySearchRequest {
-  longitude: number
-  latitude: number
-  maxDistance?: number // in meters, default: 10000
-}
-
-/**
- * Shop Verification Request
- */
-export interface ShopVerificationRequest {
-  verified: boolean
-  notes?: string
-}
-
-/**
- * Shop Transfer Request (Transfer ownership)
- */
-export interface ShopTransferRequest {
-  newManagerId: string
-  reason?: string
-  effectiveDate?: Date | string
+    street: string;
+    city: string;
+    state: string;
+    country?: string;
+    pincode: string;
+    landmark?: string;
+    coordinates?: [number, number];
+  };
+  
+  gstNumber?: string;
+  panNumber?: string;
+  tanNumber?: string;
+  
+  shopType?: ShopType;
+  category?: ShopCategory;
+  establishedYear?: number;
+  
+  managerId?: string;
+  organizationId?: string;
+  copySettingsFromShopId?: string;
+  
+  bankDetails?: BankDetail[];
+  upiDetails?: UpiDetail[];
 }
 
 // ============================================================================
-// FORM STATE TYPES
+// SHOP FILTERS (for List Page)
 // ============================================================================
 
-/**
- * Shop Form State (for create/edit forms)
- */
-export interface ShopFormState {
-  // Basic
-  name: string
-  displayName: string
-  shopType: ShopType
-  category: ShopCategory
-  establishedYear: string
-
-  // Contact
-  email: string
-  phone: string
-  alternatePhone: string
-  whatsappNumber: string
-
-  // Address
-  address: {
-    street: string
-    landmark: string
-    area: string
-    city: string
-    state: string
-    country: string
-    pincode: string
-    longitude: string
-    latitude: string
-  }
-
-  // Registration
-  gstNumber: string
-  panNumber: string
-  tanNumber: string
-  udyamNumber: string
-  tradeLicenseNumber: string
-
-  // Manager
-  managerId: string
-
-  // Media
-  logo: string
-  favicon: string
-  banner: string
-  website: string
-
-  // Social Media
-  facebook: string
-  instagram: string
-  twitter: string
-
-  // Copy Settings
-  copySettingsFromShopId: string
-}
-
-/**
- * Shop Settings Form State
- */
-export interface ShopSettingsFormState {
-  currency: Currency
-  language: Language
-  timezone: string
-  defaultWeightUnit: WeightUnit
-  enableGST: boolean
-  invoicePrefix: string
-  enableMakingCharges: boolean
-  makingChargesType: MakingChargesType
-  defaultMakingCharges: string
-  enableWastage: boolean
-  wastageType: WastageType
-  defaultWastage: string
-  allowDiscounts: boolean
-  maxDiscountPercentage: string
-}
-
-/**
- * Metal Rates Form State
- */
-export interface MetalRatesFormState {
-  gold24K: string
-  gold22K: string
-  gold18K: string
-  silver999: string
-  silver925: string
-  platinum: string
-}
-
-/**
- * Business Hours Form State
- */
-export interface BusinessHoursFormState {
-  monday: { isOpen: boolean; openTime: string; closeTime: string }
-  tuesday: { isOpen: boolean; openTime: string; closeTime: string }
-  wednesday: { isOpen: boolean; openTime: string; closeTime: string }
-  thursday: { isOpen: boolean; openTime: string; closeTime: string }
-  friday: { isOpen: boolean; openTime: string; closeTime: string }
-  saturday: { isOpen: boolean; openTime: string; closeTime: string }
-  sunday: { isOpen: boolean; openTime: string; closeTime: string }
-}
-
-/**
- * Bank Details Form State
- */
-export interface BankDetailsFormState {
-  bankName: string
-  accountNumber: string
-  ifscCode: string
-  accountHolderName: string
-  branchName: string
-  accountType: AccountType
-  isPrimary: boolean
-}
-
-/**
- * UPI Details Form State
- */
-export interface UpiDetailsFormState {
-  upiId: string
-  upiName: string
-  provider: UpiProvider
-  qrCode: string
-  isActive: boolean
-  isPrimary: boolean
+export interface ShopFilters {
+  search?: string;
+  isActive?: boolean;
+  isVerified?: boolean;
+  shopType?: ShopType;
+  category?: ShopCategory;
+  city?: string;
+  state?: string;
+  organizationId?: string;
 }
 
 // ============================================================================
-// FILTER & EXPORT TYPES
+// SHOP QUERY PARAMS (with Pagination)
 // ============================================================================
 
-/**
- * Shop Filter Options
- */
-export interface ShopFilterOptions {
-  shopTypes?: ShopType[]
-  categories?: ShopCategory[]
-  cities?: string[]
-  states?: string[]
-  isActive?: boolean
-  isVerified?: boolean
-  hasWarehouse?: boolean
-  establishedYearFrom?: number
-  establishedYearTo?: number
+export interface ShopQueryParams extends ShopFilters {
+  page?: number;
+  limit?: number;
+  sort?: string;
+  fields?: string;
 }
 
-/**
- * Shop Export Data
- */
-export interface ShopExportData {
-  code: string
-  name: string
-  shopType: string
-  category: string
-  phone: string
-  email?: string
-  city: string
-  state: string
-  pincode: string
-  gstNumber?: string
-  panNumber?: string
-  isActive: boolean
-  isVerified: boolean
-  totalProducts: number
-  totalStaff: number
-  createdAt: string
+// ============================================================================
+// API RESPONSE TYPES
+// ============================================================================
+
+export interface ShopPaginationMeta {
+  totalDocs: number;
+  totalPages: number;
+  currentPage: number;
+  limit: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+  nextPage: number | null;
+  prevPage: number | null;
 }
 
-/**
- * Shop Import Row
- */
-export interface ShopImportRow {
-  name: string
-  phone: string
-  email?: string
-  street: string
-  city: string
-  state: string
-  pincode: string
-  gstNumber?: string
-  panNumber?: string
-  shopType?: string
-  category?: string
+export interface ShopListResponse {
+  success: boolean;
+  results: number;
+  data: Shop[];
+  pagination: ShopPaginationMeta;
 }
+
+export interface ShopDetailResponse {
+  success: boolean;
+  data: Shop;
+}
+
+export interface ShopCreateResponse {
+  success: boolean;
+  message: string;
+  data: Shop;
+}
+
+export interface ShopUpdateResponse {
+  success: boolean;
+  message: string;
+  data: Shop;
+}
+
+export interface ShopDeleteResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface ShopStatisticsResponse {
+  success: boolean;
+  data: ShopStatistics;
+}
+
+// ============================================================================
+// METAL RATES UPDATE PAYLOAD
+// ============================================================================
+
+export interface MetalRatesUpdatePayload {
+  gold?: {
+    rate24K?: number;
+    rate22K?: number;
+    rate18K?: number;
+    rate14K?: number;
+  };
+  silver?: {
+    rate999?: number;
+    rate925?: number;
+    rate900?: number;
+  };
+  platinum?: {
+    rate?: number;
+  };
+}
+
+// ============================================================================
+// SHOP SETTINGS UPDATE PAYLOAD
+// ============================================================================
+
+export interface ShopSettingsUpdatePayload {
+  settings: Partial<ShopSettings>;
+}
+
+// ============================================================================
+// SHOP TABLE COLUMN TYPE
+// ============================================================================
+
+export interface ShopTableColumn {
+  key: string;
+  label: string;
+  sortable?: boolean;
+  width?: string;
+  align?: 'left' | 'center' | 'right';
+}
+
+// ============================================================================
+// SHOP CARD PROPS (for Grid View)
+// ============================================================================
+
+export interface ShopCardProps {
+  shop: Shop;
+  onView?: (shop: Shop) => void;
+  onEdit?: (shop: Shop) => void;
+  onDelete?: (shop: Shop) => void;
+  onToggleStatus?: (shop: Shop) => void;
+}
+
+// ============================================================================
+// SHOP VALIDATION ERROR
+// ============================================================================
+
+export interface ShopValidationError {
+  field: string;
+  message: string;
+}
+
+// ============================================================================
+// SHOP ACTION TYPES (for State Management)
+// ============================================================================
+
+export enum ShopActionType {
+  FETCH_SHOPS_REQUEST = 'FETCH_SHOPS_REQUEST',
+  FETCH_SHOPS_SUCCESS = 'FETCH_SHOPS_SUCCESS',
+  FETCH_SHOPS_FAILURE = 'FETCH_SHOPS_FAILURE',
+  
+  FETCH_SHOP_DETAIL_REQUEST = 'FETCH_SHOP_DETAIL_REQUEST',
+  FETCH_SHOP_DETAIL_SUCCESS = 'FETCH_SHOP_DETAIL_SUCCESS',
+  FETCH_SHOP_DETAIL_FAILURE = 'FETCH_SHOP_DETAIL_FAILURE',
+  
+  CREATE_SHOP_REQUEST = 'CREATE_SHOP_REQUEST',
+  CREATE_SHOP_SUCCESS = 'CREATE_SHOP_SUCCESS',
+  CREATE_SHOP_FAILURE = 'CREATE_SHOP_FAILURE',
+  
+  UPDATE_SHOP_REQUEST = 'UPDATE_SHOP_REQUEST',
+  UPDATE_SHOP_SUCCESS = 'UPDATE_SHOP_SUCCESS',
+  UPDATE_SHOP_FAILURE = 'UPDATE_SHOP_FAILURE',
+  
+  DELETE_SHOP_REQUEST = 'DELETE_SHOP_REQUEST',
+  DELETE_SHOP_SUCCESS = 'DELETE_SHOP_SUCCESS',
+  DELETE_SHOP_FAILURE = 'DELETE_SHOP_FAILURE',
+  
+  UPDATE_METAL_RATES_REQUEST = 'UPDATE_METAL_RATES_REQUEST',
+  UPDATE_METAL_RATES_SUCCESS = 'UPDATE_METAL_RATES_SUCCESS',
+  UPDATE_METAL_RATES_FAILURE = 'UPDATE_METAL_RATES_FAILURE',
+  
+  SET_FILTERS = 'SET_FILTERS',
+  RESET_FILTERS = 'RESET_FILTERS',
+  CLEAR_ERRORS = 'CLEAR_ERRORS',
+}
+
+// ============================================================================
+// EXPORT ALL TYPES
+// ============================================================================
+
+export type {
+  Shop as default,
+};
