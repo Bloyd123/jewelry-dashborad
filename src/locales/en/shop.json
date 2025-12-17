@@ -15,7 +15,19 @@
     "selectedCount": "{{count}} shops selected",
     "ariaLabel": "Shops table"
   },
+    "shops": {
+    "title": "Shops"
+  },
   "actions": {
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "DELETE": "Delete",
+      "LOGIN": "Login",
+      "LOGOUT": "Logout",
+      "EXPORT": "Export",
+      "IMPORT": "Import",
+      "APPROVE": "Approve",
+      "REJECT": "Reject",
     "viewDetails": "View Details",
     "edit": "Edit",
     "settings": "Settings",
@@ -31,6 +43,9 @@
   },
    "shop": {
     "searchPlaceholder": "Search by name or code...",
+        "organization": "Organization",
+    "location": "Location",
+    "established": "Established",
     "verified": "Verified",
     "unverified": "Unverified",
     "types": {
@@ -74,6 +89,156 @@
       "cityDesc": "City (Z-A)"
     }
   },
+    "shopType": {
+    "retail": "Retail",
+    "wholesale": "Wholesale",
+    "manufacturing": "Manufacturing",
+    "showroom": "Showroom",
+    "workshop": "Workshop",
+    "warehouse": "Warehouse",
+    "online": "Online"
+  },
+    "shopCategory": {
+    "jewelry": "Jewelry",
+    "gold": "Gold",
+    "silver": "Silver",
+    "diamond": "Diamond",
+    "gemstone": "Gemstone",
+    "pearls": "Pearls",
+    "platinum": "Platinum",
+    "mixed": "Mixed"
+  },
+  "activityLog": {
+    "title": "Activity Log",
+    "adminOnlyTitle": "Admin Only - Display Only",
+    "adminOnlyDescription": "This activity log is for administrators to view shop activities. All actions are tracked automatically and cannot be modified.",
+    "noActivities": "No activities found",
+    "tableAriaLabel": "Activity log table",
+    "searchPlaceholder": "Search by user, description, or module...",
+    "filters": "Filters",
+    "clearAll": "Clear All",
+    "activeFilters": "Active Filters",
+    "showingResults": "Showing {{count}} of {{total}} activities",
+    
+    "filterByUser": "User Role",
+    "filterByAction": "Action Type",
+    "filterByModule": "Module",
+    "filterByStatus": "Status",
+    "filterByDate": "Date Range",
+    
+    "allUsers": "All Users",
+    "allActions": "All Actions",
+    "allModules": "All Modules",
+    "allStatuses": "All Statuses",
+    "selectDateRange": "Select date range",
+    
+    "columns": {
+      "dateTime": "Date/Time",
+      "user": "User",
+      "action": "Action",
+      "module": "Module",
+      "description": "Description",
+      "status": "Status",
+      "details": "Details"
+    },
+    
+    "modules": {
+      "shopSettings": "Shop Settings",
+      "metalRates": "Metal Rates",
+      "invoice": "Invoice",
+      "inventory": "Inventory",
+      "customer": "Customer",
+      "product": "Product",
+      "payment": "Payment",
+      "purchaseOrder": "Purchase Order",
+      "user": "User",
+      "expense": "Expense",
+      "order": "Order",
+      "report": "Report",
+      "authentication": "Authentication",
+      "system": "System"
+    },
+    
+    "status": {
+      "success": "Success",
+      "pending": "Pending",
+      "failed": "Failed"
+    },
+    
+    "userRoles": {
+      "super_admin": "Super Admin",
+      "org_admin": "Org Admin",
+      "shop_admin": "Shop Admin",
+      "manager": "Manager",
+      "accountant": "Accountant",
+      "staff": "Staff",
+      "system": "System"
+    }
+  },
+    "statistics": {
+    "title": "Shop Statistics",
+    "subtitle": "Overview of your shop's performance and analytics",
+    "refresh": "Refresh",
+    "noData": "No statistics data available",
+    
+    "totalSales": "Total Sales",
+    "totalSalesDesc": "Total revenue from completed orders",
+    "totalOrders": "Total Orders",
+    "totalOrdersDesc": "Number of completed orders",
+    "revenue": "Revenue",
+    "revenueDesc": "Total revenue after expenses",
+    "customers": "Customers",
+    "customersDesc": "Total active customers",
+    
+    "totalProducts": "Total Products",
+    "totalProductsDesc": "Total inventory items",
+    "stockValue": "Stock Value",
+    "stockValueDesc": "Total value of current inventory",
+    "lowStock": "Low Stock",
+    "lowStockDesc": "Products below minimum stock level",
+    
+    "vsLastMonth": "vs last month",
+    "vsLastPeriod": "vs last period",
+    "last30Days": "Last 30 days",
+    "last90Days": "Last 90 days",
+    
+    "salesTrend": "Sales Trend",
+    "salesTrendDesc": "Monthly sales performance (Last 6 months)",
+    "revenueVsExpenses": "Revenue vs Expenses",
+    "revenueVsExpensesDesc": "Monthly financial overview",
+    
+    "sales": "Sales",
+    "expenses": "Expenses",
+    "profit": "Profit",
+    
+    "salesAnalysis": "Sales Analysis",
+    "salesAnalysisDesc": "Breakdown of sales by category and payment method",
+    "salesByCategory": "Sales by Category",
+    "salesByPaymentMethod": "Sales by Payment Method",
+    
+    "monthlyComparison": "Monthly Comparison",
+    "monthlyComparisonDesc": "Current year vs last year performance",
+    "currentYear": "Current Year",
+    "lastYear": "Last Year",
+    
+    "topProducts": "Top Products",
+    "topProductsDesc": "Best selling products by revenue",
+    "rank": "Rank",
+    "product": "Product",
+    "category": "Category",
+    "totalSold": "Total Sold",
+    "units": "units",
+    "stockRemaining": "Stock Remaining",
+    
+    "recentTransactions": "Recent Transactions",
+    "recentTransactionsDesc": "Latest orders and transactions",
+    "orderNumber": "Order Number",
+    "customer": "Customer",
+    "date": "Date",
+    "amount": "Amount",
+    "paymentMethod": "Payment Method",
+    "status": "Status"
+  },
   "shopProfile": {
     "displayName": "Display Name",
     "fullName": "Full Name",
@@ -107,5 +272,41 @@
     "primaryPhone": "Primary",
     "altPhone": "Alt",
     "whatsapp": "WhatsApp"
+  },
+  "bankDetails": {
+    "bankAccounts": {
+      "title": "Bank Accounts",
+      "subtitle": "Manage your bank account details"
+    },
+    "upiDetails": {
+      "title": "UPI Details",
+      "subtitle": "Manage your UPI payment methods"
+    },
+    "primary": "Primary",
+    "addBank": "Add Bank",
+    "addUPI": "Add UPI",
+    "accountNumber": "Account Number",
+    "ifscCode": "IFSC Code",
+    "accountHolder": "Account Holder Name",
+    "branch": "Branch",
+    "accountType": "Account Type",
+    "upiId": "UPI ID",
+    "copyUPI": "Copy UPI ID",
+    "downloadQR": "Download QR",
+    "viewQR": "View QR Code",
+    "noBankAccounts": "No bank accounts added yet",
+    "noUPIDetails": "No UPI details added yet",
+    "addFirstBank": "Add Your First Bank Account",
+    "addFirstUPI": "Add Your First UPI",
+    "adminOnlyNotice": "Bank and UPI details are only visible to administrators"
+  },
+    "shopDetail": {
+    "tabs": {
+      "overview": "Overview",
+      "metalRates": "Metal Rates",
+      "statistics": "Statistics",
+      "bankDetails": "Bank Details",
+      "logs": "Logs"
+    }
   }
 }

@@ -4,12 +4,7 @@
 // ============================================================================
 
 export { default as OverviewTab } from './OverviewTab';
-// export { default as SettingsTab } from './SettingsTab';
-// export { default as MetalRatesTab } from './MetalRatesTab';
-// export { default as BankDetailsTab } from './BankDetailsTab';
-// export { default as StatisticsTab } from './StatisticsTab';
-// export { default as InventoryTab } from './InventoryTab';
-// export { default as TransactionsTab } from './TransactionsTab';
-// export { default as StaffTab } from './StaffTab';
-// export { default as DocumentsTab } from './DocumentsTab';
-// export { default as ActivityLogTab } from './ActivityLogTab';
+export { default as BankDetailsTab } from './BankDetails/BankDetailsTab';
+export {default as ActivityLogTab} from './ActivityLog/ActivityLogTab'
+export {default as StatisticsTab} from './StatisticsTab'
+

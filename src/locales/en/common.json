@@ -29,6 +29,9 @@
     "retryButton": "Retry Connection"
   },
   "common": {
+        "backToList": "Back to List",
+    "settings": "Settings",
+    "verified": "Verified",
     "clearSelection": "Clear Selection",
     "loading": "Loading...",
     "cancel": "Cancel",
@@ -52,6 +55,7 @@
     "maxYear": "Maximum Year"
   }
   },
+  
   "ui": {
     "datatable": {
       "table": "Data Table",

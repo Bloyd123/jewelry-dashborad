@@ -1,31 +1,97 @@
+import React, { useState } from 'react';
+import { ShopDetailHeader } from '@/components/shop/ShopDetailsPage/ShopDetailHeader';
+import { TabsContent } from '@/components/ui/navigation/Tabs/Tabs';
+import { OverviewTab, BankDetailsTab,ActivityLogTab,StatisticsTab } from '@/components/shop/ShopDetailsPage/tabs';
+import { dummyShops } from '@/pages/shops/data';
+import { dummyShopStatistics } from '@/pages/shops/dummyStatistics'
 // ============================================================================
-// FILE: src/pages/shops/ShopDetailsPage.tsx
-// Shop Details Page - Overview Section Only
+// SHOP DETAILS PAGE COMPONENT
 // ============================================================================
 
-import ShopProfileAccordion from '@/components/shop/ShopDetailsPage/tabs/OverviewTab';
+export const ShopDetailsPage: React.FC = () => {
+  const [activeTab, setActiveTab] = useState('overview');
 
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
+  // Get shop data - Currently using dummy data
+  // TODO: Replace with API call - const { shopId } = useParams(); const { data: shop } = useGetShopByIdQuery(shopId)
+  const shop = dummyShops[0];
 
-export const ShopDetailsPage = () => {
+  // Handle back navigation
+  const handleBackClick = () => {
+    // TODO: Add navigation logic
+    console.log('Navigate back to shops list');
+    // window.history.back() or navigate('/shops')
+  };
 
+  // Handle settings modal
+  const handleSettingsClick = () => {
+    // TODO: Open settings modal
+    console.log('Open settings modal');
+  };
 
-  // ========================================================================
-  // RENDER
-  // ========================================================================
+  // Handle tab change
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    console.log('Active tab changed to:', tab);
+  };
 
   return (
-    // <div className="min-h-screen bg-bg-primary">
-                <>
-
-          {/* Shop Profile Accordion */}
+    <div className="min-h-screen bg-bg-primary">
+      <ShopDetailHeader
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+        onBackClick={handleBackClick}
+        onSettingsClick={handleSettingsClick}
+      >
+        {/* Overview Tab */}
+        <TabsContent value="overview">
           <div className="p-4">
-            <ShopProfileAccordion />
+            <OverviewTab />
           </div>
-        </>
+        </TabsContent>
 
+        {/* Metal Rates Tab */}
+        <TabsContent value="metalRates">
+          <div className="p-6">
+            <div className="bg-bg-secondary rounded-lg border border-border-secondary p-6">
+              <h2 className="text-lg font-semibold text-text-primary mb-4">
+                Current Metal Rates
+              </h2>
+              <p className="text-text-secondary">
+                Metal rates content coming soon...
+              </p>
+              {/* TODO: Add MetalRatesTab component */}
+            </div>
+          </div>
+        </TabsContent>
+
+        {/* Statistics Tab */}
+        <TabsContent value="statistics">
+          <div className="p-6">
+         <StatisticsTab
+  shopId="your-shop-id"
+  statistics={dummyShopStatistics}  // ⬅️ Yeh add karo
+  loading={false}
+/>
+          </div>
+        </TabsContent>
+
+        {/* Bank Details Tab */}
+        <TabsContent value="bankDetails">
+          <BankDetailsTab
+            bankDetails={shop.bankDetails}
+            upiDetails={shop.upiDetails}
+            isAdminView={true}
+          />
+        </TabsContent>
+
+        {/* Logs Tab */}
+        <TabsContent value="logs">
+          <div className="p-6">
+            <ActivityLogTab/>
+          </div>
+        </TabsContent>
+      </ShopDetailHeader>
+    </div>
   );
 };
 
