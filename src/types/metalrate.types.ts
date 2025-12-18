@@ -1,5 +1,6 @@
 // ============================================================================
-// Metal Rate Management - TypeScript Types
+// FILE: types/metalrate.types.ts
+// Metal Rate Management - Complete Frontend TypeScript Types
 // ============================================================================
 
 /**
@@ -43,6 +44,15 @@ export type SilverPurity = '999' | '925' | '900' | 'pure' | 'sterling'
 export type PlatinumPurity = '950'
 
 /**
+ * Trend direction
+ */
+export type TrendDirection = 'up' | 'down' | 'stable'
+
+// ============================================================================
+// CORE DATA STRUCTURES
+// ============================================================================
+
+/**
  * Rate pair (buying and selling)
  */
 export interface RatePair {
@@ -72,9 +82,9 @@ export interface SilverRates {
  * Market reference data
  */
 export interface MarketReference {
-  internationalGoldPrice?: number // USD per ounce
-  internationalSilverPrice?: number // USD per ounce
-  exchangeRate?: number // INR per USD
+  internationalGoldPrice?: number
+  internationalSilverPrice?: number
+  exchangeRate?: number
   referenceSource?: string
 }
 
@@ -150,9 +160,9 @@ export interface BaseRates {
  * Moving average data
  */
 export interface MovingAverageData {
-  ma7: number // 7-day moving average
-  ma30: number // 30-day moving average
-  ma90: number // 90-day moving average
+  ma7: number
+  ma30: number
+  ma90: number
 }
 
 /**
@@ -164,6 +174,10 @@ export interface TrendData {
   platinum: MovingAverageData
 }
 
+// ============================================================================
+// MAIN METAL RATE INTERFACE
+// ============================================================================
+
 /**
  * Main Metal Rate interface
  */
@@ -171,7 +185,7 @@ export interface MetalRate {
   _id: string
   organizationId: string
   shopId: string
-  rateDate: Date | string
+  rateDate: string
 
   // Metal rates
   gold: GoldRates
@@ -208,8 +222,8 @@ export interface MetalRate {
   isCurrent: boolean
 
   // Validity
-  validFrom: Date | string
-  validUntil?: Date | string | null
+  validFrom: string
+  validUntil?: string | null
 
   // Notes
   notes?: string
@@ -218,15 +232,19 @@ export interface MetalRate {
   // Audit
   createdBy: string
   updatedBy?: string
-  deletedAt?: Date | string | null
-  createdAt: Date | string
-  updatedAt: Date | string
+  deletedAt?: string | null
+  createdAt: string
+  updatedAt: string
 
   // Virtuals
   gold24KSpread?: number
   gold22KSpread?: number
   silverSpread?: number
 }
+
+// ============================================================================
+// API REQUEST PAYLOADS
+// ============================================================================
 
 /**
  * Request payload for creating/updating metal rate
@@ -243,9 +261,20 @@ export interface CreateMetalRatePayload {
   marketReference?: MarketReference
   notes?: string
   internalNotes?: string
-  rateDate?: Date | string
-  validFrom?: Date | string
+  rateDate?: string
+  validFrom?: string
 }
+
+/**
+ * Sync to all shops payload
+ */
+export interface SyncToAllShopsPayload extends CreateMetalRatePayload {
+  organizationId: string
+}
+
+// ============================================================================
+// API QUERY PARAMETERS
+// ============================================================================
 
 /**
  * Rate history query parameters
@@ -269,50 +298,12 @@ export interface RateComparisonParams {
 }
 
 /**
- * Rate comparison result
- */
-export interface RateComparison {
-  gold24K: {
-    start: number
-    end: number
-    change: number
-    changePercentage: number
-  }
-  silver999: {
-    start: number
-    end: number
-    change: number
-    changePercentage: number
-  }
-}
-
-/**
- * Trend chart data point
- */
-export interface TrendChartDataPoint {
-  date: Date | string
-  rate: number
-  ma7: number
-  ma30: number
-  ma90: number
-}
-
-/**
  * Trend data query parameters
  */
 export interface TrendDataParams {
   shopId: string
   metalType?: MetalType
   days?: number
-}
-
-/**
- * Average rate result
- */
-export interface AverageRateResult {
-  averageBuyingRate: number
-  averageSellingRate: number
-  samples: number
 }
 
 /**
@@ -326,10 +317,34 @@ export interface AverageRateParams {
 }
 
 /**
- * Sync to all shops payload
+ * Filter options for rate history
  */
-export interface SyncToAllShopsPayload extends CreateMetalRatePayload {
-  organizationId: string
+export interface RateFilterOptions {
+  dateRange?: {
+    start: string
+    end: string
+  }
+  metalType?: MetalType
+  rateSource?: RateSource
+  isActive?: boolean
+  isCurrent?: boolean
+  syncSource?: SyncSource
+}
+
+// ============================================================================
+// API RESPONSE STRUCTURES
+// ============================================================================
+
+/**
+ * Pagination metadata
+ */
+export interface PaginationMeta {
+  currentPage: number
+  totalPages: number
+  pageSize: number
+  totalItems: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
 }
 
 /**
@@ -339,24 +354,75 @@ export interface ApiResponse<T> {
   success: boolean
   data: T
   message?: string
-  errors?: Array<{
-    field: string
-    message: string
-    value?: any
-  }>
+  cached?: boolean
+  meta?: {
+    pagination?: PaginationMeta
+  }
 }
 
 /**
- * Paginated response
+ * Rate comparison result
  */
-export interface PaginatedResponse<T> {
-  success: boolean
-  data: T[]
-  pagination: {
-    total: number
-    page: number
-    limit: number
-    pages: number
+export interface RateComparisonResult {
+  fromDate: string
+  toDate: string
+  daysDifference: number
+  gold24K: RateChangeDetail
+  gold22K: RateChangeDetail
+  gold18K: RateChangeDetail
+  silver999: RateChangeDetail
+  platinum: RateChangeDetail
+  trendComparison: {
+    gold: TrendChangeDetail
+    silver: TrendChangeDetail
+  }
+}
+
+/**
+ * Rate change detail
+ */
+export interface RateChangeDetail {
+  startRate: number
+  endRate: number
+  change: number
+  changePercentage: number
+  trend: TrendDirection
+}
+
+/**
+ * Trend change detail
+ */
+export interface TrendChangeDetail {
+  ma7Change: number
+  ma30Change: number
+  ma90Change: number
+}
+
+/**
+ * Trend chart data point
+ */
+export interface TrendChartDataPoint {
+  date: string
+  rate: number
+  ma7: number
+  ma30: number
+  ma90: number
+}
+
+/**
+ * Trend chart response
+ */
+export interface TrendChartResponse {
+  metalType: MetalType
+  period: number
+  dataPoints: number
+  trendData: TrendChartDataPoint[]
+  summary: {
+    currentRate: number
+    startRate: number
+    highestRate: number
+    lowestRate: number
+    averageRate: number
   }
 }
 
@@ -366,8 +432,40 @@ export interface PaginatedResponse<T> {
 export interface RateForPurityResponse {
   metalType: MetalType
   purity: string
-  rates: RatePair
-  rateDate: Date | string
+  buyingRate: number
+  sellingRate: number
+  rateDate: string
+}
+
+/**
+ * Average rate result
+ */
+export interface AverageRateResult {
+  metalType: MetalType
+  purity: string
+  period: string
+  averageBuyingRate: number
+  averageSellingRate: number
+  samples: number
+}
+
+/**
+ * Multi-shop sync result
+ */
+export interface SyncResult {
+  totalShops: number
+  syncedShops: number
+  failedShops: number
+  failures: ShopSyncFailure[]
+}
+
+/**
+ * Shop sync failure detail
+ */
+export interface ShopSyncFailure {
+  shopId: string
+  shopName: string
+  error: string
 }
 
 /**
@@ -385,6 +483,178 @@ export interface RateDashboardSummary {
   monthTrend: TrendChartDataPoint[]
 }
 
+// ============================================================================
+// FORM STATE INTERFACES
+// ============================================================================
+
+/**
+ * Rate pair form input (strings for controlled inputs)
+ */
+export interface RatePairInput {
+  buying: string
+  selling: string
+}
+
+/**
+ * Form state for metal rate entry
+ */
+export interface MetalRateFormState {
+  // Required IDs
+  shopId: string
+  organizationId: string
+  rateDate: string
+
+  // Gold rates
+  gold: {
+    gold24K: RatePairInput
+    gold22K: RatePairInput
+    gold18K: RatePairInput
+    gold14K: RatePairInput
+  }
+
+  // Silver rates
+  silver: {
+    pure: RatePairInput
+    sterling925: RatePairInput
+  }
+
+  // Platinum rates
+  platinum: RatePairInput
+
+  // Custom purities
+  customPurities: CustomPurityInput[]
+
+  // Configuration
+  weightUnit: WeightUnit
+  currency: Currency
+  rateSource: RateSource
+
+  // Notes
+  notes: string
+  internalNotes: string
+
+  // Market reference
+  marketReference: {
+    internationalGoldPrice: string
+    internationalSilverPrice: string
+    exchangeRate: string
+    referenceSource: string
+  }
+}
+
+/**
+ * Custom purity form input
+ */
+export interface CustomPurityInput {
+  metalType: MetalType
+  purityName: string
+  purityPercentage: string
+  buyingRate: string
+  sellingRate: string
+  description: string
+  isActive: boolean
+}
+
+/**
+ * Form validation errors
+ */
+export interface FormValidationErrors {
+  [field: string]: string
+}
+
+/**
+ * Form submission state
+ */
+export interface FormSubmissionState {
+  isSubmitting: boolean
+  isSuccess: boolean
+  isError: boolean
+  error?: string
+}
+
+// ============================================================================
+// UI STATE INTERFACES
+// ============================================================================
+
+/**
+ * Rate card display data
+ */
+export interface RateCardData {
+  metalType: MetalType
+  purity: string
+  buyingRate: number
+  sellingRate: number
+  change: number
+  changePercentage: number
+  trend: TrendDirection
+  lastUpdated: string
+}
+
+/**
+ * Rate history table row
+ */
+export interface RateHistoryRow {
+  _id: string
+  rateDate: string
+  gold24K: number
+  gold22K: number
+  silver999: number
+  goldChange: number
+  silverChange: number
+  isCurrent: boolean
+  isActive: boolean
+}
+
+/**
+ * Chart data for visualization
+ */
+export interface ChartData {
+  labels: string[]
+  datasets: ChartDataset[]
+}
+
+/**
+ * Chart dataset
+ */
+export interface ChartDataset {
+  label: string
+  data: number[]
+  borderColor?: string
+  backgroundColor?: string
+  fill?: boolean
+}
+
+/**
+ * Filter panel state
+ */
+export interface FilterPanelState {
+  isOpen: boolean
+  filters: RateFilterOptions
+  appliedFilters: RateFilterOptions
+}
+
+/**
+ * Loading state for async operations
+ */
+export interface LoadingState {
+  isLoading: boolean
+  loadingMessage?: string
+}
+
+/**
+ * Toast notification
+ */
+export interface ToastNotification {
+  id: string
+  type: 'success' | 'error' | 'warning' | 'info'
+  message: string
+  duration?: number
+}
+
+// ============================================================================
+// VALIDATION TYPES
+// ============================================================================
+
 /**
  * Validation error
  */
@@ -395,43 +665,158 @@ export interface ValidationError {
 }
 
 /**
- * Form state for metal rate entry
+ * API error response
  */
-export interface MetalRateFormState {
-  gold: {
-    gold24K: { buying: string; selling: string }
-    gold22K: { buying: string; selling: string }
-    gold18K: { buying: string; selling: string }
-    gold14K: { buying: string; selling: string }
-  }
-  silver: {
-    pure: { buying: string; selling: string }
-    sterling925: { buying: string; selling: string }
-  }
-  platinum: { buying: string; selling: string }
-  weightUnit: WeightUnit
-  currency: Currency
-  rateSource: RateSource
-  notes: string
-  internalNotes: string
-  marketReference: {
-    internationalGoldPrice: string
-    internationalSilverPrice: string
-    exchangeRate: string
-    referenceSource: string
-  }
+export interface ApiErrorResponse {
+  success: false
+  message: string
+  errors?: ValidationError[]
+}
+
+// ============================================================================
+// UTILITY TYPES
+// ============================================================================
+
+/**
+ * Partial metal rate for updates
+ */
+export type PartialMetalRate = Partial<Omit<MetalRate, '_id' | 'createdAt' | 'updatedAt'>>
+
+/**
+ * Metal rate without audit fields (for display)
+ */
+export type MetalRateDisplay = Omit<
+  MetalRate,
+  'createdBy' | 'updatedBy' | 'deletedAt' | 'internalNotes'
+>
+
+/**
+ * Rate comparison type guard
+ */
+export function isRateComparison(data: any): data is RateComparisonResult {
+  return (
+    data &&
+    typeof data.fromDate === 'string' &&
+    typeof data.toDate === 'string' &&
+    typeof data.daysDifference === 'number'
+  )
 }
 
 /**
- * Filter options for rate history
+ * Trend chart type guard
  */
-export interface RateFilterOptions {
-  dateRange?: {
-    start: Date | string
-    end: Date | string
-  }
-  metalType?: MetalType
-  rateSource?: RateSource
-  isActive?: boolean
-  isCurrent?: boolean
+export function isTrendChartResponse(data: any): data is TrendChartResponse {
+  return (
+    data &&
+    typeof data.metalType === 'string' &&
+    Array.isArray(data.trendData) &&
+    data.summary
+  )
+}
+
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/**
+ * Weight unit labels
+ */
+export const WEIGHT_UNIT_LABELS: Record<WeightUnit, string> = {
+  gram: 'Gram',
+  kg: 'Kilogram',
+  tola: 'Tola',
+}
+
+/**
+ * Currency symbols
+ */
+export const CURRENCY_SYMBOLS: Record<Currency, string> = {
+  INR: '₹',
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  AED: 'د.إ',
+}
+
+/**
+ * Metal type labels
+ */
+export const METAL_TYPE_LABELS: Record<MetalType, string> = {
+  gold: 'Gold',
+  silver: 'Silver',
+  platinum: 'Platinum',
+  palladium: 'Palladium',
+}
+
+/**
+ * Gold purity labels
+ */
+export const GOLD_PURITY_LABELS: Record<GoldPurity, string> = {
+  '24K': '24 Karat (Pure)',
+  '22K': '22 Karat',
+  '20K': '20 Karat',
+  '18K': '18 Karat',
+  '14K': '14 Karat',
+}
+
+/**
+ * Silver purity labels
+ */
+export const SILVER_PURITY_LABELS: Record<SilverPurity, string> = {
+  '999': '999 (Pure)',
+  '925': '925 (Sterling)',
+  '900': '900',
+  pure: 'Pure Silver',
+  sterling: 'Sterling Silver',
+}
+
+/**
+ * Rate source labels
+ */
+export const RATE_SOURCE_LABELS: Record<RateSource, string> = {
+  manual: 'Manual Entry',
+  market: 'Market Rate',
+  api: 'API Integration',
+  association: 'Association Rate',
+}
+
+/**
+ * Trend direction colors
+ */
+export const TREND_COLORS: Record<TrendDirection, string> = {
+  up: '#22c55e',
+  down: '#ef4444',
+  stable: '#64748b',
+}
+
+/**
+ * Default form values
+ */
+export const DEFAULT_METAL_RATE_FORM: MetalRateFormState = {
+  shopId: '',
+  organizationId: '',
+  rateDate: new Date().toISOString().split('T')[0],
+  gold: {
+    gold24K: { buying: '', selling: '' },
+    gold22K: { buying: '', selling: '' },
+    gold18K: { buying: '', selling: '' },
+    gold14K: { buying: '', selling: '' },
+  },
+  silver: {
+    pure: { buying: '', selling: '' },
+    sterling925: { buying: '', selling: '' },
+  },
+  platinum: { buying: '', selling: '' },
+  customPurities: [],
+  weightUnit: 'gram',
+  currency: 'INR',
+  rateSource: 'manual',
+  notes: '',
+  internalNotes: '',
+  marketReference: {
+    internationalGoldPrice: '',
+    internationalSilverPrice: '',
+    exchangeRate: '',
+    referenceSource: '',
+  },
 }

@@ -1,0 +1,157 @@
+{
+  "metalRates": {
+    "currentRates": {
+      "title": "Current Metal Rates",
+      "description": "Live rates updated in real-time",
+      "lastUpdated": "Last Updated"
+    },
+    "metals": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "palladium": "Palladium"
+    },
+    "purity": {
+      "gold24K": "24K Gold",
+      "gold22K": "22K Gold",
+      "gold18K": "18K Gold",
+      "gold14K": "14K Gold",
+      "silver999": "999 Silver",
+      "silver925": "Sterling 925"
+    },
+    "rateSource": {
+      "manual": "Manual Entry",
+      "market": "Live Market",
+      "api": "API",
+      "association": "Association"
+    },
+       "quickInsights": {
+      "gold24K": "Gold 24K",
+      "gold22K": "Gold 22K",
+      "silver999": "Silver 999",
+      "platinum950": "Platinum 950",
+      "perGram": "per gram",
+      "thisWeek": "this week",
+      "stable": "stable",
+      
+      "sevenDaySummary": {
+        "title": "7-Day Summary",
+        "gold24K": "Gold 24K:",
+        "silver999": "Silver 999:",
+        "avg7D": "7D Avg:",
+        "high7D": "7D High:",
+        "low7D": "7D Low:",
+        "volatility": "Volatility:"
+      },
+      
+      "rateAlerts": {
+        "title": "Rate Alerts",
+        "goldUp": "Gold up 2.7% this week",
+        "silverDown": "Silver down 0.5% today",
+        "platinumStable": "Platinum stable"
+      },
+      
+      "quickActions": {
+        "title": "Quick Actions",
+        "compareDates": "Compare Dates",
+        "viewAnalytics": "View Full Analytics",
+        "downloadReport": "Download Report",
+        "rateSettings": "Rate Notification Settings"
+      }
+    },
+    "perGram": "per gram",
+    "buying": "Buying",
+    "selling": "Selling",
+    "spread": "Spread",
+    "today": "Today",
+    "notes": "Notes",
+    "marketReference": {
+      "title": "Market Reference",
+      "source": "Source",
+      "intlGold": "Int'l Gold (oz)",
+      "intlSilver": "Int'l Silver (oz)",
+      "exchangeRate": "Exchange Rate"
+    },
+        "trend": {
+      "title": "Price Trends",
+      "description": "Historical price movements and moving averages",
+      "selectMetal": "Select Metal",
+      "selectPeriod": "Select Period",
+      "sellingRate": "Selling Rate",
+      "rate": "Rate",
+      "ma7": "7-Day MA",
+      "ma30": "30-Day MA",
+      "highest": "Highest",
+      "lowest": "Lowest",
+      "average": "Average",
+      "change": "Change",
+      "showing": "Showing",
+      "days": "days",
+      "of": "of"
+    }
+  },
+   "rateHistory": {
+    "title": "Rate History",
+    "noRates": "No rate records found",
+    "ariaLabel": "Metal rate history table"
+  },
+  "table": {
+    "date": "Date",
+    "gold24K": "Gold 24K",
+    "gold22K": "Gold 22K",
+    "silver999": "Silver 999",
+    "platinum": "Platinum",
+    "change": "Change",
+    "user": "User"
+  },
+  "filters": {
+    "filters": "Filters",
+    "selectDateRange": "Select Date Range",
+    "selectMetalType": "Select Metal Type",
+    "allMetals": "All Metals"
+  },
+  "common": {
+    "filter": "Filter",
+    "exportCSV": "Export CSV",
+    "search": "Search",
+    "showing": "Showing",
+    "of": "of"
+  },
+  "ui": {
+    "datatable": {
+      "noData": "No data available",
+      "selectAll": "Select All",
+      "actions": "Actions",
+      "selectRow": "Select Row",
+      "rowActions": "Row Actions",
+      "table": "Table",
+      "previousPage": "Previous Page",
+      "nextPage": "Next Page",
+      "firstPage": "First Page",
+      "lastPage": "Last Page",
+      "rowsPerPage": "Rows per page",
+      "showingItems": "Showing {{start}}-{{end}} of {{total}}",
+      "pageOf": "Page {{current}} of {{total}}",
+      "expandRow": "Expand Row",
+      "collapseRow": "Collapse Row"
+    }
+},
+  "dateRange": {
+    "last7days": "Last 7 Days",
+    "last30days": "Last 30 Days",
+    "last90days": "Last 90 Days",
+    "lastYear": "Last Year"
+  }, 
+   "metalType": {
+    "gold": "Gold",
+    "silver": "Silver",
+    "platinum": "Platinum",
+    "palladium": "Palladium"
+  }, 
+   "rateSource": {
+    "manual": "Manual",
+    "market": "Market",
+    "api": "API",
+    "association": "Association"
+  }
+}

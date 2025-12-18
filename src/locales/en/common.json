@@ -29,6 +29,7 @@
     "retryButton": "Retry Connection"
   },
   "common": {
+    "noData": "No data available",
         "backToList": "Back to List",
     "settings": "Settings",
     "verified": "Verified",
@@ -49,6 +50,11 @@
         "allStates": "All States",
     "allCities": "All Cities",
       "filters":{
+            "select": "Select",
+                "rateFilters": "Rate Filters",
+
+    "active": "Active Filters",
+    "clearAll": "Clear All",
         "minPrice":"Minimum Price",
       "maxPrice":"Maximum Price",
          "minYear": "Minimum Year",
