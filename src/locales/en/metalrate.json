@@ -5,6 +5,17 @@
       "description": "Live rates updated in real-time",
       "lastUpdated": "Last Updated"
     },
+       "title": "Metal Rates",
+    "dashboard": "Metal Rates Dashboard",
+    "updateRates": "Update Rates",
+    "lastUpdated": "Last Updated",
+    "viewTrends": "View Trends",
+    "tabs": {
+      "currentRates": "Current Rates",
+      "trendCharts": "Trend Charts",
+      "rateHistory": "Rate History",
+      "quickInsights": "Quick Insights"
+    },
     "metals": {
       "gold": "Gold",
       "silver": "Silver",
@@ -115,7 +126,11 @@
     "exportCSV": "Export CSV",
     "search": "Search",
     "showing": "Showing",
-    "of": "of"
+    "of": "of",
+        "backToList": "Back to List",
+    "by": "by",
+    "active": "Active"
+    
   },
   "ui": {
     "datatable": {

@@ -30,7 +30,7 @@
   },
   "common": {
     "noData": "No data available",
-        "backToList": "Back to List",
+    "backToList": "Back to List",
     "settings": "Settings",
     "verified": "Verified",
     "clearSelection": "Clear Selection",
