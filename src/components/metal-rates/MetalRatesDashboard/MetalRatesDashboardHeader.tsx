@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { 
   ChevronLeft,
   Coins,
+    Calendar,
   TrendingUp,
   History,
   Zap,
@@ -19,7 +20,8 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge';
 import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb';
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs';
 import { Separator } from '@/components/ui/layout/Separator/Separator';
-
+import { UpdateRatesModal } from '@/components/metal-rates/UpdateRatesModal/UpdateRatesModal';
+import { CompareRatesModal } from '@/components/metal-rates/CompareRates'
 // ============================================================================
 // COMPONENT PROPS
 // ============================================================================
@@ -30,7 +32,6 @@ interface MetalRatesDashboardHeaderProps {
   activeTab?: string;
   onTabChange?: (tab: string) => void;
   onBackClick?: () => void;
-  onUpdateRates?: () => void;
   lastUpdated?: string;
   updatedBy?: string;
   isActive?: boolean;
@@ -47,7 +48,6 @@ export const MetalRatesDashboardHeader: React.FC<MetalRatesDashboardHeaderProps>
   activeTab = 'currentRates',
   onTabChange,
   onBackClick,
-  onUpdateRates,
   lastUpdated = '15 Dec 2024, 10:30 AM',
   updatedBy = 'Rajesh Kumar',
   isActive = true,
@@ -55,13 +55,25 @@ export const MetalRatesDashboardHeader: React.FC<MetalRatesDashboardHeaderProps>
 }) => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState(activeTab);
-
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+     const [isCompareOpen, setIsCompareOpen] = useState(false);
   // Handle tab change
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab);
     if (onTabChange) {
       onTabChange(tab);
     }
+  };
+    // ✅ HANDLE UPDATE RATES - OPENS MODAL
+  const handleUpdateRates = () => {
+    setIsModalOpen(true);
+  };
+
+  // ✅ HANDLE SAVE RATES
+  const handleSaveRates = (data: any) => {
+    console.log('Saving rates data:', data);
+    // TODO: Call API to save rates
+    // API call will go here during integration
   };
 
   // Breadcrumb items
@@ -104,6 +116,7 @@ export const MetalRatesDashboardHeader: React.FC<MetalRatesDashboardHeaderProps>
   ];
 
   return (
+    <>
     <div className="space-y-0">
       {/* Header Section */}
       <div className="bg-bg-secondary border-b border-border-secondary">
@@ -125,17 +138,27 @@ export const MetalRatesDashboardHeader: React.FC<MetalRatesDashboardHeaderProps>
               
               <Breadcrumb items={breadcrumbItems} showHome={true} />
             </div>
-
-            <Button
-              variant="default"
-              size="sm"
-              onClick={onUpdateRates}
-              className="gap-2"
-            >
-              <RefreshCw className="h-4 w-4" />
-              {t('metalRates.updateRates')}
-            </Button>
-          </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsCompareOpen(true)}
+                  className="gap-2"
+                >
+                  <Calendar className="h-4 w-4" />
+                  {t('metalRates.compareRates')}
+                </Button>
+              
+              {/* ✅ BUTTON OPENS MODAL */}
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleUpdateRates}
+                className="gap-2"
+              >
+                <RefreshCw className="h-4 w-4" />
+                {t('metalRates.updateRates')}
+              </Button>
+              </div>
 
           <Separator />
 
@@ -202,37 +225,21 @@ export const MetalRatesDashboardHeader: React.FC<MetalRatesDashboardHeaderProps>
         </div>
       </div>
     </div>
+          {/* ✅ UPDATE RATES MODAL - RENDERED */}
+      <UpdateRatesModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        shopName={shopName}
+        onSave={handleSaveRates}
+      />
+            <CompareRatesModal
+        isOpen={isCompareOpen}
+        onClose={() => setIsCompareOpen(false)}
+        shopId={shopId || ''}
+      />
+      </>
   );
 };
 
-// ============================================================================
-// TRANSLATION KEYS STRUCTURE
-// ============================================================================
-
-/*
-{
-  "shops": {
-    "title": "Shops"
-  },
-  "metalRates": {
-    "title": "Metal Rates",
-    "dashboard": "Metal Rates Dashboard",
-    "updateRates": "Update Rates",
-    "lastUpdated": "Last Updated",
-    "viewTrends": "View Trends",
-    "tabs": {
-      "currentRates": "Current Rates",
-      "trendCharts": "Trend Charts",
-      "rateHistory": "Rate History",
-      "quickInsights": "Quick Insights"
-    }
-  },
-  "common": {
-    "backToList": "Back to List",
-    "by": "by",
-    "active": "Active"
-  }
-}
-*/
 
 export default MetalRatesDashboardHeader;

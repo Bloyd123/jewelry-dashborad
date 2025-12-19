@@ -24,7 +24,8 @@ import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 import { CustomerDetailsPage } from './components/customer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
-import MetalRatesDashboardPage from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboardPage'
+import {GoldRatesForm} from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
+import MetalRatesDashboardPage from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -72,6 +73,15 @@ function App() {
               <Route path='/shops' element={ <ShopListPage />}/>
               <Route path='/shops/:id' element={<ShopDetailsPage/>}/>
        <Route path="metal-rates" element={<MetalRatesDashboardPage />} />
+  <Route
+  path="/update"
+  element={
+<GoldRatesForm 
+  onChange={(data) => console.log('Gold rates:', data)}
+/>
+  }
+/>
+
 
 
 

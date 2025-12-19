@@ -3,8 +3,63 @@
     "currentRates": {
       "title": "Current Metal Rates",
       "description": "Live rates updated in real-time",
-      "lastUpdated": "Last Updated"
+      "lastUpdated": "Last Updated",
+          "previewChanges": "Preview Changes",
+    "totalChanges": "Total Changes",
+    "increased": "Increased",
+    "decreased": "Decreased",
+    "unchanged": "Unchanged"
+
     },
+     "compareRates": "Compare Rates",
+        "weightUnits": {
+      "gram": "Gram",
+      "kg": "Kilogram",
+      "tola": "Tola"
+    },
+    "rateSources": {
+      "manual": "Manual",
+      "market": "Market",
+      "api": "API",
+      "association": "Association"
+    },
+      "forms": {
+    "selectDate": "Select date"
+  },
+    "puritytext":"Purity",
+    "marketReferencetext":"Market Refrence",
+        "additionalInformation": "Additional Information",
+    "weightUnit": "Weight Unit",
+    "goldRates":"Gold Rate",
+    "currency": "Currency",
+    "publicNotes": "Public Notes (visible to customers)",
+    "publicNotesPlaceholder": "Enter public notes...",
+    "publicNotesHelp": "These notes will be visible to customers",
+    "internalNotes": "Internal Notes (staff only)",
+    "internalNotesPlaceholder": "Enter internal notes...",
+    "internalNotesHelp": "These notes are for internal staff use only",
+    "optionalSection": "Optional section",
+    "internationalGoldPrice": "International Gold Price (per oz)",
+    "internationalSilverPrice": "International Silver Price (per oz)",
+    "exchangeRate": "Exchange Rate (USD to INR)",
+    "referenceSource": "Reference Source",
+    "perOunce": "per ounce",
+    "usdToInr": "USD to INR",
+    "sellingRateTip":" Tip: Selling rate should be higher than buying rate",
+    "sourceWebsite": "Source website or platform",
+        "platinumRates": "Platinum Rates",
+    "previousBuying": "Previous Buying",
+    "newBuying": "New Buying",
+    "previousSelling": "Previous Selling",
+    "newSelling": "New Selling",
+        "silverRates": "Silver Rates",
+    "previousBuy": "Previous Buy",
+    "newBuyRate": "New Buy Rate",
+    "previousSell": "Previous Sell",
+    "newSellRate": "New Sell Rate",
+        "updateTodayRates": "Update Today's Metal Rates",
+    "date": "Date",
+    "saveAndUpdate": "Save & Update Rates",
        "title": "Metal Rates",
     "dashboard": "Metal Rates Dashboard",
     "updateRates": "Update Rates",
@@ -30,6 +85,27 @@
       "silver999": "999 Silver",
       "silver925": "Sterling 925"
     },
+    "compare": {
+      "title": "Compare Rates Between Dates",
+      "description": "Compare metal rates between two dates to analyze price trends",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "selectFromDate": "Select from date",
+      "selectToDate": "Select to date",
+      "compareButton": "Compare Rates",
+      "comparing": "Comparing...",
+      "summary": "Comparison Summary",
+      "daysDifference": "Days",
+      "startRate": "Start Rate",
+      "endRate": "End Rate",
+      "change": "Change",
+      "errors": {
+        "fromDateRequired": "From date is required",
+        "toDateRequired": "To date is required",
+        "toDateAfterFrom": "To date must be after from date"
+      }
+    },
+    "rateSourcetext":"Rate Source",
     "rateSource": {
       "manual": "Manual Entry",
       "market": "Live Market",
@@ -122,6 +198,12 @@
     "allMetals": "All Metals"
   },
   "common": {
+        "reset": "Reset",
+    "close": "Close",
+    "days": "days",
+        "cancel": "Cancel",
+    "preview": "Preview",
+    "hidePreview": "Hide Preview",
     "filter": "Filter",
     "exportCSV": "Export CSV",
     "search": "Search",
@@ -133,6 +215,9 @@
     
   },
   "ui": {
+        "modal": {
+      "close": "Close"
+    },
     "datatable": {
       "noData": "No data available",
       "selectAll": "Select All",

@@ -69,7 +69,6 @@ const MetalRatesDashboardPage: React.FC = () => {
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onBackClick={handleBackClick}
-        onUpdateRates={handleUpdateRates}
         lastUpdated="15 Dec 2024, 10:30 AM"
         updatedBy="Rajesh Kumar"
         isActive={true}
