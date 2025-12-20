@@ -27,7 +27,7 @@ const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
   baseUrl: APP_CONFIG.API.BASE_URL,
-  prepareHeaders: (headers) => {
+  prepareHeaders: headers => {
     const token = getAccessToken()
     if (token) {
       headers.set('Authorization', `Bearer ${token}`)
@@ -80,13 +80,12 @@ export const baseQueryWithReauth: BaseQueryFn<
         if (refreshResult.data) {
           // Store new tokens
           const data = refreshResult.data as any
-        //   setTokens(
-        //     data.data.accessToken,
-        //     data.data.refreshToken,
-        //     data.data.tokenId
-        //   )
-        saveTokens(data.data.accessToken, data.data.refreshToken)
-
+          //   setTokens(
+          //     data.data.accessToken,
+          //     data.data.refreshToken,
+          //     data.data.tokenId
+          //   )
+          saveTokens(data.data.accessToken, data.data.refreshToken)
 
           // Retry original request
           result = await baseQuery(args, api, extraOptions)

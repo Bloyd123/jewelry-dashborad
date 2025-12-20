@@ -9,38 +9,43 @@ import { useTranslation } from 'react-i18next'
 import { Dialog } from './Dialog'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-export type ConfirmDialogVariant = 'default' | 'danger' | 'warning' | 'info' | 'success'
+export type ConfirmDialogVariant =
+  | 'default'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'success'
 
 export interface ConfirmDialogProps {
   // Control
   open: boolean
   onOpenChange: (open: boolean) => void
-  
+
   // Content
   title: string
   description?: string
-  
+
   // Variant
   variant?: ConfirmDialogVariant
-  
+
   // Actions
   confirmLabel?: string
   cancelLabel?: string
   onConfirm: () => void | Promise<void>
   onCancel?: () => void
-  
+
   // State
   loading?: boolean
   disabled?: boolean
-  
+
   // Configuration
   showIcon?: boolean
   closeOnConfirm?: boolean
   closeOnCancel?: boolean
-  
+
   // Styling
   className?: string
-  
+
   // Additional
   testId?: string
 }
@@ -127,13 +132,13 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
               <Icon className={cn('h-6 w-6', config.iconColor)} />
             </div>
           )}
-          
+
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-text-primary mb-2">
+            <h3 className="mb-2 text-lg font-semibold text-text-primary">
               {t(title)}
             </h3>
             {description && (
-              <p className="text-sm text-text-secondary mb-4">
+              <p className="mb-4 text-sm text-text-secondary">
                 {t(description)}
               </p>
             )}
@@ -141,7 +146,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3 justify-end mt-6">
+        <div className="mt-6 flex justify-end gap-3">
           <Button
             variant="outline"
             onClick={handleCancel}
@@ -152,9 +157,9 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           <Button
             variant={config.confirmVariant}
             onClick={handleConfirm}
-           disabled={loading || disabled}
+            disabled={loading || disabled}
           >
-              {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             {t(confirmLabel)}
           </Button>
         </div>

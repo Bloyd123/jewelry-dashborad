@@ -13,7 +13,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setActiveFilter, selectCustomerFilters } from '@/store/slices/customerSlice'
+import {
+  setActiveFilter,
+  selectCustomerFilters,
+} from '@/store/slices/customerSlice'
 import { Badge } from '@/components/ui/data-display/Badge'
 
 export const StatusFilter: React.FC = () => {
@@ -30,7 +33,11 @@ export const StatusFilter: React.FC = () => {
   }
 
   const currentValue =
-    filters.isActive === undefined ? 'all' : filters.isActive ? 'active' : 'inactive'
+    filters.isActive === undefined
+      ? 'all'
+      : filters.isActive
+        ? 'active'
+        : 'inactive'
 
   return (
     <Select value={currentValue} onValueChange={handleChange}>

@@ -14,7 +14,7 @@
     "customersource": "स्रोत",
     "customergender": "लिंग",
     "addCustomer": "ग्राहक जोड़ें",
-        "editCustomer": "ग्राहक संपादित करें",
+    "editCustomer": "ग्राहक संपादित करें",
     "editCustomerDescription": "ग्राहक की जानकारी अपडेट करें",
     "anniversaryDate": "वर्षगांठ की तारीख",
     "phone": "फोन नंबर",
@@ -91,94 +91,93 @@
       "platinum": "प्लैटिनम",
       "mixed": "मिश्रित"
     },
-  "list": {
-    "title": "ग्राहक",
-    "description": "अपने ग्राहक डेटाबेस को प्रबंधित करें",
-    "noCustomers": "कोई ग्राहक नहीं मिला",
-    "addFirstCustomer": "अपना पहला ग्राहक जोड़ें",
-    "error": "ग्राहकों को लोड करने में विफल"
+    "list": {
+      "title": "ग्राहक",
+      "description": "अपने ग्राहक डेटाबेस को प्रबंधित करें",
+      "noCustomers": "कोई ग्राहक नहीं मिला",
+      "addFirstCustomer": "अपना पहला ग्राहक जोड़ें",
+      "error": "ग्राहकों को लोड करने में विफल"
+    },
+    "actions": {
+      "addCustomer": "ग्राहक जोड़ें",
+      "view": "विवरण देखें",
+      "edit": "ग्राहक संपादित करें",
+      "delete": "ग्राहक हटाएं",
+      "blacklist": "ग्राहक को ब्लैकलिस्ट करें",
+      "removeBlacklist": "ब्लैकलिस्ट हटाएं",
+      "addLoyaltyPoints": "वफादारी अंक जोड़ें",
+      "redeemLoyaltyPoints": "अंक रिडीम करें",
+      "call": "ग्राहक को कॉल करें",
+      "whatsapp": "व्हाट्सऐप भेजें",
+      "email": "ईमेल भेजें",
+      "recordPayment": "भुगतान रिकॉर्ड करें",
+      "viewOrders": "ऑर्डर देखें",
+      "viewTransactions": "लेनदेन देखें",
+      "copyDetails": "विवरण कॉपी करें",
+      "markAsVIP": "VIP के रूप में चिह्नित करें",
+      "moreActions": "और क्रियाएँ"
+    },
+    "fields": {
+      "customerCode": "ग्राहक कोड",
+      "name": "नाम",
+      "email": "ईमेल",
+      "customerType": "प्रकार",
+      "membershipTier": "सदस्यता स्तर",
+      "loyaltyPoints": "वफादारी अंक",
+      "totalPurchases": "कुल खरीदारी",
+      "totalDue": "बकाया राशि",
+      "lastOrderDate": "अंतिम ऑर्डर",
+      "status": "स्थिति",
+      "createdAt": "जुड़ने की तिथि",
+      "customer": "ग्राहक",
+      "summary": "सारांश",
+      "points": "अंक",
+      "outstanding": "बकाया",
+      "due": "देय"
+    },
+    "customerTypes": {
+      "retail": "खुदरा",
+      "wholesale": "थोक",
+      "vip": "VIP",
+      "regular": "नियमित"
+    },
+    "membershipTiers": {
+      "standard": "स्टैंडर्ड",
+      "silver": "सिल्वर",
+      "gold": "गोल्ड",
+      "platinum": "प्लैटिनम"
+    },
+    "status": {
+      "blacklisted": "ब्लैकलिस्टेड"
+    },
+    "noOrders": "अभी तक कोई ऑर्डर नहीं"
   },
-  "actions": {
-    "addCustomer": "ग्राहक जोड़ें",
-    "view": "विवरण देखें",
-    "edit": "ग्राहक संपादित करें",
-    "delete": "ग्राहक हटाएं",
-    "blacklist": "ग्राहक को ब्लैकलिस्ट करें",
-    "removeBlacklist": "ब्लैकलिस्ट हटाएं",
-    "addLoyaltyPoints": "वफादारी अंक जोड़ें",
-    "redeemLoyaltyPoints": "अंक रिडीम करें",
-    "call": "ग्राहक को कॉल करें",
-    "whatsapp": "व्हाट्सऐप भेजें",
-    "email": "ईमेल भेजें",
-    "recordPayment": "भुगतान रिकॉर्ड करें",
-    "viewOrders": "ऑर्डर देखें",
-    "viewTransactions": "लेनदेन देखें",
-    "copyDetails": "विवरण कॉपी करें",
-    "markAsVIP": "VIP के रूप में चिह्नित करें",
-    "moreActions": "और क्रियाएँ"
-  },
-  "fields": {
-    "customerCode": "ग्राहक कोड",
-    "name": "नाम",
-    "email": "ईमेल",
-    "customerType": "प्रकार",
-    "membershipTier": "सदस्यता स्तर",
-    "loyaltyPoints": "वफादारी अंक",
-    "totalPurchases": "कुल खरीदारी",
-    "totalDue": "बकाया राशि",
-    "lastOrderDate": "अंतिम ऑर्डर",
+  "filters": {
+    "searchPlaceholder": "ग्राहकों को खोजें...",
+    "type": "ग्राहक प्रकार",
+    "tier": "सदस्यता स्तर",
     "status": "स्थिति",
-    "createdAt": "जुड़ने की तिथि",
-    "customer": "ग्राहक",
-    "summary": "सारांश",
-    "points": "अंक",
-    "outstanding": "बकाया",
-    "due": "देय"
+    "selectDateRange": "तारीख सीमा चुनें",
+    "dateRange": "तारीख सीमा",
+    "moreFilters": "अधिक फ़िल्टर",
+    "advancedFilters": "उन्नत फ़िल्टर",
+    "clearAll": "सभी साफ करें",
+    "customerType": "ग्राहक प्रकार",
+    "membershipTier": "सदस्यता स्तर",
+    "outstandingBalance": "बकाया शेष",
+    "showWithBalance": "बकाया वाले दिखाएं",
+    "showAll": "सभी दिखाएं"
   },
-  "customerTypes": {
+  "types": {
     "retail": "खुदरा",
     "wholesale": "थोक",
     "vip": "VIP",
     "regular": "नियमित"
   },
-  "membershipTiers": {
+  "tiers": {
     "standard": "स्टैंडर्ड",
     "silver": "सिल्वर",
     "gold": "गोल्ड",
     "platinum": "प्लैटिनम"
-  },
-  "status": {
-    "blacklisted": "ब्लैकलिस्टेड"
-  },
-  "noOrders": "अभी तक कोई ऑर्डर नहीं"
-},
-"filters": {
-  "searchPlaceholder": "ग्राहकों को खोजें...",
-  "type": "ग्राहक प्रकार",
-  "tier": "सदस्यता स्तर",
-  "status": "स्थिति",
-  "selectDateRange": "तारीख सीमा चुनें",
-  "dateRange": "तारीख सीमा",
-  "moreFilters": "अधिक फ़िल्टर",
-  "advancedFilters": "उन्नत फ़िल्टर",
-  "clearAll": "सभी साफ करें",
-  "customerType": "ग्राहक प्रकार",
-  "membershipTier": "सदस्यता स्तर",
-  "outstandingBalance": "बकाया शेष",
-  "showWithBalance": "बकाया वाले दिखाएं",
-  "showAll": "सभी दिखाएं"
-},
-"types": {
-  "retail": "खुदरा",
-  "wholesale": "थोक",
-  "vip": "VIP",
-  "regular": "नियमित"
-},
-"tiers": {
-  "standard": "स्टैंडर्ड",
-  "silver": "सिल्वर",
-  "gold": "गोल्ड",
-  "platinum": "प्लैटिनम"
-}
-  
+  }
 }

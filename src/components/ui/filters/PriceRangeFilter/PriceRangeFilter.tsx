@@ -24,7 +24,10 @@ export interface PriceRangeFilterProps {
   disabled?: boolean
 }
 
-export const PriceRangeFilter = React.forwardRef<HTMLDivElement, PriceRangeFilterProps>(
+export const PriceRangeFilter = React.forwardRef<
+  HTMLDivElement,
+  PriceRangeFilterProps
+>(
   (
     {
       value = {},

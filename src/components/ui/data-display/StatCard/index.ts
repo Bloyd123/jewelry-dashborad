@@ -4,7 +4,12 @@
 // ============================================================================
 
 export { StatCard } from './StatCard'
-export type { StatCardProps, StatCardVariant, StatCardSize, TrendDirection } from './StatCard'
+export type {
+  StatCardProps,
+  StatCardVariant,
+  StatCardSize,
+  TrendDirection,
+} from './StatCard'
 
 export { StatCardGrid } from './StatCardGrid'
 export type { StatCardGridProps } from './StatCardGrid'

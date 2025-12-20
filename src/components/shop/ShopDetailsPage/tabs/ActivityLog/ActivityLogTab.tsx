@@ -44,7 +44,7 @@ const ActivityLogTab: React.FC = () => {
     if (filters.search) {
       const searchLower = filters.search.toLowerCase()
       result = result.filter(
-        (log) =>
+        log =>
           log.user.name.toLowerCase().includes(searchLower) ||
           log.description.toLowerCase().includes(searchLower) ||
           log.module.toLowerCase().includes(searchLower) ||
@@ -54,35 +54,37 @@ const ActivityLogTab: React.FC = () => {
 
     // User filter
     if (filters.user) {
-      result = result.filter((log) => log.user.role === filters.user)
+      result = result.filter(log => log.user.role === filters.user)
     }
 
     // Action filter
     if (filters.action) {
-      result = result.filter((log) => log.action === filters.action)
+      result = result.filter(log => log.action === filters.action)
     }
 
     // Module filter
     if (filters.module) {
-      result = result.filter((log) => log.module === filters.module)
+      result = result.filter(log => log.module === filters.module)
     }
 
     // Status filter
     if (filters.status) {
-      result = result.filter((log) => log.status === filters.status)
+      result = result.filter(log => log.status === filters.status)
     }
 
     // Date range filter
     if (filters.dateRange?.from) {
-      result = result.filter((log) => {
+      result = result.filter(log => {
         const logDate = new Date(log.timestamp)
         const fromDate = new Date(filters.dateRange!.from!)
-        const toDate = filters.dateRange!.to ? new Date(filters.dateRange!.to) : new Date()
-        
+        const toDate = filters.dateRange!.to
+          ? new Date(filters.dateRange!.to)
+          : new Date()
+
         // Set time to start/end of day for accurate comparison
         fromDate.setHours(0, 0, 0, 0)
         toDate.setHours(23, 59, 59, 999)
-        
+
         return logDate >= fromDate && logDate <= toDate
       })
     }
@@ -113,7 +115,9 @@ const ActivityLogTab: React.FC = () => {
     console.log('View Activity Details:', log)
     // Show metadata in a formatted way
     const metadataStr = JSON.stringify(log.metadata, null, 2)
-    alert(`Activity Details:\n\nUser: ${log.user.name}\nAction: ${log.action}\nModule: ${log.module}\n\nMetadata:\n${metadataStr}`)
+    alert(
+      `Activity Details:\n\nUser: ${log.user.name}\nAction: ${log.action}\nModule: ${log.module}\n\nMetadata:\n${metadataStr}`
+    )
   }
 
   // FIXED: Use proper type signature matching DataTable's onRowClick
@@ -130,14 +134,14 @@ const ActivityLogTab: React.FC = () => {
       {/* Admin Info Banner */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-4">
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 rounded-full bg-accent/10 p-2">
+          <div className="bg-accent/10 flex-shrink-0 rounded-full p-2">
             <AlertCircle className="h-5 w-5 text-accent" />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <h3 className="text-sm font-semibold text-text-primary">
               {t('activityLog.adminOnlyTitle')}
             </h3>
-            <p className="text-sm text-text-secondary mt-1">
+            <p className="mt-1 text-sm text-text-secondary">
               {t('activityLog.adminOnlyDescription')}
             </p>
           </div>
@@ -155,7 +159,8 @@ const ActivityLogTab: React.FC = () => {
       {filteredData.length !== MOCK_ACTIVITY_LOGS.length && (
         <div className="flex items-center gap-2 text-sm text-text-secondary">
           <span>
-            Showing {filteredData.length} of {MOCK_ACTIVITY_LOGS.length} activities
+            Showing {filteredData.length} of {MOCK_ACTIVITY_LOGS.length}{' '}
+            activities
           </span>
         </div>
       )}
@@ -211,7 +216,7 @@ const ActivityLogTab: React.FC = () => {
         // Row Click Handler - FIXED TYPE
         onRowClick={handleRowClick}
         // Get Row ID
-        getRowId={(row) => row.id}
+        getRowId={row => row.id}
         // Test ID
         testId="activity-log-table"
         ariaLabel={t('activityLog.tableAriaLabel')}

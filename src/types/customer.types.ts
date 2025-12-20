@@ -21,7 +21,12 @@ export type CustomerType = 'retail' | 'wholesale' | 'vip' | 'regular'
 /**
  * Customer Category Enum
  */
-export type CustomerCategory = 'gold' | 'silver' | 'diamond' | 'platinum' | 'mixed'
+export type CustomerCategory =
+  | 'gold'
+  | 'silver'
+  | 'diamond'
+  | 'platinum'
+  | 'mixed'
 
 /**
  * Preferred Metal Enum
@@ -31,18 +36,23 @@ export type PreferredMetal = 'gold' | 'silver' | 'platinum' | 'diamond'
 /**
  * Communication Preference Enum
  */
-export type CommunicationPreference = 'email' | 'sms' | 'whatsapp' | 'call' | 'none'
+export type CommunicationPreference =
+  | 'email'
+  | 'sms'
+  | 'whatsapp'
+  | 'call'
+  | 'none'
 
 /**
  * Customer Source Enum
  */
-export type CustomerSource = 
-  | 'walk_in' 
-  | 'referral' 
-  | 'online' 
-  | 'phone' 
-  | 'social_media' 
-  | 'advertisement' 
+export type CustomerSource =
+  | 'walk_in'
+  | 'referral'
+  | 'online'
+  | 'phone'
+  | 'social_media'
+  | 'advertisement'
   | 'other'
 
 /**
@@ -69,7 +79,7 @@ export interface CustomerPreferences {
 export interface Customer {
   _id: ID
   shopId: ID
-  
+
   // Basic Information
   firstName: string
   lastName?: string
@@ -77,44 +87,44 @@ export interface Customer {
   alternatePhone?: string
   whatsappNumber?: string
   email?: string
-  
+
   // Personal Details
   dateOfBirth?: string // ISO8601 format: YYYY-MM-DD
   gender?: Gender
   anniversaryDate?: string // ISO8601 format: YYYY-MM-DD
-  
+
   // Address
   address?: Address
-  
+
   // KYC Details
   aadharNumber?: string // 12 digits
   panNumber?: string // Format: ABCDE1234F
   gstNumber?: string // Format: 27ABCDE1234F1Z5
-  
+
   // Customer Classification
   customerType?: CustomerType
   customerCategory?: CustomerCategory
-  
+
   // Financial
   creditLimit?: number
   totalPurchases?: number
   lastPurchaseDate?: string // ISO8601 format
   loyaltyPoints?: number
-  
+
   // Preferences
   preferences?: CustomerPreferences
-  
+
   // Source & Referral
   source?: CustomerSource
   referredBy?: ID
-  
+
   // Additional Info
   notes?: string
   tags?: string[]
-  
+
   // Status
   isActive: boolean
-  
+
   // Timestamps
   createdAt: string
   updatedAt: string
@@ -131,34 +141,34 @@ export interface CreateCustomerRequest {
   alternatePhone?: string // 10 digits, starts with 6-9
   whatsappNumber?: string // 10 digits, starts with 6-9
   email?: string
-  
+
   // Personal Details
   dateOfBirth?: string // ISO8601, age must be 18-120
   gender?: Gender
   anniversaryDate?: string
-  
+
   // Address
   address?: Address
-  
+
   // KYC Details
   aadharNumber?: string // 12 digits, starts with 2-9
   panNumber?: string // Format: ABCDE1234F (5 letters, 4 digits, 1 letter)
   gstNumber?: string // Format: 27ABCDE1234F1Z5
-  
+
   // Customer Classification
   customerType?: CustomerType
   customerCategory?: CustomerCategory
-  
+
   // Financial
   creditLimit?: number
-  
+
   // Preferences
   preferences?: CustomerPreferences
-  
+
   // Source & Referral
   source?: CustomerSource
   referredBy?: ID // MongoDB ID
-  
+
   // Additional Info
   notes?: string // Max 1000 characters
   tags?: string[] // Each tag max 50 characters
@@ -189,7 +199,7 @@ export interface UpdateCustomerRequest {
   notes?: string
   tags?: string[]
   isActive?: boolean
-  
+
   // These fields CANNOT be updated directly (per backend validation)
   // customerCode - auto-generated
   // totalPurchases - updated via transactions
@@ -350,7 +360,8 @@ export const VALIDATION_MESSAGES = {
   },
   phone: {
     required: 'Phone number is required',
-    invalid: 'Invalid Indian phone number (must start with 6-9 and be 10 digits)',
+    invalid:
+      'Invalid Indian phone number (must start with 6-9 and be 10 digits)',
   },
   email: {
     invalid: 'Invalid email address',

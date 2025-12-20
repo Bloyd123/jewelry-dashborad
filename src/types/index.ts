@@ -241,50 +241,50 @@ export type {
 export type {
   // Main Shop Interface
   Shop,
-  
+
   // Address Types
   ShopAddress,
   Coordinates,
-  
+
   // Bank & Payment Details
   BankDetail,
   UpiDetail,
-  
+
   // Business Hours
   BusinessHours,
   TimeSlot,
-  
+
   // Metal Rates
   MetalRate,
   SilverRate,
   PlatinumRate,
   MetalRates,
   MetalRateHistory,
-  
+
   // Shop Settings
   ShopSettings,
   GSTRates,
   PrintSettings,
   NotificationSettings,
-  
+
   // Shop Features & Statistics
   ShopFeatures,
   ShopStatistics,
-  
+
   // Compliance
   Compliance,
-  
+
   // References
   ShopUser,
   Organization,
-  
+
   // Form Data
   ShopFormData,
-  
+
   // Filters & Query
   ShopFilters,
   ShopQueryParams,
-  
+
   // API Response Types
   ShopListResponse,
   ShopDetailResponse,
@@ -293,18 +293,18 @@ export type {
   ShopDeleteResponse,
   ShopStatisticsResponse,
   ShopPaginationMeta,
-  
+
   // Update Payloads
   MetalRatesUpdatePayload,
   ShopSettingsUpdatePayload,
-  
+
   // UI Component Props
   ShopTableColumn,
   ShopCardProps,
-  
+
   // Validation
   ShopValidationError,
-} from './shop.types';
+} from './shop.types'
 
 // Export Enums
 export {
@@ -315,7 +315,7 @@ export {
   ShopLanguage,
   WeightUnit,
   ShopActionType,
-} from './shop.types';
+} from './shop.types'
 
 // ============================================================================
 // API TYPES
@@ -494,7 +494,6 @@ export type {
   SortOrder,
 } from './common.types'
 
-
 export {
   // Constants
   HTTP_STATUS,
@@ -539,14 +538,11 @@ export {
   pick,
   getNestedProperty,
 } from './common.types'
-export type{
-  Permission,
-  PermissionSet,
-} from './permission.types'
-export type { 
+export type { Permission, PermissionSet } from './permission.types'
+export type {
   // Core ID type
   ID,
-  
+
   // Enums
   Gender,
   CustomerType,
@@ -554,29 +550,29 @@ export type {
   PreferredMetal,
   CommunicationPreference,
   CustomerSource,
-  
+
   // Interfaces
   Address,
   CustomerPreferences,
   Customer,
-  
+
   // Request/Response types
   CreateCustomerRequest,
   UpdateCustomerRequest,
-  
+
   // Query/Filter types
   CustomerSearchParams,
   CustomerListParams,
-  
+
   // Operation types
   BlacklistCustomerRequest,
   LoyaltyPointsRequest,
-  
+
   // Bulk operation types
   BulkImportCustomerItem,
   BulkImportRequest,
   // BulkUpdateRequest,
-  
+
   // Export types
   ExportCustomersParams,
 } from './customer.types'

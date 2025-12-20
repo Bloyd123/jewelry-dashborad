@@ -58,7 +58,9 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
         <Avatar name={row.fullName} size="sm" />
-        <span className="font-medium text-text-primary">{row.customerCode}</span>
+        <span className="font-medium text-text-primary">
+          {row.customerCode}
+        </span>
       </div>
     ),
   },
@@ -72,10 +74,10 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     width: '200px',
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
-        <Avatar 
-          name={row.fullName} 
+        <Avatar
+          name={row.fullName}
           size="md"
-          status={row.isActive ? 'online' : 'offline'} 
+          status={row.isActive ? 'online' : 'offline'}
         />
         <div className="flex flex-col">
           <span className="font-medium text-text-primary">{row.fullName}</span>
@@ -96,11 +98,11 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
       <div className="flex items-center gap-2">
         <span className="text-text-primary">{row.phone}</span>
         <button
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation()
             copyToClipboard(row.phone)
           }}
-          className="p-1 rounded hover:bg-bg-tertiary text-text-tertiary hover:text-text-primary transition-colors"
+          className="rounded p-1 text-text-tertiary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
           aria-label="Copy phone number"
         >
           <Copy className="h-3.5 w-3.5" />
@@ -157,7 +159,8 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
       return (
         <Badge variant={tierVariants[row.membershipTier]}>
           <span className="mr-1">{tierIcons[row.membershipTier]}</span>
-          {row.membershipTier.charAt(0).toUpperCase() + row.membershipTier.slice(1)}
+          {row.membershipTier.charAt(0).toUpperCase() +
+            row.membershipTier.slice(1)}
         </Badge>
       )
     },
@@ -229,10 +232,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     sortable: true,
     width: '120px',
     cell: ({ row }) => (
-      <Badge 
-        variant={row.isActive ? 'active' : 'inactive'} 
-        dot
-      >
+      <Badge variant={row.isActive ? 'active' : 'inactive'} dot>
         {row.isActive ? 'Active' : 'Inactive'}
       </Badge>
     ),
@@ -246,7 +246,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     sortable: true,
     width: '130px',
     cell: ({ row }) => (
-      <span className="text-text-secondary text-sm">
+      <span className="text-sm text-text-secondary">
         {formatDate(row.createdAt)}
       </span>
     ),

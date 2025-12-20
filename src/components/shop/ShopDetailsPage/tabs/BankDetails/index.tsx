@@ -1,10 +1,10 @@
-import { BankDetailsTab } from './BankDetailsTab';
-import { dummyShops } from '@/pages/shops/data';
+import { BankDetailsTab } from './BankDetailsTab'
+import { dummyShops } from '@/pages/shops/data'
 
 // In your component
-const shop = dummyShops[0];
+const shop = dummyShops[0]
 
-<BankDetailsTab
+;<BankDetailsTab
   bankDetails={shop.bankDetails}
   upiDetails={shop.upiDetails}
   isAdminView={true}

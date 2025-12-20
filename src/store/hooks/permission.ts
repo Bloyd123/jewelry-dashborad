@@ -1,11 +1,10 @@
-
 import { useAppSelector } from '@/store/hooks'
 import { getPermissionsByRole } from '@/config/permissions.config'
-import { UserRole ,Permission} from '@/types'
+import { UserRole, Permission } from '@/types'
 
 export const usePermissions = () => {
-  const { user } = useAppSelector((state) => state.auth)
-  
+  const { user } = useAppSelector(state => state.auth)
+
   if (!user) {
     return {
       permissions: {},
@@ -24,7 +23,7 @@ export const usePermissions = () => {
   return {
     permissions,
     userRole,
-    
+
     /**
      * Check if user has a specific permission
      * @param permission - Permission key to check
@@ -33,7 +32,7 @@ export const usePermissions = () => {
     hasPermission: (permission: Permission): boolean => {
       return permissions[permission] === true
     },
-    
+
     /**
      * Check if user has a specific role
      * @param role - Role to check
@@ -42,7 +41,7 @@ export const usePermissions = () => {
     hasRole: (role: UserRole): boolean => {
       return userRole === role
     },
-    
+
     /**
      * Check if user has any of the specified roles
      * @param roles - Array of roles to check
@@ -51,7 +50,7 @@ export const usePermissions = () => {
     hasAnyRole: (roles: UserRole[]): boolean => {
       return roles.includes(userRole)
     },
-    
+
     /**
      * Check if user has at least one of the specified permissions
      * @param permissionList - Array of permissions to check
@@ -60,14 +59,16 @@ export const usePermissions = () => {
     hasAnyPermission: (permissionList: Permission[]): boolean => {
       return permissionList.some(permission => permissions[permission] === true)
     },
-    
+
     /**
      * Check if user has all of the specified permissions
      * @param permissionList - Array of permissions to check
      * @returns true if user has all permissions
      */
     hasAllPermissions: (permissionList: Permission[]): boolean => {
-      return permissionList.every(permission => permissions[permission] === true)
+      return permissionList.every(
+        permission => permissions[permission] === true
+      )
     },
   }
 }

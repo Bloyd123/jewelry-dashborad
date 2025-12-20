@@ -20,12 +20,12 @@ export interface DrawerProps {
   // Control
   open: boolean
   onOpenChange: (open: boolean) => void
-  
+
   // Content
   children: React.ReactNode
   title?: string
   description?: string
-  
+
   // Configuration
   side?: DrawerSide
   size?: DrawerSize
@@ -33,17 +33,17 @@ export interface DrawerProps {
   closeOnEscape?: boolean
   closeOnOutsideClick?: boolean
   preventScroll?: boolean
-  
+
   // Styling
   className?: string
   overlayClassName?: string
   contentClassName?: string
   headerClassName?: string
-  
+
   // Callbacks
   onClose?: () => void
   onOpen?: () => void
-  
+
   // Additional
   testId?: string
 }
@@ -154,7 +154,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         {/* Overlay */}
         <DialogPrimitive.Overlay
           className={cn(
-            'fixed inset-0 z-50 bg-bg-primary/80 backdrop-blur-sm',
+            'bg-bg-primary/80 fixed inset-0 z-50 backdrop-blur-sm',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             overlayClassName
@@ -164,11 +164,13 @@ export const Drawer: React.FC<DrawerProps> = ({
         {/* Drawer Content */}
         <DialogPrimitive.Content
           className={cn(
-            'fixed z-50 w-full h-full',
+            'fixed z-50 h-full w-full',
             positionClasses[side],
             sizeClasses[size],
-            'bg-bg-secondary border shadow-lg',
-            side === 'left' ? 'border-r border-border-primary' : 'border-l border-border-primary',
+            'border bg-bg-secondary shadow-lg',
+            side === 'left'
+              ? 'border-r border-border-primary'
+              : 'border-l border-border-primary',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:duration-300 data-[state=open]:duration-500',
             slideAnimation[side].in,
@@ -176,9 +178,9 @@ export const Drawer: React.FC<DrawerProps> = ({
             contentClassName,
             className
           )}
-          onEscapeKeyDown={closeOnEscape ? undefined : (e) => e.preventDefault()}
+          onEscapeKeyDown={closeOnEscape ? undefined : e => e.preventDefault()}
           onPointerDownOutside={
-            closeOnOutsideClick ? undefined : (e) => e.preventDefault()
+            closeOnOutsideClick ? undefined : e => e.preventDefault()
           }
           data-testid={testId}
         >
@@ -186,13 +188,13 @@ export const Drawer: React.FC<DrawerProps> = ({
           {(title || description || showCloseButton) && (
             <div
               className={cn(
-                'flex items-start justify-between px-6 py-4 border-b border-border-primary',
+                'flex items-start justify-between border-b border-border-primary px-6 py-4',
                 headerClassName
               )}
             >
               <div className="flex-1">
                 {title && (
-                  <DialogPrimitive.Title className="text-lg font-semibold text-text-primary mb-1">
+                  <DialogPrimitive.Title className="mb-1 text-lg font-semibold text-text-primary">
                     {t(title)}
                   </DialogPrimitive.Title>
                 )}
@@ -207,7 +209,7 @@ export const Drawer: React.FC<DrawerProps> = ({
               {showCloseButton && (
                 <DialogPrimitive.Close
                   className={cn(
-                    'rounded-sm opacity-70 ring-offset-background transition-opacity',
+                    'ring-offset-background rounded-sm opacity-70 transition-opacity',
                     'hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
                     'disabled:pointer-events-none',
                     'text-text-secondary hover:text-text-primary',
@@ -223,7 +225,7 @@ export const Drawer: React.FC<DrawerProps> = ({
           )}
 
           {/* Content */}
-          <div className="overflow-y-auto h-[calc(100%-5rem)] p-6">
+          <div className="h-[calc(100%-5rem)] overflow-y-auto p-6">
             {children}
           </div>
         </DialogPrimitive.Content>

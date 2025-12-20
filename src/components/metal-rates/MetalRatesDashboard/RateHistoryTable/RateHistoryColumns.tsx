@@ -163,8 +163,8 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
               change > 0
                 ? 'text-status-success'
                 : change < 0
-                ? 'text-status-error'
-                : 'text-text-tertiary'
+                  ? 'text-status-error'
+                  : 'text-text-tertiary'
             }`}
           >
             {formatChangePercentage(change)}

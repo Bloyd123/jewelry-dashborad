@@ -19,21 +19,21 @@ interface CustomerFilters {
 interface CustomerUIState {
   // Filters (UI-only state)
   filters: CustomerFilters
-  
+
   // Pagination (UI-only state)
   currentPage: number
   pageSize: number
   sortBy: string
   sortOrder: 'asc' | 'desc'
-  
+
   // Selected customers (for bulk operations)
   selectedCustomerIds: string[]
-  
+
   // UI states
   viewMode: 'grid' | 'list' | 'compact'
   showFilters: boolean
   isExporting: boolean
-  
+
   // Form states
   isFormOpen: boolean
   editingCustomerId: string | null
@@ -75,12 +75,18 @@ const customerSlice = createSlice({
       state.currentPage = 1 // Reset to first page on search
     },
 
-    setCustomerTypeFilter: (state, action: PayloadAction<CustomerType | undefined>) => {
+    setCustomerTypeFilter: (
+      state,
+      action: PayloadAction<CustomerType | undefined>
+    ) => {
       state.filters.customerType = action.payload
       state.currentPage = 1
     },
 
-    setMembershipTierFilter: (state, action: PayloadAction<MembershipTier | undefined>) => {
+    setMembershipTierFilter: (
+      state,
+      action: PayloadAction<MembershipTier | undefined>
+    ) => {
       state.filters.membershipTier = action.payload
       state.currentPage = 1
     },
@@ -109,7 +115,7 @@ const customerSlice = createSlice({
       state.currentPage = 1
     },
 
-    clearFilters: (state) => {
+    clearFilters: state => {
       state.filters = initialState.filters
       state.currentPage = 1
     },
@@ -126,11 +132,11 @@ const customerSlice = createSlice({
       state.currentPage = 1
     },
 
-    nextPage: (state) => {
+    nextPage: state => {
       state.currentPage += 1
     },
 
-    previousPage: (state) => {
+    previousPage: state => {
       if (state.currentPage > 1) {
         state.currentPage -= 1
       }
@@ -147,7 +153,7 @@ const customerSlice = createSlice({
       state.sortOrder = action.payload.sortOrder
     },
 
-    toggleSortOrder: (state) => {
+    toggleSortOrder: state => {
       state.sortOrder = state.sortOrder === 'asc' ? 'desc' : 'asc'
     },
 
@@ -162,7 +168,7 @@ const customerSlice = createSlice({
 
     deselectCustomer: (state, action: PayloadAction<string>) => {
       state.selectedCustomerIds = state.selectedCustomerIds.filter(
-        (id) => id !== action.payload
+        id => id !== action.payload
       )
     },
 
@@ -179,18 +185,21 @@ const customerSlice = createSlice({
       state.selectedCustomerIds = action.payload
     },
 
-    deselectAllCustomers: (state) => {
+    deselectAllCustomers: state => {
       state.selectedCustomerIds = []
     },
 
     // ========================================================================
     // VIEW MODE ACTIONS
     // ========================================================================
-    setViewMode: (state, action: PayloadAction<'grid' | 'list' | 'compact'>) => {
+    setViewMode: (
+      state,
+      action: PayloadAction<'grid' | 'list' | 'compact'>
+    ) => {
       state.viewMode = action.payload
     },
 
-    toggleFilters: (state) => {
+    toggleFilters: state => {
       state.showFilters = !state.showFilters
     },
 
@@ -208,7 +217,7 @@ const customerSlice = createSlice({
     // ========================================================================
     // FORM ACTIONS
     // ========================================================================
-    openCreateForm: (state) => {
+    openCreateForm: state => {
       state.isFormOpen = true
       state.formMode = 'create'
       state.editingCustomerId = null
@@ -220,7 +229,7 @@ const customerSlice = createSlice({
       state.editingCustomerId = action.payload
     },
 
-    closeForm: (state) => {
+    closeForm: state => {
       state.isFormOpen = false
       state.editingCustomerId = null
     },
@@ -281,13 +290,15 @@ export const {
 // SELECTORS (Keep with slice for better organization)
 // ============================================================================
 
-
-
 // Basic selectors
-export const selectCustomerFilters = (state: RootState) => state.customer.filters
-export const selectCustomerSearch = (state: RootState) => state.customer.filters.search
-export const selectCustomerTypeFilter = (state: RootState) => state.customer.filters.customerType
-export const selectMembershipTierFilter = (state: RootState) => state.customer.filters.membershipTier
+export const selectCustomerFilters = (state: RootState) =>
+  state.customer.filters
+export const selectCustomerSearch = (state: RootState) =>
+  state.customer.filters.search
+export const selectCustomerTypeFilter = (state: RootState) =>
+  state.customer.filters.customerType
+export const selectMembershipTierFilter = (state: RootState) =>
+  state.customer.filters.membershipTier
 
 export const selectCustomerPagination = (state: RootState) => ({
   currentPage: state.customer.currentPage,
@@ -299,9 +310,12 @@ export const selectCustomerPagination = (state: RootState) => ({
 export const selectSelectedCustomerIds = (state: RootState) =>
   state.customer.selectedCustomerIds
 
-export const selectCustomerViewMode = (state: RootState) => state.customer.viewMode
-export const selectShowFilters = (state: RootState) => state.customer.showFilters
-export const selectIsExporting = (state: RootState) => state.customer.isExporting
+export const selectCustomerViewMode = (state: RootState) =>
+  state.customer.viewMode
+export const selectShowFilters = (state: RootState) =>
+  state.customer.showFilters
+export const selectIsExporting = (state: RootState) =>
+  state.customer.isExporting
 
 export const selectCustomerFormState = (state: RootState) => ({
   isOpen: state.customer.isFormOpen,

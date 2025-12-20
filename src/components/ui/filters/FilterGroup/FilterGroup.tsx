@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/components/ui/filters/FilterGroup/FilterGroup.tsx
 // Filter Group Wrapper with Label
@@ -22,7 +21,7 @@ export const FilterGroup = React.forwardRef<HTMLDivElement, FilterGroupProps>(
         {label && (
           <Label className="text-sm font-medium text-text-secondary">
             {label}
-            {required && <span className="text-status-error ml-1">*</span>}
+            {required && <span className="ml-1 text-status-error">*</span>}
           </Label>
         )}
         {children}

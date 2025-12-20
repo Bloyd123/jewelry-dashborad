@@ -30,21 +30,26 @@ export const FilterChips = React.forwardRef<HTMLDivElement, FilterChipsProps>(
     if (filters.length === 0) return null
 
     return (
-      <div ref={ref} className={cn('flex flex-wrap items-center gap-2', className)}>
-        <span className="text-sm text-text-tertiary">{t('filters.active')}:</span>
-        
-        {filters.map((filter) => (
+      <div
+        ref={ref}
+        className={cn('flex flex-wrap items-center gap-2', className)}
+      >
+        <span className="text-sm text-text-tertiary">
+          {t('filters.active')}:
+        </span>
+
+        {filters.map(filter => (
           <Badge
             key={filter.id}
             variant="outline"
-            className="gap-1 pr-1 cursor-pointer hover:bg-bg-tertiary"
+            className="cursor-pointer gap-1 pr-1 hover:bg-bg-tertiary"
           >
             <span className="text-xs">
               {filter.label}: {filter.value}
             </span>
             <button
               onClick={() => onRemove(filter.id)}
-              className="ml-1 rounded-full p-0.5 hover:bg-bg-primary transition-colors"
+              className="ml-1 rounded-full p-0.5 transition-colors hover:bg-bg-primary"
             >
               <X className="h-3 w-3" />
             </button>

@@ -138,7 +138,9 @@ export const AreaChart = React.forwardRef<HTMLDivElement, AreaChartProps>(
                 type="monotone"
                 dataKey={area.dataKey}
                 name={area.name || area.dataKey}
-                stroke={area.color || defaultColors[index % defaultColors.length]}
+                stroke={
+                  area.color || defaultColors[index % defaultColors.length]
+                }
                 fill={area.color || defaultColors[index % defaultColors.length]}
                 fillOpacity={area.fillOpacity || 0.6}
                 stackId={stacked ? '1' : undefined}

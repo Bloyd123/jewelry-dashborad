@@ -72,9 +72,24 @@ const MODULE_OPTIONS = [
 ]
 
 const STATUS_OPTIONS = [
-  { value: 'success', label: 'Success', variant: 'active' as const, showDot: true },
-  { value: 'pending', label: 'Pending', variant: 'pending' as const, showDot: true },
-  { value: 'failed', label: 'Failed', variant: 'inactive' as const, showDot: true },
+  {
+    value: 'success',
+    label: 'Success',
+    variant: 'active' as const,
+    showDot: true,
+  },
+  {
+    value: 'pending',
+    label: 'Pending',
+    variant: 'pending' as const,
+    showDot: true,
+  },
+  {
+    value: 'failed',
+    label: 'Failed',
+    variant: 'inactive' as const,
+    showDot: true,
+  },
 ]
 
 // ============================================================================
@@ -141,13 +156,15 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
   const getFilterLabel = (key: string, value: string) => {
     switch (key) {
       case 'user':
-        return USER_ROLE_OPTIONS.find((opt) => opt.value === value)?.label || value
+        return (
+          USER_ROLE_OPTIONS.find(opt => opt.value === value)?.label || value
+        )
       case 'action':
         return value
       case 'module':
         return value
       case 'status':
-        return STATUS_OPTIONS.find((opt) => opt.value === value)?.label || value
+        return STATUS_OPTIONS.find(opt => opt.value === value)?.label || value
       default:
         return value
     }
@@ -160,7 +177,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
   return (
     <div className="space-y-4">
       {/* Search Bar & Toggle Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row">
         {/* Search Input */}
         <SearchBar
           value={filters.search}
@@ -186,7 +203,11 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
 
         {/* Clear All Button */}
         {activeFiltersCount > 0 && (
-          <Button variant="ghost" onClick={onClearAll} className="gap-2 whitespace-nowrap">
+          <Button
+            variant="ghost"
+            onClick={onClearAll}
+            className="gap-2 whitespace-nowrap"
+          >
             <X className="h-4 w-4" />
             {t('activityLog.clearAll')}
           </Button>
@@ -195,7 +216,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
 
       {/* Advanced Filters Panel */}
       {showAdvancedFilters && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-lg border border-border-primary bg-bg-secondary">
+        <div className="grid grid-cols-1 gap-4 rounded-lg border border-border-primary bg-bg-secondary p-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* User Role Filter */}
           <div className="space-y-2">
             <Label className="text-xs font-medium text-text-secondary">
@@ -256,7 +277,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           </div>
 
           {/* Date Range Filter */}
-          <div className="sm:col-span-2 lg:col-span-4 space-y-2">
+          <div className="space-y-2 sm:col-span-2 lg:col-span-4">
             <Label className="text-xs font-medium text-text-secondary">
               {t('activityLog.filterByDate')}
             </Label>
@@ -284,7 +305,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
               {getFilterLabel('user', filters.user)}
               <button
                 onClick={() => handleRemoveFilter('user')}
-                className="ml-1 hover:text-status-error transition-colors"
+                className="ml-1 transition-colors hover:text-status-error"
                 aria-label="Remove user filter"
               >
                 <X className="h-3 w-3" />
@@ -299,7 +320,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
               {filters.action}
               <button
                 onClick={() => handleRemoveFilter('action')}
-                className="ml-1 hover:text-status-error transition-colors"
+                className="ml-1 transition-colors hover:text-status-error"
                 aria-label="Remove action filter"
               >
                 <X className="h-3 w-3" />
@@ -314,7 +335,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
               {filters.module}
               <button
                 onClick={() => handleRemoveFilter('module')}
-                className="ml-1 hover:text-status-error transition-colors"
+                className="ml-1 transition-colors hover:text-status-error"
                 aria-label="Remove module filter"
               >
                 <X className="h-3 w-3" />
@@ -329,7 +350,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
               {getFilterLabel('status', filters.status)}
               <button
                 onClick={() => handleRemoveFilter('status')}
-                className="ml-1 hover:text-status-error transition-colors"
+                className="ml-1 transition-colors hover:text-status-error"
                 aria-label="Remove status filter"
               >
                 <X className="h-3 w-3" />
@@ -352,7 +373,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
                 })}`}
               <button
                 onClick={() => handleRemoveFilter('dateRange')}
-                className="ml-1 hover:text-status-error transition-colors"
+                className="ml-1 transition-colors hover:text-status-error"
                 aria-label="Remove date range filter"
               >
                 <X className="h-3 w-3" />

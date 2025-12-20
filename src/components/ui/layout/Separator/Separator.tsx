@@ -13,9 +13,16 @@ import { cn } from '@/lib/utils'
 
 export type SeparatorVariant = 'solid' | 'dashed' | 'dotted' | 'gradient'
 export type SeparatorSize = 'xs' | 'sm' | 'md' | 'lg'
-export type SeparatorColor = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error'
+export type SeparatorColor =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'success'
+  | 'warning'
+  | 'error'
 
-export interface SeparatorProps extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
+export interface SeparatorProps
+  extends React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root> {
   orientation?: 'horizontal' | 'vertical'
   decorative?: boolean
   variant?: SeparatorVariant
@@ -37,10 +44,13 @@ const variantStyles: Record<SeparatorVariant, string> = {
   gradient: 'border-none bg-gradient-to-r',
 }
 
-const sizeStyles: Record<SeparatorSize, {
-  horizontal: string
-  vertical: string
-}> = {
+const sizeStyles: Record<
+  SeparatorSize,
+  {
+    horizontal: string
+    vertical: string
+  }
+> = {
   xs: {
     horizontal: 'h-px',
     vertical: 'w-px',
@@ -68,10 +78,13 @@ const colorStyles: Record<SeparatorColor, string> = {
   error: 'border-status-error bg-status-error',
 }
 
-const spacingStyles: Record<string, {
-  horizontal: string
-  vertical: string
-}> = {
+const spacingStyles: Record<
+  string,
+  {
+    horizontal: string
+    vertical: string
+  }
+> = {
   none: { horizontal: 'my-0', vertical: 'mx-0' },
   xs: { horizontal: 'my-1', vertical: 'mx-1' },
   sm: { horizontal: 'my-2', vertical: 'mx-2' },
@@ -87,101 +100,107 @@ const spacingStyles: Record<string, {
 export const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
   SeparatorProps
->(({
-  className,
-  orientation = 'horizontal',
-  decorative = true,
-  variant = 'solid',
-  size = 'xs',
-  color = 'secondary',
-  label,
-  icon,
-  spacing = 'md',
-  ...props
-}, ref) => {
-  const isHorizontal = orientation === 'horizontal'
-  
-  // Gradient style for gradient variant
-  const gradientStyle = variant === 'gradient'
-    ? 'from-transparent via-border-secondary to-transparent'
-    : ''
+>(
+  (
+    {
+      className,
+      orientation = 'horizontal',
+      decorative = true,
+      variant = 'solid',
+      size = 'xs',
+      color = 'secondary',
+      label,
+      icon,
+      spacing = 'md',
+      ...props
+    },
+    ref
+  ) => {
+    const isHorizontal = orientation === 'horizontal'
 
-  // If there's a label or icon, render with content
-  if (label || icon) {
+    // Gradient style for gradient variant
+    const gradientStyle =
+      variant === 'gradient'
+        ? 'from-transparent via-border-secondary to-transparent'
+        : ''
+
+    // If there's a label or icon, render with content
+    if (label || icon) {
+      return (
+        <div
+          className={cn(
+            'flex items-center',
+            isHorizontal ? 'w-full' : 'h-full flex-col',
+            spacingStyles[spacing][isHorizontal ? 'horizontal' : 'vertical'],
+            className
+          )}
+        >
+          {/* First separator line */}
+          <SeparatorPrimitive.Root
+            ref={ref}
+            decorative={decorative}
+            orientation={orientation}
+            className={cn(
+              'shrink-0 bg-border-secondary',
+              isHorizontal ? 'h-px flex-1' : 'w-px flex-1',
+              variantStyles[variant],
+              sizeStyles[size][isHorizontal ? 'horizontal' : 'vertical'],
+              colorStyles[color],
+              variant === 'gradient' && gradientStyle
+            )}
+            {...props}
+          />
+
+          {/* Label/Icon */}
+          <div
+            className={cn(
+              'flex shrink-0 items-center justify-center text-sm text-text-tertiary',
+              isHorizontal ? 'px-3' : 'py-3'
+            )}
+          >
+            {icon && <span className="mr-2">{icon}</span>}
+            {label && <span>{label}</span>}
+          </div>
+
+          {/* Second separator line */}
+          <SeparatorPrimitive.Root
+            decorative={decorative}
+            orientation={orientation}
+            className={cn(
+              'shrink-0 bg-border-secondary',
+              isHorizontal ? 'h-px flex-1' : 'w-px flex-1',
+              variantStyles[variant],
+              sizeStyles[size][isHorizontal ? 'horizontal' : 'vertical'],
+              colorStyles[color],
+              variant === 'gradient' && gradientStyle
+            )}
+          />
+        </div>
+      )
+    }
+
+    // Simple separator without label
     return (
-      <div
+      <SeparatorPrimitive.Root
+        ref={ref}
+        decorative={decorative}
+        orientation={orientation}
         className={cn(
-          'flex items-center',
-          isHorizontal ? 'w-full' : 'flex-col h-full',
+          'shrink-0',
+          isHorizontal
+            ? cn('w-full', sizeStyles[size].horizontal)
+            : cn('h-full', sizeStyles[size].vertical),
+          variantStyles[variant],
+          colorStyles[color],
+          variant === 'gradient' && gradientStyle,
           spacingStyles[spacing][isHorizontal ? 'horizontal' : 'vertical'],
           className
         )}
-      >
-        {/* First separator line */}
-        <SeparatorPrimitive.Root
-          ref={ref}
-          decorative={decorative}
-          orientation={orientation}
-          className={cn(
-            'shrink-0 bg-border-secondary',
-            isHorizontal ? 'flex-1 h-px' : 'flex-1 w-px',
-            variantStyles[variant],
-            sizeStyles[size][isHorizontal ? 'horizontal' : 'vertical'],
-            colorStyles[color],
-            variant === 'gradient' && gradientStyle
-          )}
-          {...props}
-        />
-        
-        {/* Label/Icon */}
-        <div
-          className={cn(
-            'shrink-0 flex items-center justify-center text-text-tertiary text-sm',
-            isHorizontal ? 'px-3' : 'py-3'
-          )}
-        >
-          {icon && <span className="mr-2">{icon}</span>}
-          {label && <span>{label}</span>}
-        </div>
-        
-        {/* Second separator line */}
-        <SeparatorPrimitive.Root
-          decorative={decorative}
-          orientation={orientation}
-          className={cn(
-            'shrink-0 bg-border-secondary',
-            isHorizontal ? 'flex-1 h-px' : 'flex-1 w-px',
-            variantStyles[variant],
-            sizeStyles[size][isHorizontal ? 'horizontal' : 'vertical'],
-            colorStyles[color],
-            variant === 'gradient' && gradientStyle
-          )}
-        />
-      </div>
+        {...props}
+      />
     )
   }
-
-  // Simple separator without label
-  return (
-    <SeparatorPrimitive.Root
-      ref={ref}
-      decorative={decorative}
-      orientation={orientation}
-      className={cn(
-        'shrink-0',
-        isHorizontal
-          ? cn('w-full', sizeStyles[size].horizontal)
-          : cn('h-full', sizeStyles[size].vertical),
-        variantStyles[variant],
-        colorStyles[color],
-        variant === 'gradient' && gradientStyle,
-        spacingStyles[spacing][isHorizontal ? 'horizontal' : 'vertical'],
-        className
-      )}
-      {...props}
-    />
-  )
-})
+)
 
 Separator.displayName = 'Separator'
 
@@ -205,11 +224,11 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('flex flex-col gap-3 my-6', className)}>
+    <div className={cn('my-6 flex flex-col gap-3', className)}>
       {(title || subtitle || icon) && (
         <div className="flex items-center gap-3">
           {icon && (
-            <div className="flex items-center justify-center h-8 w-8 rounded-lg bg-bg-tertiary text-text-primary">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-bg-tertiary text-text-primary">
               {icon}
             </div>
           )}
@@ -220,9 +239,7 @@ export const SectionDivider: React.FC<SectionDividerProps> = ({
               </h3>
             )}
             {subtitle && (
-              <p className="text-sm text-text-secondary mt-0.5">
-                {subtitle}
-              </p>
+              <p className="mt-0.5 text-sm text-text-secondary">{subtitle}</p>
             )}
           </div>
         </div>

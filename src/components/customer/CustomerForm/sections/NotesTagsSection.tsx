@@ -23,7 +23,7 @@ export const NotesTagsSection = ({
 
   const handleAddTag = () => {
     if (!tagInput.trim()) return
-    
+
     const currentTags = data.tags || []
     if (currentTags.includes(tagInput.trim())) {
       setTagInput('')
@@ -36,7 +36,10 @@ export const NotesTagsSection = ({
 
   const handleRemoveTag = (tagToRemove: string) => {
     const currentTags = data.tags || []
-    onChange('tags', currentTags.filter(tag => tag !== tagToRemove))
+    onChange(
+      'tags',
+      currentTags.filter(tag => tag !== tagToRemove)
+    )
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -63,20 +66,20 @@ export const NotesTagsSection = ({
       />
 
       <div>
-        <label className="text-sm font-medium text-text-primary mb-2 block">
+        <label className="mb-2 block text-sm font-medium text-text-primary">
           {t('customer.tags')}
         </label>
-        
+
         {/* Tag Input */}
-        <div className="flex gap-2 mb-3">
+        <div className="mb-3 flex gap-2">
           <Input
             value={tagInput}
-            onChange={(e) => setTagInput(e.target.value)}
+            onChange={e => setTagInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder={t('customer.addTag')}
             disabled={disabled}
             maxLength={50}
-            className="flex-1 bg-bg-secondary border-border-primary text-text-primary"
+            className="flex-1 border-border-primary bg-bg-secondary text-text-primary"
           />
           <Button
             type="button"
@@ -95,7 +98,7 @@ export const NotesTagsSection = ({
             {data.tags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm bg-accent/10 text-accent border border-accent/20"
+                className="bg-accent/10 border-accent/20 inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm text-accent"
               >
                 {tag}
                 <button
@@ -112,7 +115,7 @@ export const NotesTagsSection = ({
         )}
 
         {errors.tags && (
-          <p className="text-status-error text-sm mt-2">{errors.tags}</p>
+          <p className="mt-2 text-sm text-status-error">{errors.tags}</p>
         )}
       </div>
     </div>

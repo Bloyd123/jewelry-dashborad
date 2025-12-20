@@ -33,13 +33,13 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
   return (
     <div className={cn('w-full', className)}>
       {/* Table Container */}
-      <div className="rounded-lg border border-border-primary bg-bg-secondary overflow-hidden">
+      <div className="overflow-hidden rounded-lg border border-border-primary bg-bg-secondary">
         {/* Header Skeleton */}
         <div className="border-b border-border-primary bg-bg-secondary">
           <div className="flex items-center">
             {/* Selection Header */}
             {showSelection && (
-              <div className="w-12 px-4 py-3 flex items-center justify-center">
+              <div className="flex w-12 items-center justify-center px-4 py-3">
                 <Skeleton className="h-4 w-4 rounded" />
               </div>
             )}
@@ -48,7 +48,7 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
             {Array.from({ length: columns }).map((_, index) => (
               <div
                 key={index}
-                className="flex-1 px-4 py-3 flex items-center gap-2"
+                className="flex flex-1 items-center gap-2 px-4 py-3"
               >
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="h-4 w-4" />
@@ -57,7 +57,7 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
 
             {/* Actions Header */}
             {showActions && (
-              <div className="w-20 px-4 py-3 flex items-center justify-center">
+              <div className="flex w-20 items-center justify-center px-4 py-3">
                 <Skeleton className="h-4 w-16" />
               </div>
             )}
@@ -74,7 +74,7 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
               <div className="flex items-center">
                 {/* Selection Cell */}
                 {showSelection && (
-                  <div className="w-12 px-4 py-3 flex items-center justify-center">
+                  <div className="flex w-12 items-center justify-center px-4 py-3">
                     <Skeleton className="h-4 w-4 rounded" />
                   </div>
                 )}
@@ -86,7 +86,11 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
                       className={cn(
                         'h-4',
                         // Vary widths for more realistic look
-                        colIndex % 3 === 0 ? 'w-32' : colIndex % 3 === 1 ? 'w-24' : 'w-20'
+                        colIndex % 3 === 0
+                          ? 'w-32'
+                          : colIndex % 3 === 1
+                            ? 'w-24'
+                            : 'w-20'
                       )}
                     />
                   </div>
@@ -94,7 +98,7 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
 
                 {/* Actions Cell */}
                 {showActions && (
-                  <div className="w-20 px-4 py-3 flex items-center justify-center">
+                  <div className="flex w-20 items-center justify-center px-4 py-3">
                     <Skeleton className="h-8 w-8 rounded" />
                   </div>
                 )}
@@ -169,13 +173,18 @@ export const DataTableRowSkeleton: React.FC<{
   showSelection?: boolean
   showActions?: boolean
   className?: string
-}> = ({ columns = 4, showSelection = false, showActions = false, className }) => {
+}> = ({
+  columns = 4,
+  showSelection = false,
+  showActions = false,
+  className,
+}) => {
   return (
     <tr className={cn('border-b border-border-primary', className)}>
       {/* Selection Cell */}
       {showSelection && (
         <td className="w-12 px-4 py-3 text-center">
-          <Skeleton className="h-4 w-4 rounded mx-auto" />
+          <Skeleton className="mx-auto h-4 w-4 rounded" />
         </td>
       )}
 
@@ -194,7 +203,7 @@ export const DataTableRowSkeleton: React.FC<{
       {/* Actions Cell */}
       {showActions && (
         <td className="w-20 px-4 py-3 text-center">
-          <Skeleton className="h-8 w-8 rounded mx-auto" />
+          <Skeleton className="mx-auto h-8 w-8 rounded" />
         </td>
       )}
     </tr>

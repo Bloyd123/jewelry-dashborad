@@ -680,7 +680,9 @@ export interface ApiErrorResponse {
 /**
  * Partial metal rate for updates
  */
-export type PartialMetalRate = Partial<Omit<MetalRate, '_id' | 'createdAt' | 'updatedAt'>>
+export type PartialMetalRate = Partial<
+  Omit<MetalRate, '_id' | 'createdAt' | 'updatedAt'>
+>
 
 /**
  * Metal rate without audit fields (for display)

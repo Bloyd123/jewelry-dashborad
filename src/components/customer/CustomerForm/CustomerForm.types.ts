@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/components/customer/CustomerForm/CustomerForm.types.ts
 // CustomerForm Types and Interfaces

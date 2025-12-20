@@ -31,10 +31,10 @@ export const RateHistoryTable: React.FC = () => {
     metalType: undefined,
     dateRange: 'last7days',
   })
-  
+
   // Initial sorting state
   const [sortingState, setSortingState] = useState<SortingState[]>([
-    { columnId: 'rateDate', direction: 'desc' }
+    { columnId: 'rateDate', direction: 'desc' },
   ])
 
   // ========================================================================
@@ -48,7 +48,7 @@ export const RateHistoryTable: React.FC = () => {
     if (search) {
       const searchLower = search.toLowerCase()
       data = data.filter(
-        (rate) =>
+        rate =>
           rate.rateDate.toLowerCase().includes(searchLower) ||
           rate.notes?.toLowerCase().includes(searchLower)
       )
@@ -56,7 +56,7 @@ export const RateHistoryTable: React.FC = () => {
 
     // Metal type filter
     if (filters.metalType && filters.metalType !== 'all') {
-      data = data.filter((rate) => 
+      data = data.filter(rate =>
         rate.metalTypes.includes(filters.metalType as any)
       )
     }
@@ -84,7 +84,7 @@ export const RateHistoryTable: React.FC = () => {
       const fromDate = new Date()
       fromDate.setDate(today.getDate() - daysToSubtract)
 
-      data = data.filter((rate) => new Date(rate.rateDate) >= fromDate)
+      data = data.filter(rate => new Date(rate.rateDate) >= fromDate)
     }
 
     return data
@@ -123,7 +123,7 @@ export const RateHistoryTable: React.FC = () => {
     <div className="w-full space-y-4">
       {/* Header with Title and Actions */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-text-primary flex items-center gap-2">
+        <h2 className="flex items-center gap-2 text-xl font-semibold text-text-primary">
           📊 {t('rateHistory.title')}
         </h2>
         <Button
@@ -132,7 +132,7 @@ export const RateHistoryTable: React.FC = () => {
           onClick={handleExport}
           disabled={filteredData.length === 0}
         >
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="mr-2 h-4 w-4" />
           {t('common.exportCSV')}
         </Button>
       </div>
@@ -156,7 +156,11 @@ export const RateHistoryTable: React.FC = () => {
 
       {/* Stats Summary */}
       <div className="text-sm text-text-secondary">
-        {t('common.showing')} {filteredData.length > 0 ? '1-' + Math.min(10, filteredData.length) : '0'} {t('common.of')} {filteredData.length}
+        {t('common.showing')}{' '}
+        {filteredData.length > 0
+          ? '1-' + Math.min(10, filteredData.length)
+          : '0'}{' '}
+        {t('common.of')} {filteredData.length}
       </div>
 
       {/* DataTable */}
@@ -203,7 +207,7 @@ export const RateHistoryTable: React.FC = () => {
           fullWidth: true,
         }}
         // Get Row ID
-        getRowId={(row) => row._id}
+        getRowId={row => row._id}
         // Test ID
         testId="rate-history-table"
         ariaLabel={t('rateHistory.ariaLabel')}

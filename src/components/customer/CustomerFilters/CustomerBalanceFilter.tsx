@@ -30,13 +30,7 @@ export const CustomerBalanceFilter = React.forwardRef<
   CustomerBalanceFilterProps
 >(
   (
-    {
-      value,
-      onChange,
-      showAllOption = true,
-      className,
-      disabled = false,
-    },
+    { value, onChange, showAllOption = true, className, disabled = false },
     ref
   ) => {
     const { t } = useTranslation()

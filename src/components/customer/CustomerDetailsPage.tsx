@@ -39,17 +39,19 @@ const MOCK_STATISTICS: CustomerStatistics = {
 // MAIN COMPONENT
 // ============================================================================
 
-export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({ className }) => {
+export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+  className,
+}) => {
   const { t } = useTranslation()
-  
+
   const navigate = useNavigate()
   // Redux State
-  const currentShop = useAppSelector((state) => state.shop?.currentShop)
-  
+  const currentShop = useAppSelector(state => state.shop?.currentShop)
+
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
   const [isLoading, setIsLoading] = useState(false)
-  
+
   // ========================================================================
   // HANDLERS
   // ========================================================================
@@ -93,7 +95,7 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({ classN
   return (
     <div className={`min-h-screen bg-bg-primary ${className || ''}`}>
       {/* Page Header */}
-      <div className="border-b border-border-primary bg-bg-secondary sticky top-0 z-30 shadow-sm">
+      <div className="sticky top-0 z-30 border-b border-border-primary bg-bg-secondary shadow-sm">
         <div className="container mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Title */}
@@ -101,7 +103,7 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({ classN
               <h1 className="text-xl font-bold text-text-primary sm:text-2xl">
                 {t('page.title')}
               </h1>
-              <p className="text-sm text-text-tertiary mt-1">
+              <p className="mt-1 text-sm text-text-tertiary">
                 {t('page.subtitle')}
               </p>
             </div>

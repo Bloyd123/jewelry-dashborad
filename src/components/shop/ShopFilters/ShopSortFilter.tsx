@@ -43,12 +43,12 @@ export const ShopSortFilter: React.FC<ShopSortFilterProps> = ({
   return (
     <Select value={value || 'default'} onValueChange={handleChange}>
       <SelectTrigger className={cn('w-full md:w-[200px]', className)}>
-        <ArrowUpDown className="h-4 w-4 mr-2" />
+        <ArrowUpDown className="mr-2 h-4 w-4" />
         <SelectValue placeholder={t('shop.sort.sortBy')} />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="default">{t('shop.sort.default')}</SelectItem>
-        {sortOptions.map((option) => (
+        {sortOptions.map(option => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}
           </SelectItem>

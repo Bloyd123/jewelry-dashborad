@@ -9,7 +9,14 @@
 
 export interface ActivityLogUser {
   name: string
-  role: 'super_admin' | 'org_admin' | 'shop_admin' | 'manager' | 'accountant' | 'staff' | 'system'
+  role:
+    | 'super_admin'
+    | 'org_admin'
+    | 'shop_admin'
+    | 'manager'
+    | 'accountant'
+    | 'staff'
+    | 'system'
   avatar: string // Used as seed for Avatar component
 }
 
@@ -17,7 +24,7 @@ export interface ActivityLogUser {
 // ACTIVITY ACTIONS
 // ============================================================================
 
-export type ActivityAction = 
+export type ActivityAction =
   | 'CREATE'
   | 'UPDATE'
   | 'DELETE'
@@ -229,4 +236,3 @@ export interface ActivityLogStats {
 // ============================================================================
 // EXPORT ALL TYPES
 // ============================================================================
-

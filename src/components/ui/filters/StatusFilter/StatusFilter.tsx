@@ -31,23 +31,29 @@ export interface StatusFilterProps {
   className?: string
 }
 
-export const StatusFilter = React.forwardRef<HTMLButtonElement, StatusFilterProps>(
+export const StatusFilter = React.forwardRef<
+  HTMLButtonElement,
+  StatusFilterProps
+>(
   (
-    {
-      value,
-      onChange,
-      options,
-      placeholder,
-      showAllOption = true,
-      className,
-    },
+    { value, onChange, options, placeholder, showAllOption = true, className },
     ref
   ) => {
     const { t } = useTranslation()
 
     const defaultOptions: StatusOption[] = [
-      { value: 'active', label: t('status.active'), variant: 'active', showDot: true },
-      { value: 'inactive', label: t('status.inactive'), variant: 'inactive', showDot: true },
+      {
+        value: 'active',
+        label: t('status.active'),
+        variant: 'active',
+        showDot: true,
+      },
+      {
+        value: 'inactive',
+        label: t('status.inactive'),
+        variant: 'inactive',
+        showDot: true,
+      },
     ]
 
     const statusOptions = options || defaultOptions
@@ -62,21 +68,20 @@ export const StatusFilter = React.forwardRef<HTMLButtonElement, StatusFilterProp
 
     return (
       <Select value={value || 'all'} onValueChange={handleChange}>
-        <SelectTrigger ref={ref} className={cn('w-full md:w-[160px]', className)}>
+        <SelectTrigger
+          ref={ref}
+          className={cn('w-full md:w-[160px]', className)}
+        >
           <SelectValue placeholder={placeholder || t('filters.status')} />
         </SelectTrigger>
         <SelectContent>
           {showAllOption && (
             <SelectItem value="all">{t('common.all')}</SelectItem>
           )}
-          {statusOptions.map((option) => (
+          {statusOptions.map(option => (
             <SelectItem key={option.value} value={option.value}>
               <div className="flex items-center gap-2">
-                <Badge
-                  variant={option.variant}
-                  dot={option.showDot}
-                  size="sm"
-                >
+                <Badge variant={option.variant} dot={option.showDot} size="sm">
                   {option.label}
                 </Badge>
               </div>

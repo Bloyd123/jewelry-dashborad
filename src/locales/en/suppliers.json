@@ -1,0 +1,97 @@
+{
+  "suppliers": {
+    "table": {
+      "title": "Suppliers",
+      "noSuppliers": "No suppliers found. Add your first supplier to get started.",
+      "ariaLabel": "Suppliers table",
+      "selectedCount": "{{count}} supplier(s) selected",
+      "supplierCode": "Code",
+      "businessName": "Business Name",
+      "phone": "Phone",
+      "supplierType": "Type",
+      "category": "Category",
+      "totalPurchases": "Total Purchases",
+      "totalDue": "Due Amount",
+      "rating": "Rating",
+      "status": "Status",
+      "paymentTerms": "Payment Terms",
+      "location": "Location",
+      "createdAt": "Created On"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "updateRating": "Update Rating",
+      "markPreferred": "Mark as Preferred",
+      "removePreferred": "Remove from Preferred",
+      "blacklist": "Blacklist",
+      "removeBlacklist": "Remove Blacklist",
+      "delete": "Delete",
+      "exportSelected": "Export Selected",
+      "sendEmail": "Send Email",
+      "updateBalance": "Update Balance",
+      "bulkDelete": "Bulk Delete"
+    },
+        "topSuppliers": {
+      "title": "Top Suppliers",
+      "subtitle": "This Month",
+      "noData": "No suppliers found",
+      "noDataDescription": "Start adding suppliers to see top performers"
+    },
+        "preferred": "Preferred",
+    "orders": "orders",
+    "search": {
+      "placeholder": "Search by name, code, phone, GST..."
+    },
+    "filters": {
+      "type": "Type",
+      "allTypes": "All Types",
+      "category": "Category",
+      "allCategories": "All Categories",
+      "status": "Status",
+      "preferredStatus": "Preferred Status",
+      "preferredOnly": "Preferred Only",
+      "notPreferred": "Not Preferred",
+      "verifiedStatus": "Verification",
+      "verifiedOnly": "Verified Only",
+      "notVerified": "Not Verified"
+    },
+    "type": {
+      "manufacturer": "Manufacturer",
+      "wholesaler": "Wholesaler",
+      "distributor": "Distributor",
+      "artisan": "Artisan",
+      "importer": "Importer",
+      "other": "Other"
+    },
+    "category": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "platinum": "Platinum",
+      "gemstone": "Gemstone",
+      "pearls": "Pearls",
+      "making": "Making/Labor",
+      "packaging": "Packaging",
+      "mixed": "Mixed"
+    },
+    "paymentTerms": {
+      "immediate": "Immediate",
+      "cod": "Cash on Delivery",
+      "net15": "Net 15 Days",
+      "net30": "Net 30 Days",
+      "net45": "Net 45 Days",
+      "net60": "Net 60 Days",
+      "custom": "Custom Terms"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "preferred": "Preferred",
+      "blacklisted": "Blacklisted"
+    }
+  },
+    "common": {
+    "viewAll": "View All"
+  }
+}

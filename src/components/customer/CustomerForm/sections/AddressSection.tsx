@@ -20,7 +20,7 @@ export const AddressSection = ({
   const handleAddressChange = (field: string, value: string | number) => {
     onChange('address', {
       ...data.address,
-         [field]: String(value),
+      [field]: String(value),
     })
   }
 
@@ -40,7 +40,7 @@ export const AddressSection = ({
         showCharCount
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormInput
           name="address.city"
           label={t('customer.city')}

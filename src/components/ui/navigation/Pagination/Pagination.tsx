@@ -4,7 +4,13 @@
 // ============================================================================
 
 import * as React from 'react'
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from 'lucide-react'
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  MoreHorizontal,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import {
@@ -23,19 +29,19 @@ export interface PaginationProps {
   currentPage: number
   totalPages: number
   onPageChange: (page: number) => void
-  
+
   // Optional features
   pageSize?: number
   totalItems?: number
   onPageSizeChange?: (size: number) => void
   pageSizeOptions?: number[]
-  
+
   // Display options
   showFirstLast?: boolean
   showPageSize?: boolean
   showPageInfo?: boolean
   siblingCount?: number
-  
+
   // Styling
   size?: 'sm' | 'md' | 'lg'
   variant?: 'default' | 'outline'
@@ -116,11 +122,13 @@ const sizeStyles = {
 
 const variantStyles = {
   default: {
-    button: 'bg-bg-secondary hover:bg-bg-tertiary text-text-primary border-border-primary',
+    button:
+      'bg-bg-secondary hover:bg-bg-tertiary text-text-primary border-border-primary',
     active: 'bg-accent text-white hover:bg-accent/90 border-accent',
   },
   outline: {
-    button: 'border border-border-primary hover:bg-bg-tertiary text-text-primary',
+    button:
+      'border border-border-primary hover:bg-bg-tertiary text-text-primary',
     active: 'border-accent bg-accent/10 text-accent hover:bg-accent/20',
   },
 }
@@ -164,24 +172,29 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className={cn('flex flex-col gap-4', className)}>
       {/* Page Info */}
       {showPageInfo && totalItems && (
-        <div className="flex items-center justify-between text-sm text-text-secondary px-1">
+        <div className="flex items-center justify-between px-1 text-sm text-text-secondary">
           <span>
-            {t('pagination.showing')} {startItem}-{endItem} {t('pagination.of')} {totalItems}
+            {t('pagination.showing')} {startItem}-{endItem} {t('pagination.of')}{' '}
+            {totalItems}
           </span>
-          
+
           {/* Page Size Selector */}
           {showPageSize && onPageSizeChange && (
             <div className="flex items-center gap-2">
-              <span className="hidden sm:inline">{t('pagination.itemsPerPage')}:</span>
+              <span className="hidden sm:inline">
+                {t('pagination.itemsPerPage')}:
+              </span>
               <Select
                 value={pageSize.toString()}
-                onValueChange={(value) => onPageSizeChange(Number(value))}
+                onValueChange={value => onPageSizeChange(Number(value))}
               >
-                <SelectTrigger className={cn('w-[70px]', sizeStyles[size].select)}>
+                <SelectTrigger
+                  className={cn('w-[70px]', sizeStyles[size].select)}
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {pageSizeOptions.map((option) => (
+                  {pageSizeOptions.map(option => (
                     <SelectItem key={option} value={option.toString()}>
                       {option}
                     </SelectItem>
@@ -194,7 +207,10 @@ export const Pagination: React.FC<PaginationProps> = ({
       )}
 
       {/* Pagination Controls */}
-      <nav className="flex items-center justify-center gap-1" aria-label="Pagination">
+      <nav
+        className="flex items-center justify-center gap-1"
+        aria-label="Pagination"
+      >
         {/* First Page Button */}
         {showFirstLast && (
           <PaginationButton
@@ -220,7 +236,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         </PaginationButton>
 
         {/* Page Numbers */}
-        <div className="hidden sm:flex items-center gap-1">
+        <div className="hidden items-center gap-1 sm:flex">
           {paginationRange.map((pageNumber, index) => {
             if (pageNumber === DOTS) {
               return (
@@ -254,8 +270,8 @@ export const Pagination: React.FC<PaginationProps> = ({
         </div>
 
         {/* Mobile: Current Page Indicator */}
-        <div className="sm:hidden flex items-center px-3">
-          <span className="text-sm text-text-primary font-medium">
+        <div className="flex items-center px-3 sm:hidden">
+          <span className="text-sm font-medium text-text-primary">
             {currentPage} / {totalPages}
           </span>
         </div>
@@ -321,9 +337,7 @@ const PaginationButton: React.FC<PaginationButtonProps> = ({
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
         'disabled:pointer-events-none disabled:opacity-50',
         sizeStyles[size].button,
-        isActive
-          ? variantStyles[variant].active
-          : variantStyles[variant].button
+        isActive ? variantStyles[variant].active : variantStyles[variant].button
       )}
       {...props}
     >

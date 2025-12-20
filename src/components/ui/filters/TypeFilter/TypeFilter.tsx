@@ -62,7 +62,10 @@ export const TypeFilter = React.forwardRef<HTMLButtonElement, TypeFilterProps>(
         onValueChange={handleChange}
         disabled={disabled}
       >
-        <SelectTrigger ref={ref} className={cn('w-full md:w-[180px]', className)}>
+        <SelectTrigger
+          ref={ref}
+          className={cn('w-full md:w-[180px]', className)}
+        >
           <SelectValue placeholder={placeholder || t('filters.select')} />
         </SelectTrigger>
         <SelectContent>
@@ -71,7 +74,7 @@ export const TypeFilter = React.forwardRef<HTMLButtonElement, TypeFilterProps>(
               {allOptionLabel || t('common.all')}
             </SelectItem>
           )}
-          {options.map((option) => (
+          {options.map(option => (
             <SelectItem key={option.value} value={option.value}>
               <div className="flex items-center gap-2">
                 {option.icon}

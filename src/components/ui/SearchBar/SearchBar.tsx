@@ -39,7 +39,6 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
     const [localValue, setLocalValue] = React.useState(value)
     const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
 
-
     // Sync external value changes
     React.useEffect(() => {
       setLocalValue(value)
@@ -78,7 +77,7 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
 
     return (
       <div className={cn('relative w-full', className)}>
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-tertiary" />
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
         <Input
           ref={ref}
           type="text"
@@ -95,7 +94,7 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
             variant="ghost"
             size="icon"
             onClick={handleClear}
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+            className="absolute right-1 top-1/2 h-7 w-7 -translate-y-1/2"
           >
             <X className="h-4 w-4" />
           </Button>

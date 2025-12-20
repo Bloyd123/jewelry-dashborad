@@ -128,14 +128,18 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
     return (
       <div
         className={cn(
-          'flex items-center justify-between gap-2 px-4 py-3 border-t border-border-primary bg-bg-secondary',
+          'flex items-center justify-between gap-2 border-t border-border-primary bg-bg-secondary px-4 py-3',
           className
         )}
       >
         {/* Page Info */}
         {showPageInfo && (
           <div className="text-sm text-text-secondary">
-            {t('ui.datatable.showingItems', { start: startItem, end: endItem, total: totalItems })}
+            {t('ui.datatable.showingItems', {
+              start: startItem,
+              end: endItem,
+              total: totalItems,
+            })}
           </div>
         )}
 
@@ -153,7 +157,10 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
 
           <div className="flex items-center gap-2 px-3">
             <span className="text-sm text-text-primary">
-              {t('ui.datatable.pageOf', { current: pageIndex + 1, total: totalPages })}
+              {t('ui.datatable.pageOf', {
+                current: pageIndex + 1,
+                total: totalPages,
+              })}
             </span>
           </div>
 
@@ -174,7 +181,7 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-border-primary bg-bg-secondary',
+        'flex flex-col items-center justify-between gap-4 border-t border-border-primary bg-bg-secondary px-4 py-3 sm:flex-row',
         className
       )}
     >
@@ -183,15 +190,18 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
         {/* Page Size Selector */}
         {showPageSizeSelector && (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-text-secondary whitespace-nowrap">
+            <span className="whitespace-nowrap text-sm text-text-secondary">
               {t('ui.datatable.rowsPerPage')}
             </span>
-            <Select value={String(pageSize)} onValueChange={handlePageSizeChange}>
-              <SelectTrigger className="w-[70px] h-9">
+            <Select
+              value={String(pageSize)}
+              onValueChange={handlePageSizeChange}
+            >
+              <SelectTrigger className="h-9 w-[70px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {pageSizeOptions.map((size) => (
+                {pageSizeOptions.map(size => (
                   <SelectItem key={size} value={String(size)}>
                     {size}
                   </SelectItem>
@@ -204,7 +214,11 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
         {/* Page Info */}
         {showPageInfo && (
           <div className="text-sm text-text-secondary">
-            {t('ui.datatable.showingItems', { start: startItem, end: endItem, total: totalItems })}
+            {t('ui.datatable.showingItems', {
+              start: startItem,
+              end: endItem,
+              total: totalItems,
+            })}
           </div>
         )}
       </div>
@@ -236,14 +250,11 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
         </Button>
 
         {/* Page Numbers */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden items-center gap-1 md:flex">
           {getPageNumbers().map((page, index) => {
             if (page === '...') {
               return (
-                <span
-                  key={`dots-${index}`}
-                  className="px-2 text-text-tertiary"
-                >
+                <span key={`dots-${index}`} className="px-2 text-text-tertiary">
                   ...
                 </span>
               )
@@ -258,7 +269,7 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
                 onClick={() =>
                   onPaginationChange({ pageIndex: pageNumber, pageSize })
                 }
-                className="w-9 h-9"
+                className="h-9 w-9"
               >
                 {pageNumber + 1}
               </Button>
@@ -267,18 +278,16 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
         </div>
 
         {/* Mobile Page Input */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex items-center gap-2 md:hidden">
           <input
             type="number"
             min="1"
             max={totalPages}
             value={pageIndex + 1}
             onChange={handlePageNumberChange}
-            className="w-16 h-9 px-2 text-center text-sm rounded-md border bg-bg-secondary border-border-primary text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
+            className="h-9 w-16 rounded-md border border-border-primary bg-bg-secondary px-2 text-center text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
           />
-          <span className="text-sm text-text-secondary">
-            / {totalPages}
-          </span>
+          <span className="text-sm text-text-secondary">/ {totalPages}</span>
         </div>
 
         {/* Next Page Button */}

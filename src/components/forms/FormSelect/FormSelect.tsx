@@ -45,46 +45,33 @@ export const FormSelect = ({
   options,
   className = '',
 }: FormSelectProps) => {
-
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <Label 
-          htmlFor={name}
-          className="text-text-primary"
-        >
+        <Label htmlFor={name} className="text-text-primary">
           {label}
-          {required && <span className="text-status-error ml-1">*</span>}
+          {required && <span className="ml-1 text-status-error">*</span>}
         </Label>
       )}
-      
+
       <Select
         value={value}
-        onValueChange={(val) => onChange(name, val)}
+        onValueChange={val => onChange(name, val)}
         disabled={disabled}
       >
         <SelectTrigger
           id={name}
           onBlur={() => onBlur?.(name)}
-          className={`
-            bg-bg-secondary 
-            border-border-primary 
-            text-text-primary
-            focus:border-accent
-            focus:ring-accent
-            disabled:bg-bg-tertiary
-            disabled:text-text-tertiary
-            ${error ? 'border-status-error' : ''}
-          `}
+          className={`border-border-primary bg-bg-secondary text-text-primary focus:border-accent focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${error ? 'border-status-error' : ''} `}
         >
-          <SelectValue 
+          <SelectValue
             placeholder={placeholder}
             className="text-text-tertiary"
           />
         </SelectTrigger>
-        
-        <SelectContent className="bg-bg-secondary border-border-primary">
-          {options.map((option) => (
+
+        <SelectContent className="border-border-primary bg-bg-secondary">
+          {options.map(option => (
             <SelectItem
               key={option.value}
               value={option.value}
@@ -95,9 +82,9 @@ export const FormSelect = ({
           ))}
         </SelectContent>
       </Select>
-      
+
       {error && (
-        <div className="flex items-center gap-2 text-status-error text-sm">
+        <div className="flex items-center gap-2 text-sm text-status-error">
           <AlertCircle className="h-4 w-4" />
           <span>{error}</span>
         </div>

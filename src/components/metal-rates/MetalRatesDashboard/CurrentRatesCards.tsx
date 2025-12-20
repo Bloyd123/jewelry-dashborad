@@ -5,23 +5,23 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { 
-  TrendingUp, 
-  TrendingDown, 
+import {
+  TrendingUp,
+  TrendingDown,
   Minus,
   Sparkles,
   Award,
-  Gem
+  Gem,
 } from 'lucide-react'
 import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { StatCardGrid } from '@/components/ui/data-display/StatCard/StatCardGrid'
 import { StatCardSkeleton } from '@/components/ui/data-display/StatCard/StatCardSkeleton'
-import { 
-  Card, 
-  CardHeader, 
-  CardTitle, 
-  CardDescription, 
-  CardContent 
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
 } from '@/components/ui/card'
 import { mockCurrentRate } from '@/pages/metal-rates/metal-rate.mock'
 import { CURRENCY_SYMBOLS } from '@/types/metalrate.types'
@@ -45,7 +45,9 @@ const formatCurrency = (value: number, currency: string = 'INR'): string => {
   return `${CURRENCY_SYMBOLS[currency as keyof typeof CURRENCY_SYMBOLS]}${value.toFixed(2)}`
 }
 
-const getTrendDirection = (changePercentage: number): 'up' | 'down' | 'neutral' => {
+const getTrendDirection = (
+  changePercentage: number
+): 'up' | 'down' | 'neutral' => {
   if (changePercentage > 0.1) return 'up'
   if (changePercentage < -0.1) return 'down'
   return 'neutral'
@@ -72,14 +74,18 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
   className,
 }) => {
   const { t } = useTranslation()
-  
+
   // Using mock data
   const rateData: MetalRate = mockCurrentRate
-  
+
   // Calculate trend data
-  const goldTrendDirection = getTrendDirection(rateData.changes.goldChangePercentage)
-  const silverTrendDirection = getTrendDirection(rateData.changes.silverChangePercentage)
-  
+  const goldTrendDirection = getTrendDirection(
+    rateData.changes.goldChangePercentage
+  )
+  const silverTrendDirection = getTrendDirection(
+    rateData.changes.silverChangePercentage
+  )
+
   // Format last updated time
   const lastUpdated = new Date(rateData.updatedAt).toLocaleString('en-IN', {
     dateStyle: 'medium',
@@ -125,7 +131,7 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
     <div className={className}>
       <Card>
         <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-accent" />
@@ -135,10 +141,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
                 {t('metalRates.currentRates.lastUpdated')}: {lastUpdated}
               </CardDescription>
             </div>
-            
+
             {/* Rate Source Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20">
-              <div className="h-2 w-2 rounded-full bg-status-success animate-pulse" />
+            <div className="bg-accent/10 border-accent/20 inline-flex items-center gap-2 rounded-full border px-3 py-1">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-status-success" />
               <span className="text-xs font-medium text-text-primary">
                 {t(`metalRates.rateSource.${rateData.rateSource}`)}
               </span>
@@ -149,25 +155,34 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
         <CardContent>
           {/* Gold Rates Section */}
           <div className="mb-6 sm:mb-8">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4">
-              <Award className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
-              <h3 className="text-base sm:text-lg font-semibold text-text-primary">
+            <div className="mb-3 flex items-center gap-2 sm:mb-4">
+              <Award className="h-4 w-4 text-accent sm:h-5 sm:w-5" />
+              <h3 className="text-base font-semibold text-text-primary sm:text-lg">
                 {t('metalRates.metals.gold')}
               </h3>
-              <span className="text-xs sm:text-sm text-text-tertiary">
+              <span className="text-xs text-text-tertiary sm:text-sm">
                 ({t('metalRates.perGram')})
               </span>
             </div>
-            
+
             <StatCardGrid columns={2} gap="md" className="lg:grid-cols-4">
               {/* 24K Gold */}
               <StatCard
                 title={t('metalRates.purity.gold24K')}
                 subtitle="99.9%"
-                value={formatCurrency(rateData.gold.gold24K.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.gold.gold24K.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.gold.gold24K.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(goldTrendDirection)}
-                variant={goldTrendDirection === 'up' ? 'success' : goldTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  goldTrendDirection === 'up'
+                    ? 'success'
+                    : goldTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.goldChangePercentage,
@@ -183,7 +198,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
                       {t('metalRates.spread')}:
                     </span>
                     <span className="font-medium text-text-primary">
-                      {formatCurrency(rateData.gold24KSpread || 0, rateData.currency)}
+                      {formatCurrency(
+                        rateData.gold24KSpread || 0,
+                        rateData.currency
+                      )}
                     </span>
                   </div>
                 }
@@ -193,10 +211,19 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
               <StatCard
                 title={t('metalRates.purity.gold22K')}
                 subtitle="91.6%"
-                value={formatCurrency(rateData.gold.gold22K.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.gold.gold22K.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.gold.gold22K.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(goldTrendDirection)}
-                variant={goldTrendDirection === 'up' ? 'success' : goldTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  goldTrendDirection === 'up'
+                    ? 'success'
+                    : goldTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.goldChangePercentage,
@@ -212,7 +239,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
                       {t('metalRates.spread')}:
                     </span>
                     <span className="font-medium text-text-primary">
-                      {formatCurrency(rateData.gold22KSpread || 0, rateData.currency)}
+                      {formatCurrency(
+                        rateData.gold22KSpread || 0,
+                        rateData.currency
+                      )}
                     </span>
                   </div>
                 }
@@ -222,10 +252,19 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
               <StatCard
                 title={t('metalRates.purity.gold18K')}
                 subtitle="75%"
-                value={formatCurrency(rateData.gold.gold18K.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.gold.gold18K.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.gold.gold18K.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(goldTrendDirection)}
-                variant={goldTrendDirection === 'up' ? 'success' : goldTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  goldTrendDirection === 'up'
+                    ? 'success'
+                    : goldTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.goldChangePercentage,
@@ -241,10 +280,19 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
               <StatCard
                 title={t('metalRates.purity.gold14K')}
                 subtitle="58.5%"
-                value={formatCurrency(rateData.gold.gold14K.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.gold.gold14K.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.gold.gold14K.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(goldTrendDirection)}
-                variant={goldTrendDirection === 'up' ? 'success' : goldTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  goldTrendDirection === 'up'
+                    ? 'success'
+                    : goldTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.goldChangePercentage,
@@ -260,25 +308,34 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
 
           {/* Silver Rates Section */}
           <div className="mb-6 sm:mb-8">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4">
-              <Gem className="h-4 w-4 sm:h-5 sm:w-5 text-text-secondary" />
-              <h3 className="text-base sm:text-lg font-semibold text-text-primary">
+            <div className="mb-3 flex items-center gap-2 sm:mb-4">
+              <Gem className="h-4 w-4 text-text-secondary sm:h-5 sm:w-5" />
+              <h3 className="text-base font-semibold text-text-primary sm:text-lg">
                 {t('metalRates.metals.silver')}
               </h3>
-              <span className="text-xs sm:text-sm text-text-tertiary">
+              <span className="text-xs text-text-tertiary sm:text-sm">
                 ({t('metalRates.perGram')})
               </span>
             </div>
-            
+
             <StatCardGrid columns={2} gap="md" className="lg:grid-cols-4">
               {/* Pure Silver 999 */}
               <StatCard
                 title={t('metalRates.purity.silver999')}
                 subtitle="99.9%"
-                value={formatCurrency(rateData.silver.pure.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.silver.pure.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.silver.pure.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(silverTrendDirection)}
-                variant={silverTrendDirection === 'up' ? 'success' : silverTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  silverTrendDirection === 'up'
+                    ? 'success'
+                    : silverTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.silverChangePercentage,
@@ -294,7 +351,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
                       {t('metalRates.spread')}:
                     </span>
                     <span className="font-medium text-text-primary">
-                      {formatCurrency(rateData.silverSpread || 0, rateData.currency)}
+                      {formatCurrency(
+                        rateData.silverSpread || 0,
+                        rateData.currency
+                      )}
                     </span>
                   </div>
                 }
@@ -304,10 +364,19 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
               <StatCard
                 title={t('metalRates.purity.silver925')}
                 subtitle="92.5%"
-                value={formatCurrency(rateData.silver.sterling925.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.silver.sterling925.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.silver.sterling925.buyingRate, rateData.currency)}`}
                 icon={getTrendIcon(silverTrendDirection)}
-                variant={silverTrendDirection === 'up' ? 'success' : silverTrendDirection === 'down' ? 'error' : 'default'}
+                variant={
+                  silverTrendDirection === 'up'
+                    ? 'success'
+                    : silverTrendDirection === 'down'
+                      ? 'error'
+                      : 'default'
+                }
                 size="sm"
                 trend={{
                   value: rateData.changes.silverChangePercentage,
@@ -323,7 +392,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
               <StatCard
                 title={t('metalRates.metals.platinum')}
                 subtitle="95%"
-                value={formatCurrency(rateData.platinum.sellingRate, rateData.currency)}
+                value={formatCurrency(
+                  rateData.platinum.sellingRate,
+                  rateData.currency
+                )}
                 description={`${t('metalRates.buying')}: ${formatCurrency(rateData.platinum.buyingRate, rateData.currency)}`}
                 icon={Gem}
                 variant="info"
@@ -336,41 +408,48 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
 
           {/* Market Reference Section */}
           {rateData.marketReference && (
-            <div className="mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg bg-bg-tertiary border border-border-secondary">
+            <div className="mt-4 rounded-lg border border-border-secondary bg-bg-tertiary p-3 sm:mt-6 sm:p-4">
               <div className="flex flex-col gap-4">
                 <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-text-primary mb-1 sm:mb-2">
+                  <h4 className="mb-1 text-xs font-semibold text-text-primary sm:mb-2 sm:text-sm">
                     {t('metalRates.marketReference.title')}
                   </h4>
                   <p className="text-xs text-text-tertiary">
-                    {t('metalRates.marketReference.source')}: {rateData.marketReference.referenceSource}
+                    {t('metalRates.marketReference.source')}:{' '}
+                    {rateData.marketReference.referenceSource}
                   </p>
                 </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="text-center sm:text-left p-3 rounded bg-bg-secondary border border-border-primary">
-                    <p className="text-xs text-text-tertiary mb-1">
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div className="rounded border border-border-primary bg-bg-secondary p-3 text-center sm:text-left">
+                    <p className="mb-1 text-xs text-text-tertiary">
                       {t('metalRates.marketReference.intlGold')}
                     </p>
-                    <p className="text-sm sm:text-base font-semibold text-text-primary">
-                      ${rateData.marketReference.internationalGoldPrice?.toFixed(2)}
+                    <p className="text-sm font-semibold text-text-primary sm:text-base">
+                      $
+                      {rateData.marketReference.internationalGoldPrice?.toFixed(
+                        2
+                      )}
                     </p>
                   </div>
-                  
-                  <div className="text-center sm:text-left p-3 rounded bg-bg-secondary border border-border-primary">
-                    <p className="text-xs text-text-tertiary mb-1">
+
+                  <div className="rounded border border-border-primary bg-bg-secondary p-3 text-center sm:text-left">
+                    <p className="mb-1 text-xs text-text-tertiary">
                       {t('metalRates.marketReference.intlSilver')}
                     </p>
-                    <p className="text-sm sm:text-base font-semibold text-text-primary">
-                      ${rateData.marketReference.internationalSilverPrice?.toFixed(2)}
+                    <p className="text-sm font-semibold text-text-primary sm:text-base">
+                      $
+                      {rateData.marketReference.internationalSilverPrice?.toFixed(
+                        2
+                      )}
                     </p>
                   </div>
-                  
-                  <div className="text-center sm:text-left p-3 rounded bg-bg-secondary border border-border-primary">
-                    <p className="text-xs text-text-tertiary mb-1">
+
+                  <div className="rounded border border-border-primary bg-bg-secondary p-3 text-center sm:text-left">
+                    <p className="mb-1 text-xs text-text-tertiary">
                       {t('metalRates.marketReference.exchangeRate')}
                     </p>
-                    <p className="text-sm sm:text-base font-semibold text-text-primary">
+                    <p className="text-sm font-semibold text-text-primary sm:text-base">
                       ₹{rateData.marketReference.exchangeRate?.toFixed(2)}
                     </p>
                   </div>
@@ -381,9 +460,10 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
 
           {/* Notes Section */}
           {rateData.notes && (
-            <div className="mt-4 p-3 rounded bg-status-info/10 border border-status-info/20">
+            <div className="bg-status-info/10 border-status-info/20 mt-4 rounded border p-3">
               <p className="text-sm text-text-secondary">
-                <span className="font-medium">{t('metalRates.notes')}:</span> {rateData.notes}
+                <span className="font-medium">{t('metalRates.notes')}:</span>{' '}
+                {rateData.notes}
               </p>
             </div>
           )}

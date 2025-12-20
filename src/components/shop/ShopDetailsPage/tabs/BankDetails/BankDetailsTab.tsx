@@ -1,36 +1,36 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { 
-  Building2, 
-  Wallet, 
-  Star, 
-  Copy, 
-  Eye, 
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  Building2,
+  Wallet,
+  Star,
+  Copy,
+  Eye,
   EyeOff,
   Download,
   QrCode,
-  Plus
-} from 'lucide-react';
-import { Badge } from '@/components/ui/data-display/Badge/Badge';
-import { Button } from '@/components/ui/button';
+  Plus,
+} from 'lucide-react'
+import { Badge } from '@/components/ui/data-display/Badge/Badge'
+import { Button } from '@/components/ui/button'
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@/components/ui/layout/Accordion/Accordion';
-import { Separator } from '@/components/ui/layout/Separator/Separator';
-import { Label } from '@/components/ui/label';
-import type { BankDetail, UpiDetail } from '@/types/shop.types';
+} from '@/components/ui/layout/Accordion/Accordion'
+import { Separator } from '@/components/ui/layout/Separator/Separator'
+import { Label } from '@/components/ui/label'
+import type { BankDetail, UpiDetail } from '@/types/shop.types'
 
 // ============================================================================
 // COMPONENT PROPS
 // ============================================================================
 
 interface BankDetailsTabProps {
-  bankDetails?: BankDetail[];
-  upiDetails?: UpiDetail[];
-  isAdminView?: boolean;
+  bankDetails?: BankDetail[]
+  upiDetails?: UpiDetail[]
+  isAdminView?: boolean
 }
 
 // ============================================================================
@@ -42,41 +42,43 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
   upiDetails = [],
   isAdminView = true,
 }) => {
-  const { t } = useTranslation();
-  const [visibleAccounts, setVisibleAccounts] = useState<Record<string, boolean>>({});
+  const { t } = useTranslation()
+  const [visibleAccounts, setVisibleAccounts] = useState<
+    Record<string, boolean>
+  >({})
 
   // Toggle account number visibility
   const toggleAccountVisibility = (id: string) => {
     setVisibleAccounts(prev => ({
       ...prev,
-      [id]: !prev[id]
-    }));
-  };
+      [id]: !prev[id],
+    }))
+  }
 
   // Mask account number
   const maskAccountNumber = (accountNumber: string, isVisible: boolean) => {
-    if (isVisible) return accountNumber;
-    return '●●●●●●' + accountNumber.slice(-4);
-  };
+    if (isVisible) return accountNumber
+    return '●●●●●●' + accountNumber.slice(-4)
+  }
 
   // Copy to clipboard
   const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    console.log(`${type} copied to clipboard`);
-  };
+    navigator.clipboard.writeText(text)
+    console.log(`${type} copied to clipboard`)
+  }
 
   // Download QR code (placeholder)
   const handleDownloadQR = (upiId: string) => {
-    console.log(`Download QR for ${upiId}`);
-  };
+    console.log(`Download QR for ${upiId}`)
+  }
 
   return (
     <div className="space-y-6 p-6">
       {/* Bank Accounts Section */}
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+            <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
               <Building2 className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -90,15 +92,15 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
           </div>
           {isAdminView && (
             <Button variant="outline" size="sm">
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               {t('bankDetails.addBank')}
             </Button>
           )}
         </div>
 
         <Accordion type="multiple" variant="separated" size="md">
-          {bankDetails.map((bank) => {
-            const bankId = bank._id || '';
+          {bankDetails.map(bank => {
+            const bankId = bank._id || ''
             return (
               <AccordionItem key={bankId} value={bankId}>
                 <AccordionTrigger
@@ -107,15 +109,17 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                     <div className="flex gap-2">
                       {bank.isPrimary && (
                         <Badge variant="accent" size="sm">
-                          <Star className="h-3 w-3 mr-1" />
+                          <Star className="mr-1 h-3 w-3" />
                           {t('bankDetails.primary')}
                         </Badge>
                       )}
-                      <Badge 
-                        variant={bank.isActive ? 'active' : 'inactive'} 
+                      <Badge
+                        variant={bank.isActive ? 'active' : 'inactive'}
                         size="sm"
                       >
-                        {bank.isActive ? t('common.active') : t('common.inactive')}
+                        {bank.isActive
+                          ? t('common.active')
+                          : t('common.inactive')}
                       </Badge>
                     </div>
                   }
@@ -125,21 +129,27 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                       {bank.bankName}
                     </span>
                     <span className="text-sm text-text-tertiary">
-                      {maskAccountNumber(bank.accountNumber, visibleAccounts[bankId])}
+                      {maskAccountNumber(
+                        bank.accountNumber,
+                        visibleAccounts[bankId]
+                      )}
                     </span>
                   </div>
                 </AccordionTrigger>
-                
+
                 <AccordionContent>
                   <div className="space-y-4">
                     {/* Account Number */}
                     <div>
-                      <Label className="text-text-tertiary mb-2">
+                      <Label className="mb-2 text-text-tertiary">
                         {t('bankDetails.accountNumber')}
                       </Label>
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 px-3 py-2 rounded-md bg-bg-tertiary text-text-primary font-mono">
-                          {maskAccountNumber(bank.accountNumber, visibleAccounts[bankId])}
+                        <div className="flex-1 rounded-md bg-bg-tertiary px-3 py-2 font-mono text-text-primary">
+                          {maskAccountNumber(
+                            bank.accountNumber,
+                            visibleAccounts[bankId]
+                          )}
                         </div>
                         <Button
                           variant="ghost"
@@ -155,7 +165,9 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => handleCopy(bank.accountNumber, 'Account number')}
+                          onClick={() =>
+                            handleCopy(bank.accountNumber, 'Account number')
+                          }
                         >
                           <Copy className="h-4 w-4" />
                         </Button>
@@ -166,11 +178,11 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
 
                     {/* IFSC Code */}
                     <div>
-                      <Label className="text-text-tertiary mb-2">
+                      <Label className="mb-2 text-text-tertiary">
                         {t('bankDetails.ifscCode')}
                       </Label>
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 px-3 py-2 rounded-md bg-bg-tertiary text-text-primary font-mono">
+                        <div className="flex-1 rounded-md bg-bg-tertiary px-3 py-2 font-mono text-text-primary">
                           {bank.ifscCode}
                         </div>
                         <Button
@@ -187,10 +199,10 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
 
                     {/* Account Holder */}
                     <div>
-                      <Label className="text-text-tertiary mb-2">
+                      <Label className="mb-2 text-text-tertiary">
                         {t('bankDetails.accountHolder')}
                       </Label>
-                      <div className="px-3 py-2 rounded-md bg-bg-tertiary text-text-primary">
+                      <div className="rounded-md bg-bg-tertiary px-3 py-2 text-text-primary">
                         {bank.accountHolderName}
                       </div>
                     </div>
@@ -198,23 +210,23 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                     <Separator />
 
                     {/* Branch & Account Type */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                       {bank.branchName && (
                         <div>
-                          <Label className="text-text-tertiary mb-2">
+                          <Label className="mb-2 text-text-tertiary">
                             {t('bankDetails.branch')}
                           </Label>
-                          <div className="px-3 py-2 rounded-md bg-bg-tertiary text-text-primary">
+                          <div className="rounded-md bg-bg-tertiary px-3 py-2 text-text-primary">
                             {bank.branchName}
                           </div>
                         </div>
                       )}
                       {bank.accountType && (
                         <div>
-                          <Label className="text-text-tertiary mb-2">
+                          <Label className="mb-2 text-text-tertiary">
                             {t('bankDetails.accountType')}
                           </Label>
-                          <div className="px-3 py-2 rounded-md bg-bg-tertiary text-text-primary capitalize">
+                          <div className="rounded-md bg-bg-tertiary px-3 py-2 capitalize text-text-primary">
                             {bank.accountType}
                           </div>
                         </div>
@@ -223,19 +235,19 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            );
+            )
           })}
         </Accordion>
 
         {bankDetails.length === 0 && (
-          <div className="text-center py-12 border border-dashed border-border-secondary rounded-lg">
-            <Building2 className="h-12 w-12 text-text-tertiary mx-auto mb-3" />
-            <p className="text-text-secondary mb-2">
+          <div className="rounded-lg border border-dashed border-border-secondary py-12 text-center">
+            <Building2 className="mx-auto mb-3 h-12 w-12 text-text-tertiary" />
+            <p className="mb-2 text-text-secondary">
               {t('bankDetails.noBankAccounts')}
             </p>
             {isAdminView && (
               <Button variant="outline" size="sm">
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 {t('bankDetails.addFirstBank')}
               </Button>
             )}
@@ -247,9 +259,9 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
 
       {/* UPI Details Section */}
       <div>
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+            <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
               <Wallet className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -263,15 +275,15 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
           </div>
           {isAdminView && (
             <Button variant="outline" size="sm">
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               {t('bankDetails.addUPI')}
             </Button>
           )}
         </div>
 
         <Accordion type="multiple" variant="separated" size="md">
-          {upiDetails.map((upi) => {
-            const upiId = upi._id || '';
+          {upiDetails.map(upi => {
+            const upiId = upi._id || ''
             return (
               <AccordionItem key={upiId} value={upiId}>
                 <AccordionTrigger
@@ -280,15 +292,17 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                     <div className="flex gap-2">
                       {upi.isPrimary && (
                         <Badge variant="accent" size="sm">
-                          <Star className="h-3 w-3 mr-1" />
+                          <Star className="mr-1 h-3 w-3" />
                           {t('bankDetails.primary')}
                         </Badge>
                       )}
-                      <Badge 
-                        variant={upi.isActive ? 'active' : 'inactive'} 
+                      <Badge
+                        variant={upi.isActive ? 'active' : 'inactive'}
                         size="sm"
                       >
-                        {upi.isActive ? t('common.active') : t('common.inactive')}
+                        {upi.isActive
+                          ? t('common.active')
+                          : t('common.inactive')}
                       </Badge>
                     </div>
                   }
@@ -297,21 +311,21 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                     <span className="font-semibold text-text-primary">
                       {upi.name || 'UPI Account'}
                     </span>
-                    <span className="text-sm text-text-tertiary font-mono">
+                    <span className="font-mono text-sm text-text-tertiary">
                       {upi.upiId}
                     </span>
                   </div>
                 </AccordionTrigger>
-                
+
                 <AccordionContent>
                   <div className="space-y-4">
                     {/* UPI ID */}
                     <div>
-                      <Label className="text-text-tertiary mb-2">
+                      <Label className="mb-2 text-text-tertiary">
                         {t('bankDetails.upiId')}
                       </Label>
                       <div className="flex items-center gap-2">
-                        <div className="flex-1 px-3 py-2 rounded-md bg-bg-tertiary text-text-primary font-mono">
+                        <div className="flex-1 rounded-md bg-bg-tertiary px-3 py-2 font-mono text-text-primary">
                           {upi.upiId}
                         </div>
                         <Button
@@ -333,7 +347,7 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                         size="sm"
                         onClick={() => handleCopy(upi.upiId, 'UPI ID')}
                       >
-                        <Copy className="h-4 w-4 mr-2" />
+                        <Copy className="mr-2 h-4 w-4" />
                         {t('bankDetails.copyUPI')}
                       </Button>
                       <Button
@@ -341,33 +355,30 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
                         size="sm"
                         onClick={() => handleDownloadQR(upi.upiId)}
                       >
-                        <Download className="h-4 w-4 mr-2" />
+                        <Download className="mr-2 h-4 w-4" />
                         {t('bankDetails.downloadQR')}
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                      >
-                        <QrCode className="h-4 w-4 mr-2" />
+                      <Button variant="outline" size="sm">
+                        <QrCode className="mr-2 h-4 w-4" />
                         {t('bankDetails.viewQR')}
                       </Button>
                     </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
-            );
+            )
           })}
         </Accordion>
 
         {upiDetails.length === 0 && (
-          <div className="text-center py-12 border border-dashed border-border-secondary rounded-lg">
-            <Wallet className="h-12 w-12 text-text-tertiary mx-auto mb-3" />
-            <p className="text-text-secondary mb-2">
+          <div className="rounded-lg border border-dashed border-border-secondary py-12 text-center">
+            <Wallet className="mx-auto mb-3 h-12 w-12 text-text-tertiary" />
+            <p className="mb-2 text-text-secondary">
               {t('bankDetails.noUPIDetails')}
             </p>
             {isAdminView && (
               <Button variant="outline" size="sm">
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 {t('bankDetails.addFirstUPI')}
               </Button>
             )}
@@ -377,15 +388,15 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
 
       {/* Admin Only Notice */}
       {!isAdminView && (
-        <div className="mt-6 p-4 rounded-lg bg-bg-tertiary border border-border-secondary">
-          <p className="text-sm text-text-tertiary text-center">
+        <div className="mt-6 rounded-lg border border-border-secondary bg-bg-tertiary p-4">
+          <p className="text-center text-sm text-text-tertiary">
             {t('bankDetails.adminOnlyNotice')}
           </p>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 // ============================================================================
 // TRANSLATION KEYS STRUCTURE
@@ -427,4 +438,4 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
 }
 */
 
-export default BankDetailsTab;
+export default BankDetailsTab

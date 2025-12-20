@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/components/customer/CustomerForm/CustomerForm.desktop.tsx
 // Desktop Layout for CustomerForm
@@ -6,7 +5,10 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { validateCustomer, validateField } from '@/validators/customerValidation'
+import {
+  validateCustomer,
+  validateField,
+} from '@/validators/customerValidation'
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
 import { Button } from '@/components/ui/button'
@@ -33,22 +35,23 @@ export default function CustomerFormDesktop({
   mode = 'create',
 }: CustomerFormProps) {
   const { t } = useTranslation()
-  const [formData, setFormData] = useState<Partial<CreateCustomerInput>>(initialData)
+  const [formData, setFormData] =
+    useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
 
-    // ← ADD: RTK Query mutations
+  // ← ADD: RTK Query mutations
   // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
   // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
-  
+
   // const isLoading = isCreating || isUpdating
   const handleChange = (name: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    
+    setFormData(prev => ({ ...prev, [name]: value }))
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors((prev) => {
+      setErrors(prev => {
         const newErrors = { ...prev }
         delete newErrors[name]
         return newErrors
@@ -57,21 +60,24 @@ export default function CustomerFormDesktop({
   }
 
   const handleBlur = (name: string) => {
-    setTouched((prev) => ({ ...prev, [name]: true }))
-    
+    setTouched(prev => ({ ...prev, [name]: true }))
+
     // Validate field on blur
     const fieldValue = formData[name as keyof CreateCustomerInput]
-    const fieldValidation = validateField(name as keyof CreateCustomerInput, fieldValue)
-    
+    const fieldValidation = validateField(
+      name as keyof CreateCustomerInput,
+      fieldValue
+    )
+
     if (!fieldValidation.isValid && fieldValidation.error) {
-      setErrors((prev) => ({ ...prev, [name]: fieldValidation.error! }))
+      setErrors(prev => ({ ...prev, [name]: fieldValidation.error! }))
     }
   }
 
   // const handleSubmit = async () => {
   //   // Validate entire form
   //   const validation = validateCustomer(formData)
-    
+
   //   if (!validation.isValid) {
   //     setErrors(validation.errors)
   //     // Mark all fields as touched
@@ -83,7 +89,6 @@ export default function CustomerFormDesktop({
   //     return
   //   }
 
-
   //   // ← REPLACE: Submit logic with RTK Query
   //   try {
   //     if (mode === 'create') {
@@ -91,7 +96,7 @@ export default function CustomerFormDesktop({
   //         shopId,
   //         data: formData as CreateCustomerRequest,
   //       }).unwrap()
-        
+
   //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
   //     } else {
   //       await updateCustomer({
@@ -99,48 +104,50 @@ export default function CustomerFormDesktop({
   //         customerId: customerId!,
   //         data: formData as UpdateCustomerRequest,
   //       }).unwrap()
-        
+
   //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
   //     }
-      
+
   //     onSuccess?.() // ← Call success callback
   //   } catch (error: any) {
   //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
   //   }
   // }
   const handleSubmit = async () => {
-  // ... validation logic same ...
-  
-  setIsLoading(true)
-  
-  // Mock delay
-  setTimeout(() => {
-    console.log('Mock Submit:', { mode, shopId, customerId, formData })
-    setIsLoading(false)
-    onSuccess?.()
-  }, 1000)
-}
+    // ... validation logic same ...
+
+    setIsLoading(true)
+
+    // Mock delay
+    setTimeout(() => {
+      console.log('Mock Submit:', { mode, shopId, customerId, formData })
+      setIsLoading(false)
+      onSuccess?.()
+    }, 1000)
+  }
 
   return (
-    <div className="container mx-auto p-6 max-w-7xl">
+    <div className="container mx-auto max-w-7xl p-6">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-text-primary">
-          {mode === 'create' ? t('customer.addCustomer') : t('customer.editCustomer')}
+          {mode === 'create'
+            ? t('customer.addCustomer')
+            : t('customer.editCustomer')}
         </h1>
-        <p className="text-text-secondary mt-1">
-          {mode === 'create' 
-            ? t('customer.addCustomerDescription') 
+        <p className="mt-1 text-text-secondary">
+          {mode === 'create'
+            ? t('customer.addCustomerDescription')
             : t('customer.editCustomerDescription')}
         </p>
       </div>
 
       {/* Form Grid - 2 Columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Left Column */}
         <div className="space-y-6">
           {/* Basic Info */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.basicInformation')}
@@ -158,7 +165,7 @@ export default function CustomerFormDesktop({
           </Card>
 
           {/* Contact Info */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.contactInformation')}
@@ -176,7 +183,7 @@ export default function CustomerFormDesktop({
           </Card>
 
           {/* Address */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.address')}
@@ -197,7 +204,7 @@ export default function CustomerFormDesktop({
         {/* Right Column */}
         <div className="space-y-6">
           {/* Customer Type */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.customerType')}
@@ -215,7 +222,7 @@ export default function CustomerFormDesktop({
           </Card>
 
           {/* KYC Details */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.kycDetails')}
@@ -233,7 +240,7 @@ export default function CustomerFormDesktop({
           </Card>
 
           {/* Preferences */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.preferences')}
@@ -251,7 +258,7 @@ export default function CustomerFormDesktop({
           </Card>
 
           {/* Notes & Tags */}
-          <Card className="bg-bg-secondary border-border-primary">
+          <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
                 {t('customer.notesAndTags')}
@@ -271,7 +278,7 @@ export default function CustomerFormDesktop({
       </div>
 
       {/* Form Actions - Sticky Bottom */}
-      <div className="sticky bottom-0 mt-6 py-4 bg-bg-primary border-t border-border-primary">
+      <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
         <div className="flex justify-end gap-3">
           <Button
             type="button"
@@ -280,10 +287,10 @@ export default function CustomerFormDesktop({
             disabled={isLoading}
             className="min-w-[120px]"
           >
-            <X className="h-4 w-4 mr-2" />
+            <X className="mr-2 h-4 w-4" />
             {t('common.cancel')}
           </Button>
-          
+
           <Button
             type="button"
             onClick={handleSubmit}
@@ -292,12 +299,12 @@ export default function CustomerFormDesktop({
           >
             {isLoading ? (
               <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {t('common.saving')}
               </>
             ) : (
               <>
-                <Save className="h-4 w-4 mr-2" />
+                <Save className="mr-2 h-4 w-4" />
                 {mode === 'create' ? t('common.save') : t('common.update')}
               </>
             )}

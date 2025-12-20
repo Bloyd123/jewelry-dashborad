@@ -6,11 +6,19 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, TrendingDown, Minus, Calendar } from 'lucide-react'
-import { Modal, ModalHeader, ModalBody, ModalFooter } from '@/components/ui/overlay/Modal'
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@/components/ui/overlay/Modal'
 import { Button } from '@/components/ui/button'
 import { FormDatePicker } from '@/components/forms/FormDatePicker/FormDatePicker'
 import { Spinner } from '@/components/ui/loader/Spinner'
-import type { RateComparisonResult, RateChangeDetail } from '@/types/metalrate.types'
+import type {
+  RateComparisonResult,
+  RateChangeDetail,
+} from '@/types/metalrate.types'
 
 // ============================================================================
 // COMPONENT PROPS
@@ -47,11 +55,15 @@ const formatCurrency = (value: number) => {
 // MOCK API FUNCTION (Replace with real API later)
 // ============================================================================
 
-const getMockComparisonData = (fromDate: string, toDate: string): RateComparisonResult => {
+const getMockComparisonData = (
+  fromDate: string,
+  toDate: string
+): RateComparisonResult => {
   const daysDiff = Math.floor(
-    (new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 60 * 60 * 24)
+    (new Date(toDate).getTime() - new Date(fromDate).getTime()) /
+      (1000 * 60 * 60 * 24)
   )
-  
+
   return {
     fromDate,
     toDate,
@@ -131,7 +143,8 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   const [toDate, setToDate] = useState<string>('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [comparisonData, setComparisonData] = useState<RateComparisonResult | null>(null)
+  const [comparisonData, setComparisonData] =
+    useState<RateComparisonResult | null>(null)
 
   // ============================================================================
   // HANDLERS
@@ -140,10 +153,10 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   const handleDateChange = (name: string, value: string) => {
     if (name === 'fromDate') {
       setFromDate(value)
-      setErrors((prev) => ({ ...prev, fromDate: '' }))
+      setErrors(prev => ({ ...prev, fromDate: '' }))
     } else {
       setToDate(value)
-      setErrors((prev) => ({ ...prev, toDate: '' }))
+      setErrors(prev => ({ ...prev, toDate: '' }))
     }
   }
 
@@ -151,13 +164,18 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     const newErrors: Record<string, string> = {}
 
     if (!fromDate) {
-      newErrors.fromDate = t('metalRates.compare.errors.fromDateRequired') || 'From date is required'
+      newErrors.fromDate =
+        t('metalRates.compare.errors.fromDateRequired') ||
+        'From date is required'
     }
     if (!toDate) {
-      newErrors.toDate = t('metalRates.compare.errors.toDateRequired') || 'To date is required'
+      newErrors.toDate =
+        t('metalRates.compare.errors.toDateRequired') || 'To date is required'
     }
     if (fromDate && toDate && new Date(fromDate) >= new Date(toDate)) {
-      newErrors.toDate = t('metalRates.compare.errors.toDateAfterFrom') || 'To date must be after from date'
+      newErrors.toDate =
+        t('metalRates.compare.errors.toDateAfterFrom') ||
+        'To date must be after from date'
     }
 
     setErrors(newErrors)
@@ -170,14 +188,14 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     setIsLoading(true)
     try {
       // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
       // Using mock data (replace with real API call when ready)
       const data = getMockComparisonData(fromDate, toDate)
-      
+
       // TODO: Uncomment when integrating real API
       // const data = await compareRates(shopId, fromDate, toDate)
-      
+
       setComparisonData(data)
     } catch (error) {
       console.error('Error comparing rates:', error)
@@ -194,8 +212,10 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   }
 
   const getTrendIcon = (trend: 'up' | 'down' | 'stable') => {
-    if (trend === 'up') return <TrendingUp className="h-4 w-4 text-status-success" />
-    if (trend === 'down') return <TrendingDown className="h-4 w-4 text-status-error" />
+    if (trend === 'up')
+      return <TrendingUp className="h-4 w-4 text-status-success" />
+    if (trend === 'down')
+      return <TrendingDown className="h-4 w-4 text-status-error" />
     return <Minus className="h-4 w-4 text-text-tertiary" />
   }
 
@@ -219,14 +239,17 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
       {/* Header */}
       <ModalHeader
         title={t('metalRates.compare.title') || 'Compare Rates Between Dates'}
-        description={t('metalRates.compare.description') || 'Compare metal rates between two dates to analyze price trends'}
+        description={
+          t('metalRates.compare.description') ||
+          'Compare metal rates between two dates to analyze price trends'
+        }
       />
 
       {/* Body */}
-      <ModalBody className="space-y-6 max-h-[60vh] overflow-y-auto">
+      <ModalBody className="max-h-[60vh] space-y-6 overflow-y-auto">
         {/* Date Selection Card */}
-        <div className="bg-bg-tertiary rounded-lg p-4 border border-border-primary">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* From Date */}
             <FormDatePicker
               name="fromDate"
@@ -234,7 +257,9 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
               value={fromDate}
               onChange={handleDateChange}
               error={errors.fromDate}
-              placeholder={t('metalRates.compare.selectFromDate') || 'Select from date'}
+              placeholder={
+                t('metalRates.compare.selectFromDate') || 'Select from date'
+              }
               required
               maxDate={toDate ? new Date(toDate) : new Date()}
             />
@@ -246,7 +271,9 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
               value={toDate}
               onChange={handleDateChange}
               error={errors.toDate}
-              placeholder={t('metalRates.compare.selectToDate') || 'Select to date'}
+              placeholder={
+                t('metalRates.compare.selectToDate') || 'Select to date'
+              }
               required
               minDate={fromDate ? new Date(fromDate) : undefined}
               maxDate={new Date()}
@@ -254,7 +281,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-3 mt-4">
+          <div className="mt-4 flex items-center gap-3">
             <Button
               onClick={handleCompare}
               disabled={isLoading || !fromDate || !toDate}
@@ -282,26 +309,32 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
         {comparisonData && (
           <div className="space-y-4">
             {/* Summary Card */}
-            <div className="bg-bg-tertiary rounded-lg p-4 border border-border-primary">
-              <h3 className="text-lg font-semibold text-text-primary mb-3">
+            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+              <h3 className="mb-3 text-lg font-semibold text-text-primary">
                 {t('metalRates.compare.summary') || 'Comparison Summary'}
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+              <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-3">
                 <div>
-                  <p className="text-text-tertiary">{t('metalRates.compare.fromDate') || 'From Date'}</p>
-                  <p className="text-text-primary font-medium">
+                  <p className="text-text-tertiary">
+                    {t('metalRates.compare.fromDate') || 'From Date'}
+                  </p>
+                  <p className="font-medium text-text-primary">
                     {formatDate(comparisonData.fromDate)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-text-tertiary">{t('metalRates.compare.toDate') || 'To Date'}</p>
-                  <p className="text-text-primary font-medium">
+                  <p className="text-text-tertiary">
+                    {t('metalRates.compare.toDate') || 'To Date'}
+                  </p>
+                  <p className="font-medium text-text-primary">
                     {formatDate(comparisonData.toDate)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-text-tertiary">{t('metalRates.compare.daysDifference') || 'Days'}</p>
-                  <p className="text-text-primary font-medium">
+                  <p className="text-text-tertiary">
+                    {t('metalRates.compare.daysDifference') || 'Days'}
+                  </p>
+                  <p className="font-medium text-text-primary">
                     {comparisonData.daysDifference} {t('common.days') || 'days'}
                   </p>
                 </div>
@@ -309,8 +342,8 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
             </div>
 
             {/* Gold Rates Comparison */}
-            <div className="bg-bg-tertiary rounded-lg p-4 border border-border-primary">
-              <h3 className="text-lg font-semibold text-text-primary mb-3 flex items-center gap-2">
+            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+              <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-text-primary">
                 <span className="text-yellow-500">●</span>
                 {t('metalRates.metals.gold') || 'Gold'}
               </h3>
@@ -320,27 +353,47 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
                   { key: 'gold22K', label: '22K' },
                   { key: 'gold18K', label: '18K' },
                 ].map(({ key, label }) => {
-                  const data = comparisonData[key as keyof RateComparisonResult] as RateChangeDetail
+                  const data = comparisonData[
+                    key as keyof RateComparisonResult
+                  ] as RateChangeDetail
                   return (
-                    <div key={key} className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-bg-secondary rounded-lg">
+                    <div
+                      key={key}
+                      className="grid grid-cols-1 gap-3 rounded-lg bg-bg-secondary p-3 md:grid-cols-4"
+                    >
                       <div>
-                        <p className="text-xs text-text-tertiary">{t('metalRates.puritytext') || 'Purity'}</p>
-                        <p className="text-text-primary font-medium">{label}</p>
+                        <p className="text-xs text-text-tertiary">
+                          {t('metalRates.puritytext') || 'Purity'}
+                        </p>
+                        <p className="font-medium text-text-primary">{label}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-text-tertiary">{t('metalRates.compare.startRate') || 'Start Rate'}</p>
-                        <p className="text-text-primary">{formatCurrency(data.startRate)}</p>
+                        <p className="text-xs text-text-tertiary">
+                          {t('metalRates.compare.startRate') || 'Start Rate'}
+                        </p>
+                        <p className="text-text-primary">
+                          {formatCurrency(data.startRate)}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-xs text-text-tertiary">{t('metalRates.compare.endRate') || 'End Rate'}</p>
-                        <p className="text-text-primary">{formatCurrency(data.endRate)}</p>
+                        <p className="text-xs text-text-tertiary">
+                          {t('metalRates.compare.endRate') || 'End Rate'}
+                        </p>
+                        <p className="text-text-primary">
+                          {formatCurrency(data.endRate)}
+                        </p>
                       </div>
                       <div>
-                        <p className="text-xs text-text-tertiary">{t('metalRates.compare.change') || 'Change'}</p>
-                        <div className={`flex items-center gap-2 font-semibold ${getTrendColor(data.trend)}`}>
+                        <p className="text-xs text-text-tertiary">
+                          {t('metalRates.compare.change') || 'Change'}
+                        </p>
+                        <div
+                          className={`flex items-center gap-2 font-semibold ${getTrendColor(data.trend)}`}
+                        >
                           {getTrendIcon(data.trend)}
                           <span>
-                            {formatCurrency(Math.abs(data.change))} ({Math.abs(data.changePercentage).toFixed(2)}%)
+                            {formatCurrency(Math.abs(data.change))} (
+                            {Math.abs(data.changePercentage).toFixed(2)}%)
                           </span>
                         </div>
                       </div>
@@ -351,31 +404,51 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
             </div>
 
             {/* Silver Rates Comparison */}
-            <div className="bg-bg-tertiary rounded-lg p-4 border border-border-primary">
-              <h3 className="text-lg font-semibold text-text-primary mb-3 flex items-center gap-2">
+            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+              <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-text-primary">
                 <span className="text-gray-400">●</span>
                 {t('metalRates.metals.silver') || 'Silver'}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-bg-secondary rounded-lg">
+              <div className="grid grid-cols-1 gap-3 rounded-lg bg-bg-secondary p-3 md:grid-cols-4">
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.puritytext') || 'Purity'}</p>
-                  <p className="text-text-primary font-medium">999 (Pure)</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.puritytext') || 'Purity'}
+                  </p>
+                  <p className="font-medium text-text-primary">999 (Pure)</p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.startRate') || 'Start Rate'}</p>
-                  <p className="text-text-primary">{formatCurrency(comparisonData.silver999.startRate)}</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.startRate') || 'Start Rate'}
+                  </p>
+                  <p className="text-text-primary">
+                    {formatCurrency(comparisonData.silver999.startRate)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.endRate') || 'End Rate'}</p>
-                  <p className="text-text-primary">{formatCurrency(comparisonData.silver999.endRate)}</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.endRate') || 'End Rate'}
+                  </p>
+                  <p className="text-text-primary">
+                    {formatCurrency(comparisonData.silver999.endRate)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.change') || 'Change'}</p>
-                  <div className={`flex items-center gap-2 font-semibold ${getTrendColor(comparisonData.silver999.trend)}`}>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.change') || 'Change'}
+                  </p>
+                  <div
+                    className={`flex items-center gap-2 font-semibold ${getTrendColor(comparisonData.silver999.trend)}`}
+                  >
                     {getTrendIcon(comparisonData.silver999.trend)}
                     <span>
-                      {formatCurrency(Math.abs(comparisonData.silver999.change))} (
-                      {Math.abs(comparisonData.silver999.changePercentage).toFixed(2)}%)
+                      {formatCurrency(
+                        Math.abs(comparisonData.silver999.change)
+                      )}{' '}
+                      (
+                      {Math.abs(
+                        comparisonData.silver999.changePercentage
+                      ).toFixed(2)}
+                      %)
                     </span>
                   </div>
                 </div>
@@ -383,31 +456,49 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
             </div>
 
             {/* Platinum Rates Comparison */}
-            <div className="bg-bg-tertiary rounded-lg p-4 border border-border-primary">
-              <h3 className="text-lg font-semibold text-text-primary mb-3 flex items-center gap-2">
+            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+              <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold text-text-primary">
                 <span className="text-slate-300">●</span>
                 {t('metalRates.metals.platinum') || 'Platinum'}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-bg-secondary rounded-lg">
+              <div className="grid grid-cols-1 gap-3 rounded-lg bg-bg-secondary p-3 md:grid-cols-4">
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.puritytext') || 'Purity'}</p>
-                  <p className="text-text-primary font-medium">950</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.puritytext') || 'Purity'}
+                  </p>
+                  <p className="font-medium text-text-primary">950</p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.startRate') || 'Start Rate'}</p>
-                  <p className="text-text-primary">{formatCurrency(comparisonData.platinum.startRate)}</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.startRate') || 'Start Rate'}
+                  </p>
+                  <p className="text-text-primary">
+                    {formatCurrency(comparisonData.platinum.startRate)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.endRate') || 'End Rate'}</p>
-                  <p className="text-text-primary">{formatCurrency(comparisonData.platinum.endRate)}</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.endRate') || 'End Rate'}
+                  </p>
+                  <p className="text-text-primary">
+                    {formatCurrency(comparisonData.platinum.endRate)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-xs text-text-tertiary">{t('metalRates.compare.change') || 'Change'}</p>
-                  <div className={`flex items-center gap-2 font-semibold ${getTrendColor(comparisonData.platinum.trend)}`}>
+                  <p className="text-xs text-text-tertiary">
+                    {t('metalRates.compare.change') || 'Change'}
+                  </p>
+                  <div
+                    className={`flex items-center gap-2 font-semibold ${getTrendColor(comparisonData.platinum.trend)}`}
+                  >
                     {getTrendIcon(comparisonData.platinum.trend)}
                     <span>
-                      {formatCurrency(Math.abs(comparisonData.platinum.change))} (
-                      {Math.abs(comparisonData.platinum.changePercentage).toFixed(2)}%)
+                      {formatCurrency(Math.abs(comparisonData.platinum.change))}{' '}
+                      (
+                      {Math.abs(
+                        comparisonData.platinum.changePercentage
+                      ).toFixed(2)}
+                      %)
                     </span>
                   </div>
                 </div>

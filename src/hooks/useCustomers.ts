@@ -21,23 +21,20 @@ export const useCustomers = (shopId: ID) => {
   const selection = useCustomerSelection()
 
   // Build query parameters
-  const queryParams = useMemo(() => ({
-    shopId,
-    page: pagination.currentPage,
-    limit: pagination.pageSize,
-    sort: `${pagination.sortOrder === 'desc' ? '-' : ''}${pagination.sortBy}`,
-    ...filters.filters,
-  }), [shopId, pagination, filters.filters])
+  const queryParams = useMemo(
+    () => ({
+      shopId,
+      page: pagination.currentPage,
+      limit: pagination.pageSize,
+      sort: `${pagination.sortOrder === 'desc' ? '-' : ''}${pagination.sortBy}`,
+      ...filters.filters,
+    }),
+    [shopId, pagination, filters.filters]
+  )
 
   // Fetch customers
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-    refetch,
-  } = useGetCustomersQuery(queryParams)
+  const { data, isLoading, isFetching, isError, error, refetch } =
+    useGetCustomersQuery(queryParams)
 
   // Mutations
   const [createCustomer, createState] = useCreateCustomerMutation()
@@ -52,35 +49,35 @@ export const useCustomers = (shopId: ID) => {
     // Data
     customers,
     meta,
-    
+
     // Loading states
     isLoading,
     isFetching,
     isError,
     error,
-    
+
     // Mutations
     createCustomer,
     updateCustomer,
     deleteCustomer,
-    
+
     // Mutation states
     isCreating: createState.isLoading,
     isUpdating: updateState.isLoading,
     isDeleting: deleteState.isLoading,
-    
+
     // Filters
     filters: filters.filters,
     setFilters: filters.updateFilters,
     clearFilters: filters.reset,
     hasActiveFilters: filters.hasActiveFilters,
-    
+
     // Pagination
     pagination,
-    
+
     // Selection
     selection,
-    
+
     // Utilities
     refetch,
   }

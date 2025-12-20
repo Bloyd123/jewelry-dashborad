@@ -24,7 +24,7 @@ export const ModalFooter: React.FC<ModalFooterProps> = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-2 px-6 py-4 border-t border-border-primary',
+        'flex items-center gap-2 border-t border-border-primary px-6 py-4',
         alignmentClasses[align],
         className
       )}

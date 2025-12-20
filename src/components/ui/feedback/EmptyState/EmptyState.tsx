@@ -28,7 +28,7 @@ import { Button } from '@/components/ui/button'
 // TYPES
 // ============================================================================
 
-export type EmptyStateVariant = 
+export type EmptyStateVariant =
   | 'default'
   | 'search'
   | 'filter'
@@ -52,33 +52,33 @@ export interface EmptyStateProps {
   title?: string
   description?: string
   icon?: React.ReactNode | LucideIcon
-  
+
   // Variant & Style
   variant?: EmptyStateVariant
   size?: EmptyStateSize
-  
+
   // Actions
   action?: EmptyStateAction
   secondaryAction?: EmptyStateAction
-  
+
   // Custom Content
   children?: React.ReactNode
   customContent?: React.ReactNode
-  
+
   // Image/Illustration
   image?: string
   imageAlt?: string
-  
+
   // Styling
   className?: string
   iconClassName?: string
   titleClassName?: string
   descriptionClassName?: string
-  
+
   // Responsive
   fullHeight?: boolean
   compact?: boolean
-  
+
   // Additional
   testId?: string
 }
@@ -232,11 +232,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       const IconComponent = icon as LucideIcon
       return (
         <IconComponent
-          className={cn(
-            config.icon,
-            variantStyles.iconColor,
-            iconClassName
-          )}
+          className={cn(config.icon, variantStyles.iconColor, iconClassName)}
           strokeWidth={1.5}
         />
       )
@@ -265,7 +261,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     if (!action && !secondaryAction) return null
 
     return (
-      <div className={cn('flex flex-col sm:flex-row items-center gap-3 mt-6')}>
+      <div className={cn('mt-6 flex flex-col items-center gap-3 sm:flex-row')}>
         {action && (
           <Button
             onClick={action.onClick}
@@ -337,7 +333,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
           className={cn(
             config.description,
             variantStyles.descriptionColor,
-            'max-w-md mx-auto',
+            'mx-auto max-w-md',
             descriptionClassName
           )}
         >
@@ -347,9 +343,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
       {/* Custom Content */}
       {customContent && (
-        <div className="mt-4 w-full max-w-md mx-auto">
-          {customContent}
-        </div>
+        <div className="mx-auto mt-4 w-full max-w-md">{customContent}</div>
       )}
 
       {/* Actions */}
@@ -357,9 +351,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
       {/* Children (for complete custom content) */}
       {children && (
-        <div className="mt-6 w-full max-w-lg mx-auto">
-          {children}
-        </div>
+        <div className="mx-auto mt-6 w-full max-w-lg">{children}</div>
       )}
     </div>
   )
@@ -449,7 +441,8 @@ export const EmptyDataState: React.FC<{
       action={
         onAdd
           ? {
-              label: addLabel || t('ui.emptyState.addFirst', { entity: entityName }),
+              label:
+                addLabel || t('ui.emptyState.addFirst', { entity: entityName }),
               onClick: onAdd,
             }
           : undefined

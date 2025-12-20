@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { YearRangeFilter, YearRange } from '@/components/ui/filters/YearRangeFilter'
+import {
+  YearRangeFilter,
+  YearRange,
+} from '@/components/ui/filters/YearRangeFilter'
 import { useTranslation } from 'react-i18next'
 
 interface ShopEstablishedYearFilterProps {
@@ -8,11 +11,9 @@ interface ShopEstablishedYearFilterProps {
   className?: string
 }
 
-export const ShopEstablishedYearFilter: React.FC<ShopEstablishedYearFilterProps> = ({
-  value,
-  onChange,
-  className,
-}) => {
+export const ShopEstablishedYearFilter: React.FC<
+  ShopEstablishedYearFilterProps
+> = ({ value, onChange, className }) => {
   const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
 

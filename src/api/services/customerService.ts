@@ -31,8 +31,8 @@ export const customerApi = createApi({
   reducerPath: 'customerApi',
   baseQuery: baseQueryWithReauth,
   tagTypes: ['Customer', 'Customers', 'CustomerStatistics'],
-  
-  endpoints: (builder) => ({
+
+  endpoints: builder => ({
     // ========================================================================
     // CREATE CUSTOMER
     // ========================================================================
@@ -58,16 +58,21 @@ export const customerApi = createApi({
       ApiResponse<PaginatedResponse<CustomerListItem>>,
       CustomerQueryParams
     >({
-      query: (params) => {
+      query: params => {
         const { shopId, ...queryParams } = params
-        const baseUrl = replacePathParams(API_ENDPOINTS.CUSTOMERS.BASE, { shopId })
+        const baseUrl = replacePathParams(API_ENDPOINTS.CUSTOMERS.BASE, {
+          shopId,
+        })
         const queryString = buildQueryString(queryParams)
         return `${baseUrl}${queryString}`
       },
-      providesTags: (result) =>
+      providesTags: result =>
         result?.data.data
           ? [
-              ...result.data.data.map(({ _id }) => ({ type: 'Customer' as const, id: _id })),
+              ...result.data.data.map(({ _id }) => ({
+                type: 'Customer' as const,
+                id: _id,
+              })),
               { type: 'Customers' as const, id: 'LIST' },
             ]
           : [{ type: 'Customers' as const, id: 'LIST' }],
@@ -106,9 +111,12 @@ export const customerApi = createApi({
       }
     >({
       query: ({ shopId, ...searchParams }) => {
-        const baseUrl = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BASE}/search`, {
-          shopId,
-        })
+        const baseUrl = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BASE}/search`,
+          {
+            shopId,
+          }
+        )
         const queryString = buildQueryString(searchParams)
         return `${baseUrl}${queryString}`
       },
@@ -166,10 +174,13 @@ export const customerApi = createApi({
       { shopId: ID; customerId: ID; data: BlacklistCustomerRequest }
     >({
       query: ({ shopId, customerId, data }) => {
-        const url = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BY_ID}/blacklist`, {
-          shopId,
-          id: customerId,
-        })
+        const url = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BY_ID}/blacklist`,
+          {
+            shopId,
+            id: customerId,
+          }
+        )
         return {
           url,
           method: 'PATCH',
@@ -190,10 +201,13 @@ export const customerApi = createApi({
       { shopId: ID; customerId: ID }
     >({
       query: ({ shopId, customerId }) => {
-        const url = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BY_ID}/unblacklist`, {
-          shopId,
-          id: customerId,
-        })
+        const url = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BY_ID}/unblacklist`,
+          {
+            shopId,
+            id: customerId,
+          }
+        )
         return {
           url,
           method: 'PATCH',
@@ -213,10 +227,13 @@ export const customerApi = createApi({
       { shopId: ID; customerId: ID; data: LoyaltyPointsRequest }
     >({
       query: ({ shopId, customerId, data }) => {
-        const url = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BY_ID}/loyalty/add`, {
-          shopId,
-          id: customerId,
-        })
+        const url = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BY_ID}/loyalty/add`,
+          {
+            shopId,
+            id: customerId,
+          }
+        )
         return {
           url,
           method: 'POST',
@@ -236,10 +253,13 @@ export const customerApi = createApi({
       { shopId: ID; customerId: ID; data: LoyaltyPointsRequest }
     >({
       query: ({ shopId, customerId, data }) => {
-        const url = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BY_ID}/loyalty/redeem`, {
-          shopId,
-          id: customerId,
-        })
+        const url = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BY_ID}/loyalty/redeem`,
+          {
+            shopId,
+            id: customerId,
+          }
+        )
         return {
           url,
           method: 'POST',
@@ -259,9 +279,12 @@ export const customerApi = createApi({
       { shopId: ID }
     >({
       query: ({ shopId }) => {
-        const url = replacePathParams(`${API_ENDPOINTS.CUSTOMERS.BASE}/analytics`, {
-          shopId,
-        })
+        const url = replacePathParams(
+          `${API_ENDPOINTS.CUSTOMERS.BASE}/analytics`,
+          {
+            shopId,
+          }
+        )
         return url
       },
       providesTags: ['CustomerStatistics'],

@@ -16,26 +16,26 @@ export interface DialogProps {
   // Control
   open: boolean
   onOpenChange: (open: boolean) => void
-  
+
   // Content
   children: React.ReactNode
   title?: string
   description?: string
-  
+
   // Configuration
   closeOnEscape?: boolean
   closeOnOutsideClick?: boolean
   preventScroll?: boolean
-  
+
   // Styling
   className?: string
   overlayClassName?: string
   contentClassName?: string
-  
+
   // Callbacks
   onClose?: () => void
   onOpen?: () => void
-  
+
   // Additional
   testId?: string
 }
@@ -98,7 +98,7 @@ export const Dialog: React.FC<DialogProps> = ({
         {/* Overlay */}
         <DialogPrimitive.Overlay
           className={cn(
-            'fixed inset-0 z-50 bg-bg-primary/80 backdrop-blur-sm',
+            'bg-bg-primary/80 fixed inset-0 z-50 backdrop-blur-sm',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             overlayClassName
@@ -112,24 +112,24 @@ export const Dialog: React.FC<DialogProps> = ({
             'translate-x-[-50%] translate-y-[-50%]',
             'w-full max-w-md',
             'rounded-lg border shadow-lg',
-            'bg-bg-secondary border-border-primary',
+            'border-border-primary bg-bg-secondary',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
             contentClassName,
             className
           )}
-          onEscapeKeyDown={closeOnEscape ? undefined : (e) => e.preventDefault()}
+          onEscapeKeyDown={closeOnEscape ? undefined : e => e.preventDefault()}
           onPointerDownOutside={
-            closeOnOutsideClick ? undefined : (e) => e.preventDefault()
+            closeOnOutsideClick ? undefined : e => e.preventDefault()
           }
           data-testid={testId}
         >
           {/* Header */}
           {(title || description) && (
-            <div className="px-6 pt-6 pb-4">
+            <div className="px-6 pb-4 pt-6">
               {title && (
-                <DialogPrimitive.Title className="text-lg font-semibold text-text-primary mb-2">
+                <DialogPrimitive.Title className="mb-2 text-lg font-semibold text-text-primary">
                   {t(title)}
                 </DialogPrimitive.Title>
               )}

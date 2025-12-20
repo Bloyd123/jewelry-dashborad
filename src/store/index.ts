@@ -15,7 +15,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' 
+import storage from 'redux-persist/lib/storage'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import authReducer from './slices/authSlice'
 import notificationReducer from './slices/notificationSlice'
@@ -41,13 +41,13 @@ const rootReducer = combineReducers({
   auth: authReducer,
   shop: shopReducer,
   ui: persistReducer(uiPersistConfig, uiReducer),
-  
+
   // user: userReducer,
   // shop: shopReducer,
   notification: notificationReducer,
-    // RTK Query reducer
+  // RTK Query reducer
   [customerApi.reducerPath]: customerApi.reducer,
-   customer: customerReducer,
+  customer: customerReducer,
   // ... other reducers
 })
 
@@ -78,7 +78,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-          // RTK Query middleware added here
+      // RTK Query middleware added here
       .concat(customerApi.middleware),
   devTools: import.meta.env.DEV, // Enable Redux DevTools in development
 })

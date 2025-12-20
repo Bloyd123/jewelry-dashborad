@@ -69,7 +69,7 @@ export const DataTableCell = <T,>({
   return (
     <td
       className={cn(
-        'px-4 py-3 text-sm text-text-primary border-b border-border-primary',
+        'border-b border-border-primary px-4 py-3 text-sm text-text-primary',
         alignmentClass,
         column.cellClassName,
         className
@@ -101,7 +101,7 @@ export const DataTableActions = <T,>({
 }: DataTableActionsProps<T>) => {
   const { t } = useTranslation()
 
-  const visibleActions = actions.filter((action) => {
+  const visibleActions = actions.filter(action => {
     if (typeof action.hidden === 'function') {
       return !action.hidden(row)
     }
@@ -109,11 +109,15 @@ export const DataTableActions = <T,>({
   })
 
   if (visibleActions.length === 0) {
-    return <td className="px-4 py-3 text-center border-b border-border-primary">-</td>
+    return (
+      <td className="border-b border-border-primary px-4 py-3 text-center">
+        -
+      </td>
+    )
   }
 
   return (
-    <td className="px-4 py-3 text-center border-b border-border-primary">
+    <td className="border-b border-border-primary px-4 py-3 text-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -145,7 +149,9 @@ export const DataTableActions = <T,>({
                 )}
               >
                 {action.icon && <span className="mr-2">{action.icon}</span>}
-                {typeof action.label === 'string' ? t(action.label) : action.label}
+                {typeof action.label === 'string'
+                  ? t(action.label)
+                  : action.label}
               </DropdownMenuItem>
             )
           })}
@@ -254,13 +260,13 @@ export const DataTableRow = <T,>({
       >
         {/* Selection Column */}
         {selectionEnabled && (
-          <td className="w-12 px-4 py-3 text-center border-b border-border-primary">
+          <td className="w-12 border-b border-border-primary px-4 py-3 text-center">
             <input
               type="checkbox"
               checked={selected}
               onChange={handleSelectionChange}
-              onClick={(e) => e.stopPropagation()}
-            className="h-4 w-4 rounded border-border-primary bg-bg-secondary text-accent  focus:ring-accent focus:ring-offset-0 accent-accent cursor-pointer"
+              onClick={e => e.stopPropagation()}
+              className="h-4 w-4 cursor-pointer rounded border-border-primary bg-bg-secondary text-accent accent-accent focus:ring-accent focus:ring-offset-0"
               aria-label={t('ui.datatable.selectRow')}
             />
           </td>
@@ -268,7 +274,7 @@ export const DataTableRow = <T,>({
 
         {/* Expansion Toggle Column */}
         {expansionEnabled && (
-          <td className="w-12 px-4 py-3 text-center border-b border-border-primary">
+          <td className="w-12 border-b border-border-primary px-4 py-3 text-center">
             <Button
               variant="ghost"
               size="icon"
@@ -295,7 +301,7 @@ export const DataTableRow = <T,>({
         )}
 
         {/* Data Columns */}
-        {columns.map((column) => (
+        {columns.map(column => (
           <DataTableCell
             key={column.id}
             row={row}
@@ -321,7 +327,7 @@ export const DataTableRow = <T,>({
               (actionsEnabled ? 1 : 0) +
               (expansionEnabled ? 1 : 0)
             }
-            className="px-4 py-4 border-b border-border-primary"
+            className="border-b border-border-primary px-4 py-4"
           >
             {renderExpanded(row)}
           </td>

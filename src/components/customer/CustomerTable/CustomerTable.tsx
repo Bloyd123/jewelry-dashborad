@@ -25,8 +25,10 @@ export const CustomerTable: React.FC = () => {
   // STATE
   // ========================================================================
 
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
-    // ✅ ADD FILTER STATE
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
+    new Set()
+  )
+  // ✅ ADD FILTER STATE
   const [filters, setFilters] = useState<CustomerFilterValues>({
     search: '',
     customerType: undefined,
@@ -36,7 +38,7 @@ export const CustomerTable: React.FC = () => {
     vipOnly: undefined,
     dateRange: undefined,
   })
-const navigate = useNavigate()
+  const navigate = useNavigate()
 
   // ========================================================================
   // HANDLERS
@@ -47,10 +49,10 @@ const navigate = useNavigate()
     // TODO: Open customer details modal/drawer
   }
 
-const handleEdit = (customer: Customer) => {
-  console.log('Edit Customer:', customer)
-  navigate(`/customers/edit/${customer._id}`)  // ✅ Fixed!
-}
+  const handleEdit = (customer: Customer) => {
+    console.log('Edit Customer:', customer)
+    navigate(`/customers/edit/${customer._id}`) // ✅ Fixed!
+  }
 
   const handleAddPoints = (customer: Customer) => {
     console.log('Add Loyalty Points:', customer)
@@ -69,7 +71,7 @@ const handleEdit = (customer: Customer) => {
 
   // Bulk Actions Handlers
   const handleBulkViewDetails = () => {
-    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
     if (selected.length === 1) {
       handleViewDetails(selected[0])
     }
@@ -81,26 +83,26 @@ const handleEdit = (customer: Customer) => {
   //     handleEdit(selected[0])
   //   }
   // }
-const handleBulkEdit = () => {
-  if (selectedCustomers.length === 1) {
-    navigate(`/customers/edit/${selectedCustomers[0]._id}`)  // ✅ Fixed!
+  const handleBulkEdit = () => {
+    if (selectedCustomers.length === 1) {
+      navigate(`/customers/edit/${selectedCustomers[0]._id}`) // ✅ Fixed!
+    }
   }
-}
 
   const handleBulkAddPoints = () => {
-    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
     console.log('Bulk Add Points:', selected)
     // TODO: Open bulk add points modal
   }
 
   const handleBulkBlacklist = () => {
-    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
     console.log('Bulk Blacklist:', selected)
     // TODO: Handle bulk blacklist
   }
 
   const handleBulkDelete = () => {
-    const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
+    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
     console.log('Bulk Delete:', selected)
     // TODO: Show confirmation and bulk delete
   }
@@ -108,12 +110,12 @@ const handleBulkEdit = () => {
   const handleClearSelection = () => {
     setSelectedRows(new Set())
   }
-    const handleFiltersChange = (newFilters: CustomerFilterValues) => {
+  const handleFiltersChange = (newFilters: CustomerFilterValues) => {
     setFilters(newFilters)
     // TODO: Call API with filters or filter MOCK_CUSTOMERS locally
     console.log('Filters changed:', newFilters)
   }
-    const handleClearAllFilters = () => {
+  const handleClearAllFilters = () => {
     setFilters({
       search: '',
       customerType: undefined,
@@ -146,7 +148,7 @@ const handleBulkEdit = () => {
   // ========================================================================
 
   const selectedCustomers = useMemo(() => {
-    return MOCK_CUSTOMERS.filter((customer) => selectedRows.has(customer._id))
+    return MOCK_CUSTOMERS.filter(customer => selectedRows.has(customer._id))
   }, [selectedRows])
 
   // ========================================================================
@@ -155,7 +157,7 @@ const handleBulkEdit = () => {
 
   return (
     <div className="w-full space-y-4">
-            <CustomerFilters
+      <CustomerFilters
         filters={filters}
         onFiltersChange={handleFiltersChange}
         onClearAll={handleClearAllFilters}
@@ -166,7 +168,7 @@ const handleBulkEdit = () => {
           selectedCount={selectedRows.size}
           selectedCustomers={selectedCustomers}
           onViewDetails={handleBulkViewDetails}
-       onEdit={handleBulkEdit} 
+          onEdit={handleBulkEdit}
           onAddPoints={handleBulkAddPoints}
           onBlacklist={handleBulkBlacklist}
           onDelete={handleBulkDelete}
@@ -196,7 +198,7 @@ const handleBulkEdit = () => {
           enabled: true,
           selectedRows,
           onSelectionChange: setSelectedRows,
-          getRowId: (row) => row._id,
+          getRowId: row => row._id,
           selectAllEnabled: true,
         }}
         // Row Actions Configuration
@@ -222,13 +224,13 @@ const handleBulkEdit = () => {
           fullWidth: true,
         }}
         // Row Click Handler
-        onRowClick={(customer) => {
+        onRowClick={customer => {
           console.log('Row clicked:', customer)
           // Optional: Open details on row click
           // handleViewDetails(customer)
         }}
         // Get Row ID
-        getRowId={(row) => row._id}
+        getRowId={row => row._id}
         // Test ID
         testId="customer-table"
         ariaLabel={t('table.ariaLabel')}

@@ -170,10 +170,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           />
 
           {/* Sort Filter */}
-          <ShopSortFilter
-            value={filters.sort}
-            onChange={handleSortChange}
-          />
+          <ShopSortFilter value={filters.sort} onChange={handleSortChange} />
 
           {/* More Filters Button */}
           <Button
@@ -182,10 +179,10 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
             onClick={() => setShowAdvancedDrawer(true)}
             className="relative"
           >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
+            <SlidersHorizontal className="mr-2 h-4 w-4" />
             {t('filters.moreFilters')}
             {advancedFilterCount > 0 && (
-              <span className="ml-2 px-1.5 py-0.5 text-xs rounded-full bg-accent text-white">
+              <span className="ml-2 rounded-full bg-accent px-1.5 py-0.5 text-xs text-white">
                 {advancedFilterCount}
               </span>
             )}
@@ -221,7 +218,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
             </FilterGroup>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 border-t border-border-primary">
+            <div className="flex gap-3 border-t border-border-primary pt-4">
               <Button
                 variant="outline"
                 onClick={handleClearAdvanced}
@@ -257,12 +254,12 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
         <Button
           variant="outline"
           onClick={() => setShowAdvancedDrawer(true)}
-          className="w-full relative"
+          className="relative w-full"
         >
-          <SlidersHorizontal className="h-4 w-4 mr-2" />
+          <SlidersHorizontal className="mr-2 h-4 w-4" />
           {t('filters.filters')}
           {activeFilterCount > 0 && (
-            <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-accent text-white">
+            <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
               {activeFilterCount}
             </span>
           )}
@@ -343,7 +340,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Actions - WITH CLEAR ALL */}
-          <div className="flex gap-3 pt-4 border-t border-border-primary sticky bottom-0 bg-bg-secondary pb-4">
+          <div className="sticky bottom-0 flex gap-3 border-t border-border-primary bg-bg-secondary pb-4 pt-4">
             <Button
               variant="outline"
               onClick={onClearAll}

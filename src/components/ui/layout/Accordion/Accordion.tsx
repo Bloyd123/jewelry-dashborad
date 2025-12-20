@@ -41,12 +41,15 @@ export interface AccordionProps {
 // STYLES
 // ============================================================================
 
-const variantStyles: Record<AccordionVariant, {
-  container: string
-  item: string
-  trigger: string
-  content: string
-}> = {
+const variantStyles: Record<
+  AccordionVariant,
+  {
+    container: string
+    item: string
+    trigger: string
+    content: string
+  }
+> = {
   default: {
     container: 'space-y-0',
     item: 'border-b border-border-secondary last:border-b-0',
@@ -54,7 +57,8 @@ const variantStyles: Record<AccordionVariant, {
     content: 'bg-bg-secondary',
   },
   bordered: {
-    container: 'space-y-0 border border-border-primary rounded-lg overflow-hidden',
+    container:
+      'space-y-0 border border-border-primary rounded-lg overflow-hidden',
     item: 'border-b border-border-secondary last:border-b-0',
     trigger: 'hover:bg-bg-tertiary',
     content: 'bg-bg-secondary',
@@ -73,11 +77,14 @@ const variantStyles: Record<AccordionVariant, {
   },
 }
 
-const sizeStyles: Record<AccordionSize, {
-  trigger: string
-  content: string
-  icon: string
-}> = {
+const sizeStyles: Record<
+  AccordionSize,
+  {
+    trigger: string
+    content: string
+    icon: string
+  }
+> = {
   sm: {
     trigger: 'py-2 px-3 text-sm',
     content: 'px-3 py-2 text-sm',
@@ -102,22 +109,62 @@ const sizeStyles: Record<AccordionSize, {
 export const Accordion = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,
   AccordionProps
->(({
-  items,
-  type = 'single',
-  defaultValue,
-  value,
-  onValueChange,
-  variant = 'default',
-  size = 'md',
-  collapsible = true,
-  className,
-  children,
-}, ref) => {
-  const styles = variantStyles[variant]
+>(
+  (
+    {
+      items,
+      type = 'single',
+      defaultValue,
+      value,
+      onValueChange,
+      variant = 'default',
+      size = 'md',
+      collapsible = true,
+      className,
+      children,
+    },
+    ref
+  ) => {
+    const styles = variantStyles[variant]
 
-  // If items array is provided, render them automatically
-  if (items && items.length > 0) {
+    // If items array is provided, render them automatically
+    if (items && items.length > 0) {
+      return (
+        <AccordionPrimitive.Root
+          ref={ref}
+          type={type as any}
+          defaultValue={defaultValue as any}
+          value={value as any}
+          onValueChange={onValueChange as any}
+          collapsible={type === 'single' ? collapsible : undefined}
+          className={cn(styles.container, className)}
+        >
+          {items.map(item => (
+            <AccordionItem
+              key={item.value}
+              value={item.value}
+              variant={variant}
+              size={size}
+              disabled={item.disabled}
+            >
+              <AccordionTrigger
+                variant={variant}
+                size={size}
+                icon={item.icon}
+                badge={item.badge}
+              >
+                {item.title}
+              </AccordionTrigger>
+              <AccordionContent variant={variant} size={size}>
+                {item.content}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </AccordionPrimitive.Root>
+      )
+    }
+
+    // Otherwise, render children (manual composition)
     return (
       <AccordionPrimitive.Root
         ref={ref}
@@ -128,46 +175,11 @@ export const Accordion = React.forwardRef<
         collapsible={type === 'single' ? collapsible : undefined}
         className={cn(styles.container, className)}
       >
-        {items.map((item) => (
-          <AccordionItem
-            key={item.value}
-            value={item.value}
-            variant={variant}
-            size={size}
-            disabled={item.disabled}
-          >
-            <AccordionTrigger
-              variant={variant}
-              size={size}
-              icon={item.icon}
-              badge={item.badge}
-            >
-              {item.title}
-            </AccordionTrigger>
-            <AccordionContent variant={variant} size={size}>
-              {item.content}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+        {children}
       </AccordionPrimitive.Root>
     )
   }
-
-  // Otherwise, render children (manual composition)
-  return (
-    <AccordionPrimitive.Root
-      ref={ref}
-      type={type as any}
-      defaultValue={defaultValue as any}
-      value={value as any}
-      onValueChange={onValueChange as any}
-      collapsible={type === 'single' ? collapsible : undefined}
-      className={cn(styles.container, className)}
-    >
-      {children}
-    </AccordionPrimitive.Root>
-  )
-})
+)
 
 Accordion.displayName = 'Accordion'
 
@@ -175,7 +187,8 @@ Accordion.displayName = 'Accordion'
 // ACCORDION ITEM COMPONENT
 // ============================================================================
 
-interface AccordionItemProps extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> {
+interface AccordionItemProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> {
   variant?: AccordionVariant
   size?: AccordionSize
 }
@@ -185,7 +198,7 @@ export const AccordionItem = React.forwardRef<
   AccordionItemProps
 >(({ className, variant = 'default', size = 'md', ...props }, ref) => {
   const styles = variantStyles[variant]
-  
+
   return (
     <AccordionPrimitive.Item
       ref={ref}
@@ -201,7 +214,8 @@ AccordionItem.displayName = 'AccordionItem'
 // ACCORDION TRIGGER COMPONENT
 // ============================================================================
 
-interface AccordionTriggerProps extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
+interface AccordionTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
   variant?: AccordionVariant
   size?: AccordionSize
   icon?: React.ReactNode
@@ -211,48 +225,59 @@ interface AccordionTriggerProps extends React.ComponentPropsWithoutRef<typeof Ac
 export const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   AccordionTriggerProps
->(({ className, children, variant = 'default', size = 'md', icon, badge, ...props }, ref) => {
-  const styles = variantStyles[variant]
-  const sizeStyle = sizeStyles[size]
-  
-  return (
-    <AccordionPrimitive.Header className="flex">
-      <AccordionPrimitive.Trigger
-        ref={ref}
-        className={cn(
-          'flex flex-1 items-center justify-between font-medium transition-all',
-          'text-text-primary',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
-          'disabled:pointer-events-none disabled:opacity-50',
-          '[&[data-state=open]>svg.chevron]:rotate-180',
-          styles.trigger,
-          sizeStyle.trigger,
-          className
-        )}
-        {...props}
-      >
-        <div className="flex items-center gap-3 flex-1">
-          {icon && (
-            <span className="shrink-0 text-text-secondary">
-              {icon}
-            </span>
+>(
+  (
+    {
+      className,
+      children,
+      variant = 'default',
+      size = 'md',
+      icon,
+      badge,
+      ...props
+    },
+    ref
+  ) => {
+    const styles = variantStyles[variant]
+    const sizeStyle = sizeStyles[size]
+
+    return (
+      <AccordionPrimitive.Header className="flex">
+        <AccordionPrimitive.Trigger
+          ref={ref}
+          className={cn(
+            'flex flex-1 items-center justify-between font-medium transition-all',
+            'text-text-primary',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+            'disabled:pointer-events-none disabled:opacity-50',
+            '[&[data-state=open]>svg.chevron]:rotate-180',
+            styles.trigger,
+            sizeStyle.trigger,
+            className
           )}
-          <span className="text-left">{children}</span>
-        </div>
-        
-        <div className="flex items-center gap-2 ml-4">
-          {badge && <span className="shrink-0">{badge}</span>}
-          <ChevronDown
-            className={cn(
-              'chevron shrink-0 text-text-secondary transition-transform duration-200',
-              sizeStyle.icon
+          {...props}
+        >
+          <div className="flex flex-1 items-center gap-3">
+            {icon && (
+              <span className="shrink-0 text-text-secondary">{icon}</span>
             )}
-          />
-        </div>
-      </AccordionPrimitive.Trigger>
-    </AccordionPrimitive.Header>
-  )
-})
+            <span className="text-left">{children}</span>
+          </div>
+
+          <div className="ml-4 flex items-center gap-2">
+            {badge && <span className="shrink-0">{badge}</span>}
+            <ChevronDown
+              className={cn(
+                'chevron shrink-0 text-text-secondary transition-transform duration-200',
+                sizeStyle.icon
+              )}
+            />
+          </div>
+        </AccordionPrimitive.Trigger>
+      </AccordionPrimitive.Header>
+    )
+  }
+)
 
 AccordionTrigger.displayName = 'AccordionTrigger'
 
@@ -260,7 +285,8 @@ AccordionTrigger.displayName = 'AccordionTrigger'
 // ACCORDION CONTENT COMPONENT
 // ============================================================================
 
-interface AccordionContentProps extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> {
+interface AccordionContentProps
+  extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> {
   variant?: AccordionVariant
   size?: AccordionSize
 }
@@ -268,25 +294,28 @@ interface AccordionContentProps extends React.ComponentPropsWithoutRef<typeof Ac
 export const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   AccordionContentProps
->(({ className, children, variant = 'default', size = 'md', ...props }, ref) => {
-  const styles = variantStyles[variant]
-  const sizeStyle = sizeStyles[size]
-  
-  return (
-    <AccordionPrimitive.Content
-      ref={ref}
-      className={cn(
-        'overflow-hidden text-text-secondary transition-all',
-        'data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
-        styles.content
-      )}
-      {...props}
-    >
-      <div className={cn(sizeStyle.content, className)}>
-        {children}
-      </div>
-    </AccordionPrimitive.Content>
-  )
-})
+>(
+  (
+    { className, children, variant = 'default', size = 'md', ...props },
+    ref
+  ) => {
+    const styles = variantStyles[variant]
+    const sizeStyle = sizeStyles[size]
+
+    return (
+      <AccordionPrimitive.Content
+        ref={ref}
+        className={cn(
+          'overflow-hidden text-text-secondary transition-all',
+          'data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+          styles.content
+        )}
+        {...props}
+      >
+        <div className={cn(sizeStyle.content, className)}>{children}</div>
+      </AccordionPrimitive.Content>
+    )
+  }
+)
 
 AccordionContent.displayName = 'AccordionContent'

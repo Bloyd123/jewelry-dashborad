@@ -53,21 +53,25 @@ export const getShopRowActions = (
       icon: <Edit className="h-4 w-4" />,
       onClick: onEdit,
       variant: 'default',
-      hidden: (row) => userRole === 'staff',
+      hidden: row => userRole === 'staff',
     },
     {
       label: 'actions.settings',
       icon: <Settings className="h-4 w-4" />,
       onClick: onSettings,
       variant: 'default',
-      hidden: (row) => !['super_admin', 'org_admin', 'shop_admin'].includes(userRole),
+      hidden: row =>
+        !['super_admin', 'org_admin', 'shop_admin'].includes(userRole),
     },
     {
       label: 'actions.updateRates',
       icon: <TrendingUp className="h-4 w-4" />,
       onClick: onUpdateRates,
       variant: 'default',
-      hidden: (row) => !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(userRole),
+      hidden: row =>
+        !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(
+          userRole
+        ),
     },
     {
       label: 'actions.statistics',
@@ -80,14 +84,16 @@ export const getShopRowActions = (
       icon: <Power className="h-4 w-4" />,
       onClick: onToggleStatus,
       variant: 'default',
-      hidden: (row) => row.isActive || !['super_admin', 'org_admin'].includes(userRole),
+      hidden: row =>
+        row.isActive || !['super_admin', 'org_admin'].includes(userRole),
     },
     {
       label: 'actions.deactivate',
       icon: <PowerOff className="h-4 w-4" />,
       onClick: onToggleStatus,
       variant: 'destructive',
-      hidden: (row) => !row.isActive || !['super_admin', 'org_admin'].includes(userRole),
+      hidden: row =>
+        !row.isActive || !['super_admin', 'org_admin'].includes(userRole),
     },
   ]
 
@@ -137,15 +143,17 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const allActive = selectedShops.every((s) => s.isActive)
-  const allInactive = selectedShops.every((s) => !s.isActive)
-  const canManage = ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
+  const allActive = selectedShops.every(s => s.isActive)
+  const allInactive = selectedShops.every(s => !s.isActive)
+  const canManage = ['super_admin', 'org_admin', 'shop_admin'].includes(
+    userRole
+  )
   const canDelete = ['super_admin', 'org_admin'].includes(userRole)
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 px-4 py-3 bg-accent/10 border-b border-border-primary">
+    <div className="bg-accent/10 flex flex-col items-start justify-between gap-3 border-b border-border-primary px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
       {/* Left Section - Selection Info */}
-      <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+      <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-4">
         <span className="text-sm font-medium text-text-primary">
           {t('table.selectedCount', { count: selectedCount })}
         </span>
@@ -153,21 +161,21 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           variant="ghost"
           size="sm"
           onClick={onClearSelection}
-          className="h-8 text-text-secondary hover:text-text-primary text-xs sm:text-sm"
+          className="h-8 text-xs text-text-secondary hover:text-text-primary sm:text-sm"
         >
           {t('common.clearSelection')}
         </Button>
       </div>
 
       {/* Right Section - Action Buttons */}
-      <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+      <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
         {/* View Details - Only if single selection */}
         {selectedCount === 1 && (
           <Button
             variant="outline"
             size="sm"
             onClick={onViewDetails}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Eye className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
@@ -180,7 +188,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onEdit}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Edit className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.edit')}</span>
@@ -193,7 +201,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onSettings}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Settings className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.settings')}</span>
@@ -206,7 +214,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onUpdateRates}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <TrendingUp className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.updateRates')}</span>
@@ -219,7 +227,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onActivate}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap text-status-success border-status-success/20 hover:bg-status-success/10"
+            className="border-status-success/20 hover:bg-status-success/10 h-9 gap-1 whitespace-nowrap text-xs text-status-success sm:gap-2 sm:text-sm"
           >
             <Power className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.activate')}</span>
@@ -232,7 +240,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onDeactivate}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap text-status-warning border-status-warning/20 hover:bg-status-warning/10"
+            className="border-status-warning/20 hover:bg-status-warning/10 h-9 gap-1 whitespace-nowrap text-xs text-status-warning sm:gap-2 sm:text-sm"
           >
             <PowerOff className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.deactivate')}</span>
@@ -245,7 +253,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="destructive"
             size="sm"
             onClick={onDelete}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Trash2 className="h-4 w-4" />
             <span className="hidden sm:inline">{t('actions.delete')}</span>
@@ -260,12 +268,8 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>
-              {t('actions.exportSelected')}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {t('actions.sendNotification')}
-            </DropdownMenuItem>
+            <DropdownMenuItem>{t('actions.exportSelected')}</DropdownMenuItem>
+            <DropdownMenuItem>{t('actions.sendNotification')}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
               {t('actions.bulkDelete')}

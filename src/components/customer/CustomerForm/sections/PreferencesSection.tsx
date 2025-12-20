@@ -67,7 +67,9 @@ export const PreferencesSection = ({
         name="preferences.communicationPreference"
         label={t('customer.communicationPreference')}
         value={data.preferences?.communicationPreference || ''}
-        onChange={(_, value) => handlePreferenceChange('communicationPreference', value)}
+        onChange={(_, value) =>
+          handlePreferenceChange('communicationPreference', value)
+        }
         onBlur={() => onBlur?.('preferences.communicationPreference')}
         error={errors['preferences.communicationPreference']}
         placeholder={t('customer.selectCommunication')}

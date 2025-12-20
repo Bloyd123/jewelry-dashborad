@@ -27,7 +27,9 @@ export const ShopTable: React.FC = () => {
   // STATE
   // ========================================================================
 
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
+    new Set()
+  )
 
   // ========================================================================
   // HANDLERS
@@ -136,7 +138,7 @@ export const ShopTable: React.FC = () => {
   // ========================================================================
 
   const selectedShops = useMemo(() => {
-    return dummyShops.filter((shop) => selectedRows.has(shop._id))
+    return dummyShops.filter(shop => selectedRows.has(shop._id))
   }, [selectedRows])
 
   // ========================================================================
@@ -184,7 +186,7 @@ export const ShopTable: React.FC = () => {
           enabled: true,
           selectedRows,
           onSelectionChange: setSelectedRows,
-          getRowId: (row) => row._id,
+          getRowId: row => row._id,
           selectAllEnabled: true,
         }}
         // Row Actions Configuration
@@ -215,13 +217,13 @@ export const ShopTable: React.FC = () => {
           fullWidth: true,
         }}
         // Row Click Handler
-        onRowClick={(shop) => {
+        onRowClick={shop => {
           console.log('Row clicked:', shop)
           // Optional: Open details on row click
           // handleViewDetails(shop)
         }}
         // Get Row ID
-        getRowId={(row) => row._id}
+        getRowId={row => row._id}
         // Test ID
         testId="shop-table"
         ariaLabel={t('table.ariaLabel')}

@@ -17,7 +17,11 @@ import {
   PieChart as PieChartIcon,
   Calendar,
 } from 'lucide-react'
-import { StatCard, StatCardGrid, StatCardSkeleton } from '@/components/ui/data-display/StatCard'
+import {
+  StatCard,
+  StatCardGrid,
+  StatCardSkeleton,
+} from '@/components/ui/data-display/StatCard'
 import { LineChart, AreaChart, BarChart } from '@/components/ui/charts'
 import { DonutChart } from '@/components/ui/charts/DonutChart'
 import { DataTable } from '@/components/ui/data-display/DataTable'
@@ -177,7 +181,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </h2>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertCircle className="h-12 w-12 text-text-tertiary mb-4" />
+          <AlertCircle className="mb-4 h-12 w-12 text-text-tertiary" />
           <p className="text-text-secondary">{t('statistics.noData')}</p>
         </div>
       </div>
@@ -192,14 +196,14 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           <h2 className="text-xl font-semibold text-text-primary">
             {t('statistics.title')}
           </h2>
-          <p className="text-sm text-text-tertiary mt-1">
+          <p className="mt-1 text-sm text-text-tertiary">
             {t('statistics.subtitle')}
           </p>
         </div>
         {onRefresh && (
           <button
             onClick={onRefresh}
-            className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+            className="hover:bg-accent/90 rounded-lg bg-accent px-4 py-2 text-white transition-colors"
           >
             {t('statistics.refresh')}
           </button>
@@ -216,8 +220,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           variant="default"
           size="md"
           trend={{
-            value: parseFloat(statistics.totalSales.growth.replace('+', '').replace('%', '')),
-            direction: statistics.totalSales.growth.startsWith('+') ? 'up' : 'down',
+            value: parseFloat(
+              statistics.totalSales.growth.replace('+', '').replace('%', '')
+            ),
+            direction: statistics.totalSales.growth.startsWith('+')
+              ? 'up'
+              : 'down',
             label: t('statistics.vsLastMonth'),
             showIcon: true,
           }}
@@ -232,8 +240,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           variant="info"
           size="md"
           trend={{
-            value: parseFloat(statistics.totalOrders.growth.replace('+', '').replace('%', '')),
-            direction: statistics.totalOrders.growth.startsWith('+') ? 'up' : 'down',
+            value: parseFloat(
+              statistics.totalOrders.growth.replace('+', '').replace('%', '')
+            ),
+            direction: statistics.totalOrders.growth.startsWith('+')
+              ? 'up'
+              : 'down',
             label: t('statistics.vsLastMonth'),
             showIcon: true,
           }}
@@ -248,8 +260,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           variant="success"
           size="md"
           trend={{
-            value: parseFloat(statistics.revenue.growth.replace('+', '').replace('%', '')),
-            direction: statistics.revenue.growth.startsWith('+') ? 'up' : 'down',
+            value: parseFloat(
+              statistics.revenue.growth.replace('+', '').replace('%', '')
+            ),
+            direction: statistics.revenue.growth.startsWith('+')
+              ? 'up'
+              : 'down',
             label: t('statistics.vsLastMonth'),
             showIcon: true,
           }}
@@ -264,8 +280,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           variant="warning"
           size="md"
           trend={{
-            value: parseFloat(statistics.customers.growth.replace('+', '').replace('%', '')),
-            direction: statistics.customers.growth.startsWith('+') ? 'up' : 'down',
+            value: parseFloat(
+              statistics.customers.growth.replace('+', '').replace('%', '')
+            ),
+            direction: statistics.customers.growth.startsWith('+')
+              ? 'up'
+              : 'down',
             label: t('statistics.vsLastMonth'),
             showIcon: true,
           }}
@@ -307,14 +327,14 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       </StatCardGrid>
 
       {/* Sales & Revenue Trend Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Sales Trend Chart */}
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
+        <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
               {t('statistics.salesTrend')}
             </h3>
-            <p className="text-sm text-text-tertiary mt-1">
+            <p className="mt-1 text-sm text-text-tertiary">
               {t('statistics.salesTrendDesc')}
             </p>
           </div>
@@ -340,18 +360,18 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             showGrid={true}
             showLegend={true}
             showTooltip={true}
-            formatYAxis={(value) => formatCurrency(value)}
-            formatTooltip={(value) => formatCurrency(value)}
+            formatYAxis={value => formatCurrency(value)}
+            formatTooltip={value => formatCurrency(value)}
           />
         </div>
 
         {/* Revenue vs Expenses Chart */}
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
+        <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
               {t('statistics.revenueVsExpenses')}
             </h3>
-            <p className="text-sm text-text-tertiary mt-1">
+            <p className="mt-1 text-sm text-text-tertiary">
               {t('statistics.revenueVsExpensesDesc')}
             </p>
           </div>
@@ -383,8 +403,8 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             showLegend={true}
             showTooltip={true}
             stacked={false}
-            formatYAxis={(value) => formatCurrency(value)}
-            formatTooltip={(value) => formatCurrency(value)}
+            formatYAxis={value => formatCurrency(value)}
+            formatTooltip={value => formatCurrency(value)}
           />
         </div>
       </div>
@@ -394,8 +414,8 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
 
       {/* Sales Analysis Section */}
       <div className="mt-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-status-info/10 flex items-center justify-center">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-status-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <PieChartIcon className="h-5 w-5 text-status-info" />
           </div>
           <div>
@@ -408,10 +428,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {/* Sales by Category */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
-            <h4 className="text-base font-semibold text-text-primary mb-4">
+          <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
+            <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('statistics.salesByCategory')}
             </h4>
             <DonutChart
@@ -430,17 +450,19 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
                 'var(--status-error)',
                 'var(--accent-color)',
               ]}
-              formatTooltip={(value) => formatCurrency(value)}
+              formatTooltip={value => formatCurrency(value)}
             />
           </div>
 
           {/* Sales by Payment Method */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
-            <h4 className="text-base font-semibold text-text-primary mb-4">
+          <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
+            <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('statistics.salesByPaymentMethod')}
             </h4>
             <DonutChart
-              data={statistics.salesByPaymentMethod || mockSalesByPaymentMethodData}
+              data={
+                statistics.salesByPaymentMethod || mockSalesByPaymentMethodData
+              }
               dataKey="value"
               nameKey="name"
               height={280}
@@ -454,7 +476,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
                 'var(--status-info)',
                 'var(--status-warning)',
               ]}
-              formatTooltip={(value) => formatCurrency(value)}
+              formatTooltip={value => formatCurrency(value)}
             />
           </div>
         </div>
@@ -465,8 +487,8 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
 
       {/* Monthly Comparison Section */}
       <div className="mt-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-status-success/10 flex items-center justify-center">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-status-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <Calendar className="h-5 w-5 text-status-success" />
           </div>
           <div>
@@ -479,7 +501,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </div>
         </div>
 
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
+        <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <BarChart
             data={statistics.monthlyComparison || mockMonthlyComparisonData}
             bars={[
@@ -499,8 +521,8 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             showGrid={true}
             showLegend={true}
             showTooltip={true}
-            formatYAxis={(value) => formatCurrency(value)}
-            formatTooltip={(value) => formatCurrency(value)}
+            formatYAxis={value => formatCurrency(value)}
+            formatTooltip={value => formatCurrency(value)}
           />
         </div>
       </div>
@@ -510,9 +532,9 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
 
       {/* Top Products Section */}
       <div className="mt-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
+            <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
               <Activity className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -533,10 +555,14 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               id: 'rank',
               header: t('statistics.rank'),
               cell: ({ row }) => {
-                const index = (statistics.topProducts || mockTopProducts).indexOf(row)
+                const index = (
+                  statistics.topProducts || mockTopProducts
+                ).indexOf(row)
                 return (
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-accent">#{index + 1}</span>
+                    <span className="font-semibold text-accent">
+                      #{index + 1}
+                    </span>
                   </div>
                 )
               },
@@ -548,8 +574,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               accessorKey: 'productName',
               cell: ({ row }) => (
                 <div>
-                  <div className="font-medium text-text-primary">{row.productName}</div>
-                  <div className="text-xs text-text-tertiary">{row.productCode}</div>
+                  <div className="font-medium text-text-primary">
+                    {row.productName}
+                  </div>
+                  <div className="text-xs text-text-tertiary">
+                    {row.productCode}
+                  </div>
                 </div>
               ),
             },
@@ -558,7 +588,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               header: t('statistics.category'),
               accessorKey: 'category',
               cell: ({ row }) => (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent border border-accent/20 capitalize">
+                <span className="bg-accent/10 border-accent/20 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize text-accent">
                   {row.category}
                 </span>
               ),
@@ -625,9 +655,9 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
 
       {/* Recent Transactions Section */}
       <div className="mt-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-status-info/10 flex items-center justify-center">
+            <div className="bg-status-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
               <ShoppingCart className="h-5 w-5 text-status-info" />
             </div>
             <div>
@@ -659,7 +689,9 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               header: t('statistics.customer'),
               accessorKey: 'customerName',
               cell: ({ row }) => (
-                <div className="font-medium text-text-primary">{row.customerName}</div>
+                <div className="font-medium text-text-primary">
+                  {row.customerName}
+                </div>
               ),
             },
             {
@@ -695,7 +727,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               header: t('statistics.paymentMethod'),
               accessorKey: 'paymentMethod',
               cell: ({ row }) => (
-                <span className="text-sm text-text-secondary capitalize">
+                <span className="text-sm capitalize text-text-secondary">
                   {row.paymentMethod}
                 </span>
               ),
@@ -707,14 +739,17 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               accessorKey: 'status',
               cell: ({ row }) => {
                 const statusColors = {
-                  completed: 'bg-status-success/10 text-status-success border-status-success/30',
-                  pending: 'bg-status-warning/10 text-status-warning border-status-warning/30',
-                  cancelled: 'bg-status-error/10 text-status-error border-status-error/30',
+                  completed:
+                    'bg-status-success/10 text-status-success border-status-success/30',
+                  pending:
+                    'bg-status-warning/10 text-status-warning border-status-warning/30',
+                  cancelled:
+                    'bg-status-error/10 text-status-error border-status-error/30',
                 }
                 return (
                   <span
                     className={cn(
-                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border capitalize',
+                      'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize',
                       statusColors[row.status]
                     )}
                   >
@@ -739,4 +774,4 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
   )
 }
 
-export default StatisticsTab;
+export default StatisticsTab

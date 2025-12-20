@@ -10,7 +10,7 @@ import type { CustomerFormProps } from './CustomerForm.types'
 
 export const CustomerForm = (props: CustomerFormProps) => {
   const isDesktop = useMediaQuery('(min-width: 768px)')
-  
+
   return isDesktop ? (
     <CustomerFormDesktop {...props} />
   ) : (

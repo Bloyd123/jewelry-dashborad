@@ -16,11 +16,7 @@ export const ModalBody: React.FC<ModalBodyProps> = ({
 }) => {
   return (
     <div
-      className={cn(
-        'overflow-y-auto',
-        !noPadding && 'px-6 py-4',
-        className
-      )}
+      className={cn('overflow-y-auto', !noPadding && 'px-6 py-4', className)}
     >
       {children}
     </div>

@@ -3,31 +3,31 @@
 // Silver Rates Form - Section 2 of Update Metal Rates Modal
 // ============================================================================
 
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Sparkles } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import type { RatePair } from '@/types/metalrate.types';
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Sparkles } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
+import type { RatePair } from '@/types/metalrate.types'
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 interface RatePairInput {
-  buying: string;
-  selling: string;
+  buying: string
+  selling: string
 }
 
 interface SilverRatesFormData {
-  pure: RatePairInput;
-  sterling925: RatePairInput;
+  pure: RatePairInput
+  sterling925: RatePairInput
 }
 
 interface SilverRatesFormProps {
-  initialData?: Partial<SilverRatesFormData>;
-  onChange?: (data: SilverRatesFormData) => void;
-  className?: string;
+  initialData?: Partial<SilverRatesFormData>
+  onChange?: (data: SilverRatesFormData) => void
+  className?: string
 }
 
 // ============================================================================
@@ -39,13 +39,16 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
   onChange,
   className,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   // State for silver rates
   const [silverRates, setSilverRates] = useState<SilverRatesFormData>({
     pure: initialData?.pure || { buying: '82.50', selling: '83.00' },
-    sterling925: initialData?.sterling925 || { buying: '76.30', selling: '76.75' },
-  });
+    sterling925: initialData?.sterling925 || {
+      buying: '76.30',
+      selling: '76.75',
+    },
+  })
 
   // Handle input change
   const handleRateChange = (
@@ -54,7 +57,7 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
     value: string
   ) => {
     // Only allow numbers and decimal point
-    if (value && !/^\d*\.?\d*$/.test(value)) return;
+    if (value && !/^\d*\.?\d*$/.test(value)) return
 
     const updatedRates = {
       ...silverRates,
@@ -62,18 +65,18 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
         ...silverRates[purity],
         [type]: value,
       },
-    };
+    }
 
-    setSilverRates(updatedRates);
-    onChange?.(updatedRates);
-  };
+    setSilverRates(updatedRates)
+    onChange?.(updatedRates)
+  }
 
   // Silver purity rows configuration
   const silverPurities: Array<{
-    key: keyof SilverRatesFormData;
-    label: string;
-    previousBuy: string;
-    previousSell: string;
+    key: keyof SilverRatesFormData
+    label: string
+    previousBuy: string
+    previousSell: string
   }> = [
     {
       key: 'pure',
@@ -87,13 +90,13 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
       previousBuy: '₹76.30',
       previousSell: '₹76.75',
     },
-  ];
+  ]
 
   return (
     <div className={cn('space-y-4', className)}>
       {/* Section Header */}
       <div className="flex items-center gap-3 pb-2">
-        <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+        <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
           <Sparkles className="h-5 w-5 text-accent" />
         </div>
         <div>
@@ -107,9 +110,9 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
       </div>
 
       {/* Rates Table */}
-      <div className="rounded-lg border border-border-primary overflow-hidden">
+      <div className="overflow-hidden rounded-lg border border-border-primary">
         {/* Table Header */}
-        <div className="grid grid-cols-5 gap-4 bg-bg-tertiary p-3 border-b border-border-primary">
+        <div className="grid grid-cols-5 gap-4 border-b border-border-primary bg-bg-tertiary p-3">
           <div className="text-sm font-semibold text-text-primary">
             {t('metalRates.puritytext')}
           </div>
@@ -133,7 +136,7 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
             <div
               key={purity.key}
               className={cn(
-                'grid grid-cols-5 gap-4 p-3 items-center',
+                'grid grid-cols-5 items-center gap-4 p-3',
                 index % 2 === 1 && 'bg-bg-tertiary/30'
               )}
             >
@@ -153,7 +156,7 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
                   type="text"
                   inputMode="decimal"
                   value={silverRates[purity.key].buying}
-                  onChange={(e) =>
+                  onChange={e =>
                     handleRateChange(purity.key, 'buying', e.target.value)
                   }
                   placeholder="0.00"
@@ -172,7 +175,7 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
                   type="text"
                   inputMode="decimal"
                   value={silverRates[purity.key].selling}
-                  onChange={(e) =>
+                  onChange={e =>
                     handleRateChange(purity.key, 'selling', e.target.value)
                   }
                   placeholder="0.00"
@@ -184,10 +187,10 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-SilverRatesForm.displayName = 'SilverRatesForm';
+SilverRatesForm.displayName = 'SilverRatesForm'
 
 // ============================================================================
 // TRANSLATION KEYS

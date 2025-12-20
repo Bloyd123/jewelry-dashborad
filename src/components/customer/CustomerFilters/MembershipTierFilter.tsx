@@ -13,11 +13,18 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { setMembershipTierFilter, selectMembershipTierFilter } from '@/store/slices/customerSlice'
+import {
+  setMembershipTierFilter,
+  selectMembershipTierFilter,
+} from '@/store/slices/customerSlice'
 import type { MembershipTier } from '@/types'
 import { Badge } from '@/components/ui/data-display/Badge'
 
-const membershipTiers: { value: MembershipTier; label: string; color: string }[] = [
+const membershipTiers: {
+  value: MembershipTier
+  label: string
+  color: string
+}[] = [
   { value: 'standard', label: 'customer.tiers.standard', color: 'default' },
   { value: 'silver', label: 'customer.tiers.silver', color: 'info' },
   { value: 'gold', label: 'customer.tiers.gold', color: 'warning' },
@@ -44,7 +51,7 @@ export const MembershipTierFilter: React.FC = () => {
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">{t('all')}</SelectItem>
-        {membershipTiers.map((tier) => (
+        {membershipTiers.map(tier => (
           <SelectItem key={tier.value} value={tier.value}>
             <div className="flex items-center gap-2">
               <Badge variant={tier.color as any} size="sm">

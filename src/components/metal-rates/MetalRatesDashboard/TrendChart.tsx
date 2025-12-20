@@ -8,9 +8,21 @@ import { useTranslation } from 'react-i18next'
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { LineChart } from '@/components/ui/charts/LineChart/LineChart'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { mockTrendChartData, mockMetalRateApi } from '@/pages/metal-rates/metal-rate.mock'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  mockTrendChartData,
+  mockMetalRateApi,
+} from '@/pages/metal-rates/metal-rate.mock'
 import type { TrendChartResponse, MetalType } from '@/types/metalrate.types'
 
 // ============================================================================
@@ -49,15 +61,19 @@ const METAL_TYPE_OPTIONS: FilterOption[] = [
 export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
   ({ shopId, metalType = 'gold', defaultPeriod = 90, className }, ref) => {
     const { t } = useTranslation()
-    
+
     // ============================================================================
     // STATE
     // ============================================================================
-    
-    const [selectedPeriod, setSelectedPeriod] = React.useState<string>(defaultPeriod.toString())
+
+    const [selectedPeriod, setSelectedPeriod] = React.useState<string>(
+      defaultPeriod.toString()
+    )
     const [selectedMetal, setSelectedMetal] = React.useState<string>(metalType)
     const [loading, setLoading] = React.useState(false)
-    const [trendData, setTrendData] = React.useState<TrendChartResponse | null>(null)
+    const [trendData, setTrendData] = React.useState<TrendChartResponse | null>(
+      null
+    )
 
     // ============================================================================
     // FETCH DATA
@@ -91,11 +107,11 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
 
     const chartData = React.useMemo(() => {
       if (!trendData) return []
-      
-      return trendData.trendData.map((point) => ({
-        date: new Date(point.date).toLocaleDateString('en-US', { 
-          month: 'short', 
-          day: 'numeric' 
+
+      return trendData.trendData.map(point => ({
+        date: new Date(point.date).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
         }),
         [t('metalRates.trend.rate')]: point.rate,
         [t('metalRates.trend.ma7')]: point.ma7,
@@ -110,7 +126,8 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
     const statistics = React.useMemo(() => {
       if (!trendData || !trendData.summary) return null
 
-      const { currentRate, startRate, highestRate, lowestRate, averageRate } = trendData.summary
+      const { currentRate, startRate, highestRate, lowestRate, averageRate } =
+        trendData.summary
       const change = currentRate - startRate
       const changePercentage = ((change / startRate) * 100).toFixed(2)
 
@@ -129,7 +146,7 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
 
     const getTrendIcon = () => {
       if (!statistics) return <Minus className="h-4 w-4 text-text-tertiary" />
-      
+
       if (statistics.change > 0) {
         return <TrendingUp className="h-4 w-4 text-status-success" />
       } else if (statistics.change < 0) {
@@ -143,9 +160,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
     // ============================================================================
 
     const formatCurrency = (value: number) => {
-      return `₹${value.toLocaleString('en-IN', { 
+      return `₹${value.toLocaleString('en-IN', {
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2 
+        maximumFractionDigits: 2,
       })}`
     }
 
@@ -156,7 +173,7 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
     return (
       <Card ref={ref} className={cn('w-full', className)}>
         <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <CardTitle className="text-text-primary">
                 {t('metalRates.trend.title')}
@@ -167,12 +184,12 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               {/* Metal Type Filter */}
               <TypeFilter
                 options={METAL_TYPE_OPTIONS}
                 value={selectedMetal}
-                onChange={(value) => setSelectedMetal(value || 'gold')}
+                onChange={value => setSelectedMetal(value || 'gold')}
                 placeholder={t('metalRates.trend.selectMetal')}
                 showAllOption={false}
                 className="w-full sm:w-[140px]"
@@ -182,7 +199,7 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
               <TypeFilter
                 options={PERIOD_OPTIONS}
                 value={selectedPeriod}
-                onChange={(value) => setSelectedPeriod(value || '90')}
+                onChange={value => setSelectedPeriod(value || '90')}
                 placeholder={t('metalRates.trend.selectPeriod')}
                 showAllOption={false}
                 className="w-full sm:w-[120px]"
@@ -194,7 +211,7 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
         <CardContent>
           {/* Statistics Row */}
           {statistics && (
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+            <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {/* Highest */}
               <div className="space-y-1">
                 <p className="text-xs text-text-tertiary">
@@ -232,15 +249,17 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
                 </p>
                 <div className="flex items-center gap-2">
                   {getTrendIcon()}
-                  <p className={cn(
-                    'text-lg font-semibold',
-                    statistics.change > 0 && 'text-status-success',
-                    statistics.change < 0 && 'text-status-error',
-                    statistics.change === 0 && 'text-text-tertiary'
-                  )}>
+                  <p
+                    className={cn(
+                      'text-lg font-semibold',
+                      statistics.change > 0 && 'text-status-success',
+                      statistics.change < 0 && 'text-status-error',
+                      statistics.change === 0 && 'text-text-tertiary'
+                    )}
+                  >
                     {statistics.change > 0 ? '+' : ''}
                     {formatCurrency(Math.abs(statistics.change))}
-                    <span className="text-sm ml-1">
+                    <span className="ml-1 text-sm">
                       ({statistics.changePercentage > 0 ? '+' : ''}
                       {statistics.changePercentage}%)
                     </span>
@@ -285,7 +304,8 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
 
           {/* Period Info */}
           <div className="mt-4 text-center text-sm text-text-tertiary">
-            {t('metalRates.trend.showing')} {selectedPeriod} {t('metalRates.trend.days')} {t('metalRates.trend.of')} {' '}
+            {t('metalRates.trend.showing')} {selectedPeriod}{' '}
+            {t('metalRates.trend.days')} {t('metalRates.trend.of')}{' '}
             {METAL_TYPE_OPTIONS.find(opt => opt.value === selectedMetal)?.label}
           </div>
         </CardContent>

@@ -75,7 +75,7 @@ export const useCustomerFilters = () => {
     dispatch(clearFilters())
   }, [dispatch])
 
-  const hasActiveFilters = 
+  const hasActiveFilters =
     filters.search !== '' ||
     filters.customerType !== undefined ||
     filters.membershipTier !== undefined ||

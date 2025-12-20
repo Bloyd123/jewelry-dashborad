@@ -11,20 +11,19 @@ import { getPermissionsByRole } from '../config/permissions.config'
 import { Button } from '../components/ui/button'
 import { UserRole } from '@/types'
 
-
 interface RoleRouteProps {
   // Option 1: Check by roles
   allowedRoles?: UserRole[]
-  
+
   // Option 2: Check by specific permissions (more flexible)
   requiredPermissions?: Permission[]
-  
+
   // Require ALL permissions or just ANY permission
   requireAll?: boolean
-  
+
   // Custom redirect path
   redirectTo?: string
-  
+
   // Show custom message
   customMessage?: string
 }
@@ -32,15 +31,15 @@ interface RoleRouteProps {
 // ============================================================================
 // ROLE ROUTE COMPONENT
 // ============================================================================
-const RoleRoute = ({ 
+const RoleRoute = ({
   allowedRoles,
   requiredPermissions,
   requireAll = false,
-//   redirectTo = ROUTES.dashboard,
-  customMessage
+  //   redirectTo = ROUTES.dashboard,
+  customMessage,
 }: RoleRouteProps) => {
   const { t } = useTranslation()
-  const { user, isAuthenticated } = useAppSelector((state) => state.auth)
+  const { user, isAuthenticated } = useAppSelector(state => state.auth)
 
   // ========================================
   // Check Authentication First
@@ -86,42 +85,39 @@ const RoleRoute = ({
   // ========================================
   if (!hasAccess) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-bg-primary">
-        <div className="text-center p-8 bg-bg-secondary rounded-lg shadow-lg max-w-md border border-border-primary">
+      <div className="flex min-h-screen items-center justify-center bg-bg-primary">
+        <div className="max-w-md rounded-lg border border-border-primary bg-bg-secondary p-8 text-center shadow-lg">
           {/* Icon */}
           <div className="mb-4">
-            <AlertTriangle className="w-16 h-16 mx-auto text-status-error" />
+            <AlertTriangle className="mx-auto h-16 w-16 text-status-error" />
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-bold text-text-primary mb-2">
+          <h2 className="mb-2 text-2xl font-bold text-text-primary">
             {t('permissions.accessDenied.title')}
           </h2>
 
           {/* Message */}
-          <p className="text-text-secondary mb-2">
+          <p className="mb-2 text-text-secondary">
             {customMessage || t('permissions.accessDenied.message')}
           </p>
-          
+
           {/* User Role Info */}
-          <p className="text-sm text-text-tertiary mb-6">
-            {t('permissions.accessDenied.yourRole')}: {' '}
+          <p className="mb-6 text-sm text-text-tertiary">
+            {t('permissions.accessDenied.yourRole')}:{' '}
             <span className="font-semibold capitalize text-accent">
               {t(`roles.${userRole}`)}
             </span>
           </p>
 
           {/* Actions */}
-          <div className="flex gap-3 justify-center">
-            <Button
-              variant="outline"
-              onClick={() => window.history.back()}
-            >
+          <div className="flex justify-center gap-3">
+            <Button variant="outline" onClick={() => window.history.back()}>
               {t('permissions.accessDenied.goBack')}
             </Button>
             <Button
               variant="default"
-              onClick={() => window.location.href = ROUTES.dashboard}
+              onClick={() => (window.location.href = ROUTES.dashboard)}
             >
               {t('permissions.accessDenied.goToDashboard')}
             </Button>

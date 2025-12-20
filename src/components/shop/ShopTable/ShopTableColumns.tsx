@@ -29,11 +29,11 @@ const formatCurrency = (amount: number): string => {
  */
 const formatDate = (dateString: string | Date | undefined): string => {
   if (!dateString) return '-'
-  
+
   try {
     const date = new Date(dateString)
     if (isNaN(date.getTime())) return '-'
-    
+
     return new Intl.DateTimeFormat('en-IN', {
       day: '2-digit',
       month: 'short',
@@ -70,15 +70,29 @@ const getManagerEmail = (shop: Shop): string => {
 /**
  * Badge variant type from Badge component
  */
-type BadgeVariant = 'default' | 'success' | 'warning' | 'error' | 'info' | 'accent' | 'outline' | 
-  'vip' | 'retail' | 'wholesale' | 'active' | 'inactive' | 'pending' | 'completed' | 'cancelled'
+type BadgeVariant =
+  | 'default'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'info'
+  | 'accent'
+  | 'outline'
+  | 'vip'
+  | 'retail'
+  | 'wholesale'
+  | 'active'
+  | 'inactive'
+  | 'pending'
+  | 'completed'
+  | 'cancelled'
 
 /**
  * Get badge variant for shop type
  */
 const getShopTypeVariant = (shopType: ShopType | undefined): BadgeVariant => {
   if (!shopType) return 'default'
-  
+
   const variants: Record<ShopType, BadgeVariant> = {
     retail: 'info',
     wholesale: 'warning',
@@ -88,16 +102,18 @@ const getShopTypeVariant = (shopType: ShopType | undefined): BadgeVariant => {
     warehouse: 'default',
     online: 'success',
   }
-  
+
   return variants[shopType] ?? 'default'
 }
 
 /**
  * Get badge variant for shop category
  */
-const getCategoryVariant = (category: ShopCategory | undefined): BadgeVariant => {
+const getCategoryVariant = (
+  category: ShopCategory | undefined
+): BadgeVariant => {
   if (!category) return 'default'
-  
+
   const variants: Record<ShopCategory, BadgeVariant> = {
     jewelry: 'accent',
     gold: 'warning',
@@ -108,7 +124,7 @@ const getCategoryVariant = (category: ShopCategory | undefined): BadgeVariant =>
     platinum: 'default',
     mixed: 'default',
   }
-  
+
   return variants[category] ?? 'default'
 }
 
@@ -126,10 +142,10 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
     width: '140px',
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <span className="font-mono font-semibold text-text-primary">{row.code}</span>
-        {row.isFeatured && (
-          <Award className="h-3.5 w-3.5 text-accent" />
-        )}
+        <span className="font-mono font-semibold text-text-primary">
+          {row.code}
+        </span>
+        {row.isFeatured && <Award className="h-3.5 w-3.5 text-accent" />}
       </div>
     ),
   },
@@ -161,7 +177,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
     cell: ({ row }) => {
       const shopType = row.shopType || 'retail'
       const category = row.category || 'mixed'
-      
+
       return (
         <div className="flex flex-col gap-1.5">
           <Badge variant={getShopTypeVariant(row.shopType)} size="sm">
@@ -179,14 +195,14 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   {
     id: 'location',
     header: 'table.location',
-    accessorFn: (row) => `${row.address.city}, ${row.address.state}`,
+    accessorFn: row => `${row.address.city}, ${row.address.state}`,
     sortable: true,
     width: '180px',
     cell: ({ row }) => (
       <div className="flex items-start gap-2">
-        <MapPin className="h-4 w-4 mt-0.5 text-text-tertiary flex-shrink-0" />
+        <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0 text-text-tertiary" />
         <div className="flex flex-col">
-          <span className="text-sm text-text-primary font-medium">
+          <span className="text-sm font-medium text-text-primary">
             {row.address.city}
           </span>
           <span className="text-xs text-text-tertiary">
@@ -210,18 +226,18 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
           <Phone className="h-3.5 w-3.5 text-text-tertiary" />
           <span className="text-sm text-text-primary">{row.phone}</span>
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation()
               copyToClipboard(row.phone)
             }}
-            className="p-1 rounded hover:bg-bg-tertiary text-text-tertiary hover:text-text-primary transition-colors"
+            className="rounded p-1 text-text-tertiary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
             aria-label="Copy phone number"
           >
             <Copy className="h-3 w-3" />
           </button>
         </div>
         {row.email && (
-          <span className="text-xs text-text-tertiary truncate">
+          <span className="truncate text-xs text-text-tertiary">
             {row.email}
           </span>
         )}
@@ -233,25 +249,22 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   {
     id: 'manager',
     header: 'table.manager',
-    accessorFn: (row) => getManagerName(row),
+    accessorFn: row => getManagerName(row),
     sortable: true,
     width: '180px',
     cell: ({ row }) => {
       const managerName = getManagerName(row)
       const managerEmail = getManagerEmail(row)
-      
+
       return (
         <div className="flex items-center gap-2">
-          <Avatar 
-            name={managerName} 
-            size="sm"
-          />
+          <Avatar name={managerName} size="sm" />
           <div className="flex flex-col">
             <span className="text-sm font-medium text-text-primary">
               {managerName}
             </span>
             {managerEmail && (
-              <span className="text-xs text-text-tertiary truncate">
+              <span className="truncate text-xs text-text-tertiary">
                 {managerEmail}
               </span>
             )}
@@ -276,11 +289,11 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
               {row.gstNumber}
             </span>
             <button
-              onClick={(e) => {
+              onClick={e => {
                 e.stopPropagation()
                 copyToClipboard(row.gstNumber!)
               }}
-              className="p-1 rounded hover:bg-bg-tertiary text-text-tertiary hover:text-text-primary transition-colors"
+              className="rounded p-1 text-text-tertiary transition-colors hover:bg-bg-tertiary hover:text-text-primary"
               aria-label="Copy GST number"
             >
               <Copy className="h-3 w-3" />
@@ -297,7 +310,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   {
     id: 'products',
     header: 'table.products',
-    accessorFn: (row) => row.statistics?.totalProducts ?? 0,
+    accessorFn: row => row.statistics?.totalProducts ?? 0,
     sortable: true,
     align: 'center',
     width: '120px',
@@ -314,7 +327,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   {
     id: 'inventory',
     header: 'table.inventoryValue',
-    accessorFn: (row) => row.statistics?.totalInventoryValue ?? 0,
+    accessorFn: row => row.statistics?.totalInventoryValue ?? 0,
     sortable: true,
     align: 'right',
     width: '140px',
@@ -336,11 +349,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
     width: '140px',
     cell: ({ row }) => (
       <div className="flex flex-col gap-1.5">
-        <Badge 
-          variant={row.isActive ? 'active' : 'inactive'} 
-          dot
-          size="sm"
-        >
+        <Badge variant={row.isActive ? 'active' : 'inactive'} dot size="sm">
           {row.isActive ? 'Active' : 'Inactive'}
         </Badge>
         {row.isVerified && (

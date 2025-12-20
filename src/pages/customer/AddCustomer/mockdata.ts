@@ -36,7 +36,8 @@ export const MOCK_CUSTOMERS: Customer[] = [
     },
     source: 'walk_in',
     referredBy: undefined,
-    notes: 'Regular customer, prefers 22K gold jewelry. Visits every festival season.',
+    notes:
+      'Regular customer, prefers 22K gold jewelry. Visits every festival season.',
     tags: ['vip', 'regular', 'festival-buyer'],
     totalPurchases: 150000,
     lastPurchaseDate: '2024-11-15',
@@ -114,7 +115,8 @@ export const MOCK_CUSTOMERS: Customer[] = [
     },
     source: 'referral',
     referredBy: 'cust_001',
-    notes: 'Wholesale buyer, bulk orders for retail shops. Prefers 30-day payment terms.',
+    notes:
+      'Wholesale buyer, bulk orders for retail shops. Prefers 30-day payment terms.',
     tags: ['wholesale', 'bulk-buyer', 'credit-customer'],
     totalPurchases: 850000,
     lastPurchaseDate: '2024-12-01',
@@ -231,7 +233,8 @@ export const MOCK_CUSTOMERS: Customer[] = [
     },
     source: 'referral',
     referredBy: 'cust_002',
-    notes: 'Temple jewelry specialist. Buys for special occasions and weddings.',
+    notes:
+      'Temple jewelry specialist. Buys for special occasions and weddings.',
     tags: ['temple-jewelry', 'wedding', 'south-indian'],
     totalPurchases: 185000,
     lastPurchaseDate: '2024-12-10',
@@ -270,7 +273,8 @@ export const MOCK_CUSTOMERS: Customer[] = [
     },
     source: 'walk_in',
     referredBy: undefined,
-    notes: 'VIP customer. Corporate gifts and high-value purchases. Personal consultation required.',
+    notes:
+      'VIP customer. Corporate gifts and high-value purchases. Personal consultation required.',
     tags: ['vip', 'corporate', 'high-value'],
     totalPurchases: 1250000,
     lastPurchaseDate: '2024-12-12',

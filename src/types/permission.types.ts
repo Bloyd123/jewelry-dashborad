@@ -2,7 +2,7 @@
 // TYPES
 // ============================================================================
 
-export type Permission = 
+export type Permission =
   | 'canManageInventory'
   | 'canViewInventory'
   | 'canEditInventory'

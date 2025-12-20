@@ -31,7 +31,10 @@ export interface CategoryFilterProps {
   disabled?: boolean
 }
 
-export const CategoryFilter = React.forwardRef<HTMLButtonElement, CategoryFilterProps>(
+export const CategoryFilter = React.forwardRef<
+  HTMLButtonElement,
+  CategoryFilterProps
+>(
   (
     {
       categories,
@@ -55,11 +58,16 @@ export const CategoryFilter = React.forwardRef<HTMLButtonElement, CategoryFilter
     }
 
     const renderCategories = (cats: Category[], level = 0) => {
-      return cats.map((cat) => (
+      return cats.map(cat => (
         <React.Fragment key={cat.value}>
           <SelectItem value={cat.value}>
-            <div className="flex items-center gap-2" style={{ paddingLeft: `${level * 12}px` }}>
-              {level > 0 && <ChevronRight className="h-3 w-3 text-text-tertiary" />}
+            <div
+              className="flex items-center gap-2"
+              style={{ paddingLeft: `${level * 12}px` }}
+            >
+              {level > 0 && (
+                <ChevronRight className="h-3 w-3 text-text-tertiary" />
+              )}
               <span>{cat.label}</span>
             </div>
           </SelectItem>
@@ -74,7 +82,10 @@ export const CategoryFilter = React.forwardRef<HTMLButtonElement, CategoryFilter
         onValueChange={handleChange}
         disabled={disabled}
       >
-        <SelectTrigger ref={ref} className={cn('w-full md:w-[200px]', className)}>
+        <SelectTrigger
+          ref={ref}
+          className={cn('w-full md:w-[200px]', className)}
+        >
           <SelectValue placeholder={placeholder || t('filters.category')} />
         </SelectTrigger>
         <SelectContent>

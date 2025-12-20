@@ -5,34 +5,34 @@
 
 export interface ShopStatistics {
   totalSales: {
-    amount: number;
-    growth: string;
-  };
+    amount: number
+    growth: string
+  }
   totalOrders: {
-    count: number;
-    growth: string;
-  };
+    count: number
+    growth: string
+  }
   revenue: {
-    amount: number;
-    growth: string;
-  };
+    amount: number
+    growth: string
+  }
   customers: {
-    count: number;
-    growth: string;
-  };
+    count: number
+    growth: string
+  }
   salesTrend: {
-    labels: string[];
-    data: number[];
-  };
+    labels: string[]
+    data: number[]
+  }
   inventoryOverview: {
-    totalProducts: number;
-    stockValue: number;
-    lowStock: number;
-  };
+    totalProducts: number
+    stockValue: number
+    lowStock: number
+  }
   topCustomers: {
-    name: string;
-    amount: number;
-  }[];
+    name: string
+    amount: number
+  }[]
 }
 
 // ============================================================================
@@ -92,7 +92,7 @@ export const dummyShopStatistics: ShopStatistics = {
       amount: 156700,
     },
   ],
-};
+}
 
 // ============================================================================
 // HELPER FUNCTION - Format Currency
@@ -103,16 +103,16 @@ export const formatCurrency = (amount: number): string => {
     style: 'currency',
     currency: 'INR',
     maximumFractionDigits: 0,
-  }).format(amount);
-};
+  }).format(amount)
+}
 
 // ============================================================================
 // HELPER FUNCTION - Format Number with Commas
 // ============================================================================
 
 export const formatNumber = (num: number): string => {
-  return new Intl.NumberFormat('en-IN').format(num);
-};
+  return new Intl.NumberFormat('en-IN').format(num)
+}
 // ============================================================================
 // FILE: src/components/shops/statistics/statistics.mock.ts
 // Mock Data for Shop Statistics Dashboard

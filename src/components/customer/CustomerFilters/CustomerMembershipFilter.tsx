@@ -30,13 +30,7 @@ export const CustomerMembershipFilter = React.forwardRef<
   CustomerMembershipFilterProps
 >(
   (
-    {
-      value,
-      onChange,
-      showAllOption = true,
-      className,
-      disabled = false,
-    },
+    { value, onChange, showAllOption = true, className, disabled = false },
     ref
   ) => {
     const { t } = useTranslation()

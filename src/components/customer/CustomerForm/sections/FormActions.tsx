@@ -36,11 +36,11 @@ export const FormActions = ({
           disabled={isLoading || disabled}
           className="min-w-[120px]"
         >
-          <X className="h-4 w-4 mr-2" />
+          <X className="mr-2 h-4 w-4" />
           {cancelLabel || t('common.cancel')}
         </Button>
       )}
-      
+
       <Button
         type="button"
         onClick={onSubmit}
@@ -49,12 +49,12 @@ export const FormActions = ({
       >
         {isLoading ? (
           <>
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             {t('common.saving')}
           </>
         ) : (
           <>
-            <Save className="h-4 w-4 mr-2" />
+            <Save className="mr-2 h-4 w-4" />
             {submitLabel || t('common.save')}
           </>
         )}

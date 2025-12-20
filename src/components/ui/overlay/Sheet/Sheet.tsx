@@ -125,7 +125,7 @@ const SheetContent = React.forwardRef<
           ref={ref}
           className={cn(
             'fixed inset-x-0 bottom-0 z-50 flex flex-col',
-            'bg-bg-secondary border-t border-border-primary',
+            'border-t border-border-primary bg-bg-secondary',
             'rounded-t-2xl shadow-lg',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
@@ -134,14 +134,14 @@ const SheetContent = React.forwardRef<
             className
           )}
           onInteractOutside={
-            preventOutsideClick ? (e) => e.preventDefault() : undefined
+            preventOutsideClick ? e => e.preventDefault() : undefined
           }
           {...props}
         >
           {/* Handle Bar */}
           {showHandle && (
-            <div className="flex justify-center py-3 cursor-grab active:cursor-grabbing">
-              <div className="w-12 h-1 rounded-full bg-border-primary" />
+            <div className="flex cursor-grab justify-center py-3 active:cursor-grabbing">
+              <div className="h-1 w-12 rounded-full bg-border-primary" />
             </div>
           )}
 
@@ -150,8 +150,8 @@ const SheetContent = React.forwardRef<
             <DialogPrimitive.Close
               className={cn(
                 'absolute right-4 top-4 z-10 rounded-sm p-1',
-                'opacity-70 ring-offset-background transition-all',
-                'hover:opacity-100 hover:bg-bg-tertiary',
+                'ring-offset-background opacity-70 transition-all',
+                'hover:bg-bg-tertiary hover:opacity-100',
                 'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
                 'disabled:pointer-events-none',
                 'text-text-secondary hover:text-text-primary'
@@ -163,9 +163,7 @@ const SheetContent = React.forwardRef<
           )}
 
           {/* Content Area */}
-          <div className="flex-1 overflow-hidden flex flex-col">
-            {children}
-          </div>
+          <div className="flex flex-1 flex-col overflow-hidden">{children}</div>
         </DialogPrimitive.Content>
       </SheetPortal>
     )
@@ -224,7 +222,7 @@ const SheetFooter = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'flex flex-col-reverse sm:flex-row gap-2 px-6 py-4',
+      'flex flex-col-reverse gap-2 px-6 py-4 sm:flex-row',
       'border-t border-border-secondary bg-bg-secondary',
       className
     )}
@@ -244,7 +242,7 @@ const SheetTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      'text-lg font-semibold text-text-primary leading-none',
+      'text-lg font-semibold leading-none text-text-primary',
       className
     )}
     {...props}

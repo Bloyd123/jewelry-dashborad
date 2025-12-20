@@ -3,29 +3,29 @@
 // Market Reference Form - Section 5 (Optional) of Update Metal Rates Modal
 // ============================================================================
 
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Globe, ChevronDown, ChevronUp } from 'lucide-react';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import type { MarketReference } from '@/types/metalrate.types';
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Globe, ChevronDown, ChevronUp } from 'lucide-react'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
+import type { MarketReference } from '@/types/metalrate.types'
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 interface MarketReferenceFormData {
-  internationalGoldPrice: string;
-  internationalSilverPrice: string;
-  exchangeRate: string;
-  referenceSource: string;
+  internationalGoldPrice: string
+  internationalSilverPrice: string
+  exchangeRate: string
+  referenceSource: string
 }
 
 interface MarketReferenceFormProps {
-  initialData?: Partial<MarketReferenceFormData>;
-  onChange?: (data: MarketReferenceFormData) => void;
-  className?: string;
+  initialData?: Partial<MarketReferenceFormData>
+  onChange?: (data: MarketReferenceFormData) => void
+  className?: string
 }
 
 // ============================================================================
@@ -37,8 +37,8 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
   onChange,
   className,
 }) => {
-  const { t } = useTranslation();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useTranslation()
+  const [isExpanded, setIsExpanded] = useState(false)
 
   // State for market reference
   const [marketRef, setMarketRef] = useState<MarketReferenceFormData>({
@@ -46,21 +46,25 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
     internationalSilverPrice: initialData?.internationalSilverPrice || '24.30',
     exchangeRate: initialData?.exchangeRate || '83.25',
     referenceSource: initialData?.referenceSource || 'Kitco.com',
-  });
+  })
 
   // Handle input change
-  const handleFieldChange = (field: keyof MarketReferenceFormData, value: string) => {
+  const handleFieldChange = (
+    field: keyof MarketReferenceFormData,
+    value: string
+  ) => {
     // Only allow numbers and decimal point for numeric fields
-    if (field !== 'referenceSource' && value && !/^\d*\.?\d*$/.test(value)) return;
+    if (field !== 'referenceSource' && value && !/^\d*\.?\d*$/.test(value))
+      return
 
     const updatedRef = {
       ...marketRef,
       [field]: value,
-    };
+    }
 
-    setMarketRef(updatedRef);
-    onChange?.(updatedRef);
-  };
+    setMarketRef(updatedRef)
+    onChange?.(updatedRef)
+  }
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -69,13 +73,13 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          'flex items-center justify-between w-full p-3 rounded-lg',
-          'bg-bg-secondary border border-border-primary',
-          'hover:bg-bg-tertiary transition-colors'
+          'flex w-full items-center justify-between rounded-lg p-3',
+          'border border-border-primary bg-bg-secondary',
+          'transition-colors hover:bg-bg-tertiary'
         )}
       >
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent/10">
+          <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <Globe className="h-5 w-5 text-accent" />
           </div>
           <div className="text-left">
@@ -96,8 +100,8 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
 
       {/* Collapsible Content */}
       {isExpanded && (
-        <div className="rounded-lg border border-border-primary bg-bg-secondary p-4 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-4 rounded-lg border border-border-primary bg-bg-secondary p-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* International Gold Price */}
             <div className="space-y-2">
               <Label htmlFor="intl-gold-price">
@@ -112,7 +116,7 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
                   type="text"
                   inputMode="decimal"
                   value={marketRef.internationalGoldPrice}
-                  onChange={(e) =>
+                  onChange={e =>
                     handleFieldChange('internationalGoldPrice', e.target.value)
                   }
                   placeholder="2045.50"
@@ -138,8 +142,11 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
                   type="text"
                   inputMode="decimal"
                   value={marketRef.internationalSilverPrice}
-                  onChange={(e) =>
-                    handleFieldChange('internationalSilverPrice', e.target.value)
+                  onChange={e =>
+                    handleFieldChange(
+                      'internationalSilverPrice',
+                      e.target.value
+                    )
                   }
                   placeholder="24.30"
                   className="h-10 pl-7"
@@ -164,7 +171,9 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
                   type="text"
                   inputMode="decimal"
                   value={marketRef.exchangeRate}
-                  onChange={(e) => handleFieldChange('exchangeRate', e.target.value)}
+                  onChange={e =>
+                    handleFieldChange('exchangeRate', e.target.value)
+                  }
                   placeholder="83.25"
                   className="h-10 pl-7"
                 />
@@ -183,7 +192,9 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
                 id="reference-source"
                 type="text"
                 value={marketRef.referenceSource}
-                onChange={(e) => handleFieldChange('referenceSource', e.target.value)}
+                onChange={e =>
+                  handleFieldChange('referenceSource', e.target.value)
+                }
                 placeholder="Kitco.com"
                 className="h-10"
               />
@@ -195,10 +206,10 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-MarketReferenceForm.displayName = 'MarketReferenceForm';
+MarketReferenceForm.displayName = 'MarketReferenceForm'
 
 // ============================================================================
 // TRANSLATION KEYS

@@ -5,7 +5,10 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { validateCustomer, validateField } from '@/validators/customerValidation'
+import {
+  validateCustomer,
+  validateField,
+} from '@/validators/customerValidation'
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
 import { Button } from '@/components/ui/button'
@@ -42,21 +45,22 @@ export default function CustomerFormMobile({
 }: CustomerFormProps) {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState<Partial<CreateCustomerInput>>(initialData)
+  const [formData, setFormData] =
+    useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
-    // ← ADD: RTK Query mutations
+  // ← ADD: RTK Query mutations
   // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
   // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
-  
+
   // const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    
+    setFormData(prev => ({ ...prev, [name]: value }))
+
     if (errors[name]) {
-      setErrors((prev) => {
+      setErrors(prev => {
         const newErrors = { ...prev }
         delete newErrors[name]
         return newErrors
@@ -65,13 +69,16 @@ export default function CustomerFormMobile({
   }
 
   const handleBlur = (name: string) => {
-    setTouched((prev) => ({ ...prev, [name]: true }))
-    
+    setTouched(prev => ({ ...prev, [name]: true }))
+
     const fieldValue = formData[name as keyof CreateCustomerInput]
-    const fieldValidation = validateField(name as keyof CreateCustomerInput, fieldValue)
-    
+    const fieldValidation = validateField(
+      name as keyof CreateCustomerInput,
+      fieldValue
+    )
+
     if (!fieldValidation.isValid && fieldValidation.error) {
-      setErrors((prev) => ({ ...prev, [name]: fieldValidation.error! }))
+      setErrors(prev => ({ ...prev, [name]: fieldValidation.error! }))
     }
   }
 
@@ -89,7 +96,7 @@ export default function CustomerFormMobile({
 
   // const handleSubmit = async () => {
   //   const validation = validateCustomer(formData)
-    
+
   //   if (!validation.isValid) {
   //     setErrors(validation.errors)
   //     const allTouched = Object.keys(validation.errors).reduce(
@@ -97,7 +104,7 @@ export default function CustomerFormMobile({
   //       {}
   //     )
   //     setTouched(allTouched)
-      
+
   //     // Navigate to first step with errors
   //     const firstErrorStep = STEPS.findIndex((step) => {
   //       return Object.keys(validation.errors).some((key) => {
@@ -112,13 +119,12 @@ export default function CustomerFormMobile({
   //         return false
   //       })
   //     })
-      
+
   //     if (firstErrorStep !== -1) {
   //       setCurrentStep(firstErrorStep)
   //     }
   //     return
   //   }
-
 
   //   try {
   //     if (mode === 'create') {
@@ -128,25 +134,24 @@ export default function CustomerFormMobile({
   //       await updateCustomer({ shopId, customerId: customerId!, data: formData as UpdateCustomerRequest }).unwrap()
   //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
   //     }
-      
+
   //     onSuccess?.()
   //   } catch (error: any) {
   //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
   //   }
   // }
   const handleSubmit = async () => {
-  // ... validation logic same ...
-  
-  setIsLoading(true)
-  
-  // Mock delay
-  setTimeout(() => {
-    console.log('Mock Submit:', { mode, shopId, customerId, formData })
-    setIsLoading(false)
-    onSuccess?.()
-  }, 1000)
-}
-  
+    // ... validation logic same ...
+
+    setIsLoading(true)
+
+    // Mock delay
+    setTimeout(() => {
+      console.log('Mock Submit:', { mode, shopId, customerId, formData })
+      setIsLoading(false)
+      onSuccess?.()
+    }, 1000)
+  }
 
   const renderCurrentStep = () => {
     const sectionProps = {
@@ -180,11 +185,13 @@ export default function CustomerFormMobile({
   return (
     <div className="min-h-screen bg-bg-primary pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-bg-secondary border-b border-border-primary p-4">
+      <div className="sticky top-0 z-10 border-b border-border-primary bg-bg-secondary p-4">
         <h1 className="text-xl font-bold text-text-primary">
-          {mode === 'create' ? t('customer.addCustomer') : t('customer.editCustomer')}
+          {mode === 'create'
+            ? t('customer.addCustomer')
+            : t('customer.editCustomer')}
         </h1>
-        
+
         {/* Step Indicator */}
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">
@@ -194,9 +201,9 @@ export default function CustomerFormMobile({
             {STEPS[currentStep].label}
           </span>
         </div>
-        
+
         {/* Progress Bar */}
-        <div className="mt-2 h-1 bg-bg-tertiary rounded-full overflow-hidden">
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-bg-tertiary">
           <div
             className="h-full bg-accent transition-all duration-300"
             style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
@@ -206,15 +213,13 @@ export default function CustomerFormMobile({
 
       {/* Form Content */}
       <div className="p-4">
-        <Card className="bg-bg-secondary border-border-primary">
-          <CardContent className="p-4">
-            {renderCurrentStep()}
-          </CardContent>
+        <Card className="border-border-primary bg-bg-secondary">
+          <CardContent className="p-4">{renderCurrentStep()}</CardContent>
         </Card>
       </div>
 
       {/* Fixed Bottom Actions */}
-      <div className="fixed bottom-0 left-0 right-0 bg-bg-secondary border-t border-border-primary p-4">
+      <div className="fixed bottom-0 left-0 right-0 border-t border-border-primary bg-bg-secondary p-4">
         <div className="flex gap-2">
           {currentStep > 0 && (
             <Button
@@ -224,11 +229,11 @@ export default function CustomerFormMobile({
               disabled={isLoading}
               className="flex-1"
             >
-              <ChevronLeft className="h-4 w-4 mr-2" />
+              <ChevronLeft className="mr-2 h-4 w-4" />
               {t('common.previous')}
             </Button>
           )}
-          
+
           {currentStep === 0 && (
             <Button
               type="button"
@@ -237,11 +242,11 @@ export default function CustomerFormMobile({
               disabled={isLoading}
               className="flex-1"
             >
-              <X className="h-4 w-4 mr-2" />
+              <X className="mr-2 h-4 w-4" />
               {t('common.cancel')}
             </Button>
           )}
-          
+
           {currentStep < STEPS.length - 1 ? (
             <Button
               type="button"
@@ -250,7 +255,7 @@ export default function CustomerFormMobile({
               className="flex-1"
             >
               {t('common.next')}
-              <ChevronRight className="h-4 w-4 ml-2" />
+              <ChevronRight className="ml-2 h-4 w-4" />
             </Button>
           ) : (
             <Button
@@ -261,12 +266,12 @@ export default function CustomerFormMobile({
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('common.saving')}
                 </>
               ) : (
                 <>
-                  <Save className="h-4 w-4 mr-2" />
+                  <Save className="mr-2 h-4 w-4" />
                   {mode === 'create' ? t('common.save') : t('common.update')}
                 </>
               )}

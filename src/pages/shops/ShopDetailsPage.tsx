@@ -1,38 +1,43 @@
-import React, { useState } from 'react';
-import { ShopDetailHeader } from '@/components/shop/ShopDetailsPage/ShopDetailHeader';
-import { TabsContent } from '@/components/ui/navigation/Tabs/Tabs';
-import { OverviewTab, BankDetailsTab,ActivityLogTab,StatisticsTab } from '@/components/shop/ShopDetailsPage/tabs';
-import { dummyShops } from '@/pages/shops/data';
+import React, { useState } from 'react'
+import { ShopDetailHeader } from '@/components/shop/ShopDetailsPage/ShopDetailHeader'
+import { TabsContent } from '@/components/ui/navigation/Tabs/Tabs'
+import {
+  OverviewTab,
+  BankDetailsTab,
+  ActivityLogTab,
+  StatisticsTab,
+} from '@/components/shop/ShopDetailsPage/tabs'
+import { dummyShops } from '@/pages/shops/data'
 import { dummyShopStatistics } from '@/pages/shops/dummyStatistics'
 // ============================================================================
 // SHOP DETAILS PAGE COMPONENT
 // ============================================================================
 
 export const ShopDetailsPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('overview')
 
   // Get shop data - Currently using dummy data
   // TODO: Replace with API call - const { shopId } = useParams(); const { data: shop } = useGetShopByIdQuery(shopId)
-  const shop = dummyShops[0];
+  const shop = dummyShops[0]
 
   // Handle back navigation
   const handleBackClick = () => {
     // TODO: Add navigation logic
-    console.log('Navigate back to shops list');
+    console.log('Navigate back to shops list')
     // window.history.back() or navigate('/shops')
-  };
+  }
 
   // Handle settings modal
   const handleSettingsClick = () => {
     // TODO: Open settings modal
-    console.log('Open settings modal');
-  };
+    console.log('Open settings modal')
+  }
 
   // Handle tab change
   const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    console.log('Active tab changed to:', tab);
-  };
+    setActiveTab(tab)
+    console.log('Active tab changed to:', tab)
+  }
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -52,8 +57,8 @@ export const ShopDetailsPage: React.FC = () => {
         {/* Metal Rates Tab */}
         <TabsContent value="metalRates">
           <div className="p-6">
-            <div className="bg-bg-secondary rounded-lg border border-border-secondary p-6">
-              <h2 className="text-lg font-semibold text-text-primary mb-4">
+            <div className="rounded-lg border border-border-secondary bg-bg-secondary p-6">
+              <h2 className="mb-4 text-lg font-semibold text-text-primary">
                 Current Metal Rates
               </h2>
               <p className="text-text-secondary">
@@ -67,11 +72,11 @@ export const ShopDetailsPage: React.FC = () => {
         {/* Statistics Tab */}
         <TabsContent value="statistics">
           <div className="p-6">
-         <StatisticsTab
-  shopId="your-shop-id"
-  statistics={dummyShopStatistics}  // ⬅️ Yeh add karo
-  loading={false}
-/>
+            <StatisticsTab
+              shopId="your-shop-id"
+              statistics={dummyShopStatistics} // ⬅️ Yeh add karo
+              loading={false}
+            />
           </div>
         </TabsContent>
 
@@ -87,12 +92,12 @@ export const ShopDetailsPage: React.FC = () => {
         {/* Logs Tab */}
         <TabsContent value="logs">
           <div className="p-6">
-            <ActivityLogTab/>
+            <ActivityLogTab />
           </div>
         </TabsContent>
       </ShopDetailHeader>
     </div>
-  );
-};
+  )
+}
 
-export default ShopDetailsPage;
+export default ShopDetailsPage

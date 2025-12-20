@@ -22,7 +22,10 @@ export interface StatCardSkeletonProps {
 // SIZE STYLES
 // ============================================================================
 
-const sizeStyles: Record<string, { container: string; icon: string; value: string }> = {
+const sizeStyles: Record<
+  string,
+  { container: string; icon: string; value: string }
+> = {
   sm: {
     container: 'p-4',
     icon: 'h-8 w-8',
@@ -52,59 +55,56 @@ export const StatCardSkeleton: React.FC<StatCardSkeletonProps> = ({
   className,
 }) => {
   const styles = sizeStyles[size]
-  
+
   return (
     <div
       className={cn(
-        'rounded-lg border bg-bg-secondary border-border-primary',
+        'rounded-lg border border-border-primary bg-bg-secondary',
         styles.container,
         className
       )}
     >
       {/* Header with Icon */}
-      <div className="flex items-start gap-3 mb-3">
+      <div className="mb-3 flex items-start gap-3">
         {showIcon && (
           <div
             className={cn(
-              'rounded-lg bg-bg-tertiary animate-pulse',
+              'animate-pulse rounded-lg bg-bg-tertiary',
               styles.icon
             )}
           />
         )}
-        
+
         <div className="flex-1 space-y-2">
           {/* Title */}
-          <div className="h-3 w-24 bg-bg-tertiary rounded animate-pulse" />
+          <div className="h-3 w-24 animate-pulse rounded bg-bg-tertiary" />
           {/* Subtitle */}
-          <div className="h-2 w-16 bg-bg-tertiary rounded animate-pulse" />
+          <div className="h-2 w-16 animate-pulse rounded bg-bg-tertiary" />
         </div>
       </div>
-      
+
       {/* Value and Trend */}
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-2">
           {/* Value */}
           <div
-            className={cn(
-              'bg-bg-tertiary rounded animate-pulse',
-              styles.value
-            )}
+            className={cn('animate-pulse rounded bg-bg-tertiary', styles.value)}
           />
-          
+
           {/* Trend */}
           {showTrend && (
-            <div className="h-4 w-16 bg-bg-tertiary rounded animate-pulse" />
+            <div className="h-4 w-16 animate-pulse rounded bg-bg-tertiary" />
           )}
         </div>
-        
+
         {/* Description */}
-        <div className="h-3 w-full bg-bg-tertiary rounded animate-pulse" />
+        <div className="h-3 w-full animate-pulse rounded bg-bg-tertiary" />
       </div>
-      
+
       {/* Footer */}
       {showFooter && (
-        <div className="mt-4 pt-4 border-t border-border-secondary">
-          <div className="h-3 w-32 bg-bg-tertiary rounded animate-pulse" />
+        <div className="mt-4 border-t border-border-secondary pt-4">
+          <div className="h-3 w-32 animate-pulse rounded bg-bg-tertiary" />
         </div>
       )}
     </div>

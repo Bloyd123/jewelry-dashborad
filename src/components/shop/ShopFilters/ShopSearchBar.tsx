@@ -19,11 +19,11 @@ export const ShopSearchBar: React.FC<ShopSearchBarProps> = ({
 
   return (
     <div className={cn('relative', className)}>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-tertiary" />
+      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
       <Input
         type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={e => onChange(e.target.value)}
         placeholder={t('shop.searchPlaceholder')} // "Search by name or code..."
         className="pl-10"
       />

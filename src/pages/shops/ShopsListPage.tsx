@@ -38,14 +38,14 @@ export const ShopListPage = () => {
   return (
     <div className="space-y-6 p-6">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-text-primary">Shops</h1>
-          <p className="text-text-secondary mt-1">
+          <p className="mt-1 text-text-secondary">
             Manage your jewelry shops and branches
           </p>
         </div>
-        <Button onClick={handleAddShop} className="gap-2 w-full sm:w-auto">
+        <Button onClick={handleAddShop} className="w-full gap-2 sm:w-auto">
           <Plus className="h-4 w-4" />
           Add New Shop
         </Button>
@@ -59,7 +59,7 @@ export const ShopListPage = () => {
       />
 
       {/* Table Section */}
-      <ShopTable  />
+      <ShopTable />
     </div>
   )
 }

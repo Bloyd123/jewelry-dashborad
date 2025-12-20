@@ -56,7 +56,10 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
 
   // Add home item if needed
   const allItems = showHome
-    ? [{ label: 'Home', href: '/', icon: <Home className="h-4 w-4" /> }, ...items]
+    ? [
+        { label: 'Home', href: '/', icon: <Home className="h-4 w-4" /> },
+        ...items,
+      ]
     : items
 
   // Handle collapsed items for mobile
@@ -74,9 +77,9 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   return (
     <nav
       aria-label="Breadcrumb"
-      className={cn('flex items-center flex-wrap gap-1 text-sm', className)}
+      className={cn('flex flex-wrap items-center gap-1 text-sm', className)}
     >
-      <ol className="flex items-center flex-wrap gap-1">
+      <ol className="flex flex-wrap items-center gap-1">
         {/* First item */}
         {collapsedItems[0] && (
           <BreadcrumbItemComponent
@@ -94,8 +97,8 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
               <DropdownMenu>
                 <DropdownMenuTrigger
                   className={cn(
-                    'flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors',
-                    'text-text-secondary hover:text-text-primary hover:bg-bg-tertiary',
+                    'flex items-center gap-1.5 rounded-md px-2 py-1 transition-colors',
+                    'text-text-secondary hover:bg-bg-tertiary hover:text-text-primary',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
                   )}
                 >
@@ -119,16 +122,18 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
         )}
 
         {/* Remaining items */}
-        {collapsedItems.slice(shouldCollapse ? -maxItems + 1 : 1).map((item, index, arr) => (
-          <React.Fragment key={index}>
-            <BreadcrumbSeparator separator={separator} />
-            <BreadcrumbItemComponent
-              item={item}
-              isLast={index === arr.length - 1}
-              onClick={handleClick}
-            />
-          </React.Fragment>
-        ))}
+        {collapsedItems
+          .slice(shouldCollapse ? -maxItems + 1 : 1)
+          .map((item, index, arr) => (
+            <React.Fragment key={index}>
+              <BreadcrumbSeparator separator={separator} />
+              <BreadcrumbItemComponent
+                item={item}
+                isLast={index === arr.length - 1}
+                onClick={handleClick}
+              />
+            </React.Fragment>
+          ))}
       </ol>
     </nav>
   )
@@ -157,24 +162,28 @@ const BreadcrumbItemComponent: React.FC<BreadcrumbItemComponentProps> = ({
         <button
           onClick={() => onClick(item)}
           className={cn(
-            'flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors',
-            'text-text-secondary hover:text-text-primary hover:bg-bg-tertiary',
+            'flex items-center gap-1.5 rounded-md px-2 py-1 transition-colors',
+            'text-text-secondary hover:bg-bg-tertiary hover:text-text-primary',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent'
           )}
         >
           {item.icon && <span className="shrink-0">{item.icon}</span>}
-          <span className="truncate max-w-[150px] sm:max-w-[200px]">{item.label}</span>
+          <span className="max-w-[150px] truncate sm:max-w-[200px]">
+            {item.label}
+          </span>
         </button>
       ) : (
         <span
           className={cn(
             'flex items-center gap-1.5 px-2 py-1',
-            isLast ? 'text-text-primary font-medium' : 'text-text-tertiary'
+            isLast ? 'font-medium text-text-primary' : 'text-text-tertiary'
           )}
           aria-current={isLast ? 'page' : undefined}
         >
           {item.icon && <span className="shrink-0">{item.icon}</span>}
-          <span className="truncate max-w-[150px] sm:max-w-[200px]">{item.label}</span>
+          <span className="max-w-[150px] truncate sm:max-w-[200px]">
+            {item.label}
+          </span>
         </span>
       )}
     </li>
@@ -185,7 +194,9 @@ const BreadcrumbItemComponent: React.FC<BreadcrumbItemComponentProps> = ({
 // BREADCRUMB SEPARATOR
 // ============================================================================
 
-const BreadcrumbSeparator: React.FC<{ separator: React.ReactNode }> = ({ separator }) => (
+const BreadcrumbSeparator: React.FC<{ separator: React.ReactNode }> = ({
+  separator,
+}) => (
   <li className="flex items-center text-text-tertiary" aria-hidden="true">
     {separator}
   </li>

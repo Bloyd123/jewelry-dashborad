@@ -10,5 +10,5 @@ export default {
   ...common,
   ...error,
   ...customer,
-  ...permission
+  ...permission,
 }

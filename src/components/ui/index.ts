@@ -10,7 +10,14 @@ export type { LoaderProps, SkeletonProps, SpinnerProps } from './loader'
 // Add other UI components here as you create them
 export { Button } from './button'
 export { Input } from './input'
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card'
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from './card'
 export { Label } from './label'
 export { Popover, PopoverTrigger, PopoverContent } from './popover'
 export { Calendar } from './calendar'

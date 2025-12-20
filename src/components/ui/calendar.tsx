@@ -26,11 +26,24 @@ function Calendar({
   const [currentMonth, setCurrentMonth] = React.useState<Date>(new Date())
 
   const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ]
 
-  const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - 50 + i)
+  const years = Array.from(
+    { length: 100 },
+    (_, i) => new Date().getFullYear() - 50 + i
+  )
 
   const handleMonthChange = (monthIndex: string) => {
     const newDate = new Date(currentMonth)
@@ -70,7 +83,8 @@ function Calendar({
         nav: 'hidden',
         table: 'w-full border-collapse',
         head_row: 'grid grid-cols-7 gap-1 mb-2',
-        head_cell: 'text-text-tertiary font-normal text-xs text-center w-9 h-7 flex items-center justify-center',
+        head_cell:
+          'text-text-tertiary font-normal text-xs text-center w-9 h-7 flex items-center justify-center',
         row: 'grid grid-cols-7 gap-1 mt-1',
         cell: 'relative p-0 text-center',
         day: cn(
@@ -82,9 +96,9 @@ function Calendar({
         day_selected:
           'bg-accent text-white hover:bg-accent hover:text-white focus:bg-accent focus:text-white font-medium',
         day_today: 'bg-bg-tertiary text-text-primary font-medium',
-        day_outside:
-          'text-text-tertiary opacity-50',
-        day_disabled: 'text-text-tertiary opacity-30 cursor-not-allowed hover:bg-transparent',
+        day_outside: 'text-text-tertiary opacity-50',
+        day_disabled:
+          'text-text-tertiary opacity-30 cursor-not-allowed hover:bg-transparent',
         day_range_middle:
           'aria-selected:bg-accent/50 aria-selected:text-text-primary',
         day_hidden: 'invisible',
@@ -92,11 +106,11 @@ function Calendar({
       }}
       components={{
         CaptionLabel: () => (
-          <div className="flex items-center justify-between w-full">
+          <div className="flex w-full items-center justify-between">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="h-8 w-8 bg-transparent p-0 inline-flex items-center justify-center rounded-md hover:bg-bg-tertiary text-text-primary transition-colors"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-transparent p-0 text-text-primary transition-colors hover:bg-bg-tertiary"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -106,13 +120,13 @@ function Calendar({
                 value={currentMonth.getMonth().toString()}
                 onValueChange={handleMonthChange}
               >
-                <SelectTrigger className="w-[75px] h-9 bg-bg-secondary border-border-primary text-text-primary text-sm font-normal">
+                <SelectTrigger className="h-9 w-[75px] border-border-primary bg-bg-secondary text-sm font-normal text-text-primary">
                   <SelectValue>{months[currentMonth.getMonth()]}</SelectValue>
                 </SelectTrigger>
-                <SelectContent className="bg-bg-secondary border-border-primary">
+                <SelectContent className="border-border-primary bg-bg-secondary">
                   {months.map((monthName, index) => (
-                    <SelectItem 
-                      key={monthName} 
+                    <SelectItem
+                      key={monthName}
                       value={index.toString()}
                       className="text-text-primary hover:bg-bg-tertiary"
                     >
@@ -126,13 +140,13 @@ function Calendar({
                 value={currentMonth.getFullYear().toString()}
                 onValueChange={handleYearChange}
               >
-                <SelectTrigger className="w-[80px] h-9 bg-bg-secondary border-border-primary text-text-primary text-sm font-normal">
+                <SelectTrigger className="h-9 w-[80px] border-border-primary bg-bg-secondary text-sm font-normal text-text-primary">
                   <SelectValue>{currentMonth.getFullYear()}</SelectValue>
                 </SelectTrigger>
-                <SelectContent className="bg-bg-secondary border-border-primary max-h-[200px]">
-                  {years.map((year) => (
-                    <SelectItem 
-                      key={year} 
+                <SelectContent className="max-h-[200px] border-border-primary bg-bg-secondary">
+                  {years.map(year => (
+                    <SelectItem
+                      key={year}
                       value={year.toString()}
                       className="text-text-primary hover:bg-bg-tertiary"
                     >
@@ -146,7 +160,7 @@ function Calendar({
             <button
               type="button"
               onClick={handleNextMonth}
-              className="h-8 w-8 bg-transparent p-0 inline-flex items-center justify-center rounded-md hover:bg-bg-tertiary text-text-primary transition-colors"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-transparent p-0 text-text-primary transition-colors hover:bg-bg-tertiary"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

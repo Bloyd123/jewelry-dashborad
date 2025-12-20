@@ -30,7 +30,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
     return (
       <div
         className={cn(
-          'flex flex-col space-y-1.5 px-6 py-4 border-b border-border-primary',
+          'flex flex-col space-y-1.5 border-b border-border-primary px-6 py-4',
           className
         )}
       >
@@ -42,7 +42,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
   return (
     <div
       className={cn(
-        'flex flex-col space-y-1.5 px-6 py-4 border-b border-border-primary',
+        'flex flex-col space-y-1.5 border-b border-border-primary px-6 py-4',
         className
       )}
     >

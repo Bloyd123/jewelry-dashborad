@@ -11,7 +11,6 @@ import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { ActivityLog } from '@/pages/shops/Activitylogdata'
 
-
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
@@ -63,7 +62,10 @@ const formatTimestamp = (timestamp: string): string => {
 const getRoleVariant = (
   role: string
 ): 'vip' | 'info' | 'accent' | 'success' | 'default' => {
-  const roleMap: Record<string, 'vip' | 'info' | 'accent' | 'success' | 'default'> = {
+  const roleMap: Record<
+    string,
+    'vip' | 'info' | 'accent' | 'success' | 'default'
+  > = {
     super_admin: 'vip',
     org_admin: 'info',
     shop_admin: 'accent',
@@ -78,7 +80,9 @@ const getRoleVariant = (
 /**
  * Get action badge variant
  */
-const getActionVariant = (action: string): 'success' | 'info' | 'error' | 'default' => {
+const getActionVariant = (
+  action: string
+): 'success' | 'info' | 'error' | 'default' => {
   const actionMap: Record<string, 'success' | 'info' | 'error' | 'default'> = {
     CREATE: 'success',
     UPDATE: 'info',
@@ -123,7 +127,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   {
     id: 'user',
     header: 'activityLog.columns.user',
-    accessorFn: (row) => row.user.name,
+    accessorFn: row => row.user.name,
     sortable: true,
     width: '200px',
     cell: ({ row }) => (
@@ -163,7 +167,9 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
     sortable: true,
     width: '150px',
     cell: ({ row }) => (
-      <span className="text-sm font-medium text-text-primary">{row.module}</span>
+      <span className="text-sm font-medium text-text-primary">
+        {row.module}
+      </span>
     ),
   },
 
@@ -176,7 +182,10 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
     width: 'auto',
     cell: ({ row }) => (
       <div className="max-w-md">
-        <p className="text-sm text-text-secondary truncate" title={row.description}>
+        <p
+          className="truncate text-sm text-text-secondary"
+          title={row.description}
+        >
           {row.description}
         </p>
       </div>
@@ -217,7 +226,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
       <Button
         variant="ghost"
         size="sm"
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation()
           console.log('View Details:', row)
           // Show metadata in alert or open modal

@@ -26,29 +26,19 @@ interface CustomerDateRangeFilterProps {
 export const CustomerDateRangeFilter = React.forwardRef<
   HTMLButtonElement,
   CustomerDateRangeFilterProps
->(
-  (
-    {
-      value,
-      onChange,
-      className,
-      disabled = false,
-    },
-    ref
-  ) => {
-    const { t } = useTranslation()
+>(({ value, onChange, className, disabled = false }, ref) => {
+  const { t } = useTranslation()
 
-    return (
-      <DateRangeFilter
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        placeholder={t('filters.selectDateRange')}
-        className={className}
-        disabled={disabled}
-      />
-    )
-  }
-)
+  return (
+    <DateRangeFilter
+      ref={ref}
+      value={value}
+      onChange={onChange}
+      placeholder={t('filters.selectDateRange')}
+      className={className}
+      disabled={disabled}
+    />
+  )
+})
 
 CustomerDateRangeFilter.displayName = 'CustomerDateRangeFilter'

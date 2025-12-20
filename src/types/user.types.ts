@@ -2,13 +2,13 @@
 // FILE: user.types.ts
 // User Model Types
 // ============================================================================
-export type UserRole = 
+export type UserRole =
   | 'super_admin'
   | 'org_admin'
-  | 'shop_admin' 
-  | 'manager' 
-  | 'staff' 
-  | 'accountant' 
+  | 'shop_admin'
+  | 'manager'
+  | 'staff'
+  | 'accountant'
   | 'viewer'
 
 /**

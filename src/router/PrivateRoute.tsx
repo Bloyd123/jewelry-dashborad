@@ -8,7 +8,6 @@ import { useAppSelector } from '../store/hooks'
 import { ROUTES } from '../config/routes.config'
 import { Loader } from '@/components/ui/loader'
 
-
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -22,23 +21,22 @@ interface PrivateRouteProps {
 const PrivateRoute = ({ redirectTo = ROUTES.login }: PrivateRouteProps) => {
   const { t } = useTranslation()
   const location = useLocation()
-  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth)
+  const { isAuthenticated, isLoading } = useAppSelector(state => state.auth)
 
   // ========================================
   // Show Loading State
   // ========================================
-if (isLoading) {
-  return (
-    <Loader
-      fullScreen
-      size="lg"
-      variant="spinner"
-      text={t('auth.loading')}
-      color="accent"
-    />
-  )
-}
-
+  if (isLoading) {
+    return (
+      <Loader
+        fullScreen
+        size="lg"
+        variant="spinner"
+        text={t('auth.loading')}
+        color="accent"
+      />
+    )
+  }
 
   // ========================================
   // Check Authentication

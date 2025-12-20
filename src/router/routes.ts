@@ -219,14 +219,14 @@ export const routeMetadata: Record<string, RouteMetadata> = {
  * Get route metadata by path
  */
 export const getRouteMetadata = (path: string): RouteMetadata | undefined => {
-  return Object.values(routeMetadata).find((route) => route.path === path)
+  return Object.values(routeMetadata).find(route => route.path === path)
 }
 
 /**
  * Get navigation routes (routes that should show in nav)
  */
 export const getNavRoutes = (userRole?: UserRole): RouteMetadata[] => {
-  return Object.values(routeMetadata).filter((route) => {
+  return Object.values(routeMetadata).filter(route => {
     if (!route.showInNav) return false
     if (!route.allowedRoles) return true
     if (!userRole) return false

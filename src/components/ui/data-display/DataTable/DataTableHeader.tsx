@@ -6,7 +6,11 @@
 import { useTranslation } from 'react-i18next'
 import { ArrowUp, ArrowDown, ChevronsUpDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { DataTableColumn, SortingState, SortDirection } from './DataTable.types'
+import type {
+  DataTableColumn,
+  SortingState,
+  SortDirection,
+} from './DataTable.types'
 
 // ============================================================================
 // HEADER CELL PROPS
@@ -79,9 +83,10 @@ export const DataTableHeaderCell = <T,>({
   return (
     <th
       className={cn(
-        'px-4 py-3 text-sm font-semibold text-text-primary bg-bg-secondary',
+        'bg-bg-secondary px-4 py-3 text-sm font-semibold text-text-primary',
         'border-b border-border-primary',
-        column.sortable && 'cursor-pointer select-none hover:bg-bg-tertiary transition-colors',
+        column.sortable &&
+          'cursor-pointer select-none transition-colors hover:bg-bg-tertiary',
         alignmentClass,
         column.headerClassName,
         className
@@ -98,7 +103,9 @@ export const DataTableHeaderCell = <T,>({
       }
     >
       <div className={cn('flex items-center', alignmentClass)}>
-        <span>{typeof column.header === 'string' ? t(column.header) : column.header}</span>
+        <span>
+          {typeof column.header === 'string' ? t(column.header) : column.header}
+        </span>
         {getSortIcon()}
       </div>
     </th>
@@ -142,8 +149,10 @@ export const DataTableHeader = <T,>({
 }: DataTableHeaderProps<T>) => {
   const { t } = useTranslation()
 
-  const getSortingStateForColumn = (columnId: string): SortingState | undefined => {
-    return sortingState?.find((s) => s.columnId === columnId)
+  const getSortingStateForColumn = (
+    columnId: string
+  ): SortingState | undefined => {
+    return sortingState?.find(s => s.columnId === columnId)
   }
 
   return (
@@ -157,17 +166,17 @@ export const DataTableHeader = <T,>({
       <tr className="border-b border-border-primary">
         {/* Selection Column */}
         {selectionEnabled && (
-          <th className="w-12 px-4 py-3 text-center bg-bg-secondary border-b border-border-primary">
-              <input
-                type="checkbox"
-                checked={!!allRowsSelected}
-                ref={(input) => {
-                  if (input) {
-                    input.indeterminate = !!someRowsSelected && !allRowsSelected
-                  }
-                }}
-                onChange={onSelectAll}
-               className="h-4 w-4 rounded border-border-primary bg-bg-secondary text-accent  focus:ring-accent focus:ring-offset-0 accent-accent cursor-pointer"
+          <th className="w-12 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center">
+            <input
+              type="checkbox"
+              checked={!!allRowsSelected}
+              ref={input => {
+                if (input) {
+                  input.indeterminate = !!someRowsSelected && !allRowsSelected
+                }
+              }}
+              onChange={onSelectAll}
+              className="h-4 w-4 cursor-pointer rounded border-border-primary bg-bg-secondary text-accent accent-accent focus:ring-accent focus:ring-offset-0"
               aria-label={t('ui.datatable.selectAll')}
             />
           </th>
@@ -175,13 +184,13 @@ export const DataTableHeader = <T,>({
 
         {/* Actions Column - Start */}
         {actionsEnabled && actionsPosition === 'start' && (
-          <th className="w-20 px-4 py-3 text-center text-sm font-semibold text-text-primary bg-bg-secondary border-b border-border-primary">
+          <th className="w-20 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center text-sm font-semibold text-text-primary">
             {t('ui.datatable.actions')}
           </th>
         )}
 
         {/* Data Columns */}
-        {columns.map((column) => (
+        {columns.map(column => (
           <DataTableHeaderCell
             key={column.id}
             column={column}
@@ -194,7 +203,7 @@ export const DataTableHeader = <T,>({
 
         {/* Actions Column - End */}
         {actionsEnabled && actionsPosition === 'end' && (
-          <th className="w-20 px-4 py-3 text-center text-sm font-semibold text-text-primary bg-bg-secondary border-b border-border-primary">
+          <th className="w-20 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center text-sm font-semibold text-text-primary">
             {t('ui.datatable.actions')}
           </th>
         )}

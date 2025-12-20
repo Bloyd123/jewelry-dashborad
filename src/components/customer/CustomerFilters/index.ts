@@ -12,4 +12,4 @@ export { CustomerVIPFilter } from './CustomerVIPFilter'
 export { CustomerDateRangeFilter } from './DateRangeFilter'
 // Export types
 export type { CustomerFilterValues } from './CustomerFilters'
-export {CustomerFilters} from './CustomerFilters'
+export { CustomerFilters } from './CustomerFilters'

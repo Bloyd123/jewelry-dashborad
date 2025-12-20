@@ -26,45 +26,35 @@ interface CustomerStatusFilterProps {
 export const CustomerStatusFilter = React.forwardRef<
   HTMLButtonElement,
   CustomerStatusFilterProps
->(
-  (
+>(({ value, onChange, showAllOption = true, className }, ref) => {
+  const { t } = useTranslation()
+
+  const statusOptions: StatusOption[] = [
     {
-      value,
-      onChange,
-      showAllOption = true,
-      className,
+      value: 'active',
+      label: t('status.active'),
+      variant: 'active',
+      showDot: true,
     },
-    ref
-  ) => {
-    const { t } = useTranslation()
+    {
+      value: 'inactive',
+      label: t('status.inactive'),
+      variant: 'inactive',
+      showDot: true,
+    },
+  ]
 
-    const statusOptions: StatusOption[] = [
-      {
-        value: 'active',
-        label: t('status.active'),
-        variant: 'active',
-        showDot: true,
-      },
-      {
-        value: 'inactive',
-        label: t('status.inactive'),
-        variant: 'inactive',
-        showDot: true,
-      },
-    ]
-
-    return (
-      <StatusFilter
-        ref={ref}
-        value={value}
-        onChange={onChange}
-        options={statusOptions}
-        placeholder={t('filters.status')}
-        showAllOption={showAllOption}
-        className={className}
-      />
-    )
-  }
-)
+  return (
+    <StatusFilter
+      ref={ref}
+      value={value}
+      onChange={onChange}
+      options={statusOptions}
+      placeholder={t('filters.status')}
+      showAllOption={showAllOption}
+      className={className}
+    />
+  )
+})
 
 CustomerStatusFilter.displayName = 'CustomerStatusFilter'

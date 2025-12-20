@@ -9,6 +9,7 @@ import customer from './customer.json'
 import permission from './permission.json'
 import shop from './shop.json'
 import metalrate from './metalrate.json'
+import supplier from './suppliers.json'
 // import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
@@ -27,6 +28,7 @@ export default {
   ...permission,
   ...shop,
   ...metalrate,
+  ...supplier,
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

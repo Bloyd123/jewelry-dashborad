@@ -4,7 +4,7 @@
 // ============================================================================
 
 import * as React from 'react'
-import {  X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -40,7 +40,7 @@ export const FilterBar = React.forwardRef<HTMLDivElement, FilterBarProps>(
         {isDesktop ? (
           <div className="flex flex-wrap items-center gap-3">
             {children}
-            
+
             {/* Clear All Button */}
             {showClearButton && hasActiveFilters && (
               <Button

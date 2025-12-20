@@ -16,8 +16,18 @@ export const ShopStatusFilter: React.FC<ShopStatusFilterProps> = ({
   const { t } = useTranslation()
 
   const options = [
-    { value: 'true', label: t('status.active'), variant: 'active' as const, showDot: true },
-    { value: 'false', label: t('status.inactive'), variant: 'inactive' as const, showDot: true },
+    {
+      value: 'true',
+      label: t('status.active'),
+      variant: 'active' as const,
+      showDot: true,
+    },
+    {
+      value: 'false',
+      label: t('status.inactive'),
+      variant: 'inactive' as const,
+      showDot: true,
+    },
   ]
 
   return (

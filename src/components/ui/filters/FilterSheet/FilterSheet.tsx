@@ -86,7 +86,7 @@ export const FilterSheet = React.forwardRef<HTMLDivElement, FilterSheetProps>(
                 <Badge
                   variant="error"
                   size="sm"
-                  className="ml-2 h-5 w-5 p-0 flex items-center justify-center rounded-full"
+                  className="ml-2 flex h-5 w-5 items-center justify-center rounded-full p-0"
                 >
                   {activeFilterCount}
                 </Badge>

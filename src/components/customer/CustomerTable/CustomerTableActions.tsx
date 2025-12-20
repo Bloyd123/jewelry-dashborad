@@ -53,28 +53,28 @@ export const getCustomerRowActions = (
     icon: <Award className="h-4 w-4" />,
     onClick: onAddPoints,
     variant: 'default',
-    hidden: (row) => !row.isActive,
+    hidden: row => !row.isActive,
   },
   {
     label: 'actions.blacklist',
     icon: <Ban className="h-4 w-4" />,
     onClick: onBlacklist,
     variant: 'destructive',
-    hidden: (row) => row.isBlacklisted,
+    hidden: row => row.isBlacklisted,
   },
   {
     label: 'actions.removeBlacklist',
     icon: <ShieldOff className="h-4 w-4" />,
     onClick: onBlacklist,
     variant: 'default',
-    hidden: (row) => !row.isBlacklisted,
+    hidden: row => !row.isBlacklisted,
   },
   {
     label: 'actions.delete',
     icon: <Trash2 className="h-4 w-4" />,
     onClick: onDelete,
     variant: 'destructive',
-    disabled: (row) => row.totalDue > 0,
+    disabled: row => row.totalDue > 0,
   },
 ]
 
@@ -106,44 +106,44 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   const { t } = useTranslation()
 
   // Check if any selected customer has outstanding balance
-  const hasOutstandingBalance = selectedCustomers.some((c) => c.totalDue > 0)
+  const hasOutstandingBalance = selectedCustomers.some(c => c.totalDue > 0)
 
   // Check if any selected customer is inactive
-  const hasInactive = selectedCustomers.some((c) => !c.isActive)
+  const hasInactive = selectedCustomers.some(c => !c.isActive)
 
   // Check if all selected are blacklisted or not
-  const allBlacklisted = selectedCustomers.every((c) => c.isBlacklisted)
-  const someBlacklisted = selectedCustomers.some((c) => c.isBlacklisted)
+  const allBlacklisted = selectedCustomers.every(c => c.isBlacklisted)
+  const someBlacklisted = selectedCustomers.some(c => c.isBlacklisted)
 
   return (
-<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 px-4 py-3 bg-accent/10 border-b border-border-primary">
-  {/* Left Section - Selection Info */}
-  <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
-    <span className="text-sm font-medium text-text-primary">
-      {t('table.selectedCount', { count: selectedCount })}
-    </span>
-    <Button
-      variant="ghost"
-      size="sm"
-      onClick={onClearSelection}
-      className="h-8 text-text-secondary hover:text-text-primary text-xs sm:text-sm"
-    >
-      {t('common.clearSelection')}
-    </Button>
-  </div>
+    <div className="bg-accent/10 flex flex-col items-start justify-between gap-3 border-b border-border-primary px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
+      {/* Left Section - Selection Info */}
+      <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-4">
+        <span className="text-sm font-medium text-text-primary">
+          {t('table.selectedCount', { count: selectedCount })}
+        </span>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={onClearSelection}
+          className="h-8 text-xs text-text-secondary hover:text-text-primary sm:text-sm"
+        >
+          {t('common.clearSelection')}
+        </Button>
+      </div>
 
-  {/* Right Section - Action Buttons */}
-  <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+      {/* Right Section - Action Buttons */}
+      <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
         {/* View Details - Only if single selection */}
         {selectedCount === 1 && (
           <Button
             variant="outline"
             size="sm"
             onClick={onViewDetails}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
-          <Eye className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
+            <Eye className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
           </Button>
         )}
 
@@ -153,10 +153,10 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onEdit}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
- <Edit className="h-4 w-4" />
-  <span className="hidden sm:inline">{t('actions.edit')}</span>
+            <Edit className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('actions.edit')}</span>
           </Button>
         )}
 
@@ -166,10 +166,10 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onAddPoints}
-           className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
-           <Award className="h-4 w-4" />
-  <span className="hidden sm:inline">{t('actions.addPoints')}</span>
+            <Award className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('actions.addPoints')}</span>
           </Button>
         )}
 
@@ -179,10 +179,10 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onBlacklist}
-            className="h-9 gap-2 text-status-error border-status-error/20 hover:bg-status-error/10"
+            className="border-status-error/20 hover:bg-status-error/10 h-9 gap-2 text-status-error"
           >
-             <Ban className="h-4 w-4" />
-  <span className="hidden sm:inline">{t('actions.blacklist')}</span>
+            <Ban className="h-4 w-4" />
+            <span className="hidden sm:inline">{t('actions.blacklist')}</span>
           </Button>
         )}
 
@@ -191,10 +191,12 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             variant="outline"
             size="sm"
             onClick={onBlacklist}
-            className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <ShieldOff className="h-4 w-4" />
-              <span className="hidden sm:inline"></span>{t('actions.removeBlacklist')}<span/>
+            <span className="hidden sm:inline"></span>
+            {t('actions.removeBlacklist')}
+            <span />
           </Button>
         )}
 
@@ -204,10 +206,10 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           size="sm"
           onClick={onDelete}
           disabled={hasOutstandingBalance}
-          className="h-9 gap-1 sm:gap-2 text-xs sm:text-sm whitespace-nowrap"
+          className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
-         <Trash2 className="h-4 w-4" />
-  <span className="hidden sm:inline">{t('actions.delete')}</span>
+          <Trash2 className="h-4 w-4" />
+          <span className="hidden sm:inline">{t('actions.delete')}</span>
         </Button>
 
         {/* More Actions Dropdown */}
@@ -218,15 +220,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>
-              {t('actions.exportSelected')}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {t('actions.sendEmail')}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              {t('actions.sendSMS')}
-            </DropdownMenuItem>
+            <DropdownMenuItem>{t('actions.exportSelected')}</DropdownMenuItem>
+            <DropdownMenuItem>{t('actions.sendEmail')}</DropdownMenuItem>
+            <DropdownMenuItem>{t('actions.sendSMS')}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
               {t('actions.bulkDelete')}

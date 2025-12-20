@@ -20,35 +20,35 @@ export interface ModalProps {
   // Control
   open: boolean
   onOpenChange: (open: boolean) => void
-  
+
   // Content
   children: React.ReactNode
-  
+
   // Configuration
   size?: ModalSize
   title?: string
   description?: string
-  
+
   // Behavior
   closeOnEscape?: boolean
   closeOnOutsideClick?: boolean
   showCloseButton?: boolean
   preventScroll?: boolean
-  
+
   // Styling
   className?: string
   overlayClassName?: string
   contentClassName?: string
-  
+
   // Mobile behavior
   forceMobile?: boolean
   forceDesktop?: boolean
   mobileAsSheet?: boolean // Show as bottom sheet on mobile
-  
+
   // Callbacks
   onClose?: () => void
   onOpen?: () => void
-  
+
   // Additional
   testId?: string
 }
@@ -92,8 +92,9 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  
-  const shouldShowAsSheet = !forceDesktop && (forceMobile || (isMobile && mobileAsSheet))
+
+  const shouldShowAsSheet =
+    !forceDesktop && (forceMobile || (isMobile && mobileAsSheet))
 
   // ========================================================================
   // EFFECTS
@@ -144,7 +145,7 @@ export const Modal: React.FC<ModalProps> = ({
           {/* Overlay */}
           <DialogPrimitive.Overlay
             className={cn(
-              'fixed inset-0 z-50 bg-bg-primary/80 backdrop-blur-sm',
+              'bg-bg-primary/80 fixed inset-0 z-50 backdrop-blur-sm',
               'data-[state=open]:animate-in data-[state=closed]:animate-out',
               'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
               overlayClassName
@@ -156,26 +157,28 @@ export const Modal: React.FC<ModalProps> = ({
             className={cn(
               'fixed bottom-0 left-0 right-0 z-50',
               'max-h-[90vh] rounded-t-2xl',
-              'bg-bg-secondary border-t border-border-primary',
+              'border-t border-border-primary bg-bg-secondary',
               'data-[state=open]:animate-in data-[state=closed]:animate-out',
               'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
               'data-[state=closed]:duration-300 data-[state=open]:duration-500',
               contentClassName,
               className
             )}
-            onEscapeKeyDown={closeOnEscape ? undefined : (e) => e.preventDefault()}
+            onEscapeKeyDown={
+              closeOnEscape ? undefined : e => e.preventDefault()
+            }
             onPointerDownOutside={
-              closeOnOutsideClick ? undefined : (e) => e.preventDefault()
+              closeOnOutsideClick ? undefined : e => e.preventDefault()
             }
             data-testid={testId}
           >
             {/* Handle Bar */}
             <div className="flex justify-center py-3">
-              <div className="w-12 h-1 rounded-full bg-border-primary" />
+              <div className="h-1 w-12 rounded-full bg-border-primary" />
             </div>
 
             {/* Content */}
-            <div className="overflow-y-auto max-h-[calc(90vh-3rem)]">
+            <div className="max-h-[calc(90vh-3rem)] overflow-y-auto">
               {children}
             </div>
           </DialogPrimitive.Content>
@@ -194,7 +197,7 @@ export const Modal: React.FC<ModalProps> = ({
         {/* Overlay */}
         <DialogPrimitive.Overlay
           className={cn(
-            'fixed inset-0 z-50 bg-bg-primary/80 backdrop-blur-sm',
+            'bg-bg-primary/80 fixed inset-0 z-50 backdrop-blur-sm',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             overlayClassName
@@ -210,7 +213,7 @@ export const Modal: React.FC<ModalProps> = ({
             sizeClasses[size],
             'max-h-[90vh] overflow-hidden',
             'rounded-lg border shadow-lg',
-            'bg-bg-secondary border-border-primary',
+            'border-border-primary bg-bg-secondary',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -219,9 +222,9 @@ export const Modal: React.FC<ModalProps> = ({
             contentClassName,
             className
           )}
-          onEscapeKeyDown={closeOnEscape ? undefined : (e) => e.preventDefault()}
+          onEscapeKeyDown={closeOnEscape ? undefined : e => e.preventDefault()}
           onPointerDownOutside={
-            closeOnOutsideClick ? undefined : (e) => e.preventDefault()
+            closeOnOutsideClick ? undefined : e => e.preventDefault()
           }
           data-testid={testId}
         >
@@ -230,7 +233,7 @@ export const Modal: React.FC<ModalProps> = ({
             <DialogPrimitive.Close
               className={cn(
                 'absolute right-4 top-4 z-10',
-                'rounded-sm opacity-70 ring-offset-background transition-opacity',
+                'ring-offset-background rounded-sm opacity-70 transition-opacity',
                 'hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
                 'disabled:pointer-events-none',
                 'text-text-secondary hover:text-text-primary'

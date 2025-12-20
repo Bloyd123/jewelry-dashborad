@@ -16,7 +16,9 @@ import type { CreateCustomerInput } from '@/validators/customerValidation'
 // ============================================================================
 // HELPER: Convert Customer to Form Data
 // ============================================================================
-const convertCustomerToFormData = (customer: Customer): Partial<CreateCustomerInput> => {
+const convertCustomerToFormData = (
+  customer: Customer
+): Partial<CreateCustomerInput> => {
   return {
     firstName: customer.firstName,
     lastName: customer.lastName,
@@ -24,30 +26,30 @@ const convertCustomerToFormData = (customer: Customer): Partial<CreateCustomerIn
     alternatePhone: customer.alternatePhone,
     whatsappNumber: customer.whatsappNumber,
     email: customer.email,
-    
+
     // Dates - Convert to YYYY-MM-DD format
-    dateOfBirth: customer.dateOfBirth?.split('T')[0], 
-    
+    dateOfBirth: customer.dateOfBirth?.split('T')[0],
+
     gender: customer.gender,
-    
+
     anniversaryDate: customer.anniversaryDate?.split('T')[0],
-    
+
     address: customer.address,
-    
+
     aadharNumber: customer.aadharNumber,
     panNumber: customer.panNumber,
     gstNumber: customer.gstNumber,
-    
+
     customerType: customer.customerType,
     customerCategory: customer.customerCategory,
-    
+
     creditLimit: customer.creditLimit,
-    
+
     preferences: customer.preferences,
-    
+
     source: customer.source,
     referredBy: customer.referredBy,
-    
+
     notes: customer.notes,
     tags: customer.tags,
   }
@@ -62,8 +64,8 @@ export default function AddCustomerPage() {
   const isEditMode = Boolean(customerId)
 
   // Get current shop ID from Redux
-  const currentShopId = useAppSelector((state) => state.auth.currentShop)
-   const shopId = currentShopId || 'shop_123' 
+  const currentShopId = useAppSelector(state => state.auth.currentShop)
+  const shopId = currentShopId || 'shop_123'
 
   // Fetch customer data if editing
   // const { data: customerData, isLoading } = useGetCustomerQuery(
@@ -71,15 +73,15 @@ export default function AddCustomerPage() {
   //   { skip: !isEditMode || !customerId || !currentShopId }
   // )
   const mockCustomer = useMemo(() => {
-  if (!isEditMode || !customerId) return undefined
-  return MOCK_CUSTOMERS.find(c => c._id === customerId)
-}, [customerId, isEditMode])
+    if (!isEditMode || !customerId) return undefined
+    return MOCK_CUSTOMERS.find(c => c._id === customerId)
+  }, [customerId, isEditMode])
 
-// ✅ CHANGE: Use mock data
-const initialData = useMemo(() => {
-  if (!mockCustomer) return undefined
-  return convertCustomerToFormData(mockCustomer)
-}, [mockCustomer])
+  // ✅ CHANGE: Use mock data
+  const initialData = useMemo(() => {
+    if (!mockCustomer) return undefined
+    return convertCustomerToFormData(mockCustomer)
+  }, [mockCustomer])
 
   // ← CONVERT: Customer to form data
   // const initialData = useMemo(() => {
@@ -119,7 +121,7 @@ const initialData = useMemo(() => {
   //     mode={isEditMode ? 'edit' : 'create'}
   //   />
   // )
-    return (
+  return (
     <CustomerForm
       shopId={shopId}
       customerId={customerId}
@@ -134,5 +136,4 @@ const initialData = useMemo(() => {
       mode={isEditMode ? 'edit' : 'create'}
     />
   )
-
 }

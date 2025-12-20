@@ -34,10 +34,26 @@ interface RateHistoryFiltersProps {
 // ============================================================================
 
 const dateRangeOptions: FilterOption[] = [
-  { value: 'last7days', label: 'Last 7 Days', icon: <Calendar className="h-4 w-4" /> },
-  { value: 'last30days', label: 'Last 30 Days', icon: <Calendar className="h-4 w-4" /> },
-  { value: 'last90days', label: 'Last 90 Days', icon: <Calendar className="h-4 w-4" /> },
-  { value: 'lastYear', label: 'Last Year', icon: <Calendar className="h-4 w-4" /> },
+  {
+    value: 'last7days',
+    label: 'Last 7 Days',
+    icon: <Calendar className="h-4 w-4" />,
+  },
+  {
+    value: 'last30days',
+    label: 'Last 30 Days',
+    icon: <Calendar className="h-4 w-4" />,
+  },
+  {
+    value: 'last90days',
+    label: 'Last 90 Days',
+    icon: <Calendar className="h-4 w-4" />,
+  },
+  {
+    value: 'lastYear',
+    label: 'Last Year',
+    icon: <Calendar className="h-4 w-4" />,
+  },
 ]
 
 const metalTypeOptions: FilterOption[] = [
@@ -95,7 +111,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
         showClearButton={true}
       >
         {/* Filters Label */}
-        <span className="text-sm text-text-secondary whitespace-nowrap">
+        <span className="whitespace-nowrap text-sm text-text-secondary">
           {t('filters.filters')}:
         </span>
 
@@ -132,12 +148,12 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
       <Button
         variant="outline"
         onClick={() => setShowFiltersDrawer(true)}
-        className="w-full relative"
+        className="relative w-full"
       >
-        <SlidersHorizontal className="h-4 w-4 mr-2" />
+        <SlidersHorizontal className="mr-2 h-4 w-4" />
         {t('filters.filters')}
         {activeFilterCount > 0 && (
-          <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-accent text-white">
+          <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
             {activeFilterCount}
           </span>
         )}
@@ -178,7 +194,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
           </FilterGroup>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t border-border-primary sticky bottom-0 bg-bg-secondary pb-4">
+          <div className="sticky bottom-0 flex gap-3 border-t border-border-primary bg-bg-secondary pb-4 pt-4">
             <Button
               variant="outline"
               onClick={onClearAll}
@@ -187,10 +203,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
             >
               {t('filters.clearAll')}
             </Button>
-            <Button
-              onClick={handleApplyFilters}
-              className="flex-1"
-            >
+            <Button onClick={handleApplyFilters} className="flex-1">
               {t('common.apply')}
             </Button>
           </div>

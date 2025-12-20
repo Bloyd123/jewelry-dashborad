@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { 
-  Settings, 
+import React, { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import {
+  Settings,
   Store,
   ChevronLeft,
   TrendingUp,
   Coins,
   Building2,
-  ScrollText
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/data-display/Badge/Badge';
-import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb';
-import { Tabs, TabsContent } from '@/components/ui/navigation/Tabs/Tabs';
-import { Separator } from '@/components/ui/layout/Separator/Separator';
-import type { Shop } from '@/types/shop.types';
-import { dummyShops } from '@/pages/shops/data';
+  ScrollText,
+} from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/data-display/Badge/Badge'
+import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
+import { Tabs, TabsContent } from '@/components/ui/navigation/Tabs/Tabs'
+import { Separator } from '@/components/ui/layout/Separator/Separator'
+import type { Shop } from '@/types/shop.types'
+import { dummyShops } from '@/pages/shops/data'
 
 // ============================================================================
 // COMPONENT PROPS
 // ============================================================================
 
 interface ShopDetailHeaderProps {
-  shopId?: string; // Optional: If not provided, uses first shop from dummy data
-  activeTab?: string;
-  onTabChange?: (tab: string) => void;
-  onBackClick?: () => void;
-  onSettingsClick?: () => void;
-  children?: React.ReactNode;
+  shopId?: string // Optional: If not provided, uses first shop from dummy data
+  activeTab?: string
+  onTabChange?: (tab: string) => void
+  onBackClick?: () => void
+  onSettingsClick?: () => void
+  children?: React.ReactNode
 }
 
 // ============================================================================
@@ -42,22 +42,22 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
   onSettingsClick,
   children,
 }) => {
-  const { t } = useTranslation();
-  const [currentTab, setCurrentTab] = useState(activeTab);
+  const { t } = useTranslation()
+  const [currentTab, setCurrentTab] = useState(activeTab)
 
   // Get shop data from dummy data
   // TODO: Replace with API call when integrating
-  const shop: Shop = shopId 
+  const shop: Shop = shopId
     ? dummyShops.find(s => s._id === shopId) || dummyShops[0]
-    : dummyShops[0];
+    : dummyShops[0]
 
   // Handle tab change
   const handleTabChange = (tab: string) => {
-    setCurrentTab(tab);
+    setCurrentTab(tab)
     if (onTabChange) {
-      onTabChange(tab);
+      onTabChange(tab)
     }
-  };
+  }
 
   // Breadcrumb items
   const breadcrumbItems = [
@@ -68,7 +68,7 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
     {
       label: shop.name,
     },
-  ];
+  ]
 
   // Tab items
   const tabItems = [
@@ -97,18 +97,17 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
       label: t('shopDetail.tabs.logs'),
       icon: <ScrollText className="h-4 w-4" />,
     },
-  ];
+  ]
 
   // Get organization name
-  const organizationName = typeof shop.organizationId === 'object' 
-    ? shop.organizationId.name 
-    : '';
+  const organizationName =
+    typeof shop.organizationId === 'object' ? shop.organizationId.name : ''
 
   return (
     <div className="space-y-4">
       {/* Header Section */}
-      <div className="bg-bg-secondary border-b border-border-secondary">
-        <div className="px-6 py-4 space-y-4">
+      <div className="border-b border-border-secondary bg-bg-secondary">
+        <div className="space-y-4 px-6 py-4">
           {/* Back Button and Breadcrumb */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -121,9 +120,9 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
                 <ChevronLeft className="h-4 w-4" />
                 {t('common.backToList')}
               </Button>
-              
+
               <Separator orientation="vertical" className="h-6" />
-              
+
               <Breadcrumb items={breadcrumbItems} showHome={true} />
             </div>
 
@@ -144,7 +143,7 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
               {/* Shop Icon */}
-              <div className="flex items-center justify-center h-16 w-16 rounded-lg bg-accent/10">
+              <div className="bg-accent/10 flex h-16 w-16 items-center justify-center rounded-lg">
                 <Store className="h-8 w-8 text-accent" />
               </div>
 
@@ -159,8 +158,8 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
 
                 <div className="flex flex-wrap items-center gap-2">
                   {/* Active Status */}
-                  <Badge 
-                    variant={shop.isActive ? 'active' : 'inactive'} 
+                  <Badge
+                    variant={shop.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
                     {shop.isActive ? t('common.active') : t('common.inactive')}
@@ -192,21 +191,29 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
                 <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
                   {organizationName && (
                     <div className="flex items-center gap-1">
-                      <span className="text-text-tertiary">{t('shop.organization')}:</span>
+                      <span className="text-text-tertiary">
+                        {t('shop.organization')}:
+                      </span>
                       <span>{organizationName}</span>
                     </div>
                   )}
-                  
+
                   {shop.address?.city && shop.address?.state && (
                     <div className="flex items-center gap-1">
-                      <span className="text-text-tertiary">{t('shop.location')}:</span>
-                      <span>{shop.address.city}, {shop.address.state}</span>
+                      <span className="text-text-tertiary">
+                        {t('shop.location')}:
+                      </span>
+                      <span>
+                        {shop.address.city}, {shop.address.state}
+                      </span>
                     </div>
                   )}
 
                   {shop.establishedYear && (
                     <div className="flex items-center gap-1">
-                      <span className="text-text-tertiary">{t('shop.established')}:</span>
+                      <span className="text-text-tertiary">
+                        {t('shop.established')}:
+                      </span>
                       <span>{shop.establishedYear}</span>
                     </div>
                   )}
@@ -230,8 +237,8 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // ============================================================================
 // TRANSLATION KEYS STRUCTURE
@@ -285,4 +292,4 @@ export const ShopDetailHeader: React.FC<ShopDetailHeaderProps> = ({
 }
 */
 
-export default ShopDetailHeader;
+export default ShopDetailHeader

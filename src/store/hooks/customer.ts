@@ -34,7 +34,7 @@ import {
   openEditForm,
   closeForm,
   resetCustomerState,
-  
+
   // Selectors
   selectCustomerFilters,
   selectCustomerSearch,
@@ -553,11 +553,14 @@ export const useCustomerQueryParams = (shopId: string) => {
   const filters = useAppSelector(selectCustomerFilters)
   const pagination = useAppSelector(selectCustomerPagination)
 
-  return useMemo(() => ({
-    shopId,
-    page: pagination.currentPage,
-    limit: pagination.pageSize,
-    sort: `${pagination.sortOrder === 'desc' ? '-' : ''}${pagination.sortBy}`,
-    ...filters,
-  }), [shopId, filters, pagination])
+  return useMemo(
+    () => ({
+      shopId,
+      page: pagination.currentPage,
+      limit: pagination.pageSize,
+      sort: `${pagination.sortOrder === 'desc' ? '-' : ''}${pagination.sortBy}`,
+      ...filters,
+    }),
+    [shopId, filters, pagination]
+  )
 }

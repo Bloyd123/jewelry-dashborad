@@ -163,10 +163,10 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             onClick={() => setShowAdvancedDrawer(true)}
             className="relative"
           >
-            <SlidersHorizontal className="h-4 w-4 mr-2" />
+            <SlidersHorizontal className="mr-2 h-4 w-4" />
             {t('filters.moreFilters')}
             {advancedFilterCount > 0 && (
-              <span className="ml-2 px-1.5 py-0.5 text-xs rounded-full bg-accent text-white">
+              <span className="ml-2 rounded-full bg-accent px-1.5 py-0.5 text-xs text-white">
                 {advancedFilterCount}
               </span>
             )}
@@ -210,7 +210,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             </FilterGroup>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4 border-t border-border-primary">
+            <div className="flex gap-3 border-t border-border-primary pt-4">
               <Button
                 variant="outline"
                 onClick={handleClearAdvanced}
@@ -219,10 +219,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
               >
                 {t('filters.clearAdvanced')}
               </Button>
-              <Button
-                onClick={handleApplyAdvanced}
-                className="flex-1"
-              >
+              <Button onClick={handleApplyAdvanced} className="flex-1">
                 {t('common.apply')}
               </Button>
             </div>
@@ -232,117 +229,114 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
     )
   }
 
-// ============================================================================
-// MOBILE VIEW WITH DRAWER
-// ============================================================================
-return (
-  <>
-    <div className="space-y-3">
-      {/* Search Bar - Always Visible on Mobile */}
-      <CustomerSearchBar
-        value={filters.search}
-        onChange={handleSearchChange}
-        className="w-full"
-      />
+  // ============================================================================
+  // MOBILE VIEW WITH DRAWER
+  // ============================================================================
+  return (
+    <>
+      <div className="space-y-3">
+        {/* Search Bar - Always Visible on Mobile */}
+        <CustomerSearchBar
+          value={filters.search}
+          onChange={handleSearchChange}
+          className="w-full"
+        />
 
-      {/* Filter Button */}
-      <Button
-        variant="outline"
-        onClick={() => setShowAdvancedDrawer(true)}
-        className="w-full relative"
-      >
-        <SlidersHorizontal className="h-4 w-4 mr-2" />
-        {t('filters.filters')}
-        {activeFilterCount > 0 && (
-          <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-accent text-white">
-            {activeFilterCount}
-          </span>
-        )}
-      </Button>
-    </div>
-
-    {/* Mobile Drawer - Full Width */}
-    <Drawer
-      open={showAdvancedDrawer}
-      onOpenChange={setShowAdvancedDrawer}
-      title={t('filters.title')}
-      side="right"
-      size="full"
-    >
-      <div className="space-y-6">
-        {/* Customer Type */}
-        <FilterGroup label={t('filters.customerType')}>
-          <CustomerTypeFilter
-            value={filters.customerType}
-            onChange={handleTypeChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* Membership Tier */}
-        <FilterGroup label={t('filters.membershipTier')}>
-          <CustomerMembershipFilter
-            value={filters.membershipTier}
-            onChange={handleTierChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* Status */}
-        <FilterGroup label={t('filters.status')}>
-          <CustomerStatusFilter
-            value={filters.status}
-            onChange={handleStatusChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* Balance */}
-        <FilterGroup label={t('filters.balance')}>
-          <CustomerBalanceFilter
-            value={filters.balance}
-            onChange={handleBalanceChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* VIP Status */}
-        <FilterGroup label={t('filters.vipStatus')}>
-          <CustomerVIPFilter
-            value={filters.vipOnly}
-            onChange={handleVIPChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* Date Range */}
-        <FilterGroup label={t('filters.dateRange')}>
-          <CustomerDateRangeFilter
-            value={filters.dateRange}
-            onChange={handleDateRangeChange}
-            className="w-full"
-          />
-        </FilterGroup>
-
-        {/* Actions - WITH CLEAR ALL */}
-        <div className="flex gap-3 pt-4 border-t border-border-primary sticky bottom-0 bg-bg-secondary pb-4">
-          <Button
-            variant="outline"
-            onClick={onClearAll}
-            className="flex-1"
-            disabled={activeFilterCount === 0}
-          >
-            {t('filters.clearAll')}
-          </Button>
-          <Button
-            onClick={handleApplyAdvanced}
-            className="flex-1"
-          >
-            {t('common.apply')}
-          </Button>
-        </div>
+        {/* Filter Button */}
+        <Button
+          variant="outline"
+          onClick={() => setShowAdvancedDrawer(true)}
+          className="relative w-full"
+        >
+          <SlidersHorizontal className="mr-2 h-4 w-4" />
+          {t('filters.filters')}
+          {activeFilterCount > 0 && (
+            <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
+              {activeFilterCount}
+            </span>
+          )}
+        </Button>
       </div>
-    </Drawer>
-  </>
-)
+
+      {/* Mobile Drawer - Full Width */}
+      <Drawer
+        open={showAdvancedDrawer}
+        onOpenChange={setShowAdvancedDrawer}
+        title={t('filters.title')}
+        side="right"
+        size="full"
+      >
+        <div className="space-y-6">
+          {/* Customer Type */}
+          <FilterGroup label={t('filters.customerType')}>
+            <CustomerTypeFilter
+              value={filters.customerType}
+              onChange={handleTypeChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* Membership Tier */}
+          <FilterGroup label={t('filters.membershipTier')}>
+            <CustomerMembershipFilter
+              value={filters.membershipTier}
+              onChange={handleTierChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* Status */}
+          <FilterGroup label={t('filters.status')}>
+            <CustomerStatusFilter
+              value={filters.status}
+              onChange={handleStatusChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* Balance */}
+          <FilterGroup label={t('filters.balance')}>
+            <CustomerBalanceFilter
+              value={filters.balance}
+              onChange={handleBalanceChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* VIP Status */}
+          <FilterGroup label={t('filters.vipStatus')}>
+            <CustomerVIPFilter
+              value={filters.vipOnly}
+              onChange={handleVIPChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* Date Range */}
+          <FilterGroup label={t('filters.dateRange')}>
+            <CustomerDateRangeFilter
+              value={filters.dateRange}
+              onChange={handleDateRangeChange}
+              className="w-full"
+            />
+          </FilterGroup>
+
+          {/* Actions - WITH CLEAR ALL */}
+          <div className="sticky bottom-0 flex gap-3 border-t border-border-primary bg-bg-secondary pb-4 pt-4">
+            <Button
+              variant="outline"
+              onClick={onClearAll}
+              className="flex-1"
+              disabled={activeFilterCount === 0}
+            >
+              {t('filters.clearAll')}
+            </Button>
+            <Button onClick={handleApplyAdvanced} className="flex-1">
+              {t('common.apply')}
+            </Button>
+          </div>
+        </div>
+      </Drawer>
+    </>
+  )
 }

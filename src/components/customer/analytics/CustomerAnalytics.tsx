@@ -22,14 +22,26 @@ import {
   Calendar,
   PieChart as PieChartIcon,
 } from 'lucide-react'
-import { StatCard, StatCardGrid, StatCardSkeleton } from '@/components/ui/data-display/StatCard'
-import { LineChart,AreaChart,BarChart } from '@/components/ui/charts'
+import {
+  StatCard,
+  StatCardGrid,
+  StatCardSkeleton,
+} from '@/components/ui/data-display/StatCard'
+import { LineChart, AreaChart, BarChart } from '@/components/ui/charts'
 import { DonutChart } from '@/components/ui/charts/DonutChart'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { Separator } from '@/components/ui/layout/Separator'
 import { cn } from '@/lib/utils'
 import {
-mockGrowthData,mockRetentionData,mockTopCustomers,mockSegmentationData,mockGeographyData,mockPurchasePatternData,mockRecentEvents,mockAtRiskCustomers,mockOutstandingPayments
+  mockGrowthData,
+  mockRetentionData,
+  mockTopCustomers,
+  mockSegmentationData,
+  mockGeographyData,
+  mockPurchasePatternData,
+  mockRecentEvents,
+  mockAtRiskCustomers,
+  mockOutstandingPayments,
 } from './customerAnalytics.mock'
 
 // ============================================================================
@@ -159,14 +171,12 @@ const formatNumber = (value: number): string => {
 //   }
 // }
 
-
-
 // ============================================================================
 // CUSTOMERANALYTICS COMPONENT
 // ============================================================================
 
 export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
-    shopId,
+  shopId,
   statistics,
   loading = false,
   onRefresh,
@@ -205,7 +215,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </h2>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <AlertCircle className="h-12 w-12 text-text-tertiary mb-4" />
+          <AlertCircle className="mb-4 h-12 w-12 text-text-tertiary" />
           <p className="text-text-secondary">{t('analytics.noData')}</p>
         </div>
       </div>
@@ -213,13 +223,17 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
   }
 
   // Calculate derived metrics
-  const activePercentage = statistics.totalCustomers > 0
-    ? Math.round((statistics.activeCustomers / statistics.totalCustomers) * 100)
-    : 0
+  const activePercentage =
+    statistics.totalCustomers > 0
+      ? Math.round(
+          (statistics.activeCustomers / statistics.totalCustomers) * 100
+        )
+      : 0
 
-  const vipPercentage = statistics.totalCustomers > 0
-    ? Math.round((statistics.vipCustomers / statistics.totalCustomers) * 100)
-    : 0
+  const vipPercentage =
+    statistics.totalCustomers > 0
+      ? Math.round((statistics.vipCustomers / statistics.totalCustomers) * 100)
+      : 0
 
   return (
     <div className={cn('space-y-6', className)}>
@@ -229,14 +243,14 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           <h2 className="text-xl font-semibold text-text-primary">
             {t('analytics.title')}
           </h2>
-          <p className="text-sm text-text-tertiary mt-1">
+          <p className="mt-1 text-sm text-text-tertiary">
             {t('analytics.subtitle')}
           </p>
         </div>
         {onRefresh && (
           <button
             onClick={onRefresh}
-            className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+            className="hover:bg-accent/90 rounded-lg bg-accent px-4 py-2 text-white transition-colors"
           >
             {t('analytics.refresh')}
           </button>
@@ -373,14 +387,14 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       </StatCardGrid>
 
       {/* Growth & Retention Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Customer Growth Chart */}
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
+        <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
               {t('analytics.customerGrowth')}
             </h3>
-            <p className="text-sm text-text-tertiary mt-1">
+            <p className="mt-1 text-sm text-text-tertiary">
               {t('analytics.customerGrowthDesc')}
             </p>
           </div>
@@ -405,18 +419,18 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             showGrid={true}
             showLegend={true}
             showTooltip={true}
-            formatYAxis={(value) => formatNumber(value)}
-            formatTooltip={(value) => formatNumber(value)}
+            formatYAxis={value => formatNumber(value)}
+            formatTooltip={value => formatNumber(value)}
           />
         </div>
 
         {/* Retention Rate Chart */}
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
+        <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
               {t('analytics.retentionTrend')}
             </h3>
-            <p className="text-sm text-text-tertiary mt-1">
+            <p className="mt-1 text-sm text-text-tertiary">
               {t('analytics.retentionTrendDesc')}
             </p>
           </div>
@@ -435,8 +449,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             showGrid={true}
             showLegend={true}
             showTooltip={true}
-            formatYAxis={(value) => `${value}%`}
-            formatTooltip={(value) => `${value}%`}
+            formatYAxis={value => `${value}%`}
+            formatTooltip={value => `${value}%`}
           />
         </div>
       </div>
@@ -446,8 +460,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
 
       {/* Geographic Distribution Section */}
       <div className="mt-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-status-success/10 flex items-center justify-center">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-status-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <MapPin className="h-5 w-5 text-status-success" />
           </div>
           <div>
@@ -460,7 +474,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </div>
         </div>
 
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6 chart-wrapper">
+        <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
           <BarChart
             data={statistics.geographyData || mockGeographyData}
             bars={[
@@ -475,8 +489,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             showGrid={true}
             showLegend={true}
             showTooltip={true}
-            formatYAxis={(value) => formatNumber(value)}
-            formatTooltip={(value) => `${formatNumber(value)} customers`}
+            formatYAxis={value => formatNumber(value)}
+            formatTooltip={value => `${formatNumber(value)} customers`}
           />
         </div>
       </div>
@@ -486,8 +500,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
 
       {/* Customer Segmentation Section */}
       <div className="mt-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-status-info/10 flex items-center justify-center">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-status-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <PieChartIcon className="h-5 w-5 text-status-info" />
           </div>
           <div>
@@ -500,10 +514,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* By Membership Tier */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg p-6 chart-wrapper">
-            <h4 className="text-base font-semibold text-text-primary mb-4">
+          <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
+            <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('analytics.byMembershipTier')}
             </h4>
             <DonutChart
@@ -518,20 +532,19 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               showTooltip={true}
               innerRadius={60}
               outerRadius={90}
-colors={[
-  'var(--status-info)',
-  'var(--status-warning)',
-  'var(--status-success)',
-  'var(--accent-color)',
-]}
-
-              formatTooltip={(value) => `${formatNumber(value)} customers`}
+              colors={[
+                'var(--status-info)',
+                'var(--status-warning)',
+                'var(--status-success)',
+                'var(--accent-color)',
+              ]}
+              formatTooltip={value => `${formatNumber(value)} customers`}
             />
           </div>
 
           {/* By Customer Type */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg p-6 chart-wrapper">
-            <h4 className="text-base font-semibold text-text-primary mb-4">
+          <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
+            <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('analytics.byCustomerType')}
             </h4>
             <DonutChart
@@ -552,13 +565,13 @@ colors={[
                 'var(--status-success)',
                 'var(--accent-color)',
               ]}
-              formatTooltip={(value) => `${formatNumber(value)} customers`}
+              formatTooltip={value => `${formatNumber(value)} customers`}
             />
           </div>
 
           {/* By Product Category */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg p-6">
-            <h4 className="text-base font-semibold text-text-primary mb-4">
+          <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
+            <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('analytics.byProductCategory')}
             </h4>
             <DonutChart
@@ -573,15 +586,14 @@ colors={[
               showTooltip={true}
               innerRadius={60}
               outerRadius={90}
-colors={[
-  'var(--status-warning)',
-  'var(--status-info)',
-  'var(--status-success)',
-  'var(--status-error)',
-  'var(--accent-color)',
-]}
-
-              formatTooltip={(value) => `${formatNumber(value)} customers`}
+              colors={[
+                'var(--status-warning)',
+                'var(--status-info)',
+                'var(--status-success)',
+                'var(--status-error)',
+                'var(--accent-color)',
+              ]}
+              formatTooltip={value => `${formatNumber(value)} customers`}
             />
           </div>
         </div>
@@ -592,9 +604,9 @@ colors={[
 
       {/* Top Customers Section */}
       <div className="mt-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center">
+            <div className="bg-accent/10 flex h-10 w-10 items-center justify-center rounded-lg">
               <Star className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -615,10 +627,14 @@ colors={[
               id: 'rank',
               header: t('analytics.rank'),
               cell: ({ row }) => {
-                const index = (statistics.topCustomers || mockTopCustomers).indexOf(row)
+                const index = (
+                  statistics.topCustomers || mockTopCustomers
+                ).indexOf(row)
                 return (
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-accent">#{index + 1}</span>
+                    <span className="font-semibold text-accent">
+                      #{index + 1}
+                    </span>
                   </div>
                 )
               },
@@ -630,8 +646,12 @@ colors={[
               accessorKey: 'fullName',
               cell: ({ row }) => (
                 <div>
-                  <div className="font-medium text-text-primary">{row.fullName}</div>
-                  <div className="text-xs text-text-tertiary">{row.customerCode}</div>
+                  <div className="font-medium text-text-primary">
+                    {row.fullName}
+                  </div>
+                  <div className="text-xs text-text-tertiary">
+                    {row.customerCode}
+                  </div>
                 </div>
               ),
             },
@@ -643,7 +663,9 @@ colors={[
                 <div>
                   <div className="text-sm text-text-primary">{row.phone}</div>
                   {row.email && (
-                    <div className="text-xs text-text-tertiary">{row.email}</div>
+                    <div className="text-xs text-text-tertiary">
+                      {row.email}
+                    </div>
                   )}
                 </div>
               ),
@@ -662,7 +684,7 @@ colors={[
                 return (
                   <span
                     className={cn(
-                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border capitalize',
+                      'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize',
                       tierColors[row.membershipTier] || tierColors.standard
                     )}
                   >
@@ -732,8 +754,8 @@ colors={[
 
       {/* Purchase Pattern Section */}
       <div className="mt-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="h-10 w-10 rounded-lg bg-status-warning/10 flex items-center justify-center">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-status-warning/10 flex h-10 w-10 items-center justify-center rounded-lg">
             <ShoppingBag className="h-5 w-5 text-status-warning" />
           </div>
           <div>
@@ -746,7 +768,7 @@ colors={[
           </div>
         </div>
 
-        <div className="bg-bg-secondary border border-border-primary rounded-lg p-6 chart-wrapper">
+        <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
           <AreaChart
             data={statistics.purchasePatternData || mockPurchasePatternData}
             areas={[
@@ -769,18 +791,18 @@ colors={[
             showLegend={true}
             showTooltip={true}
             stacked={false}
-            formatYAxis={(value) => {
+            formatYAxis={value => {
               if (value >= 1000000) {
                 return `₹${(value / 1000000).toFixed(1)}M`
               }
               return formatNumber(value)
             }}
-                formatTooltip={(value) => {
-                if (value > 100000) {
-                    return formatCurrency(value)
-                }
-                return formatNumber(value)
-                }}
+            formatTooltip={value => {
+              if (value > 100000) {
+                return formatCurrency(value)
+              }
+              return formatNumber(value)
+            }}
           />
         </div>
       </div>
@@ -789,10 +811,10 @@ colors={[
 
       {/* Customer Insights Grid - Events, At-Risk, Outstanding */}
       <div className="mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Recent Events */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg overflow-hidden">
-            <div className="p-4 border-b border-border-primary bg-bg-tertiary/30">
+          <div className="overflow-hidden rounded-lg border border-border-primary bg-bg-secondary">
+            <div className="bg-bg-tertiary/30 border-b border-border-primary p-4">
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5 text-status-info" />
                 <div>
@@ -806,7 +828,7 @@ colors={[
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.recentEvents || mockRecentEvents).map((event) => {
+              {(statistics.recentEvents || mockRecentEvents).map(event => {
                 const eventIcons = {
                   anniversary: '💍',
                   birthday: '🎂',
@@ -818,18 +840,29 @@ colors={[
                   signup: 'text-blue-600',
                 }
                 return (
-                  <div key={event._id} className="p-3 hover:bg-bg-tertiary/30 transition-colors">
+                  <div
+                    key={event._id}
+                    className="hover:bg-bg-tertiary/30 p-3 transition-colors"
+                  >
                     <div className="flex items-start gap-3">
-                      <span className="text-2xl">{eventIcons[event.eventType]}</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-text-primary text-sm">
+                      <span className="text-2xl">
+                        {eventIcons[event.eventType]}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-medium text-text-primary">
                           {event.customerName}
                         </div>
                         <div className="text-xs text-text-tertiary">
                           {event.customerCode}
                         </div>
-                        <div className={cn('text-xs font-medium mt-1 capitalize', eventColors[event.eventType])}>
-                          {event.eventType} • {event.daysUntil} {t('analytics.daysAway')}
+                        <div
+                          className={cn(
+                            'mt-1 text-xs font-medium capitalize',
+                            eventColors[event.eventType]
+                          )}
+                        >
+                          {event.eventType} • {event.daysUntil}{' '}
+                          {t('analytics.daysAway')}
                         </div>
                       </div>
                     </div>
@@ -840,8 +873,8 @@ colors={[
           </div>
 
           {/* At-Risk Customers */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg overflow-hidden">
-            <div className="p-4 border-b border-border-primary bg-bg-tertiary/30">
+          <div className="overflow-hidden rounded-lg border border-border-primary bg-bg-secondary">
+            <div className="bg-bg-tertiary/30 border-b border-border-primary p-4">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5 text-status-warning" />
                 <div>
@@ -855,44 +888,52 @@ colors={[
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.atRiskCustomers || mockAtRiskCustomers).map((customer) => {
-                const riskColors = {
-                  high: 'bg-status-error/10 text-status-error border-status-error/30',
-                  medium: 'bg-status-warning/10 text-status-warning border-status-warning/30',
-                  low: 'bg-status-info/10 text-status-info border-status-info/30',
-                }
-                return (
-                  <div key={customer._id} className="p-3 hover:bg-bg-tertiary/30 transition-colors">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-text-primary text-sm">
-                          {customer.fullName}
+              {(statistics.atRiskCustomers || mockAtRiskCustomers).map(
+                customer => {
+                  const riskColors = {
+                    high: 'bg-status-error/10 text-status-error border-status-error/30',
+                    medium:
+                      'bg-status-warning/10 text-status-warning border-status-warning/30',
+                    low: 'bg-status-info/10 text-status-info border-status-info/30',
+                  }
+                  return (
+                    <div
+                      key={customer._id}
+                      className="hover:bg-bg-tertiary/30 p-3 transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <div className="text-sm font-medium text-text-primary">
+                            {customer.fullName}
+                          </div>
+                          <div className="text-xs text-text-tertiary">
+                            {customer.customerCode} • {customer.phone}
+                          </div>
+                          <div className="mt-1 text-xs text-text-secondary">
+                            {t('analytics.lastOrder')}:{' '}
+                            {customer.daysSinceLastOrder}{' '}
+                            {t('analytics.daysAgo')}
+                          </div>
                         </div>
-                        <div className="text-xs text-text-tertiary">
-                          {customer.customerCode} • {customer.phone}
-                        </div>
-                        <div className="text-xs text-text-secondary mt-1">
-                          {t('analytics.lastOrder')}: {customer.daysSinceLastOrder} {t('analytics.daysAgo')}
-                        </div>
+                        <span
+                          className={cn(
+                            'inline-flex items-center rounded border px-2 py-1 text-xs font-medium capitalize',
+                            riskColors[customer.riskLevel]
+                          )}
+                        >
+                          {customer.riskLevel}
+                        </span>
                       </div>
-                      <span
-                        className={cn(
-                          'inline-flex items-center px-2 py-1 rounded text-xs font-medium border capitalize',
-                          riskColors[customer.riskLevel]
-                        )}
-                      >
-                        {customer.riskLevel}
-                      </span>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                }
+              )}
             </div>
           </div>
 
           {/* Outstanding Payments */}
-          <div className="bg-bg-secondary border border-border-primary rounded-lg overflow-hidden">
-            <div className="p-4 border-b border-border-primary bg-bg-tertiary/30">
+          <div className="overflow-hidden rounded-lg border border-border-primary bg-bg-secondary">
+            <div className="bg-bg-tertiary/30 border-b border-border-primary p-4">
               <div className="flex items-center gap-2">
                 <Receipt className="h-5 w-5 text-status-error" />
                 <div>
@@ -906,40 +947,47 @@ colors={[
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.outstandingPayments || mockOutstandingPayments).map((payment) => {
-                return (
-                  <div key={payment._id} className="p-3 hover:bg-bg-tertiary/30 transition-colors">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-text-primary text-sm">
-                          {payment.fullName}
-                        </div>
-                        <div className="text-xs text-text-tertiary">
-                          {payment.customerCode} • {payment.phone}
-                        </div>
-                        <div className="flex items-center gap-2 mt-1">
-                          <span className="text-xs text-text-secondary">
-                            {t('analytics.due')}: {formatCurrency(payment.totalDue)}
-                          </span>
-                          {payment.daysOverdue > 0 && (
-                            <span className="text-xs text-status-error font-medium">
-                              {payment.daysOverdue} {t('analytics.daysOverdue')}
+              {(statistics.outstandingPayments || mockOutstandingPayments).map(
+                payment => {
+                  return (
+                    <div
+                      key={payment._id}
+                      className="hover:bg-bg-tertiary/30 p-3 transition-colors"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <div className="text-sm font-medium text-text-primary">
+                            {payment.fullName}
+                          </div>
+                          <div className="text-xs text-text-tertiary">
+                            {payment.customerCode} • {payment.phone}
+                          </div>
+                          <div className="mt-1 flex items-center gap-2">
+                            <span className="text-xs text-text-secondary">
+                              {t('analytics.due')}:{' '}
+                              {formatCurrency(payment.totalDue)}
                             </span>
-                          )}
+                            {payment.daysOverdue > 0 && (
+                              <span className="text-xs font-medium text-status-error">
+                                {payment.daysOverdue}{' '}
+                                {t('analytics.daysOverdue')}
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-semibold text-status-error">
-                          {formatCurrency(payment.overdueAmount)}
-                        </div>
-                        <div className="text-xs text-text-tertiary">
-                          {t('analytics.overdue')}
+                        <div className="text-right">
+                          <div className="text-sm font-semibold text-status-error">
+                            {formatCurrency(payment.overdueAmount)}
+                          </div>
+                          <div className="text-xs text-text-tertiary">
+                            {t('analytics.overdue')}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                }
+              )}
             </div>
           </div>
         </div>

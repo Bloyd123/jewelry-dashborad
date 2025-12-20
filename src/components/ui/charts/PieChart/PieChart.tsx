@@ -115,23 +115,23 @@ export const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(
                 />
               ))}
             </Pie>
-        {showTooltip && (
-          <Tooltip
-            contentStyle={{
-              backgroundColor: 'var(--bg-secondary)',
-              border: '1px solid var(--border-primary)',
-              borderRadius: '0.5rem',
-            }}
-            itemStyle={{
-              color: 'var(--text-primary)',
-              fontSize: '0.875rem',
-            }}
-            labelStyle={{
-              color: 'var(--text-secondary)',
-              fontWeight: 500,
-            }}
-          />
-        )}
+            {showTooltip && (
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  border: '1px solid var(--border-primary)',
+                  borderRadius: '0.5rem',
+                }}
+                itemStyle={{
+                  color: 'var(--text-primary)',
+                  fontSize: '0.875rem',
+                }}
+                labelStyle={{
+                  color: 'var(--text-secondary)',
+                  fontWeight: 500,
+                }}
+              />
+            )}
 
             {showLegend && (
               <Legend wrapperStyle={{ color: 'var(--text-secondary)' }} />

@@ -42,7 +42,7 @@ const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      'flex h-full w-full items-center justify-center rounded-full bg-bg-tertiary text-text-primary font-medium',
+      'flex h-full w-full items-center justify-center rounded-full bg-bg-tertiary font-medium text-text-primary',
       className
     )}
     {...props}
@@ -105,13 +105,16 @@ const getColorFromName = (name: string): string => {
     'bg-indigo-500/20 text-indigo-600 dark:text-indigo-400',
     'bg-orange-500/20 text-orange-600 dark:text-orange-400',
   ]
-  
+
   const hash = name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
   return colors[hash % colors.length]
 }
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
-  ({ src, alt, name, size = 'md', status, className, fallbackClassName }, ref) => {
+  (
+    { src, alt, name, size = 'md', status, className, fallbackClassName },
+    ref
+  ) => {
     const initials = name ? getInitials(name) : '?'
     const colorClass = name ? getColorFromName(name) : ''
 
@@ -170,8 +173,10 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
     <div className={cn('flex -space-x-2', className)}>
       {displayedAvatars}
       {remainingCount > 0 && (
-        <AvatarRoot className={cn(sizeClasses[size], 'border-2 border-bg-secondary')}>
-          <AvatarFallback className="bg-bg-tertiary text-text-secondary text-xs font-medium">
+        <AvatarRoot
+          className={cn(sizeClasses[size], 'border-2 border-bg-secondary')}
+        >
+          <AvatarFallback className="bg-bg-tertiary text-xs font-medium text-text-secondary">
             +{remainingCount}
           </AvatarFallback>
         </AvatarRoot>

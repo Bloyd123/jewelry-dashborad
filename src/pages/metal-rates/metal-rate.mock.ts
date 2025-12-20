@@ -199,53 +199,56 @@ export const mockCurrentRateResponse: ApiResponse<MetalRate> = {
 // MOCK RATE HISTORY
 // ============================================================================
 
-export const mockRateHistory: MetalRate[] = Array.from({ length: 30 }, (_, i) => {
-  const date = new Date()
-  date.setDate(date.getDate() - i)
-  const goldVariation = Math.random() * 100 - 50
-  const silverVariation = Math.random() * 2 - 1
+export const mockRateHistory: MetalRate[] = Array.from(
+  { length: 30 },
+  (_, i) => {
+    const date = new Date()
+    date.setDate(date.getDate() - i)
+    const goldVariation = Math.random() * 100 - 50
+    const silverVariation = Math.random() * 2 - 1
 
-  return {
-    ...mockCurrentRate,
-    _id: `rate_${i}_${date.getTime()}`,
-    rateDate: date.toISOString(),
-    gold: {
-      gold24K: {
-        buyingRate: 7250 + goldVariation,
-        sellingRate: 7350 + goldVariation,
+    return {
+      ...mockCurrentRate,
+      _id: `rate_${i}_${date.getTime()}`,
+      rateDate: date.toISOString(),
+      gold: {
+        gold24K: {
+          buyingRate: 7250 + goldVariation,
+          sellingRate: 7350 + goldVariation,
+        },
+        gold22K: {
+          buyingRate: 6645.83 + goldVariation * 0.916,
+          sellingRate: 6736.67 + goldVariation * 0.916,
+        },
+        gold18K: {
+          buyingRate: 5437.5 + goldVariation * 0.75,
+          sellingRate: 5512.5 + goldVariation * 0.75,
+        },
+        gold14K: {
+          buyingRate: 4241.25 + goldVariation * 0.585,
+          sellingRate: 4299.75 + goldVariation * 0.585,
+        },
       },
-      gold22K: {
-        buyingRate: 6645.83 + goldVariation * 0.916,
-        sellingRate: 6736.67 + goldVariation * 0.916,
+      silver: {
+        pure: {
+          buyingRate: 82.5 + silverVariation,
+          sellingRate: 85.0 + silverVariation,
+        },
+        sterling925: {
+          buyingRate: 76.31 + silverVariation * 0.925,
+          sellingRate: 78.63 + silverVariation * 0.925,
+        },
       },
-      gold18K: {
-        buyingRate: 5437.5 + goldVariation * 0.75,
-        sellingRate: 5512.5 + goldVariation * 0.75,
+      isCurrent: i === 0,
+      changes: {
+        goldChange: goldVariation,
+        goldChangePercentage: (goldVariation / 7300) * 100,
+        silverChange: silverVariation,
+        silverChangePercentage: (silverVariation / 84) * 100,
       },
-      gold14K: {
-        buyingRate: 4241.25 + goldVariation * 0.585,
-        sellingRate: 4299.75 + goldVariation * 0.585,
-      },
-    },
-    silver: {
-      pure: {
-        buyingRate: 82.5 + silverVariation,
-        sellingRate: 85.0 + silverVariation,
-      },
-      sterling925: {
-        buyingRate: 76.31 + silverVariation * 0.925,
-        sellingRate: 78.63 + silverVariation * 0.925,
-      },
-    },
-    isCurrent: i === 0,
-    changes: {
-      goldChange: goldVariation,
-      goldChangePercentage: (goldVariation / 7300) * 100,
-      silverChange: silverVariation,
-      silverChangePercentage: (silverVariation / 84) * 100,
-    },
+    }
   }
-})
+)
 
 export const mockRateHistoryResponse: ApiResponse<MetalRate[]> = {
   success: true,
@@ -495,7 +498,7 @@ export const mockDeleteRateResponse = {
 export const mockMetalRateApi = {
   // GET Current Rate
   getCurrentRate: async (shopId: string): Promise<ApiResponse<MetalRate>> => {
-    await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500)) // Simulate network delay
     return mockCurrentRateResponse
   },
 
@@ -505,7 +508,7 @@ export const mockMetalRateApi = {
     page = 1,
     limit = 10
   ): Promise<ApiResponse<MetalRate[]>> => {
-    await new Promise((resolve) => setTimeout(resolve, 600))
+    await new Promise(resolve => setTimeout(resolve, 600))
     return mockRateHistoryResponse
   },
 
@@ -515,7 +518,7 @@ export const mockMetalRateApi = {
     metalType = 'gold',
     days = 90
   ): Promise<ApiResponse<TrendChartResponse>> => {
-    await new Promise((resolve) => setTimeout(resolve, 700))
+    await new Promise(resolve => setTimeout(resolve, 700))
     return mockTrendChartResponse
   },
 
@@ -524,7 +527,7 @@ export const mockMetalRateApi = {
     shopId: string,
     limit = 10
   ): Promise<ApiResponse<MetalRate[]>> => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 500))
     return mockLatestRatesResponse
   },
 
@@ -535,7 +538,7 @@ export const mockMetalRateApi = {
     purity = '24K',
     days = 30
   ): Promise<ApiResponse<AverageRateResult>> => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 500))
     return mockAverageRateResponse
   },
 
@@ -545,7 +548,7 @@ export const mockMetalRateApi = {
     fromDate: string,
     toDate: string
   ): Promise<ApiResponse<RateComparisonResult>> => {
-    await new Promise((resolve) => setTimeout(resolve, 600))
+    await new Promise(resolve => setTimeout(resolve, 600))
     return mockRateComparisonResponse
   },
 
@@ -554,7 +557,7 @@ export const mockMetalRateApi = {
     shopId: string,
     date: string
   ): Promise<ApiResponse<MetalRate>> => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 500))
     return mockDateRateResponse
   },
 
@@ -564,7 +567,7 @@ export const mockMetalRateApi = {
     metalType: string,
     purity: string
   ): Promise<ApiResponse<RateForPurityResponse>> => {
-    await new Promise((resolve) => setTimeout(resolve, 400))
+    await new Promise(resolve => setTimeout(resolve, 400))
     return mockPurityRateResponse
   },
 
@@ -573,7 +576,7 @@ export const mockMetalRateApi = {
     shopId: string,
     data: any
   ): Promise<ApiResponse<MetalRate>> => {
-    await new Promise((resolve) => setTimeout(resolve, 800))
+    await new Promise(resolve => setTimeout(resolve, 800))
     return mockCreateRateResponse
   },
 
@@ -582,19 +585,19 @@ export const mockMetalRateApi = {
     organizationId: string,
     data: any
   ): Promise<ApiResponse<SyncResult>> => {
-    await new Promise((resolve) => setTimeout(resolve, 1200))
+    await new Promise(resolve => setTimeout(resolve, 1200))
     return mockSyncResponse
   },
 
   // PATCH Deactivate Rate
   deactivateRate: async (rateId: string): Promise<ApiResponse<MetalRate>> => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 500))
     return mockDeactivateRateResponse
   },
 
   // DELETE Rate
   deleteRate: async (rateId: string): Promise<any> => {
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 500))
     return mockDeleteRateResponse
   },
 }

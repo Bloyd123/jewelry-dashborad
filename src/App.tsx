@@ -24,8 +24,9 @@ import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 import { CustomerDetailsPage } from './components/customer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
-import {GoldRatesForm} from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
+import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
 import MetalRatesDashboardPage from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
+import { SupplierTable } from '@/components/supplier/SupplierTable/index'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -67,26 +68,25 @@ function App() {
                 element={<Navigate to={ROUTES.dashboard} replace />}
               />
               <Route path={ROUTES.dashboard} element={<Dashboard />} />
-   <Route path="/customers/add" element={<AddCustomerPage />} />
-<Route path="/customers/edit/:customerId" element={<AddCustomerPage />} />
-              <Route path="/customerdetail" element={<CustomerDetailsPage/>}/>
-              <Route path='/shops' element={ <ShopListPage />}/>
-              <Route path='/shops/:id' element={<ShopDetailsPage/>}/>
-       <Route path="metal-rates" element={<MetalRatesDashboardPage />} />
-  <Route
-  path="/update"
-  element={
-<GoldRatesForm 
-  onChange={(data) => console.log('Gold rates:', data)}
-/>
-  }
-/>
+              <Route path="/customers/add" element={<AddCustomerPage />} />
+              <Route
+                path="/customers/edit/:customerId"
+                element={<AddCustomerPage />}
+              />
+              <Route path="/customerdetail" element={<CustomerDetailsPage />} />
+              <Route path="/shops" element={<ShopListPage />} />
+              <Route path="/shops/:id" element={<ShopDetailsPage />} />
+              <Route path="/metal-rates" element={<MetalRatesDashboardPage />} />
+              <Route path='/supplier' element={<SupplierTable/>}/>
+              <Route
+                path="/update"
+                element={
+                  <GoldRatesForm
+                    onChange={data => console.log('Gold rates:', data)}
+                  />
+                }
+              />
 
-
-
-
-
-              
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

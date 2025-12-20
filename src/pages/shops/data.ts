@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/data/shopDummyData.ts
 // Dummy data for Shop module - 15 shops with realistic Indian jewelry shop data
@@ -12,7 +11,7 @@ import {
   ShopCurrency,
   ShopLanguage,
   WeightUnit,
-} from '@/types';
+} from '@/types'
 
 // ============================================================================
 // DUMMY SHOPS DATA
@@ -165,7 +164,7 @@ export const dummyShops: Shop[] = [
       landmark: 'Kurla West',
       location: {
         type: 'Point',
-        coordinates: [72.8777, 19.0760],
+        coordinates: [72.8777, 19.076],
       },
     },
     gstNumber: '27AAACP5678B1Z2',
@@ -498,7 +497,7 @@ export const dummyShops: Shop[] = [
       landmark: 'Near Metro Station',
       location: {
         type: 'Point',
-        coordinates: [77.2090, 28.7041],
+        coordinates: [77.209, 28.7041],
       },
     },
     gstNumber: '07DDDCP7890E1Z6',
@@ -798,5 +797,5 @@ export const dummyShops: Shop[] = [
     isFeatured: false,
     createdAt: '2024-01-25T08:00:00Z',
     updatedAt: '2024-12-15T08:45:00Z',
-  }
+  },
 ]

@@ -18,7 +18,10 @@ export interface YearRangeFilterProps {
   disabled?: boolean
 }
 
-export const YearRangeFilter = React.forwardRef<HTMLDivElement, YearRangeFilterProps>(
+export const YearRangeFilter = React.forwardRef<
+  HTMLDivElement,
+  YearRangeFilterProps
+>(
   (
     {
       value = {},

@@ -20,38 +20,89 @@ interface ShopLocationFilterProps {
 
 // Indian states with their cities
 const INDIAN_STATES_WITH_CITIES: Record<string, string[]> = {
-  'Maharashtra': ['Mumbai', 'Pune', 'Nagpur', 'Nashik', 'Aurangabad', 'Solapur', 'Kolhapur'],
-  'Delhi': ['New Delhi', 'Central Delhi', 'North Delhi', 'South Delhi', 'East Delhi', 'West Delhi'],
-  'Karnataka': ['Bangalore', 'Mysore', 'Hubli', 'Mangalore', 'Belgaum', 'Gulbarga'],
-  'Tamil Nadu': ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem', 'Tirunelveli'],
-  'Uttar Pradesh': ['Lucknow', 'Kanpur', 'Agra', 'Varanasi', 'Meerut', 'Allahabad', 'Noida', 'Ghaziabad'],
-  'Gujarat': ['Ahmedabad', 'Surat', 'Vadodara', 'Rajkot', 'Bhavnagar', 'Jamnagar'],
-  'Rajasthan': ['Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Ajmer', 'Bikaner'],
+  Maharashtra: [
+    'Mumbai',
+    'Pune',
+    'Nagpur',
+    'Nashik',
+    'Aurangabad',
+    'Solapur',
+    'Kolhapur',
+  ],
+  Delhi: [
+    'New Delhi',
+    'Central Delhi',
+    'North Delhi',
+    'South Delhi',
+    'East Delhi',
+    'West Delhi',
+  ],
+  Karnataka: [
+    'Bangalore',
+    'Mysore',
+    'Hubli',
+    'Mangalore',
+    'Belgaum',
+    'Gulbarga',
+  ],
+  'Tamil Nadu': [
+    'Chennai',
+    'Coimbatore',
+    'Madurai',
+    'Tiruchirappalli',
+    'Salem',
+    'Tirunelveli',
+  ],
+  'Uttar Pradesh': [
+    'Lucknow',
+    'Kanpur',
+    'Agra',
+    'Varanasi',
+    'Meerut',
+    'Allahabad',
+    'Noida',
+    'Ghaziabad',
+  ],
+  Gujarat: [
+    'Ahmedabad',
+    'Surat',
+    'Vadodara',
+    'Rajkot',
+    'Bhavnagar',
+    'Jamnagar',
+  ],
+  Rajasthan: ['Jaipur', 'Jodhpur', 'Udaipur', 'Kota', 'Ajmer', 'Bikaner'],
   'West Bengal': ['Kolkata', 'Howrah', 'Durgapur', 'Asansol', 'Siliguri'],
   'Madhya Pradesh': ['Bhopal', 'Indore', 'Jabalpur', 'Gwalior', 'Ujjain'],
-  'Telangana': ['Hyderabad', 'Warangal', 'Nizamabad', 'Karimnagar'],
-  'Andhra Pradesh': ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Tirupati'],
-  'Kerala': ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Kollam', 'Thrissur'],
-  'Punjab': ['Chandigarh', 'Ludhiana', 'Amritsar', 'Jalandhar', 'Patiala'],
-  'Haryana': ['Faridabad', 'Gurgaon', 'Panipat', 'Ambala', 'Karnal'],
-  'Bihar': ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga'],
-  'Odisha': ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Berhampur'],
-  'Assam': ['Guwahati', 'Silchar', 'Dibrugarh', 'Jorhat'],
-  'Jharkhand': ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro'],
-  'Chhattisgarh': ['Raipur', 'Bhilai', 'Bilaspur', 'Korba'],
-  'Uttarakhand': ['Dehradun', 'Haridwar', 'Roorkee', 'Haldwani'],
-  'Goa': ['Panaji', 'Margao', 'Vasco da Gama', 'Mapusa'],
+  Telangana: ['Hyderabad', 'Warangal', 'Nizamabad', 'Karimnagar'],
+  'Andhra Pradesh': [
+    'Visakhapatnam',
+    'Vijayawada',
+    'Guntur',
+    'Nellore',
+    'Tirupati',
+  ],
+  Kerala: ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Kollam', 'Thrissur'],
+  Punjab: ['Chandigarh', 'Ludhiana', 'Amritsar', 'Jalandhar', 'Patiala'],
+  Haryana: ['Faridabad', 'Gurgaon', 'Panipat', 'Ambala', 'Karnal'],
+  Bihar: ['Patna', 'Gaya', 'Bhagalpur', 'Muzaffarpur', 'Darbhanga'],
+  Odisha: ['Bhubaneswar', 'Cuttack', 'Rourkela', 'Berhampur'],
+  Assam: ['Guwahati', 'Silchar', 'Dibrugarh', 'Jorhat'],
+  Jharkhand: ['Ranchi', 'Jamshedpur', 'Dhanbad', 'Bokaro'],
+  Chhattisgarh: ['Raipur', 'Bhilai', 'Bilaspur', 'Korba'],
+  Uttarakhand: ['Dehradun', 'Haridwar', 'Roorkee', 'Haldwani'],
+  Goa: ['Panaji', 'Margao', 'Vasco da Gama', 'Mapusa'],
   'Himachal Pradesh': ['Shimla', 'Dharamshala', 'Manali', 'Solan'],
   'Jammu and Kashmir': ['Srinagar', 'Jammu', 'Anantnag'],
-  'Puducherry': ['Puducherry', 'Karaikal', 'Mahe', 'Yanam'],
-  'Tripura': ['Agartala', 'Udaipur', 'Dharmanagar'],
-  'Meghalaya': ['Shillong', 'Tura', 'Jowai'],
-  'Manipur': ['Imphal', 'Thoubal', 'Bishnupur'],
-  'Nagaland': ['Kohima', 'Dimapur', 'Mokokchung'],
-  'Mizoram': ['Aizawl', 'Lunglei', 'Champhai'],
+  Puducherry: ['Puducherry', 'Karaikal', 'Mahe', 'Yanam'],
+  Tripura: ['Agartala', 'Udaipur', 'Dharmanagar'],
+  Meghalaya: ['Shillong', 'Tura', 'Jowai'],
+  Manipur: ['Imphal', 'Thoubal', 'Bishnupur'],
+  Nagaland: ['Kohima', 'Dimapur', 'Mokokchung'],
+  Mizoram: ['Aizawl', 'Lunglei', 'Champhai'],
   'Arunachal Pradesh': ['Itanagar', 'Naharlagun', 'Pasighat'],
-  'Sikkim': ['Gangtok', 'Namchi', 'Gyalshing'],
-  'Ladakh': ['Leh', 'Kargil']
+  Sikkim: ['Gangtok', 'Namchi', 'Gyalshing'],
+  Ladakh: ['Leh', 'Kargil'],
 }
 
 const ALL_STATES = Object.keys(INDIAN_STATES_WITH_CITIES).sort()
@@ -103,7 +154,7 @@ export const ShopLocationFilter: React.FC<ShopLocationFilterProps> = ({
               {t('common.allStates')}
             </div>
           </SelectItem>
-          {ALL_STATES.map((s) => (
+          {ALL_STATES.map(s => (
             <SelectItem key={s} value={s}>
               {s}
             </SelectItem>
@@ -119,7 +170,7 @@ export const ShopLocationFilter: React.FC<ShopLocationFilterProps> = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{t('common.allCities')}</SelectItem>
-            {cities.map((c) => (
+            {cities.map(c => (
               <SelectItem key={c} value={c}>
                 {c}
               </SelectItem>

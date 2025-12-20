@@ -38,52 +38,37 @@ export const FormTextarea = ({
   maxLength,
   showCharCount = false,
 }: FormTextareaProps) => {
-
   return (
     <div className={`space-y-2 ${className}`}>
       {label && (
-        <Label 
-          htmlFor={name}
-          className="text-text-primary"
-        >
+        <Label htmlFor={name} className="text-text-primary">
           {label}
-          {required && <span className="text-status-error ml-1">*</span>}
+          {required && <span className="ml-1 text-status-error">*</span>}
         </Label>
       )}
-      
+
       <Textarea
         id={name}
         name={name}
         value={value}
-        onChange={(e) => onChange(name, e.target.value)}
+        onChange={e => onChange(name, e.target.value)}
         onBlur={() => onBlur?.(name)}
         placeholder={placeholder}
         disabled={disabled}
         required={required}
         rows={rows}
         maxLength={maxLength}
-        className={`
-          bg-bg-secondary 
-          border-border-primary 
-          text-text-primary 
-          placeholder:text-text-tertiary
-          focus:border-accent
-          focus:ring-accent
-          disabled:bg-bg-tertiary
-          disabled:text-text-tertiary
-          resize-none
-          ${error ? 'border-status-error focus:border-status-error focus:ring-status-error' : ''}
-        `}
+        className={`resize-none border-border-primary bg-bg-secondary text-text-primary placeholder:text-text-tertiary focus:border-accent focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${error ? 'border-status-error focus:border-status-error focus:ring-status-error' : ''} `}
       />
-      
+
       {showCharCount && maxLength && (
-        <div className="text-text-tertiary text-xs text-right">
+        <div className="text-right text-xs text-text-tertiary">
           {value.length} / {maxLength}
         </div>
       )}
-      
+
       {error && (
-        <div className="flex items-center gap-2 text-status-error text-sm">
+        <div className="flex items-center gap-2 text-sm text-status-error">
           <AlertCircle className="h-4 w-4" />
           <span>{error}</span>
         </div>

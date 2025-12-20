@@ -17,4 +17,8 @@ export type { DrawerProps, DrawerSide, DrawerSize } from './Drawer'
 
 // Dialog
 export { Dialog, ConfirmDialog } from './Dialog'
-export type { DialogProps, ConfirmDialogProps, ConfirmDialogVariant } from './Dialog'
+export type {
+  DialogProps,
+  ConfirmDialogProps,
+  ConfirmDialogVariant,
+} from './Dialog'

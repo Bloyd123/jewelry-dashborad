@@ -129,9 +129,7 @@ export const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
               />
             )}
             {showLegend && (
-              <Legend
-                wrapperStyle={{ color: 'var(--text-secondary)' }}
-              />
+              <Legend wrapperStyle={{ color: 'var(--text-secondary)' }} />
             )}
             {lines.map((line, index) => (
               <Line
@@ -139,9 +137,14 @@ export const LineChart = React.forwardRef<HTMLDivElement, LineChartProps>(
                 type="monotone"
                 dataKey={line.dataKey}
                 name={line.name || line.dataKey}
-                stroke={line.color || defaultColors[index % defaultColors.length]}
+                stroke={
+                  line.color || defaultColors[index % defaultColors.length]
+                }
                 strokeWidth={line.strokeWidth || 2}
-                dot={{ fill: line.color || defaultColors[index % defaultColors.length] }}
+                dot={{
+                  fill:
+                    line.color || defaultColors[index % defaultColors.length],
+                }}
                 activeDot={{ r: 6 }}
               />
             ))}

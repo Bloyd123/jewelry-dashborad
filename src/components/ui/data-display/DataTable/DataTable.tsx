@@ -30,11 +30,11 @@ const EmptyState: React.FC<{
   const { t } = useTranslation()
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+    <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
       <div className="mb-4 text-text-tertiary">
         {icon || <FileX className="h-12 w-12" />}
       </div>
-      <p className="text-sm text-text-secondary mb-4">
+      <p className="mb-4 text-sm text-text-secondary">
         {message || t('ui.datatable.noData')}
       </p>
       {action && (
@@ -126,7 +126,7 @@ export const DataTable = <T extends Record<string, any>>({
       if (sorting?.onSortingChange) {
         sorting.onSortingChange(newSorting)
       } else {
-        setInternalState((prev) => ({ ...prev, sorting: newSorting }))
+        setInternalState(prev => ({ ...prev, sorting: newSorting }))
       }
     },
     [sorting]
@@ -139,7 +139,7 @@ export const DataTable = <T extends Record<string, any>>({
     if (currentSorting.length === 0 || !currentSorting[0].direction) return data
 
     const { columnId, direction } = currentSorting[0]
-    const column = columns.find((col) => col.id === columnId)
+    const column = columns.find(col => col.id === columnId)
 
     if (!column) return data
 
@@ -191,8 +191,8 @@ export const DataTable = <T extends Record<string, any>>({
     // Global filter
     const globalFilter = filtering.globalFilter || internalState.globalFilter
     if (globalFilter) {
-      result = result.filter((row) => {
-        return columns.some((column) => {
+      result = result.filter(row => {
+        return columns.some(column => {
           let value: any
 
           if (column.accessorFn) {
@@ -222,7 +222,7 @@ export const DataTable = <T extends Record<string, any>>({
       if (pagination?.onPaginationChange) {
         pagination.onPaginationChange(newPagination)
       } else {
-        setInternalState((prev) => ({ ...prev, pagination: newPagination }))
+        setInternalState(prev => ({ ...prev, pagination: newPagination }))
       }
     },
     [pagination]
@@ -267,14 +267,15 @@ export const DataTable = <T extends Record<string, any>>({
       if (selection?.onSelectionChange) {
         selection.onSelectionChange(newSelection)
       } else {
-        setInternalState((prev) => ({ ...prev, selectedRows: newSelection }))
+        setInternalState(prev => ({ ...prev, selectedRows: newSelection }))
       }
     },
     [selection, internalState.selectedRows]
   )
 
   const handleSelectAll = useCallback(() => {
-    const currentSelection = selection?.selectedRows || internalState.selectedRows
+    const currentSelection =
+      selection?.selectedRows || internalState.selectedRows
     const allRowIds = paginatedData.map((row, index) => getRowIdFn(row, index))
 
     let newSelection: Set<string | number>
@@ -290,12 +291,13 @@ export const DataTable = <T extends Record<string, any>>({
     if (selection?.onSelectionChange) {
       selection.onSelectionChange(newSelection)
     } else {
-      setInternalState((prev) => ({ ...prev, selectedRows: newSelection }))
+      setInternalState(prev => ({ ...prev, selectedRows: newSelection }))
     }
   }, [selection, internalState.selectedRows, paginatedData, getRowIdFn])
 
   const allRowsSelected = useMemo(() => {
-    const currentSelection = selection?.selectedRows || internalState.selectedRows
+    const currentSelection =
+      selection?.selectedRows || internalState.selectedRows
     if (paginatedData.length === 0) return false
     return paginatedData.every((row, index) =>
       currentSelection.has(getRowIdFn(row, index))
@@ -303,10 +305,13 @@ export const DataTable = <T extends Record<string, any>>({
   }, [selection, internalState.selectedRows, paginatedData, getRowIdFn])
 
   const someRowsSelected = useMemo(() => {
-    const currentSelection = selection?.selectedRows || internalState.selectedRows
+    const currentSelection =
+      selection?.selectedRows || internalState.selectedRows
     return (
       currentSelection.size > 0 &&
-      paginatedData.some((row, index) => currentSelection.has(getRowIdFn(row, index)))
+      paginatedData.some((row, index) =>
+        currentSelection.has(getRowIdFn(row, index))
+      )
     )
   }, [selection, internalState.selectedRows, paginatedData, getRowIdFn])
 
@@ -316,7 +321,8 @@ export const DataTable = <T extends Record<string, any>>({
 
   const handleExpansionToggle = useCallback(
     (rowId: string | number) => {
-      const currentExpanded = rowExpansion?.expandedRows || internalState.expandedRows
+      const currentExpanded =
+        rowExpansion?.expandedRows || internalState.expandedRows
       const newExpanded = new Set(currentExpanded)
 
       if (newExpanded.has(rowId)) {
@@ -328,7 +334,7 @@ export const DataTable = <T extends Record<string, any>>({
       if (rowExpansion?.onExpandedChange) {
         rowExpansion.onExpandedChange(newExpanded)
       } else {
-        setInternalState((prev) => ({ ...prev, expandedRows: newExpanded }))
+        setInternalState(prev => ({ ...prev, expandedRows: newExpanded }))
       }
     },
     [rowExpansion, internalState.expandedRows]
@@ -340,13 +346,15 @@ export const DataTable = <T extends Record<string, any>>({
 
   // Loading state
   if (loading?.isLoading) {
-    return loading.loadingComponent || (
-      <DataTableSkeleton
-        rows={loading.loadingRows || 5}
-        columns={columns.length}
-        showSelection={selection?.enabled}
-        showActions={rowActions?.enabled}
-      />
+    return (
+      loading.loadingComponent || (
+        <DataTableSkeleton
+          rows={loading.loadingRows || 5}
+          columns={columns.length}
+          showSelection={selection?.enabled}
+          showActions={rowActions?.enabled}
+        />
+      )
     )
   }
 
@@ -383,7 +391,7 @@ export const DataTable = <T extends Record<string, any>>({
 
       <div
         className={cn(
-          'rounded-lg border overflow-hidden',
+          'overflow-hidden rounded-lg border',
           'border-border-primary bg-bg-secondary',
           style?.shadow && 'shadow-lg',
           style?.className
@@ -408,8 +416,10 @@ export const DataTable = <T extends Record<string, any>>({
             <tbody className={style?.bodyClassName}>
               {paginatedData.map((row, index) => {
                 const rowId = getRowIdFn(row, index)
-                const currentSelection = selection?.selectedRows || internalState.selectedRows
-                const currentExpanded = rowExpansion?.expandedRows || internalState.expandedRows
+                const currentSelection =
+                  selection?.selectedRows || internalState.selectedRows
+                const currentExpanded =
+                  rowExpansion?.expandedRows || internalState.expandedRows
 
                 return (
                   <DataTableRow
