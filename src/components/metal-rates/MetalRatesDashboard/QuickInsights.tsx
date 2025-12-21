@@ -30,7 +30,7 @@ import type { MetalRate } from '@/types/metalrate.types'
 // TYPES & INTERFACES
 // ============================================================================
 
-interface QuickInsightsProps {
+export interface QuickInsightsProps {
   className?: string
   shopId?: string
 }

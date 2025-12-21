@@ -5,13 +5,13 @@
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MetalRatesDashboardHeader } from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboardHeader'
-import { CurrentRatesCards } from '@/components/metal-rates/MetalRatesDashboard/CurrentRatesCards'
-import { TrendChart } from '@/components/metal-rates/MetalRatesDashboard/TrendChart'
-import { RateHistoryTable } from '@/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryTable'
+import { MetalRatesDashboardHeader } from '@/components/metal-rates/MetalRatesDashboard'
+import { CurrentRatesCards } from '@/components/metal-rates/MetalRatesDashboard'
+import { TrendChart } from '@/components/metal-rates/MetalRatesDashboard'
+import { RateHistoryTable } from '@/components/metal-rates/MetalRatesDashboard'
 import { QuickInsights } from '@/components/metal-rates/MetalRatesDashboard/QuickInsights'
 
-const MetalRatesDashboardPage: React.FC = () => {
+export const MetalRatesDashboardPage: React.FC = () => {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('currentRates')
 
@@ -80,4 +80,4 @@ const MetalRatesDashboardPage: React.FC = () => {
   )
 }
 
-export default MetalRatesDashboardPage
+MetalRatesDashboardPage.displayName="MetalRatesDashboardPage"

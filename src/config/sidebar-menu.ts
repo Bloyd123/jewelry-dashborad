@@ -42,41 +42,37 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
   //     { title: t('sidebar.paymentEntry'), url: ROUTES.paymentEntry },
   //   ],
   // },
-    // ✅ ADD CUSTOMERS
-  {
-    title: t('sidebar.customers'),
-    url: '/customers/add',
-    icon: Users,
-  },
-  // ✅ ADD SHOPSs
-  {
-    title: t('sidebar.shops'),
-    url: '/shops',
-    icon: Building2,
-  },
     {
-    title: t('sidebar./shopId'),
-    url: '/shops/:id',
-    icon: Building2,
-  },
-  // ✅ ADD METAL RATES
-  {
     title: t('sidebar.metalRates'),
-    url: '/metal-rates',
+    url: ROUTES.metalRates,
     icon: TrendingUp,
   },
-  
-
-  // ✅ ADD SUPPLIERS
+    {
+    title: t('sidebar.customers'),
+    icon: Users,
+    items: [
+      { title: t('sidebar.addCustomer'), url: ROUTES.addCustomer },
+      { title: t('sidebar.detailcustomer'), url: ROUTES.detailcustomer }
+    ],
+  },
   {
     title: t('sidebar.suppliers'),
-    url: '/supplier',
     icon: Truck,
+    items: [
+      { title: t('sidebar.supplierdetails'), url: ROUTES.supplierdetails },
+      { title: t('sidebar.addSupplier'), url: ROUTES.addSupplier },
+      { title: t('sidebar.supplierlist'), url: ROUTES.supplierlist }
+
+    ],
   },
-    {
-    title: t('sidebar.customerdetail'),
-    url: '/customerdetail',
-    icon: Users,
+  {
+    title: t('sidebar.shops'),
+    icon: Building2,
+    items: [
+      { title: t('sidebar.shopList'), url: ROUTES.shopList },
+      { title: t('sidebar.shopdetail'), url: ROUTES.shopdetail }
+
+    ],
   },
   // {
   //   title: t('sidebar.purchases'),

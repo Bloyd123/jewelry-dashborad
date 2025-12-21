@@ -41,4 +41,21 @@ export const ROUTES = {
   
   // Custom Orders
   customOrders: '/custom-orders',
+
+  //Customer
+  addCustomer:'/customers/add',
+  detailcustomer: '/customerdetail',
+
+  // supplier
+  supplierdetails:'/supplierdetails',
+  addSupplier:'/supplier/add',
+  supplierlist:'/supplierlist',
+
+  //Shop
+  shopList:'/shops',
+  shopdetail:'/shops/:id',
+
+  // Metal Rate
+  metalRates:'/metal-rates'
+
 } as const
