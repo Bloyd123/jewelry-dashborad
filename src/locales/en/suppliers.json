@@ -1,6 +1,62 @@
 {
   "suppliers": {
-      "basicInformation": "Basic Information",
+  
+       "addSupplier": "Add New Supplier",
+    "editSupplier": "Edit Supplier",
+    "addSupplierDescription": "Enter supplier information to add them to your system",
+    "editSupplierDescription": "Update supplier information",
+    
+    "contactInformation": "Contact Information",
+    "addressAndRegistration": "Address & Registration",
+    "notesAndTags": "Notes & Tags",
+    
+    "businessNamePlaceholder": "Enter business name",
+    "displayNamePlaceholder": "Short name for display",
+    "supplierCodePlaceholder": "Auto-generated if empty",
+
+    "selectSupplierType": "Select supplier type",
+    "supplierCategory": "Supplier Category",
+    "selectSupplierCategory": "Select category",
+    
+    "contactPersonDetails": "Contact Person",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter last name",
+    "designation": "Designation",
+    "designationPlaceholder": "e.g., Manager, Director",
+    "whatsappNumber": "WhatsApp Number",
+    "emailPlaceholder": "email@example.com",
+     "paymentTermsForm": "Payment Terms & Products",
+    "businessContactDetails": "Business Contact",
+    "businessEmailPlaceholder": "info@business.com",
+    "streetPlaceholder": "Building no., Street name",
+    "landmarkPlaceholder": "Near famous place",
+    "areaPlaceholder": "Locality or area",
+    "cityPlaceholder": "Enter city",
+    "statePlaceholder": "Enter state",
+    "countryPlaceholder": "Enter country",
+    
+    "registrationDetails": "Registration Details",
+    
+    "selectPaymentTerms": "Select payment terms",
+    "productsSuppliedPlaceholder": "22K Gold, 24K Gold, Gold Coins",
+    "productsSuppliedHint": "Separate multiple items with commas",
+    "specializationPlaceholder": "Hallmarked Gold, Certified Purity",
+    "specializationHint": "Separate multiple specializations with commas",
+    
+    "bankDetailsOptional": "Bank details are optional. Fill only if you want to make direct payments.",
+    "bankNamePlaceholder": "e.g., HDFC Bank",
+    "accountHolderNamePlaceholder": "As per bank records",
+    "branchNamePlaceholder": "Bank branch location",
+    "selectAccountType": "Select account type",
+    "notesPlaceholder": "Add any additional notes about this supplier",
+    "internalNotesPlaceholder": "Private notes (not visible to supplier)",
+    "tagsPlaceholder": "Add a tag",
+
+
+
+  "basicInformation": "Basic Information",
     "businessName": "Business Name",
     "displayName": "Display Name",
     "supplierCode": "Supplier Code",
@@ -60,6 +116,7 @@
     "certificateNumber": "Certificate Number",
     "issuedBy": "Issued By",
     "validity": "Validity Period",
+
     
     "paymentTermstext": "Payment Terms & Financial",
     "creditPeriod": "Credit Period",
@@ -287,6 +344,9 @@
         "status": "Status"
       }
     },
+      "forms": {
+    "selectDate": "Select date"
+  },
     "common": {
     "viewAll": "View All",
     "backToList": "Back to List",
@@ -294,7 +354,15 @@
     "edit": "Edit",
     "delete": "Delete",
     "active": "Active",
-    "by": "by"
+    "by": "by",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "next": "Next",
+    "previous": "Previous",
+    "step": "Step",
+    "of": "of"
   }
 }
 }

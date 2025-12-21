@@ -27,11 +27,8 @@ import ShopDetailsPage from './pages/shops/ShopDetailsPage'
 // import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
 import MetalRatesDashboardPage from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
 import { SupplierTable } from '@/components/supplier/SupplierTable/index'
-import SupplierOverviewTab from './components/supplier/SupplierDetailsPage/tabs/OverviewTab'
-import SupplierFinancialTab from './components/supplier/SupplierDetailsPage/tabs/FinancialTab'
-import SupplierDocumentsTab from './components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
-import SupplierActivityTab from './components/supplier/SupplierDetailsPage/tabs/ActivityLogTab'
 import SupplierDetailPage from './components/supplier/SupplierDetailsPage/SupplierDetailsPage'
+import { AddSupplier } from './pages/suppliers/AddSupplier'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -88,6 +85,8 @@ function App() {
               <Route path='/supplierdocs' element={<SupplierDocumentsTab/>}/>
               <Route path='/supplieranalytic' element={<SupplierActivityTab/>}/> */}
               <Route path='/supplier' element={<SupplierDetailPage/>}/>
+              <Route path='/supplier/add' element={<AddSupplier/>}/>
+              <Route path='/supplier/edit/:supplierId' element={<AddSupplier/>}/>
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}
