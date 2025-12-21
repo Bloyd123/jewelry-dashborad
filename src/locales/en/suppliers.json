@@ -87,14 +87,117 @@
     "viewOnMap": "View on Map",
     "title": "Suppliers",
     "refreshData": "Refresh Data",
-    "blacklist": "Blacklist Supplier",
+    "blacklisttext": "Blacklist Supplier",
+      "balance": {
+      "title": "Update Supplier Balance",
+      "description": "Manage payments, purchases, and adjustments",
+      "currentBalance": "Current Balance",
+      "creditLimit": "Credit Limit",
+      "available": "Available",
+      "due": "Due",
+      "advance": "Advance",
+      "transactionType": "Transaction Type",
+      "amount": "Amount",
+      "note": "Note (Optional)",
+      "notePlaceholder": "e.g., Partial payment for Order PO-1234",
+      "newBalancePreview": "New Balance Preview",
+      "updateBalance": "Update Balance",
+      "amountRequired": "Amount is required",
+      "paymentExceedsDue": "Payment amount cannot exceed outstanding due"
+    },
     
+    "rating": {
+      "title": "Update Supplier Rating",
+      "description": "Rate supplier performance",
+      "currentOverallRating": "Current Overall Rating",
+      "qualityRating": "Quality Rating",
+      "deliveryRating": "Delivery Rating",
+      "priceRating": "Price Rating",
+      "newOverallRating": "New Overall Rating",
+      "updateRating": "Update Rating"
+    },
+    
+    "preferred": {
+      "title": "Preferred Supplier",
+      "description": "Manage preferred supplier status",
+      "currentlyPreferred": "Preferred Supplier",
+      "notPreferred": "Not a Preferred Supplier",
+      "preferredSince": "Preferred Since",
+      "benefitsTitle": "Preferred suppliers get priority in",
+      "benefit1": "Purchase order allocation and processing",
+      "benefit2": "Quick order processing and dispatch",
+      "benefit3": "Payment priority and better credit terms",
+      "benefit4": "Enhanced visibility in supplier listings",
+      "totalOrders": "Total Orders",
+      "rating": "Rating",
+      "totalPurchased": "Total Purchased",
+      "onTimeDelivery": "On-Time Delivery",
+      "markAsPreferred": "Mark as Preferred",
+      "removeFromPreferred": "Remove from Preferred"
+    },
+    
+    "blacklist": {
+      "title": "Blacklist Supplier",
+      "description": "Blacklist or remove supplier from blacklist",
+      "warning": "WARNING",
+      "warningDescription": "Blacklisting will deactivate this supplier and prevent future transactions. This action should only be taken for serious issues.",
+      "currentStatus": "Current Status",
+      "active": "Active",
+      "reasonLabel": "Reason for Blacklisting",
+      "reasonPlaceholder": "Repeated delivery delays, quality issues, and payment disputes...",
+      "reasonMinLength": "Reason must be at least 10 characters",
+      "consequences": "Consequences",
+      "consequence1": "Supplier will be marked as inactive",
+      "consequence2": "No new purchase orders can be created",
+      "consequence3": "Existing orders will need to be settled",
+      "consequence4": "Supplier will appear in blacklist reports",
+      "blacklistSupplier": "Blacklist Supplier",
+      "currentlyBlacklisted": "Blacklisted",
+      "blacklistedOn": "Blacklisted On",
+      "reason": "Reason",
+      "currentImpact": "Current Impact",
+      "impact1": "All transactions are blocked",
+      "impact2": "Cannot create new orders",
+      "impact3": "Visible in blacklist reports",
+      "removeFromBlacklist": "Remove from Blacklist"
+    },
+    
+    "delete": {
+      "title": "Delete Supplier",
+      "description": "Soft delete or restore supplier",
+      "warning": "WARNING",
+      "warningDescription": "This will soft delete the supplier. The supplier can be restored later if needed.",
+      "beforeDeleting": "Before deleting, please note",
+      "outstandingDue": "Outstanding Due",
+      "pendingOrders": "Pending Orders",
+      "lastTransaction": "Last Transaction",
+      "noTransactions": "No transactions",
+      "whatHappens": "What happens when deleted",
+      "consequence1": "Supplier becomes inactive immediately",
+      "consequence2": "Hidden from active supplier lists",
+      "consequence3": "All data is preserved (soft delete)",
+      "consequence4": "Can be restored anytime from deleted list",
+      "confirmQuestion": "Are you sure you want to delete this supplier?",
+      "deleteSupplier": "Delete Supplier",
+      "currentlyDeleted": "Deleted",
+      "deletedOn": "Deleted On",
+      "restoreInfo": "Restoring will",
+      "restoreBenefit1": "Reactivate the supplier immediately",
+      "restoreBenefit2": "Make them visible in supplier lists",
+      "restoreBenefit3": "Allow new transactions and orders",
+      "restoreSupplier": "Restore Supplier"
+    },
     "tabs": {
       "overview": "Overview",
       "financial": "Financial",
       "documents": "Documents",
       "activity": "Activity"
     },
+      "ui": {
+    "modal": {
+      "close": "Close"
+    }
+  },
     
     "businessRegistration": "Business Registration",
     "gstNumber": "GST Number",
@@ -232,7 +335,6 @@
       "noData": "No suppliers found",
       "noDataDescription": "Start adding suppliers to see top performers"
     },
-        "preferred": "Preferred",
     "orders": "orders",
     "search": {
       "placeholder": "Search by name, code, phone, GST..."
@@ -348,6 +450,9 @@
     "selectDate": "Select date"
   },
     "common": {
+    "updating": "Updating...",
+    "processing": "Processing...",
+    "deleting": "Deleting...",
     "viewAll": "View All",
     "backToList": "Back to List",
     "export": "Export",

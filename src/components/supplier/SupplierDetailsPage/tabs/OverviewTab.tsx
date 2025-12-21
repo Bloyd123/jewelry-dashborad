@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
+import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 import {
   Store,
   MapPin,
@@ -102,6 +104,13 @@ const RatingStars = ({ rating }: { rating: number }) => {
 const SupplierOverviewTab = () => {
   const { t } = useTranslation()
   const supplierData: Supplier = dummySupplier
+      const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
+const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+  const handleManagementSuccess = () => {
+    console.log('Action completed:', managementAction)
+    setIsManagementModalOpen(false)
+    setManagementAction(null)
+  }
 
   // ========================================================================
   // BASIC INFORMATION SECTION
@@ -783,6 +792,7 @@ const SupplierOverviewTab = () => {
   // ========================================================================
 
   const BankDetailsSection = () => {
+
     if (!supplierData.bankDetails) {
       return (
         <div className="p-4">
@@ -911,9 +921,16 @@ const SupplierOverviewTab = () => {
               <RatingStars rating={supplierData.rating || 0} />
             </div>
           </div>
-          <Button variant="outline" size="sm">
-            {t('suppliers.updateRating')}
-          </Button>
+<Button 
+  variant="outline" 
+  size="sm"
+  onClick={() => {
+    setManagementAction('update-rating')
+    setIsManagementModalOpen(true)
+  }}
+>
+  {t('suppliers.updateRating')}
+</Button>
         </div>
       </div>
 
@@ -1038,6 +1055,7 @@ const SupplierOverviewTab = () => {
         </div>
       </div>
     </div>
+    
   )
 
   // ========================================================================
@@ -1225,8 +1243,18 @@ const SupplierOverviewTab = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      {/* Management Modal */}
+      <SupplierManagementModal
+        open={isManagementModalOpen}
+        onOpenChange={setIsManagementModalOpen}
+        supplier={supplierData}
+        action={managementAction}
+        onSuccess={handleManagementSuccess}
+      />
     </div>
+    
   )
+  
 }
 
 export default SupplierOverviewTab

@@ -54,6 +54,8 @@ import {
 import SupplierOverviewTab from '@/components/supplier/SupplierDetailsPage/tabs/OverviewTab'
 import SupplierFinancialTab from '@/components/supplier/SupplierDetailsPage/tabs/FinancialTab'
 import SupplierDocumentsTab from '@/components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
+import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
+import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 // import SupplierActivityTab from '@/components/supplier/SupplierDetailsPage/tabs/StatisticsTab'
 
 // ============================================================================
@@ -113,6 +115,15 @@ const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
 const SupplierDetailPage: React.FC = () => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('overview')
+  const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
+const [managementAction, setManagementAction] =useState<ManagementAction | null>(null)
+const handleManagementSuccess = () => {
+  console.log('Action completed:', managementAction)
+  // TODO: refetch supplier details
+  setIsManagementModalOpen(false)
+  setManagementAction(null)
+}
+
 
   const supplierData: Supplier = dummySupplier
 
@@ -202,14 +213,27 @@ const SupplierDetailPage: React.FC = () => {
                       <RefreshCw className="mr-2 h-4 w-4" />
                       {t('suppliers.refreshData')}
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Ban className="mr-2 h-4 w-4" />
-                      {t('suppliers.blacklist')}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="text-status-error">
-                      <Trash2 className="mr-2 h-4 w-4" />
-                      {t('common.delete')}
-                    </DropdownMenuItem>
+         <DropdownMenuItem
+  onClick={() => {
+    setManagementAction('blacklist')
+    setIsManagementModalOpen(true)
+  }}
+>
+  <Ban className="mr-2 h-4 w-4" />
+  {t('suppliers.blacklisttext')}
+</DropdownMenuItem>
+
+<DropdownMenuItem
+  className="text-status-error"
+  onClick={() => {
+    setManagementAction('delete')
+    setIsManagementModalOpen(true)
+  }}
+>
+  <Trash2 className="mr-2 h-4 w-4" />
+  {t('common.delete')}
+</DropdownMenuItem>
+
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -276,7 +300,7 @@ const SupplierDetailPage: React.FC = () => {
                     {supplierData.isPreferred && (
                       <Badge variant="info" size="sm" className="gap-1">
                         <Star className="h-3 w-3 fill-current" />
-                        {t('suppliers.preferred')}
+                        {t('suppliers.preferredtext')}
                       </Badge>
                     )}
 
@@ -323,6 +347,14 @@ const SupplierDetailPage: React.FC = () => {
         {activeTab === 'documents' && <SupplierDocumentsTab />}
         {/* {activeTab === 'activity' && <SupplierActivityTab />} */}
       </div>
+      <SupplierManagementModal
+  open={isManagementModalOpen}
+  onOpenChange={setIsManagementModalOpen}
+  supplier={supplierData}
+  action={managementAction}
+  onSuccess={handleManagementSuccess}
+/>
+
     </div>
   )
 }

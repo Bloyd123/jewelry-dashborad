@@ -15,6 +15,8 @@ import { DataTable } from '@/components/ui/data-display/DataTable/DataTable'
 import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 import { dummySupplier } from '@/pages/suppliers/data'
+import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
+import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 
 // ============================================================================
 // PAYMENT HISTORY TYPE
@@ -127,13 +129,23 @@ const dummyPaymentHistory: PaymentHistory[] = [
   },
 ]
 
+
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
 
 const SupplierFinancialTab: React.FC = () => {
   const { t } = useTranslation()
+
   const [paymentHistory] = useState<PaymentHistory[]>(dummyPaymentHistory)
+  const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
+const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+const handleManagementSuccess = () => {
+  console.log('Action completed:', managementAction)
+  // Refresh supplier data here
+  setIsManagementModalOpen(false)
+  setManagementAction(null)
+}
 
   // Format currency
   const formatCurrency = (amount: number): string => {
@@ -288,14 +300,17 @@ const SupplierFinancialTab: React.FC = () => {
           <h3 className="text-lg font-semibold text-text-primary">
             {t('suppliers.financial.advanceAndCredit')}
           </h3>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {}}
-            className="gap-2"
-          >
-            <span>{t('suppliers.financial.updateBalance')}</span>
-          </Button>
+<Button
+  variant="outline"
+  size="sm"
+  onClick={() => {
+    setManagementAction('update-balance')
+    setIsManagementModalOpen(true)
+  }}
+  className="gap-2"
+>
+  <span>{t('suppliers.financial.updateBalance')}</span>
+</Button>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -429,6 +444,13 @@ const SupplierFinancialTab: React.FC = () => {
           }}
         />
       </div>
+            <SupplierManagementModal
+        open={isManagementModalOpen}
+        onOpenChange={setIsManagementModalOpen}
+        supplier={dummySupplier}
+        action={managementAction}
+        onSuccess={handleManagementSuccess}
+      />
     </div>
   )
 }
