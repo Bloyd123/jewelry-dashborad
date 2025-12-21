@@ -55,7 +55,7 @@ export const ShopDetailsPage: React.FC = () => {
         </TabsContent>
 
         {/* Metal Rates Tab */}
-        <TabsContent value="metalRates">
+        {/* <TabsContent value="metalRates">
           <div className="p-6">
             <div className="rounded-lg border border-border-secondary bg-bg-secondary p-6">
               <h2 className="mb-4 text-lg font-semibold text-text-primary">
@@ -64,10 +64,9 @@ export const ShopDetailsPage: React.FC = () => {
               <p className="text-text-secondary">
                 Metal rates content coming soon...
               </p>
-              {/* TODO: Add MetalRatesTab component */}
             </div>
           </div>
-        </TabsContent>
+        </TabsContent> */}
 
         {/* Statistics Tab */}
         <TabsContent value="statistics">

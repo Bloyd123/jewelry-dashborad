@@ -148,7 +148,7 @@ export const QuickInsights: React.FC<QuickInsightsProps> = ({
   return (
     <div className={cn('space-y-6', className)}>
       {/* Current Rates - Main Stats */}
-      <StatCardGrid columns={4} gap="md">
+      <StatCardGrid columns={4} gap="md" className="overflow-hidden">
         <StatCard
           title={t('metalRates.quickInsights.gold24K')}
           value={formatCurrency(
@@ -186,7 +186,9 @@ export const QuickInsights: React.FC<QuickInsightsProps> = ({
           )}
           subtitle={t('metalRates.quickInsights.perGram')}
           trend={{
-            value: Math.abs(currentRate.changes.goldChangePercentage * 0.916),
+            value: Number(
+              (currentRate.changes.goldChangePercentage * 0.916).toFixed(2)
+            ),
             direction:
               currentRate.changes.goldChange > 0
                 ? 'up'
