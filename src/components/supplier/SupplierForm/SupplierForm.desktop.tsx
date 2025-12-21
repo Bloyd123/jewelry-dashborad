@@ -219,7 +219,9 @@ export default function SupplierFormDesktop({
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                {mode === 'create' ? t('suppliers.common.save') : t('suppliers.common.update')}
+                {mode === 'create'
+                  ? t('suppliers.common.save')
+                  : t('suppliers.common.update')}
               </>
             )}
           </Button>

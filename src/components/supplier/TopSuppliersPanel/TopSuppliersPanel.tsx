@@ -1,4 +1,3 @@
-
 // FILE: src/components/supplier/TopSupp// ============================================================================
 // FILE: src/components/supplier/TopSuppliersPanel/TopSuppliersPanel.tsx
 // Top Suppliers Side Panel Component
@@ -78,7 +77,7 @@ export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10">
+          <div className="bg-accent/10 flex h-8 w-8 items-center justify-center rounded-lg">
             <Trophy className="h-4 w-4 text-accent" />
           </div>
           <div>
@@ -94,7 +93,7 @@ export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
         {showViewAll && onViewAll && (
           <button
             onClick={onViewAll}
-            className="flex items-center gap-1 text-xs font-medium text-accent transition-colors hover:text-accent/80"
+            className="hover:text-accent/80 flex items-center gap-1 text-xs font-medium text-accent transition-colors"
           >
             {t('common.viewAll')}
             <ArrowRight className="h-3 w-3" />
@@ -114,7 +113,7 @@ export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
               className={cn(
                 'group flex items-center gap-3 rounded-md border border-border-secondary bg-bg-primary p-3 transition-all',
                 onSupplierClick &&
-                  'cursor-pointer hover:border-accent/30 hover:bg-bg-tertiary hover:shadow-sm'
+                  'hover:border-accent/30 cursor-pointer hover:bg-bg-tertiary hover:shadow-sm'
               )}
             >
               {/* Rank Badge */}
@@ -134,7 +133,7 @@ export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
                     {supplier.displayName || supplier.businessName}
                   </p>
                   {supplier.isPreferred && (
-                    <span className="flex-shrink-0 rounded-full bg-accent/10 px-1.5 py-0.5 text-[10px] font-medium text-accent">
+                    <span className="bg-accent/10 flex-shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium text-accent">
                       {t('suppliers.preferred')}
                     </span>
                   )}
@@ -145,7 +144,9 @@ export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
                   <span>•</span>
                   <span>
                     {supplier.statistics.totalOrders}{' '}
-                    {t('suppliers.orders', { count: supplier.statistics.totalOrders })}
+                    {t('suppliers.orders', {
+                      count: supplier.statistics.totalOrders,
+                    })}
                   </span>
                 </div>
               </div>

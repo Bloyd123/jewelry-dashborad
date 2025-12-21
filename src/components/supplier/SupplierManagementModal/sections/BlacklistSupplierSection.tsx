@@ -57,7 +57,7 @@ export const BlacklistSupplierSection = ({
     return (
       <div className="space-y-6">
         {/* Blacklist Status */}
-        <div className="rounded-lg border-2 border-status-error bg-status-error/10 p-4 text-center">
+        <div className="bg-status-error/10 rounded-lg border-2 border-status-error p-4 text-center">
           <div className="flex items-center justify-center gap-2">
             <Ban className="h-6 w-6 text-status-error" />
             <p className="text-lg font-semibold text-status-error">
@@ -67,7 +67,8 @@ export const BlacklistSupplierSection = ({
 
           {supplier.blacklistedAt && (
             <p className="mt-2 text-sm text-text-secondary">
-              {t('suppliers.blacklist.blacklistedOn')}: {new Date(supplier.blacklistedAt).toLocaleDateString()}
+              {t('suppliers.blacklist.blacklistedOn')}:{' '}
+              {new Date(supplier.blacklistedAt).toLocaleDateString()}
             </p>
           )}
         </div>
@@ -78,12 +79,14 @@ export const BlacklistSupplierSection = ({
             <p className="mb-2 font-medium text-text-primary">
               {t('suppliers.blacklist.reason')}:
             </p>
-            <p className="text-sm text-text-secondary">{supplier.blacklistReason}</p>
+            <p className="text-sm text-text-secondary">
+              {supplier.blacklistReason}
+            </p>
           </div>
         )}
 
         {/* Impact Info */}
-        <div className="rounded-lg border border-status-warning bg-status-warning/10 p-4">
+        <div className="bg-status-warning/10 rounded-lg border border-status-warning p-4">
           <p className="mb-2 font-medium text-text-primary">
             {t('suppliers.blacklist.currentImpact')}:
           </p>
@@ -127,7 +130,7 @@ export const BlacklistSupplierSection = ({
   return (
     <div className="space-y-6">
       {/* Warning */}
-      <div className="rounded-lg border-2 border-status-error bg-status-error/10 p-4">
+      <div className="bg-status-error/10 rounded-lg border-2 border-status-error p-4">
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-status-error" />
           <div className="text-sm">
@@ -144,8 +147,10 @@ export const BlacklistSupplierSection = ({
       {/* Current Status */}
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <div className="flex items-center justify-between">
-          <p className="text-sm text-text-tertiary">{t('suppliers.blacklist.currentStatus')}:</p>
-          <span className="rounded-full bg-status-success/20 px-3 py-1 text-sm font-medium text-status-success">
+          <p className="text-sm text-text-tertiary">
+            {t('suppliers.blacklist.currentStatus')}:
+          </p>
+          <span className="bg-status-success/20 rounded-full px-3 py-1 text-sm font-medium text-status-success">
             {t('suppliers.blacklist.active')}
           </span>
         </div>
@@ -167,7 +172,7 @@ export const BlacklistSupplierSection = ({
       />
 
       {/* Consequences */}
-      <div className="rounded-lg border border-status-warning bg-status-warning/10 p-4">
+      <div className="bg-status-warning/10 rounded-lg border border-status-warning p-4">
         <p className="mb-2 font-medium text-text-primary">
           {t('suppliers.blacklist.consequences')}:
         </p>

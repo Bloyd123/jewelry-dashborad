@@ -9,8 +9,18 @@ import { FormInput } from '@/components/forms/FormInput/FormInput'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'
 import { FormTextarea } from '@/components/forms/FormTextarea/FormTextarea'
 import { Button } from '@/components/ui/button'
-import { Loader2, Save, X, IndianRupee, TrendingUp, TrendingDown } from 'lucide-react'
-import type { UpdateBalanceSectionProps, BalanceUpdateType } from '../SupplierManagementModal.types'
+import {
+  Loader2,
+  Save,
+  X,
+  IndianRupee,
+  TrendingUp,
+  TrendingDown,
+} from 'lucide-react'
+import type {
+  UpdateBalanceSectionProps,
+  BalanceUpdateType,
+} from '../SupplierManagementModal.types'
 
 const balanceTypeOptions = [
   { value: 'payment', label: 'Payment (Reduces Due)' },
@@ -69,7 +79,10 @@ export const UpdateBalanceSection = ({
       newErrors.amount = t('suppliers.balance.amountRequired')
     }
 
-    if (formData.type === 'payment' && formData.amount > Math.abs(supplier.currentBalance)) {
+    if (
+      formData.type === 'payment' &&
+      formData.amount > Math.abs(supplier.currentBalance)
+    ) {
       newErrors.amount = t('suppliers.balance.paymentExceedsDue')
     }
 
@@ -94,23 +107,30 @@ export const UpdateBalanceSection = ({
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="text-text-tertiary">{t('suppliers.balance.currentBalance')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.balance.currentBalance')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-status-error">
               {supplier.currentBalance < 0 ? '-' : ''}₹
               {Math.abs(supplier.currentBalance).toLocaleString('en-IN')}
             </p>
             <p className="text-xs text-text-tertiary">
-              {supplier.currentBalance < 0 ? t('suppliers.balance.due') : t('suppliers.balance.advance')}
+              {supplier.currentBalance < 0
+                ? t('suppliers.balance.due')
+                : t('suppliers.balance.advance')}
             </p>
           </div>
 
           <div>
-            <p className="text-text-tertiary">{t('suppliers.balance.creditLimit')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.balance.creditLimit')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-text-primary">
               ₹{supplier.creditLimit.toLocaleString('en-IN')}
             </p>
             <p className="text-xs text-text-tertiary">
-              {t('suppliers.balance.available')}: ₹{availableCredit.toLocaleString('en-IN')}
+              {t('suppliers.balance.available')}: ₹
+              {availableCredit.toLocaleString('en-IN')}
             </p>
           </div>
         </div>
@@ -157,7 +177,7 @@ export const UpdateBalanceSection = ({
         />
 
         {/* New Balance Preview */}
-        <div className="rounded-lg border-2 border-accent/20 bg-accent/5 p-4">
+        <div className="border-accent/20 bg-accent/5 rounded-lg border-2 p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-text-tertiary">
@@ -168,7 +188,9 @@ export const UpdateBalanceSection = ({
                 {Math.abs(newBalance).toLocaleString('en-IN')}
               </p>
               <p className="mt-1 text-xs text-text-tertiary">
-                {newBalance < 0 ? t('suppliers.balance.due') : t('suppliers.balance.advance')}
+                {newBalance < 0
+                  ? t('suppliers.balance.due')
+                  : t('suppliers.balance.advance')}
               </p>
             </div>
 
@@ -185,19 +207,12 @@ export const UpdateBalanceSection = ({
 
       {/* Actions */}
       <div className="flex justify-end gap-3">
-        <Button
-          variant="outline"
-          onClick={onCancel}
-          disabled={isLoading}
-        >
+        <Button variant="outline" onClick={onCancel} disabled={isLoading}>
           <X className="mr-2 h-4 w-4" />
           {t('common.cancel')}
         </Button>
 
-        <Button
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
+        <Button onClick={handleSubmit} disabled={isLoading}>
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

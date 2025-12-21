@@ -35,14 +35,14 @@ interface CertificationWithStatus extends Certification {
 // ============================================================================
 
 const transformDocuments = (): DocumentWithStatus[] => {
-  return (dummySupplier.documents || []).map((doc) => ({
+  return (dummySupplier.documents || []).map(doc => ({
     ...doc,
     uploadedBy: 'Admin User',
   }))
 }
 
 const transformCertifications = (): CertificationWithStatus[] => {
-  return (dummySupplier.certifications || []).map((cert) => {
+  return (dummySupplier.certifications || []).map(cert => {
     const getDaysUntilExpiry = (expiryDate: string): number => {
       const today = new Date()
       const expiry = new Date(expiryDate)
@@ -50,7 +50,9 @@ const transformCertifications = (): CertificationWithStatus[] => {
       return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
     }
 
-    const getCertificationStatus = (expiryDate?: string): CertificationWithStatus['status'] => {
+    const getCertificationStatus = (
+      expiryDate?: string
+    ): CertificationWithStatus['status'] => {
       if (!expiryDate) return 'Valid'
       const daysUntilExpiry = getDaysUntilExpiry(expiryDate)
       if (daysUntilExpiry < 0) return 'Expired'
@@ -72,7 +74,9 @@ const transformCertifications = (): CertificationWithStatus[] => {
 const SupplierDocumentsTab: React.FC = () => {
   const { t } = useTranslation()
   const [documents] = useState<DocumentWithStatus[]>(transformDocuments())
-  const [certifications] = useState<CertificationWithStatus[]>(transformCertifications())
+  const [certifications] = useState<CertificationWithStatus[]>(
+    transformCertifications()
+  )
 
   // Format date
   const formatDate = (dateString?: string): string => {
@@ -122,21 +126,21 @@ const SupplierDocumentsTab: React.FC = () => {
     {
       label: 'suppliers.documents.actions.view',
       icon: <Eye className="h-4 w-4" />,
-      onClick: (row) => {
+      onClick: row => {
         console.log('View document:', row)
       },
     },
     {
       label: 'suppliers.documents.actions.download',
       icon: <Download className="h-4 w-4" />,
-      onClick: (row) => {
+      onClick: row => {
         console.log('Download document:', row)
       },
     },
     {
       label: 'suppliers.documents.actions.delete',
       icon: <Trash2 className="h-4 w-4" />,
-      onClick: (row) => {
+      onClick: row => {
         console.log('Delete document:', row)
       },
       variant: 'destructive',
@@ -148,14 +152,14 @@ const SupplierDocumentsTab: React.FC = () => {
     {
       label: 'suppliers.documents.actions.view',
       icon: <Eye className="h-4 w-4" />,
-      onClick: (row) => {
+      onClick: row => {
         console.log('View certification:', row)
       },
     },
     {
       label: 'suppliers.documents.actions.download',
       icon: <Download className="h-4 w-4" />,
-      onClick: (row) => {
+      onClick: row => {
         console.log('Download certification:', row)
       },
     },
@@ -166,7 +170,7 @@ const SupplierDocumentsTab: React.FC = () => {
     {
       id: 'type',
       header: 'suppliers.documents.table.type',
-      accessorFn: (row) => getDocumentTypeName(row.documentType),
+      accessorFn: row => getDocumentTypeName(row.documentType),
       cell: ({ value }) => (
         <div className="flex items-center gap-2">
           <FileText className="h-4 w-4 text-accent" />
@@ -180,7 +184,9 @@ const SupplierDocumentsTab: React.FC = () => {
       header: 'suppliers.documents.table.number',
       accessorKey: 'documentNumber',
       cell: ({ value }) => (
-        <span className="font-mono text-sm text-text-primary">{value || '-'}</span>
+        <span className="font-mono text-sm text-text-primary">
+          {value || '-'}
+        </span>
       ),
       sortable: true,
     },
@@ -200,7 +206,7 @@ const SupplierDocumentsTab: React.FC = () => {
     {
       id: 'type',
       header: 'suppliers.documents.certifications.table.type',
-      accessorFn: (row) => getCertificationTypeName(row.certificationType),
+      accessorFn: row => getCertificationTypeName(row.certificationType),
       cell: ({ value }) => (
         <div className="flex items-center gap-2">
           <Award className="h-4 w-4 text-accent" />
@@ -214,7 +220,9 @@ const SupplierDocumentsTab: React.FC = () => {
       header: 'suppliers.documents.certifications.table.number',
       accessorKey: 'certificateNumber',
       cell: ({ value }) => (
-        <span className="font-mono text-sm text-text-primary">{value || '-'}</span>
+        <span className="font-mono text-sm text-text-primary">
+          {value || '-'}
+        </span>
       ),
       sortable: true,
     },
@@ -243,7 +251,7 @@ const SupplierDocumentsTab: React.FC = () => {
       cell: ({ value, row }) => {
         const daysUntilExpiry = getDaysUntilExpiry(value)
         const status = row.status
-        
+
         return (
           <div className="flex flex-col gap-1">
             <span className="text-sm text-text-secondary">
@@ -251,7 +259,8 @@ const SupplierDocumentsTab: React.FC = () => {
             </span>
             {status === 'Expiring Soon' && (
               <span className="text-xs text-status-warning">
-                {daysUntilExpiry} {t('suppliers.documents.certifications.daysLeft')}
+                {daysUntilExpiry}{' '}
+                {t('suppliers.documents.certifications.daysLeft')}
               </span>
             )}
           </div>
@@ -288,9 +297,11 @@ const SupplierDocumentsTab: React.FC = () => {
   ]
 
   // Count certifications by status
-  const validCount = certifications.filter((c) => c.status === 'Valid').length
-  const expiringCount = certifications.filter((c) => c.status === 'Expiring Soon').length
-  const expiredCount = certifications.filter((c) => c.status === 'Expired').length
+  const validCount = certifications.filter(c => c.status === 'Valid').length
+  const expiringCount = certifications.filter(
+    c => c.status === 'Expiring Soon'
+  ).length
+  const expiredCount = certifications.filter(c => c.status === 'Expired').length
 
   return (
     <div className="space-y-6">
@@ -298,7 +309,7 @@ const SupplierDocumentsTab: React.FC = () => {
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex flex-col gap-4 border-b border-border-primary px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-accent/10 p-2">
+            <div className="bg-accent/10 rounded-lg p-2">
               <FileText className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -349,7 +360,7 @@ const SupplierDocumentsTab: React.FC = () => {
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex flex-col gap-4 border-b border-border-primary px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-accent/10 p-2">
+            <div className="bg-accent/10 rounded-lg p-2">
               <Award className="h-5 w-5 text-accent" />
             </div>
             <div>
@@ -363,11 +374,13 @@ const SupplierDocumentsTab: React.FC = () => {
                 </span>
                 <span className="flex items-center gap-1">
                   <span className="inline-block h-2 w-2 rounded-full bg-status-warning"></span>
-                  {expiringCount} {t('suppliers.documents.certifications.expiring')}
+                  {expiringCount}{' '}
+                  {t('suppliers.documents.certifications.expiring')}
                 </span>
                 <span className="flex items-center gap-1">
                   <span className="inline-block h-2 w-2 rounded-full bg-status-error"></span>
-                  {expiredCount} {t('suppliers.documents.certifications.expired')}
+                  {expiredCount}{' '}
+                  {t('suppliers.documents.certifications.expired')}
                 </span>
               </div>
             </div>
@@ -379,13 +392,15 @@ const SupplierDocumentsTab: React.FC = () => {
             className="gap-2"
           >
             <Plus className="h-4 w-4" />
-            <span>{t('suppliers.documents.certifications.addCertificate')}</span>
+            <span>
+              {t('suppliers.documents.certifications.addCertificate')}
+            </span>
           </Button>
         </div>
 
         {/* Expiring/Expired Certifications Alert */}
         {(expiringCount > 0 || expiredCount > 0) && (
-          <div className="border-b border-border-primary bg-status-warning/5 px-6 py-4">
+          <div className="bg-status-warning/5 border-b border-border-primary px-6 py-4">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 flex-shrink-0 text-status-warning" />
               <div className="flex-1">
@@ -395,13 +410,17 @@ const SupplierDocumentsTab: React.FC = () => {
                 <p className="mt-1 text-xs text-text-secondary">
                   {expiringCount > 0 && (
                     <>
-                      {expiringCount} {t('suppliers.documents.certifications.alert.expiringSoon')}
+                      {expiringCount}{' '}
+                      {t(
+                        'suppliers.documents.certifications.alert.expiringSoon'
+                      )}
                     </>
                   )}
                   {expiringCount > 0 && expiredCount > 0 && ' • '}
                   {expiredCount > 0 && (
                     <>
-                      {expiredCount} {t('suppliers.documents.certifications.alert.expired')}
+                      {expiredCount}{' '}
+                      {t('suppliers.documents.certifications.alert.expired')}
                     </>
                   )}
                 </p>
@@ -437,7 +456,8 @@ const SupplierDocumentsTab: React.FC = () => {
       {/* API Note */}
       <div className="rounded-lg border border-border-secondary bg-bg-tertiary px-4 py-3">
         <p className="text-xs text-text-tertiary">
-          <span className="font-medium">API:</span> Supplier documents & certifications from GET /api/v1/suppliers/:id
+          <span className="font-medium">API:</span> Supplier documents &
+          certifications from GET /api/v1/suppliers/:id
         </p>
       </div>
     </div>

@@ -43,7 +43,7 @@ export const DeleteSupplierSection = ({
     return (
       <div className="space-y-6">
         {/* Delete Status */}
-        <div className="rounded-lg border-2 border-status-warning bg-status-warning/10 p-4 text-center">
+        <div className="bg-status-warning/10 rounded-lg border-2 border-status-warning p-4 text-center">
           <div className="flex items-center justify-center gap-2">
             <Trash2 className="h-6 w-6 text-status-warning" />
             <p className="text-lg font-semibold text-status-warning">
@@ -53,7 +53,8 @@ export const DeleteSupplierSection = ({
 
           {supplier.deletedAt && (
             <p className="mt-2 text-sm text-text-secondary">
-              {t('suppliers.delete.deletedOn')}: {new Date(supplier.deletedAt).toLocaleDateString()}
+              {t('suppliers.delete.deletedOn')}:{' '}
+              {new Date(supplier.deletedAt).toLocaleDateString()}
             </p>
           )}
         </div>
@@ -103,7 +104,7 @@ export const DeleteSupplierSection = ({
   return (
     <div className="space-y-6">
       {/* Warning */}
-      <div className="rounded-lg border-2 border-status-warning bg-status-warning/10 p-4">
+      <div className="bg-status-warning/10 rounded-lg border-2 border-status-warning p-4">
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-status-warning" />
           <div className="text-sm">
@@ -125,7 +126,9 @@ export const DeleteSupplierSection = ({
 
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="text-text-tertiary">{t('suppliers.delete.outstandingDue')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.delete.outstandingDue')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-status-error">
               {supplier.totalDue < 0 ? '-' : ''}₹
               {Math.abs(supplier.totalDue).toLocaleString('en-IN')}
@@ -133,17 +136,23 @@ export const DeleteSupplierSection = ({
           </div>
 
           <div>
-            <p className="text-text-tertiary">{t('suppliers.delete.pendingOrders')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.delete.pendingOrders')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-text-primary">
               {supplier.statistics.pendingOrders}
             </p>
           </div>
 
           <div className="col-span-2">
-            <p className="text-text-tertiary">{t('suppliers.delete.lastTransaction')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.delete.lastTransaction')}
+            </p>
             <p className="mt-1 text-sm font-medium text-text-primary">
               {supplier.statistics.lastOrderDate
-                ? new Date(supplier.statistics.lastOrderDate).toLocaleDateString()
+                ? new Date(
+                    supplier.statistics.lastOrderDate
+                  ).toLocaleDateString()
                 : t('suppliers.delete.noTransactions')}
             </p>
           </div>
@@ -151,7 +160,7 @@ export const DeleteSupplierSection = ({
       </div>
 
       {/* What Happens */}
-      <div className="rounded-lg border border-status-info bg-status-info/10 p-4">
+      <div className="bg-status-info/10 rounded-lg border border-status-info p-4">
         <p className="mb-2 font-medium text-text-primary">
           {t('suppliers.delete.whatHappens')}:
         </p>
@@ -164,7 +173,7 @@ export const DeleteSupplierSection = ({
       </div>
 
       {/* Confirmation Question */}
-      <div className="rounded-lg border-2 border-status-error bg-status-error/5 p-4 text-center">
+      <div className="bg-status-error/5 rounded-lg border-2 border-status-error p-4 text-center">
         <p className="font-semibold text-text-primary">
           {t('suppliers.delete.confirmQuestion')}
         </p>

@@ -170,7 +170,7 @@ export const SupplierTable: React.FC = () => {
 
   return (
     <div className="w-full space-y-4">
-              {/* <TopSuppliersPanel
+      {/* <TopSuppliersPanel
           limit={5}
           showViewAll={true}
           onViewAll={handleViewAll}

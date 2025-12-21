@@ -120,8 +120,8 @@ export default function SupplierFormMobile({
         {/* Step Indicator */}
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">
-            {t('suppliers.common.step')} {currentStep + 1} {t('suppliers.common.of')}{' '}
-            {STEPS.length}
+            {t('suppliers.common.step')} {currentStep + 1}{' '}
+            {t('suppliers.common.of')} {STEPS.length}
           </span>
           <span className="text-sm font-medium text-accent">
             {STEPS[currentStep].label}
@@ -198,7 +198,9 @@ export default function SupplierFormMobile({
               ) : (
                 <>
                   <Save className="mr-2 h-4 w-4" />
-                  {mode === 'create' ? t('suppliers.common.save') : t('suppliers.common.update')}
+                  {mode === 'create'
+                    ? t('suppliers.common.save')
+                    : t('suppliers.common.update')}
                 </>
               )}
             </Button>

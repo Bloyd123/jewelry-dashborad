@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/components/supplier/SupplierFilters/SupplierSearchBar.tsx
 // Supplier Search Wrapper - Uses Reusable SearchBar

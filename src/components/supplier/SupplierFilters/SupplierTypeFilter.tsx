@@ -7,7 +7,14 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
-import { Factory, Package, Truck, Hammer, Plane, MoreHorizontal } from 'lucide-react'
+import {
+  Factory,
+  Package,
+  Truck,
+  Hammer,
+  Plane,
+  MoreHorizontal,
+} from 'lucide-react'
 
 interface SupplierTypeFilterProps {
   value?: string

@@ -25,7 +25,7 @@ import { NoInternetWrapper } from './components/common'
 import { CustomerDetailsPage } from './components/customer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
 // import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
-import {MetalRatesDashboardPage} from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
+import { MetalRatesDashboardPage } from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
 import { SupplierTable } from '@/components/supplier/SupplierTable/index'
 import SupplierDetailPage from './components/supplier/SupplierDetailsPage/SupplierDetailsPage'
 import { AddSupplier } from './pages/suppliers/AddSupplier'
@@ -78,11 +78,17 @@ function App() {
               <Route path="/customerdetail" element={<CustomerDetailsPage />} />
               <Route path="/shops" element={<ShopListPage />} />
               <Route path="/shops/:id" element={<ShopDetailsPage />} />
-              <Route path="/metal-rates" element={<MetalRatesDashboardPage />} />
-              <Route path='/supplierlist' element={<SupplierTable/>}/>
-              <Route path='/supplierdetails' element={<SupplierDetailPage/>}/>
-              <Route path='/supplier/add' element={<AddSupplier/>}/>
-              <Route path='/supplier/edit/:supplierId' element={<AddSupplier/>}/>
+              <Route
+                path="/metal-rates"
+                element={<MetalRatesDashboardPage />}
+              />
+              <Route path="/supplierlist" element={<SupplierTable />} />
+              <Route path="/supplierdetails" element={<SupplierDetailPage />} />
+              <Route path="/supplier/add" element={<AddSupplier />} />
+              <Route
+                path="/supplier/edit/:supplierId"
+                element={<AddSupplier />}
+              />
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

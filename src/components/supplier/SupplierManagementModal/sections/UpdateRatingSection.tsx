@@ -90,7 +90,8 @@ export const UpdateRatingSection = ({
 
   // Calculate overall rating
   const overallRating =
-    (formData.qualityRating + formData.deliveryRating + formData.priceRating) / 3
+    (formData.qualityRating + formData.deliveryRating + formData.priceRating) /
+    3
 
   const handleChange = (field: keyof typeof formData, value: number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -161,7 +162,7 @@ export const UpdateRatingSection = ({
       </div>
 
       {/* New Overall Rating Preview */}
-      <div className="rounded-lg border-2 border-accent/20 bg-accent/5 p-4 text-center">
+      <div className="border-accent/20 bg-accent/5 rounded-lg border-2 p-4 text-center">
         <p className="text-sm text-text-tertiary">
           {t('suppliers.rating.newOverallRating')}
         </p>

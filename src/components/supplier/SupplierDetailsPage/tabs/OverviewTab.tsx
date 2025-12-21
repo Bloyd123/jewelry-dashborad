@@ -80,13 +80,11 @@ const CopyButton = ({ text }: { text: string }) => {
 const RatingStars = ({ rating }: { rating: number }) => {
   return (
     <div className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((star) => (
+      {[1, 2, 3, 4, 5].map(star => (
         <Star
           key={star}
           className={`h-4 w-4 ${
-            star <= rating
-              ? 'fill-accent text-accent'
-              : 'text-border-secondary'
+            star <= rating ? 'fill-accent text-accent' : 'text-border-secondary'
           }`}
         />
       ))}
@@ -104,8 +102,9 @@ const RatingStars = ({ rating }: { rating: number }) => {
 const SupplierOverviewTab = () => {
   const { t } = useTranslation()
   const supplierData: Supplier = dummySupplier
-      const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
-const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+  const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
+  const [managementAction, setManagementAction] =
+    useState<ManagementAction | null>(null)
   const handleManagementSuccess = () => {
     console.log('Action completed:', managementAction)
     setIsManagementModalOpen(false)
@@ -174,37 +173,39 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
         </div>
 
         {/* Products Supplied */}
-        {supplierData.productsSupplied && supplierData.productsSupplied.length > 0 && (
-          <div className="flex flex-col gap-1.5 md:col-span-2">
-            <Label className="text-xs text-text-secondary">
-              {t('suppliers.productsSupplied')}
-            </Label>
-            <div className="flex flex-wrap gap-2">
-              {supplierData.productsSupplied.map((product, index) => (
-                <Badge key={index} variant="outline" size="sm">
-                  {product}
-                </Badge>
-              ))}
+        {supplierData.productsSupplied &&
+          supplierData.productsSupplied.length > 0 && (
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-text-secondary">
+                {t('suppliers.productsSupplied')}
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                {supplierData.productsSupplied.map((product, index) => (
+                  <Badge key={index} variant="outline" size="sm">
+                    {product}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Specialization */}
-        {supplierData.specialization && supplierData.specialization.length > 0 && (
-          <div className="flex flex-col gap-1.5 md:col-span-2">
-            <Label className="text-xs text-text-secondary">
-              {t('suppliers.specialization')}
-            </Label>
-            <div className="flex flex-wrap gap-2">
-              {supplierData.specialization.map((spec, index) => (
-                <Badge key={index} variant="success" size="sm">
-                  <Award className="mr-1 h-3 w-3" />
-                  {spec}
-                </Badge>
-              ))}
+        {supplierData.specialization &&
+          supplierData.specialization.length > 0 && (
+            <div className="flex flex-col gap-1.5 md:col-span-2">
+              <Label className="text-xs text-text-secondary">
+                {t('suppliers.specialization')}
+              </Label>
+              <div className="flex flex-wrap gap-2">
+                {supplierData.specialization.map((spec, index) => (
+                  <Badge key={index} variant="success" size="sm">
+                    <Award className="mr-1 h-3 w-3" />
+                    {spec}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Tags */}
         {supplierData.tags && supplierData.tags.length > 0 && (
@@ -620,65 +621,70 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
       </div>
 
       {/* Certifications */}
-      {supplierData.certifications && supplierData.certifications.length > 0 && (
-        <div className="border-t border-border-secondary pt-4">
-          <Label className="mb-3 flex items-center gap-2 text-xs text-text-secondary">
-            <ShieldCheck className="h-4 w-4" />
-            {t('suppliers.certifications')}
-          </Label>
-          <div className="space-y-2">
-            {supplierData.certifications.map((cert) => (
-              <div
-                key={cert._id}
-                className="rounded-lg border border-border-secondary bg-bg-tertiary p-3"
-              >
-                <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                  <div>
-                    <p className="text-xs text-text-secondary">
-                      {t('suppliers.certificationType')}
-                    </p>
-                    <Badge variant="success" size="sm" className="mt-1 capitalize">
-                      {cert.certificationType}
-                    </Badge>
+      {supplierData.certifications &&
+        supplierData.certifications.length > 0 && (
+          <div className="border-t border-border-secondary pt-4">
+            <Label className="mb-3 flex items-center gap-2 text-xs text-text-secondary">
+              <ShieldCheck className="h-4 w-4" />
+              {t('suppliers.certifications')}
+            </Label>
+            <div className="space-y-2">
+              {supplierData.certifications.map(cert => (
+                <div
+                  key={cert._id}
+                  className="rounded-lg border border-border-secondary bg-bg-tertiary p-3"
+                >
+                  <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                    <div>
+                      <p className="text-xs text-text-secondary">
+                        {t('suppliers.certificationType')}
+                      </p>
+                      <Badge
+                        variant="success"
+                        size="sm"
+                        className="mt-1 capitalize"
+                      >
+                        {cert.certificationType}
+                      </Badge>
+                    </div>
+                    {cert.certificateNumber && (
+                      <div>
+                        <p className="text-xs text-text-secondary">
+                          {t('suppliers.certificateNumber')}
+                        </p>
+                        <p className="mt-1 font-mono text-sm text-text-primary">
+                          {cert.certificateNumber}
+                        </p>
+                      </div>
+                    )}
+                    {cert.issuedBy && (
+                      <div>
+                        <p className="text-xs text-text-secondary">
+                          {t('suppliers.issuedBy')}
+                        </p>
+                        <p className="mt-1 text-sm text-text-primary">
+                          {cert.issuedBy}
+                        </p>
+                      </div>
+                    )}
+                    {cert.issueDate && (
+                      <div>
+                        <p className="text-xs text-text-secondary">
+                          {t('suppliers.validity')}
+                        </p>
+                        <p className="mt-1 text-sm text-text-primary">
+                          {new Date(cert.issueDate).toLocaleDateString()}
+                          {cert.expiryDate &&
+                            ` - ${new Date(cert.expiryDate).toLocaleDateString()}`}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                  {cert.certificateNumber && (
-                    <div>
-                      <p className="text-xs text-text-secondary">
-                        {t('suppliers.certificateNumber')}
-                      </p>
-                      <p className="mt-1 font-mono text-sm text-text-primary">
-                        {cert.certificateNumber}
-                      </p>
-                    </div>
-                  )}
-                  {cert.issuedBy && (
-                    <div>
-                      <p className="text-xs text-text-secondary">
-                        {t('suppliers.issuedBy')}
-                      </p>
-                      <p className="mt-1 text-sm text-text-primary">
-                        {cert.issuedBy}
-                      </p>
-                    </div>
-                  )}
-                  {cert.issueDate && (
-                    <div>
-                      <p className="text-xs text-text-secondary">
-                        {t('suppliers.validity')}
-                      </p>
-                      <p className="mt-1 text-sm text-text-primary">
-                        {new Date(cert.issueDate).toLocaleDateString()}
-                        {cert.expiryDate &&
-                          ` - ${new Date(cert.expiryDate).toLocaleDateString()}`}
-                      </p>
-                    </div>
-                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   )
 
@@ -731,8 +737,8 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
               supplierData.currentBalance < 0
                 ? 'text-status-error'
                 : supplierData.currentBalance > 0
-                ? 'text-status-success'
-                : 'text-text-primary'
+                  ? 'text-status-success'
+                  : 'text-text-primary'
             }`}
           >
             ₹{Math.abs(supplierData.currentBalance).toLocaleString('en-IN')}
@@ -792,7 +798,6 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
   // ========================================================================
 
   const BankDetailsSection = () => {
-
     if (!supplierData.bankDetails) {
       return (
         <div className="p-4">
@@ -921,16 +926,16 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
               <RatingStars rating={supplierData.rating || 0} />
             </div>
           </div>
-<Button 
-  variant="outline" 
-  size="sm"
-  onClick={() => {
-    setManagementAction('update-rating')
-    setIsManagementModalOpen(true)
-  }}
->
-  {t('suppliers.updateRating')}
-</Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setManagementAction('update-rating')
+              setIsManagementModalOpen(true)
+            }}
+          >
+            {t('suppliers.updateRating')}
+          </Button>
         </div>
       </div>
 
@@ -1017,7 +1022,10 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
               {t('suppliers.avgOrderValue')}
             </p>
             <p className="mt-1 text-xl font-bold text-text-primary">
-              ₹{supplierData.statistics.averageOrderValue.toLocaleString('en-IN')}
+              ₹
+              {supplierData.statistics.averageOrderValue.toLocaleString(
+                'en-IN'
+              )}
             </p>
           </div>
 
@@ -1048,14 +1056,15 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
                 {t('suppliers.lastOrderDate')}
               </p>
               <p className="mt-1 text-sm font-medium text-text-primary">
-                {new Date(supplierData.statistics.lastOrderDate).toLocaleDateString()}
+                {new Date(
+                  supplierData.statistics.lastOrderDate
+                ).toLocaleDateString()}
               </p>
             </div>
           )}
         </div>
       </div>
     </div>
-    
   )
 
   // ========================================================================
@@ -1099,7 +1108,7 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
             {t('suppliers.documentsText')}
           </Label>
           <div className="space-y-2">
-            {supplierData.documents.map((doc) => (
+            {supplierData.documents.map(doc => (
               <div
                 key={doc._id}
                 className="flex items-center justify-between rounded-lg border border-border-secondary bg-bg-tertiary p-3"
@@ -1252,9 +1261,7 @@ const [managementAction, setManagementAction] = useState<ManagementAction | null
         onSuccess={handleManagementSuccess}
       />
     </div>
-    
   )
-  
 }
 
 export default SupplierOverviewTab

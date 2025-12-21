@@ -65,7 +65,7 @@ export const PreferredSupplierSection = ({
         className={cn(
           'rounded-lg border-2 p-4 text-center',
           isPreferred
-            ? 'border-accent bg-accent/10'
+            ? 'bg-accent/10 border-accent'
             : 'border-border-primary bg-bg-tertiary'
         )}
       >
@@ -87,7 +87,8 @@ export const PreferredSupplierSection = ({
 
         {isPreferred && (
           <p className="mt-2 text-sm text-text-secondary">
-            {t('suppliers.preferred.preferredSince')}: {new Date(supplier.verifiedAt || '').toLocaleDateString()}
+            {t('suppliers.preferred.preferredSince')}:{' '}
+            {new Date(supplier.verifiedAt || '').toLocaleDateString()}
           </p>
         )}
       </div>
@@ -118,14 +119,18 @@ export const PreferredSupplierSection = ({
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="text-text-tertiary">{t('suppliers.preferred.totalOrders')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.preferred.totalOrders')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-text-primary">
               {supplier.statistics.totalOrders}
             </p>
           </div>
 
           <div>
-            <p className="text-text-tertiary">{t('suppliers.preferred.rating')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.preferred.rating')}
+            </p>
             <div className="mt-1 flex items-center gap-1">
               <Star className="h-4 w-4 fill-accent text-accent" />
               <p className="text-lg font-semibold text-text-primary">
@@ -135,14 +140,18 @@ export const PreferredSupplierSection = ({
           </div>
 
           <div>
-            <p className="text-text-tertiary">{t('suppliers.preferred.totalPurchased')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.preferred.totalPurchased')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-text-primary">
               ₹{supplier.totalPurchases.toLocaleString('en-IN')}
             </p>
           </div>
 
           <div>
-            <p className="text-text-tertiary">{t('suppliers.preferred.onTimeDelivery')}</p>
+            <p className="text-text-tertiary">
+              {t('suppliers.preferred.onTimeDelivery')}
+            </p>
             <p className="mt-1 text-lg font-semibold text-status-success">
               {supplier.statistics.onTimeDeliveryPercentage}%
             </p>

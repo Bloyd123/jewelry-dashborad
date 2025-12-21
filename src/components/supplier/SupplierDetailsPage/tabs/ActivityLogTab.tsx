@@ -221,7 +221,7 @@ const SupplierActivityTab: React.FC = () => {
   }
 
   // Filter activities
-  const filteredActivities = activities.filter((activity) => {
+  const filteredActivities = activities.filter(activity => {
     // Action filter
     if (actionFilter !== 'all' && activity.action !== actionFilter) {
       return false
@@ -262,7 +262,7 @@ const SupplierActivityTab: React.FC = () => {
       header: 'suppliers.activity.table.action',
       accessorKey: 'action',
       cell: ({ value }) => (
-        <span className="inline-flex rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+        <span className="bg-accent/10 inline-flex rounded-full px-3 py-1 text-xs font-medium text-accent">
           {value}
         </span>
       ),
@@ -348,14 +348,18 @@ const SupplierActivityTab: React.FC = () => {
               </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-[180px] justify-between">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-[180px] justify-between"
+                  >
                     <span>
-                      {actionOptions.find((o) => o.value === actionFilter)?.label}
+                      {actionOptions.find(o => o.value === actionFilter)?.label}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-[180px]">
-                  {actionOptions.map((option) => (
+                  {actionOptions.map(option => (
                     <DropdownMenuItem
                       key={option.value}
                       onClick={() => setActionFilter(option.value)}
@@ -375,14 +379,18 @@ const SupplierActivityTab: React.FC = () => {
               <Calendar className="h-4 w-4 text-text-tertiary" />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-[150px] justify-between">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-[150px] justify-between"
+                  >
                     <span>
-                      {timeOptions.find((o) => o.value === timeFilter)?.label}
+                      {timeOptions.find(o => o.value === timeFilter)?.label}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-[150px]">
-                  {timeOptions.map((option) => (
+                  {timeOptions.map(option => (
                     <DropdownMenuItem
                       key={option.value}
                       onClick={() => setTimeFilter(option.value)}

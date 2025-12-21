@@ -1,15 +1,14 @@
 {
   "suppliers": {
-  
-       "addSupplier": "Add New Supplier",
+    "addSupplier": "Add New Supplier",
     "editSupplier": "Edit Supplier",
     "addSupplierDescription": "Enter supplier information to add them to your system",
     "editSupplierDescription": "Update supplier information",
-    
+
     "contactInformation": "Contact Information",
     "addressAndRegistration": "Address & Registration",
     "notesAndTags": "Notes & Tags",
-    
+
     "businessNamePlaceholder": "Enter business name",
     "displayNamePlaceholder": "Short name for display",
     "supplierCodePlaceholder": "Auto-generated if empty",
@@ -17,7 +16,7 @@
     "selectSupplierType": "Select supplier type",
     "supplierCategory": "Supplier Category",
     "selectSupplierCategory": "Select category",
-    
+
     "contactPersonDetails": "Contact Person",
     "firstName": "First Name",
     "firstNamePlaceholder": "Enter first name",
@@ -27,7 +26,7 @@
     "designationPlaceholder": "e.g., Manager, Director",
     "whatsappNumber": "WhatsApp Number",
     "emailPlaceholder": "email@example.com",
-     "paymentTermsForm": "Payment Terms & Products",
+    "paymentTermsForm": "Payment Terms & Products",
     "businessContactDetails": "Business Contact",
     "businessEmailPlaceholder": "info@business.com",
     "streetPlaceholder": "Building no., Street name",
@@ -36,15 +35,15 @@
     "cityPlaceholder": "Enter city",
     "statePlaceholder": "Enter state",
     "countryPlaceholder": "Enter country",
-    
+
     "registrationDetails": "Registration Details",
-    
+
     "selectPaymentTerms": "Select payment terms",
     "productsSuppliedPlaceholder": "22K Gold, 24K Gold, Gold Coins",
     "productsSuppliedHint": "Separate multiple items with commas",
     "specializationPlaceholder": "Hallmarked Gold, Certified Purity",
     "specializationHint": "Separate multiple specializations with commas",
-    
+
     "bankDetailsOptional": "Bank details are optional. Fill only if you want to make direct payments.",
     "bankNamePlaceholder": "e.g., HDFC Bank",
     "accountHolderNamePlaceholder": "As per bank records",
@@ -54,9 +53,7 @@
     "internalNotesPlaceholder": "Private notes (not visible to supplier)",
     "tagsPlaceholder": "Add a tag",
 
-
-
-  "basicInformation": "Basic Information",
+    "basicInformation": "Basic Information",
     "businessName": "Business Name",
     "displayName": "Display Name",
     "supplierCode": "Supplier Code",
@@ -65,7 +62,7 @@
     "productsSupplied": "Products Supplied",
     "specialization": "Specialization",
     "tags": "Tags",
-    
+
     "contactPerson": "Contact Person",
     "email": "Email",
     "phone": "Phone",
@@ -74,7 +71,7 @@
     "businessEmail": "Business Email",
     "businessPhone": "Business Phone",
     "website": "Website",
-    
+
     "address": "Address",
     "noAddress": "Address information not available",
     "street": "Street",
@@ -88,7 +85,7 @@
     "title": "Suppliers",
     "refreshData": "Refresh Data",
     "blacklisttext": "Blacklist Supplier",
-      "balance": {
+    "balance": {
       "title": "Update Supplier Balance",
       "description": "Manage payments, purchases, and adjustments",
       "currentBalance": "Current Balance",
@@ -105,7 +102,7 @@
       "amountRequired": "Amount is required",
       "paymentExceedsDue": "Payment amount cannot exceed outstanding due"
     },
-    
+
     "rating": {
       "title": "Update Supplier Rating",
       "description": "Rate supplier performance",
@@ -116,7 +113,7 @@
       "newOverallRating": "New Overall Rating",
       "updateRating": "Update Rating"
     },
-    
+
     "preferred": {
       "title": "Preferred Supplier",
       "description": "Manage preferred supplier status",
@@ -135,7 +132,7 @@
       "markAsPreferred": "Mark as Preferred",
       "removeFromPreferred": "Remove from Preferred"
     },
-    
+
     "blacklist": {
       "title": "Blacklist Supplier",
       "description": "Blacklist or remove supplier from blacklist",
@@ -161,7 +158,7 @@
       "impact3": "Visible in blacklist reports",
       "removeFromBlacklist": "Remove from Blacklist"
     },
-    
+
     "delete": {
       "title": "Delete Supplier",
       "description": "Soft delete or restore supplier",
@@ -193,12 +190,12 @@
       "documents": "Documents",
       "activity": "Activity"
     },
-      "ui": {
-    "modal": {
-      "close": "Close"
-    }
-  },
-    
+    "ui": {
+      "modal": {
+        "close": "Close"
+      }
+    },
+
     "businessRegistration": "Business Registration",
     "gstNumber": "GST Number",
     "panNumber": "PAN Number",
@@ -220,7 +217,6 @@
     "issuedBy": "Issued By",
     "validity": "Validity Period",
 
-    
     "paymentTermstext": "Payment Terms & Financial",
     "creditPeriod": "Credit Period",
     "days": "days",
@@ -231,7 +227,7 @@
     "totalPaid": "Total Paid",
     "totalDue": "Total Due",
     "advancePayment": "Advance Payment",
-    
+
     "bankDetails": "Bank Details",
     "noBankDetails": "Bank details not available",
     "bankName": "Bank Name",
@@ -241,7 +237,7 @@
     "ifscCode": "IFSC Code",
     "accountType": "Account Type",
     "upiId": "UPI ID",
-    
+
     "ratingsPerformance": "Ratings & Performance",
     "overallRating": "Overall Rating",
     "updateRating": "Update Rating",
@@ -257,7 +253,7 @@
     "avgDeliveryTime": "Avg Delivery Time",
     "onTimeDelivery": "On-Time Delivery",
     "lastOrderDate": "Last Order",
-    
+
     "notesDocuments": "Notes & Documents",
     "notes": "Notes",
     "internalNotes": "Internal Notes (Staff Only)",
@@ -265,7 +261,7 @@
     "view": "View",
     "createdAt": "Created At",
     "updatedAt": "Last Updated",
-     "financial": {
+    "financial": {
       "currentBalance": "Current Balance",
       "due": "Due",
       "advance": "Advance",
@@ -296,7 +292,7 @@
         "user": "User"
       }
     },
-    
+
     "table": {
       "title": "Suppliers",
       "noSuppliers": "No suppliers found. Add your first supplier to get started.",
@@ -329,7 +325,7 @@
       "updateBalance": "Update Balance",
       "bulkDelete": "Bulk Delete"
     },
-        "topSuppliers": {
+    "topSuppliers": {
       "title": "Top Suppliers",
       "subtitle": "This Month",
       "noData": "No suppliers found",
@@ -386,7 +382,7 @@
       "preferred": "Preferred",
       "blacklisted": "Blacklisted"
     },
-     "documents": {
+    "documents": {
       "businessDocuments": "Business Documents",
       "documentsUploaded": "documents uploaded",
       "addDocument": "Add Document",
@@ -421,8 +417,8 @@
           "expired": "certification(s) expired"
         }
       }
-  },
-      "activity": {
+    },
+    "activity": {
       "filters": {
         "label": "Filters",
         "allActions": "All Actions",
@@ -446,28 +442,28 @@
         "status": "Status"
       }
     },
-      "forms": {
-    "selectDate": "Select date"
-  },
+    "forms": {
+      "selectDate": "Select date"
+    },
     "common": {
-    "updating": "Updating...",
-    "processing": "Processing...",
-    "deleting": "Deleting...",
-    "viewAll": "View All",
-    "backToList": "Back to List",
-    "export": "Export",
-    "edit": "Edit",
-    "delete": "Delete",
-    "active": "Active",
-    "by": "by",
-    "save": "Save",
-    "update": "Update",
-    "cancel": "Cancel",
-    "saving": "Saving...",
-    "next": "Next",
-    "previous": "Previous",
-    "step": "Step",
-    "of": "of"
+      "updating": "Updating...",
+      "processing": "Processing...",
+      "deleting": "Deleting...",
+      "viewAll": "View All",
+      "backToList": "Back to List",
+      "export": "Export",
+      "edit": "Edit",
+      "delete": "Delete",
+      "active": "Active",
+      "by": "by",
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "next": "Next",
+      "previous": "Previous",
+      "step": "Step",
+      "of": "of"
+    }
   }
-}
 }

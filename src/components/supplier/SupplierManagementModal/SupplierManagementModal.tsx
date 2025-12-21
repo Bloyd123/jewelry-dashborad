@@ -16,7 +16,10 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/overlay/Sheet/Sheet'
-import type { SupplierManagementModalProps, ManagementAction } from './SupplierManagementModal.types'
+import type {
+  SupplierManagementModalProps,
+  ManagementAction,
+} from './SupplierManagementModal.types'
 import { UpdateBalanceSection } from './sections/UpdateBalanceSection'
 import { UpdateRatingSection } from './sections/UpdateRatingSection'
 import { PreferredSupplierSection } from './sections/PreferredSupplierSection'

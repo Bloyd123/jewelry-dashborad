@@ -7,15 +7,15 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
-import { 
-  Coins, 
-  Gem, 
-  Diamond, 
-  Sparkles, 
-  Circle, 
-  Hammer as HammerIcon, 
-  Package as PackageIcon, 
-  Grid3x3 
+import {
+  Coins,
+  Gem,
+  Diamond,
+  Sparkles,
+  Circle,
+  Hammer as HammerIcon,
+  Package as PackageIcon,
+  Grid3x3,
 } from 'lucide-react'
 
 interface SupplierCategoryFilterProps {

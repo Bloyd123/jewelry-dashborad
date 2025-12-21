@@ -16,7 +16,9 @@ export const AddSupplier = () => {
 
   // Find supplier data if editing
   const existingSupplier = supplierId
-    ? dummySuppliers.find(s => s._id === supplierId || s.supplierCode === supplierId)
+    ? dummySuppliers.find(
+        s => s._id === supplierId || s.supplierCode === supplierId
+      )
     : null
 
   // Transform backend supplier data to form data

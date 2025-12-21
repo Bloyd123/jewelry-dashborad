@@ -129,7 +129,6 @@ const dummyPaymentHistory: PaymentHistory[] = [
   },
 ]
 
-
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
@@ -139,13 +138,14 @@ const SupplierFinancialTab: React.FC = () => {
 
   const [paymentHistory] = useState<PaymentHistory[]>(dummyPaymentHistory)
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
-const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
-const handleManagementSuccess = () => {
-  console.log('Action completed:', managementAction)
-  // Refresh supplier data here
-  setIsManagementModalOpen(false)
-  setManagementAction(null)
-}
+  const [managementAction, setManagementAction] =
+    useState<ManagementAction | null>(null)
+  const handleManagementSuccess = () => {
+    console.log('Action completed:', managementAction)
+    // Refresh supplier data here
+    setIsManagementModalOpen(false)
+    setManagementAction(null)
+  }
 
   // Format currency
   const formatCurrency = (amount: number): string => {
@@ -260,7 +260,11 @@ const handleManagementSuccess = () => {
           icon={DollarSign}
           variant={dummySupplier.currentBalance > 0 ? 'error' : 'success'}
           size="md"
-          subtitle={dummySupplier.currentBalance > 0 ? t('suppliers.financial.due') : t('suppliers.financial.advance')}
+          subtitle={
+            dummySupplier.currentBalance > 0
+              ? t('suppliers.financial.due')
+              : t('suppliers.financial.advance')
+          }
         />
 
         {/* Total Due */}
@@ -300,17 +304,17 @@ const handleManagementSuccess = () => {
           <h3 className="text-lg font-semibold text-text-primary">
             {t('suppliers.financial.advanceAndCredit')}
           </h3>
-<Button
-  variant="outline"
-  size="sm"
-  onClick={() => {
-    setManagementAction('update-balance')
-    setIsManagementModalOpen(true)
-  }}
-  className="gap-2"
->
-  <span>{t('suppliers.financial.updateBalance')}</span>
-</Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setManagementAction('update-balance')
+              setIsManagementModalOpen(true)
+            }}
+            className="gap-2"
+          >
+            <span>{t('suppliers.financial.updateBalance')}</span>
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -339,7 +343,8 @@ const handleManagementSuccess = () => {
                 {t('suppliers.financial.creditUsed')}
               </span>
               <span className="font-medium text-text-primary">
-                {formatCurrency(Math.abs(dummySupplier.currentBalance))} ({creditUtilization}%)
+                {formatCurrency(Math.abs(dummySupplier.currentBalance))} (
+                {creditUtilization}%)
               </span>
             </div>
 
@@ -349,7 +354,8 @@ const handleManagementSuccess = () => {
               </span>
               <span className="font-medium text-status-success">
                 {formatCurrency(
-                  dummySupplier.creditLimit - Math.abs(dummySupplier.currentBalance)
+                  dummySupplier.creditLimit -
+                    Math.abs(dummySupplier.currentBalance)
                 )}
               </span>
             </div>
@@ -388,7 +394,8 @@ const handleManagementSuccess = () => {
                     {t('suppliers.financial.paymentTerms')}
                   </p>
                   <p className="mt-1 text-xs text-text-secondary">
-                    {dummySupplier.paymentTerms} • {dummySupplier.creditPeriod} {t('suppliers.financial.days')}
+                    {dummySupplier.paymentTerms} • {dummySupplier.creditPeriod}{' '}
+                    {t('suppliers.financial.days')}
                   </p>
                 </div>
               </div>
@@ -444,7 +451,7 @@ const handleManagementSuccess = () => {
           }}
         />
       </div>
-            <SupplierManagementModal
+      <SupplierManagementModal
         open={isManagementModalOpen}
         onOpenChange={setIsManagementModalOpen}
         supplier={dummySupplier}

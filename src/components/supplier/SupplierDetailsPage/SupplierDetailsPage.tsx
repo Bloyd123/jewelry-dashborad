@@ -92,13 +92,11 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
 const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   return (
     <div className="flex items-center gap-0.5">
-      {[1, 2, 3, 4, 5].map((star) => (
+      {[1, 2, 3, 4, 5].map(star => (
         <Star
           key={star}
           className={`h-4 w-4 ${
-            star <= rating
-              ? 'fill-accent text-accent'
-              : 'text-border-secondary'
+            star <= rating ? 'fill-accent text-accent' : 'text-border-secondary'
           }`}
         />
       ))}
@@ -116,14 +114,14 @@ const SupplierDetailPage: React.FC = () => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('overview')
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
-const [managementAction, setManagementAction] =useState<ManagementAction | null>(null)
-const handleManagementSuccess = () => {
-  console.log('Action completed:', managementAction)
-  // TODO: refetch supplier details
-  setIsManagementModalOpen(false)
-  setManagementAction(null)
-}
-
+  const [managementAction, setManagementAction] =
+    useState<ManagementAction | null>(null)
+  const handleManagementSuccess = () => {
+    console.log('Action completed:', managementAction)
+    // TODO: refetch supplier details
+    setIsManagementModalOpen(false)
+    setManagementAction(null)
+  }
 
   const supplierData: Supplier = dummySupplier
 
@@ -213,27 +211,26 @@ const handleManagementSuccess = () => {
                       <RefreshCw className="mr-2 h-4 w-4" />
                       {t('suppliers.refreshData')}
                     </DropdownMenuItem>
-         <DropdownMenuItem
-  onClick={() => {
-    setManagementAction('blacklist')
-    setIsManagementModalOpen(true)
-  }}
->
-  <Ban className="mr-2 h-4 w-4" />
-  {t('suppliers.blacklisttext')}
-</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        setManagementAction('blacklist')
+                        setIsManagementModalOpen(true)
+                      }}
+                    >
+                      <Ban className="mr-2 h-4 w-4" />
+                      {t('suppliers.blacklisttext')}
+                    </DropdownMenuItem>
 
-<DropdownMenuItem
-  className="text-status-error"
-  onClick={() => {
-    setManagementAction('delete')
-    setIsManagementModalOpen(true)
-  }}
->
-  <Trash2 className="mr-2 h-4 w-4" />
-  {t('common.delete')}
-</DropdownMenuItem>
-
+                    <DropdownMenuItem
+                      className="text-status-error"
+                      onClick={() => {
+                        setManagementAction('delete')
+                        setIsManagementModalOpen(true)
+                      }}
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      {t('common.delete')}
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -245,7 +242,7 @@ const handleManagementSuccess = () => {
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4">
                 {/* Icon */}
-                <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-accent/10">
+                <div className="bg-accent/10 flex h-16 w-16 items-center justify-center rounded-lg">
                   <Store className="h-8 w-8 text-accent" />
                 </div>
 
@@ -348,13 +345,12 @@ const handleManagementSuccess = () => {
         {/* {activeTab === 'activity' && <SupplierActivityTab />} */}
       </div>
       <SupplierManagementModal
-  open={isManagementModalOpen}
-  onOpenChange={setIsManagementModalOpen}
-  supplier={supplierData}
-  action={managementAction}
-  onSuccess={handleManagementSuccess}
-/>
-
+        open={isManagementModalOpen}
+        onOpenChange={setIsManagementModalOpen}
+        supplier={supplierData}
+        action={managementAction}
+        onSuccess={handleManagementSuccess}
+      />
     </div>
   )
 }

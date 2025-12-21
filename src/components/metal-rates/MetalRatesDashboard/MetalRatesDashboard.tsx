@@ -80,4 +80,4 @@ export const MetalRatesDashboardPage: React.FC = () => {
   )
 }
 
-MetalRatesDashboardPage.displayName="MetalRatesDashboardPage"
+MetalRatesDashboardPage.displayName = 'MetalRatesDashboardPage'

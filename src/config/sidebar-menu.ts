@@ -12,10 +12,10 @@ import {
   Coins,
   Package2,
   Wrench,
-    Users,           // ✅ Add
-  Building2,       // ✅ Add
-  TrendingUp,      // ✅ Add
-  Truck,           // ✅ Add
+  Users, // ✅ Add
+  Building2, // ✅ Add
+  TrendingUp, // ✅ Add
+  Truck, // ✅ Add
 } from 'lucide-react'
 import type { MenuItem } from '@/types/menu'
 import { ROUTES } from '@/config/routes.config'
@@ -42,17 +42,17 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
   //     { title: t('sidebar.paymentEntry'), url: ROUTES.paymentEntry },
   //   ],
   // },
-    {
+  {
     title: t('sidebar.metalRates'),
     url: ROUTES.metalRates,
     icon: TrendingUp,
   },
-    {
+  {
     title: t('sidebar.customers'),
     icon: Users,
     items: [
       { title: t('sidebar.addCustomer'), url: ROUTES.addCustomer },
-      { title: t('sidebar.detailcustomer'), url: ROUTES.detailcustomer }
+      { title: t('sidebar.detailcustomer'), url: ROUTES.detailcustomer },
     ],
   },
   {
@@ -61,8 +61,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     items: [
       { title: t('sidebar.supplierdetails'), url: ROUTES.supplierdetails },
       { title: t('sidebar.addSupplier'), url: ROUTES.addSupplier },
-      { title: t('sidebar.supplierlist'), url: ROUTES.supplierlist }
-
+      { title: t('sidebar.supplierlist'), url: ROUTES.supplierlist },
     ],
   },
   {
@@ -70,8 +69,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     icon: Building2,
     items: [
       { title: t('sidebar.shopList'), url: ROUTES.shopList },
-      { title: t('sidebar.shopdetail'), url: ROUTES.shopdetail }
-
+      { title: t('sidebar.shopdetail'), url: ROUTES.shopdetail },
     ],
   },
   // {
