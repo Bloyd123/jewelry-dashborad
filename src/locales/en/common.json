@@ -21,7 +21,9 @@
     "allProducts": "All Products",
     "addProduct": "Add Product",
     "customOrders": "Custom Orders",
-    "allCustomOrders": "All Custom Orders"
+    "allCustomOrders": "All Custom Orders",
+    "shops": "Shops",
+    "metalRates": "Metal Rates"
   },
   "noInternet": {
     "title": "No Internet Connection",
@@ -29,6 +31,11 @@
     "retryButton": "Retry Connection"
   },
   "common": {
+    "export": "Export",
+    "edit": "Edit",
+    "delete": "Delete",
+    "by": "by",
+
     "noData": "No data available",
     "backToList": "Back to List",
     "settings": "Settings",

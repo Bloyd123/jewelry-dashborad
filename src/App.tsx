@@ -24,9 +24,14 @@ import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
 import { CustomerDetailsPage } from './components/customer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
-import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
+// import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
 import MetalRatesDashboardPage from '@/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard'
 import { SupplierTable } from '@/components/supplier/SupplierTable/index'
+import SupplierOverviewTab from './components/supplier/SupplierDetailsPage/tabs/OverviewTab'
+import SupplierFinancialTab from './components/supplier/SupplierDetailsPage/tabs/FinancialTab'
+import SupplierDocumentsTab from './components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
+import SupplierActivityTab from './components/supplier/SupplierDetailsPage/tabs/ActivityLogTab'
+import SupplierDetailPage from './components/supplier/SupplierDetailsPage/SupplierDetailsPage'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -77,16 +82,12 @@ function App() {
               <Route path="/shops" element={<ShopListPage />} />
               <Route path="/shops/:id" element={<ShopDetailsPage />} />
               <Route path="/metal-rates" element={<MetalRatesDashboardPage />} />
-              <Route path='/supplier' element={<SupplierTable/>}/>
-              <Route
-                path="/update"
-                element={
-                  <GoldRatesForm
-                    onChange={data => console.log('Gold rates:', data)}
-                  />
-                }
-              />
-
+              <Route path='/supplierlist' element={<SupplierTable/>}/>
+              {/* <Route path='/supllieroverview' element={<SupplierOverviewTab/>}/>
+              <Route path='/supplierfinancial' element={<SupplierFinancialTab/>}/>
+              <Route path='/supplierdocs' element={<SupplierDocumentsTab/>}/>
+              <Route path='/supplieranalytic' element={<SupplierActivityTab/>}/> */}
+              <Route path='/supplier' element={<SupplierDetailPage/>}/>
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

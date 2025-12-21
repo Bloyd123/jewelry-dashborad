@@ -1,5 +1,142 @@
 {
   "suppliers": {
+      "basicInformation": "Basic Information",
+    "businessName": "Business Name",
+    "displayName": "Display Name",
+    "supplierCode": "Supplier Code",
+    "supplierType": "Supplier Type",
+    "categorytext": "Category",
+    "productsSupplied": "Products Supplied",
+    "specialization": "Specialization",
+    "tags": "Tags",
+    
+    "contactPerson": "Contact Person",
+    "email": "Email",
+    "phone": "Phone",
+    "alternatePhone": "Alternate Phone",
+    "whatsapp": "WhatsApp",
+    "businessEmail": "Business Email",
+    "businessPhone": "Business Phone",
+    "website": "Website",
+    
+    "address": "Address",
+    "noAddress": "Address information not available",
+    "street": "Street",
+    "landmark": "Landmark",
+    "area": "Area",
+    "city": "City",
+    "state": "State",
+    "pincode": "Pincode",
+    "country": "Country",
+    "viewOnMap": "View on Map",
+    "title": "Suppliers",
+    "refreshData": "Refresh Data",
+    "blacklist": "Blacklist Supplier",
+    
+    "tabs": {
+      "overview": "Overview",
+      "financial": "Financial",
+      "documents": "Documents",
+      "activity": "Activity"
+    },
+    
+    "businessRegistration": "Business Registration",
+    "gstNumber": "GST Number",
+    "panNumber": "PAN Number",
+    "tanNumber": "TAN Number",
+    "registrationNumber": "Registration Number",
+    "verificationStatus": "Verification Status",
+    "verified": "Verified",
+    "pending": "Pending Verification",
+    "verifiedOn": "Verified on",
+    "active": "Active",
+    "inactive": "Inactive",
+    "preferredtext": "Preferred Supplier",
+    "blacklisted": "Blacklisted",
+    "blacklistReason": "Blacklist Reason",
+    "blacklistedOn": "Blacklisted on",
+    "certifications": "Certifications",
+    "certificationType": "Certification Type",
+    "certificateNumber": "Certificate Number",
+    "issuedBy": "Issued By",
+    "validity": "Validity Period",
+    
+    "paymentTermstext": "Payment Terms & Financial",
+    "creditPeriod": "Credit Period",
+    "days": "days",
+    "creditLimit": "Credit Limit",
+    "currentBalance": "Current Balance",
+    "due": "Due",
+    "totalPurchases": "Total Purchases",
+    "totalPaid": "Total Paid",
+    "totalDue": "Total Due",
+    "advancePayment": "Advance Payment",
+    
+    "bankDetails": "Bank Details",
+    "noBankDetails": "Bank details not available",
+    "bankName": "Bank Name",
+    "branchName": "Branch Name",
+    "accountHolderName": "Account Holder Name",
+    "accountNumber": "Account Number",
+    "ifscCode": "IFSC Code",
+    "accountType": "Account Type",
+    "upiId": "UPI ID",
+    
+    "ratingsPerformance": "Ratings & Performance",
+    "overallRating": "Overall Rating",
+    "updateRating": "Update Rating",
+    "qualityRating": "Quality Rating",
+    "deliveryRating": "Delivery Rating",
+    "priceRating": "Price Rating",
+    "performanceStatistics": "Performance Statistics",
+    "totalOrders": "Total Orders",
+    "completedOrders": "Completed",
+    "pendingOrders": "Pending",
+    "cancelledOrders": "Cancelled",
+    "avgOrderValue": "Average Order Value",
+    "avgDeliveryTime": "Avg Delivery Time",
+    "onTimeDelivery": "On-Time Delivery",
+    "lastOrderDate": "Last Order",
+    
+    "notesDocuments": "Notes & Documents",
+    "notes": "Notes",
+    "internalNotes": "Internal Notes (Staff Only)",
+    "documentsText": "Documents",
+    "view": "View",
+    "createdAt": "Created At",
+    "updatedAt": "Last Updated",
+     "financial": {
+      "currentBalance": "Current Balance",
+      "due": "Due",
+      "advance": "Advance",
+      "totalDue": "Total Due",
+      "overdueAmount": "Overdue: ₹0",
+      "totalPurchases": "Total Purchases",
+      "lastMonths": "Last 6 months",
+      "totalPaid": "Total Paid",
+      "allTime": "All Time",
+      "advanceAndCredit": "Advance Payment & Credit Details",
+      "updateBalance": "Update Balance",
+      "advancePayment": "Advance Payment:",
+      "creditLimit": "Credit Limit:",
+      "creditUsed": "Credit Used:",
+      "availableCredit": "Available Credit:",
+      "creditUtilization": "Credit Utilization",
+      "paymentTerms": "Payment Terms",
+      "days": "days",
+      "paymentHistory": "Payment History (Last 10 Transactions)",
+      "export": "Export",
+      "addPayment": "Add Payment",
+      "table": {
+        "date": "Date",
+        "type": "Type",
+        "amount": "Amount",
+        "balance": "Balance",
+        "note": "Note",
+        "user": "User"
+      }
+    },
+    
     "table": {
       "title": "Suppliers",
       "noSuppliers": "No suppliers found. Add your first supplier to get started.",
@@ -89,9 +226,75 @@
       "inactive": "Inactive",
       "preferred": "Preferred",
       "blacklisted": "Blacklisted"
-    }
+    },
+     "documents": {
+      "businessDocuments": "Business Documents",
+      "documentsUploaded": "documents uploaded",
+      "addDocument": "Add Document",
+      "table": {
+        "type": "Type",
+        "number": "Number",
+        "uploaded": "Uploaded"
+      },
+      "actions": {
+        "view": "View",
+        "download": "Download",
+        "delete": "Delete"
+      },
+      "certifications": {
+        "title": "Certifications",
+        "valid": "Valid",
+        "expiring": "Expiring",
+        "expired": "Expired",
+        "addCertificate": "Add Certificate",
+        "daysLeft": "days left",
+        "table": {
+          "type": "Type",
+          "number": "Number",
+          "issuedBy": "Issued By",
+          "issueDate": "Issue Date",
+          "expiry": "Expiry",
+          "status": "Status"
+        },
+        "alert": {
+          "title": "Certification Status Alert",
+          "expiringSoon": "certification(s) expiring soon",
+          "expired": "certification(s) expired"
+        }
+      }
   },
+      "activity": {
+      "filters": {
+        "label": "Filters",
+        "allActions": "All Actions",
+        "last7Days": "Last 7 Days",
+        "last30Days": "Last 30 Days",
+        "last90Days": "Last 90 Days",
+        "allTime": "All Time"
+      },
+      "searchPlaceholder": "Search activities...",
+      "showingResults": "Showing results",
+      "activities": "activities",
+      "clearFilters": "Clear Filters",
+      "activityTable": "Activity Table",
+      "noActivities": "No activities found",
+      "apiNote": "Separate activity log endpoint or embedded in supplier data",
+      "table": {
+        "dateTime": "Date/Time",
+        "action": "Action",
+        "details": "Details",
+        "user": "User",
+        "status": "Status"
+      }
+    },
     "common": {
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "backToList": "Back to List",
+    "export": "Export",
+    "edit": "Edit",
+    "delete": "Delete",
+    "active": "Active",
+    "by": "by"
   }
+}
 }
