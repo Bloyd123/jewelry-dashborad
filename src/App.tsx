@@ -30,6 +30,7 @@ import { SupplierTable } from '@/components/supplier/SupplierTable/index'
 import SupplierDetailPage from './components/supplier/SupplierDetailsPage/SupplierDetailsPage'
 import { AddSupplier } from './pages/suppliers/AddSupplier'
 import { AddProduct } from './pages/product/AddProduct'
+import { ProductTable } from './components/products/ProductTable'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -96,6 +97,7 @@ function App() {
                 path="/products/edit/:productId"
                 element={<AddProduct />}
               />
+              <Route path='/products' element={<ProductTable/>}/>
 
               <Route
                 path="*"

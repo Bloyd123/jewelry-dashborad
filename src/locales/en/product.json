@@ -1,5 +1,63 @@
 {
   "product": {
+       "title": "Products",
+    "subtitle": "Manage your jewelry inventory",
+        "filters": {
+      "searchPlaceholder": "Search products by name, code, barcode...",
+      "metalType": "Metal Type",
+      "purity": "Purity",
+      "status": "Stock Status",
+      "saleStatus": "Sale Status",
+      "gender": "Gender",
+      "productType": "Product Type",
+      "priceRange": "Price Range",
+      "minPrice": "Min Price",
+      "maxPrice": "Max Price",
+      "price": "Price"
+    },
+    "category": {
+      "rings": "Rings",
+      "engagement": "Engagement",
+      "wedding": "Wedding",
+      "fashion": "Fashion",
+      "necklaces": "Necklaces",
+      "pendant": "Pendant",
+      "chain": "Chain",
+      "earrings": "Earrings",
+      "studs": "Studs",
+      "hoops": "Hoops",
+      "bracelets": "Bracelets",
+      "bangles": "Bangles"
+    },
+    "metal": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "diamond": "Diamond",
+      "gemstone": "Gemstone",
+      "mixed": "Mixed"
+    },
+    "status": {
+      "inStock": "In Stock",
+      "lowStock": "Low Stock",
+      "outOfStock": "Out of Stock",
+      "onOrder": "On Order",
+      "discontinued": "Discontinued"
+    },
+    "saleStatus": {
+      "available": "Available",
+      "reserved": "Reserved",
+      "sold": "Sold",
+      "onHold": "On Hold",
+      "returned": "Returned"
+    },
+    "type": {
+      "readyMade": "Ready Made",
+      "customMade": "Custom Made",
+      "onOrder": "On Order",
+      "repair": "Repair",
+      "exchange": "Exchange"
+    },
     "addProduct": "Add New Product",
     "editProduct": "Edit Product",
     "addProductDescription": "Fill in the details to add a new product to your inventory",
@@ -17,7 +75,7 @@
     "barcode": "Barcode",
     "sku": "SKU",
     "huid": "HUID",
-    "category": "Category",
+    "categorytext": "Category",
     "subCategory": "Sub Category",
     "productType": "Product Type",
     "description": "Description",
@@ -206,9 +264,48 @@
     "internalNotes": "Internal Notes",
     "internalNotesPlaceholder": "Staff-only notes...",
     "tags": "Tags"
+    
+  },
+   "table": {
+    "productCode": "Product Code",
+    "productName": "Product Name",
+    "metalDetails": "Metal Details",
+    "weight": "Weight",
+    "price": "Price",
+    "stock": "Stock",
+    "type": "Type",
+    "saleStatus": "Sale Status",
+    "features": "Features",
+    "gender": "Gender",
+    "status": "Status",
+    "noProducts": "No products found",
+    "selectedCount": "{{count}} selected",
+    "ariaLabel": "Products table"
+  },
+  "actions": {
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "duplicate": "Duplicate",
+    "updateStock": "Update Stock",
+    "calculatePrice": "Calculate Price",
+    "printLabel": "Print Label",
+    "delete": "Delete",
+    "updateStatus": "Update Status",
+    "printLabels": "Print Labels",
+    "export": "Export",
+    "bulkEdit": "Bulk Edit",
+    "changeCategory": "Change Category",
+    "recalculatePrices": "Recalculate Prices",
+    "exportPDF": "Export as PDF",
+    "exportExcel": "Export as Excel",
+    "bulkDelete": "Bulk Delete"
   },
 
   "common": {
+       "clearSelection": "Clear Selection",
+        "all": "All",
+    "apply": "Apply",
+    "search": "Search",
     "step": "Step",
     "of": "of",
     "next": "Next",
@@ -225,5 +322,20 @@
 
   "forms": {
     "selectDate": "Select date"
+  },
+   "filters": {
+    "filters": "Filters",
+    "moreFilters": "More Filters",
+    "advancedFilters": "Advanced Filters",
+    "clearAll": "Clear All",
+    "clearAdvanced": "Clear Advanced",
+    "active": "Active Filters",
+    "title": "Filter Products"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
   }
+
 }
+ 

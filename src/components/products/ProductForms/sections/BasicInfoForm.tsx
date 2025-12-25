@@ -137,7 +137,7 @@ export const BasicInfoSection = ({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormSelect
           name="categoryId"
-          label={t('product.category')}
+          label={t('product.categorytext')}
           value={data.categoryId || ''}
           onChange={(name, value) => {
             onChange(name, value)
