@@ -76,14 +76,18 @@ export default function ProductFormMobile({
     if (!formData.name) newErrors.name = t('validation.required')
     if (!formData.categoryId) newErrors.categoryId = t('validation.required')
     if (!formData.productType) newErrors.productType = t('validation.required')
-    if (!formData.metal?.type) newErrors['metal.type'] = t('validation.required')
-    if (!formData.metal?.purity) newErrors['metal.purity'] = t('validation.required')
-    if (!formData.weight?.grossWeight) newErrors['weight.grossWeight'] = t('validation.required')
-    if (!formData.stock?.quantity) newErrors['stock.quantity'] = t('validation.required')
+    if (!formData.metal?.type)
+      newErrors['metal.type'] = t('validation.required')
+    if (!formData.metal?.purity)
+      newErrors['metal.purity'] = t('validation.required')
+    if (!formData.weight?.grossWeight)
+      newErrors['weight.grossWeight'] = t('validation.required')
+    if (!formData.stock?.quantity)
+      newErrors['stock.quantity'] = t('validation.required')
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
-      
+
       // Navigate to first step with errors
       const errorSteps = [
         ['name', 'categoryId', 'productType'],
@@ -92,11 +96,11 @@ export default function ProductFormMobile({
         [],
         ['stock.quantity'],
       ]
-      
+
       const firstErrorStep = errorSteps.findIndex(stepFields =>
         stepFields.some(field => newErrors[field])
       )
-      
+
       if (firstErrorStep !== -1) {
         setCurrentStep(firstErrorStep)
       }

@@ -30,7 +30,7 @@ export default {
   ...shop,
   ...metalrate,
   ...supplier,
-  ...product
+  ...product,
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

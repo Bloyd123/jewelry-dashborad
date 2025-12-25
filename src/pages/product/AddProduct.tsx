@@ -30,13 +30,14 @@ export const AddProduct = () => {
         huid: existingProduct.hallmarking?.huid,
         name: existingProduct.name,
         description: existingProduct.description,
-        categoryId: typeof existingProduct.categoryId === 'string' 
-          ? existingProduct.categoryId 
-          : existingProduct.categoryId._id,
-        subCategoryId: existingProduct.subCategoryId 
-          ? (typeof existingProduct.subCategoryId === 'string'
-              ? existingProduct.subCategoryId
-              : existingProduct.subCategoryId._id)
+        categoryId:
+          typeof existingProduct.categoryId === 'string'
+            ? existingProduct.categoryId
+            : existingProduct.categoryId._id,
+        subCategoryId: existingProduct.subCategoryId
+          ? typeof existingProduct.subCategoryId === 'string'
+            ? existingProduct.subCategoryId
+            : existingProduct.subCategoryId._id
           : undefined,
         productType: existingProduct.productType,
         metal: existingProduct.metal,

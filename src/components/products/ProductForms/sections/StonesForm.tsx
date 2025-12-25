@@ -20,7 +20,9 @@ export const StonesSection = ({
   disabled = false,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-  const [expandedStones, setExpandedStones] = useState<Set<number>>(new Set([0]))
+  const [expandedStones, setExpandedStones] = useState<Set<number>>(
+    new Set([0])
+  )
 
   const stones = (data.stones || []) as StoneFormData[]
 
@@ -79,7 +81,7 @@ export const StonesSection = ({
   const handleRemoveStone = (index: number) => {
     const newStones = stones.filter((_, i) => i !== index)
     onChange('stones', newStones)
-    
+
     const newExpanded = new Set(expandedStones)
     newExpanded.delete(index)
     setExpandedStones(newExpanded)
@@ -113,23 +115,34 @@ export const StonesSection = ({
   // Calculate totals
   const totalStones = stones.length
   const totalPieces = stones.reduce((sum, s) => sum + (s.pieceCount || 0), 0)
-  const totalValue = stones.reduce((sum, s) => sum + (s.totalStonePrice || 0), 0)
+  const totalValue = stones.reduce(
+    (sum, s) => sum + (s.totalStonePrice || 0),
+    0
+  )
 
   return (
     <div className="space-y-4">
       {/* Summary */}
       <div className="flex items-center justify-between rounded-md border border-border-primary bg-bg-tertiary p-4">
         <div className="space-y-1">
-          <p className="text-sm text-text-secondary">{t('product.totalStones')}</p>
+          <p className="text-sm text-text-secondary">
+            {t('product.totalStones')}
+          </p>
           <p className="text-2xl font-bold text-text-primary">{totalStones}</p>
         </div>
         <div className="space-y-1">
-          <p className="text-sm text-text-secondary">{t('product.totalPieces')}</p>
+          <p className="text-sm text-text-secondary">
+            {t('product.totalPieces')}
+          </p>
           <p className="text-2xl font-bold text-text-primary">{totalPieces}</p>
         </div>
         <div className="space-y-1">
-          <p className="text-sm text-text-secondary">{t('product.totalValue')}</p>
-          <p className="text-2xl font-bold text-accent">₹{totalValue.toFixed(2)}</p>
+          <p className="text-sm text-text-secondary">
+            {t('product.totalValue')}
+          </p>
+          <p className="text-2xl font-bold text-accent">
+            ₹{totalValue.toFixed(2)}
+          </p>
         </div>
       </div>
 
@@ -173,7 +186,7 @@ export const StonesSection = ({
                   size="icon"
                   onClick={() => handleRemoveStone(index)}
                   disabled={disabled}
-                  className="h-8 w-8 text-status-error hover:bg-status-error/10"
+                  className="hover:bg-status-error/10 h-8 w-8 text-status-error"
                 >
                   <Trash2 className="h-4 w-4" />
                 </Button>
@@ -188,7 +201,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneType`}
                     label={t('product.stoneType')}
                     value={stone.stoneType}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneType', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneType', value)
+                    }
                     required={true}
                     disabled={disabled}
                     options={stoneTypes}
@@ -198,7 +213,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneName`}
                     label={t('product.stoneName')}
                     value={stone.stoneName || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneName', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneName', value)
+                    }
                     placeholder={t('product.stoneNamePlaceholder')}
                     disabled={disabled}
                   />
@@ -210,7 +227,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneQuality`}
                     label={t('product.quality')}
                     value={stone.stoneQuality || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneQuality', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneQuality', value)
+                    }
                     disabled={disabled}
                     options={stoneQualities}
                   />
@@ -219,7 +238,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneShape`}
                     label={t('product.shape')}
                     value={stone.stoneShape || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneShape', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneShape', value)
+                    }
                     disabled={disabled}
                     options={stoneShapes}
                   />
@@ -231,7 +252,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneColor`}
                     label={t('product.color')}
                     value={stone.stoneColor || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneColor', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneColor', value)
+                    }
                     placeholder="D, E, F..."
                     disabled={disabled}
                   />
@@ -240,7 +263,9 @@ export const StonesSection = ({
                     name={`stones.${index}.stoneCut`}
                     label={t('product.cut')}
                     value={stone.stoneCut || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneCut', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneCut', value)
+                    }
                     disabled={disabled}
                     options={stoneCuts}
                   />
@@ -253,7 +278,9 @@ export const StonesSection = ({
                     label={t('product.caratWeight')}
                     type="number"
                     value={stone.caratWeight || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'caratWeight', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'caratWeight', value)
+                    }
                     placeholder="0.50"
                     disabled={disabled}
                   />
@@ -263,7 +290,9 @@ export const StonesSection = ({
                     label={t('product.stoneWeight')}
                     type="number"
                     value={stone.stoneWeight || ''}
-                    onChange={(_, value) => handleStoneChange(index, 'stoneWeight', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stoneWeight', value)
+                    }
                     placeholder="0.10"
                     disabled={disabled}
                   />
@@ -276,7 +305,9 @@ export const StonesSection = ({
                     label={t('product.pieceCount')}
                     type="number"
                     value={stone.pieceCount}
-                    onChange={(_, value) => handleStoneChange(index, 'pieceCount', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'pieceCount', value)
+                    }
                     required={true}
                     disabled={disabled}
                   />
@@ -286,7 +317,9 @@ export const StonesSection = ({
                     label={t('product.pricePerPiece')}
                     type="number"
                     value={stone.stonePrice}
-                    onChange={(_, value) => handleStoneChange(index, 'stonePrice', value)}
+                    onChange={(_, value) =>
+                      handleStoneChange(index, 'stonePrice', value)
+                    }
                     required={true}
                     disabled={disabled}
                   />

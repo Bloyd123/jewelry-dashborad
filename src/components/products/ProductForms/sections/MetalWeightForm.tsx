@@ -67,7 +67,10 @@ export const MetalWeightSection = ({
     const calculatedNetWeight = grossWeight - stoneWeight
     const currentNetWeight = parseFloat(data.weight?.netWeight as any) || 0
 
-    if (calculatedNetWeight >= 0 && Math.abs(calculatedNetWeight - currentNetWeight) > 0.001) {
+    if (
+      calculatedNetWeight >= 0 &&
+      Math.abs(calculatedNetWeight - currentNetWeight) > 0.001
+    ) {
       onChange('weight', {
         grossWeight: data.weight?.grossWeight || 0,
         stoneWeight: data.weight?.stoneWeight || 0,
@@ -81,9 +84,11 @@ export const MetalWeightSection = ({
   // Auto-calculate wastage weight
   useEffect(() => {
     const netWeight = parseFloat(data.weight?.netWeight as any) || 0
-    const wastagePercentage = parseFloat(data.weight?.wastage?.percentage as any) || 0
+    const wastagePercentage =
+      parseFloat(data.weight?.wastage?.percentage as any) || 0
     const calculatedWastageWeight = (netWeight * wastagePercentage) / 100
-    const currentWastageWeight = parseFloat(data.weight?.wastage?.weight as any) || 0
+    const currentWastageWeight =
+      parseFloat(data.weight?.wastage?.weight as any) || 0
 
     if (Math.abs(calculatedWastageWeight - currentWastageWeight) > 0.001) {
       onChange('weight', {

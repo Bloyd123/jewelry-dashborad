@@ -3,12 +3,12 @@
 // ProductForm Types and Interfaces
 // ============================================================================
 
-import type { 
-  Metal, 
-  Weight, 
-  Stone, 
-  MakingCharges, 
-  Pricing, 
+import type {
+  Metal,
+  Weight,
+  Stone,
+  MakingCharges,
+  Pricing,
   Stock,
   ProductImage,
   Hallmarking,
@@ -16,7 +16,7 @@ import type {
   Dimensions,
   ProductType,
   Gender,
-  OccasionType
+  OccasionType,
 } from '@/types/product.types'
 
 // Extended form data with all fields
@@ -26,16 +26,16 @@ export interface ProductFormData {
   barcode?: string
   sku?: string
   huid?: string
-  
+
   // Basic Info
   name: string
   description?: string
-  
+
   // Category
   categoryId: string
   subCategoryId?: string
   productType: ProductType
-  
+
   // Product Details
   metal: Metal
   weight: Weight
@@ -43,29 +43,29 @@ export interface ProductFormData {
   makingCharges: MakingCharges
   pricing: Partial<Pricing>
   stock: Stock
-  
+
   // Physical Attributes
   size?: Size
   dimensions?: Dimensions
   hallmarking?: Hallmarking
-  
+
   // Media
   images?: ProductImage[]
-  
+
   // Classification
   gender: Gender
   occasion?: OccasionType[]
-  
+
   // Status
   isActive?: boolean
   isFeatured?: boolean
   isNewArrival?: boolean
   isBestseller?: boolean
-  
+
   // Search & Tags
   tags?: string[]
   keywords?: string[]
-  
+
   // Notes
   notes?: string
   internalNotes?: string

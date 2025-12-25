@@ -20,7 +20,9 @@ export const StockDetailsSection = ({
   disabled = false,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-  const [mockImages, setMockImages] = useState<Array<{ url: string; isPrimary: boolean }>>([])
+  const [mockImages, setMockImages] = useState<
+    Array<{ url: string; isPrimary: boolean }>
+  >([])
 
   const stockUnits = [
     { value: 'piece', label: t('product.stockUnits.piece') },
@@ -48,7 +50,7 @@ export const StockDetailsSection = ({
     const mockImageUrl = `https://images.unsplash.com/photo-${Date.now()}?w=400`
     const newImage = { url: mockImageUrl, isPrimary: mockImages.length === 0 }
     setMockImages([...mockImages, newImage])
-    
+
     onChange('images', [...(data.images || []), newImage])
   }
 
@@ -204,11 +206,16 @@ export const StockDetailsSection = ({
             type="checkbox"
             id="isHallmarked"
             checked={data.hallmarking?.isHallmarked || false}
-            onChange={e => handleHallmarkingChange('isHallmarked', e.target.checked)}
+            onChange={e =>
+              handleHallmarkingChange('isHallmarked', e.target.checked)
+            }
             disabled={disabled}
             className="h-4 w-4 accent-accent"
           />
-          <label htmlFor="isHallmarked" className="font-semibold text-text-primary">
+          <label
+            htmlFor="isHallmarked"
+            className="font-semibold text-text-primary"
+          >
             {t('product.isHallmarked')}
           </label>
         </div>
@@ -228,7 +235,9 @@ export const StockDetailsSection = ({
               name="hallmarking.hallmarkNumber"
               label={t('product.hallmarkNumber')}
               value={data.hallmarking?.hallmarkNumber || ''}
-              onChange={(_, value) => handleHallmarkingChange('hallmarkNumber', value)}
+              onChange={(_, value) =>
+                handleHallmarkingChange('hallmarkNumber', value)
+              }
               placeholder="HM-2024-123456"
               disabled={disabled}
             />
@@ -237,7 +246,9 @@ export const StockDetailsSection = ({
               name="hallmarking.hallmarkingCenter"
               label={t('product.hallmarkingCenter')}
               value={data.hallmarking?.hallmarkingCenter || ''}
-              onChange={(_, value) => handleHallmarkingChange('hallmarkingCenter', value)}
+              onChange={(_, value) =>
+                handleHallmarkingChange('hallmarkingCenter', value)
+              }
               placeholder="BIS Hallmarking Center, Mumbai"
               disabled={disabled}
             />
@@ -246,7 +257,9 @@ export const StockDetailsSection = ({
               name="hallmarking.bisLicenseNumber"
               label={t('product.bisLicenseNumber')}
               value={data.hallmarking?.bisLicenseNumber || ''}
-              onChange={(_, value) => handleHallmarkingChange('bisLicenseNumber', value)}
+              onChange={(_, value) =>
+                handleHallmarkingChange('bisLicenseNumber', value)
+              }
               placeholder="BIS-LIC-12345"
               disabled={disabled}
             />
@@ -317,7 +330,9 @@ export const StockDetailsSection = ({
 
       {/* Notes */}
       <div className="space-y-4">
-        <h3 className="font-semibold text-text-primary">{t('product.notes')}</h3>
+        <h3 className="font-semibold text-text-primary">
+          {t('product.notes')}
+        </h3>
 
         <FormTextarea
           name="notes"
@@ -352,9 +367,12 @@ export const StockDetailsSection = ({
       <FormInput
         name="tags"
         label={t('product.tags')}
-        value={Array.isArray(data.tags) ? data.tags.join(', ') : (data.tags || '')}
+        value={
+          Array.isArray(data.tags) ? data.tags.join(', ') : data.tags || ''
+        }
         onChange={(name, value) => {
-          const tagsArray = typeof value === 'string' ? value.split(',').map(t => t.trim()) : []
+          const tagsArray =
+            typeof value === 'string' ? value.split(',').map(t => t.trim()) : []
           onChange(name, tagsArray)
         }}
         onBlur={onBlur}

@@ -275,38 +275,50 @@ export const PricingSection = ({
 
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.metalRate')}</span>
+            <span className="text-text-secondary">
+              {t('product.metalRate')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.metalRate.toFixed(2)}/g
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.netWeight')}</span>
+            <span className="text-text-secondary">
+              {t('product.netWeight')}
+            </span>
             <span className="font-medium text-text-primary">
               {(data.weight?.netWeight || 0).toFixed(3)}g
             </span>
           </div>
           <div className="h-px bg-border-secondary" />
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.metalValue')}</span>
+            <span className="text-text-secondary">
+              {t('product.metalValue')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.metalValue.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.stoneValue')}</span>
+            <span className="text-text-secondary">
+              {t('product.stoneValue')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.stoneValue.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.makingCharges')}</span>
+            <span className="text-text-secondary">
+              {t('product.makingCharges')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.makingCharges.toFixed(2)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.otherCharges')}</span>
+            <span className="text-text-secondary">
+              {t('product.otherCharges')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.otherCharges.toFixed(2)}
             </span>
@@ -345,7 +357,9 @@ export const PricingSection = ({
 
       {/* Discount */}
       <div className="space-y-4">
-        <h3 className="font-semibold text-text-primary">{t('product.discount')}</h3>
+        <h3 className="font-semibold text-text-primary">
+          {t('product.discount')}
+        </h3>
 
         <FormSelect
           name="pricing.discount.type"
@@ -370,17 +384,21 @@ export const PricingSection = ({
       </div>
 
       {/* Final Pricing */}
-      <div className="space-y-4 rounded-md border-2 border-accent bg-accent/5 p-4">
+      <div className="bg-accent/5 space-y-4 rounded-md border-2 border-accent p-4">
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-text-secondary">{t('product.totalWithGST')}</span>
+            <span className="text-text-secondary">
+              {t('product.totalWithGST')}
+            </span>
             <span className="font-medium text-text-primary">
               ₹{priceBreakdown.totalPrice.toFixed(2)}
             </span>
           </div>
           {priceBreakdown.discount > 0 && (
             <div className="flex justify-between">
-              <span className="text-text-secondary">{t('product.discount')}</span>
+              <span className="text-text-secondary">
+                {t('product.discount')}
+              </span>
               <span className="font-medium text-status-error">
                 - ₹{priceBreakdown.discount.toFixed(2)}
               </span>
@@ -388,8 +406,12 @@ export const PricingSection = ({
           )}
           <div className="h-px bg-border-secondary" />
           <div className="flex justify-between text-lg font-bold">
-            <span className="text-text-primary">{t('product.sellingPrice')}</span>
-            <span className="text-accent">₹{priceBreakdown.sellingPrice.toFixed(2)}</span>
+            <span className="text-text-primary">
+              {t('product.sellingPrice')}
+            </span>
+            <span className="text-accent">
+              ₹{priceBreakdown.sellingPrice.toFixed(2)}
+            </span>
           </div>
         </div>
       </div>

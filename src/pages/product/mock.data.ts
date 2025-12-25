@@ -8,7 +8,7 @@ import type {
   ProductAnalytics,
   LowStockResponse,
   PaginationMeta,
-} from '@/types/product.types';
+} from '@/types/product.types'
 
 // ============================================
 // DUMMY CATEGORIES
@@ -77,7 +77,7 @@ export const dummyCategories: Category[] = [
     createdAt: '2024-01-15T10:00:00Z',
     updatedAt: '2024-01-15T10:00:00Z',
   },
-];
+]
 
 // ============================================
 // DUMMY PRODUCTS
@@ -91,7 +91,8 @@ export const dummyProducts: Product[] = [
     barcode: '1234567890123',
     sku: 'SKU-RING-001',
     name: 'Diamond Solitaire Engagement Ring',
-    description: 'Elegant 18K yellow gold diamond solitaire ring with 1 carat VVS center stone. Perfect for engagements.',
+    description:
+      'Elegant 18K yellow gold diamond solitaire ring with 1 carat VVS center stone. Perfect for engagements.',
     categoryId: '674d8e9f1234567890abcdef',
     subCategoryId: '674d8e9f1234567890abcd04',
     productType: 'ready_made',
@@ -155,7 +156,8 @@ export const dummyProducts: Product[] = [
       huid: 'HUID789012',
       bisLicenseNumber: 'BIS2024',
     },
-    primaryImage: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600',
+    primaryImage:
+      'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=600',
@@ -190,7 +192,8 @@ export const dummyProducts: Product[] = [
     barcode: '1234567890124',
     sku: 'SKU-NECK-001',
     name: 'Traditional Gold Necklace Set',
-    description: '22K gold traditional necklace with intricate design. Includes matching earrings.',
+    description:
+      '22K gold traditional necklace with intricate design. Includes matching earrings.',
     categoryId: '674d8e9f1234567890abcd01',
     productType: 'ready_made',
     metal: {
@@ -243,7 +246,8 @@ export const dummyProducts: Product[] = [
       maxStockLevel: 5,
       reorderLevel: 1,
     },
-    primaryImage: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600',
+    primaryImage:
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600',
@@ -328,7 +332,8 @@ export const dummyProducts: Product[] = [
       maxStockLevel: 10,
       reorderLevel: 3,
     },
-    primaryImage: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600',
+    primaryImage:
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600',
@@ -401,7 +406,8 @@ export const dummyProducts: Product[] = [
       maxStockLevel: 3,
       reorderLevel: 1,
     },
-    primaryImage: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600',
+    primaryImage:
+      'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600',
@@ -473,7 +479,8 @@ export const dummyProducts: Product[] = [
       maxStockLevel: 20,
       reorderLevel: 8,
     },
-    primaryImage: 'https://images.unsplash.com/photo-1599459183200-59c7687a0275?w=600',
+    primaryImage:
+      'https://images.unsplash.com/photo-1599459183200-59c7687a0275?w=600',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1599459183200-59c7687a0275?w=600',
@@ -496,7 +503,7 @@ export const dummyProducts: Product[] = [
     createdAt: '2024-01-19T10:00:00Z',
     updatedAt: '2024-01-19T10:00:00Z',
   },
-];
+]
 
 // ============================================
 // DUMMY PAGINATION
@@ -508,7 +515,7 @@ export const dummyPagination: PaginationMeta = {
   totalItems: dummyProducts.length,
   hasNextPage: false,
   hasPrevPage: false,
-};
+}
 
 // ============================================
 // DUMMY ANALYTICS
@@ -548,7 +555,7 @@ export const dummyAnalytics: ProductAnalytics = {
       totalValue: 495945,
     },
   ],
-};
+}
 
 // ============================================
 // HELPER FUNCTIONS TO SIMULATE API
@@ -557,38 +564,46 @@ export const dummyAnalytics: ProductAnalytics = {
 /**
  * Simulate API delay
  */
-const delay = (ms: number = 500) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number = 500) =>
+  new Promise(resolve => setTimeout(resolve, ms))
 
 /**
  * Get all products with filters
  */
-export const getMockProducts = async (filters?: any): Promise<ProductListResponse> => {
-  await delay();
-  
-  let filteredProducts = [...dummyProducts];
-  
+export const getMockProducts = async (
+  filters?: any
+): Promise<ProductListResponse> => {
+  await delay()
+
+  let filteredProducts = [...dummyProducts]
+
   // Apply filters if provided
   if (filters?.search) {
-    const search = filters.search.toLowerCase();
-    filteredProducts = filteredProducts.filter(p => 
-      p.name.toLowerCase().includes(search) ||
-      p.productCode.toLowerCase().includes(search) ||
-      p.tags?.some(t => t.toLowerCase().includes(search))
-    );
+    const search = filters.search.toLowerCase()
+    filteredProducts = filteredProducts.filter(
+      p =>
+        p.name.toLowerCase().includes(search) ||
+        p.productCode.toLowerCase().includes(search) ||
+        p.tags?.some(t => t.toLowerCase().includes(search))
+    )
   }
-  
+
   if (filters?.category) {
-    filteredProducts = filteredProducts.filter(p => p.categoryId === filters.category);
+    filteredProducts = filteredProducts.filter(
+      p => p.categoryId === filters.category
+    )
   }
-  
+
   if (filters?.status) {
-    filteredProducts = filteredProducts.filter(p => p.status === filters.status);
+    filteredProducts = filteredProducts.filter(p => p.status === filters.status)
   }
-  
+
   if (filters?.metalType) {
-    filteredProducts = filteredProducts.filter(p => p.metal.type === filters.metalType);
+    filteredProducts = filteredProducts.filter(
+      p => p.metal.type === filters.metalType
+    )
   }
-  
+
   return {
     success: true,
     message: 'Products retrieved successfully',
@@ -597,66 +612,70 @@ export const getMockProducts = async (filters?: any): Promise<ProductListRespons
       ...dummyPagination,
       totalItems: filteredProducts.length,
     },
-  };
-};
+  }
+}
 
 /**
  * Get single product by ID
  */
-export const getMockProductById = async (id: string): Promise<ProductResponse> => {
-  await delay();
-  
-  const product = dummyProducts.find(p => p._id === id);
-  
+export const getMockProductById = async (
+  id: string
+): Promise<ProductResponse> => {
+  await delay()
+
+  const product = dummyProducts.find(p => p._id === id)
+
   if (!product) {
-    throw new Error('Product not found');
+    throw new Error('Product not found')
   }
-  
+
   return {
     success: true,
     message: 'Product retrieved successfully',
     data: product,
-  };
-};
+  }
+}
 
 /**
  * Get low stock products
  */
 export const getMockLowStockProducts = async (): Promise<LowStockResponse> => {
-  await delay();
-  
-  const lowStockProducts = dummyProducts.filter(p => 
-    p.status === 'low_stock' || p.status === 'out_of_stock'
-  );
-  
+  await delay()
+
+  const lowStockProducts = dummyProducts.filter(
+    p => p.status === 'low_stock' || p.status === 'out_of_stock'
+  )
+
   return {
     products: lowStockProducts,
     meta: {
       totalLowStockItems: lowStockProducts.length,
-      criticalItems: lowStockProducts.filter(p => p.status === 'out_of_stock').length,
+      criticalItems: lowStockProducts.filter(p => p.status === 'out_of_stock')
+        .length,
     },
-  };
-};
+  }
+}
 
 /**
  * Get product analytics
  */
 export const getMockAnalytics = async (): Promise<ProductAnalytics> => {
-  await delay();
-  return dummyAnalytics;
-};
+  await delay()
+  return dummyAnalytics
+}
 
 /**
  * Search products
  */
 export const mockSearchProducts = async (query: string): Promise<Product[]> => {
-  await delay();
-  
-  const searchLower = query.toLowerCase();
-  return dummyProducts.filter(p =>
-    p.name.toLowerCase().includes(searchLower) ||
-    p.productCode.toLowerCase().includes(searchLower) ||
-    p.barcode?.toLowerCase().includes(searchLower) ||
-    p.tags?.some(t => t.toLowerCase().includes(searchLower))
-  );
-};
+  await delay()
+
+  const searchLower = query.toLowerCase()
+  return dummyProducts.filter(
+    p =>
+      p.name.toLowerCase().includes(searchLower) ||
+      p.productCode.toLowerCase().includes(searchLower) ||
+      p.barcode?.toLowerCase().includes(searchLower) ||
+      p.tags?.some(t => t.toLowerCase().includes(searchLower))
+  )
+}

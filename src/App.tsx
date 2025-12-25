@@ -91,8 +91,11 @@ function App() {
                 element={<AddSupplier />}
               />
 
-              <Route path='/products/add' element={<AddProduct/>}/>
-              <Route path='/products/edit/:productId' element={<AddProduct/>}/>
+              <Route path="/products/add" element={<AddProduct />} />
+              <Route
+                path="/products/edit/:productId"
+                element={<AddProduct />}
+              />
 
               <Route
                 path="*"
