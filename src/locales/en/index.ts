@@ -10,6 +10,7 @@ import permission from './permission.json'
 import shop from './shop.json'
 import metalrate from './metalrate.json'
 import supplier from './suppliers.json'
+import product from './product.json'
 // import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
@@ -29,6 +30,7 @@ export default {
   ...shop,
   ...metalrate,
   ...supplier,
+  ...product
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

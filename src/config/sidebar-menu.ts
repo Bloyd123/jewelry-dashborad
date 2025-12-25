@@ -72,6 +72,14 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       { title: t('sidebar.shopdetail'), url: ROUTES.shopdetail },
     ],
   },
+    {
+    title: t('sidebar.products'),
+    icon: Package2,
+    items: [
+      { title: t('sidebar.allProducts'), url: ROUTES.products },
+      { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
+    ],
+  },
   // {
   //   title: t('sidebar.purchases'),
   //   icon: ShoppingCart,
@@ -103,14 +111,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
   //     },
   //   ],
   // },
-  // {
-  //   title: t('sidebar.products'),
-  //   icon: Package2,
-  //   items: [
-  //     { title: t('sidebar.allProducts'), url: ROUTES.products },
-  //     { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
-  //   ],
-  // },
+
   // {
   //   title: t('sidebar.customOrders'),
   //   icon: Wrench,

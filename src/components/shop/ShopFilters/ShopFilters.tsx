@@ -180,7 +180,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
             className="relative"
           >
             <SlidersHorizontal className="mr-2 h-4 w-4" />
-            {t('filters.moreFilters')}
+            {t('shopsfilters.moreFilters')}
             {advancedFilterCount > 0 && (
               <span className="ml-2 rounded-full bg-accent px-1.5 py-0.5 text-xs text-white">
                 {advancedFilterCount}

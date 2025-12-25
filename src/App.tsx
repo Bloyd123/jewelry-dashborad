@@ -29,6 +29,7 @@ import { MetalRatesDashboardPage } from '@/components/metal-rates/MetalRatesDash
 import { SupplierTable } from '@/components/supplier/SupplierTable/index'
 import SupplierDetailPage from './components/supplier/SupplierDetailsPage/SupplierDetailsPage'
 import { AddSupplier } from './pages/suppliers/AddSupplier'
+import { AddProduct } from './pages/product/AddProduct'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -89,6 +90,10 @@ function App() {
                 path="/supplier/edit/:supplierId"
                 element={<AddSupplier />}
               />
+
+              <Route path='/products/add' element={<AddProduct/>}/>
+              <Route path='/products/edit/:productId' element={<AddProduct/>}/>
+
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

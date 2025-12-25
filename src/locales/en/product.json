@@ -1,0 +1,229 @@
+{
+  "product": {
+    "addProduct": "Add New Product",
+    "editProduct": "Edit Product",
+    "addProductDescription": "Fill in the details to add a new product to your inventory",
+    "editProductDescription": "Update product information and save changes",
+    
+    "basicInformation": "Basic Information",
+    "metalAndWeight": "Metal & Weight Details",
+    "stonesAndDiamonds": "Stones & Diamonds",
+    "pricingAndCharges": "Pricing & Charges",
+    "stockAndOther": "Stock & Other Details",
+    
+    "productCode": "Product Code",
+    "productName": "Product Name",
+    "productNamePlaceholder": "Enter product name",
+    "barcode": "Barcode",
+    "sku": "SKU",
+    "huid": "HUID",
+    "category": "Category",
+    "subCategory": "Sub Category",
+    "productType": "Product Type",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter product description...",
+    
+    "selectCategory": "Select Category",
+    "selectSubCategory": "Select Sub Category",
+    "selectProductType": "Select Product Type",
+    "selectGender": "Select Gender",
+    
+    "productTypes": {
+      "readyMade": "Ready Made",
+      "customMade": "Custom Made",
+      "onOrder": "On Order",
+      "repair": "Repair",
+      "exchange": "Exchange"
+    },
+    
+    "gender": {
+      "label": "Gender",
+      "unisex": "Unisex",
+      "male": "Male",
+      "female": "Female",
+      "kids": "Kids"
+    },
+    
+    "metalDetails": "Metal Details",
+    "metalType": "Metal Type",
+    "purity": "Purity",
+    "metalColor": "Metal Color",
+    "selectMetalType": "Select Metal Type",
+    "selectPurity": "Select Purity",
+    "selectColor": "Select Color",
+    
+    "metalTypes": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "diamond": "Diamond",
+      "gemstone": "Gemstone",
+      "mixed": "Mixed"
+    },
+    
+    "metalColors": {
+      "yellow": "Yellow",
+      "white": "White",
+      "rose": "Rose",
+      "mixed": "Mixed"
+    },
+    
+    "weightDetails": "Weight Details",
+    "weightUnit": "Weight Unit",
+    "grossWeight": "Gross Weight",
+    "stoneWeight": "Stone Weight",
+    "netWeight": "Net Weight",
+    "wastagePercentage": "Wastage %",
+    "wastageWeight": "Wastage Weight",
+    
+    "weightUnits": {
+      "gram": "Gram (g)",
+      "kg": "Kilogram (kg)",
+      "tola": "Tola",
+      "ounce": "Ounce (oz)",
+      "carat": "Carat (ct)"
+    },
+    
+    "makingCharges": "Making Charges",
+    "makingChargeType": "Type",
+    "makingChargeValue": "Value",
+    
+    "makingChargeTypes": {
+      "perGram": "Per Gram",
+      "percentage": "Percentage",
+      "flat": "Flat Amount",
+      "none": "None"
+    },
+    
+    "totalStones": "Total Stones",
+    "totalPieces": "Total Pieces",
+    "totalValue": "Total Value",
+    "addStone": "Add Stone/Diamond",
+    "stoneNumber": "Stone #{{number}}",
+    "noStonesAdded": "No stones added yet. Click 'Add Stone' to start.",
+    
+    "stoneType": "Stone Type",
+    "stoneName": "Stone Name",
+    "stoneNamePlaceholder": "Optional custom name",
+    "quality": "Quality",
+    "color": "Color",
+    "shape": "Shape",
+    "cut": "Cut",
+    "caratWeight": "Carat Weight",
+    "pieceCount": "Piece Count",
+    "pricePerPiece": "Price per Piece",
+    "totalStonePrice": "Total Stone Price",
+    
+    "stoneTypes": {
+      "diamond": "Diamond",
+      "ruby": "Ruby",
+      "emerald": "Emerald",
+      "sapphire": "Sapphire",
+      "pearl": "Pearl",
+      "topaz": "Topaz",
+      "amethyst": "Amethyst",
+      "garnet": "Garnet",
+      "other": "Other"
+    },
+    
+    "stoneShapes": {
+      "round": "Round",
+      "oval": "Oval",
+      "square": "Square",
+      "pear": "Pear",
+      "heart": "Heart"
+    },
+    
+    "stoneCuts": {
+      "excellent": "Excellent",
+      "veryGood": "Very Good",
+      "good": "Good",
+      "fair": "Fair"
+    },
+    
+    "metalRateConfiguration": "Metal Rate Configuration",
+    "useCurrentRate": "Use Current Market Rate",
+    "useCustomRate": "Use Custom Rate",
+    "customMetalRate": "Custom Metal Rate (₹/g)",
+    "calculatePrice": "Calculate Price",
+    
+    "priceBreakdown": "Price Breakdown",
+    "metalRate": "Metal Rate",
+    "metalValue": "Metal Value",
+    "stoneValue": "Stone Value",
+    "otherCharges": "Other Charges",
+    "subtotal": "Subtotal",
+    "gstPercentage": "GST %",
+    "discount": "Discount",
+    "totalWithGST": "Total (with GST)",
+    "sellingPrice": "Selling Price",
+    "costPrice": "Cost Price (Optional)",
+    "mrp": "MRP (Optional)",
+    
+    "discountType": "Discount Type",
+    "discountValue": "Discount Value",
+    
+    "discountTypes": {
+      "none": "No Discount",
+      "percentage": "Percentage (%)",
+      "flat": "Flat Amount (₹)"
+    },
+    
+    "stockDetails": "Stock Details",
+    "initialStock": "Initial Stock Quantity",
+    "stockUnit": "Stock Unit",
+    "minStockLevel": "Min Stock Level",
+    "reorderLevel": "Reorder Level",
+    "maxStockLevel": "Max Stock Level",
+    
+    "stockUnits": {
+      "piece": "Piece",
+      "pair": "Pair",
+      "set": "Set",
+      "gram": "Gram",
+      "kg": "Kilogram"
+    },
+    
+    "productImages": "Product Images",
+    "uploadImage": "Upload Image",
+    "primary": "Primary",
+    "setPrimary": "Set Primary",
+    
+    "isHallmarked": "Product is Hallmarked",
+    "hallmarkNumber": "Hallmark Number",
+    "hallmarkingCenter": "Hallmarking Center",
+    "bisLicenseNumber": "BIS License Number",
+    
+    "productStatus": "Product Status",
+    "isActive": "Is Active (Show in inventory)",
+    "isFeatured": "Is Featured (Show on homepage)",
+    "isNewArrival": "Is New Arrival",
+    "isBestseller": "Is Bestseller",
+    
+    "notes": "Notes",
+    "publicNotes": "Public Description/Notes",
+    "publicNotesPlaceholder": "Notes visible to customers...",
+    "internalNotes": "Internal Notes",
+    "internalNotesPlaceholder": "Staff-only notes...",
+    "tags": "Tags"
+  },
+  
+  "common": {
+    "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
+    "saving": "Saving..."
+  },
+  
+  "validation": {
+    "required": "This field is required"
+  },
+  
+  "forms": {
+    "selectDate": "Select date"
+  }
+}
