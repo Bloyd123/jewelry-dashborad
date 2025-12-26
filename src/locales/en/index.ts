@@ -15,7 +15,7 @@ import product from './product.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
 // import parties from './parties.json'
-// import purchase from './purchase.json'
+import purchase from './purchase.json'
 // import reports from './reports.json'
 // import sales from './sales.json'
 // import settings from './settings.json'
@@ -31,6 +31,7 @@ export default {
   ...metalrate,
   ...supplier,
   ...product,
+  ...purchase
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

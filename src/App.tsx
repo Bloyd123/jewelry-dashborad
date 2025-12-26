@@ -31,6 +31,8 @@ import SupplierDetailPage from './components/supplier/SupplierDetailsPage/Suppli
 import { AddSupplier } from './pages/suppliers/AddSupplier'
 import { AddProduct } from './pages/product/AddProduct'
 import { ProductTable } from './components/products/ProductTable'
+import { PurchaseTable } from './components/purchase/PurchaseTable'
+import AddPurchasePage from './pages/purchase/AddPurchase'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -98,6 +100,11 @@ function App() {
                 element={<AddProduct />}
               />
               <Route path='/products' element={<ProductTable/>}/>
+
+              <Route path='/purchases' element={<PurchaseTable/>}/>
+              <Route path='/purchases/add' element={<AddPurchasePage/>}/>
+              <Route path='/purchases/edit/:purchaseId' element={<AddPurchasePage/>}/>
+
 
               <Route
                 path="*"

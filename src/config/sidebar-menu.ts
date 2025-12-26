@@ -80,16 +80,16 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
     ],
   },
-  // {
-  //   title: t('sidebar.purchases'),
-  //   icon: ShoppingCart,
-  //   items: [
-  //     { title: t('sidebar.allPurchases'), url: ROUTES.purchases },
-  //     { title: t('sidebar.addPurchase'), url: ROUTES.addPurchase },
-  //     { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
-  //     { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
-  //   ],
-  // },
+  {
+    title: t('sidebar.purchases'),
+    icon: ShoppingCart,
+    items: [
+      { title: t('sidebar.allPurchases'), url: ROUTES.purchases },
+      { title: t('sidebar.addPurchase'), url: ROUTES.addPurchase },
+      // { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
+      // { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
+    ],
+  },
   // {
   //   title: t('sidebar.sales'),
   //   icon: Store,

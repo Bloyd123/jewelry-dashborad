@@ -1,0 +1,186 @@
+{
+  "purchase": {
+      "huid": "HUID Number",
+  "isHallmarked": "Hallmarked",
+  "description": "Item Description",
+  "descriptionPlaceholder": "Enter item details...",
+  "tags": "Tags",
+  "tagsPlaceholder": "Type and press Enter to add tags",
+    "editPurchase": "Edit Purchase",
+    "addPurchaseDescription": "Create a new purchase order",
+    "editPurchaseDescription": "Update purchase order details",
+    
+    "basicInformation": "Basic Information",
+    "addItems": "Add Items",
+    "paymentDetails": "Payment Details",
+    "additionalInfo": "Additional Information",
+    "review": "Review & Submit",
+    
+    "supplier": "Supplier",
+    "selectSupplier": "Select Supplier",
+    "purchaseDate": "Purchase Date",
+    "purchaseType": "Purchase Type",
+    
+    "types": {
+      "newStock": "New Stock",
+      "oldGold": "Old Gold",
+      "exchange": "Exchange",
+      "consignment": "Consignment",
+      "repairReturn": "Repair Return",
+      "sample": "Sample"
+    },
+    
+    "addNewItem": "Add New Item",
+    "addedItems": "Added Items",
+    "productName": "Product Name",
+    "metalType": "Metal Type",
+    "purity": "Purity",
+    "grossWeight": "Gross Weight (g)",
+    "stoneWeight": "Stone Weight (g)",
+    "netWeight": "Net Weight (g)",
+    "ratePerGram": "Rate/Gram",
+    "makingCharges": "Making Charges",
+    "stoneCharges": "Stone Charges",
+    "otherCharges": "Other Charges",
+    "itemTotal": "Item Total",
+    "addItem": "Add Item",
+    
+    "metals": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "platinum": "Platinum",
+      "diamond": "Diamond",
+      "mixed": "Mixed"
+    },
+    
+    "paymentMode": "Payment Mode",
+    "paidAmount": "Paid Amount",
+    "paymentTerms": "Payment Terms",
+    "dueDate": "Due Date",
+    
+    "paymentModes": {
+      "cash": "Cash",
+      "card": "Card",
+      "upi": "UPI",
+      "cheque": "Cheque",
+      "bankTransfer": "Bank Transfer",
+      "credit": "Credit"
+    },
+    
+    "expectedDeliveryDate": "Expected Delivery Date",
+    "deliveryAddress": "Delivery Address",
+    "notes": "Notes",
+    "internalNotes": "Internal Notes",
+    
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "cgst": "CGST",
+    "sgst": "SGST",
+    "grandTotal": "Grand Total",
+    "paid": "Paid",
+    "due": "Due",
+    "purchaseDetails": "Purchase Details",
+    "items": "Items",
+    "title": "Purchases",
+    "subtitle": "Manage purchase orders and invoices",
+    "addPurchase": "Add Purchase",
+    "filters": {
+      "searchPlaceholder": "Search by purchase number or supplier name...",
+      "supplier": "Supplier",
+      "status": "Purchase Status",
+      "paymentStatus": "Payment Status",
+      "dateRange": "Date Range",
+      "purchaseType": "Purchase Type",
+      "approvalStatus": "Approval Status"
+    },
+    "status": {
+      "draft": "Draft",
+      "pending": "Pending",
+      "ordered": "Ordered",
+      "received": "Received",
+      "partialReceived": "Partial Received",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "returned": "Returned"
+    },
+    "paymentStatus": {
+      "paid": "Paid",
+      "partial": "Partial",
+      "unpaid": "Unpaid",
+      "overdue": "Overdue"
+    },
+    "type": {
+      "newStock": "New Stock",
+      "oldGold": "Old Gold",
+      "exchange": "Exchange",
+      "consignment": "Consignment",
+      "repairReturn": "Repair Return",
+      "sample": "Sample"
+    },
+    "approvalStatus": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  },
+  
+  "forms": {
+    "selectDate": "Select a date"
+  },
+  "filters": {
+    "filters": "Filters",
+    "moreFilters": "More Filters",
+    "advancedFilters": "Advanced Filters",
+    "clearAll": "Clear All",
+    "clearAdvanced": "Clear Advanced",
+    "selectDateRange": "Select date range",
+    "title": "Filter Purchases"
+  },
+  "common": {
+    "apply": "Apply",
+        "clearSelection": "Clear Selection",
+            "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "previous": "Previous",
+    "cancel": "Cancel",
+    "save": "Save",
+    "update": "Update",
+    "saving": "Saving...",
+    "selectDate": "Select Date"
+  },
+   "table": {
+    "purchaseNumber": "Purchase Number",
+    "supplier": "Supplier",
+    "purchaseDate": "Purchase Date",
+    "purchaseType": "Type",
+    "items": "Items",
+    "totalAmount": "Total Amount",
+    "paymentStatus": "Payment Status",
+    "status": "Status",
+    "approval": "Approval",
+    "paid": "Paid/Due",
+    "delivery": "Delivery",
+    "noPurchases": "No purchases found",
+    "selectedCount": "{{count}} selected",
+    "ariaLabel": "Purchases table"
+  },
+  "actions": {
+    "viewDetails": "View Details",
+    "edit": "Edit",
+    "receive": "Mark as Received",
+    "addPayment": "Add Payment",
+    "approve": "Approve",
+    "reject": "Reject",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "bulkApprove": "Bulk Approve",
+    "export": "Export",
+    "print": "Print",
+    "exportPDF": "Export as PDF",
+    "exportExcel": "Export as Excel",
+    "sendEmail": "Send Email",
+    "generateReport": "Generate Report",
+    "bulkDelete": "Bulk Delete"
+  }
+}
