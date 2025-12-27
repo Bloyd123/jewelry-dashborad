@@ -5,7 +5,13 @@
 
 import { useEffect } from 'react'
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Router,
+} from 'react-router-dom'
 import { ROUTES } from './config/routes.config'
 import LoginPage from './components/auth/login/pages'
 import ForgotPasswordPage from './components/auth/forgotpassword/pages'
@@ -33,6 +39,8 @@ import { AddProduct } from './pages/product/AddProduct'
 import { ProductTable } from './components/products/ProductTable'
 import { PurchaseTable } from './components/purchase/PurchaseTable'
 import AddPurchasePage from './pages/purchase/AddPurchase'
+import { SalesTable } from './components/sales/SalesTable'
+import { CreateSalePage, EditSalePage } from './pages/sales/AddSales'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -107,6 +115,9 @@ function App() {
                 path="/purchases/edit/:purchaseId"
                 element={<AddPurchasePage />}
               />
+              <Route path="/sales" element={<SalesTable />} />
+              <Route path="/sales/add" element={<CreateSalePage />} />
+              <Route path=":saleId/edit" element={<EditSalePage />} />
 
               <Route
                 path="*"

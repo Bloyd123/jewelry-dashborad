@@ -17,7 +17,7 @@ import product from './product.json'
 // import parties from './parties.json'
 import purchase from './purchase.json'
 // import reports from './reports.json'
-// import sales from './sales.json'
+import sales from './sales.json'
 // import settings from './settings.json'
 // import validation from './validation.json'
 
@@ -32,13 +32,13 @@ export default {
   ...supplier,
   ...product,
   ...purchase,
-  //   ...dashboard,
+  // ...dashboard,
   //   ...inventory,
   //   ...masters,
   //   ...parties,
   //   ...purchase,
   //   ...reports,
-  //   ...sales,
+  ...sales,
   //   ...settings,
   //   ...validation,
 }

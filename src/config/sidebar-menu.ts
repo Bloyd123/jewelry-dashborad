@@ -90,16 +90,16 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       // { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
     ],
   },
-  // {
-  //   title: t('sidebar.sales'),
-  //   icon: Store,
-  //   items: [
-  //     { title: t('sidebar.allSales'), url: ROUTES.sales },
-  //     { title: t('sidebar.addSale'), url: ROUTES.addSale },
-  //     { title: t('sidebar.customers'), url: ROUTES.addcustomers },
-  //     { title: t('sidebar.reports'), url: ROUTES.salesReports },
-  //   ],
-  // },
+  {
+    title: t('sidebar.sales'),
+    icon: Store,
+    items: [
+      { title: t('sidebar.allSales'), url: ROUTES.sales },
+      { title: t('sidebar.addSale'), url: ROUTES.addSale },
+      // { title: t('sidebar.customers'), url: ROUTES.addcustomers },
+      // { title: t('sidebar.reports'), url: ROUTES.salesReports },
+    ],
+  },
   // {
   //   title: t('sidebar.oldGold'),
   //   icon: Coins,
