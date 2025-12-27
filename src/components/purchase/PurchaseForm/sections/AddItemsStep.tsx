@@ -154,7 +154,7 @@ export const AddItemsSection = ({
             type="number"
             value={currentItem.netWeight || 0}
             disabled
-              onChange={() => {}} 
+            onChange={() => {}}
           />
 
           <FormInput
@@ -185,7 +185,7 @@ export const AddItemsSection = ({
             disabled={disabled}
           />
 
-      <FormInput
+          <FormInput
             name="otherCharges"
             label={t('purchase.otherCharges')}
             type="number"
@@ -228,8 +228,7 @@ export const AddItemsSection = ({
           disabled={disabled}
         />
 
-
-        <div className="flex items-center justify-between rounded border border-accent/20 bg-accent/10 p-3">
+        <div className="border-accent/20 bg-accent/10 flex items-center justify-between rounded border p-3">
           <span className="text-sm font-medium text-text-primary">
             {t('purchase.itemTotal')}:
           </span>
@@ -294,4 +293,3 @@ export const AddItemsSection = ({
     </div>
   )
 }
-

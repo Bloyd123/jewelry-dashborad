@@ -1,11 +1,14 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductMetalTypeFilter.tsx
+// FILE: src/components/product/ProductsFilters/ProductMetalTypeFilter.tsx
 // Metal Type Filter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 import { Gem } from 'lucide-react'
 
 interface ProductMetalTypeFilterProps {

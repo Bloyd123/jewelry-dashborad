@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/components/purchase/PurchaseFilters/PurchaseDateRangeFilter.tsx
 // Date Range Filter

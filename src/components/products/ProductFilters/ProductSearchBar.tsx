@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductSearchBar.tsx
+// FILE: src/components/products/ProductFilters/ProductSearchBar.tsx
 // Product Search Bar Component
 // ============================================================================
 

@@ -31,7 +31,7 @@ export default {
   ...metalrate,
   ...supplier,
   ...product,
-  ...purchase
+  ...purchase,
   //   ...dashboard,
   //   ...inventory,
   //   ...masters,

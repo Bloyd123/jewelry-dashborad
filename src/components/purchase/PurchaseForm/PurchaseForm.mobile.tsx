@@ -74,8 +74,6 @@ export default function PurchaseFormMobile({
   }
 
   const handleSubmit = async () => {
-
-
     setIsLoading(true)
 
     setTimeout(() => {
@@ -123,8 +121,7 @@ export default function PurchaseFormMobile({
         {/* Step Indicator */}
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">
-            {t('common.step')} {currentStep + 1} {t('common.of')}{' '}
-            {STEPS.length}
+            {t('common.step')} {currentStep + 1} {t('common.of')} {STEPS.length}
           </span>
           <span className="text-sm font-medium text-accent">
             {STEPS[currentStep].label}

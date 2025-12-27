@@ -55,7 +55,6 @@ export default function PurchaseFormDesktop({
   }
 
   const handleSubmit = async () => {
-
     setIsLoading(true)
 
     setTimeout(() => {

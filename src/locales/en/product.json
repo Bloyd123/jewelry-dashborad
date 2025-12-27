@@ -1,8 +1,8 @@
 {
   "product": {
-       "title": "Products",
+    "title": "Products",
     "subtitle": "Manage your jewelry inventory",
-        "filters": {
+    "filters": {
       "searchPlaceholder": "Search products by name, code, barcode...",
       "metalType": "Metal Type",
       "purity": "Purity",
@@ -264,9 +264,8 @@
     "internalNotes": "Internal Notes",
     "internalNotesPlaceholder": "Staff-only notes...",
     "tags": "Tags"
-    
   },
-   "table": {
+  "table": {
     "productCode": "Product Code",
     "productName": "Product Name",
     "metalDetails": "Metal Details",
@@ -302,8 +301,8 @@
   },
 
   "common": {
-       "clearSelection": "Clear Selection",
-        "all": "All",
+    "clearSelection": "Clear Selection",
+    "all": "All",
     "apply": "Apply",
     "search": "Search",
     "step": "Step",
@@ -323,7 +322,7 @@
   "forms": {
     "selectDate": "Select date"
   },
-   "filters": {
+  "filters": {
     "filters": "Filters",
     "moreFilters": "More Filters",
     "advancedFilters": "Advanced Filters",
@@ -336,6 +335,4 @@
     "active": "Active",
     "inactive": "Inactive"
   }
-
 }
- 

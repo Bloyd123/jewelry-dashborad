@@ -1,10 +1,13 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductPriceFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductPriceFilter.tsx
 // Product Price Range Filter
 // ============================================================================
 
 import * as React from 'react'
-import { PriceRangeFilter, type PriceRange } from '@/components/ui/filters/PriceRangeFilter'
+import {
+  PriceRangeFilter,
+  type PriceRange,
+} from '@/components/ui/filters/PriceRangeFilter'
 
 interface ProductPriceFilterProps {
   value?: PriceRange

@@ -5,10 +5,7 @@
 
 export { PurchaseTable } from './PurchaseTable'
 export { purchaseTableColumns } from './PurchaseTableColumns'
-export {
-  getPurchaseRowActions,
-  BulkActionsBar,
-} from './PurchaseTableActions'
+export { getPurchaseRowActions, BulkActionsBar } from './PurchaseTableActions'
 export type {
   Purchase,
   PurchaseTableFilters,

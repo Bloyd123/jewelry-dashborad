@@ -1,11 +1,14 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductActiveFilters.tsx
+// FILE: src/components/products/ProductFilters/ProductActiveFilters.tsx
 // Active Product Filters Display
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FilterChips, type ActiveFilter } from '@/components/ui/filters/FilterChips'
+import {
+  FilterChips,
+  type ActiveFilter,
+} from '@/components/ui/filters/FilterChips'
 import type { ProductFilterValues } from './types.ts'
 
 interface ProductActiveFiltersProps {

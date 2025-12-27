@@ -1,11 +1,14 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductSaleStatusFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductSaleStatusFilter.tsx
 // Product Sale Status Filter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusFilter, type StatusOption } from '@/components/ui/filters/StatusFilter'
+import {
+  StatusFilter,
+  type StatusOption,
+} from '@/components/ui/filters/StatusFilter'
 
 interface ProductSaleStatusFilterProps {
   value?: string

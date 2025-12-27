@@ -5,7 +5,10 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 import { Package, RefreshCw, Wrench, FileText, Boxes } from 'lucide-react'
 
 interface PurchaseTypeFilterProps {

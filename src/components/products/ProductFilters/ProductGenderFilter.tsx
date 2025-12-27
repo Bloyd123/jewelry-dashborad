@@ -1,11 +1,14 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductGenderFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductGenderFilter.tsx
 // Product Gender Filter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 import { User, Users } from 'lucide-react'
 
 interface ProductGenderFilterProps {

@@ -1,14 +1,14 @@
-
-
-
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductTypeFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductTypeFilter.tsx
 // Product Type Filter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 import { Package, Wrench, ShoppingCart } from 'lucide-react'
 
 interface ProductTypeFilterProps {

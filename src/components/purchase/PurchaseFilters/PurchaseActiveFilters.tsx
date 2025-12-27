@@ -5,7 +5,10 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { FilterChips, type ActiveFilter } from '@/components/ui/filters/FilterChips'
+import {
+  FilterChips,
+  type ActiveFilter,
+} from '@/components/ui/filters/FilterChips'
 import type { PurchaseFilterValues } from './types'
 import { format } from 'date-fns'
 
@@ -30,7 +33,7 @@ export const PurchaseActiveFilters: React.FC<PurchaseActiveFiltersProps> = ({
     const active: ActiveFilter[] = []
 
     if (filters.supplierId) {
-      const supplier = suppliers.find((s) => s._id === filters.supplierId)
+      const supplier = suppliers.find(s => s._id === filters.supplierId)
       active.push({
         id: 'supplierId',
         label: t('purchase.filters.supplier'),

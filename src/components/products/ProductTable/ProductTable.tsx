@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/features/ProductTable/ProductTable.tsx
+// FILE:     src/components/products/ProductTable/ProductTable.tsx
 // Main Product Table Component
 // ============================================================================
 
@@ -11,8 +11,8 @@ import { productTableColumns } from './ProductTableColumns'
 import { getProductRowActions, BulkActionsBar } from './ProductTableActions'
 import { ProductFilters } from '@/components/products/ProductFilters'
 import type { ProductFilterValues } from '@/components/products/ProductFilters'
-import { dummyProducts} from '@/pages/product/mock.data'
-import { type Product } from "@/types/product.types"
+import { dummyProducts } from '@/pages/product/mock.data'
+import { type Product } from '@/types/product.types'
 
 // ============================================================================
 // MAIN COMPONENT
@@ -67,9 +67,7 @@ export const ProductTable: React.FC = () => {
     if (filters.category) {
       result = result.filter(p => {
         const categoryId =
-          typeof p.categoryId === 'string'
-            ? p.categoryId
-            : p.categoryId?._id
+          typeof p.categoryId === 'string' ? p.categoryId : p.categoryId?._id
         return categoryId === filters.category
       })
     }

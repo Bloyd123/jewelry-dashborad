@@ -84,7 +84,7 @@ export const purchaseTableColumns: DataTableColumn<IPurchase>[] = [
     width: '200px',
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent/10">
+        <div className="bg-accent/10 flex h-8 w-8 items-center justify-center rounded-full">
           <User className="h-4 w-4 text-accent" />
         </div>
         <div className="flex flex-col">
@@ -260,11 +260,7 @@ export const purchaseTableColumns: DataTableColumn<IPurchase>[] = [
       }
 
       return (
-        <Badge
-          variant={statusVariants[row.status] || 'default'}
-          dot
-          size="sm"
-        >
+        <Badge variant={statusVariants[row.status] || 'default'} dot size="sm">
           {statusLabels[row.status]}
         </Badge>
       )

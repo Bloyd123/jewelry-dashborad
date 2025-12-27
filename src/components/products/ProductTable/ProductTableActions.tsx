@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/features/ProductTable/ProductTableActions.tsx
+// FILE: src/components/products/ProductTable/ProductTableActions.tsx
 // Product Table Row Actions & Bulk Actions
 // ============================================================================
 

@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/features/ProductTable/ProductTableColumns.tsx
+// FILE: src/components/products/ProductTable/ProductTableColumns.tsx
 // Product Table Column Definitions
 // ============================================================================
 
@@ -88,7 +88,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
     width: '250px',
     cell: ({ row }) => (
       <div className="flex flex-col">
-        <span className="font-medium text-text-primary line-clamp-1">
+        <span className="line-clamp-1 font-medium text-text-primary">
           {row.name}
         </span>
         <div className="mt-1 flex items-center gap-2">
@@ -168,13 +168,14 @@ export const productTableColumns: DataTableColumn<Product>[] = [
             {formatCurrency(row.pricing.mrp)}
           </span>
         )}
-        {row.pricing.discount?.type !== 'none' && row.pricing.discount.value > 0 && (
-          <Badge variant="success" size="sm" className="mt-1">
-            {row.pricing.discount.type === 'percentage'
-              ? `${row.pricing.discount.value}% OFF`
-              : `₹${row.pricing.discount.value} OFF`}
-          </Badge>
-        )}
+        {row.pricing.discount?.type !== 'none' &&
+          row.pricing.discount.value > 0 && (
+            <Badge variant="success" size="sm" className="mt-1">
+              {row.pricing.discount.type === 'percentage'
+                ? `${row.pricing.discount.value}% OFF`
+                : `₹${row.pricing.discount.value} OFF`}
+            </Badge>
+          )}
       </div>
     ),
   },
@@ -310,7 +311,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
       return (
         <div className="flex items-center justify-center gap-1">
           <span>{genderIcons[row.gender]}</span>
-          <span className="text-sm text-text-secondary capitalize">
+          <span className="text-sm capitalize text-text-secondary">
             {row.gender}
           </span>
         </div>

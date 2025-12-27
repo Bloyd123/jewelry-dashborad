@@ -68,7 +68,8 @@ export const getPurchaseRowActions = (
     icon: <CreditCard className="h-4 w-4" />,
     onClick: onAddPayment,
     variant: 'default',
-    hidden: row => row.payment.paymentStatus === 'paid' || row.status === 'cancelled',
+    hidden: row =>
+      row.payment.paymentStatus === 'paid' || row.status === 'cancelled',
   },
   {
     label: 'actions.approve',

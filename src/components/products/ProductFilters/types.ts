@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/types.ts
+// FILE: src/components/products/ProductFilters/types.ts
 // Product Filter Types
 // ============================================================================
 
@@ -19,7 +19,7 @@ export interface ProductFilterValues {
   productType?: string
   isActive?: boolean
   isFeatured?: boolean
-   [key: string]: string | number | boolean | undefined // Index signature for dynamic access
+  [key: string]: string | number | boolean | undefined // Index signature for dynamic access
 }
 
 export interface PriceRange {

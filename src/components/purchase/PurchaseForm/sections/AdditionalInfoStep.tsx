@@ -1,5 +1,3 @@
-
-
 // ============================================================================
 // FILE: src/components/purchase/PurchaseForm/sections/AdditionalInfoSection.tsx
 // Additional Info Section
@@ -51,7 +49,7 @@ export const AdditionalInfoSection = ({
         disabled={disabled}
       />
 
-<FormTextarea
+      <FormTextarea
         name="internalNotes"
         label={t('purchase.internalNotes')}
         value={data.internalNotes || ''}
@@ -85,7 +83,7 @@ export const AdditionalInfoSection = ({
             {data.tags.map((tag, index) => (
               <span
                 key={index}
-                className="inline-flex items-center gap-1 rounded-full bg-accent/10 px-3 py-1 text-sm text-accent"
+                className="bg-accent/10 inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm text-accent"
               >
                 {tag}
                 <button

@@ -9,7 +9,7 @@ import type {
   ISupplierDetails,
   IPurchaseAnalytics,
   PurchaseSummary,
-} from '@/types/purchase.types';
+} from '@/types/purchase.types'
 
 // ============================================================================
 // DUMMY SUPPLIERS
@@ -43,7 +43,7 @@ export const dummySuppliers: ISupplierDetails[] = [
     address: '12/A, Metal Street, Ahmedabad',
     gstNumber: '24PQRST9012H3X4',
   },
-];
+]
 
 // ============================================================================
 // DUMMY PURCHASE ITEMS
@@ -91,7 +91,7 @@ export const dummyPurchaseItems: IPurchaseItem[] = [
     isHallmarked: true,
     description: 'Elegant diamond earrings with 18K gold setting',
   },
-];
+]
 
 // ============================================================================
 // DUMMY PURCHASES
@@ -413,7 +413,7 @@ export const dummyPurchases: IPurchase[] = [
     createdAt: new Date('2024-12-26'),
     updatedAt: new Date('2024-12-26'),
   },
-];
+]
 
 // ============================================================================
 // DUMMY ANALYTICS
@@ -464,61 +464,65 @@ export const dummyPurchaseAnalytics: IPurchaseAnalytics = {
       totalValue: 570017,
     },
   ],
-};
+}
 
 // ============================================================================
 // DUMMY PURCHASE SUMMARIES (for quick lists)
 // ============================================================================
 
-export const dummyPurchaseSummaries: PurchaseSummary[] = dummyPurchases.map((p) => ({
-  purchaseNumber: p.purchaseNumber,
-  supplierName: p.supplierDetails.supplierName,
-  date: new Date(p.purchaseDate).toLocaleDateString(),
-  amount: p.financials.grandTotal,
-  status: p.status,
-  paymentStatus: p.payment.paymentStatus,
-}));
+export const dummyPurchaseSummaries: PurchaseSummary[] = dummyPurchases.map(
+  p => ({
+    purchaseNumber: p.purchaseNumber,
+    supplierName: p.supplierDetails.supplierName,
+    date: new Date(p.purchaseDate).toLocaleDateString(),
+    amount: p.financials.grandTotal,
+    status: p.status,
+    paymentStatus: p.payment.paymentStatus,
+  })
+)
 
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
 
 export const getPurchaseById = (id: string): IPurchase | undefined => {
-  return dummyPurchases.find((p) => p._id === id);
-};
+  return dummyPurchases.find(p => p._id === id)
+}
 
 export const getPurchasesByStatus = (status: string): IPurchase[] => {
-  return dummyPurchases.filter((p) => p.status === status);
-};
+  return dummyPurchases.filter(p => p.status === status)
+}
 
 export const getPurchasesBySupplier = (supplierId: string): IPurchase[] => {
-  return dummyPurchases.filter((p) => p.supplierId === supplierId);
-};
+  return dummyPurchases.filter(p => p.supplierId === supplierId)
+}
 
-export const getPurchasesByPaymentStatus = (paymentStatus: string): IPurchase[] => {
-  return dummyPurchases.filter((p) => p.payment.paymentStatus === paymentStatus);
-};
+export const getPurchasesByPaymentStatus = (
+  paymentStatus: string
+): IPurchase[] => {
+  return dummyPurchases.filter(p => p.payment.paymentStatus === paymentStatus)
+}
 
 export const getPendingPurchases = (): IPurchase[] => {
-  return dummyPurchases.filter((p) =>
+  return dummyPurchases.filter(p =>
     ['draft', 'pending', 'ordered'].includes(p.status)
-  );
-};
+  )
+}
 
 export const getUnpaidPurchases = (): IPurchase[] => {
-  return dummyPurchases.filter((p) =>
+  return dummyPurchases.filter(p =>
     ['unpaid', 'partial'].includes(p.payment.paymentStatus)
-  );
-};
+  )
+}
 
 export const searchPurchases = (query: string): IPurchase[] => {
-  const lowerQuery = query.toLowerCase();
+  const lowerQuery = query.toLowerCase()
   return dummyPurchases.filter(
-    (p) =>
+    p =>
       p.purchaseNumber.toLowerCase().includes(lowerQuery) ||
       p.supplierDetails.supplierName.toLowerCase().includes(lowerQuery)
-  );
-};
+  )
+}
 
 // ============================================================================
 // EXPORT ALL
@@ -538,4 +542,4 @@ export default {
     getUnpaidPurchases,
     searchPurchases,
   },
-};
+}

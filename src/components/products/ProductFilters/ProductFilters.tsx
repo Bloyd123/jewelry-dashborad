@@ -1,5 +1,5 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductFilters.tsx
+// FILE: src/components/products/ProductFilters/ProductFilters.tsx
 // Main Product Filters Container - Responsive Desktop & Mobile
 // ============================================================================
 
@@ -53,7 +53,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
   // ============================================================================
   // ACTIVE FILTERS COUNT
   // ============================================================================
-  
+
   const activeFilterCount = React.useMemo(() => {
     let count = 0
     if (filters.category) count++
@@ -155,7 +155,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
   // ============================================================================
   // DESKTOP VIEW
   // ============================================================================
-  
+
   if (isDesktop) {
     return (
       <>
@@ -281,7 +281,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
   // ============================================================================
   // MOBILE VIEW WITH DRAWER
   // ============================================================================
-  
+
   return (
     <>
       <div className="space-y-3">

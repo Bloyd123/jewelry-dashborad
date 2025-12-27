@@ -99,12 +99,14 @@ function App() {
                 path="/products/edit/:productId"
                 element={<AddProduct />}
               />
-              <Route path='/products' element={<ProductTable/>}/>
+              <Route path="/products" element={<ProductTable />} />
 
-              <Route path='/purchases' element={<PurchaseTable/>}/>
-              <Route path='/purchases/add' element={<AddPurchasePage/>}/>
-              <Route path='/purchases/edit/:purchaseId' element={<AddPurchasePage/>}/>
-
+              <Route path="/purchases" element={<PurchaseTable />} />
+              <Route path="/purchases/add" element={<AddPurchasePage />} />
+              <Route
+                path="/purchases/edit/:purchaseId"
+                element={<AddPurchasePage />}
+              />
 
               <Route
                 path="*"

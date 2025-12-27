@@ -5,7 +5,10 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 import { Building2 } from 'lucide-react'
 
 interface PurchaseSupplierFilterProps {
@@ -22,7 +25,7 @@ export const PurchaseSupplierFilter = React.forwardRef<
 >(({ value, onChange, suppliers, className, disabled = false }, ref) => {
   const { t } = useTranslation()
 
-  const supplierOptions: FilterOption[] = suppliers.map((supplier) => ({
+  const supplierOptions: FilterOption[] = suppliers.map(supplier => ({
     value: supplier._id,
     label: `${supplier.businessName} (${supplier.supplierCode})`,
     icon: <Building2 className="h-4 w-4 text-accent" />,

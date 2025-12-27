@@ -1,12 +1,14 @@
-
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductPurityFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductPurityFilter.tsx
 // Metal Purity Filter
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { TypeFilter, type FilterOption } from '@/components/ui/filters/TypeFilter'
+import {
+  TypeFilter,
+  type FilterOption,
+} from '@/components/ui/filters/TypeFilter'
 
 interface ProductPurityFilterProps {
   value?: string

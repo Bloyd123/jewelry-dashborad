@@ -1,11 +1,14 @@
 // ============================================================================
-// FILE: src/components/product/ProductFilters/ProductCategoryFilter.tsx
+// FILE: src/components/products/ProductFilters/ProductCategoryFilter.tsx
 // Product Category Filter with Subcategories
 // ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { CategoryFilter, type Category } from '@/components/ui/filters/CategoryFilter'
+import {
+  CategoryFilter,
+  type Category,
+} from '@/components/ui/filters/CategoryFilter'
 
 interface ProductCategoryFilterProps {
   value?: string

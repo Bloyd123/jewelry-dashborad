@@ -1,26 +1,26 @@
 {
   "purchase": {
-      "huid": "HUID Number",
-  "isHallmarked": "Hallmarked",
-  "description": "Item Description",
-  "descriptionPlaceholder": "Enter item details...",
-  "tags": "Tags",
-  "tagsPlaceholder": "Type and press Enter to add tags",
+    "huid": "HUID Number",
+    "isHallmarked": "Hallmarked",
+    "description": "Item Description",
+    "descriptionPlaceholder": "Enter item details...",
+    "tags": "Tags",
+    "tagsPlaceholder": "Type and press Enter to add tags",
     "editPurchase": "Edit Purchase",
     "addPurchaseDescription": "Create a new purchase order",
     "editPurchaseDescription": "Update purchase order details",
-    
+
     "basicInformation": "Basic Information",
     "addItems": "Add Items",
     "paymentDetails": "Payment Details",
     "additionalInfo": "Additional Information",
     "review": "Review & Submit",
-    
+
     "supplier": "Supplier",
     "selectSupplier": "Select Supplier",
     "purchaseDate": "Purchase Date",
     "purchaseType": "Purchase Type",
-    
+
     "types": {
       "newStock": "New Stock",
       "oldGold": "Old Gold",
@@ -29,7 +29,7 @@
       "repairReturn": "Repair Return",
       "sample": "Sample"
     },
-    
+
     "addNewItem": "Add New Item",
     "addedItems": "Added Items",
     "productName": "Product Name",
@@ -44,7 +44,7 @@
     "otherCharges": "Other Charges",
     "itemTotal": "Item Total",
     "addItem": "Add Item",
-    
+
     "metals": {
       "gold": "Gold",
       "silver": "Silver",
@@ -52,12 +52,12 @@
       "diamond": "Diamond",
       "mixed": "Mixed"
     },
-    
+
     "paymentMode": "Payment Mode",
     "paidAmount": "Paid Amount",
     "paymentTerms": "Payment Terms",
     "dueDate": "Due Date",
-    
+
     "paymentModes": {
       "cash": "Cash",
       "card": "Card",
@@ -66,12 +66,12 @@
       "bankTransfer": "Bank Transfer",
       "credit": "Credit"
     },
-    
+
     "expectedDeliveryDate": "Expected Delivery Date",
     "deliveryAddress": "Delivery Address",
     "notes": "Notes",
     "internalNotes": "Internal Notes",
-    
+
     "orderSummary": "Order Summary",
     "subtotal": "Subtotal",
     "cgst": "CGST",
@@ -123,7 +123,7 @@
       "rejected": "Rejected"
     }
   },
-  
+
   "forms": {
     "selectDate": "Select a date"
   },
@@ -138,8 +138,8 @@
   },
   "common": {
     "apply": "Apply",
-        "clearSelection": "Clear Selection",
-            "step": "Step",
+    "clearSelection": "Clear Selection",
+    "step": "Step",
     "of": "of",
     "next": "Next",
     "previous": "Previous",
@@ -149,7 +149,7 @@
     "saving": "Saving...",
     "selectDate": "Select Date"
   },
-   "table": {
+  "table": {
     "purchaseNumber": "Purchase Number",
     "supplier": "Supplier",
     "purchaseDate": "Purchase Date",
