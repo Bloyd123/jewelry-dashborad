@@ -17,6 +17,7 @@ import type {
   SortDirection,
   PaginationState,
 } from './DataTable.types'
+import NotFoundPage from '@/pages/NotFound/index'
 
 // ============================================================================
 // EMPTY STATE COMPONENT
@@ -32,7 +33,8 @@ const EmptyState: React.FC<{
   return (
     <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
       <div className="mb-4 text-text-tertiary">
-        {icon || <FileX className="h-12 w-12" />}
+        {/* {icon || <FileX className="h-12 w-12" />} */}
+        <NotFoundPage />
       </div>
       <p className="mb-4 text-sm text-text-secondary">
         {message || t('ui.datatable.noData')}

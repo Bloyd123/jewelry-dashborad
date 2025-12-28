@@ -7,6 +7,7 @@ export const ROUTES = {
   login: '/login',
   forgotPassword: '/forgot-password',
   resetPassword: '/reset-password',
+
   signup:'/signup',
   
   // Main
@@ -14,7 +15,7 @@ export const ROUTES = {
   stock: '/stock',
   
   // Payments
-  payments: '/payments',
+  addpayments: '/payments/add',
   paymentHistory: '/payments/history',
   paymentEntry: '/payments/entry',
   

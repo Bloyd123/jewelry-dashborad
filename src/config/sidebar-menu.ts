@@ -11,6 +11,7 @@ import {
   Store,
   Coins,
   Package2,
+  CreditCard,
   Wrench,
   Users, // ✅ Add
   Building2, // ✅ Add
@@ -100,6 +101,15 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       // { title: t('sidebar.reports'), url: ROUTES.salesReports },
     ],
   },
+  {
+    title: t('sidebar.payments'),
+    icon: CreditCard,
+    items: [
+      { title: t('sidebar.addPayment'), url: ROUTES.addpayments },
+      { title: t('sidebar.paymentHistory'), url: ROUTES.paymentHistory },
+    ],
+  },
+
   // {
   //   title: t('sidebar.oldGold'),
   //   icon: Coins,

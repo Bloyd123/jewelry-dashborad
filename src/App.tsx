@@ -41,6 +41,7 @@ import { PurchaseTable } from './components/purchase/PurchaseTable'
 import AddPurchasePage from './pages/purchase/AddPurchase'
 import { SalesTable } from './components/sales/SalesTable'
 import { CreateSalePage, EditSalePage } from './pages/sales/AddSales'
+import { PaymentFormPage } from './pages/payment/PaymentFormPage'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -118,7 +119,7 @@ function App() {
               <Route path="/sales" element={<SalesTable />} />
               <Route path="/sales/add" element={<CreateSalePage />} />
               <Route path=":saleId/edit" element={<EditSalePage />} />
-
+              <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}
