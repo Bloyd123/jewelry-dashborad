@@ -35,7 +35,7 @@ export const ShopStatusFilter: React.FC<ShopStatusFilterProps> = ({
       value={value}
       onChange={onChange}
       options={options}
-      placeholder={t('shop.filters.status')}
+      placeholder={t('shops.filters.status')}
       className={className}
     />
   )

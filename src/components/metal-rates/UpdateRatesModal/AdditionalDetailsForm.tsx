@@ -189,7 +189,7 @@ export const AdditionalDetailsForm: React.FC<AdditionalDetailsFormProps> = ({
 
           {/* Rate Source */}
           <div className="space-y-2">
-            <Label htmlFor="rate-source">{t('metalRates.rateSource')}</Label>
+            <Label htmlFor="rate-source">{t('metalRates.rateSourcetext')}</Label>
             <Select
               value={details.rateSource}
               onChange={value =>

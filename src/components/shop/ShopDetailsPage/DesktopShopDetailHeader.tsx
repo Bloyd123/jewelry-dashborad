@@ -119,7 +119,7 @@ export const DesktopShopDetailHeader: React.FC<
                 className="gap-2"
               >
                 <ChevronLeft className="h-4 w-4" />
-                {t('common.backToList')}
+                {t('shops.common.backToList')}
               </Button>
 
               <Separator orientation="vertical" className="h-6" />
@@ -134,7 +134,7 @@ export const DesktopShopDetailHeader: React.FC<
               className="gap-2"
             >
               <Settings className="h-4 w-4" />
-              {t('common.settings')}
+              {t('shops.common.settings')}
             </Button>
           </div>
 
@@ -163,13 +163,13 @@ export const DesktopShopDetailHeader: React.FC<
                     variant={shop.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
-                    {shop.isActive ? t('common.active') : t('common.inactive')}
+                    {shop.isActive ? t('shops.common.active') : t('shops.common.inactive')}
                   </Badge>
 
                   {/* Verified Status */}
                   {shop.isVerified && (
                     <Badge variant="success" size="sm">
-                      {t('common.verified')}
+                      {t('shops.common.verified')}
                     </Badge>
                   )}
 
@@ -193,7 +193,7 @@ export const DesktopShopDetailHeader: React.FC<
                   {organizationName && (
                     <div className="flex items-center gap-1">
                       <span className="text-text-tertiary">
-                        {t('shop.organization')}:
+                        {t('shops.organization')}:
                       </span>
                       <span>{organizationName}</span>
                     </div>
@@ -202,7 +202,7 @@ export const DesktopShopDetailHeader: React.FC<
                   {shop.address?.city && shop.address?.state && (
                     <div className="flex items-center gap-1">
                       <span className="text-text-tertiary">
-                        {t('shop.location')}:
+                        {t('shops.location')}:
                       </span>
                       <span>
                         {shop.address.city}, {shop.address.state}
@@ -213,7 +213,7 @@ export const DesktopShopDetailHeader: React.FC<
                   {shop.establishedYear && (
                     <div className="flex items-center gap-1">
                       <span className="text-text-tertiary">
-                        {t('shop.established')}:
+                        {t('shops.established')}:
                       </span>
                       <span>{shop.establishedYear}</span>
                     </div>

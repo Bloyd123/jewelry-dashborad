@@ -1,0 +1,252 @@
+{
+  "metalRates": {
+    "filters": {
+      "filters": "फ़िल्टर",
+      "selectDateRange": "तारीख रेंज चुनें",
+      "selectMetalType": "धातु प्रकार चुनें",
+      "allMetals": "सभी धातुएं"
+    },
+    "common": {
+      "backToList": "सूची पर वापस जाएं",
+      "reset": "रीसेट करें",
+      "close": "बंद करें",
+      "days": "दिन",
+      "cancel": "रद्द करें",
+      "preview": "पूर्वावलोकन",
+      "hidePreview": "पूर्वावलोकन छुपाएं",
+      "filter": "फ़िल्टर करें",
+      "exportCSV": "CSV निर्यात करें",
+      "search": "खोजें",
+      "showing": "दिखाया जा रहा है",
+      "of": "का",
+      "by": "द्वारा",
+      "active": "सक्रिय"
+    },
+    "table": {
+      "date": "तारीख",
+      "gold24K": "सोना 24K",
+      "gold22K": "सोना 22K",
+      "silver999": "चांदी 999",
+      "platinum": "प्लैटिनम",
+      "change": "परिवर्तन",
+      "user": "उपयोगकर्ता"
+    },
+    "currentRates": {
+      "title": "वर्तमान धातु दरें",
+      "description": "रियल-टाइम में अपडेट की गई लाइव दरें",
+      "lastUpdated": "अंतिम अपडेट",
+      "previewChanges": "परिवर्तनों का पूर्वावलोकन",
+      "totalChanges": "कुल परिवर्तन",
+      "increased": "बढ़ा",
+      "decreased": "घटा",
+      "unchanged": "अपरिवर्तित"
+    },
+    "compareRates": "दरों की तुलना करें",
+    "weightUnits": {
+      "gram": "ग्राम",
+      "kg": "किलोग्राम",
+      "tola": "तोला"
+    },
+    "rateSources": {
+      "manual": "मैनुअल",
+      "market": "बाज़ार",
+      "api": "एपीआई",
+      "association": "संघ"
+    },
+    "forms": {
+      "selectDate": "तारीख चुनें"
+    },
+    "puritytext": "शुद्धता",
+    "marketReferencetext": "बाज़ार संदर्भ",
+    "additionalInformation": "अतिरिक्त जानकारी",
+    "weightUnit": "वज़न इकाई",
+    "goldRates": "सोने की दर",
+    "currency": "मुद्रा",
+    "publicNotes": "सार्वजनिक नोट्स (ग्राहकों को दिखाई देंगे)",
+    "publicNotesPlaceholder": "सार्वजनिक नोट्स दर्ज करें...",
+    "publicNotesHelp": "ये नोट्स ग्राहकों को दिखाई देंगे",
+    "internalNotes": "आंतरिक नोट्स (केवल स्टाफ के लिए)",
+    "internalNotesPlaceholder": "आंतरिक नोट्स दर्ज करें...",
+    "internalNotesHelp": "ये नोट्स केवल आंतरिक स्टाफ उपयोग के लिए हैं",
+    "optionalSection": "वैकल्पिक अनुभाग",
+    "internationalGoldPrice": "अंतर्राष्ट्रीय सोने की कीमत (प्रति औंस)",
+    "internationalSilverPrice": "अंतर्राष्ट्रीय चांदी की कीमत (प्रति औंस)",
+    "exchangeRate": "विनिमय दर (USD से INR)",
+    "referenceSource": "संदर्भ स्रोत",
+    "perOunce": "प्रति औंस",
+    "usdToInr": "USD से INR",
+    "sellingRateTip": "सुझाव: बिक्री दर खरीद दर से अधिक होनी चाहिए",
+    "sourceWebsite": "स्रोत वेबसाइट या प्लेटफ़ॉर्म",
+    "platinumRates": "प्लैटिनम दरें",
+    "previousBuying": "पिछली खरीद",
+    "newBuying": "नई खरीद",
+    "previousSelling": "पिछली बिक्री",
+    "newSelling": "नई बिक्री",
+    "silverRates": "चांदी की दरें",
+    "previousBuy": "पिछली खरीद",
+    "newBuyRate": "नई खरीद दर",
+    "previousSell": "पिछली बिक्री",
+    "newSellRate": "नई बिक्री दर",
+    "updateTodayRates": "आज की धातु दरें अपडेट करें",
+    "date": "तारीख",
+    "saveAndUpdate": "सहेजें और दरें अपडेट करें",
+    "title": "धातु दरें",
+    "dashboard": "धातु दरें डैशबोर्ड",
+    "updateRates": "दरें अपडेट करें",
+    "lastUpdated": "अंतिम अपडेट",
+    "viewTrends": "रुझान देखें",
+    "tabs": {
+      "currentRates": "वर्तमान दरें",
+      "trendCharts": "रुझान चार्ट",
+      "rateHistory": "दर इतिहास",
+      "quickInsights": "त्वरित जानकारी"
+    },
+    "metals": {
+      "gold": "सोना",
+      "silver": "चांदी",
+      "platinum": "प्लैटिनम",
+      "palladium": "पैलेडियम"
+    },
+    "purity": {
+      "gold24K": "24K सोना",
+      "gold22K": "22K सोना",
+      "gold18K": "18K सोना",
+      "gold14K": "14K सोना",
+      "silver999": "999 चांदी",
+      "silver925": "स्टर्लिंग 925"
+    },
+    "compare": {
+      "title": "तारीखों के बीच दरों की तुलना करें",
+      "description": "मूल्य रुझानों का विश्लेषण करने के लिए दो तारीखों के बीच धातु दरों की तुलना करें",
+      "fromDate": "से तारीख",
+      "toDate": "तक तारीख",
+      "selectFromDate": "से तारीख चुनें",
+      "selectToDate": "तक तारीख चुनें",
+      "compareButton": "दरों की तुलना करें",
+      "comparing": "तुलना की जा रही है...",
+      "summary": "तुलना सारांश",
+      "daysDifference": "दिन",
+      "startRate": "प्रारंभ दर",
+      "endRate": "अंत दर",
+      "change": "परिवर्तन",
+      "errors": {
+        "fromDateRequired": "से तारीख आवश्यक है",
+        "toDateRequired": "तक तारीख आवश्यक है",
+        "toDateAfterFrom": "तक तारीख से तारीख के बाद होनी चाहिए"
+      }
+    },
+    "rateSourcetext": "दर स्रोत",
+    "rateSource": {
+      "manual": "मैनुअल एंट्री",
+      "market": "लाइव बाज़ार",
+      "api": "एपीआई",
+      "association": "संघ"
+    },
+    "quickInsights": {
+      "gold24K": "सोना 24K",
+      "gold22K": "सोना 22K",
+      "silver999": "चांदी 999",
+      "platinum950": "प्लैटिनम 950",
+      "perGram": "प्रति ग्राम",
+      "thisWeek": "इस सप्ताह",
+      "stable": "स्थिर",
+      "sevenDaySummary": {
+        "title": "7-दिन का सारांश",
+        "gold24K": "सोना 24K:",
+        "silver999": "चांदी 999:",
+        "avg7D": "7-दिन औसत:",
+        "high7D": "7-दिन उच्च:",
+        "low7D": "7-दिन निम्न:",
+        "volatility": "अस्थिरता:"
+      },
+      "rateAlerts": {
+        "title": "दर अलर्ट",
+        "goldUp": "सोना इस सप्ताह 2.7% ऊपर",
+        "silverDown": "चांदी आज 0.5% नीचे",
+        "platinumStable": "प्लैटिनम स्थिर"
+      },
+      "quickActions": {
+        "title": "त्वरित कार्य",
+        "compareDates": "तारीखों की तुलना करें",
+        "viewAnalytics": "पूर्ण विश्लेषण देखें",
+        "downloadReport": "रिपोर्ट डाउनलोड करें",
+        "rateSettings": "दर सूचना सेटिंग्स"
+      }
+    },
+    "perGram": "प्रति ग्राम",
+    "buying": "खरीद",
+    "selling": "बिक्री",
+    "spread": "स्प्रेड",
+    "today": "आज",
+    "notes": "नोट्स",
+    "marketReference": {
+      "title": "बाज़ार संदर्भ",
+      "source": "स्रोत",
+      "intlGold": "अंतर्राष्ट्रीय सोना (औंस)",
+      "intlSilver": "अंतर्राष्ट्रीय चांदी (औंस)",
+      "exchangeRate": "विनिमय दर"
+    },
+    "trend": {
+      "title": "मूल्य रुझान",
+      "description": "ऐतिहासिक मूल्य गतिविधियां और चलती औसत",
+      "selectMetal": "धातु चुनें",
+      "selectPeriod": "अवधि चुनें",
+      "sellingRate": "बिक्री दर",
+      "rate": "दर",
+      "ma7": "7-दिन MA",
+      "ma30": "30-दिन MA",
+      "highest": "उच्चतम",
+      "lowest": "निम्नतम",
+      "average": "औसत",
+      "change": "परिवर्तन",
+      "showing": "दिखाया जा रहा है",
+      "days": "दिन",
+      "of": "का"
+    }
+  },
+  "rateHistory": {
+    "title": "दर इतिहास",
+    "noRates": "कोई दर रिकॉर्ड नहीं मिला",
+    "ariaLabel": "धातु दर इतिहास तालिका"
+  },
+  "ui": {
+    "modal": {
+      "close": "बंद करें"
+    },
+    "datatable": {
+      "noData": "कोई डेटा उपलब्ध नहीं",
+      "selectAll": "सभी चुनें",
+      "actions": "कार्य",
+      "selectRow": "पंक्ति चुनें",
+      "rowActions": "पंक्ति कार्य",
+      "table": "तालिका",
+      "previousPage": "पिछला पृष्ठ",
+      "nextPage": "अगला पृष्ठ",
+      "firstPage": "पहला पृष्ठ",
+      "lastPage": "अंतिम पृष्ठ",
+      "rowsPerPage": "प्रति पृष्ठ पंक्तियां",
+      "showingItems": "{{start}}-{{end}} दिखाया जा रहा है कुल {{total}} में से",
+      "pageOf": "पृष्ठ {{current}} कुल {{total}} में से",
+      "expandRow": "पंक्ति विस्तृत करें",
+      "collapseRow": "पंक्ति संक्षिप्त करें"
+    }
+  },
+  "dateRange": {
+    "last7days": "पिछले 7 दिन",
+    "last30days": "पिछले 30 दिन",
+    "last90days": "पिछले 90 दिन",
+    "lastYear": "पिछला वर्ष"
+  },
+  "metalType": {
+    "gold": "सोना",
+    "silver": "चांदी",
+    "platinum": "प्लैटिनम",
+    "palladium": "पैलेडियम"
+  },
+  "rateSource": {
+    "manual": "मैनुअल",
+    "market": "बाज़ार",
+    "api": "एपीआई",
+    "association": "संघ"
+  }
+}

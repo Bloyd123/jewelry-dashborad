@@ -112,7 +112,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
       >
         {/* Filters Label */}
         <span className="whitespace-nowrap text-sm text-text-secondary">
-          {t('filters.filters')}:
+          {t('metalRates.filters.filters')}:
         </span>
 
         {/* Date Range Filter */}
@@ -120,7 +120,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
           options={dateRangeOptions}
           value={filters.dateRange || 'last7days'}
           onChange={handleDateRangeChange}
-          placeholder={t('filters.selectDateRange')}
+          placeholder={t('metalRates.filters.selectDateRange')}
           showAllOption={false}
           className="w-40"
         />
@@ -130,9 +130,9 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
           options={metalTypeOptions}
           value={filters.metalType}
           onChange={handleMetalTypeChange}
-          placeholder={t('filters.selectMetalType')}
+          placeholder={t('metalRates.filters.selectMetalType')}
           showAllOption={true}
-          allOptionLabel={t('filters.allMetals')}
+          allOptionLabel={t('metalRates.filters.allMetals')}
           className="w-40"
         />
       </FilterBar>
@@ -151,7 +151,7 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
         className="relative w-full"
       >
         <SlidersHorizontal className="mr-2 h-4 w-4" />
-        {t('filters.filters')}
+        {t('metalRates.filters.filters')}
         {activeFilterCount > 0 && (
           <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
             {activeFilterCount}
@@ -163,32 +163,32 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
       <Drawer
         open={showFiltersDrawer}
         onOpenChange={setShowFiltersDrawer}
-        title={t('filters.rateFilters')}
+        title={t('metalRates.filters.rateFilters')}
         side="right"
         size="full"
       >
         <div className="space-y-6">
           {/* Date Range */}
-          <FilterGroup label={t('filters.dateRange')}>
+          <FilterGroup label={t('metalRates.filters.dateRange')}>
             <TypeFilter
               options={dateRangeOptions}
               value={filters.dateRange || 'last7days'}
               onChange={handleDateRangeChange}
-              placeholder={t('filters.selectDateRange')}
+              placeholder={t('metalRates.filters.selectDateRange')}
               showAllOption={false}
               className="w-full"
             />
           </FilterGroup>
 
           {/* Metal Type */}
-          <FilterGroup label={t('filters.metalType')}>
+          <FilterGroup label={t('metalRates.filters.metalType')}>
             <TypeFilter
               options={metalTypeOptions}
               value={filters.metalType}
               onChange={handleMetalTypeChange}
-              placeholder={t('filters.selectMetalType')}
+              placeholder={t('metalRates.filters.selectMetalType')}
               showAllOption={true}
-              allOptionLabel={t('filters.allMetals')}
+              allOptionLabel={t('metalRates.filters.allMetals')}
               className="w-full"
             />
           </FilterGroup>
@@ -201,10 +201,10 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
               className="flex-1"
               disabled={activeFilterCount === 0}
             >
-              {t('filters.clearAll')}
+              {t('metalRates.filters.clearAll')}
             </Button>
             <Button onClick={handleApplyFilters} className="flex-1">
-              {t('common.apply')}
+              {t('metalRates.common.apply')}
             </Button>
           </div>
         </div>

@@ -135,7 +135,7 @@ export const DesktopMetalRatesDashboardHeader: React.FC<
                   className="gap-2"
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  {t('common.backToList')}
+                  {t('metalRates.common.backToList')}
                 </Button>
 
                 <Separator orientation="vertical" className="h-6" />
@@ -192,7 +192,7 @@ export const DesktopMetalRatesDashboardHeader: React.FC<
                       </span>
                       <span className="font-medium">{lastUpdated}</span>
                       <span className="text-text-tertiary">
-                        {t('common.by')}
+                        {t('metalRates.common.by')}
                       </span>
                       <span className="font-medium">{updatedBy}</span>
                     </div>

@@ -180,7 +180,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
             className="relative"
           >
             <SlidersHorizontal className="mr-2 h-4 w-4" />
-            {t('shopsfilters.moreFilters')}
+            {t('shops.filters.moreFilters')}
             {advancedFilterCount > 0 && (
               <span className="ml-2 rounded-full bg-accent px-1.5 py-0.5 text-xs text-white">
                 {advancedFilterCount}
@@ -193,13 +193,13 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
         <Drawer
           open={showAdvancedDrawer}
           onOpenChange={setShowAdvancedDrawer}
-          title={t('filters.advancedFilters')}
+          title={t('shops.filters.advancedFilters')}
           side="right"
           size="md"
         >
           <div className="space-y-6">
             {/* Location Filter */}
-            <FilterGroup label={t('shop.filters.location')}>
+            <FilterGroup label={t('shops.filters.location')}>
               <ShopLocationFilter
                 state={filters.state}
                 city={filters.city}
@@ -210,7 +210,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
             </FilterGroup>
 
             {/* Established Year Filter */}
-            <FilterGroup label={t('shop.filters.establishedYear')}>
+            <FilterGroup label={t('shops.filters.establishedYear')}>
               <ShopEstablishedYearFilter
                 value={filters.establishedYear}
                 onChange={handleYearChange}
@@ -285,7 +285,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Verification */}
-          <FilterGroup label={t('shop.filters.verification')}>
+          <FilterGroup label={t('shops.filters.verification')}>
             <ShopVerificationFilter
               value={filters.isVerified}
               onChange={handleVerificationChange}
@@ -294,7 +294,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Shop Type */}
-          <FilterGroup label={t('shop.filters.shopType')}>
+          <FilterGroup label={t('shops.filters.shopType')}>
             <ShopTypeFilter
               value={filters.shopType}
               onChange={handleTypeChange}
@@ -303,7 +303,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Category */}
-          <FilterGroup label={t('shop.filters.category')}>
+          <FilterGroup label={t('shops.filters.category')}>
             <ShopCategoryFilter
               value={filters.category}
               onChange={handleCategoryChange}
@@ -312,7 +312,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Location */}
-          <FilterGroup label={t('shop.filters.location')}>
+          <FilterGroup label={t('shops.filters.location')}>
             <ShopLocationFilter
               state={filters.state}
               city={filters.city}
@@ -323,7 +323,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Established Year */}
-          <FilterGroup label={t('shop.filters.establishedYear')}>
+          <FilterGroup label={t('shops.filters.establishedYear')}>
             <ShopEstablishedYearFilter
               value={filters.establishedYear}
               onChange={handleYearChange}
@@ -331,7 +331,7 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
           </FilterGroup>
 
           {/* Sort */}
-          <FilterGroup label={t('shop.sort.sortBy')}>
+          <FilterGroup label={t('shops.sort.sortBy')}>
             <ShopSortFilter
               value={filters.sort}
               onChange={handleSortChange}

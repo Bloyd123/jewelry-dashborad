@@ -133,7 +133,7 @@ export const RateHistoryTable: React.FC = () => {
           disabled={filteredData.length === 0}
         >
           <Download className="mr-2 h-4 w-4" />
-          {t('common.exportCSV')}
+          {t('metalRates.common.exportCSV')}
         </Button>
       </div>
 
@@ -156,11 +156,11 @@ export const RateHistoryTable: React.FC = () => {
 
       {/* Stats Summary */}
       <div className="text-sm text-text-secondary">
-        {t('common.showing')}{' '}
+        {t('metalRates.common.showing')}{' '}
         {filteredData.length > 0
           ? '1-' + Math.min(10, filteredData.length)
           : '0'}{' '}
-        {t('common.of')} {filteredData.length}
+        {t('metalRates.common.of')} {filteredData.length}
       </div>
 
       {/* DataTable */}

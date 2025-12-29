@@ -19,12 +19,12 @@ export const ShopVerificationFilter: React.FC<ShopVerificationFilterProps> = ({
   const options = [
     {
       value: 'true',
-      label: t('shop.verified'),
+      label: t('shops.verified'),
       icon: <CheckCircle2 className="h-4 w-4 text-status-success" />,
     },
     {
       value: 'false',
-      label: t('shop.unverified'),
+      label: t('shops.unverified'),
       icon: <XCircle className="h-4 w-4 text-text-tertiary" />,
     },
   ]
@@ -34,7 +34,7 @@ export const ShopVerificationFilter: React.FC<ShopVerificationFilterProps> = ({
       options={options}
       value={value}
       onChange={onChange}
-      placeholder={t('shop.filters.verification')}
+      placeholder={t('shops.filters.verification')}
       className={className}
     />
   )

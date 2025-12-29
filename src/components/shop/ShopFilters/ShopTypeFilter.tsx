@@ -27,37 +27,37 @@ export const ShopTypeFilter: React.FC<ShopTypeFilterProps> = ({
   const options = [
     {
       value: 'retail',
-      label: t('shop.types.retail'),
+      label: t('shops.types.retail'),
       icon: <Store className="h-4 w-4" />,
     },
     {
       value: 'wholesale',
-      label: t('shop.types.wholesale'),
+      label: t('shops.types.wholesale'),
       icon: <ShoppingBag className="h-4 w-4" />,
     },
     {
       value: 'manufacturing',
-      label: t('shop.types.manufacturing'),
+      label: t('shops.types.manufacturing'),
       icon: <Factory className="h-4 w-4" />,
     },
     {
       value: 'showroom',
-      label: t('shop.types.showroom'),
+      label: t('shops.types.showroom'),
       icon: <Building2 className="h-4 w-4" />,
     },
     {
       value: 'workshop',
-      label: t('shop.types.workshop'),
+      label: t('shops.types.workshop'),
       icon: <Wrench className="h-4 w-4" />,
     },
     {
       value: 'warehouse',
-      label: t('shop.types.warehouse'),
+      label: t('shops.types.warehouse'),
       icon: <Warehouse className="h-4 w-4" />,
     },
     {
       value: 'online',
-      label: t('shop.types.online'),
+      label: t('shops.types.online'),
       icon: <Globe className="h-4 w-4" />,
     },
   ]
@@ -67,7 +67,7 @@ export const ShopTypeFilter: React.FC<ShopTypeFilterProps> = ({
       options={options}
       value={value}
       onChange={onChange}
-      placeholder={t('shop.filters.shopType')}
+      placeholder={t('shops.filters.shopType')}
       className={className}
     />
   )

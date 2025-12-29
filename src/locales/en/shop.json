@@ -1,5 +1,64 @@
 {
-  "table": {
+
+  "shops": {
+      "searchPlaceholder": "Search by name or code...",
+    "organization": "Organization",
+    "established": "Established",
+    "verified": "Verified",
+    "unverified": "Unverified",
+         "location": "Location",
+    "types": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "manufacturing": "Manufacturing",
+      "showroom": "Showroom",
+      "workshop": "Workshop",
+      "warehouse": "Warehouse",
+      "online": "Online"
+    },
+    "categories": {
+      "jewelry": "Jewelry",
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "gemstone": "Gemstone",
+      "pearls": "Pearls",
+      "platinum": "Platinum",
+      "mixed": "Mixed"
+    },
+    "common":{
+            "active": "Active",
+      
+    "backToList": "Back to List",
+    "settings": "Settings",
+    "verified": "Verified",
+      "allStates":"All States"
+    },
+        "filters": {
+      "status": "Status",
+       "advancedFilters": "Advanced Filters",
+      "verification": "Verification",
+      "shopType": "Shop Type",
+      "category": "Category",
+      "location": "Location",
+      "state": "State",
+      "city": "City",
+      "establishedYear": "Established Year",
+      "title": "Shop Filters",
+         "moreFilters": "More Filters"
+    },
+    "sort": {
+      "sortBy": "Sort By",
+      "default": "Default",
+      "nameAsc": "Name (A-Z)",
+      "nameDesc": "Name (Z-A)",
+      "oldestFirst": "Oldest First",
+      "newestFirst": "Newest First",
+      "cityAsc": "City (A-Z)",
+      "cityDesc": "City (Z-A)"
+    },
+    "title": "Shops",
+      "table": {
     "shopCode": "Shop Code",
     "shopName": "Shop Name",
     "type": "Type",
@@ -14,9 +73,7 @@
     "noShops": "No shops found",
     "selectedCount": "{{count}} shops selected",
     "ariaLabel": "Shops table"
-  },
-  "shops": {
-    "title": "Shops"
+  }
   },
   "actions": {
     "CREATE": "Create",
@@ -40,54 +97,6 @@
     "exportSelected": "Export Selected",
     "sendNotification": "Send Notification",
     "bulkDelete": "Bulk Delete"
-  },
-  "shop": {
-    "searchPlaceholder": "Search by name or code...",
-    "organization": "Organization",
-    "location": "Location",
-    "established": "Established",
-    "verified": "Verified",
-    "unverified": "Unverified",
-    "types": {
-      "retail": "Retail",
-      "wholesale": "Wholesale",
-      "manufacturing": "Manufacturing",
-      "showroom": "Showroom",
-      "workshop": "Workshop",
-      "warehouse": "Warehouse",
-      "online": "Online"
-    },
-    "categories": {
-      "jewelry": "Jewelry",
-      "gold": "Gold",
-      "silver": "Silver",
-      "diamond": "Diamond",
-      "gemstone": "Gemstone",
-      "pearls": "Pearls",
-      "platinum": "Platinum",
-      "mixed": "Mixed"
-    },
-    "filters": {
-      "status": "Status",
-      "verification": "Verification",
-      "shopType": "Shop Type",
-      "category": "Category",
-      "location": "Location",
-      "state": "State",
-      "city": "City",
-      "establishedYear": "Established Year",
-      "title": "Shop Filters"
-    },
-    "sort": {
-      "sortBy": "Sort By",
-      "default": "Default",
-      "nameAsc": "Name (A-Z)",
-      "nameDesc": "Name (Z-A)",
-      "oldestFirst": "Oldest First",
-      "newestFirst": "Newest First",
-      "cityAsc": "City (A-Z)",
-      "cityDesc": "City (Z-A)"
-    }
   },
   "shopType": {
     "retail": "Retail",

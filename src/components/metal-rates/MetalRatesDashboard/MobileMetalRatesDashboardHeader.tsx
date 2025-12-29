@@ -135,7 +135,7 @@ export const MobileMetalRatesDashboardHeader: React.FC<
                 className="gap-2 px-2"
               >
                 <ChevronLeft className="h-4 w-4" />
-                {t('common.backToList')}
+                {t('metalRates.common.backToList')}
               </Button>
 
               <div className="flex items-center gap-2">
@@ -181,7 +181,7 @@ export const MobileMetalRatesDashboardHeader: React.FC<
                         className="flex-shrink-0 gap-1"
                       >
                         <Check className="h-3 w-3" />
-                        {t('common.active')}
+                        {t('metalRates.common.active')}
                       </Badge>
                     )}
                   </div>
@@ -204,7 +204,7 @@ export const MobileMetalRatesDashboardHeader: React.FC<
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-text-tertiary">{t('common.by')}</span>
+                  <span className="text-text-tertiary">{t('metalRates.common.by')}</span>
                   <span className="font-medium text-text-secondary">
                     {updatedBy}
                   </span>

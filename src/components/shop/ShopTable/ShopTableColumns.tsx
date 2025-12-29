@@ -136,7 +136,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 1. Shop Code with Badge
   {
     id: 'code',
-    header: 'table.shopCode',
+    header: 'shops.table.shopCode',
     accessorKey: 'code',
     sortable: true,
     width: '140px',
@@ -153,7 +153,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 2. Shop Name with Display Name
   {
     id: 'name',
-    header: 'table.shopName',
+    header: 'shops.table.shopName',
     accessorKey: 'name',
     sortable: true,
     width: '220px',
@@ -170,7 +170,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 3. Shop Type & Category Badges
   {
     id: 'type',
-    header: 'table.type',
+    header: 'shops.table.type',
     accessorKey: 'shopType',
     sortable: true,
     width: '160px',
@@ -194,7 +194,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 4. Location with Icon
   {
     id: 'location',
-    header: 'table.location',
+    header: 'shops.table.location',
     accessorFn: row => `${row.address.city}, ${row.address.state}`,
     sortable: true,
     width: '180px',
@@ -216,7 +216,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 5. Contact with Copy Button
   {
     id: 'contact',
-    header: 'table.contact',
+    header: 'shops.table.contact',
     accessorKey: 'phone',
     sortable: false,
     width: '160px',
@@ -248,7 +248,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 6. Manager with Avatar
   {
     id: 'manager',
-    header: 'table.manager',
+    header: 'shops.table.manager',
     accessorFn: row => getManagerName(row),
     sortable: true,
     width: '180px',
@@ -277,7 +277,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 7. GST Number (if available)
   {
     id: 'gst',
-    header: 'table.gstNumber',
+    header: 'shops.table.gstNumber',
     accessorKey: 'gstNumber',
     sortable: true,
     width: '160px',
@@ -309,7 +309,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 8. Total Products
   {
     id: 'products',
-    header: 'table.products',
+    header: 'shops.table.products',
     accessorFn: row => row.statistics?.totalProducts ?? 0,
     sortable: true,
     align: 'center',
@@ -326,7 +326,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 9. Inventory Value
   {
     id: 'inventory',
-    header: 'table.inventoryValue',
+    header: 'shops.table.inventoryValue',
     accessorFn: row => row.statistics?.totalInventoryValue ?? 0,
     sortable: true,
     align: 'right',
@@ -343,7 +343,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 10. Status Badges
   {
     id: 'status',
-    header: 'table.status',
+    header: 'shops.table.status',
     accessorKey: 'isActive',
     sortable: true,
     width: '140px',
@@ -364,7 +364,7 @@ export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 11. Created Date
   {
     id: 'createdAt',
-    header: 'table.createdAt',
+    header: 'shops.table.createdAt',
     accessorKey: 'createdAt',
     sortable: true,
     width: '130px',

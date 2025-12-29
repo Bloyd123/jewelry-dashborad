@@ -38,43 +38,8 @@
     "description": "Please check your internet connection and try again.",
     "retryButton": "Retry Connection"
   },
-  "common": {
-    "export": "Export",
-    "edit": "Edit",
-    "delete": "Delete",
-    "by": "by",
-
-    "noData": "No data available",
-    "backToList": "Back to List",
-    "settings": "Settings",
-    "verified": "Verified",
-    "clearSelection": "Clear Selection",
-    "loading": "Loading...",
-    "cancel": "Cancel",
-    "save": "Save",
-    "update": "Update",
-    "next": "Next",
-    "previous": "Previous",
-    "step": "Step",
-    "of": "of",
-    "active": "Active",
-    "inactive": "Inactive",
-    "search": "Search",
-    "all": "All",
-    "apply": "Apply",
-    "allStates": "All States",
-    "allCities": "All Cities",
-    "filters": {
-      "select": "Select",
-      "rateFilters": "Rate Filters",
-
-      "active": "Active Filters",
-      "clearAll": "Clear All",
-      "minPrice": "Minimum Price",
-      "maxPrice": "Maximum Price",
-      "minYear": "Minimum Year",
-      "maxYear": "Maximum Year"
-    }
+  "commontext":{
+      "Home":"Home" 
   },
 
   "ui": {

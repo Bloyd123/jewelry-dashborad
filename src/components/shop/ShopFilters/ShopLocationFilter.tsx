@@ -145,13 +145,13 @@ export const ShopLocationFilter: React.FC<ShopLocationFilterProps> = ({
       {/* State Filter */}
       <Select value={state || 'all'} onValueChange={handleStateChange}>
         <SelectTrigger className="w-full md:w-[180px]">
-          <SelectValue placeholder={t('shop.filters.state')} />
+          <SelectValue placeholder={t('shops.filters.state')} />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
-              {t('common.allStates')}
+              {t('shops.common.allStates')}
             </div>
           </SelectItem>
           {ALL_STATES.map(s => (
@@ -166,7 +166,7 @@ export const ShopLocationFilter: React.FC<ShopLocationFilterProps> = ({
       {state && state !== 'all' && cities.length > 0 && (
         <Select value={city || 'all'} onValueChange={handleCityChange}>
           <SelectTrigger className="w-full md:w-[180px]">
-            <SelectValue placeholder={t('shop.filters.city')} />
+            <SelectValue placeholder={t('shops.filters.city')} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">{t('common.allCities')}</SelectItem>

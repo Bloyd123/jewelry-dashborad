@@ -116,7 +116,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
               className="gap-2 px-2"
             >
               <ChevronLeft className="h-4 w-4" />
-              {t('common.backToList')}
+              {t('shops.common.backToList')}
             </Button>
 
             <Button
@@ -154,12 +154,12 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
                     variant={shop.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
-                    {shop.isActive ? t('common.active') : t('common.inactive')}
+                    {shop.isActive ? t('shops.common.active') : t('shops.common.inactive')}
                   </Badge>
 
                   {shop.isVerified && (
                     <Badge variant="success" size="sm">
-                      {t('common.verified')}
+                      {t('shops.common.verified')}
                     </Badge>
                   )}
 
@@ -183,7 +183,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
               {organizationName && (
                 <div className="flex items-center justify-between">
                   <span className="text-text-tertiary">
-                    {t('shop.organization')}:
+                    {t('shops.organization')}:
                   </span>
                   <span className="font-medium text-text-secondary">
                     {organizationName}
@@ -194,7 +194,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
               {shop.address?.city && shop.address?.state && (
                 <div className="flex items-center justify-between">
                   <span className="text-text-tertiary">
-                    {t('shop.location')}:
+                    {t('shops.location')}:
                   </span>
                   <span className="font-medium text-text-secondary">
                     {shop.address.city}, {shop.address.state}
@@ -205,7 +205,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
               {shop.establishedYear && (
                 <div className="flex items-center justify-between">
                   <span className="text-text-tertiary">
-                    {t('shop.established')}:
+                    {t('shops.established')}:
                   </span>
                   <span className="font-medium text-text-secondary">
                     {shop.establishedYear}

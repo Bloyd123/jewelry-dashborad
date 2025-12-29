@@ -24,7 +24,7 @@ export const ShopSearchBar: React.FC<ShopSearchBarProps> = ({
         type="text"
         value={value}
         onChange={e => onChange(e.target.value)}
-        placeholder={t('shop.searchPlaceholder')} // "Search by name or code..."
+        placeholder={t('shops.searchPlaceholder')} // "Search by name or code..."
         className="pl-10"
       />
     </div>

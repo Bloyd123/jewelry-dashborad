@@ -27,42 +27,42 @@ export const ShopCategoryFilter: React.FC<ShopCategoryFilterProps> = ({
   const options = [
     {
       value: 'jewelry',
-      label: t('shop.categories.jewelry'),
+      label: t('shops.categories.jewelry'),
       icon: <Crown className="h-4 w-4" />,
     },
     {
       value: 'gold',
-      label: t('shop.categories.gold'),
+      label: t('shops.categories.gold'),
       icon: <Circle className="h-4 w-4 text-yellow-500" />,
     },
     {
       value: 'silver',
-      label: t('shop.categories.silver'),
+      label: t('shops.categories.silver'),
       icon: <Circle className="h-4 w-4 text-gray-400" />,
     },
     {
       value: 'diamond',
-      label: t('shop.categories.diamond'),
+      label: t('shops.categories.diamond'),
       icon: <Diamond className="h-4 w-4" />,
     },
     {
       value: 'gemstone',
-      label: t('shop.categories.gemstone'),
+      label: t('shops.categories.gemstone'),
       icon: <Gem className="h-4 w-4" />,
     },
     {
       value: 'pearls',
-      label: t('shop.categories.pearls'),
+      label: t('shops.categories.pearls'),
       icon: <Circle className="h-4 w-4 text-pink-300" />,
     },
     {
       value: 'platinum',
-      label: t('shop.categories.platinum'),
+      label: t('shops.categories.platinum'),
       icon: <Hexagon className="h-4 w-4" />,
     },
     {
       value: 'mixed',
-      label: t('shop.categories.mixed'),
+      label: t('shops.categories.mixed'),
       icon: <Sparkles className="h-4 w-4" />,
     },
   ]
@@ -72,7 +72,7 @@ export const ShopCategoryFilter: React.FC<ShopCategoryFilterProps> = ({
       options={options}
       value={value}
       onChange={onChange}
-      placeholder={t('shop.filters.category')}
+      placeholder={t('shops.filters.category')}
       className={className}
     />
   )

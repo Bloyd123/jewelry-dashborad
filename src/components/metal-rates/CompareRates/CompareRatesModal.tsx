@@ -300,7 +300,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
               )}
             </Button>
             <Button variant="outline" onClick={handleReset}>
-              {t('common.reset') || 'Reset'}
+              {t('metalRates.common.reset') || 'Reset'}
             </Button>
           </div>
         </div>
@@ -335,7 +335,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
                     {t('metalRates.compare.daysDifference') || 'Days'}
                   </p>
                   <p className="font-medium text-text-primary">
-                    {comparisonData.daysDifference} {t('common.days') || 'days'}
+                    {comparisonData.daysDifference} {t('metalRates.common.days') || 'days'}
                   </p>
                 </div>
               </div>
@@ -511,7 +511,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
       {/* Footer */}
       <ModalFooter align="right">
         <Button variant="outline" onClick={onClose}>
-          {t('common.close') || 'Close'}
+          {t('metalRates.common.close') || 'Close'}
         </Button>
       </ModalFooter>
     </Modal>

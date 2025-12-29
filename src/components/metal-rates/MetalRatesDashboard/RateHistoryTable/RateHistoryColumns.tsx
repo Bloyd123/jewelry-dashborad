@@ -60,7 +60,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 1. Date
   {
     id: 'rateDate',
-    header: 'table.date',
+    header: 'metalRates.table.date',
     accessorKey: 'rateDate',
     sortable: true,
     width: '120px',
@@ -79,7 +79,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 2. Gold 24K
   {
     id: 'gold24K',
-    header: 'table.gold24K',
+    header: 'metalRates.table.gold24K',
     accessorKey: 'gold.gold24K.sellingRate',
     sortable: true,
     align: 'right',
@@ -96,7 +96,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 3. Gold 22K
   {
     id: 'gold22K',
-    header: 'table.gold22K',
+    header: 'metalRates.table.gold22K',
     accessorKey: 'gold.gold22K.sellingRate',
     sortable: true,
     align: 'right',
@@ -113,7 +113,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 4. Silver 999
   {
     id: 'silver999',
-    header: 'table.silver999',
+    header: 'metalRates.table.silver999',
     accessorKey: 'silver.pure.sellingRate',
     sortable: true,
     align: 'right',
@@ -130,7 +130,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 5. Platinum
   {
     id: 'platinum',
-    header: 'table.platinum',
+    header: 'metalRates.table.platinum',
     accessorKey: 'platinum.sellingRate',
     sortable: true,
     align: 'right',
@@ -147,7 +147,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 6. Change (Gold)
   {
     id: 'change',
-    header: 'table.change',
+    header: 'metalRates.table.change',
     accessorKey: 'changes.goldChangePercentage',
     sortable: true,
     align: 'center',
@@ -177,7 +177,7 @@ export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 7. User (Rate Source)
   {
     id: 'user',
-    header: 'table.user',
+    header: 'metalRates.table.user',
     accessorKey: 'rateSource',
     sortable: true,
     width: '100px',

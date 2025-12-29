@@ -172,7 +172,7 @@ export const UpdateRatesModal: React.FC<UpdateRatesModalProps> = ({
               className="flex-1 gap-2 sm:flex-none"
             >
               <Eye className="h-4 w-4" />
-              {showPreview ? t('common.hidePreview') : t('common.preview')}
+              {showPreview ? t('common.hidePreview') : t('metalRates.common.preview')}
             </Button>
 
             {/* Save Button */}

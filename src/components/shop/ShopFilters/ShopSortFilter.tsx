@@ -24,12 +24,12 @@ export const ShopSortFilter: React.FC<ShopSortFilterProps> = ({
   const { t } = useTranslation()
 
   const sortOptions = [
-    { value: 'name', label: t('shop.sort.nameAsc') },
-    { value: '-name', label: t('shop.sort.nameDesc') },
-    { value: 'createdAt', label: t('shop.sort.oldestFirst') },
-    { value: '-createdAt', label: t('shop.sort.newestFirst') },
-    { value: 'city', label: t('shop.sort.cityAsc') },
-    { value: '-city', label: t('shop.sort.cityDesc') },
+    { value: 'name', label: t('shops.sort.nameAsc') },
+    { value: '-name', label: t('shops.sort.nameDesc') },
+    { value: 'createdAt', label: t('shops.sort.oldestFirst') },
+    { value: '-createdAt', label: t('shops.sort.newestFirst') },
+    { value: 'city', label: t('shops.sort.cityAsc') },
+    { value: '-city', label: t('shops.sort.cityDesc') },
   ]
 
   const handleChange = (newValue: string) => {
@@ -47,7 +47,7 @@ export const ShopSortFilter: React.FC<ShopSortFilterProps> = ({
         <SelectValue placeholder={t('shop.sort.sortBy')} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="default">{t('shop.sort.default')}</SelectItem>
+        <SelectItem value="default">{t('shops.sort.default')}</SelectItem>
         {sortOptions.map(option => (
           <SelectItem key={option.value} value={option.value}>
             {option.label}

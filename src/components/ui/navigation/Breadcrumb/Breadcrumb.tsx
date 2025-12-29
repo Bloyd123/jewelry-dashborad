@@ -7,6 +7,7 @@ import * as React from 'react'
 import { ChevronRight, Home, MoreHorizontal } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +45,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   maxItems = 3,
   className,
 }) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const handleClick = (item: BreadcrumbItem) => {
@@ -57,7 +59,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   // Add home item if needed
   const allItems = showHome
     ? [
-        { label: 'Home', href: '/', icon: <Home className="h-4 w-4" /> },
+      { label: t('commontext.Home'), href: '/', icon: <Home className="h-4 w-4" /> },
         ...items,
       ]
     : items
