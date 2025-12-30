@@ -32,7 +32,7 @@ interface DesktopShopDetailHeaderProps {
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
   onSettingsClick?: () => void
-  children?: React.ReactNode
+  // children?: React.ReactNode
 }
 
 // ============================================================================
@@ -47,7 +47,7 @@ export const DesktopShopDetailHeader: React.FC<
   onTabChange,
   onBackClick,
   onSettingsClick,
-  children,
+  // children,
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
@@ -232,11 +232,11 @@ export const DesktopShopDetailHeader: React.FC<
             onValueChange={handleTabChange}
             variant="underline"
             size="md"
-          >
-            {children}
+            >
+            {/* {children} */}
           </Tabs>
         </div>
-      </div>
+            </div>
     </div>
   )
 }

@@ -32,7 +32,7 @@ interface MobileShopDetailHeaderProps {
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
   onSettingsClick?: () => void
-  children?: React.ReactNode
+  // children?: React.ReactNode
 }
 
 // ============================================================================
@@ -45,7 +45,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
   onTabChange,
   onBackClick,
   onSettingsClick,
-  children,
+  // children,
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
@@ -225,7 +225,7 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
             variant="underline"
             size="sm"
           >
-            {children}
+            {/* {children} */}
           </Tabs>
         </div>
       </div>
