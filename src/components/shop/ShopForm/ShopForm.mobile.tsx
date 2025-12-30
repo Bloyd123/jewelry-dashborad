@@ -97,8 +97,13 @@ export default function ShopFormMobile({
       // Navigate to first step with errors
       const firstErrorStep = STEPS.findIndex(step => {
         return Object.keys(newErrors).some(key => {
-          if (step.id === 'basic' && ['name', 'shopType', 'category'].includes(key)) return true
-          if (step.id === 'contact' && ['phone', 'email'].includes(key)) return true
+          if (
+            step.id === 'basic' &&
+            ['name', 'shopType', 'category'].includes(key)
+          )
+            return true
+          if (step.id === 'contact' && ['phone', 'email'].includes(key))
+            return true
           if (step.id === 'address' && key.startsWith('address.')) return true
           return false
         })
@@ -217,7 +222,7 @@ export default function ShopFormMobile({
               type="button"
               onClick={handleNext}
               disabled={isLoading}
-              className="flex-1 bg-accent text-white hover:bg-accent/90"
+              className="hover:bg-accent/90 flex-1 bg-accent text-white"
             >
               {t('shops.common.next')}
               <ChevronRight className="ml-2 h-4 w-4" />
@@ -227,7 +232,7 @@ export default function ShopFormMobile({
               type="button"
               onClick={handleSubmit}
               disabled={isLoading}
-              className="flex-1 bg-accent text-white hover:bg-accent/90"
+              className="hover:bg-accent/90 flex-1 bg-accent text-white"
             >
               {isLoading ? (
                 <>
@@ -237,7 +242,9 @@ export default function ShopFormMobile({
               ) : (
                 <>
                   <Save className="mr-2 h-4 w-4" />
-                  {mode === 'create' ? t('shops.common.save') : t('shops.common.update')}
+                  {mode === 'create'
+                    ? t('shops.common.save')
+                    : t('shops.common.update')}
                 </>
               )}
             </Button>

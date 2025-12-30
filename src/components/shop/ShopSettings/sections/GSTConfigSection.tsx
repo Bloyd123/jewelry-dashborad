@@ -95,7 +95,7 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
                 {t('shops.settings.gstConfig.status')}
               </div>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-status-success/10 px-2 py-1 text-sm font-medium text-status-success">
+                <span className="bg-status-success/10 inline-flex items-center gap-1 rounded-full px-2 py-1 text-sm font-medium text-status-success">
                   ✓ {t('shops.settings.gstConfig.verified')}
                 </span>
               </div>
@@ -156,7 +156,11 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
                       type="number"
                       value={data.gstRates.gold}
                       onChange={(_, value) =>
-                        onNestedChange('gstRates', 'gold', parseFloat(String(value)))
+                        onNestedChange(
+                          'gstRates',
+                          'gold',
+                          parseFloat(String(value))
+                        )
                       }
                       className="max-w-[120px]"
                     />
@@ -184,7 +188,11 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
                       type="number"
                       value={data.gstRates.silver}
                       onChange={(_, value) =>
-                        onNestedChange('gstRates', 'silver', parseFloat(String(value)))
+                        onNestedChange(
+                          'gstRates',
+                          'silver',
+                          parseFloat(String(value))
+                        )
                       }
                       className="max-w-[120px]"
                     />
@@ -212,7 +220,11 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
                       type="number"
                       value={data.gstRates.diamond}
                       onChange={(_, value) =>
-                        onNestedChange('gstRates', 'diamond', parseFloat(String(value)))
+                        onNestedChange(
+                          'gstRates',
+                          'diamond',
+                          parseFloat(String(value))
+                        )
                       }
                       className="max-w-[120px]"
                     />
@@ -240,7 +252,11 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
                       type="number"
                       value={data.gstRates.platinum}
                       onChange={(_, value) =>
-                        onNestedChange('gstRates', 'platinum', parseFloat(String(value)))
+                        onNestedChange(
+                          'gstRates',
+                          'platinum',
+                          parseFloat(String(value))
+                        )
                       }
                       className="max-w-[120px]"
                     />
@@ -447,7 +463,9 @@ export const GSTConfigSection: React.FC<GSTConfigSectionProps> = ({
             <FormSwitch
               name="enableEInvoice"
               label={t('shops.settings.gstConfig.enableEInvoice')}
-              description={t('shops.settings.gstConfig.enableEInvoiceDescription')}
+              description={t(
+                'shops.settings.gstConfig.enableEInvoiceDescription'
+              )}
               checked={data.enableEInvoice}
               onChange={(_, value) => onChange('enableEInvoice', value)}
             />

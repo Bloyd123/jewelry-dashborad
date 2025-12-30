@@ -237,7 +237,7 @@ export default function ShopFormDesktop({
             type="button"
             onClick={handleSubmit}
             disabled={isLoading}
-            className="min-w-[120px] bg-accent text-white hover:bg-accent/90"
+            className="hover:bg-accent/90 min-w-[120px] bg-accent text-white"
           >
             {isLoading ? (
               <>
@@ -247,7 +247,9 @@ export default function ShopFormDesktop({
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                {mode === 'create' ? t('shops.common.save') : t('shops.common.update')}
+                {mode === 'create'
+                  ? t('shops.common.save')
+                  : t('shops.common.update')}
               </>
             )}
           </Button>

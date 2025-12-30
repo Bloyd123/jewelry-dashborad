@@ -335,7 +335,8 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
                     {t('metalRates.compare.daysDifference') || 'Days'}
                   </p>
                   <p className="font-medium text-text-primary">
-                    {comparisonData.daysDifference} {t('metalRates.common.days') || 'days'}
+                    {comparisonData.daysDifference}{' '}
+                    {t('metalRates.common.days') || 'days'}
                   </p>
                 </div>
               </div>

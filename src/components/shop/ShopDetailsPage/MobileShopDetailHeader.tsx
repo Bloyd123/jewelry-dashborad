@@ -154,7 +154,9 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
                     variant={shop.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
-                    {shop.isActive ? t('shops.common.active') : t('shops.common.inactive')}
+                    {shop.isActive
+                      ? t('shops.common.active')
+                      : t('shops.common.inactive')}
                   </Badge>
 
                   {shop.isVerified && (
@@ -165,13 +167,13 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
 
                   {shop.shopType && (
                     <Badge variant="retail" size="sm">
-                      {t(`shopType.${shop.shopType}`)}
+                      {t(`shops.shopType.${shop.shopType}`)}
                     </Badge>
                   )}
 
                   {shop.category && (
                     <Badge variant="outline" size="sm">
-                      {t(`shopCategory.${shop.category}`)}
+                      {t(`shops.shopCategory.${shop.category}`)}
                     </Badge>
                   )}
                 </div>

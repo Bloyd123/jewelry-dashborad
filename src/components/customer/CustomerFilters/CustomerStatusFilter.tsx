@@ -32,13 +32,13 @@ export const CustomerStatusFilter = React.forwardRef<
   const statusOptions: StatusOption[] = [
     {
       value: 'active',
-      label: t('status.active'),
+      label: t('customer.status.active'),
       variant: 'active',
       showDot: true,
     },
     {
       value: 'inactive',
-      label: t('status.inactive'),
+      label: t('customer.status.inactive'),
       variant: 'inactive',
       showDot: true,
     },

@@ -1,5 +1,11 @@
 {
   "sales": {
+    "customer": {
+      "customerCode": "Customer Code",
+      "phone": "Phone",
+      "email": "Email",
+      "gstNumber": "GST Number"
+    },
     "createSale": "Create Sale",
     "editSale": "Edit Sale",
     "createSaleDescription": "Fill in the details below to create a new sale",
@@ -152,6 +158,7 @@
       "generateReport": "Generate Report",
       "bulkDelete": "Bulk Delete"
     },
+
     "filters": {
       "title": "Filters",
       "filters": "Filters",
@@ -240,11 +247,5 @@
       "minPrice": "Min Price",
       "maxPrice": "Max Price"
     }
-  },
-  "customer": {
-    "customerCode": "Customer Code",
-    "phone": "Phone",
-    "email": "Email",
-    "gstNumber": "GST Number"
   }
 }

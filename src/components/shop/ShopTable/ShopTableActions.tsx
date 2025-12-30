@@ -178,7 +178,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.viewDetails')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.viewDetails')}
+            </span>
           </Button>
         )}
 
@@ -204,7 +206,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.settings')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.settings')}
+            </span>
           </Button>
         )}
 
@@ -217,7 +221,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.updateRates')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.updateRates')}
+            </span>
           </Button>
         )}
 
@@ -230,7 +236,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="border-status-success/20 hover:bg-status-success/10 h-9 gap-1 whitespace-nowrap text-xs text-status-success sm:gap-2 sm:text-sm"
           >
             <Power className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.activate')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.activate')}
+            </span>
           </Button>
         )}
 
@@ -243,7 +251,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="border-status-warning/20 hover:bg-status-warning/10 h-9 gap-1 whitespace-nowrap text-xs text-status-warning sm:gap-2 sm:text-sm"
           >
             <PowerOff className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.deactivate')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.deactivate')}
+            </span>
           </Button>
         )}
 
@@ -256,7 +266,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Trash2 className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('shops.actions.delete')}</span>
+            <span className="hidden sm:inline">
+              {t('shops.actions.delete')}
+            </span>
           </Button>
         )}
 
@@ -268,8 +280,12 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>{t('shops.actions.exportSelected')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('shops.actions.sendNotification')}</DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('shops.actions.exportSelected')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('shops.actions.sendNotification')}
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
               {t('shops.actions.bulkDelete')}

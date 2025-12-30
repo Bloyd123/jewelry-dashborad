@@ -51,7 +51,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 1. Customer Code with Avatar Initial
   {
     id: 'customerCode',
-    header: 'table.customerCode',
+    header: 'customer.table.customerCode',
     accessorKey: 'customerCode',
     sortable: true,
     width: '140px',
@@ -68,7 +68,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 2. Full Name with Avatar
   {
     id: 'fullName',
-    header: 'table.fullName',
+    header: 'customer.table.fullName',
     accessorKey: 'fullName',
     sortable: true,
     width: '200px',
@@ -90,7 +90,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 3. Phone with Copy Button
   {
     id: 'phone',
-    header: 'table.phone',
+    header: 'customer.table.phone',
     accessorKey: 'phone',
     sortable: true,
     width: '150px',
@@ -114,7 +114,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 4. Customer Type Badge
   {
     id: 'customerType',
-    header: 'table.customerType',
+    header: 'customer.table.customerType',
     accessorKey: 'customerType',
     sortable: true,
     width: '130px',
@@ -137,7 +137,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 5. Membership Tier Badge
   {
     id: 'membershipTier',
-    header: 'table.membershipTier',
+    header: 'customer.table.membershipTier',
     accessorKey: 'membershipTier',
     sortable: true,
     width: '140px',
@@ -169,7 +169,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 6. Total Purchases (Formatted Currency)
   {
     id: 'totalPurchases',
-    header: 'table.totalPurchases',
+    header: 'customer.table.totalPurchases',
     accessorKey: 'totalPurchases',
     sortable: true,
     align: 'right',
@@ -186,7 +186,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 7. Total Due (Formatted Currency with Color)
   {
     id: 'totalDue',
-    header: 'table.totalDue',
+    header: 'customer.table.totalDue',
     accessorKey: 'totalDue',
     sortable: true,
     align: 'right',
@@ -211,7 +211,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 8. Loyalty Points with Icon
   {
     id: 'loyaltyPoints',
-    header: 'table.loyaltyPoints',
+    header: 'customer.table.loyaltyPoints',
     accessorKey: 'loyaltyPoints',
     sortable: true,
     align: 'center',
@@ -227,7 +227,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 9. Active Status Badge with Dot
   {
     id: 'isActive',
-    header: 'table.status',
+    header: 'customer.table.status',
     accessorKey: 'isActive',
     sortable: true,
     width: '120px',
@@ -241,7 +241,7 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
   // 10. Created Date
   {
     id: 'createdAt',
-    header: 'table.createdAt',
+    header: 'customer.table.createdAt',
     accessorKey: 'createdAt',
     sortable: true,
     width: '130px',

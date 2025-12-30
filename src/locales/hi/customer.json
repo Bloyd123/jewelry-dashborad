@@ -1,5 +1,168 @@
 {
   "customer": {
+    "tier": {
+      "platinum": "प्लैटिनम",
+      "gold": "गोल्ड",
+      "silver": "सिल्वर",
+      "standard": "स्टैंडर्ड"
+    },
+    "tabs": {
+      "table": "ग्राहक तालिका",
+      "analytics": "विश्लेषण"
+    },
+    "page": {
+      "title": "ग्राहक",
+      "subtitle": "अपने ग्राहक डेटाबेस और विश्लेषण को प्रबंधित करें"
+    },
+    "search": {
+      "placeholder": "नाम, फ़ोन, ईमेल या कोड द्वारा खोजें..."
+    },
+    "analytics": {
+      "title": "ग्राहक विश्लेषण",
+      "subtitle": "आपके ग्राहक आधार और प्रदर्शन मेट्रिक्स का अवलोकन",
+      "refresh": "ताज़ा करें",
+      "noData": "कोई ग्राहक डेटा उपलब्ध नहीं है",
+      "vsLastMonth": "पिछले महीने की तुलना में",
+      "vsLastPeriod": "पिछली अवधि की तुलना में",
+      "ofTotal": "कुल का",
+      "last30Days": "पिछले 30 दिन",
+      "last90Days": "पिछले 90 दिन",
+
+      "totalCustomers": "कुल ग्राहक",
+      "totalCustomersDesc": "आपकी दुकान में सभी पंजीकृत ग्राहक",
+
+      "activeCustomers": "सक्रिय ग्राहक",
+      "activeCustomersDesc": "ग्राहक जिन्होंने हाल ही में खरीदारी की",
+
+      "vipCustomers": "वीआईपी ग्राहक",
+      "vipCustomersDesc": "प्रीमियम और उच्च मूल्य वाले ग्राहक",
+
+      "avgLifetimeValue": "औसत आजीवन मूल्य",
+      "avgLifetimeValueDesc": "प्रति ग्राहक औसत कुल खर्च",
+
+      "totalOutstanding": "कुल बकाया",
+      "totalOutstandingDesc": "ग्राहकों से कुल लंबित भुगतान",
+
+      "totalLoyaltyPoints": "कुल लॉयल्टी अंक",
+      "totalLoyaltyPointsDesc": "सभी ग्राहकों में कुल लॉयल्टी अंक",
+
+      "growthRate": "वृद्धि दर",
+      "growthRateDesc": "नए ग्राहक अधिग्रहण दर",
+
+      "retentionRate": "प्रतिधारण दर",
+      "retentionRateDesc": "लौटने वाले ग्राहकों का प्रतिशत",
+
+      "customerGrowth": "ग्राहक वृद्धि",
+      "customerGrowthDesc": "समय के साथ कुल और नए ग्राहक",
+      "newCustomers": "नए ग्राहक",
+
+      "retentionTrend": "प्रतिधारण प्रवृत्ति",
+      "retentionTrendDesc": "समय के साथ ग्राहक प्रतिधारण दर",
+
+      "topCustomers": "शीर्ष ग्राहक",
+      "topCustomersDesc": "कुल खरीदारी के अनुसार उच्चतम मूल्य वाले ग्राहक",
+      "rank": "रैंक",
+      "customer": "ग्राहक",
+      "contact": "संपर्क",
+      "tier": "स्तर",
+      "totalPurchases": "कुल खरीदारी",
+      "loyaltyPoints": "अंक",
+      "lastOrder": "अंतिम ऑर्डर",
+
+      "customerSegmentation": "ग्राहक विभाजन",
+      "customerSegmentationDesc": "विभिन्न खंडों में ग्राहकों का वितरण",
+      "byMembershipTier": "सदस्यता स्तर के अनुसार",
+      "byCustomerType": "ग्राहक प्रकार के अनुसार",
+      "byProductCategory": "उत्पाद श्रेणी के अनुसार",
+
+      "geographicDistribution": "भौगोलिक वितरण",
+      "geographicDistributionDesc": "शहरों और क्षेत्रों में ग्राहक वितरण",
+
+      "purchasePattern": "खरीदारी पैटर्न",
+      "purchasePatternDesc": "समय के साथ ऑर्डर और राजस्व रुझान",
+      "totalOrders": "कुल ऑर्डर",
+      "revenue": "राजस्व",
+
+      "upcomingEvents": "आगामी कार्यक्रम",
+      "upcomingEventsDesc": "जन्मदिन, वर्षगांठ और मील के पत्थर",
+      "daysAway": "दिन दूर",
+
+      "atRiskCustomers": "जोखिम वाले ग्राहक",
+      "atRiskCustomersDesc": "ग्राहक जिन्होंने हाल ही में ऑर्डर नहीं किया",
+      "daysAgo": "दिन पहले",
+
+      "outstandingPayments": "बकाया भुगतान",
+      "outstandingPaymentsDesc": "लंबित और अतिदेय भुगतान",
+      "due": "देय",
+      "overdue": "अतिदेय",
+      "daysOverdue": "दिन अतिदेय"
+    },
+    "actions": {
+      "addNew": "नया ग्राहक जोड़ें",
+      "add": "जोड़ें",
+      "viewDetails": "विवरण देखें",
+
+      "addPoints": "लॉयल्टी अंक जोड़ें",
+      "exportSelected": "चयनित निर्यात करें",
+      "sendEmail": "ईमेल भेजें",
+      "sendSMS": "एसएमएस भेजें",
+      "bulkDelete": "थोक हटाएं",
+      "addCustomer": "ग्राहक जोड़ें",
+      "view": "विवरण देखें",
+      "edit": "ग्राहक संपादित करें",
+      "delete": "ग्राहक हटाएं",
+      "blacklist": "ब्लैकलिस्ट करें",
+      "removeBlacklist": "ब्लैकलिस्ट हटाएं",
+      "addLoyaltyPoints": "लॉयल्टी अंक जोड़ें",
+      "redeemLoyaltyPoints": "अंक रिडीम करें",
+      "call": "ग्राहक को कॉल करें",
+      "whatsapp": "व्हाट्सएप भेजें",
+      "email": "ईमेल भेजें",
+      "recordPayment": "भुगतान रिकॉर्ड करें",
+      "viewOrders": "ऑर्डर देखें",
+      "viewTransactions": "लेन-देन देखें",
+      "copyDetails": "विवरण कॉपी करें",
+      "markAsVIP": "वीआईपी के रूप में चिह्नित करें",
+      "moreActions": "अधिक कार्य"
+    },
+    "filters": {
+      "filters": "फ़िल्टर",
+      "moreFilters": "अधिक फ़िल्टर",
+      "status": "स्थिति",
+      "clearAdvanced": "उन्नत साफ़ करें",
+
+      "clearAll": "सभी साफ़ करें",
+      "customerType": "ग्राहक प्रकार",
+      "allTypes": "सभी प्रकार",
+      "membershipTier": "सदस्यता स्तर",
+      "allTiers": "सभी स्तर",
+      "balance": "शेष स्थिति",
+      "hasBalance": "बकाया है",
+      "noBalance": "क्लियर",
+      "allBalances": "सभी शेष",
+      "vipStatus": "वीआईपी स्थिति",
+      "vipOnly": "केवल वीआईपी",
+      "nonVIP": "गैर-वीआईपी",
+      "selectDateRange": "तारीख सीमा चुनें",
+      "title": "ग्राहक फ़िल्टर करें",
+      "advancedFilters": "उन्नत फ़िल्टर",
+      "dateRange": "तारीख सीमा"
+    },
+    "table": {
+      "ariaLabel": "ग्राहक तालिका",
+      "customerCode": "ग्राहक कोड",
+      "fullName": "पूरा नाम",
+      "phone": "फ़ोन",
+      "customerType": "प्रकार",
+      "membershipTier": "स्तर",
+      "totalPurchases": "कुल खरीदारी",
+      "totalDue": "बकाया",
+      "loyaltyPoints": "अंक",
+      "status": "स्थिति",
+      "createdAt": "शामिल होने की तारीख",
+      "noCustomers": "कोई ग्राहक नहीं मिला",
+      "selectedCount": "{{count}} चयनित"
+    },
     "firstName": "पहला नाम",
     "firstNamePlaceholder": "पहला नाम दर्ज करें",
     "lastName": "अंतिम नाम",
@@ -14,14 +177,14 @@
     "customersource": "स्रोत",
     "customergender": "लिंग",
     "addCustomer": "ग्राहक जोड़ें",
-    "editCustomer": "ग्राहक संपादित करें",
-    "editCustomerDescription": "ग्राहक की जानकारी अपडेट करें",
     "anniversaryDate": "वर्षगांठ की तारीख",
-    "phone": "फोन नंबर",
+    "phone": "फ़ोन नंबर",
+    "editCustomer": "ग्राहक संपादित करें",
+    "editCustomerDescription": "ग्राहक विवरण अपडेट करें",
     "addCustomerDescription": "उनकी संपर्क जानकारी और अन्य विवरण दर्ज करके एक नया ग्राहक प्रोफ़ाइल बनाएं।",
     "basicInformation": "बुनियादी जानकारी",
-    "kycDetails": "केवाईसी विवरण",
-    "alternatePhone": "वैकल्पिक फोन",
+    "kycDetails": "अपने ग्राहक को जानें",
+    "alternatePhone": "वैकल्पिक फ़ोन",
     "whatsappNumber": "व्हाट्सएप नंबर",
     "email": "ईमेल",
     "street": "सड़क का पता",
@@ -34,7 +197,7 @@
     "aadharNumber": "आधार नंबर",
     "panNumber": "पैन नंबर",
     "gstNumber": "जीएसटी नंबर",
-    "kycDescription": "केवाईसी दस्तावेज वैकल्पिक हैं लेकिन अनुशंसित हैं",
+    "kycDescription": "केवाईसी दस्तावेज़ वैकल्पिक हैं लेकिन अनुशंसित हैं",
     "preferredMetal": "पसंदीदा धातु",
     "selectMetal": "पसंदीदा धातु चुनें",
     "communicationPreference": "संचार वरीयता",
@@ -50,7 +213,7 @@
     "notes": "नोट्स",
     "notesPlaceholder": "ग्राहक के बारे में कोई अतिरिक्त नोट्स जोड़ें",
     "tags": "टैग",
-    "addTag": "टैग जोड़ें",
+    "addTag": "एक टैग जोड़ें",
     "gender": {
       "male": "पुरुष",
       "female": "महिला",
@@ -66,14 +229,14 @@
       "email": "ईमेल",
       "sms": "एसएमएस",
       "whatsapp": "व्हाट्सएप",
-      "call": "फोन कॉल",
+      "call": "फ़ोन कॉल",
       "none": "कोई नहीं"
     },
     "source": {
       "walkIn": "वॉक इन",
       "referral": "रेफरल",
       "online": "ऑनलाइन",
-      "phone": "फोन",
+      "phone": "फ़ोन",
       "socialMedia": "सोशल मीडिया",
       "advertisement": "विज्ञापन",
       "other": "अन्य"
@@ -98,37 +261,18 @@
       "addFirstCustomer": "अपना पहला ग्राहक जोड़ें",
       "error": "ग्राहकों को लोड करने में विफल"
     },
-    "actions": {
-      "addCustomer": "ग्राहक जोड़ें",
-      "view": "विवरण देखें",
-      "edit": "ग्राहक संपादित करें",
-      "delete": "ग्राहक हटाएं",
-      "blacklist": "ग्राहक को ब्लैकलिस्ट करें",
-      "removeBlacklist": "ब्लैकलिस्ट हटाएं",
-      "addLoyaltyPoints": "वफादारी अंक जोड़ें",
-      "redeemLoyaltyPoints": "अंक रिडीम करें",
-      "call": "ग्राहक को कॉल करें",
-      "whatsapp": "व्हाट्सऐप भेजें",
-      "email": "ईमेल भेजें",
-      "recordPayment": "भुगतान रिकॉर्ड करें",
-      "viewOrders": "ऑर्डर देखें",
-      "viewTransactions": "लेनदेन देखें",
-      "copyDetails": "विवरण कॉपी करें",
-      "markAsVIP": "VIP के रूप में चिह्नित करें",
-      "moreActions": "और क्रियाएँ"
-    },
     "fields": {
       "customerCode": "ग्राहक कोड",
       "name": "नाम",
       "email": "ईमेल",
       "customerType": "प्रकार",
-      "membershipTier": "सदस्यता स्तर",
-      "loyaltyPoints": "वफादारी अंक",
+      "membershipTier": "स्तर",
+      "loyaltyPoints": "लॉयल्टी अंक",
       "totalPurchases": "कुल खरीदारी",
       "totalDue": "बकाया राशि",
       "lastOrderDate": "अंतिम ऑर्डर",
       "status": "स्थिति",
-      "createdAt": "जुड़ने की तिथि",
+      "createdAt": "शामिल होने की तारीख",
       "customer": "ग्राहक",
       "summary": "सारांश",
       "points": "अंक",
@@ -138,7 +282,7 @@
     "customerTypes": {
       "retail": "खुदरा",
       "wholesale": "थोक",
-      "vip": "VIP",
+      "vip": "वीआईपी",
       "regular": "नियमित"
     },
     "membershipTiers": {
@@ -148,36 +292,10 @@
       "platinum": "प्लैटिनम"
     },
     "status": {
-      "blacklisted": "ब्लैकलिस्टेड"
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "blacklisted": "ब्लैकलिस्ट"
     },
     "noOrders": "अभी तक कोई ऑर्डर नहीं"
-  },
-  "filters": {
-    "searchPlaceholder": "ग्राहकों को खोजें...",
-    "type": "ग्राहक प्रकार",
-    "tier": "सदस्यता स्तर",
-    "status": "स्थिति",
-    "selectDateRange": "तारीख सीमा चुनें",
-    "dateRange": "तारीख सीमा",
-    "moreFilters": "अधिक फ़िल्टर",
-    "advancedFilters": "उन्नत फ़िल्टर",
-    "clearAll": "सभी साफ करें",
-    "customerType": "ग्राहक प्रकार",
-    "membershipTier": "सदस्यता स्तर",
-    "outstandingBalance": "बकाया शेष",
-    "showWithBalance": "बकाया वाले दिखाएं",
-    "showAll": "सभी दिखाएं"
-  },
-  "types": {
-    "retail": "खुदरा",
-    "wholesale": "थोक",
-    "vip": "VIP",
-    "regular": "नियमित"
-  },
-  "tiers": {
-    "standard": "स्टैंडर्ड",
-    "silver": "सिल्वर",
-    "gold": "गोल्ड",
-    "platinum": "प्लैटिनम"
   }
 }

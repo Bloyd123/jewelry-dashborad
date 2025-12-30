@@ -158,7 +158,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       <div className={cn('space-y-6', className)}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('statistics.title')}
+            {t('shops.statistics.title')}
           </h2>
         </div>
         <StatCardGrid columns={4} gap="md">
@@ -177,12 +177,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       <div className={cn('space-y-6', className)}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('statistics.title')}
+            {t('shops.statistics.title')}
           </h2>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <AlertCircle className="mb-4 h-12 w-12 text-text-tertiary" />
-          <p className="text-text-secondary">{t('statistics.noData')}</p>
+          <p className="text-text-secondary">{t('shops.statistics.noData')}</p>
         </div>
       </div>
     )
@@ -194,10 +194,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('statistics.title')}
+            {t('shops.statistics.title')}
           </h2>
           <p className="mt-1 text-sm text-text-tertiary">
-            {t('statistics.subtitle')}
+            {t('shops.statistics.subtitle')}
           </p>
         </div>
         {onRefresh && (
@@ -205,7 +205,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             onClick={onRefresh}
             className="hover:bg-accent/90 rounded-lg bg-accent px-4 py-2 text-white transition-colors"
           >
-            {t('statistics.refresh')}
+            {t('shops.statistics.refresh')}
           </button>
         )}
       </div>
@@ -214,7 +214,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       <StatCardGrid columns={4} gap="md">
         {/* Total Sales */}
         <StatCard
-          title={t('statistics.totalSales')}
+          title={t('shops.statistics.totalSales')}
           value={formatCurrency(statistics.totalSales.amount)}
           icon={TrendingUp}
           variant="default"
@@ -226,15 +226,15 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             direction: statistics.totalSales.growth.startsWith('+')
               ? 'up'
               : 'down',
-            label: t('statistics.vsLastMonth'),
+            label: t('shops.statistics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('statistics.totalSalesDesc')}
+          description={t('shops.statistics.totalSalesDesc')}
         />
 
         {/* Total Orders */}
         <StatCard
-          title={t('statistics.totalOrders')}
+          title={t('shops.statistics.totalOrders')}
           value={formatNumber(statistics.totalOrders.count)}
           icon={ShoppingCart}
           variant="info"
@@ -246,15 +246,15 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             direction: statistics.totalOrders.growth.startsWith('+')
               ? 'up'
               : 'down',
-            label: t('statistics.vsLastMonth'),
+            label: t('shops.statistics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('statistics.totalOrdersDesc')}
+          description={t('shops.statistics.totalOrdersDesc')}
         />
 
         {/* Revenue */}
         <StatCard
-          title={t('statistics.revenue')}
+          title={t('shops.statistics.revenue')}
           value={formatCurrency(statistics.revenue.amount)}
           icon={DollarSign}
           variant="success"
@@ -266,15 +266,15 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             direction: statistics.revenue.growth.startsWith('+')
               ? 'up'
               : 'down',
-            label: t('statistics.vsLastMonth'),
+            label: t('shops.statistics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('statistics.revenueDesc')}
+          description={t('shops.statistics.revenueDesc')}
         />
 
         {/* Customers */}
         <StatCard
-          title={t('statistics.customers')}
+          title={t('shops.statistics.customers')}
           value={formatNumber(statistics.customers.count)}
           icon={Users}
           variant="warning"
@@ -286,10 +286,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             direction: statistics.customers.growth.startsWith('+')
               ? 'up'
               : 'down',
-            label: t('statistics.vsLastMonth'),
+            label: t('shops.statistics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('statistics.customersDesc')}
+          description={t('shops.statistics.customersDesc')}
         />
       </StatCardGrid>
 
@@ -297,32 +297,32 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
       <StatCardGrid columns={3} gap="md" className="mt-6">
         {/* Total Products */}
         <StatCard
-          title={t('statistics.totalProducts')}
+          title={t('shops.statistics.totalProducts')}
           value={formatNumber(statistics.inventoryOverview.totalProducts)}
           icon={Package}
           variant="default"
           size="md"
-          description={t('statistics.totalProductsDesc')}
+          description={t('shops.statistics.totalProductsDesc')}
         />
 
         {/* Stock Value */}
         <StatCard
-          title={t('statistics.stockValue')}
+          title={t('shops.statistics.stockValue')}
           value={formatCurrency(statistics.inventoryOverview.stockValue)}
           icon={BarChart3}
           variant="success"
           size="md"
-          description={t('statistics.stockValueDesc')}
+          description={t('shops.statistics.stockValueDesc')}
         />
 
         {/* Low Stock */}
         <StatCard
-          title={t('statistics.lowStock')}
+          title={t('shops.statistics.lowStock')}
           value={formatNumber(statistics.inventoryOverview.lowStock)}
           icon={AlertCircle}
           variant="error"
           size="md"
-          description={t('statistics.lowStockDesc')}
+          description={t('shops.statistics.lowStockDesc')}
         />
       </StatCardGrid>
 
@@ -332,10 +332,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('statistics.salesTrend')}
+              {t('shops.statistics.salesTrend')}
             </h3>
             <p className="mt-1 text-sm text-text-tertiary">
-              {t('statistics.salesTrendDesc')}
+              {t('shops.statistics.salesTrendDesc')}
             </p>
           </div>
           <LineChart
@@ -350,7 +350,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             lines={[
               {
                 dataKey: 'sales',
-                name: t('statistics.sales'),
+                name: t('shops.statistics.sales'),
                 color: 'var(--accent-color)',
                 strokeWidth: 3,
               },
@@ -369,10 +369,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('statistics.revenueVsExpenses')}
+              {t('shops.statistics.revenueVsExpenses')}
             </h3>
             <p className="mt-1 text-sm text-text-tertiary">
-              {t('statistics.revenueVsExpensesDesc')}
+              {t('shops.shopsstatistics.revenueVsExpensesDesc')}
             </p>
           </div>
           <AreaChart
@@ -380,19 +380,19 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             areas={[
               {
                 dataKey: 'revenue',
-                name: t('statistics.revenue'),
+                name: t('shops.statistics.revenue'),
                 color: 'var(--status-success)',
                 fillOpacity: 0.3,
               },
               {
                 dataKey: 'expenses',
-                name: t('statistics.expenses'),
+                name: t('shops.statistics.expenses'),
                 color: 'var(--status-error)',
                 fillOpacity: 0.3,
               },
               {
                 dataKey: 'profit',
-                name: t('statistics.profit'),
+                name: t('shops.statistics.profit'),
                 color: 'var(--accent-color)',
                 fillOpacity: 0.3,
               },
@@ -420,10 +420,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('statistics.salesAnalysis')}
+              {t('shops.statistics.salesAnalysis')}
             </h3>
             <p className="text-sm text-text-tertiary">
-              {t('statistics.salesAnalysisDesc')}
+              {t('shops.statistics.salesAnalysisDesc')}
             </p>
           </div>
         </div>
@@ -432,7 +432,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           {/* Sales by Category */}
           <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
-              {t('statistics.salesByCategory')}
+              {t('shops.statistics.salesByCategory')}
             </h4>
             <DonutChart
               data={statistics.salesByCategory || mockSalesByCategoryData}
@@ -457,7 +457,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           {/* Sales by Payment Method */}
           <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
-              {t('statistics.salesByPaymentMethod')}
+              {t('shops.statistics.salesByPaymentMethod')}
             </h4>
             <DonutChart
               data={
@@ -493,10 +493,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('statistics.monthlyComparison')}
+              {t('shops.statistics.monthlyComparison')}
             </h3>
             <p className="text-sm text-text-tertiary">
-              {t('statistics.monthlyComparisonDesc')}
+              {t('shops.statistics.monthlyComparisonDesc')}
             </p>
           </div>
         </div>
@@ -507,12 +507,12 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             bars={[
               {
                 dataKey: 'currentYear',
-                name: t('statistics.currentYear'),
+                name: t('shops.statistics.currentYear'),
                 color: 'var(--accent-color)',
               },
               {
                 dataKey: 'lastYear',
-                name: t('statistics.lastYear'),
+                name: t('shops.statistics.lastYear'),
                 color: 'var(--status-info)',
               },
             ]}
@@ -539,10 +539,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-text-primary">
-                {t('statistics.topProducts')}
+                {t('shops.statistics.topProducts')}
               </h3>
               <p className="text-sm text-text-tertiary">
-                {t('statistics.topProductsDesc')}
+                {t('shops.statistics.topProductsDesc')}
               </p>
             </div>
           </div>
@@ -553,7 +553,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           columns={[
             {
               id: 'rank',
-              header: t('statistics.rank'),
+              header: t('shops.statistics.rank'),
               cell: ({ row }) => {
                 const index = (
                   statistics.topProducts || mockTopProducts
@@ -570,7 +570,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'product',
-              header: t('statistics.product'),
+              header: t('shops.statistics.product'),
               accessorKey: 'productName',
               cell: ({ row }) => (
                 <div>
@@ -585,7 +585,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'category',
-              header: t('statistics.category'),
+              header: t('shops.statistics.category'),
               accessorKey: 'category',
               cell: ({ row }) => (
                 <span className="bg-accent/10 border-accent/20 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize text-accent">
@@ -596,11 +596,11 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'totalSold',
-              header: t('statistics.totalSold'),
+              header: t('shops.statistics.totalSold'),
               accessorKey: 'totalSold',
               cell: ({ row }) => (
                 <div className="font-medium text-text-primary">
-                  {formatNumber(row.totalSold)} {t('statistics.units')}
+                  {formatNumber(row.totalSold)} {t('shops.statistics.units')}
                 </div>
               ),
               align: 'center',
@@ -608,7 +608,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'revenue',
-              header: t('statistics.revenue'),
+              header: t('shops.statistics.revenue'),
               accessorKey: 'revenue',
               cell: ({ row }) => (
                 <div className="font-semibold text-status-success">
@@ -620,7 +620,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'stockRemaining',
-              header: t('statistics.stockRemaining'),
+              header: t('shops.statistics.stockRemaining'),
               accessorKey: 'stockRemaining',
               cell: ({ row }) => {
                 const isLowStock = row.stockRemaining < 10
@@ -662,10 +662,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-text-primary">
-                {t('statistics.recentTransactions')}
+                {t('shops.statistics.recentTransactions')}
               </h3>
               <p className="text-sm text-text-tertiary">
-                {t('statistics.recentTransactionsDesc')}
+                {t('shops.statistics.recentTransactionsDesc')}
               </p>
             </div>
           </div>
@@ -676,7 +676,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           columns={[
             {
               id: 'orderNumber',
-              header: t('statistics.orderNumber'),
+              header: t('shops.statistics.orderNumber'),
               accessorKey: 'orderNumber',
               cell: ({ row }) => (
                 <div className="font-mono text-sm font-medium text-accent">
@@ -686,7 +686,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'customer',
-              header: t('statistics.customer'),
+              header: t('shops.statistics.customer'),
               accessorKey: 'customerName',
               cell: ({ row }) => (
                 <div className="font-medium text-text-primary">
@@ -696,7 +696,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'date',
-              header: t('statistics.date'),
+              header: t('shops.statistics.date'),
               accessorKey: 'date',
               cell: ({ row }) => {
                 const date = new Date(row.date)
@@ -713,7 +713,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'amount',
-              header: t('statistics.amount'),
+              header: t('shops.statistics.amount'),
               accessorKey: 'amount',
               cell: ({ row }) => (
                 <div className="font-semibold text-text-primary">
@@ -724,7 +724,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'paymentMethod',
-              header: t('statistics.paymentMethod'),
+              header: t('shops.statistics.paymentMethod'),
               accessorKey: 'paymentMethod',
               cell: ({ row }) => (
                 <span className="text-sm capitalize text-text-secondary">
@@ -735,7 +735,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             },
             {
               id: 'status',
-              header: t('statistics.status'),
+              header: t('shops.statistics.status'),
               accessorKey: 'status',
               cell: ({ row }) => {
                 const statusColors = {

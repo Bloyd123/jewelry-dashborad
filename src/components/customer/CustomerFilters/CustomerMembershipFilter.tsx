@@ -39,22 +39,22 @@ export const CustomerMembershipFilter = React.forwardRef<
     const membershipTierOptions: FilterOption[] = [
       {
         value: 'platinum',
-        label: t('tier.platinum'),
+        label: t('customer.tier.platinum'),
         icon: <Crown className="h-4 w-4 text-accent" />,
       },
       {
         value: 'gold',
-        label: t('tier.gold'),
+        label: t('customer.tier.gold'),
         icon: <Trophy className="h-4 w-4 text-status-warning" />,
       },
       {
         value: 'silver',
-        label: t('tier.silver'),
+        label: t('customer.tier.silver'),
         icon: <Medal className="h-4 w-4 text-text-tertiary" />,
       },
       {
         value: 'standard',
-        label: t('tier.standard'),
+        label: t('customer.tier.standard'),
         icon: <Award className="h-4 w-4 text-text-secondary" />,
       },
     ]
@@ -65,9 +65,9 @@ export const CustomerMembershipFilter = React.forwardRef<
         options={membershipTierOptions}
         value={value}
         onChange={onChange}
-        placeholder={t('filters.membershipTier')}
+        placeholder={t('customer.filters.membershipTier')}
         showAllOption={showAllOption}
-        allOptionLabel={t('filters.allTiers')}
+        allOptionLabel={t('customer.filters.allTiers')}
         className={className}
         disabled={disabled}
       />

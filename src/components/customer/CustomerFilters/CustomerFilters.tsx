@@ -183,7 +183,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
         >
           <div className="space-y-6">
             {/* Balance Filter */}
-            <FilterGroup label={t('filters.balance')}>
+            <FilterGroup label={t('customer.filters.balance')}>
               <CustomerBalanceFilter
                 value={filters.balance}
                 onChange={handleBalanceChange}
@@ -192,7 +192,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             </FilterGroup>
 
             {/* VIP Status Filter */}
-            <FilterGroup label={t('filters.vipStatus')}>
+            <FilterGroup label={t('customer.filters.vipStatus')}>
               <CustomerVIPFilter
                 value={filters.vipOnly}
                 onChange={handleVIPChange}
@@ -201,7 +201,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
             </FilterGroup>
 
             {/* Date Range Filter */}
-            <FilterGroup label={t('filters.dateRange')}>
+            <FilterGroup label={t('customer.filters.dateRange')}>
               <CustomerDateRangeFilter
                 value={filters.dateRange}
                 onChange={handleDateRangeChange}
@@ -217,7 +217,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
                 className="flex-1"
                 disabled={advancedFilterCount === 0}
               >
-                {t('filters.clearAdvanced')}
+                {t('customer.filters.clearAdvanced')}
               </Button>
               <Button onClick={handleApplyAdvanced} className="flex-1">
                 {t('common.apply')}
@@ -249,7 +249,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           className="relative w-full"
         >
           <SlidersHorizontal className="mr-2 h-4 w-4" />
-          {t('filters.filters')}
+          {t('customer.filters.filters')}
           {activeFilterCount > 0 && (
             <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-xs text-white">
               {activeFilterCount}
@@ -262,13 +262,13 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
       <Drawer
         open={showAdvancedDrawer}
         onOpenChange={setShowAdvancedDrawer}
-        title={t('filters.title')}
+        title={t('customer.filters.title')}
         side="right"
         size="full"
       >
         <div className="space-y-6">
           {/* Customer Type */}
-          <FilterGroup label={t('filters.customerType')}>
+          <FilterGroup label={t('customer.filters.customerType')}>
             <CustomerTypeFilter
               value={filters.customerType}
               onChange={handleTypeChange}
@@ -277,7 +277,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           </FilterGroup>
 
           {/* Membership Tier */}
-          <FilterGroup label={t('filters.membershipTier')}>
+          <FilterGroup label={t('customer.filters.membershipTier')}>
             <CustomerMembershipFilter
               value={filters.membershipTier}
               onChange={handleTierChange}
@@ -286,7 +286,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           </FilterGroup>
 
           {/* Status */}
-          <FilterGroup label={t('filters.status')}>
+          <FilterGroup label={t('customer.filters.status')}>
             <CustomerStatusFilter
               value={filters.status}
               onChange={handleStatusChange}
@@ -295,7 +295,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           </FilterGroup>
 
           {/* Balance */}
-          <FilterGroup label={t('filters.balance')}>
+          <FilterGroup label={t('customer.filters.balance')}>
             <CustomerBalanceFilter
               value={filters.balance}
               onChange={handleBalanceChange}
@@ -304,7 +304,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           </FilterGroup>
 
           {/* VIP Status */}
-          <FilterGroup label={t('filters.vipStatus')}>
+          <FilterGroup label={t('customer.filters.vipStatus')}>
             <CustomerVIPFilter
               value={filters.vipOnly}
               onChange={handleVIPChange}
@@ -313,7 +313,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
           </FilterGroup>
 
           {/* Date Range */}
-          <FilterGroup label={t('filters.dateRange')}>
+          <FilterGroup label={t('customer.filters.dateRange')}>
             <CustomerDateRangeFilter
               value={filters.dateRange}
               onChange={handleDateRangeChange}
@@ -329,7 +329,7 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
               className="flex-1"
               disabled={activeFilterCount === 0}
             >
-              {t('filters.clearAll')}
+              {t('customer.filters.clearAll')}
             </Button>
             <Button onClick={handleApplyAdvanced} className="flex-1">
               {t('common.apply')}

@@ -19,26 +19,26 @@ const convertShopToFormData = (shop: Shop): Partial<Shop> => {
   return {
     name: shop.name,
     displayName: shop.displayName,
-    
+
     email: shop.email,
     phone: shop.phone,
     alternatePhone: shop.alternatePhone,
     whatsappNumber: shop.whatsappNumber,
     website: shop.website,
-    
+
     address: shop.address,
-    
+
     gstNumber: shop.gstNumber,
     panNumber: shop.panNumber,
     tanNumber: shop.tanNumber,
-    
+
     shopType: shop.shopType,
     category: shop.category,
     establishedYear: shop.establishedYear,
-    
+
     bankDetails: shop.bankDetails,
     upiDetails: shop.upiDetails,
-    
+
     settings: shop.settings,
     features: shop.features,
   }
@@ -55,7 +55,7 @@ export default function AddShopPage() {
   // Get current organization ID from Redux
   // const currentOrgId = useAppSelector(state => state.auth.organizationId)
   // const userRole = useAppSelector(state => state.auth.user?.role)
-  
+
   // Use fallback org ID for demo
   const organizationId = '6401a1b2c3d4e5f6a7b8c9d0'
 
@@ -64,7 +64,7 @@ export default function AddShopPage() {
   //   { shopId: shopId! },
   //   { skip: !isEditMode || !shopId }
   // )
-  
+
   const mockShop = useMemo(() => {
     if (!isEditMode || !shopId) return undefined
     return dummyShops.find(s => s._id === shopId)

@@ -1,36 +1,36 @@
 {
   "metalRates": {
-      "filters": {
-    "filters": "Filters",
-    "selectDateRange": "Select Date Range",
-    "selectMetalType": "Select Metal Type",
-    "allMetals": "All Metals"
-  },
-      "common": {
-        "backToList": "Back to List",
-    "reset": "Reset",
-    "close": "Close",
-    "days": "days",
-    "cancel": "Cancel",
-    "preview": "Preview",
-    "hidePreview": "Hide Preview",
-    "filter": "Filter",
-    "exportCSV": "Export CSV",
-    "search": "Search",
-    "showing": "Showing",
-    "of": "of",
-    "by": "by",
-    "active": "Active"
-  },
-      "table": {
-    "date": "Date",
-    "gold24K": "Gold 24K",
-    "gold22K": "Gold 22K",
-    "silver999": "Silver 999",
-    "platinum": "Platinum",
-    "change": "Change",
-    "user": "User"
-  },
+    "filters": {
+      "filters": "Filters",
+      "selectDateRange": "Select Date Range",
+      "selectMetalType": "Select Metal Type",
+      "allMetals": "All Metals"
+    },
+    "common": {
+      "backToList": "Back to List",
+      "reset": "Reset",
+      "close": "Close",
+      "days": "days",
+      "cancel": "Cancel",
+      "preview": "Preview",
+      "hidePreview": "Hide Preview",
+      "filter": "Filter",
+      "exportCSV": "Export CSV",
+      "search": "Search",
+      "showing": "Showing",
+      "of": "of",
+      "by": "by",
+      "active": "Active"
+    },
+    "table": {
+      "date": "Date",
+      "gold24K": "Gold 24K",
+      "gold22K": "Gold 22K",
+      "silver999": "Silver 999",
+      "platinum": "Platinum",
+      "change": "Change",
+      "user": "User"
+    },
     "currentRates": {
       "title": "Current Metal Rates",
       "description": "Live rates updated in real-time",
@@ -212,8 +212,6 @@
     "noRates": "No rate records found",
     "ariaLabel": "Metal rate history table"
   },
-
-
 
   "ui": {
     "modal": {

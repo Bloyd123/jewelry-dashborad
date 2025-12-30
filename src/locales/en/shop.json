@@ -1,7 +1,157 @@
 {
-
   "shops": {
-        "validation": {
+    "statistics": {
+      "title": "Shop Statistics",
+      "subtitle": "Overview of your shop's performance and analytics",
+      "refresh": "Refresh",
+      "noData": "No statistics data available",
+
+      "totalSales": "Total Sales",
+      "totalSalesDesc": "Total revenue from completed orders",
+      "totalOrders": "Total Orders",
+      "totalOrdersDesc": "Number of completed orders",
+      "revenue": "Revenue",
+      "revenueDesc": "Total revenue after expenses",
+      "customers": "Customers",
+      "customersDesc": "Total active customers",
+
+      "totalProducts": "Total Products",
+      "totalProductsDesc": "Total inventory items",
+      "stockValue": "Stock Value",
+      "stockValueDesc": "Total value of current inventory",
+      "lowStock": "Low Stock",
+      "lowStockDesc": "Products below minimum stock level",
+
+      "vsLastMonth": "vs last month",
+      "vsLastPeriod": "vs last period",
+      "last30Days": "Last 30 days",
+      "last90Days": "Last 90 days",
+
+      "salesTrend": "Sales Trend",
+      "salesTrendDesc": "Monthly sales performance (Last 6 months)",
+      "revenueVsExpenses": "Revenue vs Expenses",
+      "revenueVsExpensesDesc": "Monthly financial overview",
+
+      "sales": "Sales",
+      "expenses": "Expenses",
+      "profit": "Profit",
+
+      "salesAnalysis": "Sales Analysis",
+      "salesAnalysisDesc": "Breakdown of sales by category and payment method",
+      "salesByCategory": "Sales by Category",
+      "salesByPaymentMethod": "Sales by Payment Method",
+
+      "monthlyComparison": "Monthly Comparison",
+      "monthlyComparisonDesc": "Current year vs last year performance",
+      "currentYear": "Current Year",
+      "lastYear": "Last Year",
+
+      "topProducts": "Top Products",
+      "topProductsDesc": "Best selling products by revenue",
+      "rank": "Rank",
+      "product": "Product",
+      "category": "Category",
+      "totalSold": "Total Sold",
+      "units": "units",
+      "stockRemaining": "Stock Remaining",
+
+      "recentTransactions": "Recent Transactions",
+      "recentTransactionsDesc": "Latest orders and transactions",
+      "orderNumber": "Order Number",
+      "customer": "Customer",
+      "date": "Date",
+      "amount": "Amount",
+      "paymentMethod": "Payment Method",
+      "status": "Status"
+    },
+    "shopCategory": {
+      "jewelry": "Jewelry",
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "gemstone": "Gemstone",
+      "pearls": "Pearls",
+      "platinum": "Platinum",
+      "mixed": "Mixed"
+    },
+    "activityLog": {
+      "title": "Activity Log",
+      "adminOnlyTitle": "Admin Only - Display Only",
+      "adminOnlyDescription": "This activity log is for administrators to view shop activities. All actions are tracked automatically and cannot be modified.",
+      "noActivities": "No activities found",
+      "tableAriaLabel": "Activity log table",
+      "searchPlaceholder": "Search by user, description, or module...",
+      "filters": "Filters",
+      "clearAll": "Clear All",
+      "activeFilters": "Active Filters",
+      "showingResults": "Showing {{count}} of {{total}} activities",
+
+      "filterByUser": "User Role",
+      "filterByAction": "Action Type",
+      "filterByModule": "Module",
+      "filterByStatus": "Status",
+      "filterByDate": "Date Range",
+
+      "allUsers": "All Users",
+      "allActions": "All Actions",
+      "allModules": "All Modules",
+      "allStatuses": "All Statuses",
+      "selectDateRange": "Select date range",
+
+      "columns": {
+        "dateTime": "Date/Time",
+        "user": "User",
+        "action": "Action",
+        "module": "Module",
+        "description": "Description",
+        "status": "Status",
+        "details": "Details"
+      },
+
+      "modules": {
+        "shopSettings": "Shop Settings",
+        "metalRates": "Metal Rates",
+        "invoice": "Invoice",
+        "inventory": "Inventory",
+        "customer": "Customer",
+        "product": "Product",
+        "payment": "Payment",
+        "purchaseOrder": "Purchase Order",
+        "user": "User",
+        "expense": "Expense",
+        "order": "Order",
+        "report": "Report",
+        "authentication": "Authentication",
+        "system": "System"
+      },
+
+      "status": {
+        "success": "Success",
+        "pending": "Pending",
+        "failed": "Failed"
+      },
+
+      "userRoles": {
+        "super_admin": "Super Admin",
+        "org_admin": "Org Admin",
+        "shop_admin": "Shop Admin",
+        "manager": "Manager",
+        "accountant": "Accountant",
+        "staff": "Staff",
+        "system": "System"
+      }
+    },
+
+    "shopType": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "manufacturing": "Manufacturing",
+      "showroom": "Showroom",
+      "workshop": "Workshop",
+      "warehouse": "Warehouse",
+      "online": "Online"
+    },
+    "validation": {
       "nameRequired": "Shop name is required",
       "phoneRequired": "Phone number is required",
       "streetRequired": "Street address is required",
@@ -9,37 +159,37 @@
       "stateRequired": "State is required",
       "pincodeRequired": "Pincode is required"
     },
-        "form": {
-    "selectDate": "Select date",
+    "form": {
+      "selectDate": "Select date",
       "addShop": "Add New Shop",
       "editShop": "Edit Shop",
       "addShopDescription": "Fill in the details below to add a new shop to your organization",
       "editShopDescription": "Update shop information and settings",
-      
+
       "basicInformation": "Basic Information",
       "contactInformation": "Contact Information",
       "address": "Address",
       "businessRegistration": "Business Registration",
       "bankingDetails": "Banking Details",
       "upiDetails": "UPI Payment Details",
-      
+
       "name": "Shop Name",
       "namePlaceholder": "Enter shop name",
       "displayName": "Display Name",
       "displayNamePlaceholder": "Enter display name (optional)",
-      
+
       "shopType": "Shop Type",
       "shopTypePlaceholder": "Select shop type",
       "category": "Category",
       "categoryPlaceholder": "Select category",
       "establishedYear": "Established Year",
-      
+
       "email": "Email Address",
       "phone": "Phone Number",
       "alternatePhone": "Alternate Phone",
       "whatsappNumber": "WhatsApp Number",
       "website": "Website URL",
-      
+
       "street": "Street Address",
       "streetPlaceholder": "Enter complete street address",
       "landmark": "Landmark",
@@ -50,11 +200,11 @@
       "statePlaceholder": "Enter state",
       "pincode": "Pincode",
       "country": "Country",
-      
+
       "gstNumber": "GST Number",
       "panNumber": "PAN Number",
       "tanNumber": "TAN Number",
-      
+
       "bankAccount": "Bank Account",
       "addBankAccount": "Add Bank Account",
       "bankName": "Bank Name",
@@ -70,7 +220,7 @@
       },
       "primaryAccount": "Primary Account",
       "primaryAccountDescription": "Mark this as the primary bank account for transactions",
-      
+
       "upiAccount": "UPI Account",
       "addUPIAccount": "Add UPI Account",
       "upiId": "UPI ID",
@@ -79,30 +229,30 @@
       "primaryUPI": "Primary UPI",
       "primaryUPIDescription": "Mark this as the primary UPI for payments"
     },
-      "actions": {
-    "CREATE": "Create",
-    "UPDATE": "Update",
-    "DELETE": "Delete",
-    "LOGIN": "Login",
-    "LOGOUT": "Logout",
-    "EXPORT": "Export",
-    "IMPORT": "Import",
-    "APPROVE": "Approve",
-    "REJECT": "Reject",
-    "viewDetails": "View Details",
-    "edit": "Edit",
-    "settings": "Settings",
-    "updateRates": "Update Rates",
-    "statistics": "Statistics",
-    "activate": "Activate",
-    "deactivate": "Deactivate",
-    "delete": "Delete",
+    "actions": {
+      "CREATE": "Create",
+      "UPDATE": "Update",
+      "DELETE": "Delete",
+      "LOGIN": "Login",
+      "LOGOUT": "Logout",
+      "EXPORT": "Export",
+      "IMPORT": "Import",
+      "APPROVE": "Approve",
+      "REJECT": "Reject",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "settings": "Settings",
+      "updateRates": "Update Rates",
+      "statistics": "Statistics",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "delete": "Delete",
 
-    "exportSelected": "Export Selected",
-    "sendNotification": "Send Notification",
-    "bulkDelete": "Bulk Delete"
-  },
-        "settings": {
+      "exportSelected": "Export Selected",
+      "sendNotification": "Send Notification",
+      "bulkDelete": "Bulk Delete"
+    },
+    "settings": {
       "title": "Shop Settings",
       "confirmDiscard": "Are you sure you want to discard all changes?",
       "discardAll": "Discard All Changes",
@@ -221,12 +371,12 @@
         "loyaltyProgramDesc": "Reward repeat customers"
       }
     },
-      "searchPlaceholder": "Search by name or code...",
+    "searchPlaceholder": "Search by name or code...",
     "organization": "Organization",
     "established": "Established",
     "verified": "Verified",
     "unverified": "Unverified",
-         "location": "Location",
+    "location": "Location",
     "types": {
       "retail": "Retail",
       "wholesale": "Wholesale",
@@ -246,25 +396,25 @@
       "platinum": "Platinum",
       "mixed": "Mixed"
     },
-    "common":{
-          "save": "Save",
-    "update": "Update",
-    "cancel": "Cancel",
-    "saving": "Saving...",
-    "next": "Next",
-    "previous": "Previous",
-    "step": "Step",
-    "of": "of",
-            "active": "Active",
-      
-    "backToList": "Back to List",
-    "settings": "Settings",
-    "verified": "Verified",
-      "allStates":"All States"
+    "common": {
+      "save": "Save",
+      "update": "Update",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "next": "Next",
+      "previous": "Previous",
+      "step": "Step",
+      "of": "of",
+      "active": "Active",
+
+      "backToList": "Back to List",
+      "settings": "Settings",
+      "verified": "Verified",
+      "allStates": "All States"
     },
-        "filters": {
+    "filters": {
       "status": "Status",
-       "advancedFilters": "Advanced Filters",
+      "advancedFilters": "Advanced Filters",
       "verification": "Verification",
       "shopType": "Shop Type",
       "category": "Category",
@@ -273,7 +423,7 @@
       "city": "City",
       "establishedYear": "Established Year",
       "title": "Shop Filters",
-         "moreFilters": "More Filters"
+      "moreFilters": "More Filters"
     },
     "sort": {
       "sortBy": "Sort By",
@@ -286,173 +436,22 @@
       "cityDesc": "City (Z-A)"
     },
     "title": "Shops",
-      "table": {
-    "shopCode": "Shop Code",
-    "shopName": "Shop Name",
-    "type": "Type",
-    "location": "Location",
-    "contact": "Contact",
-    "manager": "Manager",
-    "gstNumber": "GST Number",
-    "products": "Products",
-    "inventoryValue": "Inventory Value",
-    "status": "Status",
-    "createdAt": "Created",
-    "noShops": "No shops found",
-    "selectedCount": "{{count}} shops selected",
-    "ariaLabel": "Shops table"
-  }
-  },
-
-  "shopType": {
-    "retail": "Retail",
-    "wholesale": "Wholesale",
-    "manufacturing": "Manufacturing",
-    "showroom": "Showroom",
-    "workshop": "Workshop",
-    "warehouse": "Warehouse",
-    "online": "Online"
-  },
-  "shopCategory": {
-    "jewelry": "Jewelry",
-    "gold": "Gold",
-    "silver": "Silver",
-    "diamond": "Diamond",
-    "gemstone": "Gemstone",
-    "pearls": "Pearls",
-    "platinum": "Platinum",
-    "mixed": "Mixed"
-  },
-  "activityLog": {
-    "title": "Activity Log",
-    "adminOnlyTitle": "Admin Only - Display Only",
-    "adminOnlyDescription": "This activity log is for administrators to view shop activities. All actions are tracked automatically and cannot be modified.",
-    "noActivities": "No activities found",
-    "tableAriaLabel": "Activity log table",
-    "searchPlaceholder": "Search by user, description, or module...",
-    "filters": "Filters",
-    "clearAll": "Clear All",
-    "activeFilters": "Active Filters",
-    "showingResults": "Showing {{count}} of {{total}} activities",
-
-    "filterByUser": "User Role",
-    "filterByAction": "Action Type",
-    "filterByModule": "Module",
-    "filterByStatus": "Status",
-    "filterByDate": "Date Range",
-
-    "allUsers": "All Users",
-    "allActions": "All Actions",
-    "allModules": "All Modules",
-    "allStatuses": "All Statuses",
-    "selectDateRange": "Select date range",
-
-    "columns": {
-      "dateTime": "Date/Time",
-      "user": "User",
-      "action": "Action",
-      "module": "Module",
-      "description": "Description",
-      "status": "Status",
-      "details": "Details"
-    },
-
-    "modules": {
-      "shopSettings": "Shop Settings",
-      "metalRates": "Metal Rates",
-      "invoice": "Invoice",
-      "inventory": "Inventory",
-      "customer": "Customer",
-      "product": "Product",
-      "payment": "Payment",
-      "purchaseOrder": "Purchase Order",
-      "user": "User",
-      "expense": "Expense",
-      "order": "Order",
-      "report": "Report",
-      "authentication": "Authentication",
-      "system": "System"
-    },
-
-    "status": {
-      "success": "Success",
-      "pending": "Pending",
-      "failed": "Failed"
-    },
-
-    "userRoles": {
-      "super_admin": "Super Admin",
-      "org_admin": "Org Admin",
-      "shop_admin": "Shop Admin",
+    "table": {
+      "shopCode": "Shop Code",
+      "shopName": "Shop Name",
+      "type": "Type",
+      "location": "Location",
+      "contact": "Contact",
       "manager": "Manager",
-      "accountant": "Accountant",
-      "staff": "Staff",
-      "system": "System"
+      "gstNumber": "GST Number",
+      "products": "Products",
+      "inventoryValue": "Inventory Value",
+      "status": "Status",
+      "createdAt": "Created",
+      "noShops": "No shops found",
+      "selectedCount": "{{count}} shops selected",
+      "ariaLabel": "Shops table"
     }
-  },
-  "statistics": {
-    "title": "Shop Statistics",
-    "subtitle": "Overview of your shop's performance and analytics",
-    "refresh": "Refresh",
-    "noData": "No statistics data available",
-
-    "totalSales": "Total Sales",
-    "totalSalesDesc": "Total revenue from completed orders",
-    "totalOrders": "Total Orders",
-    "totalOrdersDesc": "Number of completed orders",
-    "revenue": "Revenue",
-    "revenueDesc": "Total revenue after expenses",
-    "customers": "Customers",
-    "customersDesc": "Total active customers",
-
-    "totalProducts": "Total Products",
-    "totalProductsDesc": "Total inventory items",
-    "stockValue": "Stock Value",
-    "stockValueDesc": "Total value of current inventory",
-    "lowStock": "Low Stock",
-    "lowStockDesc": "Products below minimum stock level",
-
-    "vsLastMonth": "vs last month",
-    "vsLastPeriod": "vs last period",
-    "last30Days": "Last 30 days",
-    "last90Days": "Last 90 days",
-
-    "salesTrend": "Sales Trend",
-    "salesTrendDesc": "Monthly sales performance (Last 6 months)",
-    "revenueVsExpenses": "Revenue vs Expenses",
-    "revenueVsExpensesDesc": "Monthly financial overview",
-
-    "sales": "Sales",
-    "expenses": "Expenses",
-    "profit": "Profit",
-
-    "salesAnalysis": "Sales Analysis",
-    "salesAnalysisDesc": "Breakdown of sales by category and payment method",
-    "salesByCategory": "Sales by Category",
-    "salesByPaymentMethod": "Sales by Payment Method",
-
-    "monthlyComparison": "Monthly Comparison",
-    "monthlyComparisonDesc": "Current year vs last year performance",
-    "currentYear": "Current Year",
-    "lastYear": "Last Year",
-
-    "topProducts": "Top Products",
-    "topProductsDesc": "Best selling products by revenue",
-    "rank": "Rank",
-    "product": "Product",
-    "category": "Category",
-    "totalSold": "Total Sold",
-    "units": "units",
-    "stockRemaining": "Stock Remaining",
-
-    "recentTransactions": "Recent Transactions",
-    "recentTransactionsDesc": "Latest orders and transactions",
-    "orderNumber": "Order Number",
-    "customer": "Customer",
-    "date": "Date",
-    "amount": "Amount",
-    "paymentMethod": "Payment Method",
-    "status": "Status"
   },
   "shopProfile": {
     "displayName": "Display Name",

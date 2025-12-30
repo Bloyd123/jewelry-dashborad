@@ -59,7 +59,11 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   // Add home item if needed
   const allItems = showHome
     ? [
-      { label: t('commontext.Home'), href: '/', icon: <Home className="h-4 w-4" /> },
+        {
+          label: t('commontext.Home'),
+          href: '/',
+          icon: <Home className="h-4 w-4" />,
+        },
         ...items,
       ]
     : items

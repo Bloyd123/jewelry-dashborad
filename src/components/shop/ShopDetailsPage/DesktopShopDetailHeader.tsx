@@ -163,7 +163,9 @@ export const DesktopShopDetailHeader: React.FC<
                     variant={shop.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
-                    {shop.isActive ? t('shops.common.active') : t('shops.common.inactive')}
+                    {shop.isActive
+                      ? t('shops.common.active')
+                      : t('shops.common.inactive')}
                   </Badge>
 
                   {/* Verified Status */}
@@ -176,14 +178,14 @@ export const DesktopShopDetailHeader: React.FC<
                   {/* Shop Type */}
                   {shop.shopType && (
                     <Badge variant="retail" size="sm">
-                      {t(`shopType.${shop.shopType}`)}
+                      {t(`shops.shopType.${shop.shopType}`)}
                     </Badge>
                   )}
 
                   {/* Category */}
                   {shop.category && (
                     <Badge variant="outline" size="sm">
-                      {t(`shopCategory.${shop.category}`)}
+                      {t(`shops.shopCategory.${shop.category}`)}
                     </Badge>
                   )}
                 </div>
@@ -232,11 +234,11 @@ export const DesktopShopDetailHeader: React.FC<
             onValueChange={handleTabChange}
             variant="underline"
             size="md"
-            >
+          >
             {/* {children} */}
           </Tabs>
         </div>
-            </div>
+      </div>
     </div>
   )
 }

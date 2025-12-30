@@ -1,5 +1,169 @@
 {
   "customer": {
+    "tier": {
+      "platinum": "Platinum",
+      "gold": "Gold",
+      "silver": "Silver",
+      "standard": "Standard"
+    },
+
+    "tabs": {
+      "table": "Customer Table",
+      "analytics": "Analytics"
+    },
+    "page": {
+      "title": "Customers",
+      "subtitle": "Manage your customer database and analytics"
+    },
+    "search": {
+      "placeholder": "Search by name, phone, email or code..."
+    },
+    "analytics": {
+      "title": "Customer Analytics",
+      "subtitle": "Overview of your customer base and performance metrics",
+      "refresh": "Refresh",
+      "noData": "No customer data available",
+      "vsLastMonth": "vs last month",
+      "vsLastPeriod": "vs last period",
+      "ofTotal": "of total",
+      "last30Days": "Last 30 days",
+      "last90Days": "Last 90 days",
+
+      "totalCustomers": "Total Customers",
+      "totalCustomersDesc": "All registered customers in your shop",
+
+      "activeCustomers": "Active Customers",
+      "activeCustomersDesc": "Customers who made purchases recently",
+
+      "vipCustomers": "VIP Customers",
+      "vipCustomersDesc": "Premium and high-value customers",
+
+      "avgLifetimeValue": "Avg Lifetime Value",
+      "avgLifetimeValueDesc": "Average total spend per customer",
+
+      "totalOutstanding": "Total Outstanding",
+      "totalOutstandingDesc": "Total pending payments from customers",
+
+      "totalLoyaltyPoints": "Total Loyalty Points",
+      "totalLoyaltyPointsDesc": "Total loyalty points across all customers",
+
+      "growthRate": "Growth Rate",
+      "growthRateDesc": "New customer acquisition rate",
+
+      "retentionRate": "Retention Rate",
+      "retentionRateDesc": "Percentage of returning customers",
+
+      "customerGrowth": "Customer Growth",
+      "customerGrowthDesc": "Total and new customers over time",
+      "newCustomers": "New Customers",
+
+      "retentionTrend": "Retention Trend",
+      "retentionTrendDesc": "Customer retention rate over time",
+
+      "topCustomers": "Top Customers",
+      "topCustomersDesc": "Highest value customers by total purchases",
+      "rank": "Rank",
+      "customer": "Customer",
+      "contact": "Contact",
+      "tier": "Tier",
+      "totalPurchases": "Total Purchases",
+      "loyaltyPoints": "Points",
+      "lastOrder": "Last Order",
+
+      "customerSegmentation": "Customer Segmentation",
+      "customerSegmentationDesc": "Distribution of customers across different segments",
+      "byMembershipTier": "By Membership Tier",
+      "byCustomerType": "By Customer Type",
+      "byProductCategory": "By Product Category",
+
+      "geographicDistribution": "Geographic Distribution",
+      "geographicDistributionDesc": "Customer distribution across cities and regions",
+
+      "purchasePattern": "Purchase Pattern",
+      "purchasePatternDesc": "Orders and revenue trends over time",
+      "totalOrders": "Total Orders",
+      "revenue": "Revenue",
+
+      "upcomingEvents": "Upcoming Events",
+      "upcomingEventsDesc": "Birthdays, anniversaries & milestones",
+      "daysAway": "days away",
+
+      "atRiskCustomers": "At-Risk Customers",
+      "atRiskCustomersDesc": "Customers who haven't ordered recently",
+      "daysAgo": "days ago",
+
+      "outstandingPayments": "Outstanding Payments",
+      "outstandingPaymentsDesc": "Pending and overdue payments",
+      "due": "Due",
+      "overdue": "Overdue",
+      "daysOverdue": "days overdue"
+    },
+    "actions": {
+      "addNew": "Add New Customer",
+      "add": "Add",
+      "viewDetails": "View Details",
+
+      "addPoints": "Add Loyalty Points",
+      "exportSelected": "Export Selected",
+      "sendEmail": "Send Email",
+      "sendSMS": "Send SMS",
+      "bulkDelete": "Bulk Delete",
+      "addCustomer": "Add Customer",
+      "view": "View Details",
+      "edit": "Edit Customer",
+      "delete": "Delete Customer",
+      "blacklist": "Blacklist Customer",
+      "removeBlacklist": "Remove Blacklist",
+      "addLoyaltyPoints": "Add Loyalty Points",
+      "redeemLoyaltyPoints": "Redeem Points",
+      "call": "Call Customer",
+      "whatsapp": "Send WhatsApp",
+      "email": "Send Email",
+      "recordPayment": "Record Payment",
+      "viewOrders": "View Orders",
+      "viewTransactions": "View Transactions",
+      "copyDetails": "Copy Details",
+      "markAsVIP": "Mark as VIP",
+      "moreActions": "More Actions"
+    },
+    "filters": {
+      "filters": "Filters",
+      "moreFilters": "More Filters",
+      "status": "Status",
+      "clearAdvanced": "Clear Advance",
+
+      "clearAll": "Clear All",
+      "customerType": "Customer Type",
+      "allTypes": "All Types",
+      "membershipTier": "Membership Tier",
+      "allTiers": "All Tiers",
+      "balance": "Balance Status",
+      "hasBalance": "Has Outstanding",
+      "noBalance": "Cleared",
+      "allBalances": "All Balances",
+      "vipStatus": "VIP Status",
+      "vipOnly": "VIP Only",
+      "nonVIP": "Non-VIP",
+      "selectDateRange": "Select Date Range",
+      "title": "Filter Customers",
+      "advancedFilters": "Advanced Filters",
+      "dateRange": "Date Range"
+    },
+    "table": {
+      "ariaLabel": "Customer table",
+      "customerCode": "Customer Code",
+      "fullName": "Full Name",
+      "phone": "Phone",
+      "customerType": "Type",
+      "membershipTier": "Tier",
+      "totalPurchases": "Total Purchases",
+      "totalDue": "Outstanding",
+      "loyaltyPoints": "Points",
+      "status": "Status",
+      "createdAt": "Joined Date",
+      "noCustomers": "No customers found",
+      "selectedCount": "{{count}} selected"
+    },
     "firstName": "First Name",
     "firstNamePlaceholder": "Enter first name",
     "lastName": "Last Name",
@@ -98,25 +262,7 @@
       "addFirstCustomer": "Add your first customer",
       "error": "Failed to load customers"
     },
-    "actions": {
-      "addCustomer": "Add Customer",
-      "view": "View Details",
-      "edit": "Edit Customer",
-      "delete": "Delete Customer",
-      "blacklist": "Blacklist Customer",
-      "removeBlacklist": "Remove Blacklist",
-      "addLoyaltyPoints": "Add Loyalty Points",
-      "redeemLoyaltyPoints": "Redeem Points",
-      "call": "Call Customer",
-      "whatsapp": "Send WhatsApp",
-      "email": "Send Email",
-      "recordPayment": "Record Payment",
-      "viewOrders": "View Orders",
-      "viewTransactions": "View Transactions",
-      "copyDetails": "Copy Details",
-      "markAsVIP": "Mark as VIP",
-      "moreActions": "More Actions"
-    },
+
     "fields": {
       "customerCode": "Customer Code",
       "name": "Name",
@@ -148,167 +294,10 @@
       "platinum": "Platinum"
     },
     "status": {
+      "active": "Active",
+      "inactive": "Inactive",
       "blacklisted": "Blacklisted"
     },
     "noOrders": "No orders yet"
-  },
-  "tier": {
-    "platinum": "Platinum",
-    "gold": "Gold",
-    "silver": "Silver",
-    "standard": "Standard"
-  },
-  "search": {
-    "placeholder": "Search by name, phone, email or code..."
-  },
-  "page": {
-    "title": "Customers",
-    "subtitle": "Manage your customer database and analytics"
-  },
-  "tabs": {
-    "table": "Customer Table",
-    "analytics": "Analytics"
-  },
-  "type": {
-    "vip": "VIP",
-    "wholesale": "Wholesale",
-    "retail": "Retail",
-    "regular": "Regular"
-  },
-  "filters": {
-    "filters": "Filters",
-    "moreFilters": "More Filters",
-    "status": "Status",
-    "clearAdvanced": "Clear Advance",
-
-    "clearAll": "Clear All",
-    "customerType": "Customer Type",
-    "allTypes": "All Types",
-    "membershipTier": "Membership Tier",
-    "allTiers": "All Tiers",
-    "balance": "Balance Status",
-    "hasBalance": "Has Outstanding",
-    "noBalance": "Cleared",
-    "allBalances": "All Balances",
-    "vipStatus": "VIP Status",
-    "vipOnly": "VIP Only",
-    "nonVIP": "Non-VIP",
-    "selectDateRange": "Select Date Range",
-    "title": "Filter Customers",
-    "advancedFilters": "Advanced Filters",
-    "dateRange": "Date Range"
-  },
-  "status": {
-    "active": "Active",
-    "inactive": "Inactive"
-  },
-  "analytics": {
-    "title": "Customer Analytics",
-    "subtitle": "Overview of your customer base and performance metrics",
-    "refresh": "Refresh",
-    "noData": "No customer data available",
-    "vsLastMonth": "vs last month",
-    "vsLastPeriod": "vs last period",
-    "ofTotal": "of total",
-    "last30Days": "Last 30 days",
-    "last90Days": "Last 90 days",
-
-    "totalCustomers": "Total Customers",
-    "totalCustomersDesc": "All registered customers in your shop",
-
-    "activeCustomers": "Active Customers",
-    "activeCustomersDesc": "Customers who made purchases recently",
-
-    "vipCustomers": "VIP Customers",
-    "vipCustomersDesc": "Premium and high-value customers",
-
-    "avgLifetimeValue": "Avg Lifetime Value",
-    "avgLifetimeValueDesc": "Average total spend per customer",
-
-    "totalOutstanding": "Total Outstanding",
-    "totalOutstandingDesc": "Total pending payments from customers",
-
-    "totalLoyaltyPoints": "Total Loyalty Points",
-    "totalLoyaltyPointsDesc": "Total loyalty points across all customers",
-
-    "growthRate": "Growth Rate",
-    "growthRateDesc": "New customer acquisition rate",
-
-    "retentionRate": "Retention Rate",
-    "retentionRateDesc": "Percentage of returning customers",
-
-    "customerGrowth": "Customer Growth",
-    "customerGrowthDesc": "Total and new customers over time",
-    "newCustomers": "New Customers",
-
-    "retentionTrend": "Retention Trend",
-    "retentionTrendDesc": "Customer retention rate over time",
-
-    "topCustomers": "Top Customers",
-    "topCustomersDesc": "Highest value customers by total purchases",
-    "rank": "Rank",
-    "customer": "Customer",
-    "contact": "Contact",
-    "tier": "Tier",
-    "totalPurchases": "Total Purchases",
-    "loyaltyPoints": "Points",
-    "lastOrder": "Last Order",
-
-    "customerSegmentation": "Customer Segmentation",
-    "customerSegmentationDesc": "Distribution of customers across different segments",
-    "byMembershipTier": "By Membership Tier",
-    "byCustomerType": "By Customer Type",
-    "byProductCategory": "By Product Category",
-
-    "geographicDistribution": "Geographic Distribution",
-    "geographicDistributionDesc": "Customer distribution across cities and regions",
-
-    "purchasePattern": "Purchase Pattern",
-    "purchasePatternDesc": "Orders and revenue trends over time",
-    "totalOrders": "Total Orders",
-    "revenue": "Revenue",
-
-    "upcomingEvents": "Upcoming Events",
-    "upcomingEventsDesc": "Birthdays, anniversaries & milestones",
-    "daysAway": "days away",
-
-    "atRiskCustomers": "At-Risk Customers",
-    "atRiskCustomersDesc": "Customers who haven't ordered recently",
-    "daysAgo": "days ago",
-
-    "outstandingPayments": "Outstanding Payments",
-    "outstandingPaymentsDesc": "Pending and overdue payments",
-    "due": "Due",
-    "overdue": "Overdue",
-    "daysOverdue": "days overdue"
-  },
-  "table": {
-    "ariaLabel": "Customer table",
-    "customerCode": "Customer Code",
-    "fullName": "Full Name",
-    "phone": "Phone",
-    "customerType": "Type",
-    "membershipTier": "Tier",
-    "totalPurchases": "Total Purchases",
-    "totalDue": "Outstanding",
-    "loyaltyPoints": "Points",
-    "status": "Status",
-    "createdAt": "Joined Date",
-    "noCustomers": "No customers found",
-    "selectedCount": "{{count}} selected"
-  },
-  "actions": {
-    "addNew": "Add New Customer",
-    "add": "Add",
-    "viewDetails": "View Details",
-    "edit": "Edit Customer",
-    "addPoints": "Add Loyalty Points",
-    "blacklist": "Blacklist Customer",
-    "removeBlacklist": "Remove Blacklist",
-    "delete": "Delete Customer",
-    "exportSelected": "Export Selected",
-    "sendEmail": "Send Email",
-    "sendSMS": "Send SMS",
-    "bulkDelete": "Bulk Delete"
   }
 }

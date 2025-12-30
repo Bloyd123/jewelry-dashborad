@@ -93,7 +93,7 @@ export const BankingSection = ({
               size="sm"
               onClick={() => handleRemoveBank(index)}
               disabled={disabled}
-              className="text-status-error hover:bg-status-error/10"
+              className="hover:bg-status-error/10 text-status-error"
             >
               <Trash2 className="h-4 w-4" />
             </Button>

@@ -204,7 +204,9 @@ export const MobileMetalRatesDashboardHeader: React.FC<
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-text-tertiary">{t('metalRates.common.by')}</span>
+                  <span className="text-text-tertiary">
+                    {t('metalRates.common.by')}
+                  </span>
                   <span className="font-medium text-text-secondary">
                     {updatedBy}
                   </span>

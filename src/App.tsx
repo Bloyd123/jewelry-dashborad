@@ -91,7 +91,7 @@ function App() {
               />
               <Route path="/customerdetail" element={<CustomerDetailsPage />} />
               <Route path="/shops" element={<ShopListPage />} />
-              <Route path='/shops/add' element={<AddShopPage/>}/>
+              <Route path="/shops/add" element={<AddShopPage />} />
               <Route path="/shops/:id" element={<ShopDetailsPage />} />
               <Route path="/shops/edit/:shopId" element={<AddShopPage />} />
 

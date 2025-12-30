@@ -182,7 +182,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
         <SearchBar
           value={filters.search}
           onChange={handleSearchChange}
-          placeholder={t('activityLog.searchPlaceholder')}
+          placeholder={t('shops.activityLog.searchPlaceholder')}
           className="flex-1"
         />
 
@@ -193,7 +193,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           className="gap-2 whitespace-nowrap"
         >
           <Filter className="h-4 w-4" />
-          {t('activityLog.filters')}
+          {t('shops.activityLog.filters')}
           {activeFiltersCount > 0 && (
             <Badge variant="accent" size="sm">
               {activeFiltersCount}
@@ -209,7 +209,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
             className="gap-2 whitespace-nowrap"
           >
             <X className="h-4 w-4" />
-            {t('activityLog.clearAll')}
+            {t('shops.activityLog.clearAll')}
           </Button>
         )}
       </div>
@@ -220,14 +220,14 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           {/* User Role Filter */}
           <div className="space-y-2">
             <Label className="text-xs font-medium text-text-secondary">
-              {t('activityLog.filterByUser')}
+              {t('shops.activityLog.filterByUser')}
             </Label>
             <TypeFilter
               options={USER_ROLE_OPTIONS}
               value={filters.user}
               onChange={handleUserChange}
-              placeholder={t('activityLog.allUsers')}
-              allOptionLabel={t('activityLog.allUsers')}
+              placeholder={t('shops.activityLog.allUsers')}
+              allOptionLabel={t('shops.activityLog.allUsers')}
               className="w-full"
             />
           </div>
@@ -235,14 +235,14 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           {/* Action Filter */}
           <div className="space-y-2">
             <Label className="text-xs font-medium text-text-secondary">
-              {t('activityLog.filterByAction')}
+              {t('shops.activityLog.filterByAction')}
             </Label>
             <TypeFilter
               options={ACTION_OPTIONS}
               value={filters.action}
               onChange={handleActionChange}
-              placeholder={t('activityLog.allActions')}
-              allOptionLabel={t('activityLog.allActions')}
+              placeholder={t('shops.activityLog.allActions')}
+              allOptionLabel={t('shops.activityLog.allActions')}
               className="w-full"
             />
           </div>
@@ -250,14 +250,14 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           {/* Module Filter */}
           <div className="space-y-2">
             <Label className="text-xs font-medium text-text-secondary">
-              {t('activityLog.filterByModule')}
+              {t('shops.activityLog.filterByModule')}
             </Label>
             <TypeFilter
               options={MODULE_OPTIONS}
               value={filters.module}
               onChange={handleModuleChange}
-              placeholder={t('activityLog.allModules')}
-              allOptionLabel={t('activityLog.allModules')}
+              placeholder={t('shops.activityLog.allModules')}
+              allOptionLabel={t('shops.activityLog.allModules')}
               className="w-full"
             />
           </div>
@@ -265,13 +265,13 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           {/* Status Filter */}
           <div className="space-y-2">
             <Label className="text-xs font-medium text-text-secondary">
-              {t('activityLog.filterByStatus')}
+              {t('shops.activityLog.filterByStatus')}
             </Label>
             <StatusFilter
               options={STATUS_OPTIONS}
               value={filters.status}
               onChange={handleStatusChange}
-              placeholder={t('activityLog.allStatuses')}
+              placeholder={t('shops.activityLog.allStatuses')}
               className="w-full"
             />
           </div>
@@ -279,12 +279,12 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
           {/* Date Range Filter */}
           <div className="space-y-2 sm:col-span-2 lg:col-span-4">
             <Label className="text-xs font-medium text-text-secondary">
-              {t('activityLog.filterByDate')}
+              {t('shops.activityLog.filterByDate')}
             </Label>
             <DateRangeFilter
               value={filters.dateRange}
               onChange={handleDateRangeChange}
-              placeholder={t('activityLog.selectDateRange')}
+              placeholder={t('shops.activityLog.selectDateRange')}
               className="w-full md:w-auto"
             />
           </div>
@@ -295,7 +295,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
       {activeFiltersCount > 0 && (
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-text-secondary">
-            {t('activityLog.activeFilters')}:
+            {t('shops.activityLog.activeFilters')}:
           </span>
 
           {/* User Filter Badge */}

@@ -4,12 +4,12 @@
 // ============================================================================
 
 // Import types from main shop types instead of redefining
-import type { 
-  ShopCurrency, 
-  ShopLanguage, 
+import type {
+  ShopCurrency,
+  ShopLanguage,
   WeightUnit,
   BusinessHours as ShopBusinessHours,
-  TimeSlot
+  TimeSlot,
 } from '@/types/shop.types'
 
 export interface GeneralSettings {

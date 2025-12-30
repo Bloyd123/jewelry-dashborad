@@ -101,7 +101,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 1. Date/Time
   {
     id: 'timestamp',
-    header: 'activityLog.columns.dateTime',
+    header: 'shops.activityLog.columns.dateTime',
     accessorKey: 'timestamp',
     sortable: true,
     width: '180px',
@@ -126,7 +126,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 2. User with Avatar and Role (FIXED - removed seed prop)
   {
     id: 'user',
-    header: 'activityLog.columns.user',
+    header: 'shops.activityLog.columns.user',
     accessorFn: row => row.user.name,
     sortable: true,
     width: '200px',
@@ -148,7 +148,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 3. Action Badge
   {
     id: 'action',
-    header: 'activityLog.columns.action',
+    header: 'shops.activityLog.columns.action',
     accessorKey: 'action',
     sortable: true,
     width: '120px',
@@ -162,7 +162,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 4. Module
   {
     id: 'module',
-    header: 'activityLog.columns.module',
+    header: 'shops.activityLog.columns.module',
     accessorKey: 'module',
     sortable: true,
     width: '150px',
@@ -176,7 +176,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 5. Description
   {
     id: 'description',
-    header: 'activityLog.columns.description',
+    header: 'shops.activityLog.columns.description',
     accessorKey: 'description',
     sortable: false,
     width: 'auto',
@@ -195,7 +195,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 6. Status Badge
   {
     id: 'status',
-    header: 'activityLog.columns.status',
+    header: 'shops.activityLog.columns.status',
     accessorKey: 'status',
     sortable: true,
     width: '100px',
@@ -218,7 +218,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 7. Details Button
   {
     id: 'details',
-    header: 'activityLog.columns.details',
+    header: 'shops.activityLog.columns.details',
     sortable: false,
     width: '80px',
     align: 'center',

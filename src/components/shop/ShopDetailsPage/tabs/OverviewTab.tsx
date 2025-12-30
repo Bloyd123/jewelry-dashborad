@@ -117,7 +117,7 @@ const OverviewTab = () => {
         {/* Shop Type */}
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs text-text-secondary">
-            {t('shopProfile.shopType')}
+            {t('shops.shopProfile.shopType')}
           </Label>
           <Badge variant="default" size="sm" className="w-fit">
             {shopData.shopType || 'N/A'}

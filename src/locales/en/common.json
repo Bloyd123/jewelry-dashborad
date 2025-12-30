@@ -1,6 +1,6 @@
 {
   "sidebar": {
-    "addshop":"Add Shop",
+    "addshop": "Add Shop",
     "addPayment": "Add Payment",
     "addCustomer": "Add Customer",
     "supplierdetails": "Supplier Details",
@@ -39,8 +39,8 @@
     "description": "Please check your internet connection and try again.",
     "retryButton": "Retry Connection"
   },
-  "commontext":{
-      "Home":"Home" 
+  "commontext": {
+    "Home": "Home"
   },
 
   "ui": {

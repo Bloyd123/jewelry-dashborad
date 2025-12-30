@@ -41,7 +41,7 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
     value: string
   ) => {
     const currentDay = data[day]
-    
+
     // Ensure currentDay exists
     if (!currentDay) {
       onChange(day, {
@@ -62,7 +62,7 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
     closed: boolean
   ) => {
     const currentDay = data[day]
-    
+
     if (!currentDay) {
       onChange(day, {
         open: '10:00',
@@ -164,7 +164,7 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
             <tbody>
               {days.map((day, index) => {
                 const dayData = data[day] || { open: '10:00', close: '21:00' }
-                
+
                 return (
                   <tr
                     key={day}
@@ -233,7 +233,7 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
                 <FormInput
                   name={`holiday-occasion-${index}`}
                   label={t('shops.settings.businessHours.occasion')}
-                  value={holiday.occasion?? ''}
+                  value={holiday.occasion ?? ''}
                   onChange={(_, value) =>
                     handleHolidayChange(index, 'occasion', String(value))
                   }
@@ -245,7 +245,7 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={() => handleRemoveHoliday(index)}
-                className="text-status-error hover:bg-status-error/10"
+                className="hover:bg-status-error/10 text-status-error"
               >
                 <X className="h-4 w-4" />
               </Button>

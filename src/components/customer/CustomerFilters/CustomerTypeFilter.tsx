@@ -65,9 +65,9 @@ export const CustomerTypeFilter = React.forwardRef<
         options={customerTypeOptions}
         value={value}
         onChange={onChange}
-        placeholder={t('filters.customerType')}
+        placeholder={t('customer.filters.customerType')}
         showAllOption={showAllOption}
-        allOptionLabel={t('filters.allTypes')}
+        allOptionLabel={t('customer.filters.allTypes')}
         className={className}
         disabled={disabled}
       />

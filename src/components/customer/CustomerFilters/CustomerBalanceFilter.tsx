@@ -54,9 +54,9 @@ export const CustomerBalanceFilter = React.forwardRef<
         options={balanceOptions}
         value={value}
         onChange={onChange}
-        placeholder={t('filters.balance')}
+        placeholder={t('customer.filters.balance')}
         showAllOption={showAllOption}
-        allOptionLabel={t('filters.allBalances')}
+        allOptionLabel={t('customer.filters.allBalances')}
         className={className}
         disabled={disabled}
       />

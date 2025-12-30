@@ -37,40 +37,40 @@ export const getCustomerRowActions = (
   onDelete: (customer: Customer) => void
 ): RowAction<Customer>[] => [
   {
-    label: 'actions.viewDetails',
+    label: 'customer.actions.viewDetails',
     icon: <Eye className="h-4 w-4" />,
     onClick: onViewDetails,
     variant: 'default',
   },
   {
-    label: 'actions.edit',
+    label: 'customer.actions.edit',
     icon: <Edit className="h-4 w-4" />,
     onClick: onEdit,
     variant: 'default',
   },
   {
-    label: 'actions.addPoints',
+    label: 'customer.actions.addPoints',
     icon: <Award className="h-4 w-4" />,
     onClick: onAddPoints,
     variant: 'default',
     hidden: row => !row.isActive,
   },
   {
-    label: 'actions.blacklist',
+    label: 'customer.actions.blacklist',
     icon: <Ban className="h-4 w-4" />,
     onClick: onBlacklist,
     variant: 'destructive',
     hidden: row => row.isBlacklisted,
   },
   {
-    label: 'actions.removeBlacklist',
+    label: 'customer.actions.removeBlacklist',
     icon: <ShieldOff className="h-4 w-4" />,
     onClick: onBlacklist,
     variant: 'default',
     hidden: row => !row.isBlacklisted,
   },
   {
-    label: 'actions.delete',
+    label: 'customer.actions.delete',
     icon: <Trash2 className="h-4 w-4" />,
     onClick: onDelete,
     variant: 'destructive',
@@ -143,7 +143,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
+            <span className="hidden sm:inline">
+              {t('customer.actions.viewDetails')}
+            </span>
           </Button>
         )}
 
@@ -156,7 +158,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Edit className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.edit')}</span>
+            <span className="hidden sm:inline">
+              {t('customer.actions.edit')}
+            </span>
           </Button>
         )}
 
@@ -169,7 +173,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Award className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.addPoints')}</span>
+            <span className="hidden sm:inline">
+              {t('customer.actions.addPoints')}
+            </span>
           </Button>
         )}
 
@@ -182,7 +188,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="border-status-error/20 hover:bg-status-error/10 h-9 gap-2 text-status-error"
           >
             <Ban className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.blacklist')}</span>
+            <span className="hidden sm:inline">
+              {t('customer.actions.blacklist')}
+            </span>
           </Button>
         )}
 
@@ -195,7 +203,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           >
             <ShieldOff className="h-4 w-4" />
             <span className="hidden sm:inline"></span>
-            {t('actions.removeBlacklist')}
+            {t('customer.actions.removeBlacklist')}
             <span />
           </Button>
         )}
@@ -209,7 +217,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Trash2 className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('actions.delete')}</span>
+          <span className="hidden sm:inline">
+            {t('customer.actions.delete')}
+          </span>
         </Button>
 
         {/* More Actions Dropdown */}
@@ -220,12 +230,16 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>{t('actions.exportSelected')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('actions.sendEmail')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('actions.sendSMS')}</DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('customer.actions.exportSelected')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('customer.actions.sendEmail')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>{t('customer.actions.sendSMS')}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
-              {t('actions.bulkDelete')}
+              {t('customer.actions.bulkDelete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

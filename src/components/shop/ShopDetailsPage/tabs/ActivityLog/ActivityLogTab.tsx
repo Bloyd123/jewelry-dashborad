@@ -139,10 +139,10 @@ const ActivityLogTab: React.FC = () => {
           </div>
           <div className="min-w-0 flex-1">
             <h3 className="text-sm font-semibold text-text-primary">
-              {t('activityLog.adminOnlyTitle')}
+              {t('shops.activityLog.adminOnlyTitle')}
             </h3>
             <p className="mt-1 text-sm text-text-secondary">
-              {t('activityLog.adminOnlyDescription')}
+              {t('shops.activityLog.adminOnlyDescription')}
             </p>
           </div>
         </div>
@@ -184,7 +184,7 @@ const ActivityLogTab: React.FC = () => {
         }}
         // Empty State Configuration
         emptyState={{
-          message: t('activityLog.noActivities'),
+          message: t('shops.activityLog.noActivities'),
           icon: (
             <svg
               className="h-12 w-12 text-text-tertiary"
@@ -219,7 +219,7 @@ const ActivityLogTab: React.FC = () => {
         getRowId={row => row.id}
         // Test ID
         testId="activity-log-table"
-        ariaLabel={t('activityLog.tableAriaLabel')}
+        ariaLabel={t('shops.activityLog.tableAriaLabel')}
       />
     </div>
   )

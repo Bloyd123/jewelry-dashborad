@@ -78,12 +78,12 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   const tabs = [
     {
       value: 'table',
-      label: t('tabs.table'),
+      label: t('customer.tabs.table'),
       icon: <Users className="h-4 w-4" />,
     },
     {
       value: 'analytics',
-      label: t('tabs.analytics'),
+      label: t('customer.tabs.analytics'),
       icon: <BarChart3 className="h-4 w-4" />,
     },
   ]
@@ -101,10 +101,10 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
             {/* Title */}
             <div className="flex-1">
               <h1 className="text-xl font-bold text-text-primary sm:text-2xl">
-                {t('page.title')}
+                {t('customer.page.title')}
               </h1>
               <p className="mt-1 text-sm text-text-tertiary">
-                {t('page.subtitle')}
+                {t('customer.page.subtitle')}
               </p>
             </div>
 
@@ -114,11 +114,13 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               variant="default"
               size="default"
               className="whitespace-nowrap"
-              aria-label={t('actions.addNew')}
+              aria-label={t('customer.actions.addNew')}
             >
               <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('actions.addNew')}</span>
-              <span className="sm:hidden">{t('actions.add')}</span>
+              <span className="hidden sm:inline">
+                {t('customer.actions.addNew')}
+              </span>
+              <span className="sm:hidden">{t('customer.actions.add')}</span>
             </Button>
           </div>
         </div>

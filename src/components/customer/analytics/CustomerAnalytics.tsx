@@ -190,7 +190,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       <div className={cn('space-y-6', className)}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('analytics.title')}
+            {t('customer.analytics.title')}
           </h2>
         </div>
         <StatCardGrid columns={4} gap="md">
@@ -211,12 +211,14 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       <div className={cn('space-y-6', className)}>
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('analytics.title')}
+            {t('customer.analytics.title')}
           </h2>
         </div>
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <AlertCircle className="mb-4 h-12 w-12 text-text-tertiary" />
-          <p className="text-text-secondary">{t('analytics.noData')}</p>
+          <p className="text-text-secondary">
+            {t('customer.analytics.noData')}
+          </p>
         </div>
       </div>
     )
@@ -241,10 +243,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold text-text-primary">
-            {t('analytics.title')}
+            {t('customer.analytics.title')}
           </h2>
           <p className="mt-1 text-sm text-text-tertiary">
-            {t('analytics.subtitle')}
+            {t('customer.analytics.subtitle')}
           </p>
         </div>
         {onRefresh && (
@@ -252,7 +254,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             onClick={onRefresh}
             className="hover:bg-accent/90 rounded-lg bg-accent px-4 py-2 text-white transition-colors"
           >
-            {t('analytics.refresh')}
+            {t('customer.analytics.refresh')}
           </button>
         )}
       </div>
@@ -261,7 +263,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       <StatCardGrid columns={4} gap="md">
         {/* Total Customers */}
         <StatCard
-          title={t('analytics.totalCustomers')}
+          title={t('customer.analytics.totalCustomers')}
           value={formatNumber(statistics.totalCustomers)}
           icon={Users}
           variant="default"
@@ -269,49 +271,49 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           trend={{
             value: 12,
             direction: 'up',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.totalCustomersDesc')}
+          description={t('customer.analytics.totalCustomersDesc')}
         />
 
         {/* Active Customers */}
         <StatCard
-          title={t('analytics.activeCustomers')}
+          title={t('customer.analytics.activeCustomers')}
           value={formatNumber(statistics.activeCustomers)}
           icon={UserCheck}
           variant="success"
           size="md"
-          subtitle={`${activePercentage}% ${t('analytics.ofTotal')}`}
+          subtitle={`${activePercentage}% ${t('customer.analytics.ofTotal')}`}
           trend={{
             value: 8,
             direction: 'up',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.activeCustomersDesc')}
+          description={t('customer.analytics.activeCustomersDesc')}
         />
 
         {/* VIP Customers */}
         <StatCard
-          title={t('analytics.vipCustomers')}
+          title={t('customer.analytics.vipCustomers')}
           value={formatNumber(statistics.vipCustomers)}
           icon={Crown}
           variant="warning"
           size="md"
-          subtitle={`${vipPercentage}% ${t('analytics.ofTotal')}`}
+          subtitle={`${vipPercentage}% ${t('customer.analytics.ofTotal')}`}
           trend={{
             value: 5,
             direction: 'up',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.vipCustomersDesc')}
+          description={t('customer.analytics.vipCustomersDesc')}
         />
 
         {/* Average Lifetime Value */}
         <StatCard
-          title={t('analytics.avgLifetimeValue')}
+          title={t('customer.analytics.avgLifetimeValue')}
           value={formatCurrency(statistics.avgLifetimeValue)}
           icon={TrendingUp}
           variant="info"
@@ -319,15 +321,15 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           trend={{
             value: 15,
             direction: 'up',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.avgLifetimeValueDesc')}
+          description={t('customer.analytics.avgLifetimeValueDesc')}
         />
 
         {/* Total Outstanding */}
         <StatCard
-          title={t('analytics.totalOutstanding')}
+          title={t('customer.analytics.totalOutstanding')}
           value={formatCurrency(statistics.totalOutstanding)}
           icon={DollarSign}
           variant="error"
@@ -335,15 +337,15 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           trend={{
             value: 3,
             direction: 'down',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.totalOutstandingDesc')}
+          description={t('customer.analytics.totalOutstandingDesc')}
         />
 
         {/* Total Loyalty Points */}
         <StatCard
-          title={t('analytics.totalLoyaltyPoints')}
+          title={t('customer.analytics.totalLoyaltyPoints')}
           value={formatNumber(statistics.totalLoyaltyPoints)}
           icon={Gift}
           variant="success"
@@ -351,38 +353,38 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           trend={{
             value: 20,
             direction: 'up',
-            label: t('analytics.vsLastMonth'),
+            label: t('customer.analytics.vsLastMonth'),
             showIcon: true,
           }}
-          description={t('analytics.totalLoyaltyPointsDesc')}
+          description={t('customer.analytics.totalLoyaltyPointsDesc')}
         />
 
         {/* Customer Growth Rate */}
         <StatCard
-          title={t('analytics.growthRate')}
+          title={t('customer.analytics.growthRate')}
           value="+12%"
           icon={Activity}
           variant="success"
           size="md"
-          subtitle={t('analytics.last30Days')}
-          description={t('analytics.growthRateDesc')}
+          subtitle={t('customer.analytics.last30Days')}
+          description={t('customer.analytics.growthRateDesc')}
         />
 
         {/* Retention Rate */}
         <StatCard
-          title={t('analytics.retentionRate')}
+          title={t('customer.analytics.retentionRate')}
           value="87%"
           icon={UserCheck}
           variant="info"
           size="md"
-          subtitle={t('analytics.last90Days')}
+          subtitle={t('customer.analytics.last90Days')}
           trend={{
             value: 5,
             direction: 'up',
-            label: t('analytics.vsLastPeriod'),
+            label: t('customer.analytics.vsLastPeriod'),
             showIcon: true,
           }}
-          description={t('analytics.retentionRateDesc')}
+          description={t('customer.analytics.retentionRateDesc')}
         />
       </StatCardGrid>
 
@@ -392,10 +394,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('analytics.customerGrowth')}
+              {t('customer.analytics.customerGrowth')}
             </h3>
             <p className="mt-1 text-sm text-text-tertiary">
-              {t('analytics.customerGrowthDesc')}
+              {t('customer.analytics.customerGrowthDesc')}
             </p>
           </div>
           <LineChart
@@ -403,13 +405,13 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             lines={[
               {
                 dataKey: 'customers',
-                name: t('analytics.totalCustomers'),
+                name: t('customer.analytics.totalCustomers'),
                 color: 'var(--accent-color)',
                 strokeWidth: 3,
               },
               {
                 dataKey: 'newCustomers',
-                name: t('analytics.newCustomers'),
+                name: t('customer.analytics.newCustomers'),
                 color: 'var(--status-success)',
                 strokeWidth: 2,
               },
@@ -428,10 +430,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('analytics.retentionTrend')}
+              {t('customer.analytics.retentionTrend')}
             </h3>
             <p className="mt-1 text-sm text-text-tertiary">
-              {t('analytics.retentionTrendDesc')}
+              {t('customer.analytics.retentionTrendDesc')}
             </p>
           </div>
           <LineChart
@@ -439,7 +441,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             lines={[
               {
                 dataKey: 'rate',
-                name: t('analytics.retentionRate'),
+                name: t('customer.analytics.retentionRate'),
                 color: 'var(--status-info)',
                 strokeWidth: 3,
               },
@@ -466,10 +468,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('analytics.geographicDistribution')}
+              {t('customer.analytics.geographicDistribution')}
             </h3>
             <p className="text-sm text-text-tertiary">
-              {t('analytics.geographicDistributionDesc')}
+              {t('customer.analytics.geographicDistributionDesc')}
             </p>
           </div>
         </div>
@@ -480,7 +482,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             bars={[
               {
                 dataKey: 'customers',
-                name: t('analytics.totalCustomers'),
+                name: t('customer.analytics.totalCustomers'),
                 color: 'var(--accent-color)',
               },
             ]}
@@ -506,10 +508,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('analytics.customerSegmentation')}
+              {t('customer.analytics.customerSegmentation')}
             </h3>
             <p className="text-sm text-text-tertiary">
-              {t('analytics.customerSegmentationDesc')}
+              {t('customer.analytics.customerSegmentationDesc')}
             </p>
           </div>
         </div>
@@ -518,7 +520,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           {/* By Membership Tier */}
           <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
-              {t('analytics.byMembershipTier')}
+              {t('customer.analytics.byMembershipTier')}
             </h4>
             <DonutChart
               data={
@@ -545,7 +547,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           {/* By Customer Type */}
           <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
-              {t('analytics.byCustomerType')}
+              {t('customer.analytics.byCustomerType')}
             </h4>
             <DonutChart
               data={
@@ -572,7 +574,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           {/* By Product Category */}
           <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
-              {t('analytics.byProductCategory')}
+              {t('customer.analytics.byProductCategory')}
             </h4>
             <DonutChart
               data={
@@ -611,10 +613,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             </div>
             <div>
               <h3 className="text-lg font-semibold text-text-primary">
-                {t('analytics.topCustomers')}
+                {t('customer.analytics.topCustomers')}
               </h3>
               <p className="text-sm text-text-tertiary">
-                {t('analytics.topCustomersDesc')}
+                {t('customer.analytics.topCustomersDesc')}
               </p>
             </div>
           </div>
@@ -625,7 +627,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           columns={[
             {
               id: 'rank',
-              header: t('analytics.rank'),
+              header: t('customer.analytics.rank'),
               cell: ({ row }) => {
                 const index = (
                   statistics.topCustomers || mockTopCustomers
@@ -642,7 +644,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'customer',
-              header: t('analytics.customer'),
+              header: t('customer.analytics.customer'),
               accessorKey: 'fullName',
               cell: ({ row }) => (
                 <div>
@@ -657,7 +659,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'contact',
-              header: t('analytics.contact'),
+              header: t('customer.analytics.contact'),
               accessorKey: 'phone',
               cell: ({ row }) => (
                 <div>
@@ -672,7 +674,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'tier',
-              header: t('analytics.tier'),
+              header: t('customer.analytics.tier'),
               accessorKey: 'membershipTier',
               cell: ({ row }) => {
                 const tierColors: Record<string, string> = {
@@ -696,7 +698,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'totalPurchases',
-              header: t('analytics.totalPurchases'),
+              header: t('customer.analytics.totalPurchases'),
               accessorKey: 'totalPurchases',
               cell: ({ row }) => (
                 <div className="font-semibold text-text-primary">
@@ -708,7 +710,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'loyaltyPoints',
-              header: t('analytics.loyaltyPoints'),
+              header: t('customer.analytics.loyaltyPoints'),
               accessorKey: 'loyaltyPoints',
               cell: ({ row }) => (
                 <div className="flex items-center justify-end gap-1">
@@ -722,7 +724,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             },
             {
               id: 'lastOrder',
-              header: t('analytics.lastOrder'),
+              header: t('customer.analytics.lastOrder'),
               accessorKey: 'lastOrderDate',
               cell: ({ row }) => {
                 if (!row.lastOrderDate) return '-'
@@ -760,10 +762,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-text-primary">
-              {t('analytics.purchasePattern')}
+              {t('customer.analytics.purchasePattern')}
             </h3>
             <p className="text-sm text-text-tertiary">
-              {t('analytics.purchasePatternDesc')}
+              {t('customer.analytics.purchasePatternDesc')}
             </p>
           </div>
         </div>
@@ -774,13 +776,13 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             areas={[
               {
                 dataKey: 'orders',
-                name: t('analytics.totalOrders'),
+                name: t('customer.analytics.totalOrders'),
                 color: 'var(--accent-color)',
                 fillOpacity: 0.3,
               },
               {
                 dataKey: 'revenue',
-                name: t('analytics.revenue'),
+                name: t('customer.analytics.revenue'),
                 color: 'var(--status-success)',
                 fillOpacity: 0.3,
               },
@@ -819,10 +821,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                 <Calendar className="h-5 w-5 text-status-info" />
                 <div>
                   <h4 className="font-semibold text-text-primary">
-                    {t('analytics.upcomingEvents')}
+                    {t('customer.analytics.upcomingEvents')}
                   </h4>
                   <p className="text-xs text-text-tertiary">
-                    {t('analytics.upcomingEventsDesc')}
+                    {t('customer.analytics.upcomingEventsDesc')}
                   </p>
                 </div>
               </div>
@@ -862,7 +864,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                           )}
                         >
                           {event.eventType} • {event.daysUntil}{' '}
-                          {t('analytics.daysAway')}
+                          {t('customer.analytics.daysAway')}
                         </div>
                       </div>
                     </div>
@@ -879,10 +881,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                 <AlertTriangle className="h-5 w-5 text-status-warning" />
                 <div>
                   <h4 className="font-semibold text-text-primary">
-                    {t('analytics.atRiskCustomers')}
+                    {t('customer.analytics.atRiskCustomers')}
                   </h4>
                   <p className="text-xs text-text-tertiary">
-                    {t('analytics.atRiskCustomersDesc')}
+                    {t('customer.analytics.atRiskCustomersDesc')}
                   </p>
                 </div>
               </div>
@@ -910,9 +912,9 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                             {customer.customerCode} • {customer.phone}
                           </div>
                           <div className="mt-1 text-xs text-text-secondary">
-                            {t('analytics.lastOrder')}:{' '}
+                            {t('customer.analytics.lastOrder')}:{' '}
                             {customer.daysSinceLastOrder}{' '}
-                            {t('analytics.daysAgo')}
+                            {t('customer.analytics.daysAgo')}
                           </div>
                         </div>
                         <span
@@ -938,10 +940,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                 <Receipt className="h-5 w-5 text-status-error" />
                 <div>
                   <h4 className="font-semibold text-text-primary">
-                    {t('analytics.outstandingPayments')}
+                    {t('customer.analytics.outstandingPayments')}
                   </h4>
                   <p className="text-xs text-text-tertiary">
-                    {t('analytics.outstandingPaymentsDesc')}
+                    {t('customer.analytics.outstandingPaymentsDesc')}
                   </p>
                 </div>
               </div>
@@ -964,13 +966,13 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                           </div>
                           <div className="mt-1 flex items-center gap-2">
                             <span className="text-xs text-text-secondary">
-                              {t('analytics.due')}:{' '}
+                              {t('customer.analytics.due')}:{' '}
                               {formatCurrency(payment.totalDue)}
                             </span>
                             {payment.daysOverdue > 0 && (
                               <span className="text-xs font-medium text-status-error">
                                 {payment.daysOverdue}{' '}
-                                {t('analytics.daysOverdue')}
+                                {t('customer.analytics.daysOverdue')}
                               </span>
                             )}
                           </div>
@@ -980,7 +982,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                             {formatCurrency(payment.overdueAmount)}
                           </div>
                           <div className="text-xs text-text-tertiary">
-                            {t('analytics.overdue')}
+                            {t('customer.analytics.overdue')}
                           </div>
                         </div>
                       </div>

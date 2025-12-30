@@ -102,8 +102,8 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
     },
     businessHours: shop.businessHours || {
       monday: { open: '10:00', close: '21:00' },
-      tuesday: { open: '10:00', close: '21:00'},
-      wednesday: { open: '10:00', close: '21:00'},
+      tuesday: { open: '10:00', close: '21:00' },
+      wednesday: { open: '10:00', close: '21:00' },
       thursday: { open: '10:00', close: '21:00' },
       friday: { open: '10:00', close: '21:00' },
       saturday: { open: '10:00', close: '21:00' },
@@ -189,9 +189,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
       await onSave(formData)
       onClose()
     } catch (error: any) {
-      setSubmitError(
-        error.message || t('shops.settings.errors.saveFailed')
-      )
+      setSubmitError(error.message || t('shops.settings.errors.saveFailed'))
     } finally {
       setIsSubmitting(false)
     }
@@ -265,9 +263,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
         <GSTConfigSection
           shop={shop}
           data={formData.gstSettings}
-          onChange={(field, value) =>
-            handleChange('gstSettings', field, value)
-          }
+          onChange={(field, value) => handleChange('gstSettings', field, value)}
           onNestedChange={(parent, field, value) =>
             handleNestedChange('gstSettings', parent, field, value)
           }
@@ -300,11 +296,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
       {/* Footer Actions */}
       <div className="sticky bottom-0 flex items-center justify-between border-t border-border-primary bg-bg-secondary px-6 py-4">
-        <Button
-          variant="outline"
-          onClick={onClose}
-          disabled={isSubmitting}
-        >
+        <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
           {t('common.cancel')}
         </Button>
 
