@@ -55,6 +55,7 @@ export const ROUTES = {
   //Shop
   shopList:'/shops',
   shopdetail:'/shops/:id',
+  addshop:'/shops/add',
 
   // Metal Rate
   metalRates:'/metal-rates'

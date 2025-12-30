@@ -7,13 +7,16 @@ import {
   ActivityLogTab,
   StatisticsTab,
 } from '@/components/shop/ShopDetailsPage/tabs'
+import { ShopSettings } from '@/components/shop/ShopSettings'
 import { dummyShops } from '@/pages/shops/data'
 import { dummyShopStatistics } from '@/pages/shops/dummyStatistics'
+import type { ShopSettingsFormData } from '@/components/shop/ShopSettings'
 // ============================================================================
 // SHOP DETAILS PAGE COMPONENT
 // ============================================================================
 
 export const ShopDetailsPage: React.FC = () => {
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
 
   // Get shop data - Currently using dummy data
@@ -26,7 +29,14 @@ export const ShopDetailsPage: React.FC = () => {
     console.log('Navigate back to shops list')
     // window.history.back() or navigate('/shops')
   }
+  const handleSaveSettings = async (settings: ShopSettingsFormData) => {
+    console.log('Saving settings:', settings)
 
+    // ✅ API call example
+    // await updateShopSettings(shop._id, settings)
+
+    setIsSettingsOpen(false)
+  }
   // Handle settings modal
   const handleSettingsClick = () => {
     // TODO: Open settings modal
@@ -45,7 +55,7 @@ export const ShopDetailsPage: React.FC = () => {
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onBackClick={handleBackClick}
-        onSettingsClick={handleSettingsClick}
+         onSettingsClick={() => setIsSettingsOpen(true)}
       >
         {/* Overview Tab */}
         <TabsContent value="overview">
@@ -95,6 +105,12 @@ export const ShopDetailsPage: React.FC = () => {
           </div>
         </TabsContent>
       </ShopDetailHeader>
+            <ShopSettings
+        shop={shop}
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        onSave={handleSaveSettings}
+      />
     </div>
   )
 }

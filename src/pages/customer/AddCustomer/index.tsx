@@ -64,8 +64,8 @@ export default function AddCustomerPage() {
   const isEditMode = Boolean(customerId)
 
   // Get current shop ID from Redux
-  const currentShopId = useAppSelector(state => state.auth.currentShop)
-  const shopId = currentShopId || 'shop_123'
+  // const currentShopId = useAppSelector(state => state.auth.currentShop)
+  const shopId =  'shop_123'
 
   // Fetch customer data if editing
   // const { data: customerData, isLoading } = useGetCustomerQuery(

@@ -115,7 +115,10 @@ export interface TimeSlot {
   open: string // Format: "HH:MM" (24-hour)
   close: string
 }
-
+export interface Holiday {
+  date: string
+  occasion?: string
+}
 export interface BusinessHours {
   monday?: TimeSlot
   tuesday?: TimeSlot
@@ -124,7 +127,7 @@ export interface BusinessHours {
   friday?: TimeSlot
   saturday?: TimeSlot
   sunday?: TimeSlot
-  holidays?: string[] // Array of dates
+  holidays?: Holiday[] // Array of dates
 }
 
 // ============================================================================

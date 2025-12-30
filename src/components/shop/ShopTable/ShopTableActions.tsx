@@ -43,20 +43,20 @@ export const getShopRowActions = (
 ): RowAction<Shop>[] => {
   const actions: RowAction<Shop>[] = [
     {
-      label: 'actions.viewDetails',
+      label: 'shops.actions.viewDetails',
       icon: <Eye className="h-4 w-4" />,
       onClick: onViewDetails,
       variant: 'default',
     },
     {
-      label: 'actions.edit',
+      label: 'shops.actions.edit',
       icon: <Edit className="h-4 w-4" />,
       onClick: onEdit,
       variant: 'default',
       hidden: row => userRole === 'staff',
     },
     {
-      label: 'actions.settings',
+      label: 'shops.actions.settings',
       icon: <Settings className="h-4 w-4" />,
       onClick: onSettings,
       variant: 'default',
@@ -64,7 +64,7 @@ export const getShopRowActions = (
         !['super_admin', 'org_admin', 'shop_admin'].includes(userRole),
     },
     {
-      label: 'actions.updateRates',
+      label: 'shops.actions.updateRates',
       icon: <TrendingUp className="h-4 w-4" />,
       onClick: onUpdateRates,
       variant: 'default',
@@ -74,13 +74,13 @@ export const getShopRowActions = (
         ),
     },
     {
-      label: 'actions.statistics',
+      label: 'shops.actions.statistics',
       icon: <BarChart3 className="h-4 w-4" />,
       onClick: onStatistics,
       variant: 'default',
     },
     {
-      label: 'actions.activate',
+      label: 'shops.actions.activate',
       icon: <Power className="h-4 w-4" />,
       onClick: onToggleStatus,
       variant: 'default',
@@ -88,7 +88,7 @@ export const getShopRowActions = (
         row.isActive || !['super_admin', 'org_admin'].includes(userRole),
     },
     {
-      label: 'actions.deactivate',
+      label: 'shops.actions.deactivate',
       icon: <PowerOff className="h-4 w-4" />,
       onClick: onToggleStatus,
       variant: 'destructive',
@@ -100,7 +100,7 @@ export const getShopRowActions = (
   // Only super_admin and org_admin can delete
   if (['super_admin', 'org_admin'].includes(userRole)) {
     actions.push({
-      label: 'actions.delete',
+      label: 'shops.actions.delete',
       icon: <Trash2 className="h-4 w-4" />,
       onClick: onDelete,
       variant: 'destructive',
@@ -178,7 +178,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.viewDetails')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.viewDetails')}</span>
           </Button>
         )}
 
@@ -191,7 +191,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Edit className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.edit')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.edit')}</span>
           </Button>
         )}
 
@@ -204,7 +204,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.settings')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.settings')}</span>
           </Button>
         )}
 
@@ -217,7 +217,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.updateRates')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.updateRates')}</span>
           </Button>
         )}
 
@@ -230,7 +230,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="border-status-success/20 hover:bg-status-success/10 h-9 gap-1 whitespace-nowrap text-xs text-status-success sm:gap-2 sm:text-sm"
           >
             <Power className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.activate')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.activate')}</span>
           </Button>
         )}
 
@@ -243,7 +243,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="border-status-warning/20 hover:bg-status-warning/10 h-9 gap-1 whitespace-nowrap text-xs text-status-warning sm:gap-2 sm:text-sm"
           >
             <PowerOff className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.deactivate')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.deactivate')}</span>
           </Button>
         )}
 
@@ -256,7 +256,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Trash2 className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('actions.delete')}</span>
+            <span className="hidden sm:inline">{t('shops.actions.delete')}</span>
           </Button>
         )}
 
@@ -268,11 +268,11 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem>{t('actions.exportSelected')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('actions.sendNotification')}</DropdownMenuItem>
+            <DropdownMenuItem>{t('shops.actions.exportSelected')}</DropdownMenuItem>
+            <DropdownMenuItem>{t('shops.actions.sendNotification')}</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
-              {t('actions.bulkDelete')}
+              {t('shops.actions.bulkDelete')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

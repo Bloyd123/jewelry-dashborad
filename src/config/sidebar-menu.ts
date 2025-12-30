@@ -71,6 +71,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     items: [
       { title: t('sidebar.shopList'), url: ROUTES.shopList },
       { title: t('sidebar.shopdetail'), url: ROUTES.shopdetail },
+      { title: t('sidebar.addshop'), url: ROUTES.addshop }
     ],
   },
   {

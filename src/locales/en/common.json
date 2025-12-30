@@ -1,5 +1,6 @@
 {
   "sidebar": {
+    "addshop":"Add Shop",
     "addPayment": "Add Payment",
     "addCustomer": "Add Customer",
     "supplierdetails": "Supplier Details",
