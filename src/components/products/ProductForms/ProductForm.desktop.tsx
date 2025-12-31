@@ -206,7 +206,7 @@ export default function ProductFormDesktop({
             className="min-w-[120px]"
           >
             <X className="mr-2 h-4 w-4" />
-            {t('common.cancel')}
+            {t('product.common.cancel')}
           </Button>
 
           <Button
@@ -218,12 +218,12 @@ export default function ProductFormDesktop({
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t('common.saving')}
+                {t('product.common.saving')}
               </>
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                {mode === 'create' ? t('common.save') : t('common.update')}
+                {mode === 'create' ? t('product.common.save') : t('product.common.update')}
               </>
             )}
           </Button>

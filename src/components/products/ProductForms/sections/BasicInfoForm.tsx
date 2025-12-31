@@ -168,12 +168,12 @@ export const BasicInfoSection = ({
       {/* Product Type */}
       <FormSelect
         name="productType"
-        label={t('product.productType')}
+        label={t('product.productTypes')}
         value={data.productType || ''}
         onChange={onChange}
         onBlur={onBlur}
         error={errors.productType}
-        placeholder={t('product.selectProductType')}
+        placeholder={t('product.selectProductTypes')}
         required={true}
         disabled={disabled}
         options={productTypes}

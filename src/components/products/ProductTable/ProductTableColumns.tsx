@@ -48,7 +48,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 1. Product Code with Image Thumbnail
   {
     id: 'productCode',
-    header: 'table.productCode',
+    header: 'product.table.productCode',
     accessorKey: 'productCode',
     sortable: true,
     width: '180px',
@@ -82,7 +82,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 2. Product Name with Category
   {
     id: 'name',
-    header: 'table.productName',
+    header: 'product.table.productName',
     accessorKey: 'name',
     sortable: true,
     width: '250px',
@@ -111,7 +111,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 3. Metal Type & Purity
   {
     id: 'metal',
-    header: 'table.metalDetails',
+    header: 'product.table.metalDetails',
     accessorKey: 'metal.type',
     sortable: true,
     width: '140px',
@@ -133,7 +133,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 4. Weight
   {
     id: 'weight',
-    header: 'table.weight',
+    header: 'product.table.weight',
     accessorKey: 'weight.grossWeight',
     sortable: true,
     align: 'right',
@@ -153,7 +153,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 5. Pricing
   {
     id: 'pricing',
-    header: 'table.price',
+    header: 'product.table.price',
     accessorKey: 'pricing.sellingPrice',
     sortable: true,
     align: 'right',
@@ -183,7 +183,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 6. Stock Status
   {
     id: 'stock',
-    header: 'table.stock',
+    header: 'product.table.stock',
     accessorKey: 'stock.quantity',
     sortable: true,
     align: 'center',
@@ -213,7 +213,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 7. Product Type
   {
     id: 'productType',
-    header: 'table.type',
+    header: 'product.table.type',
     accessorKey: 'productType',
     sortable: true,
     width: '120px',
@@ -237,7 +237,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 8. Sale Status
   {
     id: 'saleStatus',
-    header: 'table.saleStatus',
+    header: 'product.table.saleStatus',
     accessorKey: 'saleStatus',
     sortable: true,
     width: '130px',
@@ -265,7 +265,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 9. Features (Hallmark, Featured, etc.)
   {
     id: 'features',
-    header: 'table.features',
+    header: 'product.table.features',
     width: '140px',
     cell: ({ row }) => (
       <div className="flex flex-wrap gap-1">
@@ -296,7 +296,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 10. Gender
   {
     id: 'gender',
-    header: 'table.gender',
+    header: 'product.table.gender',
     accessorKey: 'gender',
     sortable: true,
     width: '100px',
@@ -322,7 +322,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
   // 11. Active Status
   {
     id: 'isActive',
-    header: 'table.status',
+    header: 'product.table.status',
     accessorKey: 'isActive',
     sortable: true,
     width: '100px',

@@ -44,6 +44,8 @@ import { CreateSalePage, EditSalePage } from './pages/sales/AddSales'
 import { PaymentFormPage } from './pages/payment/PaymentFormPage'
 import AddShopPage from './pages/shops/Addshop'
 import CustomerDetailPage from './pages/customer/page'
+import ProductDetailHeader from './components/products/ProductDetailsPage/ProductDetailHeader'
+import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetailsPage'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -115,7 +117,7 @@ function App() {
                 element={<AddProduct />}
               />
               <Route path="/products" element={<ProductTable />} />
-
+              <Route path='/products/:id' element={<ProductDetailsPage/>}/>
               <Route path="/purchases" element={<PurchaseTable />} />
               <Route path="/purchases/add" element={<AddPurchasePage />} />
               <Route

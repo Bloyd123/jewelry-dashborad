@@ -304,7 +304,7 @@ export const ProductTable: React.FC = () => {
         }}
         // Empty State Configuration
         emptyState={{
-          message: t('table.noProducts'),
+          message: t('product.table.noProducts'),
         }}
         // Style Configuration
         style={{
@@ -328,7 +328,7 @@ export const ProductTable: React.FC = () => {
         getRowId={row => row._id}
         // Test ID
         testId="product-table"
-        ariaLabel={t('table.ariaLabel')}
+        ariaLabel={t('product.table.ariaLabel')}
       />
     </div>
   )

@@ -206,7 +206,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
             className="relative"
           >
             <SlidersHorizontal className="mr-2 h-4 w-4" />
-            {t('filters.moreFilters')}
+            {t('product.filters.moreFilters')}
             {advancedFilterCount > 0 && (
               <span className="ml-2 rounded-full bg-accent px-1.5 py-0.5 text-xs text-white">
                 {advancedFilterCount}
@@ -226,7 +226,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
         <Drawer
           open={showAdvancedDrawer}
           onOpenChange={setShowAdvancedDrawer}
-          title={t('filters.advancedFilters')}
+          title={t('product.filters.advancedFilters')}
           side="right"
           size="md"
         >
@@ -266,10 +266,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
                 className="flex-1"
                 disabled={advancedFilterCount === 0}
               >
-                {t('filters.clearAdvanced')}
+                {t('product.filters.clearAdvanced')}
               </Button>
               <Button onClick={handleApplyAdvanced} className="flex-1">
-                {t('common.apply')}
+                {t('product.common.apply')}
               </Button>
             </div>
           </div>
@@ -405,10 +405,10 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
               className="flex-1"
               disabled={activeFilterCount === 0}
             >
-              {t('filters.clearAll')}
+              {t('product.filters.clearAll')}
             </Button>
             <Button onClick={handleApplyAdvanced} className="flex-1">
-              {t('common.apply')}
+              {t('product.common.apply')}
             </Button>
           </div>
         </div>
