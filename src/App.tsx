@@ -28,7 +28,7 @@ import { ShopListPage } from '@/pages/shops/ShopsListPage'
 
 import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
-import { CustomerDetailsPage } from './components/customer'
+import { AllCustomers } from './components/customer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
 // import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
 import { MetalRatesDashboardPage } from '@/pages/metal-rates/MetalRatesDashboard'
@@ -90,7 +90,7 @@ function App() {
                 path="/customers/edit/:customerId"
                 element={<AddCustomerPage />}
               />
-              <Route path="/customerdetail" element={<CustomerDetailsPage />} />
+              <Route path="/allcustomer" element={<AllCustomers />} />
               <Route path="/customer/:id" element={<CustomerDetailPage />} />
               <Route path="/shops" element={<ShopListPage />} />
               <Route path="/shops/add" element={<AddShopPage />} />

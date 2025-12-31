@@ -3,5 +3,5 @@
 // Export file for Customer Details Page
 // ============================================================================
 
-export { CustomerDetailsPage } from './CustomerDetailsPage'
-export type { CustomerDetailsPageProps } from './CustomerDetailsPage'
+export { AllCustomers } from './AllCustomers'
+export type { AllCustomersProps } from './AllCustomers'

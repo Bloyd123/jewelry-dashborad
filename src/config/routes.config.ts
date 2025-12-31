@@ -45,7 +45,8 @@ export const ROUTES = {
 
   //Customer
   addCustomer:'/customers/add',
-  detailcustomer: '/customerdetail',
+  Allcustomer: '/allcustomer',
+  customerdetail:'/customer/:id',
 
   // supplier
   supplierdetails:'/supplierdetails',

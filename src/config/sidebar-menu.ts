@@ -53,7 +53,10 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     icon: Users,
     items: [
       { title: t('sidebar.addCustomer'), url: ROUTES.addCustomer },
-      { title: t('sidebar.detailcustomer'), url: ROUTES.detailcustomer },
+      { title: t('sidebar.Allcustomer'), url: ROUTES.Allcustomer },
+      { title: t('sidebar.customerdetail'), url: ROUTES.customerdetail },
+
+
     ],
   },
   {

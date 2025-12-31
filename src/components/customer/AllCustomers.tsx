@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 // TYPES & INTERFACES
 // ============================================================================
 
-export interface CustomerDetailsPageProps {
+export interface AllCustomersProps {
   className?: string
 }
 
@@ -39,7 +39,7 @@ const MOCK_STATISTICS: CustomerStatistics = {
 // MAIN COMPONENT
 // ============================================================================
 
-export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
+export const AllCustomers: React.FC<AllCustomersProps> = ({
   className,
 }) => {
   const { t } = useTranslation()
@@ -161,4 +161,4 @@ export const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   )
 }
 
-CustomerDetailsPage.displayName = 'CustomerDetailsPage'
+AllCustomers.displayName = 'AllCustomers'
