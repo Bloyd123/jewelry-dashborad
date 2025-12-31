@@ -207,7 +207,7 @@ export default function CustomerFormDesktop({
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
-                {t('customer.customerType')}
+                {t('customer.customerTypetext')}
               </CardTitle>
             </CardHeader>
             <CardContent>

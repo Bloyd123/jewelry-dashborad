@@ -1,5 +1,29 @@
 {
   "customer": {
+    "title": "Customers",
+    "common": {
+      "na": "N/A",
+      "backToList": "Back to List",
+      "settings": "Settings",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "totalPurchases": "Total Purchases",
+    "loyaltyPoints": "Loyalty Points",
+    "orders": "Orders",
+    "customerType": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "vip": "VIP",
+      "regular": "Regular"
+    },
+    "customerCategory": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "platinum": "Platinum",
+      "mixed": "Mixed"
+    },
     "tier": {
       "platinum": "Platinum",
       "gold": "Gold",
@@ -206,9 +230,9 @@
     "selectSource": "Select source",
     "referredBy": "Referred By",
     "referredByPlaceholder": "Enter referrer customer ID",
-    "customerType": "Customer Type",
+    "customerTypetext": "Customer Type",
     "selectCustomerType": "Select type",
-    "customerCategory": "Customer Category",
+    "customerCategorytext": "Customer Category",
     "selectCategory": "Select category",
     "creditLimit": "Credit Limit",
     "notes": "Notes",
@@ -299,5 +323,108 @@
       "blacklisted": "Blacklisted"
     },
     "noOrders": "No orders yet"
+  },
+  "customerDetail": {
+    "tabs": {
+      "personal": "Personal Info",
+      "financial": "Financial",
+      "orders": "Orders",
+      "loyalty": "Loyalty",
+      "documents": "Documents",
+      "activity": "Activity"
+    }
+  },
+  "customerProfile": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "anniversaryDate": "Anniversary Date",
+    "customerType": "Customer Type",
+    "customerCategory": "Customer Category",
+    "source": "Source",
+    "primaryPhone": "Primary Phone",
+    "alternatePhone": "Alternate Phone",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "street": "Street Address",
+    "city": "City",
+    "state": "State",
+    "pincode": "Pincode",
+    "viewOnMap": "View on Map",
+    "aadharNumber": "Aadhar Number",
+    "panNumber": "PAN Number",
+    "gstNumber": "GST Number",
+    "preferredMetal": "Preferred Metal",
+    "communicationPreference": "Communication Preference",
+    "notes": "Notes",
+    "tags": "Tags",
+    "basicInformation": "Basic Information",
+    "contactInformation": "Contact Information",
+    "address": "Address",
+    "kycDocuments": "KYC Documents",
+    "preferences": "Preferences",
+    "notesAndTags": "Notes & Tags"
+  },
+  "customerFinancial": {
+    "totalPurchases": "Total Purchases",
+    "creditLimit": "Credit Limit",
+    "outstandingBalance": "Outstanding Balance",
+    "financialDetails": "Financial Details",
+    "lastPurchaseDate": "Last Purchase Date",
+    "customerType": "Customer Type",
+    "paymentTerms": "Payment Terms",
+    "wholesalePaymentInfo": "Wholesale customers have 30-day payment terms with credit limit facility."
+  },
+  "customerOrders": {
+    "orderNumber": "Order Number",
+    "date": "Date",
+    "items": "Items",
+    "amount": "Amount",
+    "status": "Status",
+    "status_completed": "Completed",
+    "status_pending": "Pending",
+    "status_cancelled": "Cancelled",
+    "totalOrders": "Total Orders",
+    "lastOrder": "Last Order",
+    "totalItems": "Total Items",
+    "orderHistory": "Order History"
+  },
+  "customerLoyalty": {
+    "currentPoints": "Current Points",
+    "totalEarned": "Total Earned",
+    "totalRedeemed": "Total Redeemed",
+    "membershipTier": "Membership Tier",
+    "activeStatus": "Active",
+    "pointsValue": "Points Value",
+    "pointsWorth": "Points Worth",
+    "conversionRate": "1 point = ₹1 discount on purchases",
+    "recentActivity": "Recent Activity",
+    "earned": "Earned",
+    "redeemed": "Redeemed"
+  },
+  "customerDocuments": {
+    "uploadDocuments": "Upload Documents",
+    "uploadDescription": "Upload customer KYC documents and images",
+    "upload": "Upload",
+    "kycDocuments": "KYC Documents",
+    "verified": "Verified",
+    "uploadedDocuments": "Uploaded Documents",
+    "uploaded": "Uploaded",
+    "view": "View",
+    "download": "Download"
+  },
+  "customerActivity": {
+    "activityLog": "Activity Log",
+    "totalActivities": "Total Activities",
+    "recentActivity": "Recent Activity",
+    "type_profile_update": "Profile Update",
+    "type_purchase": "Purchase",
+    "type_document_upload": "Document",
+    "type_status_change": "Status Change",
+    "accountInformation": "Account Information",
+    "memberSince": "Member Since",
+    "lastUpdated": "Last Updated",
+    "accountStatus": "Account Status"
   }
 }

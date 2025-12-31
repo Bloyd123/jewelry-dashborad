@@ -43,6 +43,7 @@ import { SalesTable } from './components/sales/SalesTable'
 import { CreateSalePage, EditSalePage } from './pages/sales/AddSales'
 import { PaymentFormPage } from './pages/payment/PaymentFormPage'
 import AddShopPage from './pages/shops/Addshop'
+import CustomerDetailPage from './pages/customer/page'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -90,6 +91,7 @@ function App() {
                 element={<AddCustomerPage />}
               />
               <Route path="/customerdetail" element={<CustomerDetailsPage />} />
+              <Route path="/customer/:id" element={<CustomerDetailPage />} />
               <Route path="/shops" element={<ShopListPage />} />
               <Route path="/shops/add" element={<AddShopPage />} />
               <Route path="/shops/:id" element={<ShopDetailsPage />} />

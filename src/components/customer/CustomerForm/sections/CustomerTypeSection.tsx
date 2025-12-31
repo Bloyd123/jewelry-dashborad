@@ -36,7 +36,7 @@ export const CustomerTypeSection = ({
     <div className="space-y-4">
       <FormSelect
         name="customerType"
-        label={t('customer.customerType')}
+        label={t('customer.customerTypetext')}
         value={data.customerType || ''}
         onChange={onChange}
         onBlur={onBlur}
@@ -48,7 +48,7 @@ export const CustomerTypeSection = ({
 
       <FormSelect
         name="customerCategory"
-        label={t('customer.customerCategory')}
+        label={t('customer.customerCategorytext')}
         value={data.customerCategory || ''}
         onChange={onChange}
         onBlur={onBlur}
