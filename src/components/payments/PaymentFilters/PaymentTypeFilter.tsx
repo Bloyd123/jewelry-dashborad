@@ -5,8 +5,18 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ShoppingCart, ShoppingBag, Award, DollarSign, RotateCcw, MoreHorizontal } from 'lucide-react'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  ShoppingCart,
+  ShoppingBag,
+  Award,
+  DollarSign,
+  RotateCcw,
+  MoreHorizontal,
+} from 'lucide-react'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
 
 export interface PaymentTypeFilterProps {
   value?: string

@@ -1,7 +1,6 @@
 {
   "payment": {
-    
-     "table": {
+    "table": {
       "paymentNumber": "Payment No.",
       "paymentDate": "Date & Time",
       "transactionType": "Type",
@@ -31,8 +30,8 @@
       "print": "Print"
     },
     "selected": "selected",
-       "filters": {
-        "advancedFilters":"Advanced Filters",
+    "filters": {
+      "advancedFilters": "Advanced Filters",
       "title": "Payment Filters",
       "moreFilters": "More Filters",
       "paymentType": "Payment Type",
@@ -228,7 +227,7 @@
   },
 
   "common": {
-    "status":"Status",
+    "status": "Status",
     "step": "Step",
     "of": "of",
     "next": "Next",

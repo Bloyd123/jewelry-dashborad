@@ -5,8 +5,19 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Banknote, CreditCard, Smartphone, FileText, Building2, Wallet, MoreHorizontal } from 'lucide-react'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  Banknote,
+  CreditCard,
+  Smartphone,
+  FileText,
+  Building2,
+  Wallet,
+  MoreHorizontal,
+} from 'lucide-react'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
 
 export interface PaymentModeFilterProps {
   value?: string

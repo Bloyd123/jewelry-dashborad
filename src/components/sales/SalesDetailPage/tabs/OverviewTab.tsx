@@ -170,7 +170,11 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
           <Label className="text-xs text-text-secondary">
             {t('sales.common.status')}
           </Label>
-          <Badge variant={getStatusVariant(sale.status)} size="sm" className="w-fit">
+          <Badge
+            variant={getStatusVariant(sale.status)}
+            size="sm"
+            className="w-fit"
+          >
             {t(`sales.status.${sale.status}`)}
           </Badge>
         </div>
@@ -244,7 +248,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     <div className="space-y-4 p-4">
       {/* Customer Header */}
       <div className="flex items-start gap-4 rounded-lg border border-border-secondary bg-bg-tertiary p-3">
-        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+        <div className="bg-accent/10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full">
           <User className="h-6 w-6 text-accent" />
         </div>
         <div className="flex-1">
@@ -252,7 +256,8 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
             {sale.customerDetails.customerName}
           </h4>
           <p className="text-xs text-text-secondary">
-            {t('sales.common.customerCode')}: {sale.customerDetails.customerCode}
+            {t('sales.common.customerCode')}:{' '}
+            {sale.customerDetails.customerCode}
           </p>
         </div>
       </div>
@@ -424,17 +429,18 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
         </div>
 
         {/* Old Gold Value */}
-        {sale.oldGoldExchange?.hasExchange && sale.financials.oldGoldValue > 0 && (
-          <div className="flex flex-col gap-1.5">
-            <Label className="flex items-center gap-2 text-xs text-text-secondary">
-              <Coins className="h-3 w-3" />
-              {t('sales.financials.oldGoldValue')}
-            </Label>
-            <p className="text-sm font-medium text-status-warning">
-              -{formatCurrency(sale.financials.oldGoldValue)}
-            </p>
-          </div>
-        )}
+        {sale.oldGoldExchange?.hasExchange &&
+          sale.financials.oldGoldValue > 0 && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="flex items-center gap-2 text-xs text-text-secondary">
+                <Coins className="h-3 w-3" />
+                {t('sales.financials.oldGoldValue')}
+              </Label>
+              <p className="text-sm font-medium text-status-warning">
+                -{formatCurrency(sale.financials.oldGoldValue)}
+              </p>
+            </div>
+          )}
 
         {/* Grand Total */}
         <div className="flex flex-col gap-1.5 md:col-span-2">
@@ -554,7 +560,10 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
   // ========================================================================
 
   const OldGoldExchangeSection = () => {
-    if (!sale.oldGoldExchange?.hasExchange || sale.oldGoldExchange.items.length === 0) {
+    if (
+      !sale.oldGoldExchange?.hasExchange ||
+      sale.oldGoldExchange.items.length === 0
+    ) {
       return (
         <div className="p-4">
           <p className="text-sm text-text-secondary">
@@ -614,7 +623,9 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
                   <Label className="text-xs text-text-tertiary">
                     {t('sales.oldGold.description')}
                   </Label>
-                  <p className="text-sm text-text-secondary">{item.description}</p>
+                  <p className="text-sm text-text-secondary">
+                    {item.description}
+                  </p>
                 </div>
               )}
             </div>
@@ -708,7 +719,9 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
                 <p className="font-mono text-sm font-medium text-text-primary">
                   {sale.delivery.courierDetails.trackingNumber}
                 </p>
-                <CopyButton text={sale.delivery.courierDetails.trackingNumber} />
+                <CopyButton
+                  text={sale.delivery.courierDetails.trackingNumber}
+                />
               </div>
             </div>
           </>

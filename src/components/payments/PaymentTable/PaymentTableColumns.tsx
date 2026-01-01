@@ -3,7 +3,13 @@
 // Payment Table Column Definitions
 // ============================================================================
 
-import { Copy, ArrowDownCircle, ArrowUpCircle, CheckCircle2, AlertCircle } from 'lucide-react'
+import {
+  Copy,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Payment } from './PaymentTable.types'

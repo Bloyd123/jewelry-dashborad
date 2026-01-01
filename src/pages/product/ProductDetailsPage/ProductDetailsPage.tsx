@@ -64,7 +64,7 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleRecalculatePrice = async () => {
     console.log('Recalculating price for product:', product._id)
-    
+
     // TODO: API call to recalculate price
     // try {
     //   const response = await fetch(
@@ -89,13 +89,13 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleUploadImage = async (files: FileList) => {
     console.log('Uploading images:', files)
-    
+
     // TODO: API call to upload images
     // const formData = new FormData()
     // Array.from(files).forEach((file) => {
     //   formData.append('images', file)
     // })
-    
+
     // try {
     //   const response = await fetch(
     //     `/api/v1/shops/${product.shopId}/products/${product._id}/images`,
@@ -114,7 +114,7 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleDeleteImage = async (imageUrl: string) => {
     console.log('Deleting image:', imageUrl)
-    
+
     // TODO: API call to delete image
     // try {
     //   const response = await fetch(
@@ -135,7 +135,7 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleSetPrimaryImage = async (imageUrl: string) => {
     console.log('Setting primary image:', imageUrl)
-    
+
     // TODO: API call to set primary image
     // try {
     //   const response = await fetch(
@@ -160,7 +160,7 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleLoadMoreHistory = async () => {
     console.log('Loading more history for product:', product._id)
-    
+
     // TODO: API call to load more history
     // try {
     //   const response = await fetch(

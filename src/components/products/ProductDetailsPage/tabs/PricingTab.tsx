@@ -57,8 +57,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
         ).toFixed(2)
       : '0.00'
 
-  const profitAmount =
-    product.pricing.sellingPrice - product.pricing.costPrice
+  const profitAmount = product.pricing.sellingPrice - product.pricing.costPrice
 
   if (loading) {
     return (
@@ -81,7 +80,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {/* Selling Price */}
-        <div className="rounded-lg border border-accent/20 bg-accent/5 p-4">
+        <div className="border-accent/20 bg-accent/5 rounded-lg border p-4">
           <p className="flex items-center gap-2 text-xs text-text-secondary">
             <DollarSign className="h-3 w-3" />
             {t('product.sellingPrice')}
@@ -103,7 +102,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
         </div>
 
         {/* Profit Margin */}
-        <div className="rounded-lg border border-status-success/20 bg-status-success/5 p-4">
+        <div className="border-status-success/20 bg-status-success/5 rounded-lg border p-4">
           <p className="flex items-center gap-2 text-xs text-text-secondary">
             <TrendingUp className="h-3 w-3" />
             {t('product.profitMargin')}
@@ -140,8 +139,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
             {t('product.metalRate')}
           </Label>
           <p className="text-xl font-semibold text-text-primary">
-            ₹{product.pricing.metalRate.toLocaleString()}/
-            {product.weight.unit}
+            ₹{product.pricing.metalRate.toLocaleString()}/{product.weight.unit}
           </p>
         </div>
 
@@ -157,7 +155,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
       </div>
 
       {/* Metal Value Calculation */}
-      <div className="rounded-lg border border-accent/20 bg-accent/5 p-4">
+      <div className="border-accent/20 bg-accent/5 rounded-lg border p-4">
         <div className="flex items-center justify-between">
           <div>
             <Label className="text-xs text-text-secondary">
@@ -240,7 +238,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
 
     return (
       <div className="space-y-4 p-4">
-        <div className="rounded-lg border border-accent/20 bg-accent/5 p-4">
+        <div className="border-accent/20 bg-accent/5 rounded-lg border p-4">
           <div className="flex items-center justify-between">
             <Label className="text-xs text-text-secondary">
               {t('product.totalStoneValue')}
@@ -342,7 +340,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
         </div>
 
         {product.pricing.discount.type !== 'none' && (
-          <div className="rounded-lg bg-status-success/10 p-3">
+          <div className="bg-status-success/10 rounded-lg p-3">
             <div className="flex items-center justify-between">
               <span className="text-sm text-status-success">
                 {t('product.discount')} (
@@ -359,7 +357,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
         )}
 
         {/* Final Selling Price */}
-        <div className="rounded-lg border border-accent/20 bg-accent/5 p-4">
+        <div className="border-accent/20 bg-accent/5 rounded-lg border p-4">
           <div className="flex items-center justify-between">
             <span className="text-lg font-semibold text-text-primary">
               {t('product.finalSellingPrice')}
@@ -401,7 +399,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
         </div>
 
         {/* Profit Amount */}
-        <div className="rounded-lg border border-status-success/20 bg-status-success/5 p-4">
+        <div className="border-status-success/20 bg-status-success/5 rounded-lg border p-4">
           <p className="text-xs text-text-secondary">
             {t('product.profitAmount')}
           </p>

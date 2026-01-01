@@ -172,10 +172,10 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
 
   // Calculate statistics
   const totalTransactions = transactions.length
-  const stockIn = transactions.filter((t) => t.transactionType === 'IN').length
-  const stockOut = transactions.filter((t) => t.transactionType === 'OUT').length
+  const stockIn = transactions.filter(t => t.transactionType === 'IN').length
+  const stockOut = transactions.filter(t => t.transactionType === 'OUT').length
   const adjustments = transactions.filter(
-    (t) => t.transactionType === 'ADJUSTMENT'
+    t => t.transactionType === 'ADJUSTMENT'
   ).length
 
   if (loading) {
@@ -208,7 +208,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
           </p>
         </div>
 
-        <div className="rounded-lg border border-status-success/20 bg-status-success/5 p-4">
+        <div className="border-status-success/20 bg-status-success/5 rounded-lg border p-4">
           <p className="flex items-center gap-2 text-xs text-text-secondary">
             <TrendingUp className="h-3 w-3" />
             {t('product.productDetail.history.stockIn')}
@@ -218,7 +218,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
           </p>
         </div>
 
-        <div className="rounded-lg border border-status-error/20 bg-status-error/5 p-4">
+        <div className="border-status-error/20 bg-status-error/5 rounded-lg border p-4">
           <p className="flex items-center gap-2 text-xs text-text-secondary">
             <TrendingDown className="h-3 w-3" />
             {t('product.productDetail.history.stockOut')}
@@ -264,12 +264,12 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
       <div className="space-y-4 p-4">
         {/* Timeline View */}
         <div className="space-y-4">
-          {transactions.map((transaction) => {
+          {transactions.map(transaction => {
             const Icon = getTransactionIcon(transaction.transactionType)
             return (
               <div
                 key={transaction._id}
-                className="relative border-l-2 border-border-secondary pl-8 pb-6 last:pb-0"
+                className="relative border-l-2 border-border-secondary pb-6 pl-8 last:pb-0"
               >
                 {/* Timeline Icon */}
                 <div className="absolute -left-3 top-0 rounded-full bg-bg-secondary p-1">
@@ -277,7 +277,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
                 </div>
 
                 {/* Transaction Card */}
-                <div className="rounded-lg border border-border-secondary bg-bg-primary p-4 transition-colors hover:border-accent/30">
+                <div className="hover:border-accent/30 rounded-lg border border-border-secondary bg-bg-primary p-4 transition-colors">
                   <div className="flex items-start justify-between gap-4">
                     {/* Left Content */}
                     <div className="flex-1 space-y-2">
@@ -397,7 +397,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
         </div>
 
         {product.soldDate && (
-          <div className="rounded-lg border border-accent/20 bg-accent/5 p-3 md:col-span-2">
+          <div className="border-accent/20 bg-accent/5 rounded-lg border p-3 md:col-span-2">
             <p className="text-xs text-text-secondary">
               {t('product.productDetail.history.soldOn')}
             </p>

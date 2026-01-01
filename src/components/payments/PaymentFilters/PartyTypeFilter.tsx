@@ -6,7 +6,10 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Users, Package, MoreHorizontal } from 'lucide-react'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
 
 export interface PartyTypeFilterProps {
   value?: string

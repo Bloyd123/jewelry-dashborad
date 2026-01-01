@@ -6,7 +6,10 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ArrowDownCircle, ArrowUpCircle } from 'lucide-react'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
 
 export interface TransactionTypeFilterProps {
   value?: string

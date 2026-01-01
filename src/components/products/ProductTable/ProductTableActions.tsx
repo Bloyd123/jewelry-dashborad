@@ -152,7 +152,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Eye className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('product.actions.viewDetails')}</span>
+            <span className="hidden sm:inline">
+              {t('product.actions.viewDetails')}
+            </span>
           </Button>
         )}
 
@@ -165,7 +167,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <Edit className="h-4 w-4" />
-            <span className="hidden sm:inline">{t('product.actions.edit')}</span>
+            <span className="hidden sm:inline">
+              {t('product.actions.edit')}
+            </span>
           </Button>
         )}
 
@@ -177,7 +181,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Package className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('product.actions.updateStatus')}</span>
+          <span className="hidden sm:inline">
+            {t('product.actions.updateStatus')}
+          </span>
         </Button>
 
         {/* Print Labels */}
@@ -188,7 +194,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Printer className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('product.actions.printLabels')}</span>
+          <span className="hidden sm:inline">
+            {t('product.actions.printLabels')}
+          </span>
         </Button>
 
         {/* Export */}
@@ -199,7 +207,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Download className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('product.actions.export')}</span>
+          <span className="hidden sm:inline">
+            {t('product.actions.export')}
+          </span>
         </Button>
 
         {/* Delete - Disabled if any sold/reserved */}
@@ -211,7 +221,9 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Trash2 className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('product.actions.delete')}</span>
+          <span className="hidden sm:inline">
+            {t('product.actions.delete')}
+          </span>
         </Button>
 
         {/* More Actions Dropdown */}
@@ -223,13 +235,19 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem>{t('product.actions.bulkEdit')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('product.actions.changeCategory')}</DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('product.actions.changeCategory')}
+            </DropdownMenuItem>
             <DropdownMenuItem>
               {t('product.actions.recalculatePrices')}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>{t('product.actions.exportPDF')}</DropdownMenuItem>
-            <DropdownMenuItem>{t('product.actions.exportExcel')}</DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('product.actions.exportPDF')}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              {t('product.actions.exportExcel')}
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-status-error">
               {t('product.actions.bulkDelete')}

@@ -119,7 +119,7 @@ function App() {
                 element={<AddProduct />}
               />
               <Route path="/products" element={<ProductTable />} />
-              <Route path='/products/:id' element={<ProductDetailsPage/>}/>
+              <Route path="/products/:id" element={<ProductDetailsPage />} />
               <Route path="/purchases" element={<PurchaseTable />} />
               <Route path="/purchases/add" element={<AddPurchasePage />} />
               <Route
@@ -129,9 +129,9 @@ function App() {
               <Route path="/sales" element={<SalesTable />} />
               <Route path="/sales/add" element={<CreateSalePage />} />
               <Route path=":saleId/edit" element={<EditSalePage />} />
-              <Route path='/sales/:id' element={<SalesDetailsPage/>}/>
+              <Route path="/sales/:id" element={<SalesDetailsPage />} />
               <Route path="/payments/add" element={<PaymentFormPage />} />
-              <Route path='/allpayments' element={<PaymentTable/>}/>
+              <Route path="/allpayments" element={<PaymentTable />} />
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

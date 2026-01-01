@@ -194,10 +194,7 @@ export const MobileProductDetailHeader: React.FC<
 
                 {/* Badges - Mobile Compact */}
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <Badge
-                    variant={getStatusVariant(product.status)}
-                    size="sm"
-                  >
+                  <Badge variant={getStatusVariant(product.status)} size="sm">
                     {t(`product.status.${product.status}`)}
                   </Badge>
 

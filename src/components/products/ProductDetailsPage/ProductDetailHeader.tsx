@@ -25,7 +25,9 @@ interface ProductDetailHeaderProps {
 // RESPONSIVE PRODUCT DETAIL HEADER COMPONENT
 // ============================================================================
 
-export const ProductDetailHeader: React.FC<ProductDetailHeaderProps> = props => {
+export const ProductDetailHeader: React.FC<
+  ProductDetailHeaderProps
+> = props => {
   const isMobile = useMediaQuery('(max-width: 1024px)')
 
   return isMobile ? (

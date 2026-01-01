@@ -223,7 +223,9 @@ export default function ProductFormDesktop({
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                {mode === 'create' ? t('product.common.save') : t('product.common.update')}
+                {mode === 'create'
+                  ? t('product.common.save')
+                  : t('product.common.update')}
               </>
             )}
           </Button>

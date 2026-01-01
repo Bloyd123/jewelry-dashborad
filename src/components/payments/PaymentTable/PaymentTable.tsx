@@ -10,7 +10,10 @@ import { DataTable } from '@/components/ui/data-display/DataTable'
 import { paymentTableColumns } from './PaymentTableColumns'
 import { getPaymentRowActions, BulkActionsBar } from './PaymentTableActions'
 import { MOCK_PAYMENTS, type Payment } from './PaymentTable.types'
-import { PaymentFilters, PaymentFilterState } from '@/components/payments/PaymentFilters'
+import {
+  PaymentFilters,
+  PaymentFilterState,
+} from '@/components/payments/PaymentFilters'
 
 // ============================================================================
 // MAIN COMPONENT

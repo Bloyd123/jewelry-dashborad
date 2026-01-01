@@ -6,7 +6,10 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle2, AlertCircle } from 'lucide-react'
-import { TypeFilter, FilterOption } from '@/components/ui/filters/TypeFilter/TypeFilter'
+import {
+  TypeFilter,
+  FilterOption,
+} from '@/components/ui/filters/TypeFilter/TypeFilter'
 
 export interface ReconciliationFilterProps {
   value?: string

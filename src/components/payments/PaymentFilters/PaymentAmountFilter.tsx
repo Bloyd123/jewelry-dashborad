@@ -5,7 +5,10 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { PriceRangeFilter, PriceRange } from '@/components/ui/filters/PriceRangeFilter/PriceRangeFilter'
+import {
+  PriceRangeFilter,
+  PriceRange,
+} from '@/components/ui/filters/PriceRangeFilter/PriceRangeFilter'
 
 export interface PaymentAmountFilterProps {
   value?: PriceRange

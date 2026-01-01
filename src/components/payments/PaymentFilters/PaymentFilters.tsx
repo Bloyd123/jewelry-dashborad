@@ -75,7 +75,8 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
     return count
   }, [filters])
 
-  const hasActiveFilters = activeFilterCount > 0 || (filters.search?.length ?? 0) > 0
+  const hasActiveFilters =
+    activeFilterCount > 0 || (filters.search?.length ?? 0) > 0
 
   // Count advanced filters only (for "More Filters" badge)
   const advancedFilterCount = React.useMemo(() => {

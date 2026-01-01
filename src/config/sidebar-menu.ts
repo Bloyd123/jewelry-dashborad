@@ -55,8 +55,6 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       { title: t('sidebar.addCustomer'), url: ROUTES.addCustomer },
       { title: t('sidebar.Allcustomer'), url: ROUTES.Allcustomer },
       { title: t('sidebar.customerdetail'), url: ROUTES.customerdetail },
-
-
     ],
   },
   {
@@ -84,9 +82,6 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       { title: t('sidebar.allProducts'), url: ROUTES.products },
       { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
       { title: t('sidebar.productdetail'), url: ROUTES.productdetail },
-
-
-      
     ],
   },
   {
@@ -115,7 +110,6 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     items: [
       { title: t('sidebar.addPayment'), url: ROUTES.addpayments },
       { title: t('sidebar.allpayments'), url: ROUTES.allpayments },
-      
     ],
   },
 

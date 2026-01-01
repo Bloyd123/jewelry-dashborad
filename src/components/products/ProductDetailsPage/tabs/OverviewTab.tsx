@@ -454,9 +454,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     if (!product.tags || product.tags.length === 0) {
       return (
         <div className="p-4">
-          <p className="text-sm text-text-secondary">
-            {t('product.noTags')}
-          </p>
+          <p className="text-sm text-text-secondary">{t('product.noTags')}</p>
         </div>
       )
     }

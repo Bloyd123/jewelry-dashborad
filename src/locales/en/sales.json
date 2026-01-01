@@ -1,8 +1,8 @@
 {
   "sales": {
-        "sections": {
+    "sections": {
       "saleInformation": "Sale Information",
-      "customerInformation": "Customer Information", 
+      "customerInformation": "Customer Information",
       "financialSummary": "Financial Summary",
       "paymentSummary": "Payment Summary",
       "oldGoldExchange": "Old Gold Exchange",
@@ -20,7 +20,7 @@
       "grandTotal": "Grand Total",
       "netPayable": "Net Payable"
     },
-       "title": "Sales",
+    "title": "Sales",
     "common": {
       "backToList": "Back to Sales",
       "customer": "Customer",
@@ -244,7 +244,7 @@
       "allSalesPersons": "All Sales Persons",
       "searchCustomer": "Search customer..."
     },
-    "status": {  
+    "status": {
       "draft": "Draft",
       "pending": "Pending",
       "confirmed": "Confirmed",

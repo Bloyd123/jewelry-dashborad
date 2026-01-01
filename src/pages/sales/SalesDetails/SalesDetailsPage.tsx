@@ -5,13 +5,11 @@
 
 import React, { useState } from 'react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import 
-  OverviewTab
-//   ItemsTab,
+import OverviewTab from //   ItemsTab,
 //   PaymentsTab,
 //   DocumentsTab,
-//   HistoryTab, 
- from '@/components/sales/SalesDetailPage/tabs/OverviewTab'
+//   HistoryTab,
+'@/components/sales/SalesDetailPage/tabs/OverviewTab'
 import { dummySales } from '../data'
 
 // ============================================================================

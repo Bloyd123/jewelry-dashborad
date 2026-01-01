@@ -62,7 +62,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
   }
 
   const totalImages = product.images?.length || 0
-  const hasPrimaryImage = product.images?.some((img) => img.isPrimary) || false
+  const hasPrimaryImage = product.images?.some(img => img.isPrimary) || false
 
   if (loading) {
     return (
@@ -102,10 +102,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
             {t('product.productDetail.images.primaryImage')}
           </p>
           <div className="mt-2">
-            <Badge
-              variant={hasPrimaryImage ? 'success' : 'warning'}
-              size="md"
-            >
+            <Badge variant={hasPrimaryImage ? 'success' : 'warning'} size="md">
               {hasPrimaryImage
                 ? t('product.common.yes')
                 : t('product.common.no')}
@@ -199,7 +196,8 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
         {/* View Mode Toggle */}
         <div className="flex items-center justify-between border-b border-border-secondary pb-3">
           <Label className="text-xs text-text-secondary">
-            {t('product.productDetail.images.allImages')} ({product.images.length})
+            {t('product.productDetail.images.allImages')} (
+            {product.images.length})
           </Label>
           <Button
             variant="outline"
@@ -230,7 +228,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                 className={`group relative cursor-pointer overflow-hidden rounded-lg border-2 transition-all ${
                   selectedImage === image.url
                     ? 'border-accent'
-                    : 'border-border-primary hover:border-accent/50'
+                    : 'hover:border-accent/50 border-border-primary'
                 }`}
                 onClick={() => setSelectedImage(image.url)}
               >
@@ -258,7 +256,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                       variant="secondary"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         onSetPrimaryImage(image.url)
                       }}
@@ -271,7 +269,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                       variant="destructive"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         if (
                           confirm(
@@ -306,8 +304,8 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                 key={index}
                 className={`flex items-center gap-3 rounded-lg border p-3 transition-all ${
                   selectedImage === image.url
-                    ? 'border-accent bg-accent/10'
-                    : 'border-border-primary hover:border-accent/50'
+                    ? 'bg-accent/10 border-accent'
+                    : 'hover:border-accent/50 border-border-primary'
                 }`}
                 onClick={() => setSelectedImage(image.url)}
               >
@@ -344,7 +342,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         onSetPrimaryImage(image.url)
                       }}
@@ -357,7 +355,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
                       variant="ghost"
                       size="icon"
                       className="h-8 w-8 text-status-error"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         if (
                           confirm(
@@ -397,7 +395,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     }
 
     const selectedImageData = product.images?.find(
-      (img) => img.url === selectedImage
+      img => img.url === selectedImage
     )
 
     return (
@@ -408,7 +406,11 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
             {t('product.productDetail.images.preview')}
           </Badge>
           {selectedImage === product.primaryImage && (
-            <Badge variant="success" size="sm" icon={<Star className="h-3 w-3" />}>
+            <Badge
+              variant="success"
+              size="sm"
+              icon={<Star className="h-3 w-3" />}
+            >
               {t('product.productDetail.images.primary')}
             </Badge>
           )}
@@ -437,7 +439,6 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
       </div>
     )
   }
-
 
   // ========================================================================
   // RENDER MAIN ACCORDION

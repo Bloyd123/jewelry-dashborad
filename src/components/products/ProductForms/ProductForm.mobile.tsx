@@ -155,7 +155,8 @@ export default function ProductFormMobile({
         {/* Step Indicator */}
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">
-            {t('product.common.step')} {currentStep + 1} {t('product.common.of')} {STEPS.length}
+            {t('product.common.step')} {currentStep + 1}{' '}
+            {t('product.common.of')} {STEPS.length}
           </span>
           <span className="text-sm font-medium text-accent">
             {STEPS[currentStep].label}
@@ -232,7 +233,9 @@ export default function ProductFormMobile({
               ) : (
                 <>
                   <Save className="mr-2 h-4 w-4" />
-                  {mode === 'create' ? t('product.common.save') : t('product.common.update')}
+                  {mode === 'create'
+                    ? t('product.common.save')
+                    : t('product.common.update')}
                 </>
               )}
             </Button>

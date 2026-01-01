@@ -58,8 +58,7 @@ export const getPaymentRowActions = (
       icon: <Edit className="h-4 w-4" />,
       onClick: onEdit,
       variant: 'default',
-      hidden: row => 
-        row.status !== 'pending' || userRole === 'staff',
+      hidden: row => row.status !== 'pending' || userRole === 'staff',
     },
     {
       label: 'payment.actions.viewReceipt',
@@ -73,18 +72,22 @@ export const getPaymentRowActions = (
       icon: <Send className="h-4 w-4" />,
       onClick: onSendReceipt,
       variant: 'default',
-      hidden: row => 
-        !row.receipt.receiptGenerated || 
-        !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(userRole),
+      hidden: row =>
+        !row.receipt.receiptGenerated ||
+        !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(
+          userRole
+        ),
     },
     {
       label: 'payment.actions.markCompleted',
       icon: <CheckCircle2 className="h-4 w-4" />,
       onClick: onMarkCompleted,
       variant: 'default',
-      hidden: row => 
-        row.status !== 'pending' || 
-        !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(userRole),
+      hidden: row =>
+        row.status !== 'pending' ||
+        !['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(
+          userRole
+        ),
     },
     {
       label: 'payment.actions.reconcile',
@@ -92,7 +95,7 @@ export const getPaymentRowActions = (
       onClick: onReconcile,
       variant: 'default',
       hidden: row =>
-        row.status !== 'completed' || 
+        row.status !== 'completed' ||
         row.reconciliation.isReconciled ||
         !['super_admin', 'org_admin', 'shop_admin'].includes(userRole),
     },
@@ -112,8 +115,9 @@ export const getPaymentRowActions = (
       icon: <XCircle className="h-4 w-4" />,
       onClick: onCancel,
       variant: 'destructive',
-      hidden: row => 
-        (row.status === 'cancelled' || row.status === 'completed') ||
+      hidden: row =>
+        row.status === 'cancelled' ||
+        row.status === 'completed' ||
         !['super_admin', 'org_admin', 'shop_admin'].includes(userRole),
     },
   ]
@@ -172,30 +176,37 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   const { t } = useTranslation()
 
   // Calculate what actions are available
-  const canEdit = 
-    selectedCount === 1 && 
+  const canEdit =
+    selectedCount === 1 &&
     selectedPayments.every(p => p.status === 'pending') &&
     userRole !== 'staff'
-  
+
   const hasReceipts = selectedPayments.some(p => p.receipt.receiptGenerated)
-  
-  const canMarkCompleted = 
+
+  const canMarkCompleted =
     selectedPayments.every(p => p.status === 'pending') &&
     ['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(userRole)
-  
-  const canReconcile = 
-    selectedPayments.some(p => p.status === 'completed' && !p.reconciliation.isReconciled) &&
-    ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
-  
-  const canCancel = 
-    selectedPayments.some(p => p.status !== 'cancelled' && p.status !== 'completed') &&
-    ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
-  
-  const canDelete = 
+
+  const canReconcile =
+    selectedPayments.some(
+      p => p.status === 'completed' && !p.reconciliation.isReconciled
+    ) && ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
+
+  const canCancel =
+    selectedPayments.some(
+      p => p.status !== 'cancelled' && p.status !== 'completed'
+    ) && ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
+
+  const canDelete =
     selectedPayments.some(p => p.status === 'pending') &&
     ['super_admin', 'org_admin'].includes(userRole)
 
-  const canManage = ['super_admin', 'org_admin', 'shop_admin', 'manager'].includes(userRole)
+  const canManage = [
+    'super_admin',
+    'org_admin',
+    'shop_admin',
+    'manager',
+  ].includes(userRole)
 
   return (
     <div className="bg-accent/10 flex flex-col items-start justify-between gap-3 border-b border-border-primary px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
@@ -327,9 +338,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
         >
           <Printer className="h-4 w-4" />
-          <span className="hidden sm:inline">
-            {t('payment.actions.print')}
-          </span>
+          <span className="hidden sm:inline">{t('payment.actions.print')}</span>
         </Button>
 
         {/* Cancel */}
@@ -392,7 +401,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
               </DropdownMenuItem>
             )}
             {canCancel && (
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={onCancel}
                 className="text-status-warning"
               >
@@ -403,7 +412,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             {canDelete && (
               <>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   onClick={onDelete}
                   className="text-status-error"
                 >

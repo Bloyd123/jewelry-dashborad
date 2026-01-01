@@ -5,7 +5,10 @@
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { StatusFilter, StatusOption } from '@/components/ui/filters/StatusFilter/StatusFilter'
+import {
+  StatusFilter,
+  StatusOption,
+} from '@/components/ui/filters/StatusFilter/StatusFilter'
 
 export interface PaymentStatusFilterProps {
   value?: string

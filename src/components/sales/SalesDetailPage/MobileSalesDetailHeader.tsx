@@ -39,7 +39,9 @@ interface MobileSalesDetailHeaderProps {
 // MOBILE SALES DETAIL HEADER COMPONENT
 // ============================================================================
 
-export const MobileSalesDetailHeader: React.FC<MobileSalesDetailHeaderProps> = ({
+export const MobileSalesDetailHeader: React.FC<
+  MobileSalesDetailHeaderProps
+> = ({
   saleId,
   activeTab = 'overview',
   onTabChange,
@@ -187,7 +189,7 @@ export const MobileSalesDetailHeader: React.FC<MobileSalesDetailHeaderProps> = (
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               {/* Sale Icon */}
-              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-accent/10">
+              <div className="bg-accent/10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
                 <Receipt className="h-6 w-6 text-accent" />
               </div>
 
@@ -204,15 +206,14 @@ export const MobileSalesDetailHeader: React.FC<MobileSalesDetailHeaderProps> = (
 
                 {/* Badges - Mobile Compact */}
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <Badge
-                    variant={getStatusVariant(sale.status)}
-                    size="sm"
-                  >
+                  <Badge variant={getStatusVariant(sale.status)} size="sm">
                     {t(`sales.status.${sale.status}`)}
                   </Badge>
 
                   <Badge
-                    variant={getPaymentStatusVariant(sale.payment.paymentStatus)}
+                    variant={getPaymentStatusVariant(
+                      sale.payment.paymentStatus
+                    )}
                     size="sm"
                   >
                     {t(`sales.paymentStatus.${sale.payment.paymentStatus}`)}
@@ -270,7 +271,9 @@ export const MobileSalesDetailHeader: React.FC<MobileSalesDetailHeaderProps> = (
                     {t('sales.common.salesPerson')}:
                   </span>
                   <span className="font-medium text-text-secondary">
-                    {typeof sale.salesPerson === 'string' ? sale.salesPerson : 'N/A'}
+                    {typeof sale.salesPerson === 'string'
+                      ? sale.salesPerson
+                      : 'N/A'}
                   </span>
                 </div>
               )}

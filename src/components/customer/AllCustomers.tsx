@@ -39,9 +39,7 @@ const MOCK_STATISTICS: CustomerStatistics = {
 // MAIN COMPONENT
 // ============================================================================
 
-export const AllCustomers: React.FC<AllCustomersProps> = ({
-  className,
-}) => {
+export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   const { t } = useTranslation()
 
   const navigate = useNavigate()

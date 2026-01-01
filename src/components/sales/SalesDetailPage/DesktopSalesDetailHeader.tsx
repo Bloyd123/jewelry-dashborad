@@ -46,7 +46,9 @@ interface DesktopSalesDetailHeaderProps {
 // DESKTOP SALES DETAIL HEADER COMPONENT
 // ============================================================================
 
-export const DesktopSalesDetailHeader: React.FC<DesktopSalesDetailHeaderProps> = ({
+export const DesktopSalesDetailHeader: React.FC<
+  DesktopSalesDetailHeaderProps
+> = ({
   saleId,
   activeTab = 'overview',
   onTabChange,
@@ -231,7 +233,7 @@ export const DesktopSalesDetailHeader: React.FC<DesktopSalesDetailHeaderProps> =
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
               {/* Sale Icon */}
-              <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-accent/10">
+              <div className="bg-accent/10 flex h-16 w-16 items-center justify-center rounded-lg">
                 <Receipt className="h-8 w-8 text-accent" />
               </div>
 
@@ -248,16 +250,15 @@ export const DesktopSalesDetailHeader: React.FC<DesktopSalesDetailHeaderProps> =
 
                 <div className="flex flex-wrap items-center gap-2">
                   {/* Status */}
-                  <Badge
-                    variant={getStatusVariant(sale.status)}
-                    size="sm"
-                  >
+                  <Badge variant={getStatusVariant(sale.status)} size="sm">
                     {t(`sales.status.${sale.status}`)}
                   </Badge>
 
                   {/* Payment Status */}
                   <Badge
-                    variant={getPaymentStatusVariant(sale.payment.paymentStatus)}
+                    variant={getPaymentStatusVariant(
+                      sale.payment.paymentStatus
+                    )}
                     size="sm"
                   >
                     {t(`sales.paymentStatus.${sale.payment.paymentStatus}`)}
@@ -325,7 +326,9 @@ export const DesktopSalesDetailHeader: React.FC<DesktopSalesDetailHeaderProps> =
                         {t('sales.common.salesPerson')}:
                       </span>
                       <span>
-                        {typeof sale.salesPerson === 'string' ? sale.salesPerson : 'N/A'}
+                        {typeof sale.salesPerson === 'string'
+                          ? sale.salesPerson
+                          : 'N/A'}
                       </span>
                     </div>
                   )}
@@ -362,16 +365,17 @@ export const DesktopSalesDetailHeader: React.FC<DesktopSalesDetailHeaderProps> =
                     </span>
                   </div>
                 )}
-                {sale.oldGoldExchange?.hasExchange && sale.financials.oldGoldValue > 0 && (
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-text-tertiary">
-                      {t('sales.common.oldGold')}:
-                    </span>
-                    <span className="font-medium text-status-warning">
-                      -{formatCurrency(sale.financials.oldGoldValue)}
-                    </span>
-                  </div>
-                )}
+                {sale.oldGoldExchange?.hasExchange &&
+                  sale.financials.oldGoldValue > 0 && (
+                    <div className="flex items-center justify-between gap-8">
+                      <span className="text-text-tertiary">
+                        {t('sales.common.oldGold')}:
+                      </span>
+                      <span className="font-medium text-status-warning">
+                        -{formatCurrency(sale.financials.oldGoldValue)}
+                      </span>
+                    </div>
+                  )}
                 <Separator />
                 <div className="flex items-center justify-between gap-8">
                   <span className="font-medium text-text-primary">
