@@ -41,7 +41,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 1. Invoice Number
   {
     id: 'invoiceNumber',
-    header: 'table.invoiceNumber',
+    header: 'sales.table.invoiceNumber',
     accessorKey: 'invoiceNumber',
     sortable: true,
     width: '150px',
@@ -69,7 +69,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 2. Customer Details
   {
     id: 'customer',
-    header: 'table.customer',
+    header: 'sales.table.customer',
     accessorKey: 'customerDetails.customerName',
     sortable: true,
     width: '200px',
@@ -93,7 +93,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 3. Sale Date
   {
     id: 'saleDate',
-    header: 'table.saleDate',
+    header: 'sales.table.saleDate',
     accessorKey: 'saleDate',
     sortable: true,
     width: '120px',
@@ -107,7 +107,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 4. Sale Type
   {
     id: 'saleType',
-    header: 'table.saleType',
+    header: 'sales.table.saleType',
     accessorKey: 'saleType',
     sortable: true,
     width: '120px',
@@ -132,7 +132,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 5. Items Count
   {
     id: 'itemsCount',
-    header: 'table.items',
+    header: 'sales.table.items',
     sortable: false,
     align: 'center',
     width: '80px',
@@ -149,7 +149,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 6. Total Amount
   {
     id: 'grandTotal',
-    header: 'table.totalAmount',
+    header: 'sales.table.totalAmount',
     accessorKey: 'financials.grandTotal',
     sortable: true,
     align: 'right',
@@ -171,7 +171,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 7. Payment Status
   {
     id: 'paymentStatus',
-    header: 'table.paymentStatus',
+    header: 'sales.table.paymentStatus',
     accessorKey: 'payment.paymentStatus',
     sortable: true,
     align: 'center',
@@ -206,7 +206,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 8. Sale Status
   {
     id: 'status',
-    header: 'table.status',
+    header: 'sales.table.status',
     accessorKey: 'status',
     sortable: true,
     width: '120px',
@@ -232,7 +232,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 9. Payment Mode
   {
     id: 'paymentMode',
-    header: 'table.paymentMode',
+    header: 'sales.table.paymentMode',
     accessorKey: 'payment.paymentMode',
     sortable: true,
     width: '110px',
@@ -246,7 +246,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 10. Paid Amount
   {
     id: 'paidAmount',
-    header: 'table.paid',
+    header: 'sales.table.paid',
     accessorKey: 'payment.paidAmount',
     sortable: true,
     align: 'right',
@@ -268,7 +268,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 11. Old Gold Exchange
   {
     id: 'oldGold',
-    header: 'table.oldGold',
+    header: 'sales.table.oldGold',
     sortable: false,
     width: '110px',
     cell: ({ row }) => {
@@ -289,7 +289,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 12. Delivery Status
   {
     id: 'delivery',
-    header: 'table.delivery',
+    header: 'sales.table.delivery',
     sortable: false,
     width: '120px',
     cell: ({ row }) => {
@@ -323,7 +323,7 @@ export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 13. GST Amount
   {
     id: 'gstAmount',
-    header: 'table.gst',
+    header: 'sales.table.gst',
     accessorKey: 'financials.totalGST',
     sortable: true,
     align: 'right',

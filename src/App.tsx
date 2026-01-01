@@ -47,6 +47,7 @@ import CustomerDetailPage from './pages/customer/page'
 import ProductDetailHeader from './components/products/ProductDetailsPage/ProductDetailHeader'
 import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetailsPage'
 import { PaymentTable } from './components/payments/PaymentTable'
+import SalesDetailsPage from './pages/sales/SalesDetails/SalesDetailsPage'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -128,6 +129,7 @@ function App() {
               <Route path="/sales" element={<SalesTable />} />
               <Route path="/sales/add" element={<CreateSalePage />} />
               <Route path=":saleId/edit" element={<EditSalePage />} />
+              <Route path='/sales/:id' element={<SalesDetailsPage/>}/>
               <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route path='/allpayments' element={<PaymentTable/>}/>
               <Route

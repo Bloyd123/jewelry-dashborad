@@ -28,6 +28,8 @@ export const ROUTES = {
   // Sales
   sales: '/sales',
   addSale: '/sales/add',
+  detailsales:'/sales/:id',
+
   addcustomers: '/customers/add',
   customers: '/customers',
   salesReports: '/sales/reports',

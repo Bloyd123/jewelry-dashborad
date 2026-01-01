@@ -1,5 +1,65 @@
 {
   "sales": {
+        "sections": {
+      "saleInformation": "Sale Information",
+      "customerInformation": "Customer Information", 
+      "financialSummary": "Financial Summary",
+      "paymentSummary": "Payment Summary",
+      "oldGoldExchange": "Old Gold Exchange",
+      "deliveryInformation": "Delivery Information"
+    },
+    "financials": {
+      "subtotal": "Subtotal",
+      "metalValue": "Metal Value",
+      "stoneValue": "Stone Value",
+      "makingCharges": "Making Charges",
+      "otherCharges": "Other Charges",
+      "discount": "Discount",
+      "gst": "GST",
+      "oldGoldValue": "Old Gold Value",
+      "grandTotal": "Grand Total",
+      "netPayable": "Net Payable"
+    },
+       "title": "Sales",
+    "common": {
+      "backToList": "Back to Sales",
+      "customer": "Customer",
+      "totalAmount": "Total Amount",
+      "dueAmount": "Due Amount",
+      "salesPerson": "Sales Person",
+      "items": "Items",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "oldGold": "Old Gold",
+      "netPayable": "Net Payable",
+      "print": "Print",
+      "send": "Send",
+      "edit": "Edit",
+      "delete": "Delete",
+      "oldGoldExchange": "Old Gold Exchange",
+      "approved": "Approved"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "items": "Items",
+      "payments": "Payments",
+      "documents": "Documents",
+      "history": "History"
+    },
+    "paymentStatus": {
+      "paid": "Paid",
+      "partial": "Partial",
+      "unpaid": "Unpaid",
+      "overdue": "Overdue"
+    },
+    "saleType": {
+      "retail": "Retail",
+      "wholesale": "Wholesale",
+      "exchange": "Exchange",
+      "order_fulfillment": "Order Fulfillment",
+      "repair_billing": "Repair Billing",
+      "estimate": "Estimate"
+    },
     "customer": {
       "customerCode": "Customer Code",
       "phone": "Phone",
@@ -11,12 +71,12 @@
     "createSaleDescription": "Fill in the details below to create a new sale",
     "editSaleDescription": "Update the sale information below",
 
-    "customer": "Customer",
+    "customertext": "Customer",
     "selectCustomer": "Select Customer",
     "customerDetails": "Customer Details",
     "customerInformation": "Customer Information",
 
-    "saleType": "Sale Type",
+    "saleTypetext": "Sale Type",
     "selectSaleType": "Select Sale Type",
     "retail": "Retail",
     "wholesale": "Wholesale",
@@ -82,7 +142,7 @@
     "dueDate": "Due Date",
     "selectDueDate": "Select due date",
 
-    "paymentStatus": "Payment Status",
+    "paymentStatustext": "Payment Status",
     "paid": "Paid",
     "partial": "Partially Paid",
     "unpaid": "Unpaid",
@@ -117,7 +177,6 @@
     "pressEnterToAdd": "Press Enter to add tag",
     "noTagsAdded": "No tags added yet",
     "commonTags": "Common Tags",
-    "title": "Sales",
     "subtitle": "Manage sales and invoices",
     "table": {
       "invoiceNumber": "Invoice Number",
@@ -185,7 +244,7 @@
       "allSalesPersons": "All Sales Persons",
       "searchCustomer": "Search customer..."
     },
-    "status": {
+    "status": {  
       "draft": "Draft",
       "pending": "Pending",
       "confirmed": "Confirmed",

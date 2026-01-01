@@ -148,7 +148,7 @@ export const PaymentSection = ({
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-4">
         <div className="flex items-center justify-between">
           <span className="text-text-secondary">
-            {t('sales.paymentStatus')}
+            {t('sales.paymentStatustext')}
           </span>
           <span
             className={`rounded-full px-3 py-1 text-sm font-medium ${

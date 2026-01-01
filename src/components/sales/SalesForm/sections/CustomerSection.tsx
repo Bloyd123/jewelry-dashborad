@@ -37,7 +37,7 @@ export const CustomerSection = ({
         <div className="flex-1">
           <FormSelect
             name="customerId"
-            label={t('sales.customer')}
+            label={t('sales.customertext')}
             value={data.customerId || ''}
             onChange={onChange}
             onBlur={onBlur}
@@ -115,7 +115,7 @@ export const CustomerSection = ({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormSelect
           name="saleType"
-          label={t('sales.saleType')}
+          label={t('sales.saleTypetext')}
           value={data.saleType || 'retail'}
           onChange={onChange}
           onBlur={onBlur}
