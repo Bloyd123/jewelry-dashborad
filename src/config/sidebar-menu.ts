@@ -83,6 +83,10 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     items: [
       { title: t('sidebar.allProducts'), url: ROUTES.products },
       { title: t('sidebar.addProduct'), url: ROUTES.addProduct },
+      { title: t('sidebar.productdetail'), url: ROUTES.productdetail },
+
+
+      
     ],
   },
   {
@@ -110,7 +114,8 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     icon: CreditCard,
     items: [
       { title: t('sidebar.addPayment'), url: ROUTES.addpayments },
-      { title: t('sidebar.paymentHistory'), url: ROUTES.paymentHistory },
+      { title: t('sidebar.allpayments'), url: ROUTES.allpayments },
+      
     ],
   },
 

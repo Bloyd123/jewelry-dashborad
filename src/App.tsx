@@ -46,6 +46,7 @@ import AddShopPage from './pages/shops/Addshop'
 import CustomerDetailPage from './pages/customer/page'
 import ProductDetailHeader from './components/products/ProductDetailsPage/ProductDetailHeader'
 import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetailsPage'
+import { PaymentTable } from './components/payments/PaymentTable'
 // ============================================================================
 // APP COMPONENT
 // ============================================================================
@@ -128,6 +129,7 @@ function App() {
               <Route path="/sales/add" element={<CreateSalePage />} />
               <Route path=":saleId/edit" element={<EditSalePage />} />
               <Route path="/payments/add" element={<PaymentFormPage />} />
+              <Route path='/allpayments' element={<PaymentTable/>}/>
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

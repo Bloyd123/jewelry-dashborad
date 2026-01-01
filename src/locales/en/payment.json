@@ -1,5 +1,92 @@
 {
   "payment": {
+    
+     "table": {
+      "paymentNumber": "Payment No.",
+      "paymentDate": "Date & Time",
+      "transactionType": "Type",
+      "partyName": "Party Name",
+      "amount": "Amount",
+      "paymentMode": "Mode",
+      "paymentType": "Payment Type",
+      "status": "Status",
+      "reconciliation": "Reconciliation",
+      "reference": "Reference",
+      "noPayments": "No payments found",
+      "ariaLabel": "Payments table"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "edit": "Edit Payment",
+      "viewReceipt": "View Receipt",
+      "sendReceipt": "Send Receipt",
+      "viewReceipts": "View Receipts",
+      "sendReceipts": "Send Receipts",
+      "markCompleted": "Mark as Completed",
+      "cancel": "Cancel Payment",
+      "reconcile": "Reconcile",
+      "processRefund": "Process Refund",
+      "delete": "Delete Payment",
+      "export": "Export",
+      "print": "Print"
+    },
+    "selected": "selected",
+       "filters": {
+        "advancedFilters":"Advanced Filters",
+      "title": "Payment Filters",
+      "moreFilters": "More Filters",
+      "paymentType": "Payment Type",
+      "transactionType": "Transaction Type",
+      "paymentMode": "Payment Mode",
+      "partyType": "Party Type",
+      "dateRange": "Date Range",
+      "amountRange": "Amount Range",
+      "reconciliation": "Reconciliation",
+      "selectPaymentType": "Select Payment Type",
+      "selectTransactionType": "Select Transaction Type",
+      "selectPaymentMode": "Select Payment Mode",
+      "selectStatus": "Select Status",
+      "selectPartyType": "Select Party Type",
+      "selectReconciliation": "Select Reconciliation",
+      "minAmount": "Minimum Amount",
+      "maxAmount": "Maximum Amount",
+      "searchPlaceholder": "Search by payment number, party name, transaction ID..."
+    },
+    "types": {
+      "salePayment": "Sale Payment",
+      "purchasePayment": "Purchase Payment",
+      "schemePayment": "Scheme Payment",
+      "advancePayment": "Advance Payment",
+      "refund": "Refund",
+      "other": "Other"
+    },
+    "transactionTypes": {
+      "receipt": "Money In (Receipt)",
+      "payment": "Money Out (Payment)"
+    },
+    "modes": {
+      "cash": "Cash",
+      "card": "Card",
+      "upi": "UPI",
+      "cheque": "Cheque",
+      "bankTransfer": "Bank Transfer",
+      "wallet": "Wallet",
+      "other": "Other"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "refunded": "Refunded"
+    },
+    "partyTypes": {
+      "customer": "Customer",
+      "supplier": "Supplier",
+      "other": "Other"
+    },
+    "reconciled": "Reconciled",
+    "unreconciled": "Unreconciled",
     "createPayment": "Create Payment",
     "editPayment": "Edit Payment",
     "viewPayment": "View Payment",
@@ -141,6 +228,7 @@
   },
 
   "common": {
+    "status":"Status",
     "step": "Step",
     "of": "of",
     "next": "Next",

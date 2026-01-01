@@ -16,7 +16,7 @@ export const ROUTES = {
   
   // Payments
   addpayments: '/payments/add',
-  paymentHistory: '/payments/history',
+  allpayments: 'allpayments',
   paymentEntry: '/payments/entry',
   
   // Purchases
@@ -39,6 +39,7 @@ export const ROUTES = {
   // Products
   products: '/products',
   addProduct: '/products/add',
+  productdetail:"/products/:id",
   
   // Custom Orders
   customOrders: '/custom-orders',
