@@ -125,7 +125,8 @@ const AddPaymentForm: React.FC<{
             {/* Amount */}
             <div className="space-y-2">
               <Label htmlFor="amount" className="text-sm font-medium">
-                {t('sales.payment.amount')} <span className="text-status-error">*</span>
+                {t('sales.payment.amount')}{' '}
+                <span className="text-status-error">*</span>
               </Label>
               <div className="relative">
                 <IndianRupee className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-tertiary" />
@@ -136,8 +137,11 @@ const AddPaymentForm: React.FC<{
                   max={dueAmount}
                   step="0.01"
                   value={formData.amount}
-                  onChange={(e) =>
-                    setFormData({ ...formData, amount: parseFloat(e.target.value) })
+                  onChange={e =>
+                    setFormData({
+                      ...formData,
+                      amount: parseFloat(e.target.value),
+                    })
                   }
                   className="pl-10"
                   required
@@ -151,12 +155,16 @@ const AddPaymentForm: React.FC<{
             {/* Payment Mode */}
             <div className="space-y-2">
               <Label htmlFor="paymentMode" className="text-sm font-medium">
-                {t('sales.payment.paymentMode')} <span className="text-status-error">*</span>
+                {t('sales.payment.paymentMode')}{' '}
+                <span className="text-status-error">*</span>
               </Label>
               <Select
                 value={formData.paymentMode}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, paymentMode: value as PaymentMode })
+                onValueChange={value =>
+                  setFormData({
+                    ...formData,
+                    paymentMode: value as PaymentMode,
+                  })
                 }
               >
                 <SelectTrigger>
@@ -200,13 +208,14 @@ const AddPaymentForm: React.FC<{
             {/* Payment Date */}
             <div className="space-y-2">
               <Label htmlFor="paymentDate" className="text-sm font-medium">
-                {t('sales.payment.paymentDate')} <span className="text-status-error">*</span>
+                {t('sales.payment.paymentDate')}{' '}
+                <span className="text-status-error">*</span>
               </Label>
               <Input
                 id="paymentDate"
                 type="date"
                 value={formData.paymentDate}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({ ...formData, paymentDate: e.target.value })
                 }
                 max={new Date().toISOString().split('T')[0]}
@@ -215,7 +224,9 @@ const AddPaymentForm: React.FC<{
             </div>
 
             {/* Transaction ID (for card/UPI/bank) */}
-            {['card', 'upi', 'bank_transfer'].includes(formData.paymentMode || '') && (
+            {['card', 'upi', 'bank_transfer'].includes(
+              formData.paymentMode || ''
+            ) && (
               <div className="space-y-2">
                 <Label htmlFor="transactionId" className="text-sm font-medium">
                   {t('sales.payment.transactionId')}
@@ -225,7 +236,7 @@ const AddPaymentForm: React.FC<{
                   type="text"
                   placeholder={t('sales.payment.enterTransactionId')}
                   value={formData.transactionId || ''}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, transactionId: e.target.value })
                   }
                 />
@@ -244,7 +255,7 @@ const AddPaymentForm: React.FC<{
                     type="text"
                     placeholder={t('sales.payment.enterChequeNumber')}
                     value={formData.chequeNumber || ''}
-                    onChange={(e) =>
+                    onChange={e =>
                       setFormData({ ...formData, chequeNumber: e.target.value })
                     }
                   />
@@ -257,7 +268,7 @@ const AddPaymentForm: React.FC<{
                     id="chequeDate"
                     type="date"
                     value={formData.chequeDate || ''}
-                    onChange={(e) =>
+                    onChange={e =>
                       setFormData({ ...formData, chequeDate: e.target.value })
                     }
                   />
@@ -266,7 +277,9 @@ const AddPaymentForm: React.FC<{
             )}
 
             {/* Bank Name */}
-            {['card', 'bank_transfer', 'cheque'].includes(formData.paymentMode || '') && (
+            {['card', 'bank_transfer', 'cheque'].includes(
+              formData.paymentMode || ''
+            ) && (
               <div className="space-y-2">
                 <Label htmlFor="bankName" className="text-sm font-medium">
                   {t('sales.payment.bankName')}
@@ -276,7 +289,7 @@ const AddPaymentForm: React.FC<{
                   type="text"
                   placeholder={t('sales.payment.enterBankName')}
                   value={formData.bankName || ''}
-                  onChange={(e) =>
+                  onChange={e =>
                     setFormData({ ...formData, bankName: e.target.value })
                   }
                 />
@@ -292,7 +305,7 @@ const AddPaymentForm: React.FC<{
                 id="notes"
                 placeholder={t('sales.payment.enterNotes')}
                 value={formData.notes || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({ ...formData, notes: e.target.value })
                 }
                 rows={3}
@@ -388,7 +401,7 @@ const PaymentTimeline: React.FC<{
 
           <div className="flex gap-4">
             {/* Icon */}
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-status-success/10">
+            <div className="bg-status-success/10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
               {getPaymentModeIcon(payment.paymentMode)}
             </div>
 
@@ -580,7 +593,10 @@ const PaymentsTab: React.FC<PaymentsTabProps> = ({
               <h3 className="text-lg font-semibold text-text-primary">
                 {t('sales.payment.paymentStatus')}
               </h3>
-              <Badge variant={getStatusVariant(payment.paymentStatus)} size="md">
+              <Badge
+                variant={getStatusVariant(payment.paymentStatus)}
+                size="md"
+              >
                 {t(`sales.paymentStatus.${payment.paymentStatus}`)}
               </Badge>
             </div>

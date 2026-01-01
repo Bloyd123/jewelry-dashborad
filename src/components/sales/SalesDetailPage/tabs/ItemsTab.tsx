@@ -214,7 +214,10 @@ const ItemDetailView: React.FC<{
       </div>
 
       {/* Additional Info */}
-      {(item.isHallmarked || item.huid || item.warrantyPeriod || item.notes) && (
+      {(item.isHallmarked ||
+        item.huid ||
+        item.warrantyPeriod ||
+        item.notes) && (
         <div className="rounded-lg border border-border-secondary bg-bg-tertiary p-4">
           <h4 className="mb-3 text-sm font-semibold text-text-primary">
             {t('sales.items.additionalInfo')}
@@ -316,7 +319,10 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
     const totalItems = items.length
     const totalValue = items.reduce((sum, item) => sum + item.itemTotal, 0)
     const totalWeight = items.reduce((sum, item) => sum + item.netWeight, 0)
-    const totalDiscount = items.reduce((sum, item) => sum + item.discount.amount, 0)
+    const totalDiscount = items.reduce(
+      (sum, item) => sum + item.discount.amount,
+      0
+    )
 
     return { totalItems, totalValue, totalWeight, totalDiscount }
   }, [items])
@@ -330,7 +336,9 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
       sortable: true,
       cell: ({ row }) => (
         <div className="flex flex-col gap-1">
-          <span className="font-medium text-text-primary">{row.productName}</span>
+          <span className="font-medium text-text-primary">
+            {row.productName}
+          </span>
           <span className="text-xs text-text-tertiary">{row.productCode}</span>
         </div>
       ),
@@ -513,7 +521,9 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
                     <Label className="text-xs text-text-tertiary">
                       {t('sales.oldGold.description')}
                     </Label>
-                    <p className="text-sm text-text-secondary">{item.description}</p>
+                    <p className="text-sm text-text-secondary">
+                      {item.description}
+                    </p>
                   </div>
                 )}
               </div>
@@ -521,7 +531,7 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
           ))}
 
           {/* Old Gold Total */}
-          <div className="flex items-center justify-between rounded-lg border-2 border-status-warning bg-status-warning/5 p-4">
+          <div className="bg-status-warning/5 flex items-center justify-between rounded-lg border-2 border-status-warning p-4">
             <div className="flex items-center gap-2">
               <Coins className="h-5 w-5 text-status-warning" />
               <span className="font-semibold text-text-primary">

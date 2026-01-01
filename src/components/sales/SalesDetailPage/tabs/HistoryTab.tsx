@@ -54,7 +54,13 @@ interface HistoryTabProps {
 interface ActivityLog {
   _id: string
   action: string
-  actionType: 'create' | 'update' | 'delete' | 'status_change' | 'payment' | 'approval'
+  actionType:
+    | 'create'
+    | 'update'
+    | 'delete'
+    | 'status_change'
+    | 'payment'
+    | 'approval'
   performedBy: {
     _id: string
     name: string
@@ -311,10 +317,7 @@ const ActivityItem: React.FC<{
             </Label>
             <div className="space-y-2">
               {activity.changes.map((change, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 text-sm"
-                >
+                <div key={index} className="flex items-center gap-2 text-sm">
                   <span className="capitalize text-text-secondary">
                     {change.field}:
                   </span>
@@ -391,7 +394,7 @@ const HistoryTab: React.FC<HistoryTabProps> = ({
   const filteredActivities = useMemo(() => {
     if (filterType === 'all') return activities
 
-    return activities.filter((activity) => activity.actionType === filterType)
+    return activities.filter(activity => activity.actionType === filterType)
   }, [activities, filterType])
 
   // Format date

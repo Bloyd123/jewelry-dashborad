@@ -5,17 +5,14 @@
 
 import React, { useState } from 'react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import OverviewTab from 
- 
-//   PaymentsTab,
+import OverviewTab from //   PaymentsTab,
 //   DocumentsTab,
 //   HistoryTab,
 '@/components/sales/SalesDetailPage/tabs/OverviewTab'
-import  ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
-import  PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
-import  HistoryTab from '@/components/sales/SalesDetailPage/tabs/HistoryTab'
-import  DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
-
+import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
+import PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
+import HistoryTab from '@/components/sales/SalesDetailPage/tabs/HistoryTab'
+import DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
 
 import { dummySales } from '../data'
 
@@ -81,17 +78,17 @@ export const SalesDetailsPage: React.FC = () => {
       case 'items':
         return (
           <div className="p-6">
-             <ItemsTab 
-              items={sale.items} 
+            <ItemsTab
+              items={sale.items}
               oldGoldExchange={sale.oldGoldExchange}
-            /> 
+            />
           </div>
         )
 
       case 'payments':
         return (
           <div className="p-6">
-            <PaymentsTab 
+            <PaymentsTab
               payment={sale.payment}
               invoiceNumber={sale.invoiceNumber}
               saleId={sale._id}
@@ -102,21 +99,18 @@ export const SalesDetailsPage: React.FC = () => {
       case 'documents':
         return (
           <div className="p-6">
-             <DocumentsTab 
-              documents={sale.documents}
-              saleId={sale._id}
-            /> 
+            <DocumentsTab documents={sale.documents} saleId={sale._id} />
           </div>
         )
 
       case 'history':
         return (
           <div className="p-6">
-             <HistoryTab 
+            <HistoryTab
               saleId={sale._id}
               createdAt={sale.createdAt}
               updatedAt={sale.updatedAt}
-            /> 
+            />
           </div>
         )
 

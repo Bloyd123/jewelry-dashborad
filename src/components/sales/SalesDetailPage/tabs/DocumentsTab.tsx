@@ -59,7 +59,13 @@ interface DocumentsTabProps {
 
 interface Document {
   _id?: string
-  documentType: 'invoice' | 'receipt' | 'estimate' | 'certificate' | 'warranty' | 'other'
+  documentType:
+    | 'invoice'
+    | 'receipt'
+    | 'estimate'
+    | 'certificate'
+    | 'warranty'
+    | 'other'
   documentUrl: string
   documentNumber?: string
   uploadedAt: string
@@ -137,11 +143,12 @@ const UploadDocumentForm: React.FC<{
             {/* Document Type */}
             <div className="space-y-2">
               <Label htmlFor="documentType" className="text-sm font-medium">
-                {t('sales.documents.documentType')} <span className="text-status-error">*</span>
+                {t('sales.documents.documentType')}{' '}
+                <span className="text-status-error">*</span>
               </Label>
               <Select
                 value={formData.documentType}
-                onValueChange={(value) =>
+                onValueChange={value =>
                   setFormData({ ...formData, documentType: value })
                 }
               >
@@ -199,7 +206,7 @@ const UploadDocumentForm: React.FC<{
                 type="text"
                 placeholder={t('sales.documents.enterDocumentNumber')}
                 value={formData.documentNumber}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({ ...formData, documentNumber: e.target.value })
                 }
               />
@@ -208,7 +215,8 @@ const UploadDocumentForm: React.FC<{
             {/* File Upload */}
             <div className="space-y-2">
               <Label htmlFor="file" className="text-sm font-medium">
-                {t('sales.documents.uploadFile')} <span className="text-status-error">*</span>
+                {t('sales.documents.uploadFile')}{' '}
+                <span className="text-status-error">*</span>
               </Label>
               <div className="flex flex-col gap-2">
                 <Input
@@ -266,7 +274,9 @@ const DocumentsTab: React.FC<DocumentsTabProps> = ({
   const { t } = useTranslation()
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(null)
+  const [selectedDocument, setSelectedDocument] = useState<Document | null>(
+    null
+  )
 
   // Format date
   const formatDate = (dateString: string) => {
@@ -316,9 +326,10 @@ const DocumentsTab: React.FC<DocumentsTabProps> = ({
   // Calculate statistics
   const stats = {
     total: documents.length,
-    invoices: documents.filter((d) => d.documentType === 'invoice').length,
-    receipts: documents.filter((d) => d.documentType === 'receipt').length,
-    certificates: documents.filter((d) => d.documentType === 'certificate').length,
+    invoices: documents.filter(d => d.documentType === 'invoice').length,
+    receipts: documents.filter(d => d.documentType === 'receipt').length,
+    certificates: documents.filter(d => d.documentType === 'certificate')
+      .length,
   }
 
   // Define table columns
@@ -360,9 +371,7 @@ const DocumentsTab: React.FC<DocumentsTabProps> = ({
       accessorKey: 'uploadedAt',
       sortable: true,
       cell: ({ value }) => (
-        <span className="text-sm text-text-secondary">
-          {formatDate(value)}
-        </span>
+        <span className="text-sm text-text-secondary">{formatDate(value)}</span>
       ),
     },
     {

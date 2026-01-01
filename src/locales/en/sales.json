@@ -1,6 +1,6 @@
 {
   "sales": {
-      "documents": {
+    "documents": {
       "uploadDocument": "Upload Document",
       "uploadDescription": "Upload invoices, receipts, certificates and other documents",
       "documentType": "Document Type",
@@ -32,7 +32,7 @@
       "warranty": "Warranty",
       "other": "Other"
     },
-        "items": {
+    "items": {
       "totalItems": "Total Items",
       "totalValue": "Total Value",
       "totalWeight": "Total Weight",
@@ -52,9 +52,9 @@
       "weightDetails": "Weight Details",
       "pricingDetails": "Pricing Details",
       "additionalInfo": "Additional Information"
-        },
-        "payment": {
-                "paid": "Paid",
+    },
+    "payment": {
+      "paid": "Paid",
       "partial": "Partially Paid",
       "unpaid": "Unpaid",
       "overdue": "Overdue",
@@ -78,7 +78,7 @@
       "sendReceipt": "Send Receipt",
       "noPaymentsYet": "No payments recorded yet"
     },
-      "history": {
+    "history": {
       "activityLog": "Activity Log",
       "trackAllChanges": "Track all changes and activities",
       "allActivities": "All Activities",
@@ -372,7 +372,7 @@
       "credit": "Credit"
     }
   },
-    "time": {
+  "time": {
     "justNow": "Just now",
     "minutesAgo": "{{count}} minutes ago",
     "hoursAgo": "{{count}} hours ago",
