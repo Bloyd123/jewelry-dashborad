@@ -71,7 +71,7 @@ export const ItemsSection = ({
         <div className="flex items-center gap-2">
           <Package className="h-5 w-5 text-accent" />
           <h3 className="text-lg font-semibold text-text-primary">
-            {t('sales.items')}
+            {t('sales.itemstext')}
           </h3>
           {items.length > 0 && (
             <span className="rounded-full bg-accent px-2 py-0.5 text-xs text-white">

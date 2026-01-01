@@ -1,5 +1,105 @@
 {
   "sales": {
+      "documents": {
+      "uploadDocument": "Upload Document",
+      "uploadDescription": "Upload invoices, receipts, certificates and other documents",
+      "documentType": "Document Type",
+      "documentNumber": "Document Number",
+      "uploadFile": "Upload File",
+      "uploadedAt": "Uploaded At",
+      "documentsList": "Documents List",
+      "manageDocuments": "Manage all sale related documents",
+      "totalDocuments": "Total Documents",
+      "invoices": "Invoices",
+      "receipts": "Receipts",
+      "certificates": "Certificates",
+      "view": "View",
+      "download": "Download",
+      "print": "Print",
+      "send": "Send",
+      "delete": "Delete",
+      "noDocuments": "No documents uploaded yet",
+      "uploadFirst": "Upload your first document",
+      "supportedFormats": "Supported: PDF, JPG, PNG, DOC, DOCX (Max 5MB)",
+      "deleteConfirmTitle": "Delete Document?",
+      "deleteConfirmDescription": "This action cannot be undone"
+    },
+    "documentType": {
+      "invoice": "Invoice",
+      "receipt": "Receipt",
+      "estimate": "Estimate",
+      "certificate": "Certificate",
+      "warranty": "Warranty",
+      "other": "Other"
+    },
+        "items": {
+      "totalItems": "Total Items",
+      "totalValue": "Total Value",
+      "totalWeight": "Total Weight",
+      "totalDiscount": "Total Discount",
+      "itemsList": "Items List",
+      "productName": "Product Name",
+      "category": "Category",
+      "metalType": "Metal Type",
+      "weight": "Weight",
+      "quantity": "Quantity",
+      "rate": "Rate",
+      "total": "Total",
+      "status": "Status",
+      "viewDetails": "View Details",
+      "itemDetails": "Item Details",
+      "basicDetails": "Basic Details",
+      "weightDetails": "Weight Details",
+      "pricingDetails": "Pricing Details",
+      "additionalInfo": "Additional Information"
+        },
+        "payment": {
+                "paid": "Paid",
+      "partial": "Partially Paid",
+      "unpaid": "Unpaid",
+      "overdue": "Overdue",
+      "addPayment": "Add Payment",
+      "totalAmount": "Total Amount",
+      "paidAmount": "Paid Amount",
+      "dueAmount": "Due Amount",
+      "numberOfPayments": "Number of Payments",
+      "paymentStatus": "Payment Status",
+      "paymentMode": "Payment Mode",
+      "paymentDate": "Payment Date",
+      "paymentHistory": "Payment History",
+      "remainingAmount": "Remaining Amount",
+      "transactionId": "Transaction ID",
+      "referenceNumber": "Reference Number",
+      "chequeNumber": "Cheque Number",
+      "chequeDate": "Cheque Date",
+      "bankName": "Bank Name",
+      "notes": "Notes",
+      "downloadReceipt": "Download Receipt",
+      "sendReceipt": "Send Receipt",
+      "noPaymentsYet": "No payments recorded yet"
+    },
+      "history": {
+      "activityLog": "Activity Log",
+      "trackAllChanges": "Track all changes and activities",
+      "allActivities": "All Activities",
+      "changes": "Changes",
+      "amount": "Amount",
+      "paymentMode": "Payment Mode",
+      "reason": "Reason",
+      "createdAt": "Created At",
+      "lastUpdated": "Last Updated",
+      "totalActivities": "Total Activities",
+      "activities": "activities",
+      "noActivities": "No activities found"
+    },
+    "activityType": {
+      "create": "Created",
+      "update": "Updated",
+      "status_change": "Status Changed",
+      "payment": "Payment",
+      "approval": "Approval",
+      "delete": "Deleted"
+    },
     "sections": {
       "saleInformation": "Sale Information",
       "customerInformation": "Customer Information",
@@ -87,7 +187,7 @@
 
     "saleDate": "Sale Date",
 
-    "items": "Items",
+    "itemstext": "Items",
     "saleItems": "Sale Items",
     "addItem": "Add Item",
     "addFirstItem": "Add First Item",
@@ -253,12 +353,7 @@
       "cancelled": "Cancelled",
       "returned": "Returned"
     },
-    "payment": {
-      "paid": "Paid",
-      "partial": "Partially Paid",
-      "unpaid": "Unpaid",
-      "overdue": "Overdue"
-    },
+
     "type": {
       "retail": "Retail",
       "wholesale": "Wholesale",
@@ -276,6 +371,12 @@
       "mixed": "Mixed",
       "credit": "Credit"
     }
+  },
+    "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hours ago",
+    "daysAgo": "{{count}} days ago"
   },
   "validation": {
     "customerRequired": "Please select a customer",
