@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/modules/payment/filters/PaymentAmountFilter.tsx
 // Payment Amount Range Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

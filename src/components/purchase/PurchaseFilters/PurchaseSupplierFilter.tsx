@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/PurchaseSupplierFilter.tsx
 // Supplier Filter (TypeFilter)
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

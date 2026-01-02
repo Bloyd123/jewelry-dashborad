@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/index.ts
 // Sidebar Exports
-// ============================================================================
 
 export { Sidebar } from '../../sidebar/Sidebar'
 export { SidebarHeader } from './SidebarHeader'

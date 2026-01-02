@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierForm/SupplierForm.types.ts
 // TypeScript Types for SupplierForm
-// ============================================================================
+// 
 
 import type {
   SupplierType,

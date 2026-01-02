@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shops/ShopSettings/sections/FeaturesSection.tsx
 // Section 5: Features
-// ============================================================================
+// 
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/CustomerFilter.tsx
 // Customer Search/Select Filter
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

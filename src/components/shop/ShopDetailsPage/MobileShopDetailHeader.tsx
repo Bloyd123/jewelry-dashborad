@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/Shops/MobileShopDetailHeader.tsx
+// 
+// FILE: src/components/shop/ShopDetailsPages/MobileShopDetailHeader.tsx
 // Mobile Shop Detail Header Component
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +22,9 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Shop } from '@/types/shop.types'
 import { dummyShops } from '@/pages/shops/data'
 
-// ============================================================================
+// 
 // COMPONENT PROPS
-// ============================================================================
+// 
 
 interface MobileShopDetailHeaderProps {
   shopId?: string
@@ -35,9 +35,9 @@ interface MobileShopDetailHeaderProps {
   // children?: React.ReactNode
 }
 
-// ============================================================================
+// 
 // MOBILE SHOP DETAIL HEADER COMPONENT
-// ============================================================================
+// 
 
 export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
   shopId,

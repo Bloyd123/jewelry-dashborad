@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductPurityFilter.tsx
 // Metal Purity Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

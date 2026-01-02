@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierFilters/SupplierSearchBar.tsx
 // Supplier Search Wrapper - Uses Reusable SearchBar
-// ============================================================================
+// 
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

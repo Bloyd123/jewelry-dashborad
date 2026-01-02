@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/AdditionalDetailsForm.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/AdditionalDetailsForm.tsx
 // Additional Details Form - Section 4 of Update Metal Rates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +9,7 @@ import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
 import type { WeightUnit, Currency, RateSource } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface AdditionalDetailsFormData {
   weightUnit: WeightUnit
@@ -28,9 +25,7 @@ interface AdditionalDetailsFormProps {
   className?: string
 }
 
-// ============================================================================
 // SELECT COMPONENT
-// ============================================================================
 
 interface SelectProps {
   value: string
@@ -64,9 +59,7 @@ const Select: React.FC<SelectProps> = ({
   </select>
 )
 
-// ============================================================================
 // TEXTAREA COMPONENT
-// ============================================================================
 
 interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
@@ -85,9 +78,8 @@ const Textarea: React.FC<TextareaProps> = ({ className, ...props }) => (
   />
 )
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
+
 
 export const AdditionalDetailsForm: React.FC<AdditionalDetailsFormProps> = ({
   initialData,
@@ -240,15 +232,3 @@ export const AdditionalDetailsForm: React.FC<AdditionalDetailsFormProps> = ({
 
 AdditionalDetailsForm.displayName = 'AdditionalDetailsForm'
 
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-
-  }
-}
-*/

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/metalrates/QuickInsights.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/QuickInsights.tsx
 // Metal Rates Quick Insights Dashboard Component
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +25,7 @@ import { StatCardGrid } from '@/components/ui/data-display/StatCard/StatCardGrid
 import { mockCurrentRate } from '@/pages/metal-rates/metal-rate.mock'
 import type { MetalRate } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface QuickInsightsProps {
   className?: string
@@ -42,9 +39,7 @@ interface AlertItem {
   percentage?: number
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 const formatCurrency = (value: number, currency: string = 'INR'): string => {
   const symbols: Record<string, string> = {
@@ -68,9 +63,7 @@ const calculateVolatility = (
   return ((high - low) / avg) * 100
 }
 
-// ============================================================================
 // QUICKINSIGHTS COMPONENT
-// ============================================================================
 
 export const QuickInsights: React.FC<QuickInsightsProps> = ({
   className,

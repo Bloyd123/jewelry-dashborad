@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/PurchaseActiveFilters.tsx
 // Active Purchase Filters Display
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

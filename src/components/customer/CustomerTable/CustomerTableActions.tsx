@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/features/CustomerTable/CustomerTableActions.tsx
 // Customer Table Row Actions & Bulk Actions
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,9 +24,7 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Customer } from './CustomerTable.types'
 
-// ============================================================================
 // ROW ACTIONS (Individual Customer Actions)
-// ============================================================================
 
 export const getCustomerRowActions = (
   onViewDetails: (customer: Customer) => void,
@@ -78,9 +75,7 @@ export const getCustomerRowActions = (
   },
 ]
 
-// ============================================================================
 // BULK ACTIONS BAR (Shows when rows are selected)
-// ============================================================================
 
 interface BulkActionsBarProps {
   selectedCount: number

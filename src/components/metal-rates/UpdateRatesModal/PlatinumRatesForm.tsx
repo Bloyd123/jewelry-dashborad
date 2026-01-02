@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/PlatinumRatesForm.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/PlatinumRatesForm.tsx
 // Platinum Rates Form - Section 3 of Update Metal Rates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +10,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import type { RatePair } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface RatePairInput {
   buying: string
@@ -26,9 +23,7 @@ interface PlatinumRatesFormProps {
   className?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const PlatinumRatesForm: React.FC<PlatinumRatesFormProps> = ({
   initialData,
@@ -132,15 +127,3 @@ export const PlatinumRatesForm: React.FC<PlatinumRatesFormProps> = ({
 }
 
 PlatinumRatesForm.displayName = 'PlatinumRatesForm'
-
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-  }
-}
-*/

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE:     src/components/products/ProductTable/ProductTable.tsx
 // Main Product Table Component
-// ============================================================================
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,17 +13,15 @@ import type { ProductFilterValues } from '@/components/products/ProductFilters'
 import { dummyProducts } from '@/pages/product/mock.data'
 import { type Product } from '@/types/product.types'
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const ProductTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // ========================================================================
+
   // STATE
-  // ========================================================================
+
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -44,9 +41,8 @@ export const ProductTable: React.FC = () => {
     maxPrice: undefined,
   })
 
-  // ========================================================================
+
   // FILTERED DATA
-  // ========================================================================
 
   const filteredProducts = useMemo(() => {
     let result = [...dummyProducts]
@@ -115,9 +111,7 @@ export const ProductTable: React.FC = () => {
     return result
   }, [dummyProducts, filters])
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleViewDetails = (product: Product) => {
     console.log('View Details:', product)
@@ -235,17 +229,13 @@ export const ProductTable: React.FC = () => {
     []
   )
 
-  // ========================================================================
   // SELECTED PRODUCTS
-  // ========================================================================
 
   const selectedProducts = useMemo(() => {
     return filteredProducts.filter(product => selectedRows.has(product._id))
   }, [filteredProducts, selectedRows])
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="w-full space-y-4">

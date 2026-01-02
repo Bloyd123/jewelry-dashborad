@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormTextarea/FormTextarea.tsx
 // Theme-based Form Textarea Component
-// ============================================================================
 
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'

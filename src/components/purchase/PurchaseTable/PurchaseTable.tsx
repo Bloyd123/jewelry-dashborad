@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/PurchaseTable/PurchaseTable.tsx
+
+// FILE: src/components/purchase/PurchaseTable/PurchaseTable.tsx
 // Main Purchase Table Component
-// ============================================================================
+
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,17 +14,15 @@ import type { PurchaseFilterValues } from '@/components/purchase/PurchaseFilters
 import { dummyPurchases, dummySuppliers } from '@/pages/purchase/mock.data'
 import type { IPurchase } from '@/types/purchase.types'
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const PurchaseTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // ========================================================================
+
   // STATE
-  // ========================================================================
+
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -40,9 +38,9 @@ export const PurchaseTable: React.FC = () => {
     dateRange: undefined,
   })
 
-  // ========================================================================
+
   // FILTERED DATA
-  // ========================================================================
+
 
   const filteredPurchases = useMemo(() => {
     let result = [...dummyPurchases]
@@ -100,9 +98,9 @@ export const PurchaseTable: React.FC = () => {
     return result
   }, [dummyPurchases, filters])
 
-  // ========================================================================
+
   // HANDLERS
-  // ========================================================================
+
 
   const handleViewDetails = (purchase: IPurchase) => {
     console.log('View Details:', purchase)
@@ -203,9 +201,9 @@ export const PurchaseTable: React.FC = () => {
     })
   }
 
-  // ========================================================================
+ 
   // ROW ACTIONS
-  // ========================================================================
+ 
 
   const rowActions = useMemo(
     () =>
@@ -222,17 +220,17 @@ export const PurchaseTable: React.FC = () => {
     []
   )
 
-  // ========================================================================
+ 
   // SELECTED PURCHASES
-  // ========================================================================
+ 
 
   const selectedPurchases = useMemo(() => {
     return filteredPurchases.filter(purchase => selectedRows.has(purchase._id))
   }, [filteredPurchases, selectedRows])
 
-  // ========================================================================
+ 
   // RENDER
-  // ========================================================================
+ 
 
   return (
     <div className="w-full space-y-4">

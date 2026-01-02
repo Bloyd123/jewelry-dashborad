@@ -1,16 +1,15 @@
-// ============================================================================
-// FILE: src/components/features/PurchaseTable/PurchaseTable.types.ts
+
+// FILE: src/components/purchase/PurchaseTable/PurchaseTable.types.ts
 // Purchase Table TypeScript Types
-// ============================================================================
+ 
 
 import type { IPurchase } from '@/types/purchase.types'
 
 // Re-export Purchase type for convenience
 export type { IPurchase as Purchase }
 
-// ============================================================================
+
 // TABLE-SPECIFIC TYPES
-// ============================================================================
 
 export interface PurchaseTableFilters {
   search: string

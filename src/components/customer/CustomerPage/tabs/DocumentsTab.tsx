@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/DocumentsTab.tsx
+// FILE: ssrc/components/customer/CustomerPage/tabs/DocumentsTab.tsx
 // Documents Tab
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,9 +16,7 @@ import { Label } from '@/components/ui/label'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// ============================================================================
 // MOCK DOCUMENTS DATA
-// ============================================================================
 
 interface Document {
   id: string
@@ -58,17 +54,13 @@ const MOCK_DOCUMENTS: Document[] = [
   },
 ]
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface DocumentsTabProps {
   customerId?: string
 }
 
-// ============================================================================
 // DOCUMENTS TAB COMPONENT
-// ============================================================================
 
 export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
   const { t } = useTranslation()

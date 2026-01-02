@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/sections/MetalWeightSection.tsx
 // Step 2: Metal Details, Weight, and Making Charges
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'

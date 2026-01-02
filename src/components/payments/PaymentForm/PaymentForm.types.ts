@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/PaymentForm.types.ts
 // PaymentForm Types and Interfaces
-// ============================================================================
 
 import type { Payment } from '@/types/payment.types'
 

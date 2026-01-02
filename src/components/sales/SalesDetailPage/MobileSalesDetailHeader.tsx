@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/Sales/MobileSalesDetailHeader.tsx
+
+// FILE: src/components/sales/SalesDetailPage/MobileSalesDetailHeader.tsx
 // Mobile Sales Detail Header Component
-// ============================================================================
+
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +22,9 @@ import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import type { Sale } from '@/types/sale.types'
 import { dummySales } from '@/pages/sales/data'
 
-// ============================================================================
+
 // COMPONENT PROPS
-// ============================================================================
+
 
 interface MobileSalesDetailHeaderProps {
   saleId?: string
@@ -35,9 +35,9 @@ interface MobileSalesDetailHeaderProps {
   onSendClick?: () => void
 }
 
-// ============================================================================
+
 // MOBILE SALES DETAIL HEADER COMPONENT
-// ============================================================================
+
 
 export const MobileSalesDetailHeader: React.FC<
   MobileSalesDetailHeaderProps

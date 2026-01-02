@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormSwitch/FormSwitch.tsx
 // Theme-based Form Switch Component (More Flexible & Reusable)
-// ============================================================================
 
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'

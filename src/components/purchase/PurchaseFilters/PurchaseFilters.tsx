@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/PurchaseFilters.tsx
 // Main Purchase Filters Container
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

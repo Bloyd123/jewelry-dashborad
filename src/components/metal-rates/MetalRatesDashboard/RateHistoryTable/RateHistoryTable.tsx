@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/RateHistoryTable/RateHistoryTable.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryTable.tsx
 // Rate History Table Component - With Responsive Drawer Filters
-// ============================================================================
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,16 +14,14 @@ import { Button } from '@/components/ui/button'
 import { Download } from 'lucide-react'
 import { SearchBar } from '@/components/ui/SearchBar'
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const RateHistoryTable: React.FC = () => {
   const { t } = useTranslation()
 
-  // ========================================================================
+
   // STATE
-  // ========================================================================
+
 
   const [search, setSearch] = useState('')
   const [filters, setFilters] = useState<RateHistoryFilterValues>({
@@ -37,9 +34,9 @@ export const RateHistoryTable: React.FC = () => {
     { columnId: 'rateDate', direction: 'desc' },
   ])
 
-  // ========================================================================
+
   // FILTERED DATA
-  // ========================================================================
+
 
   const filteredData = useMemo(() => {
     let data = [...mockRateHistory]
@@ -90,9 +87,9 @@ export const RateHistoryTable: React.FC = () => {
     return data
   }, [search, filters])
 
-  // ========================================================================
+
   // HANDLERS
-  // ========================================================================
+
 
   const handleSearchChange = (value: string) => {
     setSearch(value)
@@ -115,9 +112,9 @@ export const RateHistoryTable: React.FC = () => {
     // TODO: Generate and download CSV
   }
 
-  // ========================================================================
+
   // RENDER
-  // ========================================================================
+
 
   return (
     <div className="w-full space-y-4">

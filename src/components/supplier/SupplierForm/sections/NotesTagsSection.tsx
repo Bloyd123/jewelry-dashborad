@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierForm/sections/NotesTagsSection.tsx
 // Notes & Tags Section
-// ============================================================================
+// 
 
 import { useTranslation } from 'react-i18next'
 import { FormTextarea } from '@/components/forms/FormTextarea/FormTextarea'

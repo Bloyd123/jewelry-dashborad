@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/sales/SaleForm/SaleForm.mobile.tsx
 // Mobile Layout for SaleForm (Tabbed Interface)
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

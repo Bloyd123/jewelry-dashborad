@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/mode-fields/BankTransferFields.tsx
 // Bank Transfer Payment Mode Fields
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

@@ -1,8 +1,5 @@
-// ============================================================================
 // FILE: src/components/features/Customers/tabs/LoyaltyTab.tsx
 // Loyalty Program Tab
-// ============================================================================
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Award, Gift, TrendingUp, Star } from 'lucide-react'
@@ -12,9 +9,7 @@ import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// ============================================================================
 // MOCK LOYALTY HISTORY
-// ============================================================================
 
 interface LoyaltyTransaction {
   id: string
@@ -55,17 +50,14 @@ const MOCK_LOYALTY_HISTORY: LoyaltyTransaction[] = [
   },
 ]
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface LoyaltyTabProps {
   customerId?: string
 }
 
-// ============================================================================
+
 // LOYALTY TAB COMPONENT
-// ============================================================================
 
 export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
   const { t } = useTranslation()

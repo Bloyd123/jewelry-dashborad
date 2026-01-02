@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Products/tabs/HistoryTab.tsx
+
+// FILE: src/components/products/ProductDetailsPage/tabs/HistoryTab.tsx
 // Product History Tab - Accordion-based Layout
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,9 +28,7 @@ import {
 import type { Product, InventoryTransaction } from '@/types/product.types'
 import { format } from 'date-fns'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface HistoryTabProps {
   product: Product
@@ -41,9 +38,9 @@ interface HistoryTabProps {
   hasMore?: boolean
 }
 
-// ============================================================================
+
 // MOCK TRANSACTION DATA
-// ============================================================================
+
 
 const mockTransactions: InventoryTransaction[] = [
   {
@@ -119,9 +116,8 @@ const mockTransactions: InventoryTransaction[] = [
   },
 ]
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
+
 
 const getTransactionIcon = (type: string) => {
   switch (type) {
@@ -157,9 +153,7 @@ const getTransactionBadgeVariant = (type: string) => {
   }
 }
 
-// ============================================================================
 // HISTORY TAB COMPONENT
-// ============================================================================
 
 export const HistoryTab: React.FC<HistoryTabProps> = ({
   product,
@@ -191,9 +185,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // TRANSACTION STATISTICS SECTION
-  // ========================================================================
+
 
   const TransactionStatisticsSection = () => (
     <div className="space-y-4 p-4">
@@ -241,9 +235,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+  
   // TRANSACTION HISTORY SECTION
-  // ========================================================================
+
 
   const TransactionHistorySection = () => {
     if (transactions.length === 0) {
@@ -371,9 +365,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // PRODUCT LIFECYCLE SECTION
-  // ========================================================================
+
 
   const ProductLifecycleSection = () => (
     <div className="space-y-3 p-4">
@@ -410,9 +404,9 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+  
   // RENDER MAIN ACCORDION
-  // ========================================================================
+
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

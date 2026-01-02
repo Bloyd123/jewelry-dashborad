@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseForm/PurchaseForm.mobile.tsx
 // Mobile Layout for PurchaseForm (Tabbed Interface)
-// ============================================================================
+
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

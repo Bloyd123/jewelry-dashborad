@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/index.ts
 // ProductForm Exports
-// ============================================================================
 
 export { ProductForm } from './ProductForm'
 export { default as ProductFormDesktop } from './ProductForm.desktop'

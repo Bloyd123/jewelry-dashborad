@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierFilters/SupplierFilters.tsx
 // Supplier Filters Container - Responsive Desktop & Mobile
-// ============================================================================
+// 
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,9 +20,9 @@ import {
   SupplierPreferredFilter,
   SupplierVerifiedFilter,
 } from './index'
-// ============================================================================
+// 
 // TYPES
-// ============================================================================
+// 
 
 export interface SupplierFilterValues {
   search: string
@@ -39,9 +39,9 @@ interface SupplierFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
+// 
 // SUPPLIER FILTERS COMPONENT
-// ============================================================================
+// 
 
 export const SupplierFilters: React.FC<SupplierFiltersProps> = ({
   filters,
@@ -111,9 +111,9 @@ export const SupplierFilters: React.FC<SupplierFiltersProps> = ({
     return count
   }, [filters])
 
-  // ============================================================================
+  // 
   // DESKTOP VIEW
-  // ============================================================================
+  // 
   if (isDesktop) {
     return (
       <>
@@ -209,9 +209,9 @@ export const SupplierFilters: React.FC<SupplierFiltersProps> = ({
     )
   }
 
-  // ============================================================================
+  // 
   // MOBILE VIEW WITH DRAWER
-  // ============================================================================
+  // 
   return (
     <>
       <div className="space-y-3">

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/ActivityLogsTab.tsx
+// FILE: src/components/customer/CustomerPage/tabs/ActivityLogsTab.tsx
 // Activity Logs Tab
-// ============================================================================
+
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,9 +16,7 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// ============================================================================
 // MOCK ACTIVITY LOGS
-// ============================================================================
 
 interface ActivityLog {
   id: string
@@ -73,17 +70,13 @@ const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
   },
 ]
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface ActivityLogsTabProps {
   customerId?: string
 }
 
-// ============================================================================
 // ACTIVITY LOGS TAB COMPONENT
-// ============================================================================
 
 export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
   customerId,

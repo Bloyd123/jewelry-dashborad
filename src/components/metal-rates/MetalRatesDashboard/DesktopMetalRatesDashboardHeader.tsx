@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/DesktopMetalRatesDashboardHeader.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/DesktopMetalRatesDashboardHeader.tsx
 // Desktop Metal Rates Dashboard Header with Tabs and Shop Info
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -39,9 +38,7 @@ interface DesktopMetalRatesDashboardHeaderProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
 // DESKTOP METAL RATES DASHBOARD HEADER COMPONENT
-// ============================================================================
 
 export const DesktopMetalRatesDashboardHeader: React.FC<
   DesktopMetalRatesDashboardHeaderProps

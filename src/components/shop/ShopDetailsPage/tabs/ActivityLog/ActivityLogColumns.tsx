@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/ShopDetails/ActivityLogColumns.tsx
+// 
+// FILE: src/components/shop/ShopDetailsPages/tabs/ActivityLog/ActivityLogColumns.tsx
 // Activity Log Table Column Definitions - FIXED
-// ============================================================================
+// 
 
 import React from 'react'
 import { Eye } from 'lucide-react'
@@ -11,9 +11,9 @@ import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { ActivityLog } from '@/pages/shops/Activitylogdata'
 
-// ============================================================================
+// 
 // HELPER FUNCTIONS
-// ============================================================================
+// 
 
 /**
  * Format timestamp to readable date/time
@@ -93,9 +93,9 @@ const getActionVariant = (
   return actionMap[action] || 'default'
 }
 
-// ============================================================================
+// 
 // COLUMN DEFINITIONS
-// ============================================================================
+// 
 
 export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 1. Date/Time

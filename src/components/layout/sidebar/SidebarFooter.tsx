@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/SidebarFooter.tsx
 // Sidebar Footer - User Info, Settings, Logout
-// ============================================================================
 
 import { Settings, LogOut, User } from 'lucide-react'
 import { useSidebar } from '@/hooks/useSidebar'

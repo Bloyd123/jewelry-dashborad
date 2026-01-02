@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductTable/index.ts
 // Product Table Barrel Export
-// ============================================================================
 
 export { ProductTable } from './ProductTable'
 export { productTableColumns } from './ProductTableColumns'

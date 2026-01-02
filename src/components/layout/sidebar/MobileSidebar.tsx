@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/MobileSidebar.tsx
 // Mobile Sidebar with Overlay
-// ============================================================================
 
 import { Sidebar } from '../../sidebar/Sidebar'
 import { useSidebar } from '@/hooks/useSidebar'

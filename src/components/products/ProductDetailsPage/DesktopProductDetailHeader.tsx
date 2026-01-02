@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Products/DesktopProductDetailHeader.tsx
+
+// FILE: src/components/products/ProductDetailsPage/DesktopProductDetailHeader.tsx
 // Desktop Product Detail Header Component
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,9 +33,8 @@ interface DesktopProductDetailHeaderProps {
   onSettingsClick?: () => void
 }
 
-// ============================================================================
 // DESKTOP PRODUCT DETAIL HEADER COMPONENT
-// ============================================================================
+
 
 export const DesktopProductDetailHeader: React.FC<
   DesktopProductDetailHeaderProps

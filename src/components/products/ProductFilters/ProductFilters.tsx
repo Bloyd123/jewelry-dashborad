@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductFilters.tsx
 // Main Product Filters Container - Responsive Desktop & Mobile
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

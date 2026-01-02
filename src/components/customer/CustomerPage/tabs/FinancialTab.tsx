@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/FinancialTab.tsx
+// FILE: src/components/customer/CustomerPage/tabs/FinancialTab.tsx
 // Financial Information Tab
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,17 +10,13 @@ import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface FinancialTabProps {
   customerId?: string
 }
 
-// ============================================================================
 // FINANCIAL TAB COMPONENT
-// ============================================================================
 
 export const FinancialTab: React.FC<FinancialTabProps> = ({ customerId }) => {
   const { t } = useTranslation()

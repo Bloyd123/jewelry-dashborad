@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/PaymentModeFilter.tsx
 // Payment Mode Filter - Uses Reusable TypeFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

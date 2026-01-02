@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/features/ShopTable/ShopTableActions.tsx
 // Shop Table Row Actions & Bulk Actions
-// ============================================================================
+// 
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,9 +27,9 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Shop } from '@/types/shop.types'
 
-// ============================================================================
+// 
 // ROW ACTIONS (Individual Shop Actions)
-// ============================================================================
+// 
 
 export const getShopRowActions = (
   onViewDetails: (shop: Shop) => void,
@@ -110,9 +110,9 @@ export const getShopRowActions = (
   return actions
 }
 
-// ============================================================================
+// 
 // BULK ACTIONS BAR (Shows when rows are selected)
-// ============================================================================
+// 
 
 interface BulkActionsBarProps {
   selectedCount: number

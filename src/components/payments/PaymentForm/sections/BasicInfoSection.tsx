@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/sections/BasicInfoSection.tsx
 // Basic Information Section (Payment Type, Amount, Date, Time)
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'

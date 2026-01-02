@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/features/SalesTable/SalesTableActions.tsx
 // Sales Table Row Actions & Bulk Actions
-// ============================================================================
+// 
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,9 +31,9 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Sale } from '@/types/sale.types'
 
-// ============================================================================
+// 
 // ROW ACTIONS
-// ============================================================================
+// 
 
 export const getSalesRowActions = (
   onViewDetails: (sale: Sale) => void,
@@ -114,9 +114,9 @@ export const getSalesRowActions = (
   },
 ]
 
-// ============================================================================
+// 
 // BULK ACTIONS BAR
-// ============================================================================
+// 
 
 interface BulkActionsBarProps {
   selectedCount: number

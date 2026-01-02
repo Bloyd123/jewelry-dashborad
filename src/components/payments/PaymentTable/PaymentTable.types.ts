@@ -1,16 +1,13 @@
-// ============================================================================
-// FILE: src/components/features/PaymentTable/PaymentTable.types.ts
+
+// FILE: src/components/payments/PaymentTable/PaymentTable.types.ts
 // Payment Table Type Definitions
-// ============================================================================
 
 import type { Payment } from '@/types/payment.types'
 
 // Re-export Payment type
 export type { Payment }
 
-// ============================================================================
 // MOCK DATA FOR TESTING
-// ============================================================================
 
 export const MOCK_PAYMENTS: Payment[] = [
   {

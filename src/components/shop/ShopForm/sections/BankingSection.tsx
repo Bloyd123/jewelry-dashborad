@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shop/ShopForm/sections/BankingSection.tsx
 // Banking Details Section
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/sections/ReferenceLinkSection.tsx
 // Reference Link Section (Link to Sale/Purchase Invoice)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

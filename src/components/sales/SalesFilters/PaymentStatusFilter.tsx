@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/PaymentStatusFilter.tsx
 // Payment Status Filter - Uses Reusable StatusFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: componens/Dashboard/components/DashboardStats.tsx
 // Stats Cards Component
-// ============================================================================
 
 import {
   TrendingUp,

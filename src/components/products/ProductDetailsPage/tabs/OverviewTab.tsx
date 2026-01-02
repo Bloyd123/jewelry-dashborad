@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Products/tabs/OverviewTab.tsx
+
+// FILE: src/components/products/ProductDetailsPage/tabs/OverviewTab.tsx
 // Product Overview Tab - Accordion-based Layout
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,18 +29,16 @@ import {
 } from '@/components/ui/layout/Accordion/Accordion'
 import type { Product } from '@/types/product.types'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface OverviewTabProps {
   product: Product
   loading?: boolean
 }
 
-// ============================================================================
+
 // COPY BUTTON COMPONENT
-// ============================================================================
+
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -68,9 +65,9 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-// ============================================================================
+
 // OVERVIEW TAB COMPONENT
-// ============================================================================
+
 
 export const OverviewTab: React.FC<OverviewTabProps> = ({
   product,
@@ -106,9 +103,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     )
   }
 
-  // ========================================================================
+  
   // BASIC INFORMATION SECTION
-  // ========================================================================
+  
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -260,9 +257,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // METAL DETAILS SECTION
-  // ========================================================================
+  
 
   const MetalDetailsSection = () => (
     <div className="space-y-4 p-4">
@@ -307,9 +304,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // WEIGHT DETAILS SECTION
-  // ========================================================================
+  
 
   const WeightDetailsSection = () => (
     <div className="space-y-4 p-4">
@@ -364,9 +361,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // STOCK INFORMATION SECTION
-  // ========================================================================
+
 
   const StockInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -446,9 +443,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // TAGS SECTION
-  // ========================================================================
+
 
   const TagsSection = () => {
     if (!product.tags || product.tags.length === 0) {
@@ -472,9 +469,9 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // RENDER MAIN ACCORDION
-  // ========================================================================
+
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

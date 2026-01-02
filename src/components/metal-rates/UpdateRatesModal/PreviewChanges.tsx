@@ -1,16 +1,13 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/PreviewChanges.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/PreviewChanges.tsx
 // Preview Changes - Shows rate changes before saving
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface RateChange {
   metal: string
@@ -23,9 +20,7 @@ interface PreviewChangesProps {
   className?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const PreviewChanges: React.FC<PreviewChangesProps> = ({
   changes,
@@ -176,15 +171,3 @@ export const PreviewChanges: React.FC<PreviewChangesProps> = ({
 }
 
 PreviewChanges.displayName = 'PreviewChanges'
-
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-  }
-}
-*/

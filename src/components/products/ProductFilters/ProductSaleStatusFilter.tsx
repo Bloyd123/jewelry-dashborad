@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductSaleStatusFilter.tsx
 // Product Sale Status Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

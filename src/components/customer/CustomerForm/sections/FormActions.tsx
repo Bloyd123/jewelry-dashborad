@@ -1,7 +1,6 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerForm/sections/FormActions.tsx
 // Form Actions Component (Submit/Cancel Buttons)
-// ============================================================================
+
 
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'

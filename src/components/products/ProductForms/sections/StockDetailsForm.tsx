@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/sections/StockDetailsSection.tsx
 // Step 5: Stock, Images, Hallmarking & Other Details
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

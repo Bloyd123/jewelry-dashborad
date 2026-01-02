@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/GoldRatesForm.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/GoldRatesForm.tsx
 // Gold Rates Form - Section 1 of Update Metal Rates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface RatePairInput {
   buying: string
@@ -32,9 +29,8 @@ interface GoldRatesFormProps {
   className?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
+
 
 export const GoldRatesForm: React.FC<GoldRatesFormProps> = ({
   initialData,

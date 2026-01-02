@@ -1,7 +1,6 @@
-// / ============================================================================
-// FILE: src/components/metalrates/CurrentRatesCards/CurrentRatesCards.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/CurrentRatesCards/CurrentRatesCards.tsx
 // Current Metal Rates Display Cards
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,9 +26,7 @@ import { mockCurrentRate } from '@/pages/metal-rates/metal-rate.mock'
 import { CURRENCY_SYMBOLS } from '@/types/metalrate.types'
 import type { MetalRate, TrendDirection } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface CurrentRatesCardsProps {
   loading?: boolean
@@ -37,9 +34,7 @@ export interface CurrentRatesCardsProps {
   className?: string
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 const formatCurrency = (value: number, currency: string = 'INR'): string => {
   return `${CURRENCY_SYMBOLS[currency as keyof typeof CURRENCY_SYMBOLS]}${value.toFixed(2)}`
@@ -64,9 +59,7 @@ const getTrendIcon = (direction: 'up' | 'down' | 'neutral') => {
   }
 }
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
   loading = false,
@@ -92,9 +85,9 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
     timeStyle: 'short',
   })
 
-  // ============================================================================
+
   // LOADING STATE
-  // ============================================================================
+
 
   if (loading) {
     return (
@@ -123,10 +116,8 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
     )
   }
 
-  // ============================================================================
-  // MAIN RENDER
-  // ============================================================================
 
+  // MAIN RENDER
   return (
     <div className={className}>
       <Card>

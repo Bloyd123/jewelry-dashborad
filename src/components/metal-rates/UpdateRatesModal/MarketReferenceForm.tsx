@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/MarketReferenceForm.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/MarketReferenceForm.tsx
 // Market Reference Form - Section 5 (Optional) of Update Metal Rates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +10,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import type { MarketReference } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface MarketReferenceFormData {
   internationalGoldPrice: string
@@ -28,9 +25,8 @@ interface MarketReferenceFormProps {
   className?: string
 }
 
-// ============================================================================
+
 // COMPONENT
-// ============================================================================
 
 export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
   initialData,
@@ -211,14 +207,3 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
 
 MarketReferenceForm.displayName = 'MarketReferenceForm'
 
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-  }
-}
-*/

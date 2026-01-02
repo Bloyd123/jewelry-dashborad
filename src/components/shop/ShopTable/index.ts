@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/ShopTable/index.ts
+// 
+// FILE: src/components/shop/ShopTable/index.ts
 // ShopTable Component Exports
-// ============================================================================
+// 
 
 export { ShopTable } from './ShopTable'
 export { shopTableColumns } from './ShopTableColumns'

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: componens/dashboard/components/SalesChart.tsx
 // Sales Chart Component
-// ============================================================================
 
 import { BarChart3 } from 'lucide-react'
 

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: componens/dashboard/components/StockAlerts.tsx
 // Low Stock Alerts
-// ============================================================================
 
 import { AlertTriangle } from 'lucide-react'
 

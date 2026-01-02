@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormInput/FormInput.tsx
 // Theme-based Form Input Component
-// ============================================================================
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AlertCircle } from 'lucide-react'

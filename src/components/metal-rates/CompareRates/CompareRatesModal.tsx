@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/metalRates/CompareRatesModal/CompareRatesModal.tsx
+
+// FILE: src/components/metal-rates/CompareRates/CompareRatesModal.tsx
 // Compare Rates Between Dates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,9 +19,7 @@ import type {
   RateChangeDetail,
 } from '@/types/metalrate.types'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface CompareRatesModalProps {
   isOpen: boolean
@@ -30,9 +27,7 @@ interface CompareRatesModalProps {
   shopId: string
 }
 
-// ============================================================================
 // UTILITY FUNCTIONS
-// ============================================================================
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
@@ -51,9 +46,7 @@ const formatCurrency = (value: number) => {
   }).format(value)
 }
 
-// ============================================================================
 // MOCK API FUNCTION (Replace with real API later)
-// ============================================================================
 
 const getMockComparisonData = (
   fromDate: string,
@@ -129,9 +122,7 @@ const compareRates = async (shopId: string, fromDate: string, toDate: string) =>
 }
 */
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   isOpen,
@@ -146,9 +137,9 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   const [comparisonData, setComparisonData] =
     useState<RateComparisonResult | null>(null)
 
-  // ============================================================================
+  
   // HANDLERS
-  // ============================================================================
+
 
   const handleDateChange = (name: string, value: string) => {
     if (name === 'fromDate') {
@@ -225,9 +216,9 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     return 'text-text-tertiary'
   }
 
-  // ============================================================================
+
   // RENDER
-  // ============================================================================
+
 
   return (
     <Modal

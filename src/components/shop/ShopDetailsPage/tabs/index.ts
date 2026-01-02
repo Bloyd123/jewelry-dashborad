@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/pages/shops/profile/tabs/index.ts
+// 
+// FILE: src/components/shop/ShopDetailsPages/tabs/index.ts
 // Barrel export for all shop profile tabs
-// ============================================================================
+// 
 
 export { default as OverviewTab } from './OverviewTab'
 export { default as BankDetailsTab } from './BankDetails/BankDetailsTab'

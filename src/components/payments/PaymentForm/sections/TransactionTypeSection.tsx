@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/sections/TransactionTypeSection.tsx
 // Transaction Type Toggle Section (Receipt/Payment)
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react'

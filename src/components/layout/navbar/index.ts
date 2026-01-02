@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/navbar/index.ts
 // Navbar Exports
-// ============================================================================
 
 export { Navbar } from '../../navbar/Navbar'
 export { DesktopNavbar } from './DesktopNavbar'

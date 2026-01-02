@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/types.ts
 // Product Filter Types
-// ============================================================================
 
 import type { DateRange } from 'react-day-picker'
 

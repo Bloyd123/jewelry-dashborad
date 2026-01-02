@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/PaymentFilters.tsx
+
+// FILE: src/components/payments/PaymentFilters/PaymentFilters.tsx
 // Main Payment Filters Component with Desktop & Mobile Views
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

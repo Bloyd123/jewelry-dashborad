@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shop/ShopForm/ShopForm.desktop.tsx
 // Desktop Layout for ShopForm
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

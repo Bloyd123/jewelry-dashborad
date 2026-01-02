@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/PurchaseStatusFilter.tsx
 // Purchase Status Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

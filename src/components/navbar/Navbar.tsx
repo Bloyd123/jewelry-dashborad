@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: components/navbar/Navbar.tsx
 // Main Navbar Component (Responsive)
-// ============================================================================
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { DesktopNavbar } from '../layout/navbar/DesktopNavbar'

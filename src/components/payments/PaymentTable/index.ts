@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/PaymentTable/index.ts
+
+// FILE: src/components/payments/PaymentTable/index.ts
 // Payment Table - Barrel Export
-// ============================================================================
 
 export { PaymentTable } from './PaymentTable'
 export { paymentTableColumns } from './PaymentTableColumns'

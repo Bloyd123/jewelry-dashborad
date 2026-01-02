@@ -1,16 +1,13 @@
-// ============================================================================
-// FILE: src/components/features/RateHistoryTable/RateHistoryColumns.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryColumns.tsx
 // Rate History Table Column Definitions
-// ============================================================================
 
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { MetalRate } from '@/types/metalrate.types'
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Format currency in INR
@@ -52,9 +49,7 @@ const getTrendIcon = (change: number) => {
   return <Minus className="h-4 w-4 text-text-tertiary" />
 }
 
-// ============================================================================
 // COLUMN DEFINITIONS
-// ============================================================================
 
 export const rateHistoryColumns: DataTableColumn<MetalRate>[] = [
   // 1. Date

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/dashboard/pages/Dashboard.tsx
 // Dashboard
-// ============================================================================
 
 import { DashboardStats } from '../components/DashboardStats'
 import { SalesChart } from '../components/SalesChart'

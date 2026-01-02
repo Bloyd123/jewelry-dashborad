@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductActiveFilters.tsx
 // Active Product Filters Display
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

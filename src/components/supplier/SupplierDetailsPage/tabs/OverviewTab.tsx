@@ -44,9 +44,9 @@ import { Label } from '@/components/ui/label'
 import { dummySupplier } from '@/pages/suppliers/data'
 import type { Supplier } from '@/types/supplier.types'
 
-// ============================================================================
+// 
 // COPY BUTTON COMPONENT
-// ============================================================================
+// 
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -73,9 +73,9 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-// ============================================================================
+// 
 // RATING STARS COMPONENT
-// ============================================================================
+// 
 
 const RatingStars = ({ rating }: { rating: number }) => {
   return (
@@ -95,9 +95,9 @@ const RatingStars = ({ rating }: { rating: number }) => {
   )
 }
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 const SupplierOverviewTab = () => {
   const { t } = useTranslation()
@@ -226,9 +226,9 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
+
   // CONTACT PERSON SECTION
-  // ========================================================================
+
 
   const ContactPersonSection = () => (
     <div className="space-y-4 p-4">

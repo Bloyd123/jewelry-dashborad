@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/payment/PaymentForm/PaymentForm.desktop.tsx
+
+// FILE: src/components/payments/PaymentForm/PaymentForm.desktop.tsx
 // Desktop Layout for PaymentForm (2-Column)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

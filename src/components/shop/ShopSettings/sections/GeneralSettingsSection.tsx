@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shops/ShopSettings/sections/GeneralSettingsSection.tsx
 // Section 2: General Settings
-// ============================================================================
+// 
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

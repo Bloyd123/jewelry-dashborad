@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductSearchBar.tsx
 // Product Search Bar Component
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

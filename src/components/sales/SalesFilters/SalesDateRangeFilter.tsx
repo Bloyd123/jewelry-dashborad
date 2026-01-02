@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/SalesDateRangeFilter.tsx
 // Sales Date Range Filter - Uses Reusable DateRangeFilter
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

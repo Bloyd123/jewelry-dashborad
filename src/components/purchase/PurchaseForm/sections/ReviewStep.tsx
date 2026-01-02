@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseForm/sections/ReviewSection.tsx
 // Review Section
-// ============================================================================
+
 
 import { useTranslation } from 'react-i18next'
 import type { FormSectionProps } from '../PurchaseForm.types'

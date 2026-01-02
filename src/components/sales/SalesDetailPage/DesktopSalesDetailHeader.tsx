@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/Sales/DesktopSalesDetailHeader.tsx
+
+// FILE: src/components/sales/SalesDetailPage/DesktopSalesDetailHeader.tsx
 // Desktop Sales Detail Header Component
-// ============================================================================
+
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,9 +27,9 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Sale } from '@/types/sale.types'
 import { dummySales } from '@/pages/sales/data'
 
-// ============================================================================
+
 // COMPONENT PROPS
-// ============================================================================
+
 
 interface DesktopSalesDetailHeaderProps {
   saleId?: string
@@ -42,9 +42,9 @@ interface DesktopSalesDetailHeaderProps {
   onSendClick?: () => void
 }
 
-// ============================================================================
+
 // DESKTOP SALES DETAIL HEADER COMPONENT
-// ============================================================================
+
 
 export const DesktopSalesDetailHeader: React.FC<
   DesktopSalesDetailHeaderProps

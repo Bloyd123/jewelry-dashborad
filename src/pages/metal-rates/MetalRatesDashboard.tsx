@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/pages/metal-rates/MetalRatesDashboardPage.tsx
 // Main Metal Rates Dashboard Page with Header and Tab Content
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'

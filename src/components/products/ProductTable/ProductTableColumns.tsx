@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductTable/ProductTableColumns.tsx
 // Product Table Column Definitions
-// ============================================================================
 
 import { Copy, Award, Package } from 'lucide-react'
 // import { Avatar } from '@/components/ui/data-display/Avatar'
@@ -9,9 +8,7 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Product } from './ProductTable.types'
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Format currency in INR
@@ -40,9 +37,7 @@ const getCategoryName = (category: any): string => {
   return category.name?.default || category.name || '-'
 }
 
-// ============================================================================
 // COLUMN DEFINITIONS
-// ============================================================================
 
 export const productTableColumns: DataTableColumn<Product>[] = [
   // 1. Product Code with Image Thumbnail

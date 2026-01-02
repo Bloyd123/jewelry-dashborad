@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/PaymentSearchBar.tsx
+
+// FILE: src/components/payments/paymentFilters/PaymentSearchBar.tsx
 // Payment Search Bar Component
-// ============================================================================
 
 import * as React from 'react'
 import { Search, X } from 'lucide-react'

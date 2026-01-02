@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/SidebarItem.tsx
 // Single Sidebar Menu Item (No children)
-// ============================================================================
 
 import { NavLink } from 'react-router-dom'
 import type { MenuItem } from '@/types/menu'

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/pages/customers/CustomerDetailsPage.tsx
+
+// FILE: src/pages/customer/CustomerDetailsPage.tsx
 // Customer Details Page with Tabbed Interface
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'

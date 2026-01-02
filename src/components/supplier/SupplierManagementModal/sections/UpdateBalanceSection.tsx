@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierManagementModal/sections/UpdateBalanceSection.tsx
 // Update Supplier Balance Section
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

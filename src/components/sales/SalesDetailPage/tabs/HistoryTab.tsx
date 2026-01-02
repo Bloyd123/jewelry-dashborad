@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Sales/tabs/HistoryTab.tsx
+
+// FILE: src/components/sales/SalesDetailPage/tabs/HistoryTab.tsx
 // Sales Activity History/Audit Log Tab
-// ============================================================================
 
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,9 +34,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// ============================================================================
+
 // COMPONENT PROPS
-// ============================================================================
+
 
 interface HistoryTabProps {
   saleId: string
@@ -47,9 +46,9 @@ interface HistoryTabProps {
   // activities?: ActivityLog[]
 }
 
-// ============================================================================
+
 // TYPES
-// ============================================================================
+
 
 interface ActivityLog {
   _id: string
@@ -81,9 +80,9 @@ interface ActivityLog {
   }
 }
 
-// ============================================================================
+// 
 // DUMMY DATA (Replace with API call)
-// ============================================================================
+// 
 
 const dummyActivities: ActivityLog[] = [
   {
@@ -171,9 +170,9 @@ const dummyActivities: ActivityLog[] = [
   },
 ]
 
-// ============================================================================
+// 
 // ACTIVITY ICON COMPONENT
-// ============================================================================
+// 
 
 const getActivityIcon = (actionType: string) => {
   switch (actionType) {
@@ -213,9 +212,9 @@ const getActivityColor = (actionType: string) => {
   }
 }
 
-// ============================================================================
+// 
 // ACTIVITY ITEM COMPONENT
-// ============================================================================
+// 
 
 const ActivityItem: React.FC<{
   activity: ActivityLog
@@ -372,9 +371,9 @@ const ActivityItem: React.FC<{
   )
 }
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 const HistoryTab: React.FC<HistoryTabProps> = ({
   saleId,

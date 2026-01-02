@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/SalesPersonFilter.tsx
 // Sales Person Filter
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

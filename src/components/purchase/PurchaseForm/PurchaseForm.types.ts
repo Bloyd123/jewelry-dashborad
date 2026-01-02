@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseForm/PurchaseForm.types.ts
 // PurchaseForm Types and Interfaces
-// ============================================================================
+
 
 import type {
   IPurchaseItem,

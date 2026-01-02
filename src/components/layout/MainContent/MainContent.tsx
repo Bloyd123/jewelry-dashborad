@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layouts/MainContent/MainContent.tsx
 // Dashboard Layout with Sidebar + Navbar (FIXED)
-// ============================================================================
 
 import { Outlet } from 'react-router-dom'
 import { Sidebar, MobileSidebar } from '@/components/layout/sidebar'

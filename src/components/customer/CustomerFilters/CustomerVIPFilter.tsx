@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerVIPFilter.tsx
 // Customer VIP Filter - Uses Reusable StatusFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StatusFilter } from '@/components/ui/filters/StatusFilter'
 import type { StatusOption } from '@/components/ui/filters/StatusFilter'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface CustomerVIPFilterProps {
   value?: string
@@ -19,9 +15,7 @@ interface CustomerVIPFilterProps {
   className?: string
 }
 
-// ============================================================================
 // CUSTOMER VIP FILTER COMPONENT
-// ============================================================================
 
 export const CustomerVIPFilter = React.forwardRef<
   HTMLButtonElement,

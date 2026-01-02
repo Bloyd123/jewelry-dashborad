@@ -1,16 +1,14 @@
-// ============================================================================
-// FILE: src/components/features/Products/ProductDetailHeader.tsx
-// Responsive Product Detail Header (Main Component)
-// ============================================================================
 
+// FILE: src/components/products/ProductDetailsPage/ProductDetailHeader.tsx
+// Responsive Product Detail Header (Main Component)
 import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileProductDetailHeader } from './MobileProductDetailHeader'
 import { DesktopProductDetailHeader } from './DesktopProductDetailHeader'
 
-// ============================================================================
+
 // COMPONENT PROPS
-// ============================================================================
+
 
 interface ProductDetailHeaderProps {
   productId?: string
@@ -21,9 +19,9 @@ interface ProductDetailHeaderProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
+
 // RESPONSIVE PRODUCT DETAIL HEADER COMPONENT
-// ============================================================================
+
 
 export const ProductDetailHeader: React.FC<
   ProductDetailHeaderProps

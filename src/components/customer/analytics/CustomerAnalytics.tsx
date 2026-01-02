@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customers/analytics/CustomerAnalytics.tsx
 // Customer Analytics Dashboard Component
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -44,9 +42,7 @@ import {
   mockOutstandingPayments,
 } from './customerAnalytics.mock'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface CustomerStatistics {
   totalCustomers: number
@@ -146,9 +142,7 @@ export interface CustomerAnalyticsProps {
   className?: string
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -171,9 +165,8 @@ const formatNumber = (value: number): string => {
 //   }
 // }
 
-// ============================================================================
 // CUSTOMERANALYTICS COMPONENT
-// ============================================================================
+
 
 export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
   shopId,

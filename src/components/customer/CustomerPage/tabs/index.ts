@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/index.ts
+// FILE: src/components/customer/CustomerPage/tabs/index.ts
 // Customer Tabs Exports
-// ============================================================================
 
 export { PersonalInfoTab } from './PersonalInfoTab'
 export { FinancialTab } from './FinancialTab'

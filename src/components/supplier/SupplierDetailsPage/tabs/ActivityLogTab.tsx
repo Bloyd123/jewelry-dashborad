@@ -20,9 +20,9 @@ import {
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 // import { dummySupplier } from '@/data/supplier/supplier.dummy'
 
-// ============================================================================
+// 
 // ACTIVITY LOG TYPES
-// ============================================================================
+// 
 
 type ActivityAction =
   | 'Payment'
@@ -49,9 +49,9 @@ interface ActivityLog {
   status: ActivityStatus
 }
 
-// ============================================================================
+// 
 // DUMMY ACTIVITY LOG DATA
-// ============================================================================
+// 
 
 const dummyActivityLogs: ActivityLog[] = [
   {
@@ -176,9 +176,9 @@ const dummyActivityLogs: ActivityLog[] = [
   },
 ]
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 const SupplierActivityTab: React.FC = () => {
   const { t } = useTranslation()

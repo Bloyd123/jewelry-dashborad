@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/PaymentTypeFilter.tsx
+
+// FILE: src/components/payments/paymentFilters/PaymentTypeFilter.tsx
 // Payment Type Filter Component
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

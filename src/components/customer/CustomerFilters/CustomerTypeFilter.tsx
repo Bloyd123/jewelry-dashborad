@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerTypeFilter.tsx
 // Customer Type Filter - Uses Reusable TypeFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +7,7 @@ import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
 import { Crown, ShoppingBag, Tag, User } from 'lucide-react'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface CustomerTypeFilterProps {
   value?: string
@@ -21,9 +17,7 @@ interface CustomerTypeFilterProps {
   disabled?: boolean
 }
 
-// ============================================================================
 // CUSTOMER TYPE FILTER COMPONENT
-// ============================================================================
 
 export const CustomerTypeFilter = React.forwardRef<
   HTMLButtonElement,

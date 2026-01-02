@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/sections/PricingSection.tsx
 // Step 4: Pricing & Auto-calculation
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'

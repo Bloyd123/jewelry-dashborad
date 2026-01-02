@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/sections/StonesSection.tsx
 // Step 3: Stones & Diamonds Management
-// ============================================================================
 
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

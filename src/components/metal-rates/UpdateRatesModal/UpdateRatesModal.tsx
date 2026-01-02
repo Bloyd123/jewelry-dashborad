@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/UpdateRatesModal.tsx
+
+// FILE: src/components/metal-rates/UpdateRatesModal/UpdateRatesModal.tsx
 // Complete Update Metal Rates Modal with Sheet
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,9 +23,7 @@ import { AdditionalDetailsForm } from './AdditionalDetailsForm'
 import { MarketReferenceForm } from './MarketReferenceForm'
 import { PreviewChanges } from './PreviewChanges'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface UpdateRatesModalProps {
   open: boolean
@@ -36,9 +33,7 @@ interface UpdateRatesModalProps {
   onSave?: (data: any) => void
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const UpdateRatesModal: React.FC<UpdateRatesModalProps> = ({
   open,
@@ -194,18 +189,3 @@ export const UpdateRatesModal: React.FC<UpdateRatesModalProps> = ({
 }
 
 UpdateRatesModal.displayName = 'UpdateRatesModal'
-
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-  },
-  "common": {
-
-  }
-}
-*/

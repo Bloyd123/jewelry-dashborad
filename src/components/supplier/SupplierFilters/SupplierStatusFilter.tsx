@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierFilters/SupplierStatusFilter.tsx
 // Supplier Status Filter - Uses Reusable StatusFilter
-// ============================================================================
+// 
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

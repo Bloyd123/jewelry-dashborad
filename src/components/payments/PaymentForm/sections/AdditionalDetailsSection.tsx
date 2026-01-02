@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/payment/PaymentForm/sections/AdditionalDetailsSection.tsx
+
+// FILE: src/components/payments/PaymentForm/sections/AdditionalDetailsSection.tsx
 // Additional Details Section (Notes, Tags, Attachments)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

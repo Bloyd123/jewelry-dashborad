@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/Customers/MobileCustomerDetailHeader.tsx
+// FILE: src/components/customer/CustomerPage/MobileCustomerDetailHeader.tsx
 // Mobile Customer Detail Header Component
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +20,7 @@ import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface MobileCustomerDetailHeaderProps {
   customerId?: string
@@ -34,9 +30,7 @@ interface MobileCustomerDetailHeaderProps {
   onSettingsClick?: () => void
 }
 
-// ============================================================================
 // MOBILE CUSTOMER DETAIL HEADER COMPONENT
-// ============================================================================
 
 export const MobileCustomerDetailHeader: React.FC<
   MobileCustomerDetailHeaderProps

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerForm/CustomerForm.mobile.tsx
 // Mobile Layout for CustomerForm (Tabbed Interface)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

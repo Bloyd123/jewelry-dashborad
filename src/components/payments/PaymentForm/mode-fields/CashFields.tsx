@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/mode-fields/CashFields.tsx
 // Cash Payment Mode Fields
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

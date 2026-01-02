@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/ShopDetails/ActivityLogFilters.tsx
+// 
+// FILE: src/components/shop/ShopDetailsPages/tabs/ActivityLogFilters.tsx
 // Activity Log Filters Component - FIXED with Label import
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -15,9 +15,9 @@ import { StatusFilter } from '@/components/ui/filters/StatusFilter'
 import { DateRangeFilter } from '@/components/ui/filters/DateRangeFilter'
 import type { DateRange } from 'react-day-picker'
 
-// ============================================================================
+// 
 // TYPES
-// ============================================================================
+// 
 
 export interface ActivityLogFilterValues {
   search: string
@@ -34,9 +34,9 @@ export interface ActivityLogFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
+// 
 // FILTER OPTIONS
-// ============================================================================
+// 
 
 const USER_ROLE_OPTIONS = [
   { value: 'super_admin', label: 'Super Admin' },
@@ -92,9 +92,9 @@ const STATUS_OPTIONS = [
   },
 ]
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
   filters,

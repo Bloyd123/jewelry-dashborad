@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Customers/DesktopCustomerDetailHeader.tsx
+// FILE: src/components/customer/CustomerPage/DesktopCustomerDetailHeader.tsx
 // Desktop Customer Detail Header Component
-// ============================================================================
+
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +25,7 @@ import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface DesktopCustomerDetailHeaderProps {
   customerId?: string
@@ -38,9 +35,7 @@ interface DesktopCustomerDetailHeaderProps {
   onSettingsClick?: () => void
 }
 
-// ============================================================================
 // DESKTOP CUSTOMER DETAIL HEADER COMPONENT
-// ============================================================================
 
 export const DesktopCustomerDetailHeader: React.FC<
   DesktopCustomerDetailHeaderProps

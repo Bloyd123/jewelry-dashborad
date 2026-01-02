@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/PaymentTable/PaymentTableColumns.tsx
+
+// FILE: src/components/payments/PaymentTable/PaymentTableColumns.tsx
 // Payment Table Column Definitions
-// ============================================================================
 
 import {
   Copy,
@@ -14,9 +13,7 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Payment } from './PaymentTable.types'
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Format currency in INR
@@ -62,9 +59,9 @@ const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
 
-// ============================================================================
+
 // COLUMN DEFINITIONS
-// ============================================================================
+
 
 export const paymentTableColumns: DataTableColumn<Payment>[] = [
   // 1. Payment Number

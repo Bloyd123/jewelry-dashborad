@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/navbar/MobileNavbar.tsx
 // Mobile Navbar with Theme Picker
-// ============================================================================
 
 import { Menu, Bell, Palette } from 'lucide-react'
 import { useSidebar } from '@/hooks/useSidebar'

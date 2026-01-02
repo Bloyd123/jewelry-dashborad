@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/PaymentStatusFilter.tsx
+
+// FILE: src/components/payments/paymentFilters/PaymentStatusFilter.tsx
 // Payment Status Filter Component
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

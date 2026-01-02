@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Products/tabs/ImagesTab.tsx
+
+// FILE: src/components/products/ProductDetailsPage/tabs/ImagesTab.tsx
 // Product Images Tab - Accordion-based Layout
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,9 +24,7 @@ import {
 } from '@/components/ui/layout/Accordion/Accordion'
 import type { Product } from '@/types/product.types'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface ImagesTabProps {
   product: Product
@@ -37,9 +34,7 @@ interface ImagesTabProps {
   onSetPrimaryImage?: (imageUrl: string) => void
 }
 
-// ============================================================================
 // IMAGES TAB COMPONENT
-// ============================================================================
 
 export const ImagesTab: React.FC<ImagesTabProps> = ({
   product,
@@ -77,9 +72,9 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // IMAGE STATISTICS SECTION
-  // ========================================================================
+
 
   const ImageStatisticsSection = () => (
     <div className="space-y-4 p-4">
@@ -155,9 +150,9 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // IMAGE GALLERY SECTION
-  // ========================================================================
+
 
   const ImageGallerySection = () => {
     if (!product.images || product.images.length === 0) {
@@ -378,9 +373,8 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // IMAGE PREVIEW SECTION
-  // ========================================================================
 
   const ImagePreviewSection = () => {
     if (!selectedImage) {
@@ -440,9 +434,9 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-  // ========================================================================
+
   // RENDER MAIN ACCORDION
-  // ========================================================================
+
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

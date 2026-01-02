@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/MobileMetalRatesDashboardHeader.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/MobileMetalRatesDashboardHeader.tsx
 // Mobile Metal Rates Dashboard Header with Tabs and Shop Info
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,9 +23,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { UpdateRatesModal } from '@/components/metal-rates/UpdateRatesModal/UpdateRatesModal'
 import { CompareRatesModal } from '@/components/metal-rates/CompareRates'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface MobileMetalRatesDashboardHeaderProps {
   shopId?: string
@@ -40,9 +37,9 @@ interface MobileMetalRatesDashboardHeaderProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
+
 // MOBILE METAL RATES DASHBOARD HEADER COMPONENT
-// ============================================================================
+
 
 export const MobileMetalRatesDashboardHeader: React.FC<
   MobileMetalRatesDashboardHeaderProps

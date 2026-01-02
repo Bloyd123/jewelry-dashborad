@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Products/tabs/index.ts
+
+// FILE: src/components/products/ProductDetailsPage/tabs/index.ts
 // Export all Product Detail Tabs
-// ============================================================================
 
 export { OverviewTab } from './OverviewTab'
 export { PricingTab } from './PricingTab'

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductCategoryFilter.tsx
 // Product Category Filter with Subcategories
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/payment/PaymentForm/sections/ActivityTimelineSection.tsx
+
+// FILE: src/components/payments/PaymentForm/sections/ActivityTimelineSection.tsx
 // Activity Timeline Section (View/Edit Mode Only)
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import {

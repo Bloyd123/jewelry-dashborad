@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/features/SupplierTable/SupplierTableColumns.tsx
 // Supplier Table Column Definitions
-// ============================================================================
+// 
 
 import { Copy, Award, Store, TrendingUp } from 'lucide-react'
 import { Avatar } from '@/components/ui/data-display/Avatar'
@@ -9,9 +9,9 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Supplier } from './SupplierTable.types'
 
-// ============================================================================
+// 
 // HELPER FUNCTIONS
-// ============================================================================
+// 
 
 /**
  * Format currency in INR
@@ -43,9 +43,9 @@ const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
 
-// ============================================================================
+// 
 // COLUMN DEFINITIONS
-// ============================================================================
+// 
 
 export const supplierTableColumns: DataTableColumn<Supplier>[] = [
   // 1. Supplier Code with Avatar

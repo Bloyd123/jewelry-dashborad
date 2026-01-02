@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/SidebarHeader.tsx
 // Sidebar Header - Logo & Brand
-// ============================================================================
 
 import { useSidebar } from '@/hooks/useSidebar'
 import { Menu, X } from 'lucide-react'

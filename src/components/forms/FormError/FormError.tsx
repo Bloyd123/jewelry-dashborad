@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormError/FormError.tsx
 // Theme-based Form Error Component
-// ============================================================================
 
 import { AlertCircle, AlertTriangle, XCircle } from 'lucide-react'
 

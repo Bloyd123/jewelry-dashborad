@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shop/ShopForm/ShopForm.types.ts
 // ShopForm Types and Interfaces
-// ============================================================================
+// 
 
 import type { Shop } from '@/types'
 

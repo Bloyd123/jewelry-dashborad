@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/features/ShopTable/ShopTableColumns.tsx
 // Shop Table Column Definitions
-// ============================================================================
+// 
 
 import { Copy, MapPin, Phone, Award } from 'lucide-react'
 import { Avatar } from '@/components/ui/data-display/Avatar'
@@ -9,9 +9,9 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Shop, ShopType, ShopCategory } from '@/types/shop.types'
 
-// ============================================================================
+// 
 // HELPER FUNCTIONS
-// ============================================================================
+// 
 
 /**
  * Format currency in INR
@@ -128,9 +128,9 @@ const getCategoryVariant = (
   return variants[category] ?? 'default'
 }
 
-// ============================================================================
+// 
 // COLUMN DEFINITIONS
-// ============================================================================
+// 
 
 export const shopTableColumns: DataTableColumn<Shop>[] = [
   // 1. Shop Code with Badge

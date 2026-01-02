@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/ReconciliationFilter.tsx
+
+// FILE: src/components/payments/paymentFilters/ReconciliationFilter.tsx
 // Reconciliation Status Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

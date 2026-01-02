@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shop/ShopForm/ShopForm.mobile.tsx
 // Mobile Layout for ShopForm (Tabbed Interface)
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

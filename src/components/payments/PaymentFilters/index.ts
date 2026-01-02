@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/index.ts
+
+// FILE: src/components/payments/paymentFilters/index.ts
 // Payment Filters - Barrel Export
-// ============================================================================
 
 export { PaymentFilters } from './PaymentFilters'
 export type { PaymentFilterState, PaymentFiltersProps } from './PaymentFilters'

@@ -23,9 +23,9 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Label } from '@/components/ui/label'
 import type { BankDetail, UpiDetail } from '@/types/shop.types'
 
-// ============================================================================
+// 
 // COMPONENT PROPS
-// ============================================================================
+// 
 
 interface BankDetailsTabProps {
   bankDetails?: BankDetail[]
@@ -33,9 +33,9 @@ interface BankDetailsTabProps {
   isAdminView?: boolean
 }
 
-// ============================================================================
+// 
 // BANK DETAILS TAB COMPONENT
-// ============================================================================
+// 
 
 export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
   bankDetails = [],
@@ -397,45 +397,5 @@ export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
     </div>
   )
 }
-
-// ============================================================================
-// TRANSLATION KEYS STRUCTURE
-// ============================================================================
-
-/*
-{
-  "bankDetails": {
-    "bankAccounts": {
-      "title": "Bank Accounts",
-      "subtitle": "Manage your bank account details"
-    },
-    "upiDetails": {
-      "title": "UPI Details",
-      "subtitle": "Manage your UPI payment methods"
-    },
-    "primary": "Primary",
-    "addBank": "Add Bank",
-    "addUPI": "Add UPI",
-    "accountNumber": "Account Number",
-    "ifscCode": "IFSC Code",
-    "accountHolder": "Account Holder Name",
-    "branch": "Branch",
-    "accountType": "Account Type",
-    "upiId": "UPI ID",
-    "copyUPI": "Copy UPI ID",
-    "downloadQR": "Download QR",
-    "viewQR": "View QR Code",
-    "noBankAccounts": "No bank accounts added yet",
-    "noUPIDetails": "No UPI details added yet",
-    "addFirstBank": "Add Your First Bank Account",
-    "addFirstUPI": "Add Your First UPI",
-    "adminOnlyNotice": "Bank and UPI details are only visible to administrators"
-  },
-  "common": {
-    "active": "Active",
-    "inactive": "Inactive"
-  }
-}
-*/
 
 export default BankDetailsTab

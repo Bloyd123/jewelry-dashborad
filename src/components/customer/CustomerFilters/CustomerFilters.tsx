@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerFilters.tsx
 // Customer Filters Container - Responsive Desktop & Mobile
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

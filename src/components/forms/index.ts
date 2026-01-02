@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/index.ts
 // Export all form components
-// ============================================================================
 
 export { FormInput } from './FormInput'
 export { FormSelect } from './FormSelect'

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/TransactionTypeFilter.tsx
+
+// FILE: src/components/payments/PaymentFilters/TransactionTypeFilter.tsx
 // Transaction Type Filter (Receipt/Payment)
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

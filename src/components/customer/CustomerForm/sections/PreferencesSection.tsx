@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerForm/sections/PreferencesSection.tsx
 // Preferences Section
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'

@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerSearchBar.tsx
 // Customer Search Wrapper - Uses Reusable SearchBar
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { SearchBar } from '@/components/ui/SearchBar'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface CustomerSearchBarProps {
   value: string
@@ -20,9 +16,7 @@ export interface CustomerSearchBarProps {
   autoFocus?: boolean
 }
 
-// ============================================================================
 // CUSTOMER SEARCH BAR COMPONENT
-// ============================================================================
 
 export const CustomerSearchBar = React.forwardRef<
   HTMLInputElement,

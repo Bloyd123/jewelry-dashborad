@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductFilters/ProductPriceFilter.tsx
 // Product Price Range Filter
-// ============================================================================
 
 import * as React from 'react'
 import {

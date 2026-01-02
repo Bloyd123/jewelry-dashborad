@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/StatusFilter.tsx
 // Sales Status Filter - Uses Reusable StatusFilter
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

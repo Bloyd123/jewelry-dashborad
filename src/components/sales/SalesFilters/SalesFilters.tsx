@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/SalesFilters.tsx
 // Sales Filters Container - Responsive Desktop & Mobile
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +26,9 @@ import {
   ActiveFiltersDisplay,
 } from './index'
 
-// ============================================================================
+// 
 // TYPES
-// ============================================================================
+// 
 
 export interface PriceRange {
   min?: number
@@ -55,9 +55,9 @@ interface SalesFiltersProps {
   salesPersons?: any[]
 }
 
-// ============================================================================
+
 // SALES FILTERS COMPONENT
-// ============================================================================
+
 
 export const SalesFilters: React.FC<SalesFiltersProps> = ({
   filters,
@@ -238,9 +238,9 @@ export const SalesFilters: React.FC<SalesFiltersProps> = ({
     onFiltersChange(newFilters)
   }
 
-  // ============================================================================
+  
   // DESKTOP VIEW
-  // ============================================================================
+   
   if (isDesktop) {
     return (
       <>
@@ -376,9 +376,9 @@ export const SalesFilters: React.FC<SalesFiltersProps> = ({
     )
   }
 
-  // ============================================================================
+  
   // MOBILE VIEW WITH DRAWER
-  // ============================================================================
+  
   return (
     <>
       <div className="space-y-3">

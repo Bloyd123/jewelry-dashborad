@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/PaymentTable/PaymentTableActions.tsx
+
+// FILE: src/components/payments/PaymentTable/PaymentTableActions.tsx
 // Payment Table Row Actions & Bulk Actions with Role-Based Permissions
-// ============================================================================
+
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -30,9 +30,7 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Payment } from '@/types/payment.types'
 
-// ============================================================================
 // ROW ACTIONS (Individual Payment Actions)
-// ============================================================================
 
 export const getPaymentRowActions = (
   onViewDetails: (payment: Payment) => void,
@@ -136,9 +134,7 @@ export const getPaymentRowActions = (
   return actions
 }
 
-// ============================================================================
 // BULK ACTIONS BAR (Shows when rows are selected)
-// ============================================================================
 
 interface BulkActionsBarProps {
   selectedCount: number

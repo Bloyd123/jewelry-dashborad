@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormDatePicker/FormDatePicker.tsx
 // Theme-based Form DatePicker Component
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { Label } from '@/components/ui/label'

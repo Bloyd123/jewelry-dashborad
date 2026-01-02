@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerMembershipFilter.tsx
 // Customer Membership Tier Filter - Uses Reusable TypeFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +7,7 @@ import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
 import { Award, Medal, Trophy, Crown } from 'lucide-react'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface CustomerMembershipFilterProps {
   value?: string
@@ -21,9 +17,7 @@ interface CustomerMembershipFilterProps {
   disabled?: boolean
 }
 
-// ============================================================================
 // CUSTOMER MEMBERSHIP FILTER COMPONENT
-// ============================================================================
 
 export const CustomerMembershipFilter = React.forwardRef<
   HTMLButtonElement,

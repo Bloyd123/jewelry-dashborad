@@ -1,16 +1,13 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductTable/ProductTable.types.ts
 // Product Table TypeScript Types
-// ============================================================================
 
 import type { Product } from '@/types/product.types'
 
 // Re-export Product type for convenience
 export type { Product } from '@/types/product.types'
 
-// ============================================================================
 // TABLE-SPECIFIC TYPES
-// ============================================================================
 
 export interface ProductTableFilters {
   search: string

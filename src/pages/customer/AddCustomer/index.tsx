@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/pages/customer/AddCustomer/index.tsx
 // Add/Edit Customer Page
-// ============================================================================
+// 
 
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -13,9 +13,9 @@ import type { Customer } from '@/types'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 
-// ============================================================================
+// 
 // HELPER: Convert Customer to Form Data
-// ============================================================================
+// 
 const convertCustomerToFormData = (
   customer: Customer
 ): Partial<CreateCustomerInput> => {
@@ -55,9 +55,9 @@ const convertCustomerToFormData = (
   }
 }
 
-// ============================================================================
+// 
 // PAGE COMPONENT
-// ============================================================================
+// 
 export default function AddCustomerPage() {
   const navigate = useNavigate()
   const { customerId } = useParams()

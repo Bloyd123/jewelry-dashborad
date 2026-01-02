@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/sales/SalesFilters/SalesSearchBar.tsx
 // Sales Search Bar
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

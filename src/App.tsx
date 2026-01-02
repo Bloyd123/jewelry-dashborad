@@ -28,7 +28,7 @@ import { ShopListPage } from '@/pages/shops/ShopsListPage'
 
 import { Dashboard } from './components/dashboard/pages'
 import { NoInternetWrapper } from './components/common'
-import { AllCustomers } from './components/customer'
+import { AllCustomers } from './pages/customer/Allcustomer'
 import ShopDetailsPage from './pages/shops/ShopDetailsPage'
 // import { GoldRatesForm } from '@/components/metal-rates/UpdateRatesModal/GoldRatesForm'
 import { MetalRatesDashboardPage } from '@/pages/metal-rates/MetalRatesDashboard'

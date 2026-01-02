@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: componens/dashboard/components/RecentOrders.tsx
 // Recent Orders Table
-// ============================================================================
 
 import { Package, Eye } from 'lucide-react'
 

@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/SalesTable/index.ts
+// 
+// FILE: src/components/sales/SalesTable/index.ts
 // Sales Table Barrel Export
-// ============================================================================
+// 
 
 export { SalesTable } from './SalesTable'
 export { salesTableColumns } from './SalesTableColumns'

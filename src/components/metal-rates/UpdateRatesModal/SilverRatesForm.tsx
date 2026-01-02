@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/SilverRatesForm.tsx
+// FILE: src/components/metal-rates/UpdateRatesModal/SilverRatesForm.tsx
 // Silver Rates Form - Section 2 of Update Metal Rates Modal
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +8,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import type { RatePair } from '@/types/metalrate.types'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface RatePairInput {
   buying: string
@@ -30,9 +26,8 @@ interface SilverRatesFormProps {
   className?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
+
 
 export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
   initialData,
@@ -192,14 +187,3 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
 
 SilverRatesForm.displayName = 'SilverRatesForm'
 
-// ============================================================================
-// TRANSLATION KEYS
-// ============================================================================
-
-/*
-{
-  "metalRates": {
-
-  }
-}
-*/

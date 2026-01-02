@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductForm/sections/BasicInfoSection.tsx
 // Step 1: Basic Product Information
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

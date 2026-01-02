@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/forms/FormSelect/FormSelect.tsx
 // Theme-based Form Select Component
-// ============================================================================
 
 import { Label } from '@/components/ui/label'
 import {

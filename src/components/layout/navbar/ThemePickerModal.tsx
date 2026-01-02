@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/navbar/ThemePickerModal.tsx
 // Theme Picker Modal Component
-// ============================================================================
 
 import { X, Check } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'

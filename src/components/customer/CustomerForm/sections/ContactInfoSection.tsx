@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerForm/sections/ContactInfoSection.tsx
 // Contact Information Section
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput'

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/metalRates/TrendChart/TrendChart.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/TrendChart/TrendChart.tsx
 // Metal Rate Trend Chart with Period Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,9 +24,7 @@ import {
 } from '@/pages/metal-rates/metal-rate.mock'
 import type { TrendChartResponse, MetalType } from '@/types/metalrate.types'
 
-// ============================================================================
 // INTERFACES
-// ============================================================================
 
 export interface TrendChartProps {
   shopId: string
@@ -36,9 +33,7 @@ export interface TrendChartProps {
   className?: string
 }
 
-// ============================================================================
 // PERIOD OPTIONS
-// ============================================================================
 
 const PERIOD_OPTIONS: FilterOption[] = [
   { value: '7', label: '7 Days' },
@@ -54,17 +49,15 @@ const METAL_TYPE_OPTIONS: FilterOption[] = [
   { value: 'platinum', label: 'Platinum 950' },
 ]
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
   ({ shopId, metalType = 'gold', defaultPeriod = 90, className }, ref) => {
     const { t } = useTranslation()
 
-    // ============================================================================
+
     // STATE
-    // ============================================================================
+
 
     const [selectedPeriod, setSelectedPeriod] = React.useState<string>(
       defaultPeriod.toString()
@@ -75,9 +68,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       null
     )
 
-    // ============================================================================
+
     // FETCH DATA
-    // ============================================================================
+
 
     const fetchTrendData = React.useCallback(async () => {
       setLoading(true)
@@ -101,9 +94,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       fetchTrendData()
     }, [fetchTrendData])
 
-    // ============================================================================
+
     // CHART DATA FORMATTING
-    // ============================================================================
+
 
     const chartData = React.useMemo(() => {
       if (!trendData) return []
@@ -119,9 +112,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       }))
     }, [trendData, t])
 
-    // ============================================================================
+
     // STATISTICS CALCULATION
-    // ============================================================================
+
 
     const statistics = React.useMemo(() => {
       if (!trendData || !trendData.summary) return null
@@ -140,9 +133,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       }
     }, [trendData])
 
-    // ============================================================================
+
     // TREND INDICATOR
-    // ============================================================================
+
 
     const getTrendIcon = () => {
       if (!statistics) return <Minus className="h-4 w-4 text-text-tertiary" />
@@ -155,9 +148,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       return <Minus className="h-4 w-4 text-text-tertiary" />
     }
 
-    // ============================================================================
+
     // CURRENCY FORMATTER
-    // ============================================================================
+
 
     const formatCurrency = (value: number) => {
       return `₹${value.toLocaleString('en-IN', {
@@ -166,9 +159,9 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       })}`
     }
 
-    // ============================================================================
+
     // RENDER
-    // ============================================================================
+
 
     return (
       <Card ref={ref} className={cn('w-full', className)}>

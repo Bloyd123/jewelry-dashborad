@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierFilters/index.ts
 // Export All Supplier Filter Components
-// ============================================================================
+// 
 
 export { SupplierSearchBar } from './SupplierSearchBar'
 export { SupplierTypeFilter } from './SupplierTypeFilter'

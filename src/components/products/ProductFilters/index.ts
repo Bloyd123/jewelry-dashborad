@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/product/ProductFilters/index.ts
+
+// FILE: src/components/products/ProductFilters/index.ts
 // Product Filters Exports
-// ============================================================================
 
 export { ProductFilters } from './ProductFilters'
 export { ProductSearchBar } from './ProductSearchBar'

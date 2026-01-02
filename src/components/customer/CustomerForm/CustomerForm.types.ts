@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerForm/CustomerForm.types.ts
 // CustomerForm Types and Interfaces
-// ============================================================================
 
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 

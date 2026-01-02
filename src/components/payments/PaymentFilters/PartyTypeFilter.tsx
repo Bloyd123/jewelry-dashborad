@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/modules/payment/filters/PartyTypeFilter.tsx
+
+// FILE: src/components/payments/paymentFilters/PartyTypeFilter.tsx
 // Party Type Filter (Customer/Supplier)
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

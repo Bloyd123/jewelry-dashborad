@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/sidebar/SidebarCollapse.tsx
 // Collapsible Sidebar Menu Item (With children)
-// ============================================================================
 
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'

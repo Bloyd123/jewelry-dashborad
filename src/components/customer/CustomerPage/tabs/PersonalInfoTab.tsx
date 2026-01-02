@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/PersonalInfoTab.tsx
+
+// FILE: src/components/customer/CustomerPage/tabs/PersonalInfoTab.tsx
 // Personal Information Tab with Accordions
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,9 +26,7 @@ import { Button } from '@/components/ui/button'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// ============================================================================
 // COPY BUTTON COMPONENT
-// ============================================================================
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -56,17 +53,14 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
+
 
 interface PersonalInfoTabProps {
   customerId?: string
 }
 
-// ============================================================================
 // PERSONAL INFO TAB COMPONENT
-// ============================================================================
 
 export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
   customerId,
@@ -78,9 +72,8 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
     : MOCK_CUSTOMERS[0]
 
-  // ========================================================================
+
   // BASIC INFORMATION SECTION
-  // ========================================================================
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -181,9 +174,7 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // CONTACT INFORMATION SECTION
-  // ========================================================================
 
   const ContactInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -251,9 +242,8 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // ADDRESS SECTION
-  // ========================================================================
+
 
   const AddressSection = () => (
     <div className="space-y-4 p-4">
@@ -314,9 +304,8 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // KYC DOCUMENTS SECTION
-  // ========================================================================
 
   const KYCDocumentsSection = () => (
     <div className="space-y-4 p-4">
@@ -369,9 +358,7 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // PREFERENCES SECTION
-  // ========================================================================
 
   const PreferencesSection = () => (
     <div className="space-y-4 p-4">
@@ -403,9 +390,9 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // NOTES SECTION
-  // ========================================================================
+
 
   const NotesSection = () => (
     <div className="space-y-4 p-4">
@@ -435,9 +422,8 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ========================================================================
+
   // RENDER MAIN ACCORDION
-  // ========================================================================
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/RateHistoryTable/RateHistoryFilters.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryFilters.tsx
 // Rate History Filters - Responsive Desktop & Mobile with Drawer
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +13,7 @@ import { Button } from '@/components/ui/button'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { Calendar, SlidersHorizontal } from 'lucide-react'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface RateHistoryFilterValues {
   metalType?: string
@@ -29,9 +26,7 @@ interface RateHistoryFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
 // FILTER OPTIONS
-// ============================================================================
 
 const dateRangeOptions: FilterOption[] = [
   {
@@ -63,9 +58,7 @@ const metalTypeOptions: FilterOption[] = [
   { value: 'palladium', label: 'Palladium', icon: '⚪' },
 ]
 
-// ============================================================================
 // RATE HISTORY FILTERS COMPONENT
-// ============================================================================
 
 export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
   filters,
@@ -100,9 +93,9 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
     setShowFiltersDrawer(false)
   }
 
-  // ============================================================================
+
   // DESKTOP VIEW
-  // ============================================================================
+
   if (isDesktop) {
     return (
       <FilterBar
@@ -139,9 +132,8 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
     )
   }
 
-  // ============================================================================
+
   // MOBILE VIEW WITH DRAWER
-  // ============================================================================
   return (
     <>
       {/* Filter Button - Mobile */}

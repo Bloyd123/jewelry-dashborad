@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/Customers/tabs/OrdersTab.tsx
+// FILE: src/components/customer/CustomerPage/tabs/OrdersTab.tsx
 // Orders History Tab
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,9 +11,7 @@ import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 
-// ============================================================================
 // MOCK ORDER DATA
-// ============================================================================
 
 interface Order {
   id: string
@@ -61,17 +57,13 @@ const MOCK_ORDERS: Order[] = [
   },
 ]
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface OrdersTabProps {
   customerId?: string
 }
 
-// ============================================================================
 // ORDERS TAB COMPONENT
-// ============================================================================
 
 export const OrdersTab: React.FC<OrdersTabProps> = ({ customerId }) => {
   const { t } = useTranslation()

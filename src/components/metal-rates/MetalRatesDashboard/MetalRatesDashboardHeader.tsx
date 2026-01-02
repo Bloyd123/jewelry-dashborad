@@ -1,16 +1,14 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/MetalRatesDashboardHeader.tsx
+
+// FILE: src/components/metal-rates/MetalRatesDashboard/MetalRatesDashboardHeader.tsx
 // Responsive Metal Rates Dashboard Header (Main Component)
-// ============================================================================
+
 
 import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileMetalRatesDashboardHeader } from './MobileMetalRatesDashboardHeader'
 import { DesktopMetalRatesDashboardHeader } from './DesktopMetalRatesDashboardHeader'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface MetalRatesDashboardHeaderProps {
   shopId?: string
@@ -24,9 +22,7 @@ interface MetalRatesDashboardHeaderProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
 // RESPONSIVE METAL RATES DASHBOARD HEADER COMPONENT
-// ============================================================================
 
 export const MetalRatesDashboardHeader: React.FC<
   MetalRatesDashboardHeaderProps

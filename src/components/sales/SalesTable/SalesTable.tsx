@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/SalesTable/SalesTable.tsx
+// 
+// FILE: src/components/sales/SalesTable/SalesTable.tsx
 // Main Sales Table Component
-// ============================================================================
+// 
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +14,9 @@ import type { Sale } from '@/types/sale.types'
 import { SalesFilters } from '@/components/sales/SalesFilters'
 import type { SalesFilterValues } from '@/components/sales/SalesFilters/SalesFilters.tsx'
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 export const SalesTable: React.FC = () => {
   const { t } = useTranslation()
@@ -202,9 +202,9 @@ export const SalesTable: React.FC = () => {
     setSelectedRows(new Set())
   }
 
-  // ========================================================================
+ 
   // ROW ACTIONS
-  // ========================================================================
+  
 
   const rowActions = useMemo(
     () =>
@@ -222,17 +222,17 @@ export const SalesTable: React.FC = () => {
     []
   )
 
-  // ========================================================================
+  
   // SELECTED SALES
-  // ========================================================================
+  
 
   const selectedSales = useMemo(() => {
     return filteredSales.filter(sale => selectedRows.has(sale._id))
   }, [filteredSales, selectedRows])
 
-  // ========================================================================
+  
   // RENDER
-  // ========================================================================
+  
 
   return (
     <div className="w-full space-y-4">

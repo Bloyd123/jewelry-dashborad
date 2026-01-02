@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierForm/SupplierForm.mobile.tsx
 // Mobile Layout for SupplierForm (Tabbed Interface)
-// ============================================================================
+// 
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/CustomerDateRangeFilter.tsx
 // Customer Date Range Filter - Uses Reusable DateRangeFilter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { DateRangeFilter } from '@/components/ui/filters/DateRangeFilter'
 import type { DateRange } from 'react-day-picker'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 interface CustomerDateRangeFilterProps {
   value?: DateRange
@@ -19,9 +15,7 @@ interface CustomerDateRangeFilterProps {
   disabled?: boolean
 }
 
-// ============================================================================
 // CUSTOMER DATE RANGE FILTER COMPONENT
-// ============================================================================
 
 export const CustomerDateRangeFilter = React.forwardRef<
   HTMLButtonElement,

@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/CustomerTable/CustomerTable.types.ts
+
+// FILE: src/components/customer/CustomerTable/CustomerTable.types.ts
 // Customer Table TypeScript Types & Mock Data
-// ============================================================================
 
 export interface Customer {
   _id: string
@@ -21,9 +20,7 @@ export interface Customer {
   createdAt: string
 }
 
-// ============================================================================
 // MOCK DATA
-// ============================================================================
 
 export const MOCK_CUSTOMERS: Customer[] = [
   {

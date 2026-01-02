@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/customer/CustomerFilters/index.ts
 // Export All Customer Filter Components
-// ============================================================================
 
 export { CustomerSearchBar } from './CustomerSearchBar'
 export { CustomerTypeFilter } from './CustomerTypeFilter'

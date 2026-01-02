@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/Sales/tabs/DocumentsTab.tsx
+// 
+// FILE: src/components/sales/SalesDetailPage/tabs/DocumentsTab.tsx
 // Sales Documents Tab Component with Upload & Preview
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -46,9 +46,9 @@ import {
 } from '@/components/ui/select'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 
-// ============================================================================
+// 
 // COMPONENT PROPS
-// ============================================================================
+// 
 
 interface DocumentsTabProps {
   documents: Document[]
@@ -78,9 +78,9 @@ interface DocumentUploadData {
   file?: File
 }
 
-// ============================================================================
+// 
 // UPLOAD DOCUMENT FORM COMPONENT
-// ============================================================================
+// 
 
 const UploadDocumentForm: React.FC<{
   isOpen: boolean
@@ -261,9 +261,9 @@ const UploadDocumentForm: React.FC<{
   )
 }
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 const DocumentsTab: React.FC<DocumentsTabProps> = ({
   documents,

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: componens/dashboard/components/TopProducts.tsx
 // Top Selling Products
-// ============================================================================
 
 import { TrendingUp } from 'lucide-react'
 

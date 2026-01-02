@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseForm/sections/PaymentDetailsSection.tsx
 // Payment Details Section
-// ============================================================================
+
 
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'

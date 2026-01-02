@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseForm/sections/AdditionalInfoSection.tsx
 // Additional Info Section
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormTextarea } from '@/components/forms/FormTextarea/FormTextarea'

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/products/ProductTable/ProductTableActions.tsx
 // Product Table Row Actions & Bulk Actions
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

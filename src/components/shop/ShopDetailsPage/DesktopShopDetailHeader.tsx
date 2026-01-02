@@ -1,7 +1,7 @@
-// ============================================================================
-// FILE: src/components/features/Shops/DesktopShopDetailHeader.tsx
+// 
+// FILE: src/components/shop/ShopDetailsPages/DesktopShopDetailHeader.tsx
 // Desktop Shop Detail Header Component
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +22,9 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Shop } from '@/types/shop.types'
 import { dummyShops } from '@/pages/shops/data'
 
-// ============================================================================
+// 
 // COMPONENT PROPS
-// ============================================================================
+// 
 
 interface DesktopShopDetailHeaderProps {
   shopId?: string
@@ -35,9 +35,9 @@ interface DesktopShopDetailHeaderProps {
   // children?: React.ReactNode
 }
 
-// ============================================================================
+// 
 // DESKTOP SHOP DETAIL HEADER COMPONENT
-// ============================================================================
+// 
 
 export const DesktopShopDetailHeader: React.FC<
   DesktopShopDetailHeaderProps

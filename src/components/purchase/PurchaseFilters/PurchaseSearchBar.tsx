@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/PurchaseSearchBar.tsx
 // Purchase Search Bar
-// ============================================================================
+
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

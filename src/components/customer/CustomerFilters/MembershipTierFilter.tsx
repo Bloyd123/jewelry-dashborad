@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/features/customer/components/CustomerFilters/MembershipTierFilter.tsx
 // Membership Tier Dropdown Filter
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

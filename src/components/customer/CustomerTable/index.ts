@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/CustomerTable/index.ts
+
+// FILE: src/components/customer/CustomerTable/index.ts
 // CustomerTable Barrel Export
-// ============================================================================
 
 export { CustomerTable } from './CustomerTable'
 export { customerTableColumns } from './CustomerTableColumns'

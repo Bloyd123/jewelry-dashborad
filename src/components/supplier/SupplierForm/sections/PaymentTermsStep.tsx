@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/supplier/SupplierForm/sections/PaymentTermsSection.tsx
 // Payment Terms Section
-// ============================================================================
+// 
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

@@ -1,7 +1,7 @@
-// ============================================================================
+// 
 // FILE: src/components/shops/ShopSettings/ShopSettings.tsx
 // Main Shop Settings Modal Component
-// ============================================================================
+// 
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,9 +21,10 @@ import { FeaturesSection } from './sections/FeaturesSection'
 import type { Shop } from '@/types/shop.types'
 import type { ShopSettingsFormData } from './shopSettings.types'
 
-// ============================================================================
+// 
 // PROPS
-// ============================================================================
+// 
+
 
 interface ShopSettingsProps {
   shop: Shop
@@ -32,9 +33,11 @@ interface ShopSettingsProps {
   onSave: (settings: ShopSettingsFormData) => Promise<void>
 }
 
-// ============================================================================
+// 
+
 // COMPONENT
-// ============================================================================
+// 
+
 
 export const ShopSettings: React.FC<ShopSettingsProps> = ({
   shop,

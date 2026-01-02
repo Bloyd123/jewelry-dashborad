@@ -1,7 +1,6 @@
-// ============================================================================
-// FILE: src/components/features/MetalRates/index.ts
+
+// FILE: src/components/metal-rates/UpdateRatesModal/index.ts
 // Metal Rates Components - Barrel Export
-// ============================================================================
 
 // Main Modal
 export { UpdateRatesModal } from './UpdateRatesModal'
@@ -15,6 +14,3 @@ export { MarketReferenceForm } from './MarketReferenceForm'
 
 // Preview Component
 export { PreviewChanges } from './PreviewChanges'
-
-// Dashboard Header (if needed separately)
-// export { MetalRatesDashboardHeader } from './MetalRatesDashboardHeader';

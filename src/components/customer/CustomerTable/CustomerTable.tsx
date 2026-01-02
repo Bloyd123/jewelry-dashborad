@@ -1,7 +1,5 @@
-// ============================================================================
-// FILE: src/components/features/CustomerTable/CustomerTable.tsx
+// FILE: src/components/customer/CustomerTable/CustomerTable.tsx
 // Main Customer Table Component
-// ============================================================================
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,16 +12,14 @@ import { CustomerFilters } from '@/components/customer/CustomerFilters'
 import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
 import { useNavigate } from 'react-router-dom'
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const CustomerTable: React.FC = () => {
   const { t } = useTranslation()
 
-  // ========================================================================
+
   // STATE
-  // ========================================================================
+
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -40,9 +36,9 @@ export const CustomerTable: React.FC = () => {
   })
   const navigate = useNavigate()
 
-  // ========================================================================
+
   // HANDLERS
-  // ========================================================================
+
 
   const handleViewDetails = (customer: Customer) => {
     console.log('View Details:', customer)
@@ -127,9 +123,7 @@ export const CustomerTable: React.FC = () => {
     })
   }
 
-  // ========================================================================
   // ROW ACTIONS
-  // ========================================================================
 
   const rowActions = useMemo(
     () =>
@@ -143,17 +137,16 @@ export const CustomerTable: React.FC = () => {
     []
   )
 
-  // ========================================================================
+
   // SELECTED CUSTOMERS
-  // ========================================================================
+
 
   const selectedCustomers = useMemo(() => {
     return MOCK_CUSTOMERS.filter(customer => selectedRows.has(customer._id))
   }, [selectedRows])
 
-  // ========================================================================
+
   // RENDER
-  // ========================================================================
 
   return (
     <div className="w-full space-y-4">

@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/purchase/PurchaseFilters/index.ts
 // Exports
-// ============================================================================
 
 export { PurchaseFilters } from './PurchaseFilters'
 export { PurchaseSearchBar } from './PurchaseSearchBar'

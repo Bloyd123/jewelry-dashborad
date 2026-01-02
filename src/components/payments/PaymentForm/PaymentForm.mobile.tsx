@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/PaymentForm.mobile.tsx
 // Mobile Layout for PaymentForm (Stepper Interface)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

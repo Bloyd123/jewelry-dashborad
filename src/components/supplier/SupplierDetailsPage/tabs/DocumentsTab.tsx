@@ -18,9 +18,9 @@ import type {
 import { dummySupplier } from '@/pages/suppliers/data'
 import type { Document, Certification } from '@/types/supplier.types'
 
-// ============================================================================
+// 
 // EXTEND TYPES FOR UI
-// ============================================================================
+// 
 
 interface DocumentWithStatus extends Document {
   uploadedBy?: string
@@ -30,9 +30,9 @@ interface CertificationWithStatus extends Certification {
   status: 'Valid' | 'Expiring Soon' | 'Expired'
 }
 
-// ============================================================================
+// 
 // TRANSFORM DUMMY DATA
-// ============================================================================
+// 
 
 const transformDocuments = (): DocumentWithStatus[] => {
   return (dummySupplier.documents || []).map(doc => ({
@@ -67,9 +67,9 @@ const transformCertifications = (): CertificationWithStatus[] => {
   })
 }
 
-// ============================================================================
+// 
 // MAIN COMPONENT
-// ============================================================================
+// 
 
 const SupplierDocumentsTab: React.FC = () => {
   const { t } = useTranslation()

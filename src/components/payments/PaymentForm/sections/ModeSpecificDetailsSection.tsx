@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/components/payment/PaymentForm/sections/ModeSpecificDetailsSection.tsx
 // Mode-Specific Details Section (Dynamic Container)
-// ============================================================================
+
 
 import { useTranslation } from 'react-i18next'
 import { CashFields } from '../mode-fields/CashFields'

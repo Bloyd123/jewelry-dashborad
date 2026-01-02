@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: layout/navbar/LanguageDropdown.tsx
 // Language Selection Dropdown Component
-// ============================================================================
 
 import { useRef, useEffect } from 'react'
 import { Check } from 'lucide-react'
