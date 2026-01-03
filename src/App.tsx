@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: App.tsx
 // Main Application Component
-// ============================================================================
 
 import { useEffect } from 'react'
 
@@ -48,25 +47,21 @@ import ProductDetailHeader from './components/products/ProductDetailsPage/Produc
 import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetailsPage'
 import { PaymentTable } from './components/payments/PaymentTable'
 import SalesDetailsPage from './pages/sales/SalesDetails/SalesDetailsPage'
-// ============================================================================
 // APP COMPONENT
-// ============================================================================
-
 function App() {
   const dispatch = useAppDispatch()
   useThemeSync()
 
-  // ========================================
+
   // Initialize App
-  // ========================================
+
   useEffect(() => {
     // Initialize authentication state
     dispatch(initializeAuth())
   }, [dispatch])
 
-  // ========================================
+
   // Render Routes
-  // ========================================
   return (
     <NoInternetWrapper>
       <BrowserRouter>

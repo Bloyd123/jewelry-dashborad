@@ -1,19 +1,16 @@
-// ============================================================================
+
 // FILE: store/slices/uiSlice.ts
 // UI State Management (Sidebar, Theme, Loading)
-// ============================================================================
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { ThemeName } from '@/themes/presets'
 
-// ============================================================================
 // STATE INTERFACE
-// ============================================================================
 
 interface UIState {
   sidebarOpen: boolean
   sidebarCollapsed: boolean
-  themeName: ThemeName // ✅ CHANGED: from 'theme' to 'themeName'
+  themeName: ThemeName //  CHANGED: from 'theme' to 'themeName'
   isLoading: boolean
   loadingMessage: string | null
   mobileMenuOpen: boolean
@@ -22,14 +19,12 @@ interface UIState {
   language: 'en' | 'hi' | 'mr'
 }
 
-// ============================================================================
 // INITIAL STATE
-// ============================================================================
 
 const getInitialTheme = (): ThemeName => {
   const savedTheme = localStorage.getItem('themeName')
 
-  // ✅ NEW: Check if it's a valid theme name
+  // NEW: Check if it's a valid theme name
   const validThemes: ThemeName[] = [
     'default',
     'defaultDark',
@@ -60,9 +55,7 @@ const initialState: UIState = {
   language: (localStorage.getItem('language') as 'en' | 'hi' | 'mr') || 'en',
 }
 
-// ============================================================================
 // SLICE
-// ============================================================================
 
 const uiSlice = createSlice({
   name: 'ui',
@@ -94,7 +87,7 @@ const uiSlice = createSlice({
       state.mobileMenuOpen = action.payload
     },
 
-    // ✅ CHANGED: Theme now accepts ThemeName
+    // CHANGED: Theme now accepts ThemeName
     setTheme: (state, action: PayloadAction<ThemeName>) => {
       state.themeName = action.payload
       localStorage.setItem('themeName', action.payload)
@@ -132,7 +125,7 @@ const uiSlice = createSlice({
       localStorage.setItem('appearance', action.payload)
     },
 
-    // ✅ REMOVED: toggleTheme (no longer needed with multi-theme)
+    //  REMOVED: toggleTheme (no longer needed with multi-theme)
 
     // Loading
     setLoading: (state, action: PayloadAction<boolean>) => {
@@ -165,9 +158,7 @@ const uiSlice = createSlice({
   },
 })
 
-// ============================================================================
 // EXPORT ACTIONS & REDUCER
-// ============================================================================
 
 export const {
   toggleSidebar,
@@ -177,7 +168,7 @@ export const {
   toggleMobileMenu,
   setMobileMenuOpen,
   setTheme,
-  cycleTheme, // ✅ NEW
+  cycleTheme, 
   setLoading,
   setLoadingWithMessage,
   resetUI,

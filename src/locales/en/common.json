@@ -1,42 +1,40 @@
 {
   "sidebar": {
-    "addshop": "Add Shop",
-    "addPayment": "Add Payment",
+    "dashboard": "Dashboard",
+    "metalRates": "Metal Rates",
+    
+    "customers": "Customers",
     "addCustomer": "Add Customer",
+    "Allcustomer": "All Customers",
+    "customerdetail": "Customer Details",
+    
+    "suppliers": "Suppliers",
     "supplierdetails": "Supplier Details",
     "addSupplier": "Add Supplier",
-    "productdetail": "Product Details",
     "supplierlist": "Supplier List",
+    
+    "shops": "Shops",
     "shopList": "Shop List",
     "shopdetail": "Shop Details",
-    "Allcustomer": "All customers",
-    "customerdetail": "Customer Details",
-    "detailcustomer": "Details Customers",
-    "dashboard": "Dashboard",
-    "stock": "Stock",
-    "payments": "Payments",
-    "detailsales": "Sales Details",
-    "allpayments": "All Payment",
-    "paymentEntry": "Payment Entry",
-    "purchases": "Purchases",
-    "allPurchases": "All Purchases",
-    "addPurchase": "Add Purchase",
-    "suppliers": "Suppliers",
-    "sales": "Sales",
-    "allSales": "All Sales",
-    "addSale": "Add Sale",
-    "customers": "Customers",
-    "reports": "Reports",
-    "oldGold": "Old Gold",
-    "allOldGoldPurchases": "All Old Gold Purchases",
-    "addOldGoldPurchase": "Add Old Gold Purchase",
+    "addshop": "Add Shop",
+    
     "products": "Products",
     "allProducts": "All Products",
     "addProduct": "Add Product",
-    "customOrders": "Custom Orders",
-    "allCustomOrders": "All Custom Orders",
-    "shops": "Shops",
-    "metalRates": "Metal Rates"
+    "productdetail": "Product Details",
+    
+    "purchases": "Purchases",
+    "allPurchases": "All Purchases",
+    "addPurchase": "Add Purchase",
+    
+    "sales": "Sales",
+    "allSales": "All Sales",
+    "addSale": "Add Sale",
+    "detailsales": "Sale Details",
+    
+    "payments": "Payments",
+    "addPayment": "Add Payment",
+    "allpayments": "All Payments"
   },
   "noInternet": {
     "title": "No Internet Connection",

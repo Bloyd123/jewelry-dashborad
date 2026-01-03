@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: types/menu.ts
 // Menu Item Types
-// ============================================================================
 
 import { LucideIcon } from 'lucide-react'
 
@@ -15,4 +14,5 @@ export interface MenuItem {
 export interface SubMenuItem {
   title: string
   url: string
+    icon?: LucideIcon 
 }

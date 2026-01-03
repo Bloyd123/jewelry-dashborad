@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/main.tsx
 // Application Entry Point with Redux Provider
-// ============================================================================
 
 import React from 'react'
 
@@ -13,9 +11,7 @@ import { store } from './store'
 import './styles/index.css'
 
 import '@/lib/i18n'
-// ============================================================================
 // RENDER APPLICATION
-// ============================================================================
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
