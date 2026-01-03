@@ -115,7 +115,7 @@ export const DesktopNavbar = () => {
             </div>
             <div className="hidden text-left xl:block">
               <p className="text-sm font-medium text-text-primary">John Doe</p>
-              <p className="text-xs text-text-tertiary">Admin</p>
+              {/* <p className="text-xs text-text-tertiary">Admin</p> */}
             </div>
           </button>
         </div>

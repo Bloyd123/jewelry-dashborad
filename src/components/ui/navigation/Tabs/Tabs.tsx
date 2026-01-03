@@ -1,16 +1,13 @@
-// ============================================================================
+
 // FILE: src/components/ui/navigation/Tabs/Tabs.tsx
 // Theme-based Tabs Component - Flexible & Responsive
-// ============================================================================
 
 import * as React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
-// TYPES & INTERFACES
-// ============================================================================
 
+// TYPES & INTERFACES
 export type TabsVariant = 'default' | 'pills' | 'underline'
 export type TabsSize = 'sm' | 'md' | 'lg'
 
@@ -35,9 +32,7 @@ export interface TabsProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
 // STYLES
-// ============================================================================
 
 const sizeStyles: Record<TabsSize, string> = {
   sm: 'text-sm px-3 py-1.5 gap-1.5',
@@ -73,9 +68,7 @@ const variantStyles: Record<
   },
 }
 
-// ============================================================================
 // TABS COMPONENT
-// ============================================================================
 
 const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
@@ -151,9 +144,7 @@ const Tabs = React.forwardRef<
 
 Tabs.displayName = 'Tabs'
 
-// ============================================================================
 // TAB CONTENT COMPONENT
-// ============================================================================
 
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
@@ -171,8 +162,6 @@ const TabsContent = React.forwardRef<
 
 TabsContent.displayName = 'TabsContent'
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export { Tabs, TabsContent }

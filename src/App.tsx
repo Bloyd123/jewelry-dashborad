@@ -47,6 +47,7 @@ import ProductDetailHeader from './components/products/ProductDetailsPage/Produc
 import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetailsPage'
 import { PaymentTable } from './components/payments/PaymentTable'
 import SalesDetailsPage from './pages/sales/SalesDetails/SalesDetailsPage'
+import UserProfile from './pages/user/page'
 // APP COMPONENT
 function App() {
   const dispatch = useAppDispatch()
@@ -127,6 +128,7 @@ function App() {
               <Route path="/sales/:id" element={<SalesDetailsPage />} />
               <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route path="/allpayments" element={<PaymentTable />} />
+              <Route path='/userprofile' element={<UserProfile/>}/>
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

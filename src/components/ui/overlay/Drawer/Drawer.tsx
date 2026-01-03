@@ -1,7 +1,6 @@
-// ============================================================================
+
 // FILE: src/components/ui/overlay/Drawer/Drawer.tsx
 // Side Drawer Component (Left/Right)
-// ============================================================================
 
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +8,8 @@ import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
-// ============================================================================
 // TYPES
-// ============================================================================
+
 
 export type DrawerSide = 'left' | 'right'
 export type DrawerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
@@ -48,9 +46,7 @@ export interface DrawerProps {
   testId?: string
 }
 
-// ============================================================================
 // SIZE CONFIGURATION
-// ============================================================================
 
 const sizeClasses: Record<DrawerSize, string> = {
   sm: 'max-w-sm',
@@ -60,9 +56,7 @@ const sizeClasses: Record<DrawerSize, string> = {
   full: 'max-w-full',
 }
 
-// ============================================================================
 // DRAWER COMPONENT
-// ============================================================================
 
 export const Drawer: React.FC<DrawerProps> = ({
   open,
