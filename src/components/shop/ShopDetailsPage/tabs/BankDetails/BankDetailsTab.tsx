@@ -23,9 +23,9 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Label } from '@/components/ui/label'
 import type { BankDetail, UpiDetail } from '@/types/shop.types'
 
-// 
+//
 // COMPONENT PROPS
-// 
+//
 
 interface BankDetailsTabProps {
   bankDetails?: BankDetail[]
@@ -33,9 +33,9 @@ interface BankDetailsTabProps {
   isAdminView?: boolean
 }
 
-// 
+//
 // BANK DETAILS TAB COMPONENT
-// 
+//
 
 export const BankDetailsTab: React.FC<BankDetailsTabProps> = ({
   bankDetails = [],

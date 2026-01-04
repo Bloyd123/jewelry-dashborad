@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentForm/PaymentForm.desktop.tsx
 // Desktop Layout for PaymentForm (2-Column)
 

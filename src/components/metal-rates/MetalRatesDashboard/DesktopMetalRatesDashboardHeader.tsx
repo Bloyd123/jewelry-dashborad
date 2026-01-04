@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/DesktopMetalRatesDashboardHeader.tsx
 // Desktop Metal Rates Dashboard Header with Tabs and Shop Info
 

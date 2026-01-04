@@ -1,16 +1,16 @@
-// 
+//
 // FILE: src/components/features/SalesTable/SalesTableColumns.tsx
 // Sales Table Column Definitions
-// 
+//
 
 import { Copy, FileText, User, Package } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Sale } from '@/types/sale.types'
 
-// 
+//
 // HELPER FUNCTIONS
-// 
+//
 
 const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -33,9 +33,9 @@ const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
 
-// 
+//
 // COLUMN DEFINITIONS
-// 
+//
 
 export const salesTableColumns: DataTableColumn<Sale>[] = [
   // 1. Invoice Number

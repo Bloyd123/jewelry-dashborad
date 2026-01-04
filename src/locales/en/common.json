@@ -2,36 +2,36 @@
   "sidebar": {
     "dashboard": "Dashboard",
     "metalRates": "Metal Rates",
-    
+
     "customers": "Customers",
     "addCustomer": "Add Customer",
     "Allcustomer": "All Customers",
     "customerdetail": "Customer Details",
-    
+
     "suppliers": "Suppliers",
     "supplierdetails": "Supplier Details",
     "addSupplier": "Add Supplier",
     "supplierlist": "Supplier List",
-    
+
     "shops": "Shops",
     "shopList": "Shop List",
     "shopdetail": "Shop Details",
     "addshop": "Add Shop",
-    
+
     "products": "Products",
     "allProducts": "All Products",
     "addProduct": "Add Product",
     "productdetail": "Product Details",
-    
+
     "purchases": "Purchases",
     "allPurchases": "All Purchases",
     "addPurchase": "Add Purchase",
-    
+
     "sales": "Sales",
     "allSales": "All Sales",
     "addSale": "Add Sale",
     "detailsales": "Sale Details",
-    
+
     "payments": "Payments",
     "addPayment": "Add Payment",
     "allpayments": "All Payments"

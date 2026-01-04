@@ -1,7 +1,6 @@
 // FILE: src/components/customer/CustomerForm/sections/NotesTagsSection.tsx
 // Notes & Tags Section
 
-
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormTextarea } from '@/components/forms/FormTextarea'

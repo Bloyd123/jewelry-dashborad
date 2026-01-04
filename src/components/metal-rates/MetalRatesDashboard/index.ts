@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/MetalRatesDashboard/index.ts
 
 export { CurrentRatesCards } from './CurrentRatesCards'

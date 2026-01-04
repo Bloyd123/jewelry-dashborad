@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/mode-fields/ChequeFields.tsx
 // Cheque Payment Mode Fields
 

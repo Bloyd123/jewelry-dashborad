@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/MarketReferenceForm.tsx
 // Market Reference Form - Section 5 (Optional) of Update Metal Rates Modal
 
@@ -24,7 +23,6 @@ interface MarketReferenceFormProps {
   onChange?: (data: MarketReferenceFormData) => void
   className?: string
 }
-
 
 // COMPONENT
 
@@ -206,4 +204,3 @@ export const MarketReferenceForm: React.FC<MarketReferenceFormProps> = ({
 }
 
 MarketReferenceForm.displayName = 'MarketReferenceForm'
-

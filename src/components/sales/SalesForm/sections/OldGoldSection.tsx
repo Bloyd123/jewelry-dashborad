@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/sales/SaleForm/sections/OldGoldSection.tsx
 // Old Gold Exchange Section
-// 
+//
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

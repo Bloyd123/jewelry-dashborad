@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shop/ShopForm/ShopForm.tsx
 // Main ShopForm Component (Route Handler)
-// 
+//
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ShopFormDesktop from './ShopForm.desktop'

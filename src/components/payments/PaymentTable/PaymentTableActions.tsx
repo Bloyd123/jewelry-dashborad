@@ -1,7 +1,5 @@
-
 // FILE: src/components/payments/PaymentTable/PaymentTableActions.tsx
 // Payment Table Row Actions & Bulk Actions with Role-Based Permissions
-
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

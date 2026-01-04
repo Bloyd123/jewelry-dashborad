@@ -56,7 +56,6 @@ interface LoyaltyTabProps {
   customerId?: string
 }
 
-
 // LOYALTY TAB COMPONENT
 
 export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {

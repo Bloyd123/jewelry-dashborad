@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentForm/sections/ActivityTimelineSection.tsx
 // Activity Timeline Section (View/Edit Mode Only)
 

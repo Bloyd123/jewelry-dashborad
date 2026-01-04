@@ -1,4 +1,3 @@
-
 // FILE: App.tsx
 // Main Application Component
 
@@ -53,14 +52,12 @@ function App() {
   const dispatch = useAppDispatch()
   useThemeSync()
 
-
   // Initialize App
 
   useEffect(() => {
     // Initialize authentication state
     dispatch(initializeAuth())
   }, [dispatch])
-
 
   // Render Routes
   return (
@@ -128,7 +125,7 @@ function App() {
               <Route path="/sales/:id" element={<SalesDetailsPage />} />
               <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route path="/allpayments" element={<PaymentTable />} />
-              <Route path='/userprofile' element={<UserProfile/>}/>
+              <Route path="/userprofile" element={<UserProfile />} />
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

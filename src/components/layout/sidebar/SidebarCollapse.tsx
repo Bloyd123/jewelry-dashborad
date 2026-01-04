@@ -1,4 +1,3 @@
-
 // FILE: layout/sidebar/SidebarCollapse.tsx
 // Collapsible Sidebar Menu Item (With children)
 
@@ -19,9 +18,11 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
   const parentRef = useRef<HTMLDivElement>(null)
 
   // Check if any child is active
-const isAnyChildActive = item.items?.some(subItem =>
-  location.pathname === subItem.url || location.pathname.startsWith(subItem.url + '/')
-)
+  const isAnyChildActive = item.items?.some(
+    subItem =>
+      location.pathname === subItem.url ||
+      location.pathname.startsWith(subItem.url + '/')
+  )
 
   const [isOpen, setIsOpen] = useState(isAnyChildActive || false)
 
@@ -30,9 +31,9 @@ const isAnyChildActive = item.items?.some(subItem =>
       setIsOpen(true)
       // Scroll active item into view
       setTimeout(() => {
-        parentRef.current?.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'nearest' 
+        parentRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
         })
       }, 100)
     }
@@ -43,16 +44,19 @@ const isAnyChildActive = item.items?.some(subItem =>
   return (
     <div ref={parentRef}>
       {/* Parent Item */}
-<button
-  onClick={toggleOpen}
-  className={`group relative flex w-full items-center justify-between gap-3 px-4 py-3 transition-all duration-200 hover:bg-sidebar-hover hover:text-accent active:scale-95 ${
-    isAnyChildActive 
-      ? 'bg-sidebar-hover text-accent font-medium' // ✅ Same as hover
-      : 'text-sidebar-text'
-  } ${isCollapsed ? 'justify-center' : ''} `}
+      <button
+        onClick={toggleOpen}
+        className={`group relative flex w-full items-center justify-between gap-3 px-4 py-3 transition-all duration-200 hover:bg-sidebar-hover hover:text-accent active:scale-95 ${
+          isAnyChildActive
+            ? 'bg-sidebar-hover font-medium text-accent' // ✅ Same as hover
+            : 'text-sidebar-text'
+        } ${isCollapsed ? 'justify-center' : ''} `}
       >
         <div className="flex items-center gap-3">
-          <Icon size={20} className="shrink-0 transition-transform duration-200 group-hover:scale-110" />
+          <Icon
+            size={20}
+            className="shrink-0 transition-transform duration-200 group-hover:scale-110"
+          />
           {!isCollapsed && (
             <span className="text-sm font-medium">{item.title}</span>
           )}
@@ -80,21 +84,24 @@ const isAnyChildActive = item.items?.some(subItem =>
         <div className="bg-sidebar-bg/50">
           {item.items.map(subItem => {
             const SubIcon = subItem.icon
-            
+
             return (
               <NavLink
                 key={subItem.url}
                 to={`${subItem.url}`}
                 className={({ isActive }) =>
                   `group flex items-center gap-3 py-2.5 pl-12 pr-4 text-sm text-sidebar-muted transition-all duration-200 hover:bg-sidebar-hover hover:text-accent active:scale-[0.98] ${
-                    isActive 
-                      ? 'bg-accent/10 text-accent font-medium border-l-4 border-accent' 
+                    isActive
+                      ? 'bg-accent/10 border-l-4 border-accent font-medium text-accent'
                       : 'border-l-4 border-transparent'
                   } `
                 }
               >
                 {SubIcon ? (
-                  <SubIcon size={16} className="shrink-0 transition-transform duration-200 group-hover:scale-110" />
+                  <SubIcon
+                    size={16}
+                    className="shrink-0 transition-transform duration-200 group-hover:scale-110"
+                  />
                 ) : (
                   <span className="h-1.5 w-1.5 rounded-full bg-current transition-transform duration-200 group-hover:scale-150" />
                 )}

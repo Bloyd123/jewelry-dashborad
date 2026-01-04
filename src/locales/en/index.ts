@@ -12,6 +12,7 @@ import metalrate from './metalrate.json'
 import supplier from './suppliers.json'
 import product from './product.json'
 import payment from './payment.json'
+import user from './user.json'
 // import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
@@ -34,6 +35,7 @@ export default {
   ...product,
   ...purchase,
   ...payment,
+  ...user,
   // ...dashboard,
   //   ...inventory,
   //   ...masters,

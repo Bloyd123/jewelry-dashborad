@@ -1,7 +1,6 @@
 // FILE: src/components/customer/CustomerPage/tabs/ActivityLogsTab.tsx
 // Activity Logs Tab
 
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {

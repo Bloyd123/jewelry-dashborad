@@ -1,7 +1,5 @@
-
 // FILE: src/components/products/ProductDetailsPage/MobileProductDetailHeader.tsx
 // Mobile Product Detail Header Component
-
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +20,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Product } from '@/types/product.types'
 import { dummyProducts } from '@/pages/product/mock.data'
 
-
 // COMPONENT PROPS
-
 
 interface MobileProductDetailHeaderProps {
   productId?: string

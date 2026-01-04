@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductTable/index.ts
 // Product Table Barrel Export
 

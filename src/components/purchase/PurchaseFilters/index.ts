@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseFilters/index.ts
 // Exports
 

@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shops/ShopSettings/sections/GSTConfigSection.tsx
 // Section 3: GST Configuration
-// 
+//
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

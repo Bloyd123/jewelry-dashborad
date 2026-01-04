@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/PaymentForm.types.ts
 // PaymentForm Types and Interfaces
 

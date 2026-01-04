@@ -1,4 +1,3 @@
-
 // FILE: src/components/ui/overlay/Drawer/Drawer.tsx
 // Side Drawer Component (Left/Right)
 
@@ -9,7 +8,6 @@ import { cn } from '@/lib/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
 // TYPES
-
 
 export type DrawerSide = 'left' | 'right'
 export type DrawerSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'

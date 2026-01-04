@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shop/ShopDetailsPages/tabs/ActivityLogTab.tsx
 // Activity Log Table Component - FIXED SORTING
-// 
+//
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,9 +13,9 @@ import { ActivityLogFilters } from './ActivityLogFilters'
 import type { ActivityLogFilterValues } from './ActivityLogFilters'
 import { AlertCircle } from 'lucide-react'
 
-// 
+//
 // MAIN COMPONENT
-// 
+//
 
 const ActivityLogTab: React.FC = () => {
   const { t } = useTranslation()
@@ -33,9 +33,7 @@ const ActivityLogTab: React.FC = () => {
     dateRange: undefined,
   })
 
-
   // FILTERED DATA
-  
 
   const filteredData = useMemo(() => {
     let result = [...MOCK_ACTIVITY_LOGS]
@@ -92,9 +90,7 @@ const ActivityLogTab: React.FC = () => {
     return result
   }, [filters])
 
-  
   // HANDLERS
-  
 
   const handleFiltersChange = (newFilters: ActivityLogFilterValues) => {
     setFilters(newFilters)
@@ -125,9 +121,7 @@ const ActivityLogTab: React.FC = () => {
     handleViewDetails(row)
   }
 
-  
   // RENDER
-  
 
   return (
     <div className="w-full space-y-4">

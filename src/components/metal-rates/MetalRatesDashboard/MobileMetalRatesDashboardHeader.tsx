@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/MobileMetalRatesDashboardHeader.tsx
 // Mobile Metal Rates Dashboard Header with Tabs and Shop Info
 
@@ -37,9 +36,7 @@ interface MobileMetalRatesDashboardHeaderProps {
   children?: React.ReactNode
 }
 
-
 // MOBILE METAL RATES DASHBOARD HEADER COMPONENT
-
 
 export const MobileMetalRatesDashboardHeader: React.FC<
   MobileMetalRatesDashboardHeaderProps

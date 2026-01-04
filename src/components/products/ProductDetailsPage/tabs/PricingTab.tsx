@@ -1,7 +1,5 @@
-
 // FILE: src/components/products/ProductDetailsPage/tabs/PricingTab.tsx
 // Product Pricing Tab - Accordion-based Layout
-
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

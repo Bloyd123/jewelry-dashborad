@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/sections/TransactionTypeSection.tsx
 // Transaction Type Toggle Section (Receipt/Payment)
 

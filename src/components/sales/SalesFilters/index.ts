@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesFilters/index.ts
 // Export all filter components
-
 
 export { SalesStatusFilter } from './StatusFilter'
 export { PaymentStatusFilter } from './PaymentStatusFilter'

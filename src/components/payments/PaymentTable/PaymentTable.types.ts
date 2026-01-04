@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentTable/PaymentTable.types.ts
 // Payment Table Type Definitions
 

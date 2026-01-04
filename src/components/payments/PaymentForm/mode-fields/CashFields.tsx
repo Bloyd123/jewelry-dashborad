@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/mode-fields/CashFields.tsx
 // Cash Payment Mode Fields
 

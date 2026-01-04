@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesDetailPage/SalesDetailHeader.tsx
 // Responsive Sales Detail Header (Main Component)
-
 
 import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'

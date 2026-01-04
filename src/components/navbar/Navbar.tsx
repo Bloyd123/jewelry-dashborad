@@ -1,4 +1,3 @@
-
 // FILE: components/navbar/Navbar.tsx
 // Main Navbar Component (Responsive)
 

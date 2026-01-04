@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shops/ShopSettings/index.ts
 // Export all Shop Settings components
-// 
+//
 
 export { ShopSettings } from './ShopSettings'
 export { GeneralSettingsSection } from './sections/GeneralSettingsSection'

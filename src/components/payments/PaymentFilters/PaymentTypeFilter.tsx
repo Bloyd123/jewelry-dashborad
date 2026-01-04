@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/paymentFilters/PaymentTypeFilter.tsx
 // Payment Type Filter Component
 

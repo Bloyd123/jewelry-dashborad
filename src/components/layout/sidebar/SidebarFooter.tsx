@@ -1,8 +1,7 @@
-
 // FILE: layout/sidebar/SidebarFooter.tsx
 // Sidebar Footer - User Info, Settings, Logout
 
-import {  LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 import { useSidebar } from '@/hooks/useSidebar'
 import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'

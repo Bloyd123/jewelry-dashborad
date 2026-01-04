@@ -18,9 +18,9 @@ import {
   ShopSortFilter,
 } from './index'
 
-// 
+//
 // TYPES
-// 
+//
 
 export interface ShopFilterValues {
   search: string
@@ -40,9 +40,9 @@ interface ShopFiltersProps {
   onClearAll: () => void
 }
 
-// 
+//
 // SHOP FILTERS COMPONENT
-// 
+//
 
 export const ShopFilters: React.FC<ShopFiltersProps> = ({
   filters,
@@ -127,9 +127,9 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
     return count
   }, [filters])
 
-  // 
+  //
   // DESKTOP VIEW
-  // 
+  //
   if (isDesktop) {
     return (
       <>
@@ -237,9 +237,9 @@ export const ShopFilters: React.FC<ShopFiltersProps> = ({
     )
   }
 
-  // 
+  //
   // MOBILE VIEW
-  // 
+  //
   return (
     <>
       <div className="space-y-3">

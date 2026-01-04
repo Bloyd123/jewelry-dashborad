@@ -1,4 +1,3 @@
-
 // ============================================================================
 // FILE: src/pages/UserProfile/tabs/SecurityTab.tsx
 // Security & Authentication Tab Component
@@ -6,8 +5,21 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Lock, Smartphone, Monitor, CheckCircle2, XCircle, Shield } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Lock,
+  Smartphone,
+  Monitor,
+  CheckCircle2,
+  XCircle,
+  Shield,
+} from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -34,14 +46,18 @@ export const SecurityTab = () => {
       <Card>
         <CardHeader>
           <CardTitle>{t('userProfile.security.verificationStatus')}</CardTitle>
-          <CardDescription>{t('userProfile.security.verificationStatusDesc')}</CardDescription>
+          <CardDescription>
+            {t('userProfile.security.verificationStatusDesc')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <CheckCircle2 className="h-5 w-5 text-status-success" />
               <div>
-                <p className="text-sm font-medium text-text-primary">{t('userProfile.security.emailVerified')}</p>
+                <p className="text-sm font-medium text-text-primary">
+                  {t('userProfile.security.emailVerified')}
+                </p>
                 <p className="text-xs text-text-tertiary">{dummyUser.email}</p>
               </div>
             </div>
@@ -58,14 +74,18 @@ export const SecurityTab = () => {
                 <XCircle className="h-5 w-5 text-status-error" />
               )}
               <div>
-                <p className="text-sm font-medium text-text-primary">{t('userProfile.security.phoneVerified')}</p>
+                <p className="text-sm font-medium text-text-primary">
+                  {t('userProfile.security.phoneVerified')}
+                </p>
                 <p className="text-xs text-text-tertiary">{dummyUser.phone}</p>
               </div>
             </div>
             {dummyUser.isPhoneVerified ? (
               <Badge variant="success">{t('common.verified')}</Badge>
             ) : (
-              <Button variant="outline" size="sm">{t('userProfile.security.verifyNow')}</Button>
+              <Button variant="outline" size="sm">
+                {t('userProfile.security.verifyNow')}
+              </Button>
             )}
           </div>
         </CardContent>
@@ -78,36 +98,59 @@ export const SecurityTab = () => {
             <Lock className="mr-2 inline h-5 w-5" />
             {t('userProfile.security.changePassword')}
           </CardTitle>
-          <CardDescription>{t('userProfile.security.changePasswordDesc')}</CardDescription>
+          <CardDescription>
+            {t('userProfile.security.changePasswordDesc')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="currentPassword">{t('userProfile.security.currentPassword')}</Label>
+            <Label htmlFor="currentPassword">
+              {t('userProfile.security.currentPassword')}
+            </Label>
             <Input
               id="currentPassword"
               type="password"
               value={passwordData.currentPassword}
-              onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+              onChange={e =>
+                setPasswordData({
+                  ...passwordData,
+                  currentPassword: e.target.value,
+                })
+              }
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="newPassword">{t('userProfile.security.newPassword')}</Label>
+            <Label htmlFor="newPassword">
+              {t('userProfile.security.newPassword')}
+            </Label>
             <Input
               id="newPassword"
               type="password"
               value={passwordData.newPassword}
-              onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+              onChange={e =>
+                setPasswordData({
+                  ...passwordData,
+                  newPassword: e.target.value,
+                })
+              }
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">{t('userProfile.security.confirmPassword')}</Label>
+            <Label htmlFor="confirmPassword">
+              {t('userProfile.security.confirmPassword')}
+            </Label>
             <Input
               id="confirmPassword"
               type="password"
               value={passwordData.confirmPassword}
-              onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+              onChange={e =>
+                setPasswordData({
+                  ...passwordData,
+                  confirmPassword: e.target.value,
+                })
+              }
             />
           </div>
 
@@ -124,15 +167,21 @@ export const SecurityTab = () => {
             <Shield className="mr-2 inline h-5 w-5" />
             {t('userProfile.security.twoFactorAuth')}
           </CardTitle>
-          <CardDescription>{t('userProfile.security.twoFactorAuthDesc')}</CardDescription>
+          <CardDescription>
+            {t('userProfile.security.twoFactorAuthDesc')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Smartphone className="h-5 w-5 text-text-secondary" />
               <div>
-                <p className="text-sm font-medium text-text-primary">{t('userProfile.security.twoFactorStatus')}</p>
-                <p className="text-xs text-text-tertiary">{t('userProfile.security.twoFactorStatusDesc')}</p>
+                <p className="text-sm font-medium text-text-primary">
+                  {t('userProfile.security.twoFactorStatus')}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {t('userProfile.security.twoFactorStatusDesc')}
+                </p>
               </div>
             </div>
             <Switch checked={dummyUser.twoFactorEnabled} />
@@ -153,7 +202,9 @@ export const SecurityTab = () => {
             <Monitor className="mr-2 inline h-5 w-5" />
             {t('userProfile.security.activeSessions')}
           </CardTitle>
-          <CardDescription>{t('userProfile.security.activeSessionsDesc')}</CardDescription>
+          <CardDescription>
+            {t('userProfile.security.activeSessionsDesc')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
@@ -162,14 +213,21 @@ export const SecurityTab = () => {
               <div className="flex items-center gap-3">
                 <Monitor className="h-5 w-5 text-status-success" />
                 <div>
-                  <p className="text-sm font-medium text-text-primary">{t('userProfile.security.currentDevice')}</p>
-                  <p className="text-xs text-text-tertiary">{dummyUser.lastLoginIP}</p>
+                  <p className="text-sm font-medium text-text-primary">
+                    {t('userProfile.security.currentDevice')}
+                  </p>
                   <p className="text-xs text-text-tertiary">
-                    {t('userProfile.security.lastActive')}: {new Date(dummyUser.lastLogin!).toLocaleString()}
+                    {dummyUser.lastLoginIP}
+                  </p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('userProfile.security.lastActive')}:{' '}
+                    {new Date(dummyUser.lastLogin!).toLocaleString()}
                   </p>
                 </div>
               </div>
-              <Badge variant="success">{t('userProfile.security.active')}</Badge>
+              <Badge variant="success">
+                {t('userProfile.security.active')}
+              </Badge>
             </div>
 
             {/* Dummy other sessions */}
@@ -177,12 +235,18 @@ export const SecurityTab = () => {
               <div className="flex items-center gap-3">
                 <Smartphone className="h-5 w-5 text-text-secondary" />
                 <div>
-                  <p className="text-sm font-medium text-text-primary">Mobile Device</p>
+                  <p className="text-sm font-medium text-text-primary">
+                    Mobile Device
+                  </p>
                   <p className="text-xs text-text-tertiary">192.168.1.105</p>
-                  <p className="text-xs text-text-tertiary">{t('userProfile.security.lastActive')}: 2 hours ago</p>
+                  <p className="text-xs text-text-tertiary">
+                    {t('userProfile.security.lastActive')}: 2 hours ago
+                  </p>
                 </div>
               </div>
-              <Button variant="outline" size="sm">{t('userProfile.security.revoke')}</Button>
+              <Button variant="outline" size="sm">
+                {t('userProfile.security.revoke')}
+              </Button>
             </div>
           </div>
 

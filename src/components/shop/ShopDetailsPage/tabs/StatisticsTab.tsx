@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shop/ShopDetailsPages/tabs/StatisticsTab.tsx
 // Shop Statistics Dashboard Component
-// 
+//
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -38,9 +38,9 @@ import {
   mockRecentTransactions,
 } from '@/pages/shops/dummyStatistics'
 
-// 
+//
 // TYPES & INTERFACES
-// 
+//
 
 export interface ShopStatistics {
   totalSales: {
@@ -123,9 +123,9 @@ export interface StatisticsTabProps {
   className?: string
 }
 
-// 
+//
 // HELPER FUNCTIONS
-// 
+//
 
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -139,9 +139,9 @@ const formatNumber = (value: number): string => {
   return new Intl.NumberFormat('en-IN').format(value)
 }
 
-// 
+//
 // STATISTICSTAB COMPONENT
-// 
+//
 
 const StatisticsTab: React.FC<StatisticsTabProps> = ({
   shopId,

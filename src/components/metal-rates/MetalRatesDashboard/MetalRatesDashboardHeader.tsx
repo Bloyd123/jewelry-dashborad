@@ -1,7 +1,5 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/MetalRatesDashboardHeader.tsx
 // Responsive Metal Rates Dashboard Header (Main Component)
-
 
 import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'

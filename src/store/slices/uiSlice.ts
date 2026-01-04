@@ -1,4 +1,3 @@
-
 // FILE: store/slices/uiSlice.ts
 // UI State Management (Sidebar, Theme, Loading)
 
@@ -168,7 +167,7 @@ export const {
   toggleMobileMenu,
   setMobileMenuOpen,
   setTheme,
-  cycleTheme, 
+  cycleTheme,
   setLoading,
   setLoadingWithMessage,
   resetUI,

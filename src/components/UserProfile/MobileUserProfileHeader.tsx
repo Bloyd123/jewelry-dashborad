@@ -38,12 +38,7 @@ interface MobileUserProfileHeaderProps {
 
 export const MobileUserProfileHeader: React.FC<
   MobileUserProfileHeaderProps
-> = ({
-  activeTab = 'personal',
-  onTabChange,
-  onBackClick,
-  onSettingsClick,
-}) => {
+> = ({ activeTab = 'personal', onTabChange, onBackClick, onSettingsClick }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 

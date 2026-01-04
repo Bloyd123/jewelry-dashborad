@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductForm/sections/StockDetailsSection.tsx
 // Step 5: Stock, Images, Hallmarking & Other Details
 

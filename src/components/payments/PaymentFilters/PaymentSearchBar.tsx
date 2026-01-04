@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/paymentFilters/PaymentSearchBar.tsx
 // Payment Search Bar Component
 

@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/sales/SaleForm/SaleForm.tsx
 // Main SaleForm Component (Route Handler)
-// 
+//
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import SaleFormDesktop from './SaleForm.desktop'

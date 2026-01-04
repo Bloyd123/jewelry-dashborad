@@ -1,4 +1,3 @@
-
 // FILE: src/components/customer/CustomerTable/index.ts
 // CustomerTable Barrel Export
 

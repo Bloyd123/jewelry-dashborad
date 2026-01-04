@@ -1,4 +1,3 @@
-
 // FILE:     src/components/products/ProductTable/ProductTable.tsx
 // Main Product Table Component
 
@@ -19,9 +18,7 @@ export const ProductTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-
   // STATE
-
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -40,7 +37,6 @@ export const ProductTable: React.FC = () => {
     minPrice: undefined,
     maxPrice: undefined,
   })
-
 
   // FILTERED DATA
 

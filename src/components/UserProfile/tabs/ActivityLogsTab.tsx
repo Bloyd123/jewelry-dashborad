@@ -5,10 +5,22 @@
 
 import { useTranslation } from 'react-i18next'
 import { Clock, Activity, Filter } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { dummyUserWithRelations } from '@/pages/user/data'
 
 export const ActivityLogsTab = () => {
@@ -34,31 +46,51 @@ export const ActivityLogsTab = () => {
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-text-primary">{t('userProfile.activityLogs.actionType')}</label>
+              <label className="text-sm font-medium text-text-primary">
+                {t('userProfile.activityLogs.actionType')}
+              </label>
               <Select defaultValue="all">
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t('userProfile.activityLogs.allActions')}</SelectItem>
-                  <SelectItem value="login">{t('userProfile.activityLogs.login')}</SelectItem>
-                  <SelectItem value="logout">{t('userProfile.activityLogs.logout')}</SelectItem>
-                  <SelectItem value="profile_update">{t('userProfile.activityLogs.profileUpdate')}</SelectItem>
+                  <SelectItem value="all">
+                    {t('userProfile.activityLogs.allActions')}
+                  </SelectItem>
+                  <SelectItem value="login">
+                    {t('userProfile.activityLogs.login')}
+                  </SelectItem>
+                  <SelectItem value="logout">
+                    {t('userProfile.activityLogs.logout')}
+                  </SelectItem>
+                  <SelectItem value="profile_update">
+                    {t('userProfile.activityLogs.profileUpdate')}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-text-primary">{t('userProfile.activityLogs.dateRange')}</label>
+              <label className="text-sm font-medium text-text-primary">
+                {t('userProfile.activityLogs.dateRange')}
+              </label>
               <Select defaultValue="7days">
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="today">{t('userProfile.activityLogs.today')}</SelectItem>
-                  <SelectItem value="7days">{t('userProfile.activityLogs.last7Days')}</SelectItem>
-                  <SelectItem value="30days">{t('userProfile.activityLogs.last30Days')}</SelectItem>
-                  <SelectItem value="all">{t('userProfile.activityLogs.allTime')}</SelectItem>
+                  <SelectItem value="today">
+                    {t('userProfile.activityLogs.today')}
+                  </SelectItem>
+                  <SelectItem value="7days">
+                    {t('userProfile.activityLogs.last7Days')}
+                  </SelectItem>
+                  <SelectItem value="30days">
+                    {t('userProfile.activityLogs.last30Days')}
+                  </SelectItem>
+                  <SelectItem value="all">
+                    {t('userProfile.activityLogs.allTime')}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -79,10 +111,13 @@ export const ActivityLogsTab = () => {
             <Activity className="mr-2 inline h-5 w-5" />
             {t('userProfile.activityLogs.recentActivity')}
           </CardTitle>
-          <CardDescription>{t('userProfile.activityLogs.recentActivityDesc')}</CardDescription>
+          <CardDescription>
+            {t('userProfile.activityLogs.recentActivityDesc')}
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          {dummyUserWithRelations.activityLogs && dummyUserWithRelations.activityLogs.length > 0 ? (
+          {dummyUserWithRelations.activityLogs &&
+          dummyUserWithRelations.activityLogs.length > 0 ? (
             <div className="space-y-4">
               {dummyUserWithRelations.activityLogs.map((log: any) => (
                 <div
@@ -98,9 +133,13 @@ export const ActivityLogsTab = () => {
                       <Badge variant={getActionBadgeVariant(log.action)}>
                         {t(`userProfile.activityLogs.${log.action}`)}
                       </Badge>
-                      <span className="text-sm text-text-secondary">{log.module}</span>
+                      <span className="text-sm text-text-secondary">
+                        {log.module}
+                      </span>
                     </div>
-                    <p className="text-sm text-text-primary">{log.description}</p>
+                    <p className="text-sm text-text-primary">
+                      {log.description}
+                    </p>
                     <p className="text-xs text-text-tertiary">
                       {new Date(log.timestamp).toLocaleString()}
                     </p>
@@ -109,7 +148,9 @@ export const ActivityLogsTab = () => {
               ))}
             </div>
           ) : (
-            <p className="text-center text-sm text-text-tertiary">{t('userProfile.activityLogs.noActivity')}</p>
+            <p className="text-center text-sm text-text-tertiary">
+              {t('userProfile.activityLogs.noActivity')}
+            </p>
           )}
         </CardContent>
       </Card>

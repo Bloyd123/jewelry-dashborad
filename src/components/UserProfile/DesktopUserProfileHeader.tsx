@@ -43,12 +43,7 @@ interface DesktopUserProfileHeaderProps {
 
 export const DesktopUserProfileHeader: React.FC<
   DesktopUserProfileHeaderProps
-> = ({
-  activeTab = 'personal',
-  onTabChange,
-  onBackClick,
-  onSettingsClick,
-}) => {
+> = ({ activeTab = 'personal', onTabChange, onBackClick, onSettingsClick }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 

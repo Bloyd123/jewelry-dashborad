@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/sales/SaleForm/SaleForm.types.ts
 // SaleForm Types and Interfaces
-// 
+//
 
 import type {
   SaleItem,
@@ -11,9 +11,9 @@ import type {
   SaleType,
 } from '@/types/sale.types'
 
-// 
+//
 // FORM DATA INTERFACE
-// 
+//
 
 export interface SaleFormData {
   // Customer Info
@@ -51,9 +51,9 @@ export interface SaleFormData {
   tags?: string[]
 }
 
-// 
+//
 // ITEM INTERFACES
-// 
+//
 
 export interface SaleFormItem {
   productId?: string
@@ -90,9 +90,9 @@ export interface OldGoldFormItem {
   description?: string
 }
 
-// 
+//
 // COMPONENT PROPS
-// 
+//
 
 export interface SaleFormProps {
   initialData?: Partial<SaleFormData>
@@ -111,18 +111,18 @@ export interface FormSectionProps {
   disabled?: boolean
 }
 
-// 
+//
 // VALIDATION RESULT
-// 
+//
 
 export interface ValidationResult {
   isValid: boolean
   errors: Record<string, string>
 }
 
-// 
+//
 // DEFAULT VALUES
-// 
+//
 
 export const defaultSaleFormData: SaleFormData = {
   customerId: '',

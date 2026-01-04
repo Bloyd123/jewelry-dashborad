@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shops/ShopSettings/types/shopSettings.types.ts
 // TypeScript interfaces for Shop Settings
-// 
+//
 
 // Import types from main shop types instead of redefining
 import type {

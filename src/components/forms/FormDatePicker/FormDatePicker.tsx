@@ -1,4 +1,3 @@
-
 // FILE: src/components/forms/FormDatePicker/FormDatePicker.tsx
 // Theme-based Form DatePicker Component
 

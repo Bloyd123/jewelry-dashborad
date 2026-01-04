@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductDetailsPage/tabs/HistoryTab.tsx
 // Product History Tab - Accordion-based Layout
 
@@ -38,9 +37,7 @@ interface HistoryTabProps {
   hasMore?: boolean
 }
 
-
 // MOCK TRANSACTION DATA
-
 
 const mockTransactions: InventoryTransaction[] = [
   {
@@ -118,7 +115,6 @@ const mockTransactions: InventoryTransaction[] = [
 
 // HELPER FUNCTIONS
 
-
 const getTransactionIcon = (type: string) => {
   switch (type) {
     case 'IN':
@@ -185,9 +181,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     )
   }
 
-
   // TRANSACTION STATISTICS SECTION
-
 
   const TransactionStatisticsSection = () => (
     <div className="space-y-4 p-4">
@@ -235,9 +229,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     </div>
   )
 
-  
   // TRANSACTION HISTORY SECTION
-
 
   const TransactionHistorySection = () => {
     if (transactions.length === 0) {
@@ -365,9 +357,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     )
   }
 
-
   // PRODUCT LIFECYCLE SECTION
-
 
   const ProductLifecycleSection = () => (
     <div className="space-y-3 p-4">
@@ -404,9 +394,7 @@ export const HistoryTab: React.FC<HistoryTabProps> = ({
     </div>
   )
 
-  
   // RENDER MAIN ACCORDION
-
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

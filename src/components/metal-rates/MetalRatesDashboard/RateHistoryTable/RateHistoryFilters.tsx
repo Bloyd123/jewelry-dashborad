@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryFilters.tsx
 // Rate History Filters - Responsive Desktop & Mobile with Drawer
 
@@ -93,7 +92,6 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
     setShowFiltersDrawer(false)
   }
 
-
   // DESKTOP VIEW
 
   if (isDesktop) {
@@ -131,7 +129,6 @@ export const RateHistoryFilters: React.FC<RateHistoryFiltersProps> = ({
       </FilterBar>
     )
   }
-
 
   // MOBILE VIEW WITH DRAWER
   return (

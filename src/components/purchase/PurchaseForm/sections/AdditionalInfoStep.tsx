@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseForm/sections/AdditionalInfoSection.tsx
 // Additional Info Section
 

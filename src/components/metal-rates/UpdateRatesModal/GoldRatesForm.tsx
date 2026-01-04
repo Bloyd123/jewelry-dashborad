@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/GoldRatesForm.tsx
 // Gold Rates Form - Section 1 of Update Metal Rates Modal
 
@@ -30,7 +29,6 @@ interface GoldRatesFormProps {
 }
 
 // COMPONENT
-
 
 export const GoldRatesForm: React.FC<GoldRatesFormProps> = ({
   initialData,

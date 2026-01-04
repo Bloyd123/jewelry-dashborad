@@ -1,7 +1,5 @@
-
 // FILE: src/components/purchase/PurchaseTable/PurchaseTableActions.tsx
 // Purchase Table Row Actions & Bulk Actions
-
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,9 +27,7 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { IPurchase } from '@/types/purchase.types'
 
-
 // ROW ACTIONS (Individual Purchase Actions)
-
 
 export const getPurchaseRowActions = (
   onViewDetails: (purchase: IPurchase) => void,
@@ -101,9 +97,7 @@ export const getPurchaseRowActions = (
   },
 ]
 
-
 // BULK ACTIONS BAR
-
 
 interface BulkActionsBarProps {
   selectedCount: number

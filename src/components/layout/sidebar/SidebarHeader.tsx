@@ -1,4 +1,3 @@
-
 // FILE: layout/sidebar/SidebarHeader.tsx
 // Sidebar Header - Logo & Brand
 

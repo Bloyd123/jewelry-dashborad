@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryColumns.tsx
 // Rate History Table Column Definitions
 

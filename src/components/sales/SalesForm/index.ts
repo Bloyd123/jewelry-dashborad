@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/sales/SaleForm/index.ts
 // SaleForm Exports
-// 
+//
 
 export { SaleForm } from './SaleForm'
 export { CustomerSection } from './sections/CustomerSection'

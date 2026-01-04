@@ -1,4 +1,3 @@
-
 // FILE: src/components/customer/CustomerPage/tabs/PersonalInfoTab.tsx
 // Personal Information Tab with Accordions
 
@@ -55,7 +54,6 @@ const CopyButton = ({ text }: { text: string }) => {
 
 // COMPONENT PROPS
 
-
 interface PersonalInfoTabProps {
   customerId?: string
 }
@@ -71,7 +69,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
   const customer: Customer = customerId
     ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
     : MOCK_CUSTOMERS[0]
-
 
   // BASIC INFORMATION SECTION
 
@@ -244,7 +241,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
 
   // ADDRESS SECTION
 
-
   const AddressSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -303,7 +299,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
       </Button>
     </div>
   )
-
 
   // KYC DOCUMENTS SECTION
 
@@ -390,9 +385,7 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-
   // NOTES SECTION
-
 
   const NotesSection = () => (
     <div className="space-y-4 p-4">
@@ -421,7 +414,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
       )}
     </div>
   )
-
 
   // RENDER MAIN ACCORDION
 

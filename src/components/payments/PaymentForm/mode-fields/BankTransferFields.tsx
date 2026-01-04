@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/mode-fields/BankTransferFields.tsx
 // Bank Transfer Payment Mode Fields
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/paymentFilters/ReconciliationFilter.tsx
 // Reconciliation Status Filter
 

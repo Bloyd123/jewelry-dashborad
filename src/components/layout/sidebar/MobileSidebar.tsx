@@ -1,4 +1,3 @@
-
 // FILE: layout/sidebar/MobileSidebar.tsx
 // Mobile Sidebar with Overlay
 

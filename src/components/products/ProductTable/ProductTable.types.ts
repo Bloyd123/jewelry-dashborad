@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductTable/ProductTable.types.ts
 // Product Table TypeScript Types
 

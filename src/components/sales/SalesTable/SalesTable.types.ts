@@ -1,16 +1,16 @@
-// 
+//
 // FILE: src/components/sales/SalesTable/SalesTable.types.ts
 // Sales Table TypeScript Types
-// 
+//
 
 import type { Sale } from '@/types/sale.types'
 
 // Re-export Sale type for convenience
 export type { Sale }
 
-// 
+//
 // TABLE-SPECIFIC TYPES
-// 
+//
 
 // export interface SalesTableFilters {
 //   search: string

@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseFilters/PurchaseActiveFilters.tsx
 // Active Purchase Filters Display
 

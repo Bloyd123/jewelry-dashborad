@@ -167,7 +167,6 @@ const formatNumber = (value: number): string => {
 
 // CUSTOMERANALYTICS COMPONENT
 
-
 export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
   shopId,
   statistics,

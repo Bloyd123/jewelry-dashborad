@@ -2,36 +2,36 @@
   "sidebar": {
     "dashboard": "डैशबोर्ड",
     "metalRates": "धातु दरें",
-    
+
     "customers": "ग्राहक",
     "addCustomer": "ग्राहक जोड़ें",
     "Allcustomer": "सभी ग्राहक",
     "customerdetail": "ग्राहक विवरण",
-    
+
     "suppliers": "आपूर्तिकर्ता",
     "supplierdetails": "आपूर्तिकर्ता विवरण",
     "addSupplier": "आपूर्तिकर्ता जोड़ें",
     "supplierlist": "आपूर्तिकर्ता सूची",
-    
+
     "shops": "दुकानें",
     "shopList": "दुकान सूची",
     "shopdetail": "दुकान विवरण",
     "addshop": "दुकान जोड़ें",
-    
+
     "products": "उत्पाद",
     "allProducts": "सभी उत्पाद",
     "addProduct": "उत्पाद जोड़ें",
     "productdetail": "उत्पाद विवरण",
-    
+
     "purchases": "खरीद",
     "allPurchases": "सभी खरीद",
     "addPurchase": "खरीद जोड़ें",
-    
+
     "sales": "बिक्री",
     "allSales": "सभी बिक्री",
     "addSale": "बिक्री जोड़ें",
     "detailsales": "बिक्री विवरण",
-    
+
     "payments": "भुगतान",
     "addPayment": "भुगतान जोड़ें",
     "allpayments": "सभी भुगतान"

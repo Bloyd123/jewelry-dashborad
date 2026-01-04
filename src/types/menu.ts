@@ -1,4 +1,3 @@
-
 // FILE: types/menu.ts
 // Menu Item Types
 
@@ -14,5 +13,5 @@ export interface MenuItem {
 export interface SubMenuItem {
   title: string
   url: string
-    icon?: LucideIcon 
+  icon?: LucideIcon
 }

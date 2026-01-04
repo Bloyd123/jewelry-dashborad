@@ -1,4 +1,3 @@
-
 // FILE: src/components/forms/FormError/index.ts
 
 export { FormError } from './FormError'

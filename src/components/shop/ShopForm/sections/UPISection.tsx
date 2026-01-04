@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shop/ShopForm/sections/UPISection.tsx
 // UPI Details Section
-// 
+//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

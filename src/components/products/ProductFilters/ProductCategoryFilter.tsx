@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/ProductCategoryFilter.tsx
 // Product Category Filter with Subcategories
 

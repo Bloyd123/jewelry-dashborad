@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/supplier/SupplierManagementModal/SupplierManagementModal.types.ts
 // TypeScript Types for SupplierManagementModal
-// 
+//
 
 import type { Supplier } from '@/types/supplier.types'
 
@@ -20,9 +20,9 @@ export interface SupplierManagementModalProps {
   onSuccess?: () => void
 }
 
-// 
+//
 // UPDATE BALANCE TYPES
-// 
+//
 
 export type BalanceUpdateType = 'payment' | 'purchase' | 'adjustment'
 
@@ -38,9 +38,9 @@ export interface UpdateBalanceSectionProps {
   onCancel: () => void
 }
 
-// 
+//
 // UPDATE RATING TYPES
-// 
+//
 
 export interface UpdateRatingFormData {
   qualityRating: number
@@ -54,9 +54,9 @@ export interface UpdateRatingSectionProps {
   onCancel: () => void
 }
 
-// 
+//
 // PREFERRED SUPPLIER TYPES
-// 
+//
 
 export interface PreferredSupplierSectionProps {
   supplier: Supplier
@@ -65,9 +65,9 @@ export interface PreferredSupplierSectionProps {
   onCancel: () => void
 }
 
-// 
+//
 // BLACKLIST SUPPLIER TYPES
-// 
+//
 
 export interface BlacklistFormData {
   reason: string
@@ -80,9 +80,9 @@ export interface BlacklistSupplierSectionProps {
   onCancel: () => void
 }
 
-// 
+//
 // DELETE SUPPLIER TYPES
-// 
+//
 
 export interface DeleteSupplierSectionProps {
   supplier: Supplier

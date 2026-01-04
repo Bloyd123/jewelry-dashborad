@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductTable/ProductTableColumns.tsx
 // Product Table Column Definitions
 

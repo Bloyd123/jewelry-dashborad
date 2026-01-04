@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesFilters/SaleTypeFilter.tsx
 // Sale Type Filter - Uses Reusable TypeFilter
- 
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

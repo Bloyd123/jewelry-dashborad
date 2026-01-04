@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentForm/sections/AdditionalDetailsSection.tsx
 // Additional Details Section (Notes, Tags, Attachments)
 

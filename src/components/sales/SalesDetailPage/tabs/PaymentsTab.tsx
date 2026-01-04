@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesDetailPage/tabs/PaymentsTab.tsx
 // Sales Payments Tab Component with Timeline & Add Payment
-
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -47,9 +45,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { Payment, PaymentRecord, PaymentMode } from '@/types/sale.types'
 
-
 // COMPONENT PROPS
-
 
 interface PaymentsTabProps {
   payment: Payment
@@ -58,9 +54,7 @@ interface PaymentsTabProps {
   onAddPayment?: (paymentData: Partial<PaymentRecord>) => Promise<void>
 }
 
-
 // ADD PAYMENT FORM COMPONENT
-
 
 const AddPaymentForm: React.FC<{
   isOpen: boolean
@@ -328,9 +322,7 @@ const AddPaymentForm: React.FC<{
   )
 }
 
-
 // PAYMENT TIMELINE COMPONENT
-
 
 const PaymentTimeline: React.FC<{
   payments: PaymentRecord[]
@@ -479,9 +471,7 @@ const PaymentTimeline: React.FC<{
   )
 }
 
-
 // MAIN COMPONENT
-
 
 const PaymentsTab: React.FC<PaymentsTabProps> = ({
   payment,

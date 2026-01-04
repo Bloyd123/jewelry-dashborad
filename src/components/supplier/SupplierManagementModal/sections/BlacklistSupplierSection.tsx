@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/supplier/SupplierManagementModal/sections/BlacklistSupplierSection.tsx
 // Blacklist Supplier Section
-// 
+//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

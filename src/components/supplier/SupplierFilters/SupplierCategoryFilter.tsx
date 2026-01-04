@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/supplier/SupplierFilters/SupplierCategoryFilter.tsx
 // Supplier Category Filter - Uses Reusable TypeFilter
-// 
+//
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

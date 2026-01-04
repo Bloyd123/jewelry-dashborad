@@ -1,4 +1,3 @@
-
 // FILE: src/components/product/ProductsFilters/ProductMetalTypeFilter.tsx
 // Metal Type Filter
 

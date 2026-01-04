@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseFilters/PurchaseFilters.tsx
 // Main Purchase Filters Container
 

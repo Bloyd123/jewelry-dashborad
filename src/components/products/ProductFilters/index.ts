@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/index.ts
 // Product Filters Exports
 

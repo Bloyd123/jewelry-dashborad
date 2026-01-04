@@ -1,4 +1,3 @@
-
 // FILE: src/components/sales/SalesFilters/PaymentModeFilter.tsx
 // Payment Mode Filter - Uses Reusable TypeFilter
 

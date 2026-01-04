@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseFilters/PurchaseApprovalStatusFilter.tsx
 // Approval Status Filter
 

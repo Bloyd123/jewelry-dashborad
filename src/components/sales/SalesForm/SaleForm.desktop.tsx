@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/sales/SaleForm/SaleForm.desktop.tsx
 // Desktop Layout for SaleForm
-// 
+//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

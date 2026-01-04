@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/sections/PartyDetailsSection.tsx
 // Party Details Section (Customer/Supplier Selection with Smart Search)
 

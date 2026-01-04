@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentTable/PaymentTableColumns.tsx
 // Payment Table Column Definitions
 
@@ -59,9 +58,7 @@ const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
 
-
 // COLUMN DEFINITIONS
-
 
 export const paymentTableColumns: DataTableColumn<Payment>[] = [
   // 1. Payment Number

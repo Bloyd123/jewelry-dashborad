@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/ProductPurityFilter.tsx
 // Metal Purity Filter
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/PlatinumRatesForm.tsx
 // Platinum Rates Form - Section 3 of Update Metal Rates Modal
 

@@ -1,7 +1,5 @@
-
 // FILE: src/components/purchase/PurchaseFilters/types.ts
 // Purchase Filter Types
-
 
 import type { DateRange } from 'react-day-picker'
 

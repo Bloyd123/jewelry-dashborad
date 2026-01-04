@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/CompareRates/CompareRatesModal.tsx
 // Compare Rates Between Dates Modal
 
@@ -137,9 +136,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   const [comparisonData, setComparisonData] =
     useState<RateComparisonResult | null>(null)
 
-  
   // HANDLERS
-
 
   const handleDateChange = (name: string, value: string) => {
     if (name === 'fromDate') {
@@ -216,9 +213,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     return 'text-text-tertiary'
   }
 
-
   // RENDER
-
 
   return (
     <Modal

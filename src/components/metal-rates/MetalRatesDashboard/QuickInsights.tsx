@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/QuickInsights.tsx
 // Metal Rates Quick Insights Dashboard Component
 

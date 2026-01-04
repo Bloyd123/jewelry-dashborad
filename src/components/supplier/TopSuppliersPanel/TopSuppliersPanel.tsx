@@ -1,7 +1,7 @@
-// FILE: src/components/supplier/TopSupp// 
+// FILE: src/components/supplier/TopSupp//
 // FILE: src/components/supplier/TopSuppliersPanel/TopSuppliersPanel.tsx
 // Top Suppliers Side Panel Component
-// 
+//
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +10,9 @@ import { cn } from '@/lib/utils'
 import { dummyTopSuppliers } from '@/pages/suppliers/data'
 import type { Supplier } from '@/types/supplier.types'
 
-// 
+//
 // TYPES
-// 
+//
 
 export interface TopSuppliersPanelProps {
   limit?: number
@@ -22,9 +22,9 @@ export interface TopSuppliersPanelProps {
   className?: string
 }
 
-// 
+//
 // HELPER FUNCTIONS
-// 
+//
 
 const formatCurrency = (amount: number): string => {
   if (amount >= 10000000) {
@@ -49,9 +49,9 @@ const getRankBadgeColor = (rank: number): string => {
   }
 }
 
-// 
+//
 // TOP SUPPLIERS PANEL COMPONENT
-// 
+//
 
 export const TopSuppliersPanel: React.FC<TopSuppliersPanelProps> = ({
   limit = 5,

@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductDetailsPage/tabs/index.ts
 // Export all Product Detail Tabs
 

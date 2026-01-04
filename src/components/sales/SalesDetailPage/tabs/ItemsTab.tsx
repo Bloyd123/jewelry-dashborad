@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesDetailPage/tabs/ItemsTab.tsx
 // Sales Items Tab Component with DataTable & Sheet Modal
-
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -32,18 +30,14 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 import type { SaleItem, OldGoldExchange, OldGoldItem } from '@/types/sale.types'
 
-
 // COMPONENT PROPS
-
 
 interface ItemsTabProps {
   items: SaleItem[]
   oldGoldExchange?: OldGoldExchange
 }
 
-
 // ITEM DETAIL MODAL/SHEET COMPONENT
-
 
 const ItemDetailView: React.FC<{
   item: SaleItem | null
@@ -295,9 +289,7 @@ const ItemDetailView: React.FC<{
   )
 }
 
-
 // MAIN COMPONENT
-
 
 const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
   const { t } = useTranslation()
@@ -547,7 +539,6 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
     )
   }
 
-  
   // RENDER
 
   return (

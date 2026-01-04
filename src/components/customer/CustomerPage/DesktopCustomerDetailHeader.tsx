@@ -1,7 +1,6 @@
 // FILE: src/components/customer/CustomerPage/DesktopCustomerDetailHeader.tsx
 // Desktop Customer Detail Header Component
 
-
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {

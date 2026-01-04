@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentFilters/PaymentFilters.tsx
 // Main Payment Filters Component with Desktop & Mobile Views
 

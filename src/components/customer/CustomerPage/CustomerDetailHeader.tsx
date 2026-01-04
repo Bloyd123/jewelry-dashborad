@@ -6,7 +6,6 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileCustomerDetailHeader } from './MobileCustomerDetailHeader'
 import { DesktopCustomerDetailHeader } from './DesktopCustomerDetailHeader'
 
-
 // COMPONENT PROPS
 
 interface CustomerDetailHeaderProps {

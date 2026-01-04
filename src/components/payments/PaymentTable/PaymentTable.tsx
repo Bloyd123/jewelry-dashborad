@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentTable/PaymentTable.tsx
 // Main Payment Table Component
 
@@ -14,25 +13,20 @@ import {
   PaymentFilterState,
 } from '@/components/payments/PaymentFilters'
 
-
 // MAIN COMPONENT
 
 export const PaymentTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-
   // STATE
-
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
   const [filters, setFilters] = useState<PaymentFilterState>({})
 
-
   // FILTER HANDLER
-
 
   const handleFilterChange = (newFilters: PaymentFilterState) => {
     setFilters(newFilters)
@@ -40,9 +34,7 @@ export const PaymentTable: React.FC = () => {
     // TODO: Call API with filters or filter MOCK_PAYMENTS locally
   }
 
-
   // ROW ACTION HANDLERS
-
 
   const handleViewDetails = (payment: Payment) => {
     console.log('View Payment Details:', payment)
@@ -93,9 +85,7 @@ export const PaymentTable: React.FC = () => {
     // TODO: Show confirmation and delete
   }
 
-
   // BULK ACTION HANDLERS
-
 
   const handleBulkViewDetails = () => {
     if (selectedPayments.length === 1) {
@@ -143,7 +133,6 @@ export const PaymentTable: React.FC = () => {
   }
 
   // ROW ACTIONS
-
 
   const rowActions = useMemo(
     () =>

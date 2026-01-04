@@ -5,8 +5,7 @@
 
 import React, { useState } from 'react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import OverviewTab from //   PaymentsTab,
-//   DocumentsTab,
+import OverviewTab from //   DocumentsTab, //   PaymentsTab,
 //   HistoryTab,
 '@/components/sales/SalesDetailPage/tabs/OverviewTab'
 import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'

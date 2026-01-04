@@ -1,4 +1,3 @@
-
 // FILE: src/components/forms/FormSwitch/index.ts
 
 export { FormSwitch } from './FormSwitch'

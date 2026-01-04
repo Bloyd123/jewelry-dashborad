@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/sections/BasicInfoSection.tsx
 // Basic Information Section (Payment Type, Amount, Date, Time)
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/customer/CustomerTable/CustomerTableColumns.tsx
 // Customer Table Column Definitions
 

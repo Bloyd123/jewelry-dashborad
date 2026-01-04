@@ -1,7 +1,5 @@
-
 // FILE: src/components/purchase/PurchaseForm/PurchaseForm.desktop.tsx
 // Desktop Layout for PurchaseForm
-
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

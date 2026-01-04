@@ -1,4 +1,3 @@
-
 // FILE: layout/navbar/MobileNavbar.tsx
 // Mobile Navbar with Theme Picker
 

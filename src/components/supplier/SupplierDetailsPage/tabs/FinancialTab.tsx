@@ -18,9 +18,9 @@ import { dummySupplier } from '@/pages/suppliers/data'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 
-// 
+//
 // PAYMENT HISTORY TYPE
-// 
+//
 
 interface PaymentHistory {
   _id: string
@@ -32,9 +32,9 @@ interface PaymentHistory {
   user: string
 }
 
-// 
+//
 // DUMMY PAYMENT HISTORY DATA
-// 
+//
 
 const dummyPaymentHistory: PaymentHistory[] = [
   {
@@ -129,9 +129,9 @@ const dummyPaymentHistory: PaymentHistory[] = [
   },
 ]
 
-// 
+//
 // MAIN COMPONENT
-// 
+//
 
 const SupplierFinancialTab: React.FC = () => {
   const { t } = useTranslation()

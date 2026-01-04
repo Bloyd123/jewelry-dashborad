@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/paymentFilters/PartyTypeFilter.tsx
 // Party Type Filter (Customer/Supplier)
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/ProductActiveFilters.tsx
 // Active Product Filters Display
 

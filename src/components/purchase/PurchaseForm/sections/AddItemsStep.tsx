@@ -1,7 +1,5 @@
-
 // FILE: src/components/purchase/PurchaseForm/sections/AddItemsSection.tsx
 // Add Items Section
-
 
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'

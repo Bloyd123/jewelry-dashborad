@@ -17,9 +17,7 @@ import { useNavigate } from 'react-router-dom'
 export const CustomerTable: React.FC = () => {
   const { t } = useTranslation()
 
-
   // STATE
-
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -36,9 +34,7 @@ export const CustomerTable: React.FC = () => {
   })
   const navigate = useNavigate()
 
-
   // HANDLERS
-
 
   const handleViewDetails = (customer: Customer) => {
     console.log('View Details:', customer)
@@ -137,14 +133,11 @@ export const CustomerTable: React.FC = () => {
     []
   )
 
-
   // SELECTED CUSTOMERS
-
 
   const selectedCustomers = useMemo(() => {
     return MOCK_CUSTOMERS.filter(customer => selectedRows.has(customer._id))
   }, [selectedRows])
-
 
   // RENDER
 

@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesFilters/ActiveFiltersDisplay.tsx
 // Active Filters Display Component
-
 
 import * as React from 'react'
 import { X } from 'lucide-react'

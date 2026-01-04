@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductForm/sections/StonesSection.tsx
 // Step 3: Stones & Diamonds Management
 

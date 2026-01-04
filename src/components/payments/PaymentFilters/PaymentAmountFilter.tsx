@@ -1,4 +1,3 @@
-
 // FILE: src/components/modules/payment/filters/PaymentAmountFilter.tsx
 // Payment Amount Range Filter
 

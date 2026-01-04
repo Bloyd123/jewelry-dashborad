@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/UpdateRatesModal.tsx
 // Complete Update Metal Rates Modal with Sheet
 

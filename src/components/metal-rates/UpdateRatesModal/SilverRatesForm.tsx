@@ -28,7 +28,6 @@ interface SilverRatesFormProps {
 
 // COMPONENT
 
-
 export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
   initialData,
   onChange,
@@ -186,4 +185,3 @@ export const SilverRatesForm: React.FC<SilverRatesFormProps> = ({
 }
 
 SilverRatesForm.displayName = 'SilverRatesForm'
-

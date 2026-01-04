@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/MetalRatesDashboard/CurrentRatesCards/CurrentRatesCards.tsx
 // Current Metal Rates Display Cards
 
@@ -85,9 +84,7 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
     timeStyle: 'short',
   })
 
-
   // LOADING STATE
-
 
   if (loading) {
     return (
@@ -115,7 +112,6 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
       </div>
     )
   }
-
 
   // MAIN RENDER
   return (

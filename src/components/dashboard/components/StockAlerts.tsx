@@ -1,4 +1,3 @@
-
 // FILE: componens/dashboard/components/StockAlerts.tsx
 // Low Stock Alerts
 

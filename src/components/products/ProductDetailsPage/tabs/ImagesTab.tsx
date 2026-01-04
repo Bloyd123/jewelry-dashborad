@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductDetailsPage/tabs/ImagesTab.tsx
 // Product Images Tab - Accordion-based Layout
 
@@ -72,9 +71,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-
   // IMAGE STATISTICS SECTION
-
 
   const ImageStatisticsSection = () => (
     <div className="space-y-4 p-4">
@@ -150,9 +147,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     </div>
   )
 
-
   // IMAGE GALLERY SECTION
-
 
   const ImageGallerySection = () => {
     if (!product.images || product.images.length === 0) {
@@ -373,7 +368,6 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-
   // IMAGE PREVIEW SECTION
 
   const ImagePreviewSection = () => {
@@ -434,9 +428,7 @@ export const ImagesTab: React.FC<ImagesTabProps> = ({
     )
   }
 
-
   // RENDER MAIN ACCORDION
-
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

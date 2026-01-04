@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/AdditionalDetailsForm.tsx
 // Additional Details Form - Section 4 of Update Metal Rates Modal
 
@@ -79,7 +78,6 @@ const Textarea: React.FC<TextareaProps> = ({ className, ...props }) => (
 )
 
 // COMPONENT
-
 
 export const AdditionalDetailsForm: React.FC<AdditionalDetailsFormProps> = ({
   initialData,
@@ -231,4 +229,3 @@ export const AdditionalDetailsForm: React.FC<AdditionalDetailsFormProps> = ({
 }
 
 AdditionalDetailsForm.displayName = 'AdditionalDetailsForm'
-

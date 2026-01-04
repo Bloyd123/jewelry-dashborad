@@ -3,14 +3,19 @@
 // Dummy User Data for Testing Profile & Other Features
 // ============================================================================
 
-import { User, UserProfile, UserListItem, UserWithRelations } from '@/types/user.types';
+import {
+  User,
+  UserProfile,
+  UserListItem,
+  UserWithRelations,
+} from '@/types/user.types'
 
 /**
  * Complete Dummy User (Full Profile)
  */
 export const dummyUser: User = {
   _id: '507f1f77bcf86cd799439011',
-  
+
   // Basic Information
   username: 'rajesh_kumar',
   email: 'rajesh.kumar@jewelryerp.com',
@@ -18,34 +23,34 @@ export const dummyUser: User = {
   lastName: 'Kumar',
   phone: '9876543210',
   profileImage: 'https://i.pravatar.cc/150?img=12',
-  
+
   // SaaS Multi-tenant Fields
   organizationId: '507f1f77bcf86cd799439012',
   role: 'shop_admin',
   primaryShop: '507f1f77bcf86cd799439013',
-  
+
   // User Status
   isActive: true,
   isEmailVerified: true,
   isPhoneVerified: true,
-  
+
   // Security & Session
   lastLogin: '2025-01-02T10:30:00.000Z',
   lastLoginIP: '192.168.1.100',
-  
+
   // Two-Factor Authentication
   twoFactorEnabled: false,
-  
+
   // Jewelry Business Fields
   designation: 'Store Manager',
   department: 'management',
   employeeId: 'EMP001',
   joiningDate: '2023-06-15T00:00:00.000Z',
-  
+
   // Sales Performance
   salesTarget: 500000,
   commissionRate: 2.5,
-  
+
   // User Preferences
   preferences: {
     language: 'en',
@@ -55,21 +60,21 @@ export const dummyUser: User = {
     theme: 'light',
     notificationsEnabled: true,
   },
-  
+
   // Tracking
   createdBy: null,
   updatedBy: null,
-  
+
   // Timestamps
   createdAt: '2023-06-15T00:00:00.000Z',
   updatedAt: '2025-01-02T10:30:00.000Z',
   deletedAt: null,
-  
+
   // Virtuals
   fullName: 'Rajesh Kumar',
   isSuperAdmin: false,
   isOrgAdmin: false,
-};
+}
 
 /**
  * Dummy Super Admin User
@@ -113,7 +118,7 @@ export const dummySuperAdmin: User = {
   fullName: 'Admin User',
   isSuperAdmin: true,
   isOrgAdmin: true,
-};
+}
 
 /**
  * Dummy Staff User
@@ -157,7 +162,7 @@ export const dummyStaff: User = {
   fullName: 'Priya Sharma',
   isSuperAdmin: false,
   isOrgAdmin: false,
-};
+}
 
 /**
  * Dummy User Profile (Public Facing)
@@ -172,7 +177,7 @@ export const dummyUserProfile: UserProfile = {
   designation: 'Store Manager',
   department: 'management',
   role: 'shop_admin',
-};
+}
 
 /**
  * Dummy User List (for tables/lists)
@@ -238,7 +243,7 @@ export const dummyUserList: UserListItem[] = [
     lastLogin: '2024-12-28T14:30:00.000Z',
     createdAt: '2023-11-05T00:00:00.000Z',
   },
-];
+]
 
 /**
  * Dummy User with Relations (Populated)
@@ -288,7 +293,7 @@ export const dummyUserWithRelations: UserWithRelations = {
       timestamp: '2025-01-02T11:15:00.000Z',
     },
   ],
-};
+}
 
 /**
  * Helper: Get dummy user by role
@@ -298,18 +303,18 @@ export const getDummyUserByRole = (role: string): User => {
     super_admin: dummySuperAdmin,
     shop_admin: dummyUser,
     staff: dummyStaff,
-  };
-  
-  return users[role as keyof typeof users] || dummyUser;
-};
+  }
+
+  return users[role as keyof typeof users] || dummyUser
+}
 
 /**
  * Helper: Get current logged-in user (for localStorage/context)
  */
 export const getCurrentDummyUser = (): User => {
   // You can switch this based on what you're testing
-  return dummyUser; // Change to dummySuperAdmin or dummyStaff as needed
-};
+  return dummyUser // Change to dummySuperAdmin or dummyStaff as needed
+}
 
 /**
  * Export all dummy data
@@ -323,4 +328,4 @@ export default {
   dummyUserWithRelations,
   getDummyUserByRole,
   getCurrentDummyUser,
-};
+}

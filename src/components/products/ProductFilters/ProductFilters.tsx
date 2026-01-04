@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/ProductFilters.tsx
 // Main Product Filters Container - Responsive Desktop & Mobile
 

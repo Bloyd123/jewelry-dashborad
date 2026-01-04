@@ -1,4 +1,3 @@
-
 // FILE: src/components/metal-rates/UpdateRatesModal/index.ts
 // Metal Rates Components - Barrel Export
 

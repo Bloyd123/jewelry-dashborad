@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductDetailsPage/DesktopProductDetailHeader.tsx
 // Desktop Product Detail Header Component
 
@@ -34,7 +33,6 @@ interface DesktopProductDetailHeaderProps {
 }
 
 // DESKTOP PRODUCT DETAIL HEADER COMPONENT
-
 
 export const DesktopProductDetailHeader: React.FC<
   DesktopProductDetailHeaderProps

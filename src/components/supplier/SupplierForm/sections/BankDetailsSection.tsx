@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/supplier/SupplierForm/sections/BankDetailsSection.tsx
 // Bank Details Section (Optional)
-// 
+//
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

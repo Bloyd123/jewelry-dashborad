@@ -1,4 +1,3 @@
-
 // FILE: src/components/payment/PaymentForm/sections/ReferenceLinkSection.tsx
 // Reference Link Section (Link to Sale/Purchase Invoice)
 

@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/features/ShopTable/ShopTable.tsx
 // Main Shop Table Component
-// 
+//
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,9 +12,9 @@ import { getShopRowActions, BulkActionsBar } from './ShopTableActions'
 import { dummyShops } from '@/pages/shops/data'
 import type { Shop } from '@/types/shop.types'
 
-// 
+//
 // MAIN COMPONENT
-// 
+//
 
 export const ShopTable: React.FC = () => {
   const { t } = useTranslation()

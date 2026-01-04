@@ -1,11 +1,9 @@
-
 // FILE: src/components/ui/navigation/Tabs/Tabs.tsx
 // Theme-based Tabs Component - Flexible & Responsive
 
 import * as React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@/lib/utils'
-
 
 // TYPES & INTERFACES
 export type TabsVariant = 'default' | 'pills' | 'underline'

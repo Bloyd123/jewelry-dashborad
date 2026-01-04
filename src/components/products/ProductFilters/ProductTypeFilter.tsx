@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/ProductTypeFilter.tsx
 // Product Type Filter
 

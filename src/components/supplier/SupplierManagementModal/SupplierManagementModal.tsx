@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/supplier/SupplierManagementModal/SupplierManagementModal.tsx
 // Main Supplier Management Modal
-// 
+//
 
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '@/hooks/useMediaQuery'

@@ -1,4 +1,3 @@
-
 // FILE: src/components/purchase/PurchaseFilters/PurchaseSupplierFilter.tsx
 // Supplier Filter (TypeFilter)
 

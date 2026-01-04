@@ -1,7 +1,5 @@
-
 // FILE: src/components/purchase/PurchaseForm/PurchaseForm.tsx
 // Main PurchaseForm Component (Route Handler)
-
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import PurchaseFormDesktop from './PurchaseForm.desktop'

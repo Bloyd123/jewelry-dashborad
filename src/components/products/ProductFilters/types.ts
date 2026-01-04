@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductFilters/types.ts
 // Product Filter Types
 

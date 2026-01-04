@@ -1,4 +1,3 @@
-
 // FILE: src/components/customer/CustomerTable/CustomerTable.types.ts
 // Customer Table TypeScript Types & Mock Data
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentFilters/TransactionTypeFilter.tsx
 // Transaction Type Filter (Receipt/Payment)
 

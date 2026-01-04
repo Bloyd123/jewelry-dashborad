@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductForm/sections/PricingSection.tsx
 // Step 4: Pricing & Auto-calculation
 

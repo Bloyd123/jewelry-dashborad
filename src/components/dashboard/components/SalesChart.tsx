@@ -1,4 +1,3 @@
-
 // FILE: componens/dashboard/components/SalesChart.tsx
 // Sales Chart Component
 

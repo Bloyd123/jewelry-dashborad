@@ -1,16 +1,12 @@
-
 // FILE: src/components/purchase/PurchaseTable/PurchaseTableColumns.tsx
 // Purchase Table Column Definitions
-
 
 import { Copy, FileText, User } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { IPurchase } from '@/types/purchase.types'
 
-
 // HELPER FUNCTIONS
-
 
 /**
  * Format currency in INR
@@ -42,9 +38,7 @@ const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
 
-
 // COLUMN DEFINITIONS
-
 
 export const purchaseTableColumns: DataTableColumn<IPurchase>[] = [
   // 1. Purchase Number with Icon

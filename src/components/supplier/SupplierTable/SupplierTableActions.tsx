@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/features/SupplierTable/SupplierTableActions.tsx
 // Supplier Table Row Actions & Bulk Actions
-// 
+//
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -27,9 +27,9 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Supplier } from './SupplierTable.types'
 
-// 
+//
 // ROW ACTIONS (Individual Supplier Actions)
-// 
+//
 
 export const getSupplierRowActions = (
   onViewDetails: (supplier: Supplier) => void,
@@ -95,9 +95,9 @@ export const getSupplierRowActions = (
   },
 ]
 
-// 
+//
 // BULK ACTIONS BAR (Shows when rows are selected)
-// 
+//
 
 interface BulkActionsBarProps {
   selectedCount: number

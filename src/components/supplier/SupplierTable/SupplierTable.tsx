@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/features/SupplierTable/SupplierTable.tsx
 // Main Supplier Table Component
-// 
+//
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,17 +13,17 @@ import { useNavigate } from 'react-router-dom'
 import { SupplierFilters } from '@/components/supplier/SupplierFilters'
 import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters'
 // import { TopSuppliersPanel } from '@/components/supplier/TopSuppliersPanel'
-// 
+//
 // MAIN COMPONENT
-// 
+//
 
 export const SupplierTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // 
+  //
   // STATE
-  // 
+  //
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -39,9 +39,9 @@ export const SupplierTable: React.FC = () => {
     isVerified: undefined,
   })
 
-  // 
+  //
   // FILTER HANDLERS
-  // 
+  //
 
   const handleFiltersChange = (newFilters: SupplierFilterValues) => {
     setFilters(newFilters)
@@ -60,9 +60,9 @@ export const SupplierTable: React.FC = () => {
     })
   }
 
-  // 
+  //
   // HANDLERS
-  // 
+  //
 
   const handleViewDetails = (supplier: Supplier) => {
     console.log('View Details:', supplier)
@@ -139,9 +139,9 @@ export const SupplierTable: React.FC = () => {
   //   // OR open modal/drawer
   // }
 
-  // 
+  //
   // ROW ACTIONS
-  // 
+  //
 
   const rowActions = useMemo(
     () =>
@@ -156,17 +156,17 @@ export const SupplierTable: React.FC = () => {
     []
   )
 
-  // 
+  //
   // SELECTED SUPPLIERS
-  // 
+  //
 
   const selectedSuppliers = useMemo(() => {
     return dummySuppliers.filter(supplier => selectedRows.has(supplier._id))
   }, [selectedRows])
 
-  // 
+  //
   // RENDER
-  // 
+  //
 
   return (
     <div className="w-full space-y-4">

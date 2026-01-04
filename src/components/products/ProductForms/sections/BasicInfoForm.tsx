@@ -1,4 +1,3 @@
-
 // FILE: src/components/products/ProductForm/sections/BasicInfoSection.tsx
 // Step 1: Basic Product Information
 

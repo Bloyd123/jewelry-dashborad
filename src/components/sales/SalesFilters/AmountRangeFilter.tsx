@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesFilters/AmountRangeFilter.tsx
 // Amount Range Filter - Uses Reusable PriceRangeFilter
-
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

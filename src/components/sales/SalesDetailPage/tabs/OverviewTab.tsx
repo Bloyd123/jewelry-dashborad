@@ -1,7 +1,5 @@
-
 // FILE: src/components/sales/SalesDetailPage/tabs/OverviewTab.tsx
 // Sales Overview Tab Component
-
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,17 +32,13 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import type { Sale } from '@/types/sale.types'
 
-
 // COMPONENT PROPS
-
 
 interface OverviewTabProps {
   sale: Sale
 }
 
-
 // COPY BUTTON COMPONENT
-
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -71,9 +65,7 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-
 // MAIN COMPONENT
-
 
 const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
   const { t } = useTranslation()
@@ -133,9 +125,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     }
   }
 
-  
   // SALE INFORMATION SECTION
-  
 
   const SaleInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -240,9 +230,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     </div>
   )
 
-  
   // CUSTOMER INFORMATION SECTION
-  
 
   const CustomerInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -342,9 +330,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     </div>
   )
 
-  
   // FINANCIAL SUMMARY SECTION
-  
 
   const FinancialSummarySection = () => (
     <div className="space-y-4 p-4">
@@ -465,9 +451,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     </div>
   )
 
-  
   // PAYMENT SUMMARY SECTION
-  
 
   const PaymentSummarySection = () => (
     <div className="space-y-4 p-4">
@@ -555,9 +539,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     </div>
   )
 
-  
   // OLD GOLD EXCHANGE SECTION
-  
 
   const OldGoldExchangeSection = () => {
     if (
@@ -645,9 +627,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     )
   }
 
-  
   // DELIVERY INFORMATION SECTION
-  
 
   const DeliveryInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -730,9 +710,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ sale }) => {
     </div>
   )
 
-  
   // RENDER MAIN ACCORDION
-  
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4">

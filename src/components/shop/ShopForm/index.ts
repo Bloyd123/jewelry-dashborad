@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/components/shop/ShopForm/index.ts
 // Export ShopForm
-// 
+//
 
 export { ShopForm } from './ShopForm'
 export type { ShopFormProps, FormSectionProps } from './shopForm.types'

@@ -1,4 +1,3 @@
-
 // FILE: src/components/payments/PaymentTable/index.ts
 // Payment Table - Barrel Export
 

@@ -1,4 +1,3 @@
-
 // FILE: src/components/sales/SalesFilters/PaymentStatusFilter.tsx
 // Payment Status Filter - Uses Reusable StatusFilter
 
