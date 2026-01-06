@@ -1,140 +1,86 @@
-// // ============================================================================
-// // FILE: router/AppRouter.tsx
-// // Main Application Router with Route Configuration
-// // ============================================================================
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { ROUTES } from '../config/routes.config'
-import { MainLayout } from '../components/layout/MainLayout/MainLayout'
-import PrivateRoute from './PrivateRoute'
-// import RoleRoute from './RoleRoute'
+// ============================================================================
+// FILE: src/router/AppRouter.tsx
+// Main Application Router
+// ============================================================================
 
-// // Auth Pages
-import LoginPage from '../components/auth/login/pages'
-import ForgotPasswordPage from '../components/auth/forgotpassword/pages'
-import ResetPasswordPage from '../components/auth/resetpassword/pages'
-// import SignupPage from '../components/auth/signup/pages'
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { PrivateRoute, PublicRoute } from './PrivateRoute';
+import { RoleRoute } from './RoleRoute';
+import { MainLayout } from '@/components/layout/MainLayout/MainLayout';
+import { publicRoutes, protectedRoutes, RouteConfig } from '@/config/routes.config';
+import { ROUTE_PATHS } from '@/constants/routePaths';
+import { Suspense } from 'react';
+import { Spinner } from '@/components/ui/loader/Spinner';
 
-// // Dashboard
-import { Dashboard } from '../components/dashboard/pages'
+// ============================================================================
+// Route Renderer - Handles individual route rendering with permissions
+// ============================================================================
 
-// // Stock Management
-// import StockPage from '../components/stock/pages/StockPage'
+const RouteRenderer: React.FC<{ route: RouteConfig }> = ({ route }) => {
+  const Element = route.element;
 
-// // Payment Pages
-// import PaymentsPage from '../components/payments/pages/PaymentsPage'
-// import PaymentHistoryPage from '../components/payments/pages/PaymentHistoryPage'
-// import PaymentEntryPage from '../components/payments/pages/PaymentEntryPage'
+  return (
+    <Suspense fallback={<Spinner  />}>
+      {route.permission || route.requiredPermissions ? (
+        <RoleRoute
+          permission={route.permission}
+          requiredPermissions={route.requiredPermissions}
+        >
+          <Element />
+        </RoleRoute>
+      ) : (
+        <Element />
+      )}
+    </Suspense>
+  );
+};
 
-// // Purchase Pages
-// import PurchasesPage from '../components/purchases/pages/PurchasesPage'
-// import AddPurchasePage from '../components/purchases/pages/AddPurchasePage'
-// import SuppliersPage from '../components/suppliers/pages/SuppliersPage'
-// import PurchaseReportsPage from '../components/purchases/pages/PurchaseReportsPage'
+// ============================================================================
+// Main App Router
+// ============================================================================
 
-// // Sales Pages
-// import SalesPage from '../components/sales/pages/SalesPage'
-// import AddSalePage from '../components/sales/pages/AddSalePage'
-// import CustomersPage from '../components/customers/pages/CustomersPage'
-// import SalesReportsPage from '../components/sales/pages/SalesReportsPage'
-
-// // Old Gold Pages
-// import OldGoldPurchasesPage from '../components/purchases/pages/OldGoldPurchasesPage'
-// import AddOldGoldPurchasePage from '../components/purchases/pages/AddOldGoldPurchasePage'
-
-// // Product Pages
-// import ProductsPage from '../components/products/pages/ProductsPage'
-// import AddProductPage from '../components/products/pages/AddProductPage'
-
-// // Custom Orders
-// import CustomOrdersPage from '../components/custom-orders/pages/CustomOrdersPage'
-
-// // ============================================================================
-// // ROUTER COMPONENT
-// // ============================================================================
-export const AppRouter = () => {
+export const AppRouter: React.FC = () => {
   return (
     <Routes>
-      {/* ====================================== */}
-      {/* PUBLIC ROUTES */}
-      {/* ====================================== */}
-      <Route path="/" element={<Navigate to={ROUTES.login} replace />} />
-      <Route path={ROUTES.login} element={<LoginPage />} />
-      {/*        <Route path={ROUTES.signup} element={<SignupPage />} /> */}
-      <Route path={ROUTES.forgotPassword} element={<ForgotPasswordPage />} />
-      <Route path={ROUTES.resetPassword} element={<ResetPasswordPage />} />
+      {/* Root Redirect */}
+      <Route path="/" element={<Navigate to={ROUTE_PATHS.AUTH.LOGIN} replace />} />
 
-      {/* ====================================== */}
-      {/* PROTECTED ROUTES WITH LAYOUT */}
-      {/* ====================================== */}
-      <Route element={<PrivateRoute />}>
-        <Route element={<MainLayout />}>
-          {/* Dashboard */}
-          <Route path={ROUTES.dashboard} element={<Dashboard />} />
+      {/* Public Routes (Auth pages) */}
+      {publicRoutes.map((route) => (
+        <Route
+          key={route.path}
+          path={route.path}
+          element={
+            <PublicRoute>
+              <RouteRenderer route={route} />
+            </PublicRoute>
+          }
+        />
+      ))}
 
-          {/* Stock Management */}
-          {/*            <Route path={ROUTES.stock} element={<StockPage />} /> */}
+      {/* Protected Routes with Layout */}
+      <Route
+        element={
+          <PrivateRoute>
+            <MainLayout />
+          </PrivateRoute>
+        }
+      >
+        {/* Dashboard redirect */}
+        <Route index element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />} />
 
-          {/* ====================================== */}
-          {/* PAYMENT ROUTES */}
-          {/* ====================================== */}
-          {/* <Route path={ROUTES.payments} element={<PaymentsPage />} /> */}
-          {/* <Route path={ROUTES.paymentHistory} element={<PaymentHistoryPage />} /> */}
-          {/* <Route path={ROUTES.paymentEntry} element={<PaymentEntryPage />} /> */}
+        {/* Protected Routes */}
+        {protectedRoutes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={<RouteRenderer route={route} />}
+          />
+        ))}
 
-          {/* ====================================== */}
-          {/* PURCHASE ROUTES */}
-          {/* ====================================== */}
-          {/*            <Route path={ROUTES.purchases} element={<PurchasesPage />} /> */}
-          {/*            <Route path={ROUTES.addPurchase} element={<AddPurchasePage />} /> */}
-          {/*            <Route path={ROUTES.suppliers} element={<SuppliersPage />} /> */}
-          {/*            <Route path={ROUTES.purchaseReports} element={<PurchaseReportsPage />} /> */}
-
-          {/* ====================================== */}
-          {/* SALES ROUTES */}
-          {/* ====================================== */}
-          {/*            <Route path={ROUTES.sales} element={<SalesPage />} /> */}
-          {/*            <Route path={ROUTES.addSale} element={<AddSalePage />} /> */}
-          {/*            <Route path={ROUTES.customers} element={<CustomersPage />} /> */}
-          {/*            <Route path={ROUTES.salesReports} element={<SalesReportsPage />} /> */}
-
-          {/* ====================================== */}
-          {/* OLD GOLD ROUTES */}
-          {/* ====================================== */}
-          {/* <Route 
-             path={ROUTES.oldGoldPurchases} 
-             element={<OldGoldPurchasesPage />} 
-           />
-           <Route 
-             path={ROUTES.addOldGoldPurchase} 
-             element={<AddOldGoldPurchasePage />} 
-           /> */}
-
-          {/* ====================================== */}
-          {/* PRODUCT ROUTES */}
-          {/* ====================================== */}
-          {/*            <Route path={ROUTES.products} element={<ProductsPage />} /> */}
-          {/*            <Route path={ROUTES.addProduct} element={<AddProductPage />} /> */}
-
-          {/* ====================================== */}
-          {/* CUSTOM ORDERS */}
-          {/* ====================================== */}
-          {/*            <Route path={ROUTES.customOrders} element={<CustomOrdersPage />} /> */}
-
-          {/* ====================================== */}
-          {/* ROLE-BASED ROUTES EXAMPLE */}
-          {/* ====================================== */}
-          {/* Only Admin can access reports */}
-          {/*            <Route element={<RoleRoute allowedRoles={['admin', 'manager']} />}> */}
-          {/*              <Route path={ROUTES.purchaseReports} element={<PurchaseReportsPage />} /> */}
-          {/*              <Route path={ROUTES.salesReports} element={<SalesReportsPage />} /> */}
-          {/*            </Route> */}
-
-          {/* Fallback to Dashboard for any unmatched routes */}
-          {/*            <Route path="*" element={<Navigate to={ROUTES.dashboard} replace />} /> */}
-        </Route>
+        {/* Catch all - redirect to dashboard */}
+        <Route path="*" element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />} />
       </Route>
     </Routes>
-  )
-}
-
-export default AppRouter
+  );
+};

@@ -1,20 +1,12 @@
 // ============================================================================
-// FILE: router/index.ts
-// Central Export File for Router Module
+// FILE: src/router/index.ts
+// Central Export Point for Router
 // ============================================================================
 
-export { default as AppRouter } from './AppRouter'
-export { default as PrivateRoute } from './PrivateRoute'
-export { default as RoleRoute } from './RoleRoute'
-export type { UserRole } from '@/types'
+export { AppRouter } from './AppRouter';
+export { PrivateRoute, PublicRoute } from './PrivateRoute';
+export { RoleRoute, usePermission } from './RoleRoute';
 
-export {
-  routeMetadata,
-  routeGroups,
-  getRouteMetadata,
-  getNavRoutes,
-  canAccessRoute,
-  getBreadcrumbs,
-} from './routes'
-
-export type { RouteMetadata, RouteGroup } from './routes'
+// Re-export route constants for convenience
+export { ROUTE_PATHS, buildRoute } from '@/constants/routePaths';
+export { ROUTES } from '@/config/routes.config';

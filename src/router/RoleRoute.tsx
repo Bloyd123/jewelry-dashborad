@@ -1,136 +1,163 @@
 // ============================================================================
-// FILE: router/RoleRoute.tsx
-// Permission-Based Route Component - Uses Centralized Permissions Config
+// FILE: src/router/RoleRoute.tsx
+// Permission-Based Route Protection - Following Component Guidelines
 // ============================================================================
-import { Navigate, Outlet } from 'react-router-dom'
+
+import { Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { AlertTriangle } from 'lucide-react'
-import { useAppSelector } from '../store/hooks'
-import { ROUTES } from '../config/routes.config'
-import { getPermissionsByRole } from '../config/permissions.config'
-import { Button } from '../components/ui/button'
-import { UserRole } from '@/types'
+import { useAppSelector } from '@/store/hooks'
+import { ROUTE_PATHS } from '@/constants/routePaths'
+import { Alert, AlertDescription, AlertTitle } from '@/components/common/Alert'
+import { Button } from '@/components/ui/button'
+import { ShieldAlert, ArrowLeft } from 'lucide-react'
+
+// ============================================================================
+// TYPES & INTERFACES
+// ============================================================================
 
 interface RoleRouteProps {
-  // Option 1: Check by roles
-  allowedRoles?: UserRole[]
-
-  // Option 2: Check by specific permissions (more flexible)
-  requiredPermissions?: Permission[]
-
-  // Require ALL permissions or just ANY permission
-  requireAll?: boolean
-
-  // Custom redirect path
-  redirectTo?: string
-
-  // Show custom message
-  customMessage?: string
+  children: React.ReactNode
+  permission?: string
+  requiredPermissions?: string[]
+  requireAll?: boolean // If true, user must have ALL permissions. If false, ANY permission is enough
+  fallbackPath?: string
+  showError?: boolean
 }
 
 // ============================================================================
 // ROLE ROUTE COMPONENT
 // ============================================================================
-const RoleRoute = ({
-  allowedRoles,
-  requiredPermissions,
+
+export const RoleRoute: React.FC<RoleRouteProps> = ({
+  children,
+  permission,
+  requiredPermissions = [],
   requireAll = false,
-  //   redirectTo = ROUTES.dashboard,
-  customMessage,
-}: RoleRouteProps) => {
-  const { t } = useTranslation()
-  const { user, isAuthenticated } = useAppSelector(state => state.auth)
+  fallbackPath = ROUTE_PATHS.DASHBOARD,
+  showError = true,
+}) => {
+  const { userShopAccess } = useAppSelector((state) => state.auth)
 
-  // ========================================
-  // Check Authentication First
-  // ========================================
-  if (!isAuthenticated || !user) {
-    return <Navigate to={ROUTES.login} replace />
+  // If no permissions specified, allow access
+  if (!permission && requiredPermissions.length === 0) {
+    return <>{children}</>
   }
 
-  // ========================================
-  // Get User Permissions
-  // ========================================
-  const userRole = user.role as UserRole
-  const userPermissions = getPermissionsByRole(userRole)
-
-  // ========================================
-  // Check Access by Role
-  // ========================================
-  let hasAccess = false
-
-  if (allowedRoles && allowedRoles.length > 0) {
-    hasAccess = allowedRoles.includes(userRole)
+  // If no shop access data, deny access
+  if (!userShopAccess) {
+    return showError ? (
+      <AccessDeniedError />
+    ) : (
+      <Navigate to={fallbackPath} replace />
+    )
   }
 
-  // ========================================
-  // Check Access by Permissions (more granular)
-  // ========================================
-  if (requiredPermissions && requiredPermissions.length > 0) {
-    if (requireAll) {
-      // User must have ALL required permissions
-      hasAccess = requiredPermissions.every(
-        permission => userPermissions[permission] === true
-      )
-    } else {
-      // User must have at least ONE required permission
-      hasAccess = requiredPermissions.some(
-        permission => userPermissions[permission] === true
+  // Check single permission
+  if (permission) {
+    const hasPermission = userShopAccess.permissions?.[permission] === true
+    if (!hasPermission) {
+      return showError ? (
+        <AccessDeniedError />
+      ) : (
+        <Navigate to={fallbackPath} replace />
       )
     }
   }
 
-  // ========================================
-  // Show Access Denied UI
-  // ========================================
-  if (!hasAccess) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-bg-primary">
-        <div className="max-w-md rounded-lg border border-border-primary bg-bg-secondary p-8 text-center shadow-lg">
-          {/* Icon */}
-          <div className="mb-4">
-            <AlertTriangle className="mx-auto h-16 w-16 text-status-error" />
-          </div>
+  // Check multiple permissions
+  if (requiredPermissions.length > 0) {
+    const checkPermissions = requireAll
+      ? requiredPermissions.every(
+          (perm) => userShopAccess.permissions?.[perm] === true
+        )
+      : requiredPermissions.some(
+          (perm) => userShopAccess.permissions?.[perm] === true
+        )
 
-          {/* Title */}
-          <h2 className="mb-2 text-2xl font-bold text-text-primary">
-            {t('permissions.accessDenied.title')}
-          </h2>
+    if (!checkPermissions) {
+      return showError ? (
+        <AccessDeniedError />
+      ) : (
+        <Navigate to={fallbackPath} replace />
+      )
+    }
+  }
 
-          {/* Message */}
-          <p className="mb-2 text-text-secondary">
-            {customMessage || t('permissions.accessDenied.message')}
-          </p>
+  return <>{children}</>
+}
 
-          {/* User Role Info */}
-          <p className="mb-6 text-sm text-text-tertiary">
-            {t('permissions.accessDenied.yourRole')}:{' '}
-            <span className="font-semibold capitalize text-accent">
-              {t(`roles.${userRole}`)}
-            </span>
-          </p>
+// ============================================================================
+// ACCESS DENIED ERROR COMPONENT
+// ============================================================================
 
-          {/* Actions */}
-          <div className="flex justify-center gap-3">
-            <Button variant="outline" onClick={() => window.history.back()}>
-              {t('permissions.accessDenied.goBack')}
-            </Button>
-            <Button
-              variant="default"
-              onClick={() => (window.location.href = ROUTES.dashboard)}
-            >
-              {t('permissions.accessDenied.goToDashboard')}
-            </Button>
-          </div>
+const AccessDeniedError: React.FC = () => {
+  const { t } = useTranslation()
+
+  const handleGoBack = () => {
+    window.history.back()
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
+      <div className="w-full max-w-md">
+        <Alert variant="error" size="lg" bordered shadow>
+          <AlertTitle className="flex items-center gap-2">
+            <ShieldAlert className="h-5 w-5" />
+            {t('auth.accessDenied.title')}
+          </AlertTitle>
+          <AlertDescription className="mt-2">
+            {t('auth.accessDenied.description')}
+          </AlertDescription>
+        </Alert>
+
+        <div className="mt-6 text-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleGoBack}
+            className="gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            {t('common.goBack')}
+          </Button>
         </div>
       </div>
+    </div>
+  )
+}
+
+// ============================================================================
+// PERMISSION CHECKER HOOK
+// ============================================================================
+
+export const usePermission = () => {
+  const { userShopAccess } = useAppSelector((state) => state.auth)
+
+  const hasPermission = (permission: string): boolean => {
+    return userShopAccess?.permissions?.[permission] === true
+  }
+
+  const hasAnyPermission = (permissions: string[]): boolean => {
+    return permissions.some(
+      (perm) => userShopAccess?.permissions?.[perm] === true
     )
   }
 
-  // ========================================
-  // Render Protected Content
-  // ========================================
-  return <Outlet />
-}
+  const hasAllPermissions = (permissions: string[]): boolean => {
+    return permissions.every(
+      (perm) => userShopAccess?.permissions?.[perm] === true
+    )
+  }
 
-export default RoleRoute
+  const getRole = (): string | null => {
+    return userShopAccess?.role || null
+  }
+
+  return {
+    hasPermission,
+    hasAnyPermission,
+    hasAllPermissions,
+    getRole,
+    userShopAccess,
+  }
+}
