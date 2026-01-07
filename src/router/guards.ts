@@ -1,6 +1,6 @@
 // ============================================================================
 // FILE: src/router/guards.ts
-// Navigation Guards and Route Utilities
+// Navigation Guards and Route Utilities - FIXED VERSION
 // ============================================================================
 
 import { useEffect } from 'react';
@@ -23,7 +23,8 @@ interface RouteGuardOptions {
 export const useRouteGuard = (options: RouteGuardOptions) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { userShopAccess, isAuthenticated } = useAppSelector((state) => state.auth);
+  // ✅ FIXED: Access correct state properties
+  const { permissions, isAuthenticated } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     // Check authentication
@@ -38,7 +39,7 @@ export const useRouteGuard = (options: RouteGuardOptions) => {
     // Check permissions if specified
     if (options.permission || options.requiredPermissions) {
       const hasAccess = checkPermissions(
-        userShopAccess,
+        permissions,
         options.permission,
         options.requiredPermissions,
         options.requireAll
@@ -49,35 +50,35 @@ export const useRouteGuard = (options: RouteGuardOptions) => {
         navigate(options.redirectTo || ROUTE_PATHS.DASHBOARD, { replace: true });
       }
     }
-  }, [isAuthenticated, userShopAccess, location.pathname]);
+  }, [isAuthenticated, permissions, location.pathname]);
 };
 
 // ============================================================================
-// Permission Checker Utility
+// Permission Checker Utility - FIXED
 // ============================================================================
 
 export const checkPermissions = (
-  userShopAccess: any,
+  permissions: any,
   permission?: string,
   requiredPermissions?: string[],
   requireAll = false
 ): boolean => {
-  if (!userShopAccess) return false;
+  if (!permissions) return false;
 
   // Check single permission
   if (permission) {
-    return userShopAccess.permissions?.[permission] === true;
+    return permissions[permission] === true;
   }
 
   // Check multiple permissions
   if (requiredPermissions && requiredPermissions.length > 0) {
     if (requireAll) {
       return requiredPermissions.every(
-        (perm) => userShopAccess.permissions?.[perm] === true
+        (perm) => permissions[perm] === true
       );
     } else {
       return requiredPermissions.some(
-        (perm) => userShopAccess.permissions?.[perm] === true
+        (perm) => permissions[perm] === true
       );
     }
   }
@@ -86,7 +87,7 @@ export const checkPermissions = (
 };
 
 // ============================================================================
-// Navigation Helper with Permission Check
+// Navigation Helper with Permission Check - FIXED
 // ============================================================================
 
 interface NavigateWithPermissionOptions {
@@ -98,7 +99,8 @@ interface NavigateWithPermissionOptions {
 
 export const useNavigateWithPermission = () => {
   const navigate = useNavigate();
-  const { userShopAccess } = useAppSelector((state) => state.auth);
+  // ✅ FIXED: Access correct state property
+  const { permissions } = useAppSelector((state) => state.auth);
 
   const navigateWithPermission = (
     path: string,
@@ -110,7 +112,7 @@ export const useNavigateWithPermission = () => {
     }
 
     const hasAccess = checkPermissions(
-      userShopAccess,
+      permissions,
       options.permission,
       options.requiredPermissions,
       options.requireAll

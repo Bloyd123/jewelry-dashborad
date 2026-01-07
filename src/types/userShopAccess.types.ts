@@ -17,139 +17,291 @@ export type ShopRole =
  * Shop Access Permissions - Complete Permission Structure
  */
 export interface ShopPermissions {
-  // ===== Inventory & Product Management (6) =====
-  canViewInventory: boolean
-  canEditInventory: boolean
-  canManageProducts: boolean
-  canDeleteProducts: boolean
-  canImportProducts: boolean
-  canExportProducts: boolean
+  // Index signature - allows dynamic string access
+  [key: string]: boolean | undefined;
+  
+  // Customer Management
+  canCreateCustomer: boolean;
+  canSearchCustomer: boolean;
+  canViewCustomers: boolean;
+  canGetSingleCustomer: boolean;
+  canUpdateCustomer: boolean;
+  canDeleteCustomers: boolean;
+  canBlacklistCustomer: boolean;
+  canRemoveCustomerBlacklist: boolean;
+  canAddLoyaltyPoints: boolean;
+  canRedeemLoyaltyPoints: boolean;
+  canViewCustomerAnalytics: boolean;
+  canManageCustomers: boolean;
+  canViewCustomerHistory: boolean;
 
-  // ===== Purchase Management (5) =====
-  canViewPurchases: boolean
-  canCreatePurchases: boolean
-  canEditPurchases: boolean
-  canDeletePurchases: boolean
-  canApprovePurchases: boolean
+  // Product Management
+  canCreateProduct: boolean;
+  canViewProducts: boolean;
+  canSearchProducts: boolean;
+  canGetSingleProduct: boolean;
+  canUpdateProduct: boolean;
+  canDeleteProducts: boolean;
+  canUpdateStock: boolean;
+  canReserveProduct: boolean;
+  canCancelReservation: boolean;
+  canMarkAsSold: boolean;
+  canCalculatePrice: boolean;
+  canGetLowStock: boolean;
+  canViewProductHistory: boolean;
+  canViewProductAnalytics: boolean;
+  canBulkDeleteProducts: boolean;
+  canBulkUpdateStatus: boolean;
+  canManageProducts: boolean;
+  canManageInventory: boolean;
+  canViewInventory: boolean;
+  canEditInventory: boolean;
+  canImportProducts: boolean;
+  canExportProducts: boolean;
 
-  // ===== Sales Management (8) =====
-  canViewSales: boolean
-  canCreateSales: boolean
-  canEditSales: boolean
-  canDeleteSales: boolean
-  canApproveSales: boolean
-  canGenerateInvoices: boolean
-  canCancelInvoices: boolean
-  canApplyDiscounts: boolean
+  // Shop Management
+  canCreateShop: boolean;
+  canViewShops: boolean;
+  canViewSingleShop: boolean;
+  canUpdateShop: boolean;
+  canDeleteShop: boolean;
+  canUpdateSettings: boolean;
+  canUpdateMetalRates: boolean;
+  canViewShopStatistics: boolean;
+  canManageShopSettings: boolean;
+  canManageMetalRates: boolean;
+  canTransferInventory: boolean;
 
-  // ===== Order Management (5) =====
-  canManageOrders: boolean
-  canViewOrders: boolean
-  canCreateOrders: boolean
-  canEditOrders: boolean
-  canCancelOrders: boolean
+  // Supplier Management
+  canCreateSupplier: boolean;
+  canViewSuppliers: boolean;
+  canGetSingleSupplier: boolean;
+  canUpdateSupplier: boolean;
+  canDeleteSuppliers: boolean;
+  canRestoreSupplier: boolean;
+  canUpdateSupplierRating: boolean;
+  canBlacklistSupplier: boolean;
+  canRemoveSupplierBlacklist: boolean;
+  canMarkPreferredSupplier: boolean;
+  canRemovePreferredSupplier: boolean;
+  canUpdateSupplierBalance: boolean;
+  canViewSupplierStatistics: boolean;
+  canViewTopSuppliers: boolean;
+  canManageSuppliers: boolean;
 
-  // ===== Customer Management (11) =====
-  canManageCustomers: boolean
-  canViewCustomers: boolean
-  canCreateCustomers: boolean
-  canEditCustomers: boolean
-  canDeleteCustomers: boolean
-  canViewCustomerHistory: boolean
-  canBlacklistCustomer: boolean
-  canRemoveCustomerBlacklist: boolean
-  canAddLoyaltyPoints: boolean
-  canRedeemLoyaltyPoints: boolean
-  canViewCustomerAnalytics: boolean
+  // Metal Rate Management
+  canCreateUpdateRate: boolean;
+  canGetCurrentRate: boolean;
+  canGetRateHistory: boolean;
+  canGetRateByDate: boolean;
+  canCompareRates: boolean;
+  canGetTrendData: boolean;
+  canGetRateForPurity: boolean;
+  canGetAverageRate: boolean;
+  canSyncToAllShops: boolean;
+  canDeactivateRate: boolean;
+  canDeleteRate: boolean;
 
-  // ===== Supplier Management (14) =====
-  canManageSuppliers: boolean
-  canViewSuppliers: boolean
-  canCreateSuppliers: boolean
-  canEditSuppliers: boolean
-  canDeleteSuppliers: boolean
-  canRestoreSupplier: boolean
-  canUpdateSupplierRating: boolean
-  canBlacklistSupplier: boolean
-  canRemoveSupplierBlacklist: boolean
-  canMarkPreferredSupplier: boolean
-  canRemovePreferredSupplier: boolean
-  canUpdateSupplierBalance: boolean
-  canViewSupplierStatistics: boolean
-  canViewTopSuppliers: boolean
+  // Purchase Management
+  canCreatePurchase: boolean;
+  canViewPurchases: boolean;
+  canGetSinglePurchase: boolean;
+  canUpdatePurchase: boolean;
+  canDeletePurchases: boolean;
+  canUpdatePurchaseStatus: boolean;
+  canMarkAsReceived: boolean;
+  canCancelPurchase: boolean;
+  canApprovePurchases: boolean;
+  canRejectPurchase: boolean;
+  canAddPurchasePayment: boolean;
+  canGetPurchasePayments: boolean;
+  canGetBySupplier: boolean;
+  canViewPurchaseAnalytics: boolean;
+  canViewPendingPurchases: boolean;
+  canViewUnpaidPurchases: boolean;
+  canBulkDeletePurchases: boolean;
+  canBulkApprovePurchases: boolean;
+  canUploadPurchaseDocuments: boolean;
+  canGetPurchaseDocuments: boolean;
+  canManagePurchases: boolean;
 
-  // ===== Party Management (2) =====
-  canManageParties: boolean
-  canViewPartyLedger: boolean
+  // Sale Management
+  canCreateSale: boolean;
+  canViewSales: boolean;
+  canGetSingleSale: boolean;
+  canUpdateSale: boolean;
+  canDeleteSales: boolean;
+  canUpdateSaleStatus: boolean;
+  canConfirmSale: boolean;
+  canMarkAsDelivered: boolean;
+  canCompleteSale: boolean;
+  canCancelSale: boolean;
+  canAddSalePayment: boolean;
+  canGetSalePayments: boolean;
+  canGenerateInvoices: boolean;
+  canSendInvoice: boolean;
+  canPrintInvoice: boolean;
+  canProcessReturn: boolean;
+  canAddOldGold: boolean;
+  canRemoveOldGold: boolean;
+  canApplyDiscounts: boolean;
+  canRemoveDiscount: boolean;
+  canGetByCustomer: boolean;
+  canViewSalesPersonSales: boolean;
+  canViewSalesAnalytics: boolean;
+  canViewSalesDashboard: boolean;
+  canViewTodaysSales: boolean;
+  canViewPendingSales: boolean;
+  canViewUnpaidSales: boolean;
+  canViewOverdueSales: boolean;
+  canApproveSales: boolean;
+  canRejectSale: boolean;
+  canBulkDeleteSales: boolean;
+  canBulkPrintInvoices: boolean;
+  canSendReminders: boolean;
+  canManageSales: boolean;
+  canCancelInvoices: boolean;
+  canAccessPOS: boolean;
 
-  // ===== Financial & Billing (7) =====
-  canViewBilling: boolean
-  canViewFinancials: boolean
-  canApproveTransactions: boolean
-  canViewPayments: boolean
-  canReceivePayments: boolean
-  canMakePayments: boolean
-  canViewProfitLoss: boolean
+  // Payment Management
+  canCreatePayment: boolean;
+  canGetPaymentsList: boolean;
+  canGetSinglePayment: boolean;
+  canUpdatePayment: boolean;
+  canDeletePayment: boolean;
+  canUpdatePaymentStatus: boolean;
+  canCompletePayment: boolean;
+  canCancelPayment: boolean;
+  canViewPendingCheques: boolean;
+  canClearCheque: boolean;
+  canBounceCheque: boolean;
+  canViewBouncedCheques: boolean;
+  canViewClearedCheques: boolean;
+  canReconcilePayment: boolean;
+  canViewPendingReconciliation: boolean;
+  canViewReconciliationSummary: boolean;
+  canGenerateReceipt: boolean;
+  canSendReceipt: boolean;
+  canGetByParty: boolean;
+  canGetByReference: boolean;
+  canViewPaymentByMode: boolean;
+  canViewCashCollection: boolean;
+  canViewDigitalCollection: boolean;
+  canViewPaymentAnalytics: boolean;
+  canViewPaymentDashboard: boolean;
+  canViewTodaysPayments: boolean;
+  canViewPendingPayments: boolean;
+  canViewFailedPayments: boolean;
+  canApprovePayment: boolean;
+  canRejectPayment: boolean;
+  canProcessRefund: boolean;
+  canGetRefunds: boolean;
+  canBulkReconcile: boolean;
+  canBulkExportPayments: boolean;
+  canBulkPrintReceipts: boolean;
+  canViewPayments: boolean;
+  canReceivePayments: boolean;
+  canMakePayments: boolean;
 
-  // ===== Schemes & Offers (5) =====
-  canManageSchemes: boolean
-  canViewSchemes: boolean
-  canCreateSchemes: boolean
-  canEditSchemes: boolean
-  canDeleteSchemes: boolean
+  // Order Management
+  canCreateOrder: boolean;
+  canViewOrders: boolean;
+  canGetSingleOrder: boolean;
+  canUpdateOrder: boolean;
+  canCancelOrders: boolean;
+  canUpdateOrderStatus: boolean;
+  canConfirmOrder: boolean;
+  canStartOrder: boolean;
+  canHoldOrder: boolean;
+  canResumeOrder: boolean;
+  canMarkAsReady: boolean;
+  canMarkOrderAsDelivered: boolean;
+  canCompleteOrder: boolean;
+  canAssignOrder: boolean;
+  canReassignOrder: boolean;
+  canGetAssignedOrders: boolean;
+  canAddProgressUpdate: boolean;
+  canGetProgress: boolean;
+  canQualityCheck: boolean;
+  canGetQualityCheck: boolean;
+  canAddOrderPayment: boolean;
+  canGetOrderPayments: boolean;
+  canGenerateBill: boolean;
+  canAddFeedback: boolean;
+  canGetFeedback: boolean;
+  canViewOverdueOrders: boolean;
+  canViewDueSoonOrders: boolean;
+  canViewPendingOrders: boolean;
+  canViewCompletedOrders: boolean;
+  canViewOrdersByType: boolean;
+  canViewOrdersByPriority: boolean;
+  canViewOrderAnalytics: boolean;
+  canViewOrderDashboard: boolean;
+  canViewCustomerOrders: boolean;
+  canApproveOrder: boolean;
+  canRejectOrder: boolean;
+  canUploadDocuments: boolean;
+  canGetDocuments: boolean;
+  canDeleteDocument: boolean;
+  canSendReminder: boolean;
+  canBulkStatusUpdate: boolean;
+  canBulkAssign: boolean;
+  canBulkExportOrders: boolean;
+  canManageOrders: boolean;
+  canManageRepairs: boolean;
+  canManageCustomOrders: boolean;
 
-  // ===== Reports & Analytics (5) =====
-  canViewReports: boolean
-  canGenerateReports: boolean
-  canExportReports: boolean
-  canViewAnalytics: boolean
-  canViewDashboard: boolean
+  // Parties & Billing
+  canManageParties: boolean;
+  canViewPartyLedger: boolean;
+  canManageBilling: boolean;
+  canViewBilling: boolean;
 
-  // ===== User Management (6) =====
-  canManageUsers: boolean
-  canViewUsers: boolean
-  canCreateUsers: boolean
-  canEditUsers: boolean
-  canDeleteUsers: boolean
-  canAssignRoles: boolean
+  // Financial
+  canViewFinancials: boolean;
+  canViewProfitLoss: boolean;
+  canApproveTransactions: boolean;
 
-  // ===== Shop Settings (3) =====
-  canManageShopSettings: boolean
-  canUpdateMetalRates: boolean
-  canManageTaxSettings: boolean
+  // Expenses
+  canManageExpenses: boolean;
 
-  // ===== Shop Management (7) =====
-  canCreateShop: boolean
-  canViewShops: boolean
-  canViewSingleShop: boolean
-  canUpdateShop: boolean
-  canDeleteShop: boolean
-  canViewShopStatistics: boolean
-  canTransferInventory: boolean
+  // Schemes
+  canManageSchemes: boolean;
+  canViewSchemes: boolean;
+  canCreateSchemes: boolean;
+  canEditSchemes: boolean;
+  canDeleteSchemes: boolean;
 
-  // ===== Advanced Features (4) =====
-  canManageRepairs: boolean
-  canManageCustomOrders: boolean
-  canManageHallmarking: boolean
-  canManageOldGold: boolean
+  // Reports & Analytics
+  canManageReports: boolean;
+  canViewReports: boolean;
+  canGenerateReports: boolean;
+  canExportReports: boolean;
+  canViewAnalytics: boolean;
+  canViewDashboard: boolean;
 
-  // ===== System (3) =====
-  canViewAuditLog: boolean
-  canBackupData: boolean
-  canRestoreData: boolean
+  // Users
+  canManageUsers: boolean;
+  canViewUsers: boolean;
+  canCreateUsers: boolean;
+  canEditUsers: boolean;
+  canDeleteUsers: boolean;
+  canAssignRoles: boolean;
 
-  // ===== Composite/High-Level Permissions (10) =====
-  canManageInventory: boolean
-  canManageSales: boolean
-  canManagePurchases: boolean
-  canManageExpenses: boolean
-  canManageReports: boolean
-  canManageSettings: boolean
-  canExportData: boolean
-  canDeleteRecords: boolean
-  canManageMetalRates: boolean
-  canAccessPOS: boolean
-  canManageBilling: boolean
+  // Settings
+  canManageTaxSettings: boolean;
+
+  // Advanced Features
+  canManageHallmarking: boolean;
+  canManageOldGold: boolean;
+
+  // System
+  canManageSettings: boolean;
+  canExportData: boolean;
+  canDeleteRecords: boolean;
+  canViewAuditLog: boolean;
+  canBackupData: boolean;
+  canRestoreData: boolean;
 }
 
 /**

@@ -375,43 +375,102 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(
-        login.fulfilled,
-        (state, action: PayloadAction<LoginResponse['data']>) => {
-          state.isLoading = false
-          state.user = action.payload.user
-          state.accessToken = action.payload.accessToken
-          state.refreshToken = action.payload.refreshToken
-          state.tokenId = action.payload.tokenId
-          state.isAuthenticated = true
-          state.shopAccesses = action.payload.shopAccesses || []
-          state.requires2FA = action.payload.requires2FA || false
-          state.lastActivity = Date.now()
+  login.fulfilled,
+  (state, action: PayloadAction<LoginResponse['data']>) => {
+    state.isLoading = false;
+    state.user = action.payload.user;
+    state.accessToken = action.payload.accessToken;
+    state.refreshToken = action.payload.refreshToken;
+    state.tokenId = action.payload.tokenId;
+    state.isAuthenticated = true;
+    state.requires2FA = action.payload.requires2FA || false;
+    state.lastActivity = Date.now();
 
-          // Store tokens
-          tokenService.saveAccessToken(action.payload.accessToken)
-          tokenService.saveRefreshToken(action.payload.refreshToken)
+    // Store tokens
+    tokenService.saveAccessToken(action.payload.accessToken);
+    tokenService.saveRefreshToken(action.payload.refreshToken);
 
-          // Set current shop if user has shop accesses
-          if (state.shopAccesses.length > 0) {
-            const storedShop = localStorage.getItem('currentShop')
-            const shopExists = state.shopAccesses.some(
-              access => access.shopId === storedShop
-            )
+    // ✅ NEW: Handle both org-level and shop-level users
+    const { effectivePermissions, shopAccesses } = action.payload;
 
-            if (storedShop && shopExists) {
-              state.currentShop = storedShop
-            } else {
-              state.currentShop = state.shopAccesses[0].shopId
-            }
+    if (effectivePermissions) {
+      // ✅ Org-level user (super_admin, org_admin)
+      state.permissions = effectivePermissions;
+      state.shopAccesses = [];
+      state.currentShop = null;
+      state.currentShopAccess = null;
+      
+      console.log(`[Auth] ${action.payload.user.role} logged in with effective permissions`);
+    } else {
+      // ✅ Shop-level user (shop_admin, manager, staff, etc.)
+      state.shopAccesses = shopAccesses || [];
 
-            const shopAccess = state.shopAccesses.find(
-              access => access.shopId === state.currentShop
-            )
-            state.currentShopAccess = shopAccess || null
-            state.permissions = shopAccess?.permissions || null
-          }
+      if (state.shopAccesses.length > 0) {
+        // Restore last selected shop or use first
+        const storedShop = localStorage.getItem('currentShop');
+        const shopExists = state.shopAccesses.some(
+          access => access.shopId === storedShop
+        );
+
+        if (storedShop && shopExists) {
+          state.currentShop = storedShop;
+        } else {
+          state.currentShop = state.shopAccesses[0].shopId;
+          localStorage.setItem('currentShop', state.currentShop);
         }
-      )
+
+        // Set permissions from current shop access
+        const shopAccess = state.shopAccesses.find(
+          access => access.shopId === state.currentShop
+        );
+        state.currentShopAccess = shopAccess || null;
+        state.permissions = shopAccess?.permissions || null;
+        
+        console.log(`[Auth] Shop-level user logged in to shop: ${state.currentShop}`);
+      } else {
+        console.warn('[Auth] Shop-level user has no shop access!');
+      }
+    }
+  }
+)
+      // .addCase(
+      //   login.fulfilled,
+      //   (state, action: PayloadAction<LoginResponse['data']>) => {
+      //     state.isLoading = false
+      //     state.user = action.payload.user
+      //     state.accessToken = action.payload.accessToken
+      //     state.refreshToken = action.payload.refreshToken
+      //     state.tokenId = action.payload.tokenId
+      //     state.isAuthenticated = true
+      //     state.shopAccesses = action.payload.shopAccesses || []
+      //     state.requires2FA = action.payload.requires2FA || false
+      //     state.lastActivity = Date.now()
+
+      //     // Store tokens
+      //     tokenService.saveAccessToken(action.payload.accessToken)
+      //     tokenService.saveRefreshToken(action.payload.refreshToken)
+
+      //     // Set current shop if user has shop accesses
+      //     if (state.shopAccesses.length > 0) {
+      //       const storedShop = localStorage.getItem('currentShop')
+      //       const shopExists = state.shopAccesses.some(
+      //         access => access.shopId === storedShop
+      //       )
+
+      //       if (storedShop && shopExists) {
+      //         state.currentShop = storedShop
+      //       } else {
+      //         state.currentShop = state.shopAccesses[0].shopId
+      //       }
+
+      //       const shopAccess = state.shopAccesses.find(
+      //         access => access.shopId === state.currentShop
+      //       )
+      //       state.currentShopAccess = shopAccess || null
+      //       state.permissions = shopAccess?.permissions || null
+      //     }
+      //   }
+      // )
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string

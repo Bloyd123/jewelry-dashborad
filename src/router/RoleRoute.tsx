@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/router/RoleRoute.tsx
-// Permission-Based Route Protection - Following Component Guidelines
-// ============================================================================
+// Permission-Based Route Protection - FIXED VERSION
 
 import { Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +17,7 @@ interface RoleRouteProps {
   children: React.ReactNode
   permission?: string
   requiredPermissions?: string[]
-  requireAll?: boolean // If true, user must have ALL permissions. If false, ANY permission is enough
+  requireAll?: boolean
   fallbackPath?: string
   showError?: boolean
 }
@@ -36,15 +34,17 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   fallbackPath = ROUTE_PATHS.DASHBOARD,
   showError = true,
 }) => {
-  const { userShopAccess } = useAppSelector((state) => state.auth)
+  // ✅ FIXED: Access correct state properties
+  const { permissions, user } = useAppSelector((state) => state.auth)
 
   // If no permissions specified, allow access
   if (!permission && requiredPermissions.length === 0) {
     return <>{children}</>
   }
 
-  // If no shop access data, deny access
-  if (!userShopAccess) {
+  // ✅ FIXED: Check if permissions object exists
+  if (!permissions) {
+    console.warn('[RoleRoute] No permissions found for user:', user?.role)
     return showError ? (
       <AccessDeniedError />
     ) : (
@@ -54,8 +54,14 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
 
   // Check single permission
   if (permission) {
-    const hasPermission = userShopAccess.permissions?.[permission] === true
+    const hasPermission = permissions[permission] === true
+    
     if (!hasPermission) {
+      console.warn(`[RoleRoute] Permission denied: ${permission}`, {
+        role: user?.role,
+        hasPermission
+      })
+      
       return showError ? (
         <AccessDeniedError />
       ) : (
@@ -67,14 +73,16 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   // Check multiple permissions
   if (requiredPermissions.length > 0) {
     const checkPermissions = requireAll
-      ? requiredPermissions.every(
-          (perm) => userShopAccess.permissions?.[perm] === true
-        )
-      : requiredPermissions.some(
-          (perm) => userShopAccess.permissions?.[perm] === true
-        )
+      ? requiredPermissions.every((perm) => permissions[perm] === true)
+      : requiredPermissions.some((perm) => permissions[perm] === true)
 
     if (!checkPermissions) {
+      console.warn('[RoleRoute] Multiple permissions check failed:', {
+        required: requiredPermissions,
+        requireAll,
+        role: user?.role
+      })
+      
       return showError ? (
         <AccessDeniedError />
       ) : (
@@ -103,10 +111,10 @@ const AccessDeniedError: React.FC = () => {
         <Alert variant="error" size="lg" bordered shadow>
           <AlertTitle className="flex items-center gap-2">
             <ShieldAlert className="h-5 w-5" />
-            {t('auth.accessDenied.title')}
+            {t('authAlert.accessDenied.title')}
           </AlertTitle>
           <AlertDescription className="mt-2">
-            {t('auth.accessDenied.description')}
+            {t('authAlert.accessDenied.description')}
           </AlertDescription>
         </Alert>
 
@@ -131,26 +139,27 @@ const AccessDeniedError: React.FC = () => {
 // ============================================================================
 
 export const usePermission = () => {
-  const { userShopAccess } = useAppSelector((state) => state.auth)
+  // ✅ FIXED: Access correct state properties
+  const { permissions, user, currentShopAccess } = useAppSelector((state) => state.auth)
 
   const hasPermission = (permission: string): boolean => {
-    return userShopAccess?.permissions?.[permission] === true
+    return permissions?.[permission] === true
   }
 
-  const hasAnyPermission = (permissions: string[]): boolean => {
-    return permissions.some(
-      (perm) => userShopAccess?.permissions?.[perm] === true
+  const hasAnyPermission = (permissionList: string[]): boolean => {
+    return permissionList.some(
+      (perm) => permissions?.[perm] === true
     )
   }
 
-  const hasAllPermissions = (permissions: string[]): boolean => {
-    return permissions.every(
-      (perm) => userShopAccess?.permissions?.[perm] === true
+  const hasAllPermissions = (permissionList: string[]): boolean => {
+    return permissionList.every(
+      (perm) => permissions?.[perm] === true
     )
   }
 
   const getRole = (): string | null => {
-    return userShopAccess?.role || null
+    return user?.role || null
   }
 
   return {
@@ -158,6 +167,8 @@ export const usePermission = () => {
     hasAnyPermission,
     hasAllPermissions,
     getRole,
-    userShopAccess,
+    permissions,
+    currentShopAccess,
+    user,
   }
 }

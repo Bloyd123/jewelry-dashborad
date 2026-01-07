@@ -538,7 +538,9 @@ export {
   pick,
   getNestedProperty,
 } from './common.types'
-export type { Permission, PermissionSet } from './permission.types'
+// export type { Permission, PermissionSet } from './permission.types'
+// Export ShopPermissions from config
+
 export type {
   // Core ID type
   ID,

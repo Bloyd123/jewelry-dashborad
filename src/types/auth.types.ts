@@ -157,7 +157,8 @@ export interface LoginResponse {
     refreshToken: string
     tokenId: string
     expiresIn: number
-    shopAccesses?: UserShopAccess[]
+        shopAccesses?: UserShopAccess[];      // ✅ Optional now
+    effectivePermissions?: ShopPermissions; // ✅ New field
     requires2FA?: boolean
   }
 }
