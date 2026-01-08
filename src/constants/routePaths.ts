@@ -91,7 +91,7 @@ export const ROUTE_PATHS = {
   METAL_RATES: '/metal-rates',
 
   // User Profile
-  USER_PROFILE: '/profile',
+  USER_PROFILE: '/userprofile',
 
   // Catch All
   NOT_FOUND: '*',
