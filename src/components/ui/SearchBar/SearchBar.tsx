@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/form/SearchBar/SearchBar.tsx
 // Reusable SearchBar Component with Debounce
-// ============================================================================
 
 import * as React from 'react'
 import { Search, X } from 'lucide-react'

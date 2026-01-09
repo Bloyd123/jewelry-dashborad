@@ -25,7 +25,7 @@ import sales from './sales.json'
 // import validation from './validation.json'
 
 export default {
-    ...auth,
+  ...auth,
   ...common,
   ...error,
   ...customer,

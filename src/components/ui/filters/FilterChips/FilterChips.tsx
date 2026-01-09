@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/FilterChips/FilterChips.tsx
 // Active Filter Tags Display
-// ============================================================================
 
 import * as React from 'react'
 import { X } from 'lucide-react'

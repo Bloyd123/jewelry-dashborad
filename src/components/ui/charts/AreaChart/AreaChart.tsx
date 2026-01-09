@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/AreaChart/AreaChart.tsx
 // Flexible Area Chart Component
-// ============================================================================
 
 import * as React from 'react'
 import {

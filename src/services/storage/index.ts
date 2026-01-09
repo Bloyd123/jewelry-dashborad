@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/storage/index.ts
 // Export all storage services
-// ============================================================================
 
 import localStorageService from './localStorageService'
 import sessionStorageService from './sessionStorageService'

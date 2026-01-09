@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: src/components/ui/layout/Separator/Separator.tsx
 // Theme-based Separator Component - Flexible & Responsive
-// ============================================================================
 
 import * as React from 'react'
 import * as SeparatorPrimitive from '@radix-ui/react-separator'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export type SeparatorVariant = 'solid' | 'dashed' | 'dotted' | 'gradient'
 export type SeparatorSize = 'xs' | 'sm' | 'md' | 'lg'
@@ -33,9 +29,7 @@ export interface SeparatorProps
   spacing?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
-// ============================================================================
 // STYLES
-// ============================================================================
 
 const variantStyles: Record<SeparatorVariant, string> = {
   solid: 'border-solid',
@@ -93,9 +87,7 @@ const spacingStyles: Record<
   xl: { horizontal: 'my-8', vertical: 'mx-8' },
 }
 
-// ============================================================================
 // SEPARATOR COMPONENT
-// ============================================================================
 
 export const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,
@@ -204,9 +196,7 @@ export const Separator = React.forwardRef<
 
 Separator.displayName = 'Separator'
 
-// ============================================================================
 // SECTION DIVIDER (CONVENIENCE COMPONENT)
-// ============================================================================
 
 interface SectionDividerProps {
   title?: string

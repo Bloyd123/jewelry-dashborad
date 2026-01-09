@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: store/index.ts
 // Redux Store Configuration
-// ============================================================================
 
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 // import customerReducer from '@/store/slices/customerSlice'
@@ -33,9 +31,7 @@ const uiPersistConfig = {
   whitelist: ['themeName', 'accentColor', 'appearance', 'language'],
 }
 
-// ============================================================================
 // ROOT REDUCER
-// ============================================================================
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -51,9 +47,7 @@ const rootReducer = combineReducers({
   // ... other reducers
 })
 
-// ============================================================================
 // PERSIST CONFIGURATION
-// ============================================================================
 
 const persistConfig = {
   key: 'root',
@@ -65,9 +59,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-// ============================================================================
 // STORE CONFIGURATION
-// ============================================================================
 
 export const store = configureStore({
   reducer: persistedReducer,
@@ -88,16 +80,12 @@ export const persistor = persistStore(store)
 // Enable refetchOnFocus / refetchOnReconnect
 setupListeners(store.dispatch)
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export default store

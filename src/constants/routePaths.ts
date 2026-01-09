@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/constants/routePaths.ts
 // Centralized Route Path Constants
-// ============================================================================
 
 export const ROUTE_PATHS = {
   // Auth Routes
@@ -95,11 +93,9 @@ export const ROUTE_PATHS = {
 
   // Catch All
   NOT_FOUND: '*',
-} as const;
+} as const
 
-// ============================================================================
 // Route Builder Utilities
-// ============================================================================
 
 export const buildRoute = {
   customer: {
@@ -134,17 +130,15 @@ export const buildRoute = {
     detail: (id: string) => `/orders/${id}`,
     edit: (id: string) => `/orders/edit/${id}`,
   },
-};
+}
 
-// ============================================================================
 // Route Metadata Types
-// ============================================================================
 
 export interface RouteMetadata {
-  path: string;
-  permission?: string;
-  requiredPermissions?: string[];
-  requiresAuth?: boolean;
-  title?: string;
-  layout?: 'main' | 'auth' | 'minimal';
+  path: string
+  permission?: string
+  requiredPermissions?: string[]
+  requiresAuth?: boolean
+  title?: string
+  layout?: 'main' | 'auth' | 'minimal'
 }

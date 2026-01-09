@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/FilterGroup/FilterGroup.tsx
 // Filter Group Wrapper with Label
-// ============================================================================
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'

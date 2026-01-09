@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/FilterSheet/FilterSheet.tsx
 // Mobile Bottom Sheet for Filters - Updated
-// ============================================================================
 
 import * as React from 'react'
 import { Filter, X } from 'lucide-react'
@@ -19,9 +17,7 @@ import {
 } from '@/components/ui/overlay/Sheet'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface FilterSheetProps {
   children: React.ReactNode
@@ -37,9 +33,7 @@ export interface FilterSheetProps {
   className?: string
 }
 
-// ============================================================================
 // FILTER SHEET COMPONENT
-// ============================================================================
 
 export const FilterSheet = React.forwardRef<HTMLDivElement, FilterSheetProps>(
   (

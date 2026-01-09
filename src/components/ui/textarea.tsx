@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/textarea.tsx
 // Theme-based Textarea Component
-// ============================================================================
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'

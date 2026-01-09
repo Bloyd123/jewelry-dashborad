@@ -1,15 +1,15 @@
-// ============================================================================
+
 // FILE: src/config/routes.config.ts
 // Route Configuration with Permissions
-// ============================================================================
+
 import React from 'react'
 
 import { ROUTE_PATHS, RouteMetadata } from '@/constants/routePaths';
 import { lazy } from 'react';
 
-// ============================================================================
+
 // Lazy Loaded Components
-// ============================================================================
+
 
 // Auth Pages
 const LoginPage = lazy(() => import('@/components/auth/login/pages'));
@@ -111,9 +111,9 @@ const MetalRatesDashboardPage = lazy(() =>
 // User Profile
 const UserProfile = lazy(() => import('@/pages/user/page'));
 
-// ============================================================================
+
 // Route Configurations
-// ============================================================================
+
 
 export interface RouteConfig extends RouteMetadata {
   element: React.LazyExoticComponent<React.ComponentType<any>>;
@@ -370,9 +370,9 @@ export const protectedRoutes: RouteConfig[] = [
   },
 ];
 
-// ============================================================================
+
 // Legacy Routes Support (for backward compatibility)
-// ============================================================================
+
 
 export const ROUTES = {
   // Auth

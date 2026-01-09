@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/ui/layout/Accordion/Accordion.tsx
 // Theme-based Accordion Component - Flexible & Responsive
-// ============================================================================
 
 import * as React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export type AccordionVariant = 'default' | 'bordered' | 'separated' | 'ghost'
 export type AccordionSize = 'sm' | 'md' | 'lg'
@@ -37,9 +33,7 @@ export interface AccordionProps {
   children?: React.ReactNode
 }
 
-// ============================================================================
 // STYLES
-// ============================================================================
 
 const variantStyles: Record<
   AccordionVariant,
@@ -102,9 +96,7 @@ const sizeStyles: Record<
   },
 }
 
-// ============================================================================
 // ACCORDION ROOT COMPONENT
-// ============================================================================
 
 export const Accordion = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,
@@ -183,9 +175,7 @@ export const Accordion = React.forwardRef<
 
 Accordion.displayName = 'Accordion'
 
-// ============================================================================
 // ACCORDION ITEM COMPONENT
-// ============================================================================
 
 interface AccordionItemProps
   extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> {
@@ -210,9 +200,7 @@ export const AccordionItem = React.forwardRef<
 
 AccordionItem.displayName = 'AccordionItem'
 
-// ============================================================================
 // ACCORDION TRIGGER COMPONENT
-// ============================================================================
 
 interface AccordionTriggerProps
   extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
@@ -281,9 +269,7 @@ export const AccordionTrigger = React.forwardRef<
 
 AccordionTrigger.displayName = 'AccordionTrigger'
 
-// ============================================================================
 // ACCORDION CONTENT COMPONENT
-// ============================================================================
 
 interface AccordionContentProps
   extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content> {

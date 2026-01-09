@@ -1,26 +1,26 @@
-// ============================================================================
 // FILE: src/router/AppRouter.tsx
 // Main Application Router
-// ============================================================================
 
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { PrivateRoute, PublicRoute } from './PrivateRoute';
-import { RoleRoute } from './RoleRoute';
-import { MainLayout } from '@/components/layout/MainLayout/MainLayout';
-import { publicRoutes, protectedRoutes, RouteConfig } from '@/config/routes.config';
-import { ROUTE_PATHS } from '@/constants/routePaths';
-import { Suspense } from 'react';
-import { Spinner } from '@/components/ui/loader/Spinner';
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { PrivateRoute, PublicRoute } from './PrivateRoute'
+import { RoleRoute } from './RoleRoute'
+import { MainLayout } from '@/components/layout/MainLayout/MainLayout'
+import {
+  publicRoutes,
+  protectedRoutes,
+  RouteConfig,
+} from '@/config/routes.config'
+import { ROUTE_PATHS } from '@/constants/routePaths'
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/loader/Spinner'
 
-// ============================================================================
 // Route Renderer - Handles individual route rendering with permissions
-// ============================================================================
 
 const RouteRenderer: React.FC<{ route: RouteConfig }> = ({ route }) => {
-  const Element = route.element;
+  const Element = route.element
 
   return (
-    <Suspense fallback={<Spinner  />}>
+    <Suspense fallback={<Spinner />}>
       {route.permission || route.requiredPermissions ? (
         <RoleRoute
           permission={route.permission}
@@ -32,21 +32,22 @@ const RouteRenderer: React.FC<{ route: RouteConfig }> = ({ route }) => {
         <Element />
       )}
     </Suspense>
-  );
-};
+  )
+}
 
-// ============================================================================
 // Main App Router
-// ============================================================================
 
 export const AppRouter: React.FC = () => {
   return (
     <Routes>
       {/* Root Redirect */}
-      <Route path="/" element={<Navigate to={ROUTE_PATHS.AUTH.LOGIN} replace />} />
+      <Route
+        path="/"
+        element={<Navigate to={ROUTE_PATHS.AUTH.LOGIN} replace />}
+      />
 
       {/* Public Routes (Auth pages) */}
-      {publicRoutes.map((route) => (
+      {publicRoutes.map(route => (
         <Route
           key={route.path}
           path={route.path}
@@ -67,10 +68,13 @@ export const AppRouter: React.FC = () => {
         }
       >
         {/* Dashboard redirect */}
-        <Route index element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />} />
+        <Route
+          index
+          element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />}
+        />
 
         {/* Protected Routes */}
-        {protectedRoutes.map((route) => (
+        {protectedRoutes.map(route => (
           <Route
             key={route.path}
             path={route.path}
@@ -79,8 +83,11 @@ export const AppRouter: React.FC = () => {
         ))}
 
         {/* Catch all - redirect to dashboard */}
-        <Route path="*" element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />} />
+        <Route
+          path="*"
+          element={<Navigate to={ROUTE_PATHS.DASHBOARD} replace />}
+        />
       </Route>
     </Routes>
-  );
-};
+  )
+}

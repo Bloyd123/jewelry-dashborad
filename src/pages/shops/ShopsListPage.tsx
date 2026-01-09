@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/shops/ShopsPage.tsx
 // Shop List Page - Complete Implementation
-// ============================================================================
 
 import * as React from 'react'
 import { Plus } from 'lucide-react'

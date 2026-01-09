@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/feedback/EmptyState/index.ts
 // EmptyState Barrel Export
-// ============================================================================
 
 export {
   EmptyState,

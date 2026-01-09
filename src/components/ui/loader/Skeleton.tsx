@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/ui/loader/Skeleton.tsx
 // Skeleton Loader for Content Loading States
-// ============================================================================
 
 import type { SkeletonProps } from '@/types/loader.types'
 

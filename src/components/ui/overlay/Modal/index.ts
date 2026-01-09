@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Modal/index.ts
-// ============================================================================
 
 export { Modal } from './Modal'
 export { ModalHeader } from './ModalHeader'

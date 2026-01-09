@@ -1,7 +1,5 @@
-// ============================================================================
 // Mini-Step 7.3: Select Component (Theme-Aware)
 // FILE: src/components/common/Select.tsx
-// ============================================================================
 
 import { SelectHTMLAttributes, forwardRef } from 'react'
 

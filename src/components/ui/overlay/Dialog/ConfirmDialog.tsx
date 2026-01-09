@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Dialog/ConfirmDialog.tsx
 // Pre-built Confirmation Dialog
-// ============================================================================
 
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'

@@ -1,17 +1,12 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/TwoFactorCodeInput.tsx
 // 6-Digit Code Input Component
-// ============================================================================
 
 import { useRef, useEffect, KeyboardEvent, ClipboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 
-
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface TwoFactorCodeInputProps {
   value: string
@@ -22,9 +17,7 @@ export interface TwoFactorCodeInputProps {
   autoFocus?: boolean
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const TwoFactorCodeInput: React.FC<TwoFactorCodeInputProps> = ({
   value,
@@ -38,33 +31,34 @@ export const TwoFactorCodeInput: React.FC<TwoFactorCodeInputProps> = ({
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
   const digits = value.split('').concat(Array(6 - value.length).fill(''))
 
-  // ========================================================================
   // EFFECTS
-  // ========================================================================
 
   useEffect(() => {
     if (autoFocus && inputRefs.current[0]) {
       inputRefs.current[0].focus()
     }
   }, [autoFocus])
-const hasCalledRef = useRef(false)
-useEffect(() => {
-  // ✅ Only call once when reaching 6 digits
-  if (value.length === 6 && onComplete && !disabled && !hasCalledRef.current) {
-    hasCalledRef.current = true
-    onComplete()
-  }
-  
-  // ✅ Reset when code is cleared/changed
-  if (value.length < 6) {
-    hasCalledRef.current = false
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [value, disabled])
+  const hasCalledRef = useRef(false)
+  useEffect(() => {
+    // ✅ Only call once when reaching 6 digits
+    if (
+      value.length === 6 &&
+      onComplete &&
+      !disabled &&
+      !hasCalledRef.current
+    ) {
+      hasCalledRef.current = true
+      onComplete()
+    }
 
-  // ========================================================================
+    // ✅ Reset when code is cleared/changed
+    if (value.length < 6) {
+      hasCalledRef.current = false
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, disabled])
+
   // HANDLERS
-  // ========================================================================
 
   const handleChange = (index: number, digit: string) => {
     if (disabled) return
@@ -114,7 +108,7 @@ useEffect(() => {
 
     if (sanitized) {
       onChange(sanitized)
-      
+
       // Focus last filled input or last input
       const focusIndex = Math.min(sanitized.length, 5)
       inputRefs.current[focusIndex]?.focus()
@@ -126,23 +120,23 @@ useEffect(() => {
     inputRefs.current[index]?.select()
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="space-y-2">
-      <div className="flex gap-2 justify-center">
+      <div className="flex justify-center gap-2">
         {digits.map((digit, index) => (
           <Input
             key={index}
-            ref={(el) => { inputRefs.current[index] = el }}
+            ref={el => {
+              inputRefs.current[index] = el
+            }}
             type="text"
             inputMode="numeric"
             maxLength={1}
             value={digit}
-            onChange={(e) => handleChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
+            onChange={e => handleChange(index, e.target.value)}
+            onKeyDown={e => handleKeyDown(index, e)}
             onPaste={handlePaste}
             onFocus={() => handleFocus(index)}
             disabled={disabled}

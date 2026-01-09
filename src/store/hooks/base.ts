@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: store/hooks/base.ts
 // Base Redux Hooks - Typed hooks for TypeScript
-// ============================================================================
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import type { RootState, AppDispatch } from '../index'
 
-// ============================================================================
 // TYPED HOOKS
-// ============================================================================
 
 /**
  * Typed useDispatch hook
@@ -23,9 +19,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>()
  */
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export default {
   useAppDispatch,

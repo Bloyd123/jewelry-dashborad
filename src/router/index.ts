@@ -1,12 +1,10 @@
-// ============================================================================
 // FILE: src/router/index.ts
 // Central Export Point for Router
-// ============================================================================
 
-export { AppRouter } from './AppRouter';
-export { PrivateRoute, PublicRoute } from './PrivateRoute';
-export { RoleRoute, usePermission } from './RoleRoute';
+export { AppRouter } from './AppRouter'
+export { PrivateRoute, PublicRoute } from './PrivateRoute'
+export { RoleRoute, usePermission } from './RoleRoute'
 
 // Re-export route constants for convenience
-export { ROUTE_PATHS, buildRoute } from '@/constants/routePaths';
-export { ROUTES } from '@/config/routes.config';
+export { ROUTE_PATHS, buildRoute } from '@/constants/routePaths'
+export { ROUTES } from '@/config/routes.config'

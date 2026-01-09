@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Sheet/Sheet.tsx
 // Bottom Sheet Component - Mobile-First (Native Feel)
-// ============================================================================
 
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export type SheetSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 
@@ -25,9 +21,7 @@ export interface SheetProps {
   className?: string
 }
 
-// ============================================================================
 // SIZE VARIANTS
-// ============================================================================
 
 const sizeStyles: Record<SheetSize, string> = {
   sm: 'h-[30vh] min-h-[250px]',
@@ -37,33 +31,23 @@ const sizeStyles: Record<SheetSize, string> = {
   full: 'h-[95vh]',
 }
 
-// ============================================================================
 // SHEET ROOT
-// ============================================================================
 
 const Sheet = DialogPrimitive.Root
 
-// ============================================================================
 // SHEET TRIGGER
-// ============================================================================
 
 const SheetTrigger = DialogPrimitive.Trigger
 
-// ============================================================================
 // SHEET CLOSE
-// ============================================================================
 
 const SheetClose = DialogPrimitive.Close
 
-// ============================================================================
 // SHEET PORTAL
-// ============================================================================
 
 const SheetPortal = DialogPrimitive.Portal
 
-// ============================================================================
 // SHEET OVERLAY
-// ============================================================================
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -82,9 +66,7 @@ const SheetOverlay = React.forwardRef<
 ))
 SheetOverlay.displayName = 'SheetOverlay'
 
-// ============================================================================
 // SHEET CONTENT
-// ============================================================================
 
 interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
@@ -171,9 +153,7 @@ const SheetContent = React.forwardRef<
 )
 SheetContent.displayName = 'SheetContent'
 
-// ============================================================================
 // SHEET HEADER
-// ============================================================================
 
 const SheetHeader = React.forwardRef<
   HTMLDivElement,
@@ -191,9 +171,7 @@ const SheetHeader = React.forwardRef<
 ))
 SheetHeader.displayName = 'SheetHeader'
 
-// ============================================================================
 // SHEET BODY
-// ============================================================================
 
 const SheetBody = React.forwardRef<
   HTMLDivElement,
@@ -211,9 +189,7 @@ const SheetBody = React.forwardRef<
 ))
 SheetBody.displayName = 'SheetBody'
 
-// ============================================================================
 // SHEET FOOTER
-// ============================================================================
 
 const SheetFooter = React.forwardRef<
   HTMLDivElement,
@@ -231,9 +207,7 @@ const SheetFooter = React.forwardRef<
 ))
 SheetFooter.displayName = 'SheetFooter'
 
-// ============================================================================
 // SHEET TITLE
-// ============================================================================
 
 const SheetTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
@@ -250,9 +224,7 @@ const SheetTitle = React.forwardRef<
 ))
 SheetTitle.displayName = 'SheetTitle'
 
-// ============================================================================
 // SHEET DESCRIPTION
-// ============================================================================
 
 const SheetDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
@@ -266,9 +238,7 @@ const SheetDescription = React.forwardRef<
 ))
 SheetDescription.displayName = 'SheetDescription'
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export {
   Sheet,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/supplier/AddSupplier.tsx
 // Add/Edit Supplier Page (No API Integration - Test Only)
-// ============================================================================
 
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { SupplierForm } from '@/components/supplier/SupplierForm'

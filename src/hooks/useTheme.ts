@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: hooks/useTheme.ts
 // Theme Hook - Get Current Theme
-// ============================================================================
 
 import { useAppSelector } from '@/store/hooks'
 import { getThemeByName } from '@/themes/presets'

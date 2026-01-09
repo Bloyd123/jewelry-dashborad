@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/auth/tokenService.ts
 // Token management service for JWT tokens
-// ============================================================================
 
 import { api } from '@/api/axios'
 import { API_ENDPOINTS } from '@/api/endpoints'
@@ -9,18 +7,14 @@ import type { ApiResponse } from '@/types'
 
 import * as storage from '../storage/localStorageService'
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 const TOKEN_KEYS = {
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
 } as const
 
-// ============================================================================
 // TOKEN SAVE/GET/REMOVE
-// ============================================================================
 
 /**
  * Save access token to localStorage
@@ -88,9 +82,7 @@ export const removeTokens = (): boolean => {
   return accessRemoved && refreshRemoved
 }
 
-// ============================================================================
 // TOKEN VALIDATION
-// ============================================================================
 
 /**
  * Decode JWT token (without verification)
@@ -183,9 +175,7 @@ export const getTimeUntilExpiration = (token: string): number => {
   }
 }
 
-// ============================================================================
 // TOKEN REFRESH
-// ============================================================================
 
 /**
  * Refresh access token using refresh token
@@ -252,9 +242,7 @@ export const autoRefreshToken = async (
   }
 }
 
-// ============================================================================
 // TOKEN INFO
-// ============================================================================
 
 /**
  * Get user ID from access token
@@ -288,9 +276,7 @@ export const getTokenPayload = (): any | null => {
   return decodeToken(token)
 }
 
-// ============================================================================
 // DEFAULT EXPORT
-// ============================================================================
 
 export default {
   saveAccessToken,

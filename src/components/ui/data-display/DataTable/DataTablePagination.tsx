@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTablePagination.tsx
 // DataTable Pagination Controls
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,9 +20,7 @@ import {
 } from '@/components/ui/select'
 import type { PaginationState } from './DataTable.types'
 
-// ============================================================================
 // PAGINATION PROPS
-// ============================================================================
 
 export interface DataTablePaginationProps {
   pageIndex: number
@@ -40,9 +36,7 @@ export interface DataTablePaginationProps {
   compact?: boolean
 }
 
-// ============================================================================
 // PAGINATION COMPONENT
-// ============================================================================
 
 export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
   pageIndex,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/storage/sessionStorageService.ts
 // Session storage service instance
-// ============================================================================
 
 import createStorageService from './storageService'
 

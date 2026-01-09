@@ -329,12 +329,11 @@ export default {
   resendVerificationEmail,
   getActiveSessions,
   revokeSession,
-    enable2FA,
+  enable2FA,
   verify2FA,
   disable2FA,
   verify2FALogin,
   verifyBackupCode,
-
 
   // Helpers
   checkEmailAvailability,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: store/slices/authSlice.ts
 // Authentication State Management
-// ============================================================================
 
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
@@ -19,14 +17,11 @@ import type {
   UserShopAccess,
   ShopPermissions,
   PermissionKey,
-  
 } from '@/types'
 
 import type { RootState } from '../index'
 
-// ============================================================================
 // STATE INTERFACE
-// ============================================================================
 
 interface AuthState {
   // User & Authentication
@@ -37,10 +32,10 @@ interface AuthState {
   isAuthenticated: boolean
 
   // Loading States
-  isLoading: boolean          // ✅ ONLY for login/logout/init
-  is2FALoading: boolean       // ✅ NEW: Only for 2FA operations
+  isLoading: boolean // ✅ ONLY for login/logout/init
+  is2FALoading: boolean // ✅ NEW: Only for 2FA operations
   isPasswordChanging: boolean // ✅ NEW: Only for password
-  isProfileUpdating: boolean  // ✅ NEW: Only for profile
+  isProfileUpdating: boolean // ✅ NEW: Only for profile
   isInitializing: boolean
   isRefreshing: boolean
 
@@ -56,15 +51,13 @@ interface AuthState {
   // Two-Factor
   requires2FA: boolean
   twoFactorEnabled: boolean
-   tempToken: string | null 
+  tempToken: string | null
 
   // Last Activity
   lastActivity: number | null
 }
 
-// ============================================================================
 // INITIAL STATE
-// ============================================================================
 
 const initialState: AuthState = {
   user: null,
@@ -74,7 +67,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
 
   isLoading: false,
-    is2FALoading: false,        // ✅ Add this
+  is2FALoading: false, // ✅ Add this
   isPasswordChanging: false,
   isProfileUpdating: false,
 
@@ -90,14 +83,12 @@ const initialState: AuthState = {
 
   requires2FA: false,
   twoFactorEnabled: false,
-  tempToken: null, 
+  tempToken: null,
 
   lastActivity: null,
 }
 
-// ============================================================================
 // ASYNC THUNKS
-// ============================================================================
 
 /**
  * Login user
@@ -395,9 +386,8 @@ export const verifyBackupCodeLogin = createAsyncThunk(
     }
   }
 )
-// ============================================================================
+
 // SLICE
-// ============================================================================
 
 const authSlice = createSlice({
   name: 'auth',
@@ -467,71 +457,75 @@ const authSlice = createSlice({
         state.error = null
       })
       .addCase(
-  login.fulfilled,
-  (state, action: PayloadAction<LoginResponse['data']>) => {
-    state.isLoading = false;
-        if (action.payload.requires2FA) {
-      state.requires2FA = true;
-     state.tempToken = action.payload.tempToken ?? null
+        login.fulfilled,
+        (state, action: PayloadAction<LoginResponse['data']>) => {
+          state.isLoading = false
+          if (action.payload.requires2FA) {
+            state.requires2FA = true
+            state.tempToken = action.payload.tempToken ?? null
 
-      state.isAuthenticated = false; // Not authenticated yet
-      return; // Don't proceed with normal login
-    }
-    state.user = action.payload.user;
-    state.accessToken = action.payload.accessToken;
-    state.refreshToken = action.payload.refreshToken;
-    state.tokenId = action.payload.tokenId;
-    state.isAuthenticated = true;
-    state.requires2FA = action.payload.requires2FA || false;
-    state.lastActivity = Date.now();
+            state.isAuthenticated = false // Not authenticated yet
+            return // Don't proceed with normal login
+          }
+          state.user = action.payload.user
+          state.accessToken = action.payload.accessToken
+          state.refreshToken = action.payload.refreshToken
+          state.tokenId = action.payload.tokenId
+          state.isAuthenticated = true
+          state.requires2FA = action.payload.requires2FA || false
+          state.lastActivity = Date.now()
 
-    // Store tokens
-    tokenService.saveAccessToken(action.payload.accessToken);
-    tokenService.saveRefreshToken(action.payload.refreshToken);
+          // Store tokens
+          tokenService.saveAccessToken(action.payload.accessToken)
+          tokenService.saveRefreshToken(action.payload.refreshToken)
 
-    // ✅ NEW: Handle both org-level and shop-level users
-    const { effectivePermissions, shopAccesses } = action.payload;
+          // ✅ NEW: Handle both org-level and shop-level users
+          const { effectivePermissions, shopAccesses } = action.payload
 
-    if (effectivePermissions) {
-      // ✅ Org-level user (super_admin, org_admin)
-      state.permissions = effectivePermissions;
-      state.shopAccesses = [];
-      state.currentShop = null;
-      state.currentShopAccess = null;
-      
-      console.log(`[Auth] ${action.payload.user.role} logged in with effective permissions`);
-    } else {
-      // ✅ Shop-level user (shop_admin, manager, staff, etc.)
-      state.shopAccesses = shopAccesses || [];
+          if (effectivePermissions) {
+            // ✅ Org-level user (super_admin, org_admin)
+            state.permissions = effectivePermissions
+            state.shopAccesses = []
+            state.currentShop = null
+            state.currentShopAccess = null
 
-      if (state.shopAccesses.length > 0) {
-        // Restore last selected shop or use first
-        const storedShop = localStorage.getItem('currentShop');
-        const shopExists = state.shopAccesses.some(
-          access => access.shopId === storedShop
-        );
+            console.log(
+              `[Auth] ${action.payload.user.role} logged in with effective permissions`
+            )
+          } else {
+            // ✅ Shop-level user (shop_admin, manager, staff, etc.)
+            state.shopAccesses = shopAccesses || []
 
-        if (storedShop && shopExists) {
-          state.currentShop = storedShop;
-        } else {
-          state.currentShop = state.shopAccesses[0].shopId;
-          localStorage.setItem('currentShop', state.currentShop);
+            if (state.shopAccesses.length > 0) {
+              // Restore last selected shop or use first
+              const storedShop = localStorage.getItem('currentShop')
+              const shopExists = state.shopAccesses.some(
+                access => access.shopId === storedShop
+              )
+
+              if (storedShop && shopExists) {
+                state.currentShop = storedShop
+              } else {
+                state.currentShop = state.shopAccesses[0].shopId
+                localStorage.setItem('currentShop', state.currentShop)
+              }
+
+              // Set permissions from current shop access
+              const shopAccess = state.shopAccesses.find(
+                access => access.shopId === state.currentShop
+              )
+              state.currentShopAccess = shopAccess || null
+              state.permissions = shopAccess?.permissions || null
+
+              console.log(
+                `[Auth] Shop-level user logged in to shop: ${state.currentShop}`
+              )
+            } else {
+              console.warn('[Auth] Shop-level user has no shop access!')
+            }
+          }
         }
-
-        // Set permissions from current shop access
-        const shopAccess = state.shopAccesses.find(
-          access => access.shopId === state.currentShop
-        );
-        state.currentShopAccess = shopAccess || null;
-        state.permissions = shopAccess?.permissions || null;
-        
-        console.log(`[Auth] Shop-level user logged in to shop: ${state.currentShop}`);
-      } else {
-        console.warn('[Auth] Shop-level user has no shop access!');
-      }
-    }
-  }
-)
+      )
       // .addCase(
       //   login.fulfilled,
       //   (state, action: PayloadAction<LoginResponse['data']>) => {
@@ -773,125 +767,123 @@ const authSlice = createSlice({
         state.isInitializing = false
         state.isAuthenticated = false
       })
-  .addCase(enable2FA.pending, state => {
-     state.is2FALoading = true  
-    state.error = null
-  })
-  .addCase(enable2FA.fulfilled, state => {
-    state.is2FALoading = false   
-  })
-  .addCase(enable2FA.rejected, (state, action) => {
-   state.is2FALoading = false   
-    state.error = action.payload as string
-  })
+      .addCase(enable2FA.pending, state => {
+        state.is2FALoading = true
+        state.error = null
+      })
+      .addCase(enable2FA.fulfilled, state => {
+        state.is2FALoading = false
+      })
+      .addCase(enable2FA.rejected, (state, action) => {
+        state.is2FALoading = false
+        state.error = action.payload as string
+      })
 
-// ========================================
-// VERIFY 2FA
-// ========================================
-builder
-  .addCase(verify2FA.pending, state => {
-     state.is2FALoading = true
-    state.error = null
-  })
-  .addCase(verify2FA.fulfilled, (state, action) => {
-   state.is2FALoading = false 
-    if (state.user) {
-      state.user.twoFactorEnabled = true
-      state.twoFactorEnabled = true
+    // ========================================
+    // VERIFY 2FA
+    // ========================================
+    builder
+      .addCase(verify2FA.pending, state => {
+        state.is2FALoading = true
+        state.error = null
+      })
+      .addCase(verify2FA.fulfilled, (state, action) => {
+        state.is2FALoading = false
+        if (state.user) {
+          state.user.twoFactorEnabled = true
+          state.twoFactorEnabled = true
 
-      state.user.backupCodes = action.payload.backupCodes || []
-    }
-  })
-  .addCase(verify2FA.rejected, (state, action) => {
-    state.is2FALoading = false 
-    state.error = action.payload as string
-  })
+          state.user.backupCodes = action.payload.backupCodes || []
+        }
+      })
+      .addCase(verify2FA.rejected, (state, action) => {
+        state.is2FALoading = false
+        state.error = action.payload as string
+      })
 
-// ========================================
-// DISABLE 2FA
-// ========================================
-builder
-  .addCase(disable2FA.pending, state => {
-  state.is2FALoading = false
-    state.error = null
-  })
-  .addCase(disable2FA.fulfilled, (state) => {
-     state.is2FALoading = false
-    if (state.user) {
-      state.user.twoFactorEnabled = false
-      state.twoFactorEnabled = false
-    }
-  })
-  .addCase(disable2FA.rejected, (state, action) => {
-     state.is2FALoading = false
-    state.error = action.payload as string
-  })
+    // ========================================
+    // DISABLE 2FA
+    // ========================================
+    builder
+      .addCase(disable2FA.pending, state => {
+        state.is2FALoading = false
+        state.error = null
+      })
+      .addCase(disable2FA.fulfilled, state => {
+        state.is2FALoading = false
+        if (state.user) {
+          state.user.twoFactorEnabled = false
+          state.twoFactorEnabled = false
+        }
+      })
+      .addCase(disable2FA.rejected, (state, action) => {
+        state.is2FALoading = false
+        state.error = action.payload as string
+      })
 
-// ========================================
-// VERIFY 2FA LOGIN
-// ========================================
-builder
-  .addCase(verify2FALogin.pending, state => {
-    state.isLoading = true
-    state.error = null
-  })
-  .addCase(
-    verify2FALogin.fulfilled,
-    (state, action: PayloadAction<LoginResponse['data']>) => {
-      state.isLoading = false
-      state.requires2FA = false
-      state.tempToken = null
-      state.user = action.payload.user
-      state.accessToken = action.payload.accessToken
-      state.refreshToken = action.payload.refreshToken
-      state.tokenId = action.payload.tokenId
-      state.isAuthenticated = true
-      // ... handle shop accesses and permissions as in normal login
-      
-      tokenService.saveAccessToken(action.payload.accessToken)
-      tokenService.saveRefreshToken(action.payload.refreshToken)
-    }
-  )
-  .addCase(verify2FALogin.rejected, (state, action) => {
-    state.isLoading = false
-    state.error = action.payload as string
-  })
+    // ========================================
+    // VERIFY 2FA LOGIN
+    // ========================================
+    builder
+      .addCase(verify2FALogin.pending, state => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(
+        verify2FALogin.fulfilled,
+        (state, action: PayloadAction<LoginResponse['data']>) => {
+          state.isLoading = false
+          state.requires2FA = false
+          state.tempToken = null
+          state.user = action.payload.user
+          state.accessToken = action.payload.accessToken
+          state.refreshToken = action.payload.refreshToken
+          state.tokenId = action.payload.tokenId
+          state.isAuthenticated = true
+          // ... handle shop accesses and permissions as in normal login
 
-// ========================================
-// VERIFY BACKUP CODE
-// ========================================
-builder
-  .addCase(verifyBackupCodeLogin.pending, state => {
-    state.isLoading = true
-    state.error = null
-  })
-  .addCase(
-    verifyBackupCodeLogin.fulfilled,
-    (state, action: PayloadAction<LoginResponse['data']>) => {
-      // Same as verify2FALogin.fulfilled
-      state.isLoading = false
-      state.requires2FA = false
-      state.tempToken = null
-      state.user = action.payload.user
-      state.accessToken = action.payload.accessToken
-      state.refreshToken = action.payload.refreshToken
-      state.tokenId = action.payload.tokenId
-      state.isAuthenticated = true
-      
-      tokenService.saveAccessToken(action.payload.accessToken)
-      tokenService.saveRefreshToken(action.payload.refreshToken)
-    }
-  )
-  .addCase(verifyBackupCodeLogin.rejected, (state, action) => {
-    state.isLoading = false
-    state.error = action.payload as string
-  })
+          tokenService.saveAccessToken(action.payload.accessToken)
+          tokenService.saveRefreshToken(action.payload.refreshToken)
+        }
+      )
+      .addCase(verify2FALogin.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+
+    // ========================================
+    // VERIFY BACKUP CODE
+    // ========================================
+    builder
+      .addCase(verifyBackupCodeLogin.pending, state => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(
+        verifyBackupCodeLogin.fulfilled,
+        (state, action: PayloadAction<LoginResponse['data']>) => {
+          // Same as verify2FALogin.fulfilled
+          state.isLoading = false
+          state.requires2FA = false
+          state.tempToken = null
+          state.user = action.payload.user
+          state.accessToken = action.payload.accessToken
+          state.refreshToken = action.payload.refreshToken
+          state.tokenId = action.payload.tokenId
+          state.isAuthenticated = true
+
+          tokenService.saveAccessToken(action.payload.accessToken)
+          tokenService.saveRefreshToken(action.payload.refreshToken)
+        }
+      )
+      .addCase(verifyBackupCodeLogin.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
   },
 })
 
-// ============================================================================
 // ACTIONS
-// ============================================================================
 
 export const {
   setCurrentShop,
@@ -901,12 +893,10 @@ export const {
   setError,
   updateUser,
   setRequires2FA,
-  resetAuthState
+  resetAuthState,
 } = authSlice.actions
 
-// ============================================================================
 // SELECTORS
-// ============================================================================
 
 // Basic selectors
 export const selectAuth = (state: RootState) => state.auth
@@ -950,8 +940,6 @@ export const selectHasAllPermissions = (
   return permissions.every(perm => state.auth.permissions![perm] === true)
 }
 
-// ============================================================================
 // EXPORT REDUCER
-// ============================================================================
 
 export default authSlice.reducer

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/Avatar/Avatar.tsx
 // Reusable Avatar Component
-// ============================================================================
 
 import * as React from 'react'
 import * as AvatarPrimitive from '@radix-ui/react-avatar'
@@ -50,9 +48,7 @@ const AvatarFallback = React.forwardRef<
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
-// ============================================================================
 // Composite Avatar Component with Extra Features
-// ============================================================================
 
 export interface AvatarProps {
   src?: string
@@ -148,9 +144,7 @@ export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
 
 Avatar.displayName = 'Avatar'
 
-// ============================================================================
 // Avatar Group Component (for multiple avatars)
-// ============================================================================
 
 export interface AvatarGroupProps {
   children: React.ReactNode

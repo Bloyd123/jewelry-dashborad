@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/index.ts
 // Export all tabs
-// ============================================================================
 
 export { PersonalInfoTab } from './PersonalInfoTab'
 export { SecurityTab } from './SecurityTab'

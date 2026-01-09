@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/auth/sessionService.ts
 // Session management service for user data and authentication state
-// ============================================================================
 
 import type { User } from '@/types'
 
@@ -9,9 +7,7 @@ import * as storage from '../storage/localStorageService'
 
 import { removeTokens, getAccessToken } from './tokenService'
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 const SESSION_KEYS = {
   USER: 'user',
@@ -19,9 +15,7 @@ const SESSION_KEYS = {
   PERMISSIONS: 'permissions',
 } as const
 
-// ============================================================================
 // USER MANAGEMENT
-// ============================================================================
 
 /**
  * Save user data to localStorage
@@ -75,9 +69,7 @@ export const updateUser = (updates: Partial<User>): boolean => {
   }
 }
 
-// ============================================================================
 // PERMISSIONS MANAGEMENT
-// ============================================================================
 
 /**
  * Save user permissions to localStorage
@@ -120,9 +112,7 @@ export const removePermissions = (): boolean => {
   }
 }
 
-// ============================================================================
 // SHOP MANAGEMENT
-// ============================================================================
 
 /**
  * Save current shop ID to localStorage
@@ -160,9 +150,7 @@ export const removeCurrentShopId = (): boolean => {
   }
 }
 
-// ============================================================================
 // SESSION MANAGEMENT
-// ============================================================================
 
 /**
  * Save complete session (user and permissions)
@@ -222,9 +210,7 @@ export const getSession = () => {
   }
 }
 
-// ============================================================================
 // USER INFO HELPERS
-// ============================================================================
 
 /**
  * Get user ID from session
@@ -280,9 +266,7 @@ export const getUserEmail = (): string | null => {
   return user?.email || null
 }
 
-// ============================================================================
 // ROLE CHECKS
-// ============================================================================
 
 /**
  * Check if user has specific role
@@ -328,9 +312,7 @@ export const isManagerOrAbove = (): boolean => {
   return hasAnyRole(['super_admin', 'org_admin', 'shop_admin', 'manager'])
 }
 
-// ============================================================================
 // SESSION VALIDATION
-// ============================================================================
 
 /**
  * Validate session (check if user and token exist and are valid)
@@ -356,9 +338,7 @@ export const validateSession = (): boolean => {
   }
 }
 
-// ============================================================================
 // DEFAULT EXPORT
-// ============================================================================
 
 export default {
   saveUser,

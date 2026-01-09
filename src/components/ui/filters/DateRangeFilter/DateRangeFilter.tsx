@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/DateRangeFilter/DateRangeFilter.tsx
 // Date Range Picker Filter
-// ============================================================================
 
 import * as React from 'react'
 import { CalendarIcon } from 'lucide-react'

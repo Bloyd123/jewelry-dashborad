@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: mocks/metal-rate.mock.ts
 // Metal Rate Management - Mock Data for Frontend Development
-// ============================================================================
 
 import type {
   MetalRate,
@@ -15,9 +13,7 @@ import type {
   TrendChartDataPoint,
 } from '@/types/metalrate.types'
 
-// ============================================================================
 // MOCK CURRENT RATE
-// ============================================================================
 
 export const mockCurrentRate: MetalRate = {
   _id: '674a5b8c9d1234567890abcd',
@@ -184,9 +180,7 @@ export const mockCurrentRate: MetalRate = {
   silverSpread: 2.5,
 }
 
-// ============================================================================
 // MOCK CURRENT RATE API RESPONSE
-// ============================================================================
 
 export const mockCurrentRateResponse: ApiResponse<MetalRate> = {
   success: true,
@@ -195,9 +189,7 @@ export const mockCurrentRateResponse: ApiResponse<MetalRate> = {
   cached: false,
 }
 
-// ============================================================================
 // MOCK RATE HISTORY
-// ============================================================================
 
 export const mockRateHistory: MetalRate[] = Array.from(
   { length: 30 },
@@ -266,9 +258,7 @@ export const mockRateHistoryResponse: ApiResponse<MetalRate[]> = {
   },
 }
 
-// ============================================================================
 // MOCK TREND CHART DATA
-// ============================================================================
 
 export const mockTrendChartData: TrendChartDataPoint[] = Array.from(
   { length: 90 },
@@ -307,9 +297,7 @@ export const mockTrendChartResponse: ApiResponse<TrendChartResponse> = {
   cached: false,
 }
 
-// ============================================================================
 // MOCK LATEST RATES (10)
-// ============================================================================
 
 export const mockLatestRatesResponse: ApiResponse<MetalRate[]> = {
   success: true,
@@ -317,9 +305,7 @@ export const mockLatestRatesResponse: ApiResponse<MetalRate[]> = {
   message: 'Latest rates retrieved',
 }
 
-// ============================================================================
 // MOCK AVERAGE RATE
-// ============================================================================
 
 export const mockAverageRateResponse: ApiResponse<AverageRateResult> = {
   success: true,
@@ -334,9 +320,7 @@ export const mockAverageRateResponse: ApiResponse<AverageRateResult> = {
   message: 'Average rate calculated',
 }
 
-// ============================================================================
 // MOCK RATE COMPARISON
-// ============================================================================
 
 export const mockRateComparisonResponse: ApiResponse<RateComparisonResult> = {
   success: true,
@@ -395,9 +379,7 @@ export const mockRateComparisonResponse: ApiResponse<RateComparisonResult> = {
   message: 'Rate comparison completed',
 }
 
-// ============================================================================
 // MOCK SPECIFIC DATE RATE
-// ============================================================================
 
 export const mockDateRateResponse: ApiResponse<MetalRate> = {
   success: true,
@@ -415,9 +397,7 @@ export const mockDateRateResponse: ApiResponse<MetalRate> = {
   message: 'Rate for 2024-11-15 retrieved successfully',
 }
 
-// ============================================================================
 // MOCK SPECIFIC PURITY RATE
-// ============================================================================
 
 export const mockPurityRateResponse: ApiResponse<RateForPurityResponse> = {
   success: true,
@@ -431,9 +411,7 @@ export const mockPurityRateResponse: ApiResponse<RateForPurityResponse> = {
   message: 'Rate for purity retrieved',
 }
 
-// ============================================================================
 // MOCK MULTI-SHOP SYNC
-// ============================================================================
 
 export const mockSyncResponse: ApiResponse<SyncResult> = {
   success: true,
@@ -452,9 +430,7 @@ export const mockSyncResponse: ApiResponse<SyncResult> = {
   message: 'Rates synced with 1 failure(s)',
 }
 
-// ============================================================================
 // MOCK CREATE/UPDATE RATE RESPONSE
-// ============================================================================
 
 export const mockCreateRateResponse: ApiResponse<MetalRate> = {
   success: true,
@@ -468,9 +444,7 @@ export const mockUpdateRateResponse: ApiResponse<MetalRate> = {
   message: 'Metal rates updated successfully',
 }
 
-// ============================================================================
 // MOCK DEACTIVATE RATE
-// ============================================================================
 
 export const mockDeactivateRateResponse: ApiResponse<MetalRate> = {
   success: true,
@@ -482,18 +456,14 @@ export const mockDeactivateRateResponse: ApiResponse<MetalRate> = {
   message: 'Metal rate deactivated successfully',
 }
 
-// ============================================================================
 // MOCK DELETE RATE (204 No Content)
-// ============================================================================
 
 export const mockDeleteRateResponse = {
   success: true,
   message: 'Metal rate deleted successfully',
 }
 
-// ============================================================================
 // MOCK API FUNCTIONS (Use these in your components)
-// ============================================================================
 
 export const mockMetalRateApi = {
   // GET Current Rate

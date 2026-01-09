@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTableSkeleton.tsx
 // DataTable Loading Skeleton
-// ============================================================================
 
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { Skeleton } from '@/components/ui/loader'
 
-// ============================================================================
 // SKELETON PROPS
-// ============================================================================
 
 export interface DataTableSkeletonProps {
   rows?: number
@@ -19,9 +15,7 @@ export interface DataTableSkeletonProps {
   className?: string
 }
 
-// ============================================================================
 // SKELETON COMPONENT
-// ============================================================================
 
 export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
   rows = 5,
@@ -129,9 +123,7 @@ export const DataTableSkeleton: React.FC<DataTableSkeletonProps> = ({
   )
 }
 
-// ============================================================================
 // COMPACT SKELETON VARIANT
-// ============================================================================
 
 export const DataTableCompactSkeleton: React.FC<{
   rows?: number
@@ -164,9 +156,7 @@ export const DataTableCompactSkeleton: React.FC<{
   )
 }
 
-// ============================================================================
 // TABLE ROW SKELETON
-// ============================================================================
 
 export const DataTableRowSkeleton: React.FC<{
   columns?: number

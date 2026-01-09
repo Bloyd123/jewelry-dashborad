@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/ActivityLogsTab.tsx
 // Activity Logs Tab Component
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { Clock, Activity, Filter } from 'lucide-react'

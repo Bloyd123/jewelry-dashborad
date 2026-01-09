@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/MobileUserProfileHeader.tsx
 // Mobile User Profile Header Component
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,9 +19,7 @@ import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import { dummyUser } from '@/pages/user/data'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface MobileUserProfileHeaderProps {
   activeTab?: string
@@ -32,9 +28,7 @@ interface MobileUserProfileHeaderProps {
   onSettingsClick?: () => void
 }
 
-// ============================================================================
 // MOBILE USER PROFILE HEADER COMPONENT
-// ============================================================================
 
 export const MobileUserProfileHeader: React.FC<
   MobileUserProfileHeaderProps

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/PersonalInfoTab.tsx
 // Personal Information Tab Component
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

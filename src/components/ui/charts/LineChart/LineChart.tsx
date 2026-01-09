@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/LineChart/LineChart.tsx
 // Flexible Line Chart Component with Theme Support
-// ============================================================================
 
 import * as React from 'react'
 import {

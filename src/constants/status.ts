@@ -1,11 +1,7 @@
-// ============================================================================
 // FILE: src/constants/status.ts
 // All status enums and constants for the application
-// ============================================================================
 
-// ============================================================================
 // USER STATUS
-// ============================================================================
 
 /**
  * User Account Status
@@ -40,9 +36,7 @@ export const USER_STATUS_COLORS: Record<UserStatus, string> = {
   [UserStatus.LOCKED]: 'orange',
 }
 
-// ============================================================================
 // ORDER/SALE STATUS
-// ============================================================================
 
 /**
  * Order Status
@@ -105,9 +99,7 @@ export const ORDER_STATUS_FLOW = [
   OrderStatus.COMPLETED,
 ] as const
 
-// ============================================================================
 // PAYMENT STATUS
-// ============================================================================
 
 /**
  * Payment Status
@@ -154,9 +146,7 @@ export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
   [PaymentStatus.CANCELLED]: 'gray',
 }
 
-// ============================================================================
 // PRODUCT/INVENTORY STATUS
-// ============================================================================
 
 /**
  * Product Status
@@ -200,9 +190,7 @@ export const PRODUCT_STATUS_COLORS: Record<ProductStatus, string> = {
   [ProductStatus.INACTIVE]: 'red',
 }
 
-// ============================================================================
 // INVOICE STATUS
-// ============================================================================
 
 /**
  * Invoice Status
@@ -249,9 +237,7 @@ export const INVOICE_STATUS_COLORS: Record<InvoiceStatus, string> = {
   [InvoiceStatus.REFUNDED]: 'purple',
 }
 
-// ============================================================================
 // SCHEME STATUS (Jewelry Schemes)
-// ============================================================================
 
 /**
  * Scheme Status
@@ -289,9 +275,7 @@ export const SCHEME_STATUS_COLORS: Record<SchemeStatus, string> = {
   [SchemeStatus.CLOSED]: 'gray',
 }
 
-// ============================================================================
 // ORGANIZATION/SHOP STATUS
-// ============================================================================
 
 /**
  * Organization Status
@@ -359,9 +343,7 @@ export const SHOP_STATUS_COLORS: Record<ShopStatus, string> = {
   [ShopStatus.MAINTENANCE]: 'yellow',
 }
 
-// ============================================================================
 // SUBSCRIPTION STATUS
-// ============================================================================
 
 /**
  * Subscription Status
@@ -402,9 +384,7 @@ export const SUBSCRIPTION_STATUS_COLORS: Record<SubscriptionStatus, string> = {
   [SubscriptionStatus.PENDING]: 'blue',
 }
 
-// ============================================================================
 // TRANSACTION STATUS
-// ============================================================================
 
 /**
  * Transaction Status
@@ -442,9 +422,7 @@ export const TRANSACTION_STATUS_COLORS: Record<TransactionStatus, string> = {
   [TransactionStatus.REFUNDED]: 'purple',
 }
 
-// ============================================================================
 // NOTIFICATION STATUS
-// ============================================================================
 
 /**
  * Notification Status
@@ -464,9 +442,7 @@ export const NOTIFICATION_STATUS_LABELS: Record<NotificationStatus, string> = {
   [NotificationStatus.ARCHIVED]: 'Archived',
 }
 
-// ============================================================================
 // ACTIVITY LOG STATUS
-// ============================================================================
 
 /**
  * Activity Status
@@ -498,9 +474,7 @@ export const ACTIVITY_STATUS_COLORS: Record<ActivityStatus, string> = {
   [ActivityStatus.WARNING]: 'orange',
 }
 
-// ============================================================================
 // APPROVAL STATUS
-// ============================================================================
 
 /**
  * Approval Status
@@ -532,9 +506,7 @@ export const APPROVAL_STATUS_COLORS: Record<ApprovalStatus, string> = {
   [ApprovalStatus.REVISION_REQUIRED]: 'orange',
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Get status label
@@ -647,9 +619,7 @@ export function isPendingStatus(status: string): boolean {
   return pendingStatuses.includes(status as any)
 }
 
-// ============================================================================
 // EXPORT ALL
-// ============================================================================
 
 export default {
   // Enums

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/product/AddProduct.tsx
 // Add/Edit Product Page (No API Integration - Test Only)
-// ============================================================================
 
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ProductForm } from '@/components/products/ProductForms'

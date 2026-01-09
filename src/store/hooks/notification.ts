@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: store/hooks/notification.ts
 // Custom Hooks for Notifications
-// ============================================================================
 
 import { useCallback } from 'react'
 

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/TypeFilter/TypeFilter.tsx
 // Generic Dropdown Filter (Reusable for Any Type)
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

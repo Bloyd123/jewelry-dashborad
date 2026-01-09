@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Dialog/Dialog.tsx
 // Simple Dialog Component (Confirmation, Alerts, etc.)
-// ============================================================================
 
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface DialogProps {
   // Control
@@ -40,9 +36,7 @@ export interface DialogProps {
   testId?: string
 }
 
-// ============================================================================
 // DIALOG COMPONENT
-// ============================================================================
 
 export const Dialog: React.FC<DialogProps> = ({
   open,
@@ -62,9 +56,7 @@ export const Dialog: React.FC<DialogProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // EFFECTS
-  // ========================================================================
 
   useEffect(() => {
     if (open && onOpen) {
@@ -88,9 +80,7 @@ export const Dialog: React.FC<DialogProps> = ({
     }
   }, [open, preventScroll])
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>

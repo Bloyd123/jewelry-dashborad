@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Modal/Modal.tsx
 // Adaptive Modal - Auto switches between desktop modal and mobile sheet
-// ============================================================================
 
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,9 +8,7 @@ import { cn } from '@/lib/utils'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 
@@ -53,9 +49,7 @@ export interface ModalProps {
   testId?: string
 }
 
-// ============================================================================
 // SIZE CONFIGURATION
-// ============================================================================
 
 const sizeClasses: Record<ModalSize, string> = {
   sm: 'max-w-sm',
@@ -65,9 +59,7 @@ const sizeClasses: Record<ModalSize, string> = {
   full: 'max-w-full mx-4',
 }
 
-// ============================================================================
 // MODAL COMPONENT
-// ============================================================================
 
 export const Modal: React.FC<ModalProps> = ({
   open,
@@ -96,9 +88,7 @@ export const Modal: React.FC<ModalProps> = ({
   const shouldShowAsSheet =
     !forceDesktop && (forceMobile || (isMobile && mobileAsSheet))
 
-  // ========================================================================
   // EFFECTS
-  // ========================================================================
 
   useEffect(() => {
     if (open && onOpen) {
@@ -122,9 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
     }
   }, [open, preventScroll])
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleOpenChange = (newOpen: boolean) => {
     onOpenChange(newOpen)
@@ -134,9 +122,7 @@ export const Modal: React.FC<ModalProps> = ({
     onOpenChange(false)
   }
 
-  // ========================================================================
   // RENDER MOBILE SHEET
-  // ========================================================================
 
   if (shouldShowAsSheet) {
     return (
@@ -178,18 +164,14 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
 
             {/* Content */}
-            <div className="max-h-[90vh] overflow-y-auto">
-              {children}
-            </div>
+            <div className="max-h-[90vh] overflow-y-auto">{children}</div>
           </DialogPrimitive.Content>
         </DialogPrimitive.Portal>
       </DialogPrimitive.Root>
     )
   }
 
-  // ========================================================================
   // RENDER DESKTOP MODAL
-  // ========================================================================
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
@@ -211,7 +193,7 @@ export const Modal: React.FC<ModalProps> = ({
             'translate-x-[-50%] translate-y-[-50%]',
             'w-full',
             sizeClasses[size],
-            'max-h-[90vh] ',
+            'max-h-[90vh]',
             'rounded-lg border shadow-lg',
             'border-border-primary bg-bg-secondary',
             'flex flex-col',

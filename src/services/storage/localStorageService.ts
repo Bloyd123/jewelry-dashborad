@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/storage/localStorageService.ts
 // Local storage service instance
-// ============================================================================
 
 import createStorageService from './storageService'
 

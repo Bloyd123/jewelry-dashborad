@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/card.tsx
 // Theme-based Card Component
-// ============================================================================
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'

@@ -1,14 +1,10 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/StatCard/StatCardGrid.tsx
 // Responsive Grid Wrapper for StatCards
-// ============================================================================
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface StatCardGridProps {
   children: React.ReactNode
@@ -17,9 +13,7 @@ export interface StatCardGridProps {
   className?: string
 }
 
-// ============================================================================
 // GRID STYLES
-// ============================================================================
 
 const columnStyles: Record<number, string> = {
   1: 'grid-cols-1',
@@ -34,9 +28,7 @@ const gapStyles: Record<string, string> = {
   lg: 'gap-6',
 }
 
-// ============================================================================
 // STATCARDGRID COMPONENT
-// ============================================================================
 
 export const StatCardGrid: React.FC<StatCardGridProps> = ({
   children,

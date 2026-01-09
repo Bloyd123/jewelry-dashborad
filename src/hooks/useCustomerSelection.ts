@@ -1,7 +1,7 @@
-// ============================================================================
+//
 // FILE: src/hooks/customer/useCustomerSelection.ts
 // Custom Hook for Customer Selection
-// ============================================================================
+//
 
 import { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'

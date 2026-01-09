@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/ui/loader/index.ts
 // Barrel Export for Loader Components
-// ============================================================================
 
 export { Loader } from './Loader'
 export { Skeleton } from './Skeleton'

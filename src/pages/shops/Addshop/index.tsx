@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/shop/AddShop/index.tsx
 // Add/Edit Shop Page
-// ============================================================================
 
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -12,9 +10,8 @@ import { ShopForm } from '@/components/shop/ShopForm'
 import type { Shop } from '@/types'
 import { dummyShops } from '../data'
 
-// ============================================================================
 // HELPER: Convert Shop to Form Data
-// ============================================================================
+
 const convertShopToFormData = (shop: Shop): Partial<Shop> => {
   return {
     name: shop.name,
@@ -44,9 +41,8 @@ const convertShopToFormData = (shop: Shop): Partial<Shop> => {
   }
 }
 
-// ============================================================================
 // PAGE COMPONENT
-// ============================================================================
+
 export default function AddShopPage() {
   const navigate = useNavigate()
   const { shopId } = useParams()

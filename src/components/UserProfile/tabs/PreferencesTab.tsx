@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/PreferencesTab.tsx
 // User Preferences Tab Component
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

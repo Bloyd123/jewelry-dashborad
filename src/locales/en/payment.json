@@ -226,7 +226,6 @@
     "sendReceipt": "Send Receipt"
   },
 
-
   "validation": {
     "required": "This field is required"
   }

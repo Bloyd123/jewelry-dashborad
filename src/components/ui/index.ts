@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/ui/index.ts
 // Main UI Components Barrel Export
-// ============================================================================
 
 // Loader components
 export { Loader, Skeleton, Spinner } from './loader'

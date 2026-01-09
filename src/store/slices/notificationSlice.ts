@@ -1,13 +1,9 @@
-// ============================================================================
 // FILE: src/store/slices/notificationSlice.ts
 // Notification State Management - Redux Toolkit Slice
-// ============================================================================
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 /**
  * Notification Type
@@ -71,9 +67,7 @@ export interface ShowNotificationPayload {
   icon?: string
 }
 
-// ============================================================================
 // INITIAL STATE
-// ============================================================================
 
 const initialState: NotificationState = {
   notifications: [],
@@ -82,9 +76,7 @@ const initialState: NotificationState = {
   maxNotifications: 5, // Maximum simultaneous notifications
 }
 
-// ============================================================================
 // UTILITY FUNCTIONS
-// ============================================================================
 
 /**
  * Generate unique notification ID
@@ -106,9 +98,7 @@ const getDefaultIcon = (variant: NotificationVariant): string => {
   return iconMap[variant] || 'ℹ️'
 }
 
-// ============================================================================
 // SLICE
-// ============================================================================
 
 const notificationSlice = createSlice({
   name: 'notification',
@@ -338,9 +328,7 @@ const notificationSlice = createSlice({
   },
 })
 
-// ============================================================================
 // ACTIONS
-// ============================================================================
 
 export const {
   showNotification,
@@ -357,9 +345,7 @@ export const {
   removeExpiredNotifications,
 } = notificationSlice.actions
 
-// ============================================================================
 // SELECTORS
-// ============================================================================
 
 /**
  * Select all notifications
@@ -426,15 +412,11 @@ export const selectHasErrorNotifications = (state: {
   notification: NotificationState
 }) => state.notification.notifications.some(n => n.variant === 'error')
 
-// ============================================================================
 // REDUCER
-// ============================================================================
 
 export default notificationSlice.reducer
 
-// ============================================================================
 // THUNK ACTIONS (Optional - for complex scenarios)
-// ============================================================================
 
 /**
  * Show notification with auto-dismiss
@@ -460,9 +442,7 @@ export const showNotificationWithAutoDismiss = (
   }
 }
 
-// ============================================================================
 // USAGE EXAMPLES
-// ============================================================================
 
 /**
  * EXAMPLE 1: Basic Usage in Component

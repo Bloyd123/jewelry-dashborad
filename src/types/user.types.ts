@@ -87,8 +87,8 @@ export interface User {
 
   // Two-Factor Authentication
   twoFactorEnabled: boolean
-    backupCodes?: string[]        // ✅ ADD
-  backupCodesUsed?: string[]    // ✅ ADD
+  backupCodes?: string[] // ✅ ADD
+  backupCodesUsed?: string[] // ✅ ADD
 
   // Additional Fields for Jewelry Business
   designation?: string

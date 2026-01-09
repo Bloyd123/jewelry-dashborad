@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: data/salesDummyData.ts
 // Dummy Data for Sales Module - Ready for Frontend Integration
-// ============================================================================
 
 import type {
   Sale,
@@ -10,9 +8,7 @@ import type {
   CustomerSalesSummary,
 } from '@/types/sale.types'
 
-// ============================================================================
 // DUMMY SALES DATA (10 Complete Sales)
-// ============================================================================
 
 export const dummySales: Sale[] = [
   {
@@ -1145,9 +1141,7 @@ export const dummySales: Sale[] = [
   },
 ]
 
-// ============================================================================
 // SALES ANALYTICS DUMMY DATA
-// ============================================================================
 
 export const dummySalesAnalytics: SalesAnalytics = {
   totalSales: 10,
@@ -1159,9 +1153,7 @@ export const dummySalesAnalytics: SalesAnalytics = {
   unpaidSales: 4,
 }
 
-// ============================================================================
 // SALES DASHBOARD DUMMY DATA
-// ============================================================================
 
 export const dummySalesDashboard: SalesDashboard = {
   today: {
@@ -1172,9 +1164,7 @@ export const dummySalesDashboard: SalesDashboard = {
   pendingPayments: 4,
 }
 
-// ============================================================================
 // CUSTOMER SALES SUMMARY DUMMY DATA
-// ============================================================================
 
 export const dummyCustomerSalesSummary: CustomerSalesSummary = {
   totalSales: 3,
@@ -1183,9 +1173,7 @@ export const dummyCustomerSalesSummary: CustomerSalesSummary = {
   lastPurchase: '2024-12-27T10:00:00.000Z',
 }
 
-// ============================================================================
 // SALES PERSON PERFORMANCE DUMMY DATA
-// ============================================================================
 
 export const dummySalesPersonPerformance = {
   totalSales: 7,
@@ -1193,9 +1181,7 @@ export const dummySalesPersonPerformance = {
   averageValue: 208120.29,
 }
 
-// ============================================================================
 // FILTER OPTIONS (FOR DROPDOWNS)
-// ============================================================================
 
 export const saleStatusOptions = [
   { value: 'draft', label: 'Draft' },
@@ -1248,9 +1234,7 @@ export const deliveryTypeOptions = [
   { value: 'pickup', label: 'Pickup' },
 ]
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 export const getSaleById = (saleId: string): Sale | undefined => {
   return dummySales.find(sale => sale._id === saleId)
@@ -1298,9 +1282,7 @@ export const getOverdueSales = (): Sale[] => {
   )
 }
 
-// ============================================================================
 // MOCK API RESPONSES
-// ============================================================================
 
 export const mockApiResponses = {
   getAllSales: {

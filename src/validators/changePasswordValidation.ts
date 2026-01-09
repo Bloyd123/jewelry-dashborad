@@ -35,11 +35,11 @@ const changePasswordSchema = z
       .trim()
       .min(1, getRequiredMessage('Confirm password')),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine(data => data.newPassword === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
-  .refine((data) => data.currentPassword !== data.newPassword, {
+  .refine(data => data.currentPassword !== data.newPassword, {
     message: 'New password must be different from current password',
     path: ['newPassword'],
   })

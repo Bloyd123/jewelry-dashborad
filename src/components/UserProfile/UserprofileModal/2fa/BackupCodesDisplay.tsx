@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/BackupCodesDisplay.tsx
 // Backup Codes Display with Download/Copy/Print
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +7,7 @@ import { Download, Copy, Printer, Check, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface BackupCodesDisplayProps {
   codes: string[]
@@ -20,9 +16,7 @@ export interface BackupCodesDisplayProps {
   className?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
   codes,
@@ -33,9 +27,7 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
   const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleCopy = () => {
     const text = codes.join('\n')
@@ -145,9 +137,7 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
     return showUsedStatus && usedCodes.includes(code)
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className={cn('space-y-4', className)}>
@@ -203,7 +193,7 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
           <Download className="h-4 w-4" />
           {t('auth.2fa.downloadCodes')}
         </Button>
-        
+
         <Button
           variant="outline"
           size="sm"
@@ -222,7 +212,7 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
             </>
           )}
         </Button>
-        
+
         <Button
           variant="outline"
           size="sm"

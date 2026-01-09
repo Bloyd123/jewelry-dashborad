@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/Step2QRCode.tsx
 // Step 2: Scan QR Code
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,9 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Step2QRCodeProps {
   qrCode: string
@@ -24,9 +20,7 @@ export interface Step2QRCodeProps {
   error?: string | null
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
   qrCode,
@@ -39,9 +33,7 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
   const { t } = useTranslation()
   const [secretCopied, setSecretCopied] = useState(false)
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleCopySecret = () => {
     navigator.clipboard.writeText(secret.replace(/\s/g, ''))
@@ -49,9 +41,7 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
     setTimeout(() => setSecretCopied(false), 2000)
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <>
@@ -77,11 +67,7 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
         <div className="flex justify-center">
           <div className="rounded-lg border-2 border-border-primary bg-white p-4">
             {qrCode ? (
-              <img
-                src={qrCode}
-                alt="QR Code"
-                className="h-48 w-48"
-              />
+              <img src={qrCode} alt="QR Code" className="h-48 w-48" />
             ) : (
               <div className="flex h-48 w-48 items-center justify-center">
                 <Loader size="lg" variant="spinner" />
@@ -108,18 +94,14 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
             </Button>
           </div>
           {secretCopied && (
-            <p className="text-xs text-status-success">
-              {t('common.copied')}
-            </p>
+            <p className="text-xs text-status-success">{t('common.copied')}</p>
           )}
         </div>
 
         {/* Helper Info */}
         <Alert variant="info">
           <AlertDescription>
-            <p className="text-xs">
-              {t('auth.2fa.qrCodeInfo')}
-            </p>
+            <p className="text-xs">{t('auth.2fa.qrCodeInfo')}</p>
           </AlertDescription>
         </Alert>
 

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/calendar.tsx
 // Theme-based Calendar Component with Dropdown Selection
-// ============================================================================
 
 import * as React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'

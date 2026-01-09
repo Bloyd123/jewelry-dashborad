@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/Step3VerifyCode.tsx
 // Step 3: Verify Code
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { ChevronLeft, Clock } from 'lucide-react'
@@ -11,9 +9,7 @@ import { Alert, AlertDescription } from '@/components/common/Alert'
 import { TwoFactorCodeInput } from '../TwoFactorCodeInput'
 import { Loader } from '@/components/ui/loader/Loader'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Step3VerifyCodeProps {
   code: string
@@ -24,9 +20,7 @@ export interface Step3VerifyCodeProps {
   error?: string | null
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Step3VerifyCode: React.FC<Step3VerifyCodeProps> = ({
   code,
@@ -60,13 +54,13 @@ export const Step3VerifyCode: React.FC<Step3VerifyCodeProps> = ({
 
         {/* Code Input */}
         <div className="flex justify-center">
-        <TwoFactorCodeInput
-          value={code}
-          onChange={onChange}
-          onComplete={loading ? undefined : onVerify}  
-          error={error}
-          disabled={loading}
-        />
+          <TwoFactorCodeInput
+            value={code}
+            onChange={onChange}
+            onComplete={loading ? undefined : onVerify}
+            error={error}
+            disabled={loading}
+          />
         </div>
 
         {/* Helper text with icon */}
@@ -100,9 +94,7 @@ export const Step3VerifyCode: React.FC<Step3VerifyCodeProps> = ({
         {isCodeComplete && !error && !loading && (
           <Alert variant="success">
             <AlertDescription>
-              <p className="text-xs">
-                {t('auth.2fa.codeReady')}
-              </p>
+              <p className="text-xs">{t('auth.2fa.codeReady')}</p>
             </AlertDescription>
           </Alert>
         )}
@@ -113,10 +105,7 @@ export const Step3VerifyCode: React.FC<Step3VerifyCodeProps> = ({
           <ChevronLeft className="h-4 w-4" />
           {t('common.back')}
         </Button>
-        <Button
-          onClick={onVerify}
-          disabled={loading || !isCodeComplete}
-        >
+        <Button onClick={onVerify} disabled={loading || !isCodeComplete}>
           {loading && <Loader size="xs" variant="spinner" />}
           {t('auth.2fa.verifyAndContinue')}
         </Button>

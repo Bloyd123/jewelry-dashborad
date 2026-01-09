@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/storage/storageService.ts
 // Base storage service with error handling and type safety
-// ============================================================================
 
 /**
  * Generic storage interface

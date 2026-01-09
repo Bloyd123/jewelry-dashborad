@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTable.tsx
 // Main DataTable Component - Flexible, Reusable Table
-// ============================================================================
 
 import React, { useMemo, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -19,9 +17,7 @@ import type {
 } from './DataTable.types'
 import NotFoundPage from '@/pages/NotFound/index'
 
-// ============================================================================
 // EMPTY STATE COMPONENT
-// ============================================================================
 
 const EmptyState: React.FC<{
   message?: React.ReactNode
@@ -51,9 +47,7 @@ const EmptyState: React.FC<{
   )
 }
 
-// ============================================================================
 // MAIN DATATABLE COMPONENT
-// ============================================================================
 
 export const DataTable = <T extends Record<string, any>>({
   // Required props
@@ -87,9 +81,7 @@ export const DataTable = <T extends Record<string, any>>({
 }: DataTableProps<T>) => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // STATE MANAGEMENT
-  // ========================================================================
 
   const [internalState, setInternalState] = useState<DataTableInternalState>({
     sorting: sorting?.sortingState || [],
@@ -104,9 +96,7 @@ export const DataTable = <T extends Record<string, any>>({
     columnVisibility: {},
   })
 
-  // ========================================================================
   // HELPER FUNCTIONS
-  // ========================================================================
 
   const getRowIdFn = useCallback(
     (row: T, index: number): string | number => {
@@ -117,9 +107,7 @@ export const DataTable = <T extends Record<string, any>>({
     [getRowId, selection]
   )
 
-  // ========================================================================
   // SORTING
-  // ========================================================================
 
   const handleSort = useCallback(
     (columnId: string, direction: SortDirection) => {
@@ -181,9 +169,7 @@ export const DataTable = <T extends Record<string, any>>({
     })
   }, [data, columns, sorting, internalState.sorting])
 
-  // ========================================================================
   // FILTERING
-  // ========================================================================
 
   const filteredData = useMemo(() => {
     if (!filtering?.enabled) return sortedData
@@ -215,9 +201,7 @@ export const DataTable = <T extends Record<string, any>>({
     return result
   }, [sortedData, columns, filtering, internalState.globalFilter])
 
-  // ========================================================================
   // PAGINATION
-  // ========================================================================
 
   const handlePaginationChange = useCallback(
     (newPagination: PaginationState) => {
@@ -250,9 +234,7 @@ export const DataTable = <T extends Record<string, any>>({
     return Math.ceil(filteredData.length / pageSize)
   }, [filteredData.length, pagination, internalState.pagination.pageSize])
 
-  // ========================================================================
   // SELECTION
-  // ========================================================================
 
   const handleSelectionChange = useCallback(
     (rowId: string | number, selected: boolean) => {
@@ -317,9 +299,7 @@ export const DataTable = <T extends Record<string, any>>({
     )
   }, [selection, internalState.selectedRows, paginatedData, getRowIdFn])
 
-  // ========================================================================
   // ROW EXPANSION
-  // ========================================================================
 
   const handleExpansionToggle = useCallback(
     (rowId: string | number) => {
@@ -342,9 +322,7 @@ export const DataTable = <T extends Record<string, any>>({
     [rowExpansion, internalState.expandedRows]
   )
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   // Loading state
   if (loading?.isLoading) {

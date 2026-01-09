@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/common/ThemePicker.tsx
 // Theme Picker Component - Visual Theme Selector
-// ============================================================================
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { setTheme } from '@/store/slices/uiSlice'

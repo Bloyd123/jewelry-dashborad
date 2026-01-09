@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/constants/roles.ts
 // Role Constants and Helper Functions for Frontend
-// ============================================================================
 
 /**
  * 🎯 USER ROLES ENUM
@@ -122,9 +120,7 @@ export const SHOP_LEVEL_ROLES = [
   UserRole.VIEWER,
 ]
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Check if user is any type of admin
@@ -328,9 +324,7 @@ export const isValidRole = (role: string): boolean => {
   return getAllRoles().includes(role as UserRole)
 }
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export default {
   UserRole,

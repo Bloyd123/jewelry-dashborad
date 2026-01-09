@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/index.ts
 // DataTable Barrel Export
-// ============================================================================
 
 export { DataTable } from './DataTable'
 export { DataTableHeader, DataTableHeaderCell } from './DataTableHeader'

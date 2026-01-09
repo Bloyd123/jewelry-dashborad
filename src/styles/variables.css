@@ -1,7 +1,7 @@
-/* ============================================================================
+/* 
    FILE: styles/variables.css
    CSS Variables - Theme Colors
-   ============================================================================ */
+    */
 
 :root {
   /* ========== Header Colors ========== */
@@ -67,7 +67,8 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 
   /* ========== Typography ========== */
-  --font-sans: 'Bricolage Grotesque', 'Geist', system-ui, -apple-system, sans-serif;
+  --font-sans:
+    'Bricolage Grotesque', 'Geist', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   --font-size-xs: 0.75rem;
@@ -99,10 +100,10 @@
   --z-tooltip: 1070;
 }
 
-/* ============================================================================
+/* 
    Dark Mode Override (Fallback)
    Note: These will be overridden by useThemeSync hook
-   ============================================================================ */
+    */
 [data-mode='dark'] {
   --header-primary: #1e293b;
   --header-secondary: #f97316;

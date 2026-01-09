@@ -1,16 +1,12 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/StatCard/StatCard.tsx
 // Flexible Analytics Card Component for All Modules
-// ============================================================================
 
 import * as React from 'react'
 import { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 // import { useTranslation } from 'react-i18next'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export type StatCardVariant =
   | 'default'
@@ -51,9 +47,7 @@ export interface StatCardProps {
   badge?: React.ReactNode
 }
 
-// ============================================================================
 // VARIANT STYLES
-// ============================================================================
 
 const variantStyles: Record<StatCardVariant, string> = {
   default: 'bg-bg-secondary border-border-primary',
@@ -95,9 +89,7 @@ const sizeStyles: Record<
   },
 }
 
-// ============================================================================
 // TREND COMPONENT
-// ============================================================================
 
 interface TrendIndicatorProps {
   trend: NonNullable<StatCardProps['trend']>
@@ -140,9 +132,7 @@ const TrendIndicator: React.FC<TrendIndicatorProps> = ({ trend }) => {
   )
 }
 
-// ============================================================================
 // STATCARD COMPONENT
-// ============================================================================
 
 export const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
   (

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/feedback/EmptyState/EmptyState.tsx
 // Reusable Empty State Component - Fully Flexible & Responsive
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -24,9 +22,7 @@ import {
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export type EmptyStateVariant =
   | 'default'
@@ -83,9 +79,7 @@ export interface EmptyStateProps {
   testId?: string
 }
 
-// ============================================================================
 // PRESET ICONS (For Common Use Cases)
-// ============================================================================
 
 export const EmptyStateIcons = {
   default: FileX,
@@ -103,9 +97,7 @@ export const EmptyStateIcons = {
   image: ImageIcon,
 } as const
 
-// ============================================================================
 // EMPTY STATE COMPONENT
-// ============================================================================
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
   title,
@@ -129,9 +121,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // SIZE CONFIGURATION
-  // ========================================================================
 
   const sizeConfig = {
     sm: {
@@ -165,9 +155,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
   const config = sizeConfig[size]
 
-  // ========================================================================
   // VARIANT CONFIGURATION
-  // ========================================================================
 
   const variantConfig = {
     default: {
@@ -210,9 +198,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
 
   const variantStyles = variantConfig[variant]
 
-  // ========================================================================
   // RENDER ICON
-  // ========================================================================
 
   const renderIcon = () => {
     if (!icon && !image) return null
@@ -253,9 +239,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     )
   }
 
-  // ========================================================================
   // RENDER ACTIONS
-  // ========================================================================
 
   const renderActions = () => {
     if (!action && !secondaryAction) return null
@@ -291,9 +275,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     )
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div
@@ -357,9 +339,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   )
 }
 
-// ============================================================================
 // PRESET COMPONENTS (Common Use Cases)
-// ============================================================================
 
 /**
  * No Search Results
@@ -480,9 +460,7 @@ export const EmptyErrorState: React.FC<{
   )
 }
 
-// ============================================================================
 // DISPLAY NAMES
-// ============================================================================
 
 EmptyState.displayName = 'EmptyState'
 EmptySearchResults.displayName = 'EmptySearchResults'
@@ -490,8 +468,6 @@ EmptyFilterResults.displayName = 'EmptyFilterResults'
 EmptyDataState.displayName = 'EmptyDataState'
 EmptyErrorState.displayName = 'EmptyErrorState'
 
-// ============================================================================
 // EXPORT
-// ============================================================================
 
 export default EmptyState

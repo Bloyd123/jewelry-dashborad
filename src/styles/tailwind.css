@@ -1,7 +1,7 @@
-/* ============================================================================
+/* 
    FILE: styles/tailwind.css
    Tailwind Directives & Custom Utilities
-   ============================================================================ */
+    */
 
 @tailwind base;
 @tailwind components;

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: pages/payment/payment.dummy.ts
 // Payment Module - Dummy Data for Frontend Testing
-// ============================================================================
 
 import {
   Payment,
@@ -14,9 +12,7 @@ import {
   PaymentModeBreakdown,
 } from '@/types/payment.types'
 
-// ============================================================================
 // DUMMY PAYMENTS DATA
-// ============================================================================
 
 export const dummyPayments: Payment[] = [
   {
@@ -482,9 +478,7 @@ export const dummyPayments: Payment[] = [
   },
 ]
 
-// ============================================================================
 // PAYMENT DASHBOARD DATA
-// ============================================================================
 
 export const dummyPaymentDashboard: PaymentDashboard = {
   todayCollection: {
@@ -506,9 +500,7 @@ export const dummyPaymentDashboard: PaymentDashboard = {
   recentPayments: dummyPayments.slice(0, 5),
 }
 
-// ============================================================================
 // PAYMENT ANALYTICS DATA
-// ============================================================================
 
 export const dummyPaymentAnalytics: PaymentAnalytics = {
   analytics: [
@@ -558,9 +550,7 @@ export const dummyPaymentAnalytics: PaymentAnalytics = {
   },
 }
 
-// ============================================================================
 // PARTY PAYMENT SUMMARY DATA
-// ============================================================================
 
 export const dummyPartyPaymentSummary: PartyPaymentSummary = {
   totalReceived: 75000,
@@ -574,9 +564,7 @@ export const dummyPartyPaymentSummary: PartyPaymentSummary = {
   },
 }
 
-// ============================================================================
 // RECONCILIATION SUMMARY DATA
-// ============================================================================
 
 export const dummyReconciliationSummary: ReconciliationSummary = {
   totalPayments: 8,
@@ -591,9 +579,7 @@ export const dummyReconciliationSummary: ReconciliationSummary = {
   totalDiscrepancy: 0,
 }
 
-// ============================================================================
 // CASH COLLECTION DATA
-// ============================================================================
 
 export const dummyCashCollection: CashCollection = {
   date: '2024-12-27',
@@ -608,9 +594,7 @@ export const dummyCashCollection: CashCollection = {
   netCashBalance: 15000,
 }
 
-// ============================================================================
 // DIGITAL COLLECTION DATA
-// ============================================================================
 
 export const dummyDigitalCollection: DigitalCollection = {
   breakdown: [
@@ -621,25 +605,19 @@ export const dummyDigitalCollection: DigitalCollection = {
   totalDigitalCollection: 178500,
 }
 
-// ============================================================================
 // PENDING CHEQUES DATA
-// ============================================================================
 
 export const dummyPendingCheques: Payment[] = dummyPayments.filter(
   p => p.paymentMode === 'cheque' && p.status === 'pending'
 )
 
-// ============================================================================
 // BOUNCED CHEQUES DATA
-// ============================================================================
 
 export const dummyBouncedCheques: Payment[] = dummyPayments.filter(
   p => p.paymentMode === 'cheque' && p.status === 'failed'
 )
 
-// ============================================================================
 // EXPORT ALL
-// ============================================================================
 
 export default {
   dummyPayments,

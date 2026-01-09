@@ -1,7 +1,7 @@
-// ============================================================================
+//
 // FILE: src/hooks/customer/useCustomers.ts
 // Combined Hook for Customer Management
-// ============================================================================
+//
 
 import { useMemo } from 'react'
 import {

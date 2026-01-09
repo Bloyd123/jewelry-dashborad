@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/FilterBar/FilterBar.tsx
 // Generic Filter Container for All Modules
-// ============================================================================
 
 import * as React from 'react'
 import { X } from 'lucide-react'

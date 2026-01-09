@@ -1,13 +1,9 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTable.types.ts
 // DataTable TypeScript Types & Interfaces
-// ============================================================================
 
 import { ReactNode } from 'react'
 
-// ============================================================================
 // COLUMN DEFINITION
-// ============================================================================
 
 export interface DataTableColumn<T = any> {
   id: string
@@ -30,9 +26,7 @@ export interface DataTableColumn<T = any> {
   meta?: Record<string, any>
 }
 
-// ============================================================================
 // SORTING
-// ============================================================================
 
 export type SortDirection = 'asc' | 'desc' | null
 
@@ -48,9 +42,7 @@ export interface SortingConfig {
   onSortingChange?: (sorting: SortingState[]) => void
 }
 
-// ============================================================================
 // PAGINATION
-// ============================================================================
 
 export interface PaginationState {
   pageIndex: number
@@ -70,9 +62,7 @@ export interface PaginationConfig {
   showFirstLastButtons?: boolean
 }
 
-// ============================================================================
 // FILTERING
-// ============================================================================
 
 export interface FilterState {
   columnId: string
@@ -87,9 +77,7 @@ export interface FilteringConfig {
   onGlobalFilterChange?: (value: string) => void
 }
 
-// ============================================================================
 // SELECTION
-// ============================================================================
 
 export interface SelectionConfig<T = any> {
   enabled?: boolean
@@ -99,9 +87,7 @@ export interface SelectionConfig<T = any> {
   selectAllEnabled?: boolean
 }
 
-// ============================================================================
 // ROW ACTIONS
-// ============================================================================
 
 export interface RowAction<T = any> {
   label: string | ReactNode
@@ -120,9 +106,8 @@ export interface RowActionsConfig<T = any> {
   dropdownLabel?: string
   width?: string | number
 }
-// ============================================================================
+
 // LOADING & EMPTY STATES
-// ============================================================================
 
 export interface LoadingConfig {
   isLoading?: boolean
@@ -139,9 +124,7 @@ export interface EmptyStateConfig {
   }
 }
 
-// ============================================================================
 // STYLING & LAYOUT
-// ============================================================================
 
 export interface StyleConfig {
   variant?: 'default' | 'bordered' | 'striped' | 'compact'
@@ -163,9 +146,7 @@ export interface StyleConfig {
   cellClassName?: string
 }
 
-// ============================================================================
 // RESPONSIVE CONFIG
-// ============================================================================
 
 export interface ResponsiveConfig {
   enabled?: boolean
@@ -178,9 +159,7 @@ export interface ResponsiveConfig {
   }
 }
 
-// ============================================================================
 // MAIN DATATABLE PROPS
-// ============================================================================
 
 export interface DataTableProps<T = any> {
   // Required
@@ -226,9 +205,7 @@ export interface DataTableProps<T = any> {
   ariaLabel?: string
 }
 
-// ============================================================================
 // INTERNAL STATE (for component use)
-// ============================================================================
 
 export interface DataTableInternalState {
   sorting: SortingState[]
@@ -240,9 +217,7 @@ export interface DataTableInternalState {
   columnVisibility: Record<string, boolean>
 }
 
-// ============================================================================
 // HELPER TYPES
-// ============================================================================
 
 export type DataTableInstance<T = any> = {
   data: T[]

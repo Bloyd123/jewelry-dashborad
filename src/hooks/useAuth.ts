@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: hooks/auth.ts
 // Authentication Hooks - Custom hooks for auth operations
-// ============================================================================
 
 import { useCallback, useEffect, useMemo } from 'react'
 
@@ -47,9 +45,7 @@ import type {
   ForgetRequest,
 } from '@/types'
 
-// ============================================================================
 // MAIN AUTH HOOK
-// ============================================================================
 
 /**
  * Main authentication hook
@@ -59,9 +55,8 @@ export const useAuth = () => {
   const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
 
-  // ========================================
   // LOGIN
-  // ========================================
+
   const login = useCallback(
     async (credentials: LoginRequest) => {
       try {
@@ -74,9 +69,9 @@ export const useAuth = () => {
     },
     [dispatch]
   )
-  // ========================================
+
   // FORGOT PASSWORD
-  // ========================================
+
   const forgotPassword = useCallback(
     async (credentials: ForgetRequest) => {
       try {
@@ -90,9 +85,9 @@ export const useAuth = () => {
     },
     [dispatch]
   )
-  // ========================================
+
   // RESET PASSWORD
-  // ========================================
+
   const resetPassword = useCallback(
     async (credentials: ResetPasswordRequest) => {
       try {
@@ -104,9 +99,9 @@ export const useAuth = () => {
     },
     [dispatch]
   )
-  // ========================================
+
   // REGISTER
-  // ========================================
+
   const register = useCallback(
     async (userData: RegisterRequest) => {
       try {
@@ -119,9 +114,8 @@ export const useAuth = () => {
     [dispatch]
   )
 
-  // ========================================
   // LOGOUT
-  // ========================================
+
   const logout = useCallback(async () => {
     try {
       await dispatch(logoutAction()).unwrap()
@@ -133,9 +127,8 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
-  // ========================================
   // LOGOUT ALL DEVICES
-  // ========================================
+
   const logoutAll = useCallback(async () => {
     try {
       await dispatch(logoutAllAction()).unwrap()
@@ -145,9 +138,8 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
-  // ========================================
   // GET CURRENT USER
-  // ========================================
+
   const getUser = useCallback(async () => {
     try {
       const result = await dispatch(getCurrentUser()).unwrap()
@@ -157,9 +149,8 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
-  // ========================================
   // UPDATE PROFILE
-  // ========================================
+
   const updateProfile = useCallback(
     async (updates: UpdateProfileRequest) => {
       try {
@@ -172,9 +163,8 @@ export const useAuth = () => {
     [dispatch]
   )
 
-  // ========================================
   // CHANGE PASSWORD
-  // ========================================
+
   const changePassword = useCallback(
     async (data: ChangePasswordRequest) => {
       try {
@@ -187,9 +177,8 @@ export const useAuth = () => {
     [dispatch]
   )
 
-  // ========================================
   // REFRESH TOKEN
-  // ========================================
+
   const refreshToken = useCallback(async () => {
     try {
       await dispatch(refreshTokenAction()).unwrap()
@@ -199,9 +188,8 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
-  // ========================================
   // INITIALIZE AUTH
-  // ========================================
+
   const initialize = useCallback(async () => {
     try {
       await dispatch(initializeAuth()).unwrap()
@@ -211,9 +199,8 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
-  // ========================================
   // SHOP MANAGEMENT
-  // ========================================
+
   const switchShop = useCallback(
     (shopId: string) => {
       dispatch(setCurrentShop(shopId))
@@ -225,16 +212,14 @@ export const useAuth = () => {
     dispatch(clearCurrentShop())
   }, [dispatch])
 
-  // ========================================
   // ACTIVITY TRACKING
-  // ========================================
+
   const trackActivity = useCallback(() => {
     dispatch(updateLastActivity())
   }, [dispatch])
 
-  // ========================================
   // ERROR HANDLING
-  // ========================================
+
   const clearAuthError = useCallback(() => {
     dispatch(clearError())
   }, [dispatch])
@@ -246,9 +231,8 @@ export const useAuth = () => {
     [dispatch]
   )
 
-  // ========================================
   // TOKEN UTILITIES
-  // ========================================
+
   const checkTokenValidity = useCallback(() => {
     return tokenService.isAccessTokenValid()
   }, [])
@@ -292,9 +276,7 @@ export const useAuth = () => {
   }
 }
 
-// ============================================================================
 // SIMPLIFIED HOOKS
-// ============================================================================
 
 /**
  * Check if user is authenticated
@@ -394,9 +376,7 @@ export const useAuthError = () => {
   return useAppSelector(selectError)
 }
 
-// ============================================================================
 // COMPOSITE HOOKS
-// ============================================================================
 
 /**
  * Hook for login form
@@ -596,8 +576,6 @@ export const usePermissionCheck = () => {
   return { can, canAny, canAll, permissions }
 }
 
-// ============================================================================
 // DEFAULT EXPORT
-// ============================================================================
 
 export default useAuth

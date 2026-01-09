@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/index.ts
 // Main Filter Components Barrel Export
-// ============================================================================
 
 export { FilterBar } from './FilterBar'
 export type { FilterBarProps } from './FilterBar'

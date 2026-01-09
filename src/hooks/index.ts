@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: hooks/index.ts
 // Hooks Exports
-// ============================================================================
 
 export { useSidebar } from './useSidebar'
 export { useMediaQuery } from './useMediaQuery'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/Enable2FAModal.tsx
 // Enable 2FA Modal - Main Container with Step Navigation
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
 import { enable2FA, verify2FA } from '@/store/slices/authSlice'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Enable2FAModalProps {
   open: boolean
@@ -26,9 +22,7 @@ export interface Enable2FAModalProps {
 
 type Step = 1 | 2 | 3 | 4
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
   open,
@@ -37,61 +31,57 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-const { handleError } = useErrorHandler()
-const loading = useAppSelector(state => state.auth.isLoading)
+  const { handleError } = useErrorHandler()
+  const loading = useAppSelector(state => state.auth.isLoading)
 
+  const [step, setStep] = useState<Step>(1)
+  const [error, setError] = useState<string | null>(null)
+  const [qrCode, setQrCode] = useState<string>('')
+  const [secret, setSecret] = useState<string>('')
+  const [backupCodes, setBackupCodes] = useState<string[]>([])
+  const [verificationCode, setVerificationCode] = useState('')
 
-const [step, setStep] = useState<Step>(1)
-const [error, setError] = useState<string | null>(null)
-const [qrCode, setQrCode] = useState<string>('')
-const [secret, setSecret] = useState<string>('')
-const [backupCodes, setBackupCodes] = useState<string[]>([])
-const [verificationCode, setVerificationCode] = useState('')
-
-  // ========================================================================
   // STEP 1 HANDLERS
-  // ========================================================================
-const handleStep1Next = async () => {
-  setError(null)
-  try {
-    const result = await dispatch(enable2FA()).unwrap()
-    setQrCode(result.qrCodeDataURL)
-    setSecret(result.secret)
-    setStep(2)
-  } catch (err: any) {
-    handleError(err, (errors) => {
-      setError(Object.values(errors)[0] as string)
-    })
-  }
-}
 
-// 🆕 REPLACE handleStep3Verify
-const handleStep3Verify = async () => {
-  if (verificationCode.length !== 6) {
-    setError('Please enter a 6-digit code')
-    return
+  const handleStep1Next = async () => {
+    setError(null)
+    try {
+      const result = await dispatch(enable2FA()).unwrap()
+      setQrCode(result.qrCodeDataURL)
+      setSecret(result.secret)
+      setStep(2)
+    } catch (err: any) {
+      handleError(err, errors => {
+        setError(Object.values(errors)[0] as string)
+      })
+    }
   }
-  
-  setError(null)
-  try {
-    const result = await dispatch(verify2FA(verificationCode)).unwrap()
-    setBackupCodes(result.backupCodes)
-    setStep(4)
-  } catch (err: any) {
-    handleError(err, (errors) => {
-      setError(Object.values(errors)[0] as string)
-    })
+
+  // 🆕 REPLACE handleStep3Verify
+  const handleStep3Verify = async () => {
+    if (verificationCode.length !== 6) {
+      setError('Please enter a 6-digit code')
+      return
+    }
+
+    setError(null)
+    try {
+      const result = await dispatch(verify2FA(verificationCode)).unwrap()
+      setBackupCodes(result.backupCodes)
+      setStep(4)
+    } catch (err: any) {
+      handleError(err, errors => {
+        setError(Object.values(errors)[0] as string)
+      })
+    }
   }
-}
 
   const handleStep1Cancel = () => {
     onOpenChange(false)
     resetState()
   }
 
-  // ========================================================================
   // STEP 2 HANDLERS
-  // ========================================================================
 
   const handleStep2Next = () => {
     setStep(3)
@@ -103,18 +93,14 @@ const handleStep3Verify = async () => {
     setError(null)
   }
 
-  // ========================================================================
   // STEP 3 HANDLERS
-  // ========================================================================
 
   const handleStep3Back = () => {
     setStep(2)
     setError(null)
   }
 
-  // ========================================================================
   // STEP 4 HANDLERS
-  // ========================================================================
 
   const handleStep4Complete = () => {
     onOpenChange(false)
@@ -122,9 +108,7 @@ const handleStep3Verify = async () => {
     resetState()
   }
 
-  // ========================================================================
   // HELPERS
-  // ========================================================================
 
   const resetState = () => {
     setTimeout(() => {
@@ -150,9 +134,7 @@ const handleStep3Verify = async () => {
     }
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <Modal

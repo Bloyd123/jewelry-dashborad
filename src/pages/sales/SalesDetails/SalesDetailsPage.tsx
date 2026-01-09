@@ -1,12 +1,9 @@
-// ============================================================================
 // FILE: src/pages/Sales/SalesDetailsPage.tsx
 // Sales Details Page Component
-// ============================================================================
 
 import React, { useState } from 'react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import OverviewTab from //   DocumentsTab, //   PaymentsTab,
-//   HistoryTab,
+import OverviewTab from //   HistoryTab, //   DocumentsTab, //   PaymentsTab,
 '@/components/sales/SalesDetailPage/tabs/OverviewTab'
 import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
 import PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
@@ -15,9 +12,7 @@ import DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
 
 import { dummySales } from '../data'
 
-// ============================================================================
 // SALES DETAILS PAGE COMPONENT
-// ============================================================================
 
 export const SalesDetailsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview')

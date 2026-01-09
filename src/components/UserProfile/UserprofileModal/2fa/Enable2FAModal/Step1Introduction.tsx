@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/Step1Introduction.tsx
 // Step 1: Introduction & How It Works
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { Shield, Download, Smartphone, Key, CheckCircle } from 'lucide-react'
@@ -10,9 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Step1IntroductionProps {
   onNext: () => void
@@ -21,9 +17,7 @@ export interface Step1IntroductionProps {
   error?: string | null
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Step1Introduction: React.FC<Step1IntroductionProps> = ({
   onNext,
@@ -51,7 +45,7 @@ export const Step1Introduction: React.FC<Step1IntroductionProps> = ({
       <ModalBody className="space-y-6">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
+          <div className="bg-accent/10 flex h-16 w-16 items-center justify-center rounded-full">
             <Shield className="h-8 w-8 text-accent" />
           </div>
         </div>
@@ -90,7 +84,7 @@ export const Step1Introduction: React.FC<Step1IntroductionProps> = ({
             {t('auth.2fa.recommendedApps')}
           </h4>
           <div className="grid grid-cols-3 gap-2">
-            {recommendedApps.map((app) => (
+            {recommendedApps.map(app => (
               <div
                 key={app}
                 className="rounded-lg border border-border-primary bg-bg-secondary px-3 py-2 text-center transition-colors hover:bg-bg-tertiary"

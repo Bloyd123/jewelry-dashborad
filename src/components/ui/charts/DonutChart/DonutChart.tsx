@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/DonutChart/DonutChart.tsx
 // Donut Chart (Pie Chart with innerRadius)
-// ============================================================================
 
 import * as React from 'react'
 import { PieChart, type PieChartProps } from '../PieChart'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTableRow.tsx
 // DataTable Row Component
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,9 +14,7 @@ import {
 import { Button } from '@/components/ui/button'
 import type { DataTableColumn, RowAction } from './DataTable.types'
 
-// ============================================================================
 // ROW CELL PROPS
-// ============================================================================
 
 interface DataTableCellProps<T = any> {
   row: T
@@ -28,9 +24,7 @@ interface DataTableCellProps<T = any> {
   className?: string
 }
 
-// ============================================================================
 // ROW CELL COMPONENT
-// ============================================================================
 
 export const DataTableCell = <T,>({
   row,
@@ -80,9 +74,7 @@ export const DataTableCell = <T,>({
   )
 }
 
-// ============================================================================
 // ROW ACTIONS PROPS
-// ============================================================================
 
 interface DataTableActionsProps<T = any> {
   row: T
@@ -90,9 +82,7 @@ interface DataTableActionsProps<T = any> {
   dropdownLabel?: string
 }
 
-// ============================================================================
 // ROW ACTIONS COMPONENT
-// ============================================================================
 
 export const DataTableActions = <T,>({
   row,
@@ -161,9 +151,7 @@ export const DataTableActions = <T,>({
   )
 }
 
-// ============================================================================
 // ROW PROPS
-// ============================================================================
 
 interface DataTableRowProps<T = any> {
   row: T
@@ -188,9 +176,7 @@ interface DataTableRowProps<T = any> {
   renderExpanded?: (row: T) => React.ReactNode
 }
 
-// ============================================================================
 // ROW COMPONENT
-// ============================================================================
 
 export const DataTableRow = <T,>({
   row,

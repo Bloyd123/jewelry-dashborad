@@ -1,7 +1,5 @@
-// ============================================================================
 // Mini-Step 7.5: Modal Component (Theme-Aware)
 // FILE: src/components/common/Modal.tsx
-// ============================================================================
 
 import React, { ReactNode, useEffect, useRef } from 'react'
 

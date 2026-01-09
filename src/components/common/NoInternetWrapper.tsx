@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/common/NoInternetWrapper.tsx
 // Wrapper Component to Check Internet Connection
-// ============================================================================
 
 import { useState, useEffect, ReactNode } from 'react'
 import { NoInternet } from './NoInternet'

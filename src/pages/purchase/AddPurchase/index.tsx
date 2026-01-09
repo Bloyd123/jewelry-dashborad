@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/purchase/AddPurchase/index.tsx
 // Add/Edit Purchase Page
-// ============================================================================
 
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -13,9 +11,8 @@ import type { IPurchase } from '@/types/purchase.types'
 import type { PurchaseFormData } from '@/components/purchase/PurchaseForm/PurchaseForm.types'
 import { dummyPurchases } from '../mock.data'
 
-// ============================================================================
 // HELPER: Convert Purchase to Form Data
-// ============================================================================
+
 const convertPurchaseToFormData = (
   purchase: IPurchase
 ): Partial<PurchaseFormData> => {
@@ -58,9 +55,8 @@ const convertPurchaseToFormData = (
   }
 }
 
-// ============================================================================
 // PAGE COMPONENT
-// ============================================================================
+
 export default function AddPurchasePage() {
   const navigate = useNavigate()
   const { purchaseId } = useParams()
@@ -70,9 +66,8 @@ export default function AddPurchasePage() {
   const currentShopId = useAppSelector(state => state.auth.currentShop)
   const shopId = currentShopId || 'SHOP001'
 
-  // ============================================================================
   // OPTION 1: Using Mock Data (Current Implementation)
-  // ============================================================================
+
   const mockPurchase = useMemo(() => {
     if (!isEditMode || !purchaseId) return undefined
     return dummyPurchases.find(p => p._id === purchaseId)
@@ -83,10 +78,9 @@ export default function AddPurchasePage() {
     return convertPurchaseToFormData(mockPurchase)
   }, [mockPurchase])
 
-  // ============================================================================
   // OPTION 2: Using RTK Query (For Future Integration)
   // Uncomment this when API is ready
-  // ============================================================================
+
   /*
   const { data: purchaseData, isLoading } = useGetPurchaseQuery(
     { shopId: currentShopId!, purchaseId: purchaseId! },

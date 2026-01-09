@@ -1,13 +1,15 @@
-
 // FILE: components/auth/login/components/Login2FAStep.tsx
 // Two-Factor Authentication Step for Login
-
 
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Shield, ArrowLeft, Key } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
-import { verify2FALogin, verifyBackupCodeLogin, setRequires2FA } from '@/store/slices/authSlice'
+import {
+  verify2FALogin,
+  verifyBackupCodeLogin,
+  setRequires2FA,
+} from '@/store/slices/authSlice'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { Button } from '@/components/ui/button'
 import { TwoFactorCodeInput } from '@/components/UserProfile/UserprofileModal/2fa/TwoFactorCodeInput'
@@ -19,10 +21,10 @@ export const Login2FAStep: React.FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
-  
+
   const loading = useAppSelector(state => state.auth.isLoading)
   const tempToken = useAppSelector(state => state.auth.tempToken)
-  
+
   const [mode, setMode] = useState<'authenticator' | 'backup'>('authenticator')
   const [code, setCode] = useState('')
   const [backupCode, setBackupCode] = useState('')
@@ -42,7 +44,7 @@ export const Login2FAStep: React.FC = () => {
 
   const handleVerifyAuthenticator = async () => {
     if (code.length !== 6 || !tempToken || hasCalledRef.current) return
-    
+
     hasCalledRef.current = true
     setError(null)
 
@@ -51,7 +53,7 @@ export const Login2FAStep: React.FC = () => {
       // Success - Redux will handle auth state
     } catch (err: any) {
       hasCalledRef.current = false
-      handleError(err, (errors) => {
+      handleError(err, errors => {
         setError(Object.values(errors)[0] as string)
       })
     }
@@ -59,14 +61,14 @@ export const Login2FAStep: React.FC = () => {
 
   const handleVerifyBackup = async () => {
     if (backupCode.length !== 14 || !tempToken) return
-    
+
     setError(null)
 
     try {
       await dispatch(verifyBackupCodeLogin({ tempToken, backupCode })).unwrap()
       // Success - Redux will handle auth state
     } catch (err: any) {
-      handleError(err, (errors) => {
+      handleError(err, errors => {
         setError(Object.values(errors)[0] as string)
       })
     }
@@ -95,11 +97,11 @@ export const Login2FAStep: React.FC = () => {
     <div className="w-full max-w-md">
       {/* Header */}
       <div className="mb-8 text-center">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
+        <div className="bg-accent/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
           <Shield className="h-8 w-8 text-accent" />
         </div>
         <h2 className="mb-2 text-2xl font-bold text-text-primary">
-          {mode === 'authenticator' 
+          {mode === 'authenticator'
             ? t('auth.2fa.twoFactorVerification')
             : t('auth.2fa.useBackupCode')}
         </h2>

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/switch.tsx
 // Theme-based Switch Component (Radix UI + Tailwind CSS Variables)
-// ============================================================================
 
 import * as React from 'react'
 import * as SwitchPrimitives from '@radix-ui/react-switch'

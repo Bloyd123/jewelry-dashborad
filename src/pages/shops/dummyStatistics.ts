@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/data/dummyStatistics.ts
 // Dummy Statistics Data for Shop Dashboard
-// ============================================================================
 
 export interface ShopStatistics {
   totalSales: {
@@ -35,9 +33,7 @@ export interface ShopStatistics {
   }[]
 }
 
-// ============================================================================
 // DUMMY STATISTICS DATA
-// ============================================================================
 
 export const dummyShopStatistics: ShopStatistics = {
   // Total Sales Card
@@ -94,9 +90,7 @@ export const dummyShopStatistics: ShopStatistics = {
   ],
 }
 
-// ============================================================================
 // HELPER FUNCTION - Format Currency
-// ============================================================================
 
 export const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {
@@ -106,21 +100,16 @@ export const formatCurrency = (amount: number): string => {
   }).format(amount)
 }
 
-// ============================================================================
 // HELPER FUNCTION - Format Number with Commas
-// ============================================================================
 
 export const formatNumber = (num: number): string => {
   return new Intl.NumberFormat('en-IN').format(num)
 }
-// ============================================================================
+
 // FILE: src/components/shops/statistics/statistics.mock.ts
 // Mock Data for Shop Statistics Dashboard
-// ============================================================================
 
-// ============================================================================
 // SALES TREND DATA (Last 6 Months)
-// ============================================================================
 
 export const mockSalesTrendData = [
   { month: 'Jul', sales: 3200000 },
@@ -131,9 +120,7 @@ export const mockSalesTrendData = [
   { month: 'Dec', sales: 4523450 },
 ]
 
-// ============================================================================
 // REVENUE TREND DATA (Revenue vs Expenses vs Profit)
-// ============================================================================
 
 export const mockRevenueTrendData = [
   { month: 'Jul', revenue: 3200000, expenses: 2400000, profit: 800000 },
@@ -144,9 +131,7 @@ export const mockRevenueTrendData = [
   { month: 'Dec', revenue: 4523450, expenses: 3100000, profit: 1423450 },
 ]
 
-// ============================================================================
 // INVENTORY DATA
-// ============================================================================
 
 export const mockInventoryData = {
   totalProducts: 2456,
@@ -154,9 +139,7 @@ export const mockInventoryData = {
   lowStock: 23,
 }
 
-// ============================================================================
 // TOP PRODUCTS DATA
-// ============================================================================
 
 export const mockTopProducts = [
   {
@@ -206,9 +189,7 @@ export const mockTopProducts = [
   },
 ]
 
-// ============================================================================
 // SALES BY CATEGORY DATA
-// ============================================================================
 
 export const mockSalesByCategoryData = [
   { name: 'Gold Jewelry', value: 1850000 },
@@ -218,9 +199,7 @@ export const mockSalesByCategoryData = [
   { name: 'Others', value: 173450 },
 ]
 
-// ============================================================================
 // SALES BY PAYMENT METHOD DATA
-// ============================================================================
 
 export const mockSalesByPaymentMethodData = [
   { name: 'Cash', value: 2100000 },
@@ -229,9 +208,7 @@ export const mockSalesByPaymentMethodData = [
   { name: 'Bank Transfer', value: 173450 },
 ]
 
-// ============================================================================
 // MONTHLY COMPARISON DATA (Current Year vs Last Year)
-// ============================================================================
 
 export const mockMonthlyComparisonData = [
   { month: 'Jan', currentYear: 3000000, lastYear: 2800000 },
@@ -248,9 +225,7 @@ export const mockMonthlyComparisonData = [
   { month: 'Dec', currentYear: 4523450, lastYear: 4100000 },
 ]
 
-// ============================================================================
 // RECENT TRANSACTIONS DATA
-// ============================================================================
 
 export const mockRecentTransactions = [
   {
@@ -327,9 +302,7 @@ export const mockRecentTransactions = [
   },
 ]
 
-// ============================================================================
 // EXPORT ALL MOCK DATA
-// ============================================================================
 
 export default {
   mockSalesTrendData,

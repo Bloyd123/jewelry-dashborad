@@ -15,7 +15,7 @@ const LoginDesktop: React.FC = () => {
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Image Section */}
-      
+
       <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
           src={loginImage}
@@ -28,44 +28,44 @@ const LoginDesktop: React.FC = () => {
 
       {/* Right Side - Login Form Section */}
       <div className="flex w-full items-center justify-center bg-stone-50 px-8 py-12 transition-colors duration-200 dark:bg-gray-900 lg:w-1/2">
-      {requires2FA ? (
+        {requires2FA ? (
           // 🆕 Show 2FA verification step
           <Login2FAStep />
         ) : (
-        <div className="w-full max-w-md">
-          {/* Logo & Brand Section */}
-          <div className="mb-8 flex items-center justify-center">
-            <div className="flex flex-col items-center">
-              {/* Brand Name */}
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                KaratLog
-              </h1>
-              {/* Welcome Header */}
-              <div className="mb-10 text-center">
-                <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
-                  Welcome Back
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Log in to manage your business.
-                </p>
+          <div className="w-full max-w-md">
+            {/* Logo & Brand Section */}
+            <div className="mb-8 flex items-center justify-center">
+              <div className="flex flex-col items-center">
+                {/* Brand Name */}
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  KaratLog
+                </h1>
+                {/* Welcome Header */}
+                <div className="mb-10 text-center">
+                  <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+                    Welcome Back
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Log in to manage your business.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Login Form */}
-          <div className="rounded-2xl p-8 transition-colors duration-200 dark:bg-gray-800">
-            <LoginForm />
-          </div>
+            {/* Login Form */}
+            <div className="rounded-2xl p-8 transition-colors duration-200 dark:bg-gray-800">
+              <LoginForm />
+            </div>
 
-          {/* Footer */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights
-              reserved.
-            </p>
+            {/* Footer */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights
+                reserved.
+              </p>
+            </div>
           </div>
-        </div>
-            )}
+        )}
       </div>
     </div>
   )

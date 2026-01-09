@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/select.tsx
 // Theme-based Select Component
-// ============================================================================
 
 import * as React from 'react'
 import * as SelectPrimitive from '@radix-ui/react-select'

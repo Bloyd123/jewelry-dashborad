@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/Step4BackupCodes.tsx
 // Step 4: Save Backup Codes
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,18 +9,14 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { BackupCodesDisplay } from '../BackupCodesDisplay'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Step4BackupCodesProps {
   codes: string[]
   onComplete: () => void
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Step4BackupCodes: React.FC<Step4BackupCodesProps> = ({
   codes,
@@ -66,7 +60,7 @@ export const Step4BackupCodes: React.FC<Step4BackupCodesProps> = ({
             <input
               type="checkbox"
               checked={savedConfirmed}
-              onChange={(e) => setSavedConfirmed(e.target.checked)}
+              onChange={e => setSavedConfirmed(e.target.checked)}
               className="mt-1 h-4 w-4 shrink-0 rounded border-border-primary text-accent transition-colors focus:ring-2 focus:ring-accent focus:ring-offset-2"
             />
             <span className="select-none text-sm text-text-secondary">
@@ -78,9 +72,7 @@ export const Step4BackupCodes: React.FC<Step4BackupCodesProps> = ({
         {/* Additional Info */}
         <Alert variant="info">
           <AlertDescription>
-            <p className="text-xs">
-              {t('auth.2fa.backupCodesInfo')}
-            </p>
+            <p className="text-xs">{t('auth.2fa.backupCodesInfo')}</p>
           </AlertDescription>
         </Alert>
       </ModalBody>

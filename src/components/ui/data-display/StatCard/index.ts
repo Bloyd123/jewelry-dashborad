@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/StatCard/index.ts
 // Barrel Export for StatCard Components
-// ============================================================================
 
 export { StatCard } from './StatCard'
 export type {

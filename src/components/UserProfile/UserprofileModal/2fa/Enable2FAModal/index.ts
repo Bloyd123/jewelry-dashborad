@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Enable2FAModal/index.ts
 // Barrel Export for Enable2FAModal
-// ============================================================================
 
 export { Enable2FAModal } from './Enable2FAModal'
 export type { Enable2FAModalProps } from './Enable2FAModal'

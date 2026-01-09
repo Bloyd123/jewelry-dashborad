@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/hooks/customer/useCustomerFilters.ts
 // Custom Hook for Customer Filters
-// ============================================================================
 
 import { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'

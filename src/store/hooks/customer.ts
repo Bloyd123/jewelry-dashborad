@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/store/hooks/customer.ts
 // Customer-specific Redux hooks with selectors and utilities
-// ============================================================================
 
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -52,9 +50,7 @@ import {
 } from '@/store/slices/customerSlice'
 import type { CustomerType, MembershipTier } from '@/types'
 
-// ============================================================================
 // FILTER HOOKS
-// ============================================================================
 
 /**
  * Hook to get customer filters state
@@ -172,9 +168,7 @@ export const useCustomerFilters = () => {
   }
 }
 
-// ============================================================================
 // PAGINATION HOOKS
-// ============================================================================
 
 /**
  * Hook to get customer pagination state
@@ -236,9 +230,7 @@ export const useCustomerPagination = () => {
   }
 }
 
-// ============================================================================
 // SELECTION HOOKS
-// ============================================================================
 
 /**
  * Hook to get selected customer IDs
@@ -339,9 +331,7 @@ export const useCustomerSelection = () => {
   }
 }
 
-// ============================================================================
 // VIEW MODE HOOKS
-// ============================================================================
 
 /**
  * Hook to get current customer view mode
@@ -395,9 +385,7 @@ export const useCustomerViewSettings = () => {
   }
 }
 
-// ============================================================================
 // EXPORT HOOKS
-// ============================================================================
 
 /**
  * Hook to check if export is in progress
@@ -430,9 +418,7 @@ export const useCustomerExport = () => {
   }
 }
 
-// ============================================================================
 // FORM HOOKS
-// ============================================================================
 
 /**
  * Hook to get customer form state
@@ -500,9 +486,7 @@ export const useCustomerForm = () => {
   }
 }
 
-// ============================================================================
 // UTILITY HOOKS
-// ============================================================================
 
 /**
  * Hook to reset all customer state

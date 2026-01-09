@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/products/ProductDetailsPage.tsx
 // Product Details Page Component - Complete with All Tabs
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,9 +14,7 @@ import {
 import { dummyProducts } from '../mock.data'
 import type { Product } from '@/types/product.types'
 
-// ============================================================================
 // PRODUCT DETAILS PAGE COMPONENT
-// ============================================================================
 
 export const ProductDetailsPage: React.FC = () => {
   const { t } = useTranslation()

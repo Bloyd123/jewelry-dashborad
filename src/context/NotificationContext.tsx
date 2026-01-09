@@ -1,7 +1,5 @@
-// ============================================================================
 // Mini-Step 6.1: Notification Context
 // FILE: src/context/NotificationContext.tsx
-// ============================================================================
 
 import React, {
   createContext,

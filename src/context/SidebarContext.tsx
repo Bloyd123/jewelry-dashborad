@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: context/SidebarContext.tsx
 // Sidebar Context - Manage Sidebar State
-// ============================================================================
 
 import { createContext, useContext, useState, ReactNode } from 'react'
 

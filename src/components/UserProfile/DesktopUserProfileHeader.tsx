@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/DesktopUserProfileHeader.tsx
 // Desktop User Profile Header Component
-// ============================================================================
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,9 +24,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import { dummyUser } from '@/pages/user/data'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface DesktopUserProfileHeaderProps {
   activeTab?: string
@@ -37,9 +33,7 @@ interface DesktopUserProfileHeaderProps {
   onSettingsClick?: () => void
 }
 
-// ============================================================================
 // DESKTOP USER PROFILE HEADER COMPONENT
-// ============================================================================
 
 export const DesktopUserProfileHeader: React.FC<
   DesktopUserProfileHeaderProps

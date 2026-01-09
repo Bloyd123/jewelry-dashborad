@@ -1,6 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Modal/ModalBody.tsx
-// ============================================================================
+
 import { cn } from '@/lib/utils'
 
 export interface ModalBodyProps {

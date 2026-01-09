@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/payment/PaymentFormPage.tsx
 // Usage Example - Payment Form Page
-// ============================================================================
 
 import { useNavigate, useParams } from 'react-router-dom'
 import { PaymentForm } from '@/components/payments/PaymentForm'

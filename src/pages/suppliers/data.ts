@@ -1,6 +1,4 @@
-// ============================================================================
 // SUPPLIER MODULE - COMPREHENSIVE DUMMY DATA
-// ============================================================================
 
 import {
   Supplier,
@@ -12,9 +10,7 @@ import {
   AccountType,
 } from '@/types/supplier.types'
 
-// ============================================================================
 // SINGLE SUPPLIERS (Individual detailed data)
-// ============================================================================
 
 export const dummySupplier: Supplier = {
   _id: '6745a8b3c9d2e1f4a5b6c7d8',
@@ -137,9 +133,7 @@ export const dummySupplier: Supplier = {
   updatedAt: '2024-12-15T11:00:00Z',
 }
 
-// ============================================================================
 // MULTIPLE SUPPLIERS (List data)
-// ============================================================================
 
 export const dummySuppliers: Supplier[] = [
   // 1. Gold Supplier (Preferred)
@@ -665,9 +659,7 @@ export const dummySuppliers: Supplier[] = [
   },
 ]
 
-// ============================================================================
 // SUPPLIER STATISTICS
-// ============================================================================
 
 export const dummySupplierStats = {
   totalSuppliers: 10,
@@ -679,9 +671,7 @@ export const dummySupplierStats = {
   totalAdvance: 125000,
 }
 
-// ============================================================================
 // TOP SUPPLIERS
-// ============================================================================
 
 export const dummyTopSuppliers: Supplier[] = [
   dummySuppliers[0], // Rajesh Gold - 15M
@@ -691,9 +681,7 @@ export const dummyTopSuppliers: Supplier[] = [
   dummySuppliers[3], // Royal Gems - 2.8M
 ]
 
-// ============================================================================
 // FILTER OPTIONS (for dropdowns)
-// ============================================================================
 
 export const supplierTypeOptions = [
   { value: SupplierType.MANUFACTURER, label: 'Manufacturer' },
@@ -726,9 +714,7 @@ export const paymentTermsOptions = [
   { value: PaymentTerms.CUSTOM, label: 'Custom Terms' },
 ]
 
-// ============================================================================
 // EMPTY SUPPLIER TEMPLATE (for forms)
-// ============================================================================
 
 export const emptySupplier: Partial<Supplier> = {
   businessName: '',

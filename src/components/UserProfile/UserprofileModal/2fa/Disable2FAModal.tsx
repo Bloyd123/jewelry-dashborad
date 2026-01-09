@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/Disable2FAModal.tsx
 // Disable 2FA Confirmation Modal
-// ============================================================================
 
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
@@ -9,7 +7,12 @@ import { disable2FA } from '@/store/slices/authSlice'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
 import { AlertTriangle, Eye, EyeOff } from 'lucide-react'
-import { Modal, ModalBody, ModalHeader, ModalFooter } from '@/components/ui/overlay/Modal'
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter,
+} from '@/components/ui/overlay/Modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,9 +20,7 @@ import { Alert, AlertDescription } from '@/components/common/Alert'
 import { TwoFactorCodeInput } from './TwoFactorCodeInput'
 import { Loader } from '@/components/ui/loader/Loader'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface Disable2FAModalProps {
   open: boolean
@@ -27,9 +28,7 @@ export interface Disable2FAModalProps {
   onSuccess?: () => void
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
   open,
@@ -38,8 +37,8 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-const { handleError } = useErrorHandler()
-const loading = useAppSelector(state => state.auth.is2FALoading)
+  const { handleError } = useErrorHandler()
+  const loading = useAppSelector(state => state.auth.is2FALoading)
 
   // State
   const [password, setPassword] = useState('')
@@ -47,44 +46,42 @@ const loading = useAppSelector(state => state.auth.is2FALoading)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
-const handleDisable = async () => {
-  setError(null)
-  
-  // Validation
-  if (!password) {
-    setError('Password is required')
-    return
-  }
-  if (code.length !== 6) {
-    setError('Please enter a 6-digit code')
-    return
-  }
+  const handleDisable = async () => {
+    setError(null)
 
-  try {
-    await dispatch(disable2FA({ password, token: code })).unwrap()
-    onOpenChange(false)
-    onSuccess?.()
-    
-    // Reset state
-    setTimeout(() => {
-      setPassword('')
-      setCode('')
-      setError(null)
-    }, 300)
-  } catch (err: any) {
-    handleError(err, (errors) => {
-      setError(Object.values(errors)[0] as string)
-    })
+    // Validation
+    if (!password) {
+      setError('Password is required')
+      return
+    }
+    if (code.length !== 6) {
+      setError('Please enter a 6-digit code')
+      return
+    }
+
+    try {
+      await dispatch(disable2FA({ password, token: code })).unwrap()
+      onOpenChange(false)
+      onSuccess?.()
+
+      // Reset state
+      setTimeout(() => {
+        setPassword('')
+        setCode('')
+        setError(null)
+      }, 300)
+    } catch (err: any) {
+      handleError(err, errors => {
+        setError(Object.values(errors)[0] as string)
+      })
+    }
   }
-}
 
   const handleCancel = () => {
     onOpenChange(false)
-    
+
     // Reset state
     setTimeout(() => {
       setPassword('')
@@ -93,9 +90,7 @@ const handleDisable = async () => {
     }, 300)
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <Modal
@@ -112,7 +107,9 @@ const handleDisable = async () => {
           <AlertTriangle className="h-5 w-5" />
           <AlertDescription>
             <p className="font-medium">{t('auth.2fa.disableWarningTitle')}</p>
-            <p className="mt-1 text-xs">{t('auth.2fa.disableWarningMessage')}</p>
+            <p className="mt-1 text-xs">
+              {t('auth.2fa.disableWarningMessage')}
+            </p>
           </AlertDescription>
         </Alert>
 
@@ -131,7 +128,7 @@ const handleDisable = async () => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               placeholder={t('auth.2fa.enterPassword')}
               className="pr-10"
             />

@@ -1,14 +1,10 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/StatCard/StatCardSkeleton.tsx
 // Loading Skeleton for StatCard
-// ============================================================================
 
 import * as React from 'react'
 import { cn } from '@/lib/utils'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface StatCardSkeletonProps {
   size?: 'sm' | 'md' | 'lg'
@@ -18,9 +14,7 @@ export interface StatCardSkeletonProps {
   className?: string
 }
 
-// ============================================================================
 // SIZE STYLES
-// ============================================================================
 
 const sizeStyles: Record<
   string,
@@ -43,9 +37,7 @@ const sizeStyles: Record<
   },
 }
 
-// ============================================================================
 // STATCARDSKELETON COMPONENT
-// ============================================================================
 
 export const StatCardSkeleton: React.FC<StatCardSkeletonProps> = ({
   size = 'md',

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/navigation/Breadcrumb/Breadcrumb.tsx
 // Theme-based Breadcrumb Component - Flexible & Responsive
-// ============================================================================
 
 import * as React from 'react'
 import { ChevronRight, Home, MoreHorizontal } from 'lucide-react'
@@ -15,9 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface BreadcrumbItem {
   label: string
@@ -34,9 +30,7 @@ export interface BreadcrumbProps {
   className?: string
 }
 
-// ============================================================================
 // BREADCRUMB COMPONENT
-// ============================================================================
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   items,
@@ -145,9 +139,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   )
 }
 
-// ============================================================================
 // BREADCRUMB ITEM COMPONENT
-// ============================================================================
 
 interface BreadcrumbItemComponentProps {
   item: BreadcrumbItem
@@ -196,9 +188,7 @@ const BreadcrumbItemComponent: React.FC<BreadcrumbItemComponentProps> = ({
   )
 }
 
-// ============================================================================
 // BREADCRUMB SEPARATOR
-// ============================================================================
 
 const BreadcrumbSeparator: React.FC<{ separator: React.ReactNode }> = ({
   separator,

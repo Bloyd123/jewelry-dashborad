@@ -1,11 +1,7 @@
-// ============================================================================
 // FILE: src/constants/messages.ts
 // All application messages - success, error, confirmation, info
-// ============================================================================
 
-// ============================================================================
 // AUTHENTICATION MESSAGES
-// ============================================================================
 
 export const AUTH_MESSAGES = {
   // Success
@@ -188,9 +184,7 @@ export const CUSTOMER_MESSAGES = {
   DOWNLOAD_PURCHASE_HISTORY: 'Download purchase history',
 } as const
 
-// ============================================================================
 // USER MANAGEMENT MESSAGES
-// ============================================================================
 
 export const USER_MESSAGES = {
   // Success
@@ -217,9 +211,7 @@ export const USER_MESSAGES = {
   SUSPEND_USER_CONFIRM: 'Are you sure you want to suspend this user?',
 } as const
 
-// ============================================================================
 // SALES MESSAGES
-// ============================================================================
 
 export const SALES_MESSAGES = {
   // Success
@@ -248,9 +240,7 @@ export const SALES_MESSAGES = {
   SEND_INVOICE_CONFIRM: 'Send invoice to customer via email?',
 } as const
 
-// ============================================================================
 // PURCHASE MESSAGES
-// ============================================================================
 
 export const PURCHASE_MESSAGES = {
   // Success
@@ -272,9 +262,7 @@ export const PURCHASE_MESSAGES = {
   CANCEL_PURCHASE_CONFIRM: 'Are you sure you want to cancel this purchase?',
 } as const
 
-// ============================================================================
 // INVENTORY MESSAGES
-// ============================================================================
 
 export const INVENTORY_MESSAGES = {
   // Success
@@ -306,9 +294,7 @@ export const INVENTORY_MESSAGES = {
   OUT_OF_STOCK_WARNING: 'Some products are out of stock.',
 } as const
 
-// ============================================================================
 // PARTY (CUSTOMER/SUPPLIER) MESSAGES
-// ============================================================================
 
 export const PARTY_MESSAGES = {
   // Success
@@ -333,9 +319,7 @@ export const PARTY_MESSAGES = {
   DELETE_SUPPLIER_CONFIRM: 'Are you sure you want to delete this supplier?',
 } as const
 
-// ============================================================================
 // SCHEME MESSAGES
-// ============================================================================
 
 export const SCHEME_MESSAGES = {
   // Success
@@ -357,9 +341,7 @@ export const SCHEME_MESSAGES = {
   CLOSE_SCHEME_CONFIRM: 'Are you sure you want to close this scheme?',
 } as const
 
-// ============================================================================
 // PAYMENT MESSAGES
-// ============================================================================
 
 export const PAYMENT_MESSAGES = {
   // Success
@@ -381,9 +363,7 @@ export const PAYMENT_MESSAGES = {
   PROCESS_REFUND_CONFIRM: 'Are you sure you want to process this refund?',
 } as const
 
-// ============================================================================
 // MASTER DATA MESSAGES
-// ============================================================================
 
 export const MASTER_MESSAGES = {
   // Success
@@ -408,9 +388,7 @@ export const MASTER_MESSAGES = {
   UPDATE_METAL_RATE_CONFIRM: 'Update metal rates for today?',
 } as const
 
-// ============================================================================
 // REPORT MESSAGES
-// ============================================================================
 
 export const REPORT_MESSAGES = {
   // Success
@@ -431,9 +409,7 @@ export const REPORT_MESSAGES = {
   REPORT_READY: 'Your report is ready for download.',
 } as const
 
-// ============================================================================
 // ORGANIZATION/SHOP MESSAGES
-// ============================================================================
 
 export const ORGANIZATION_MESSAGES = {
   // Success
@@ -461,9 +437,7 @@ export const ORGANIZATION_MESSAGES = {
   DELETE_SHOP_CONFIRM: 'Are you sure you want to delete this shop?',
 } as const
 
-// ============================================================================
 // GENERAL MESSAGES
-// ============================================================================
 
 export const GENERAL_MESSAGES = {
   // Success
@@ -503,9 +477,7 @@ export const GENERAL_MESSAGES = {
   UNDER_MAINTENANCE: 'System is under maintenance. Please try again later.',
 } as const
 
-// ============================================================================
 // VALIDATION MESSAGES
-// ============================================================================
 
 export const VALIDATION_MESSAGES = {
   // Required Fields
@@ -550,9 +522,7 @@ export const VALIDATION_MESSAGES = {
   PAST_DATE_NOT_ALLOWED: 'Past date is not allowed.',
 } as const
 
-// ============================================================================
 // NOTIFICATION MESSAGES
-// ============================================================================
 
 export const NOTIFICATION_MESSAGES = {
   NEW_SALE: 'New sale created',
@@ -565,9 +535,7 @@ export const NOTIFICATION_MESSAGES = {
   METAL_RATE_UPDATED: 'Metal rates updated',
 } as const
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Get confirmation message
@@ -611,9 +579,7 @@ export function getDuplicateMessage(field: string): string {
   return `${field} already exists.`
 }
 
-// ============================================================================
 // MESSAGE CATEGORIES (for easy access)
-// ============================================================================
 
 export const MESSAGES = {
   AUTH: AUTH_MESSAGES,
@@ -633,8 +599,6 @@ export const MESSAGES = {
   NOTIFICATION: NOTIFICATION_MESSAGES,
 } as const
 
-// ============================================================================
 // EXPORT ALL
-// ============================================================================
 
 export default MESSAGES

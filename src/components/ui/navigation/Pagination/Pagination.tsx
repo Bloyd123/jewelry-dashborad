@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/navigation/Pagination/Pagination.tsx
 // Theme-based Pagination Component - Flexible & Responsive
-// ============================================================================
 
 import * as React from 'react'
 import {
@@ -21,9 +19,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface PaginationProps {
   currentPage: number
@@ -48,9 +44,7 @@ export interface PaginationProps {
   className?: string
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 const range = (start: number, end: number): number[] => {
   const length = end - start + 1
@@ -101,9 +95,7 @@ const usePagination = (
   }, [currentPage, totalPages, siblingCount])
 }
 
-// ============================================================================
 // STYLES
-// ============================================================================
 
 const sizeStyles = {
   sm: {
@@ -133,9 +125,7 @@ const variantStyles = {
   },
 }
 
-// ============================================================================
 // PAGINATION COMPONENT
-// ============================================================================
 
 export const Pagination: React.FC<PaginationProps> = ({
   currentPage,
@@ -304,9 +294,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   )
 }
 
-// ============================================================================
 // PAGINATION BUTTON COMPONENT
-// ============================================================================
 
 interface PaginationButtonProps {
   onClick: () => void

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/PieChart/PieChart.tsx
 // Flexible Pie Chart Component
-// ============================================================================
 
 import * as React from 'react'
 import {

@@ -11,9 +11,7 @@ import { dummyShops } from '@/pages/shops/data'
 import { dummyShopStatistics } from '@/pages/shops/dummyStatistics'
 import type { ShopSettingsFormData } from '@/components/shop/ShopSettings'
 
-// ============================================================================
 // SHOP DETAILS PAGE COMPONENT
-// ============================================================================
 
 export const ShopDetailsPage: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)

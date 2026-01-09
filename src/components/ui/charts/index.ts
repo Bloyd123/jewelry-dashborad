@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/index.ts
 // Main Chart Barrel Export
-// ============================================================================
 
 export { LineChart } from './LineChart'
 export type { LineChartProps } from './LineChart'

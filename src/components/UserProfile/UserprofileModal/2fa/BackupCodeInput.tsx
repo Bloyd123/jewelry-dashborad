@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/BackupCodeInput.tsx
 // Backup Code Input Component (XXXX-XXXX-XXXX format)
-// ============================================================================
 
 import { useState, ChangeEvent, KeyboardEvent, ClipboardEvent } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,9 +7,7 @@ import { cn } from '@/lib/utils'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface BackupCodeInputProps {
   value: string
@@ -23,9 +19,7 @@ export interface BackupCodeInputProps {
   placeholder?: string
 }
 
-// ============================================================================
 // COMPONENT
-// ============================================================================
 
 export const BackupCodeInput: React.FC<BackupCodeInputProps> = ({
   value,
@@ -39,22 +33,18 @@ export const BackupCodeInput: React.FC<BackupCodeInputProps> = ({
   const { t } = useTranslation()
   const [focused, setFocused] = useState(false)
 
-  // ========================================================================
   // HELPERS
-  // ========================================================================
 
   const formatBackupCode = (input: string): string => {
     // Remove all non-alphanumeric characters
     const cleaned = input.toUpperCase().replace(/[^A-Z0-9]/g, '')
-    
+
     // Split into groups of 4 and join with dashes
     const groups = cleaned.match(/.{1,4}/g) || []
     return groups.join('-').slice(0, 14) // Max length: XXXX-XXXX-XXXX
   }
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled) return
@@ -81,9 +71,7 @@ export const BackupCodeInput: React.FC<BackupCodeInputProps> = ({
     onChange(formatted)
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   const isComplete = value.length === 14
   const showError = error && !focused
@@ -91,7 +79,7 @@ export const BackupCodeInput: React.FC<BackupCodeInputProps> = ({
   return (
     <div className="space-y-2">
       {label && <Label>{label}</Label>}
-      
+
       <div className="relative">
         <Input
           type="text"

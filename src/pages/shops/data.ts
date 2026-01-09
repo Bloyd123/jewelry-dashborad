@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/data/shopDummyData.ts
 // Dummy data for Shop module - 15 shops with realistic Indian jewelry shop data
-// ============================================================================
 
 import {
   Shop,
@@ -13,9 +11,7 @@ import {
   WeightUnit,
 } from '@/types'
 
-// ============================================================================
 // DUMMY SHOPS DATA
-// ============================================================================
 
 export const dummyShops: Shop[] = [
   {

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/data-display/DataTable/DataTableHeader.tsx
 // DataTable Header with Sorting Support
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { ArrowUp, ArrowDown, ChevronsUpDown } from 'lucide-react'
@@ -12,9 +10,7 @@ import type {
   SortDirection,
 } from './DataTable.types'
 
-// ============================================================================
 // HEADER CELL PROPS
-// ============================================================================
 
 interface DataTableHeaderCellProps<T = any> {
   column: DataTableColumn<T>
@@ -25,9 +21,7 @@ interface DataTableHeaderCellProps<T = any> {
   className?: string
 }
 
-// ============================================================================
 // HEADER CELL COMPONENT
-// ============================================================================
 
 export const DataTableHeaderCell = <T,>({
   column,
@@ -112,9 +106,7 @@ export const DataTableHeaderCell = <T,>({
   )
 }
 
-// ============================================================================
 // HEADER ROW PROPS
-// ============================================================================
 
 interface DataTableHeaderProps<T = any> {
   columns: DataTableColumn<T>[]
@@ -130,9 +122,7 @@ interface DataTableHeaderProps<T = any> {
   stickyHeader?: boolean
 }
 
-// ============================================================================
 // HEADER ROW COMPONENT
-// ============================================================================
 
 export const DataTableHeader = <T,>({
   columns,

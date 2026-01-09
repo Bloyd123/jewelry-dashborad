@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/CategoryFilter/CategoryFilter.tsx
 // Multi-level Category Filter
-// ============================================================================
 
 import * as React from 'react'
 import { ChevronRight } from 'lucide-react'

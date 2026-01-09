@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/PriceRangeFilter/PriceRangeFilter.tsx
 // Price/Amount Range Filter with Min-Max Inputs
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

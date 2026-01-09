@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/ShopAccessTab.tsx
 // Shop Access & Permissions Tab Component
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { Store, Shield, CheckCircle2 } from 'lucide-react'

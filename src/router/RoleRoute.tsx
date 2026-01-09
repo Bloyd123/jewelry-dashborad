@@ -9,9 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import { ShieldAlert, ArrowLeft } from 'lucide-react'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 interface RoleRouteProps {
   children: React.ReactNode
@@ -22,9 +20,7 @@ interface RoleRouteProps {
   showError?: boolean
 }
 
-// ============================================================================
 // ROLE ROUTE COMPONENT
-// ============================================================================
 
 export const RoleRoute: React.FC<RoleRouteProps> = ({
   children,
@@ -35,7 +31,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   showError = true,
 }) => {
   // ✅ FIXED: Access correct state properties
-  const { permissions, user } = useAppSelector((state) => state.auth)
+  const { permissions, user } = useAppSelector(state => state.auth)
 
   // If no permissions specified, allow access
   if (!permission && requiredPermissions.length === 0) {
@@ -55,13 +51,13 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   // Check single permission
   if (permission) {
     const hasPermission = permissions[permission] === true
-    
+
     if (!hasPermission) {
       console.warn(`[RoleRoute] Permission denied: ${permission}`, {
         role: user?.role,
-        hasPermission
+        hasPermission,
       })
-      
+
       return showError ? (
         <AccessDeniedError />
       ) : (
@@ -73,16 +69,16 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   // Check multiple permissions
   if (requiredPermissions.length > 0) {
     const checkPermissions = requireAll
-      ? requiredPermissions.every((perm) => permissions[perm] === true)
-      : requiredPermissions.some((perm) => permissions[perm] === true)
+      ? requiredPermissions.every(perm => permissions[perm] === true)
+      : requiredPermissions.some(perm => permissions[perm] === true)
 
     if (!checkPermissions) {
       console.warn('[RoleRoute] Multiple permissions check failed:', {
         required: requiredPermissions,
         requireAll,
-        role: user?.role
+        role: user?.role,
       })
-      
+
       return showError ? (
         <AccessDeniedError />
       ) : (
@@ -94,9 +90,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   return <>{children}</>
 }
 
-// ============================================================================
 // ACCESS DENIED ERROR COMPONENT
-// ============================================================================
 
 const AccessDeniedError: React.FC = () => {
   const { t } = useTranslation()
@@ -134,28 +128,24 @@ const AccessDeniedError: React.FC = () => {
   )
 }
 
-// ============================================================================
 // PERMISSION CHECKER HOOK
-// ============================================================================
 
 export const usePermission = () => {
   // ✅ FIXED: Access correct state properties
-  const { permissions, user, currentShopAccess } = useAppSelector((state) => state.auth)
+  const { permissions, user, currentShopAccess } = useAppSelector(
+    state => state.auth
+  )
 
   const hasPermission = (permission: string): boolean => {
     return permissions?.[permission] === true
   }
 
   const hasAnyPermission = (permissionList: string[]): boolean => {
-    return permissionList.some(
-      (perm) => permissions?.[perm] === true
-    )
+    return permissionList.some(perm => permissions?.[perm] === true)
   }
 
   const hasAllPermissions = (permissionList: string[]): boolean => {
-    return permissionList.every(
-      (perm) => permissions?.[perm] === true
-    )
+    return permissionList.every(perm => permissions?.[perm] === true)
   }
 
   const getRole = (): string | null => {

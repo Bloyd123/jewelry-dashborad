@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/dropdown-menu.tsx
 // Theme-based Dropdown Menu Component
-// ============================================================================
 
 import * as React from 'react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'

@@ -1,12 +1,11 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/SecurityTab.tsx
 // Security & Authentication Tab Component
-// ============================================================================
+
 import { validateChangePasswordForm } from '@/validators/changePasswordValidation'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useAuth } from '@/hooks/useAuth'
 import { useNotification } from '@/hooks/useNotification'
-import { useState,useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Lock,
@@ -30,10 +29,10 @@ import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { dummyUser } from '@/pages/user/data'
-import { 
-  Enable2FAModal, 
+import {
+  Enable2FAModal,
   Disable2FAModal,
-  BackupCodesDisplay 
+  BackupCodesDisplay,
 } from '@/components/UserProfile/UserprofileModal/2fa'
 import { useTwoFactorEnabled } from '@/store/hooks/auth'
 import { useAppSelector } from '@/store/hooks/base'
@@ -42,39 +41,38 @@ import { Eye, EyeOff } from 'lucide-react'
 export const SecurityTab = () => {
   const { t } = useTranslation()
   const twoFactorEnabled = useTwoFactorEnabled()
-const user = useAppSelector(state => state.auth.user)
-const [showEnableModal, setShowEnableModal] = useState(false)
-const [showDisableModal, setShowDisableModal] = useState(false)
-const [showBackupCodes, setShowBackupCodes] = useState(false)
-const backupCodes = user?.backupCodes || []
+  const user = useAppSelector(state => state.auth.user)
+  const [showEnableModal, setShowEnableModal] = useState(false)
+  const [showDisableModal, setShowDisableModal] = useState(false)
+  const [showBackupCodes, setShowBackupCodes] = useState(false)
+  const backupCodes = user?.backupCodes || []
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   })
-    const [errors, setErrors] = useState<Record<string, string>>({})
-const [loading, setLoading] = useState(false)
-const { changePassword } = useAuth()
-const { handleError } = useErrorHandler()
-const { showSuccess } = useNotification()
-const usedCodes = user?.backupCodesUsed ?? []
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [loading, setLoading] = useState(false)
+  const { changePassword } = useAuth()
+  const { handleError } = useErrorHandler()
+  const { showSuccess } = useNotification()
+  const usedCodes = user?.backupCodesUsed ?? []
 
-  
-const handleEnable2FASuccess = () => {
-  // Redux will update automatically from API response
-  showSuccess(
-    t('userProfile.security.2faEnabled'),
-    t('userProfile.security.2faEnabledSuccess')
-  )
-}
+  const handleEnable2FASuccess = () => {
+    // Redux will update automatically from API response
+    showSuccess(
+      t('userProfile.security.2faEnabled'),
+      t('userProfile.security.2faEnabledSuccess')
+    )
+  }
 
-const handleDisable2FASuccess = () => {
-  // Redux will update automatically from API response
-  showSuccess(
-    t('userProfile.security.2faDisabled'),
-    t('userProfile.security.2faDisabledSuccess')
-  )
-}
+  const handleDisable2FASuccess = () => {
+    // Redux will update automatically from API response
+    showSuccess(
+      t('userProfile.security.2faDisabled'),
+      t('userProfile.security.2faDisabledSuccess')
+    )
+  }
   // Handlers
   const handleEnable2FA = () => {
     setShowEnableModal(true)
@@ -84,49 +82,48 @@ const handleDisable2FASuccess = () => {
     setShowDisableModal(true)
   }
 
-const handleChangePassword = useCallback(async () => {
-  // Validate form
-  const validation = validateChangePasswordForm(passwordData)
-  
-  if (!validation.isValid) {
-    setErrors(validation.errors)
-    return
-  }
+  const handleChangePassword = useCallback(async () => {
+    // Validate form
+    const validation = validateChangePasswordForm(passwordData)
 
-  setLoading(true)
-  setErrors({})
+    if (!validation.isValid) {
+      setErrors(validation.errors)
+      return
+    }
 
-  try {
-    await changePassword({
-      currentPassword: passwordData.currentPassword,
-      newPassword: passwordData.newPassword,
-      confirmPassword: passwordData.confirmPassword,
-    })
-    
-    showSuccess(
-      t('userProfile.security.passwordChanged'),
-      t('userProfile.security.passwordChangedSuccess')
-    )
-    
-    // Reset form
-    setPasswordData({
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-    })
-  } catch (error: any) {
+    setLoading(true)
+    setErrors({})
 
-    handleError(error, setErrors)
-  } finally {
-    setLoading(false)
-  }
-}, [passwordData, changePassword, showSuccess, handleError, t])
+    try {
+      await changePassword({
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword,
+        confirmPassword: passwordData.confirmPassword,
+      })
+
+      showSuccess(
+        t('userProfile.security.passwordChanged'),
+        t('userProfile.security.passwordChangedSuccess')
+      )
+
+      // Reset form
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      })
+    } catch (error: any) {
+      handleError(error, setErrors)
+    } finally {
+      setLoading(false)
+    }
+  }, [passwordData, changePassword, showSuccess, handleError, t])
 
   const [showPassword, setShowPassword] = useState({
-  current: false,
-  new: false,
-  confirm: false,
-})
+    current: false,
+    new: false,
+    confirm: false,
+  })
 
   return (
     <div className="space-y-6">
@@ -180,157 +177,181 @@ const handleChangePassword = useCallback(async () => {
       </Card>
 
       {/* Change Password Card */}
-<Card>
-  <CardHeader>
-    <CardTitle>
-      <Lock className="mr-2 inline h-5 w-5" />
-      {t('userProfile.security.changePassword')}
-    </CardTitle>
-    <CardDescription>
-      {t('userProfile.security.changePasswordDesc')}
-    </CardDescription>
-  </CardHeader>
-  <CardContent className="space-y-4">
-    {/* Current Password */}
-    <div className="space-y-2">
-      <Label htmlFor="currentPassword">
-        {t('userProfile.security.currentPassword')}
-      </Label>
-      <div className="relative">
-        <Input
-          id="currentPassword"
-          type={showPassword.current ? "text" : "password"}
-          value={passwordData.currentPassword}
-          onChange={e => {
-            setPasswordData({
-              ...passwordData,
-              currentPassword: e.target.value,
-            })
-            // Clear error when typing
-            if (errors.currentPassword) {
-              setErrors(prev => {
-                const newErrors = { ...prev }
-                delete newErrors.currentPassword
-                return newErrors
-              })
-            }
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword({ ...showPassword, current: !showPassword.current })}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
-        >
-          {showPassword.current ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        </button>
-      </div>
-      {errors.currentPassword && (
-        <p className="mt-2 text-sm text-status-error">
-          {errors.currentPassword}
-        </p>
-      )}
-    </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>
+            <Lock className="mr-2 inline h-5 w-5" />
+            {t('userProfile.security.changePassword')}
+          </CardTitle>
+          <CardDescription>
+            {t('userProfile.security.changePasswordDesc')}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Current Password */}
+          <div className="space-y-2">
+            <Label htmlFor="currentPassword">
+              {t('userProfile.security.currentPassword')}
+            </Label>
+            <div className="relative">
+              <Input
+                id="currentPassword"
+                type={showPassword.current ? 'text' : 'password'}
+                value={passwordData.currentPassword}
+                onChange={e => {
+                  setPasswordData({
+                    ...passwordData,
+                    currentPassword: e.target.value,
+                  })
+                  // Clear error when typing
+                  if (errors.currentPassword) {
+                    setErrors(prev => {
+                      const newErrors = { ...prev }
+                      delete newErrors.currentPassword
+                      return newErrors
+                    })
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPassword({
+                    ...showPassword,
+                    current: !showPassword.current,
+                  })
+                }
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
+              >
+                {showPassword.current ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+            {errors.currentPassword && (
+              <p className="mt-2 text-sm text-status-error">
+                {errors.currentPassword}
+              </p>
+            )}
+          </div>
 
-    {/* New Password */}
-    <div className="space-y-2">
-      <Label htmlFor="newPassword">
-        {t('userProfile.security.newPassword')}
-      </Label>
-      <div className="relative">
-        <Input
-          id="newPassword"
-          type={showPassword.new ? "text" : "password"}
-          value={passwordData.newPassword}
-          onChange={e => {
-            setPasswordData({
-              ...passwordData,
-              newPassword: e.target.value,
-            })
-            // Clear error when typing
-            if (errors.newPassword) {
-              setErrors(prev => {
-                const newErrors = { ...prev }
-                delete newErrors.newPassword
-                return newErrors
-              })
-            }
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword({ ...showPassword, new: !showPassword.new })}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
-        >
-          {showPassword.new ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        </button>
-      </div>
-      {errors.newPassword && (
-        <p className="mt-2 text-sm text-status-error">
-          {errors.newPassword}
-        </p>
-      )}
-    </div>
+          {/* New Password */}
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">
+              {t('userProfile.security.newPassword')}
+            </Label>
+            <div className="relative">
+              <Input
+                id="newPassword"
+                type={showPassword.new ? 'text' : 'password'}
+                value={passwordData.newPassword}
+                onChange={e => {
+                  setPasswordData({
+                    ...passwordData,
+                    newPassword: e.target.value,
+                  })
+                  // Clear error when typing
+                  if (errors.newPassword) {
+                    setErrors(prev => {
+                      const newErrors = { ...prev }
+                      delete newErrors.newPassword
+                      return newErrors
+                    })
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPassword({ ...showPassword, new: !showPassword.new })
+                }
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
+              >
+                {showPassword.new ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+            {errors.newPassword && (
+              <p className="mt-2 text-sm text-status-error">
+                {errors.newPassword}
+              </p>
+            )}
+          </div>
 
-    {/* Confirm Password */}
-    <div className="space-y-2">
-      <Label htmlFor="confirmPassword">
-        {t('userProfile.security.confirmPassword')}
-      </Label>
-      <div className="relative">
-        <Input
-          id="confirmPassword"
-          type={showPassword.confirm ? "text" : "password"}
-          value={passwordData.confirmPassword}
-          onChange={e => {
-            setPasswordData({
-              ...passwordData,
-              confirmPassword: e.target.value,
-            })
-            // Clear error when typing
-            if (errors.confirmPassword) {
-              setErrors(prev => {
-                const newErrors = { ...prev }
-                delete newErrors.confirmPassword
-                return newErrors
-              })
-            }
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword({ ...showPassword, confirm: !showPassword.confirm })}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
-        >
-          {showPassword.confirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-        </button>
-      </div>
-      {errors.confirmPassword && (
-        <p className="mt-2 text-sm text-status-error">
-          {errors.confirmPassword}
-        </p>
-      )}
-    </div>
+          {/* Confirm Password */}
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">
+              {t('userProfile.security.confirmPassword')}
+            </Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type={showPassword.confirm ? 'text' : 'password'}
+                value={passwordData.confirmPassword}
+                onChange={e => {
+                  setPasswordData({
+                    ...passwordData,
+                    confirmPassword: e.target.value,
+                  })
+                  // Clear error when typing
+                  if (errors.confirmPassword) {
+                    setErrors(prev => {
+                      const newErrors = { ...prev }
+                      delete newErrors.confirmPassword
+                      return newErrors
+                    })
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setShowPassword({
+                    ...showPassword,
+                    confirm: !showPassword.confirm,
+                  })
+                }
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-tertiary hover:text-text-primary"
+              >
+                {showPassword.confirm ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+            {errors.confirmPassword && (
+              <p className="mt-2 text-sm text-status-error">
+                {errors.confirmPassword}
+              </p>
+            )}
+          </div>
 
-    {/* Submit Button */}
-    <Button 
-      onClick={handleChangePassword} 
-      className="w-full"
-      disabled={loading}
-    >
-      {loading ? (
-        <div className="flex items-center justify-center">
-          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-          {t('common.updating')}
-        </div>
-      ) : (
-        t('userProfile.security.updatePassword')
-      )}
-    </Button>
-  </CardContent>
-</Card>
+          {/* Submit Button */}
+          <Button
+            onClick={handleChangePassword}
+            className="w-full"
+            disabled={loading}
+          >
+            {loading ? (
+              <div className="flex items-center justify-center">
+                <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {t('common.updating')}
+              </div>
+            ) : (
+              t('userProfile.security.updatePassword')
+            )}
+          </Button>
+        </CardContent>
+      </Card>
 
       {/* Two-Factor Authentication Card */}
-    <Card>
+      <Card>
         <CardHeader>
           <CardTitle>
             <Shield className="mr-2 inline h-5 w-5" />
@@ -340,7 +361,7 @@ const handleChangePassword = useCallback(async () => {
             {t('userProfile.security.twoFactorAuthDesc')}
           </CardDescription>
         </CardHeader>
-        
+
         <CardContent className="space-y-4">
           {/* Status */}
           <div className="flex items-center justify-between">
@@ -350,22 +371,24 @@ const handleChangePassword = useCallback(async () => {
                   {t('userProfile.security.twoFactorStatus')}
                 </p>
                 <p className="text-xs text-text-tertiary">
-                  {twoFactorEnabled 
-                    ? t('userProfile.security.enabled') 
+                  {twoFactorEnabled
+                    ? t('userProfile.security.enabled')
                     : t('userProfile.security.disabled')}
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2">
               {twoFactorEnabled ? (
                 <Badge variant="success">Enabled</Badge>
               ) : (
                 <Badge variant="default">Disabled</Badge>
               )}
-              <Switch 
-                checked={twoFactorEnabled} 
-                onCheckedChange={twoFactorEnabled ? handleDisable2FA : handleEnable2FA}
+              <Switch
+                checked={twoFactorEnabled}
+                onCheckedChange={
+                  twoFactorEnabled ? handleDisable2FA : handleEnable2FA
+                }
               />
             </div>
           </div>
@@ -373,16 +396,16 @@ const handleChangePassword = useCallback(async () => {
           {/* Actions when enabled */}
           {twoFactorEnabled && (
             <div className="space-y-2 border-t border-border-primary pt-4">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="w-full"
                 onClick={() => setShowBackupCodes(!showBackupCodes)}
               >
                 {showBackupCodes ? 'Hide' : 'View'} Backup Codes
               </Button>
-              
+
               {showBackupCodes && (
-                <BackupCodesDisplay 
+                <BackupCodesDisplay
                   codes={backupCodes}
                   usedCodes={usedCodes}
                   showUsedStatus={true}
@@ -393,8 +416,8 @@ const handleChangePassword = useCallback(async () => {
 
           {/* Action when disabled */}
           {!twoFactorEnabled && (
-            <Button 
-              variant="default" 
+            <Button
+              variant="default"
               className="w-full"
               onClick={handleEnable2FA}
             >

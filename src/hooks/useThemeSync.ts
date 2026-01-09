@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: hooks/useThemeSync.ts
 // Theme Sync Hook - Sync Theme to CSS Variables
-// ============================================================================
 
 import { useEffect } from 'react'
 import { useAppSelector } from '@/store/hooks'

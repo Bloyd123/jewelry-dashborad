@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: src/config/permissions.config.ts
 // BACKEND-COMPATIBLE Permissions Configuration
-// ============================================================================
+
 
 /**
  * ⚠️ IMPORTANT: This file should match EXACTLY with backend permissions
@@ -12,20 +12,20 @@
 
 export type UserRole = 'shop_admin' | 'manager' | 'staff' | 'accountant' | 'viewer'
 
-// ============================================================================
+
 // COMPLETE PERMISSION INTERFACE (237 permissions - matches backend)
-// ============================================================================
+
 import {ShopPermissions} from '@/types'
 
-// ============================================================================
+
 // PERMISSION KEY TYPE (for type-safe permission checking)
-// ============================================================================
+
 
 export type PermissionKey = keyof Omit<ShopPermissions, number | symbol>;
 
-// ============================================================================
+
 // HELPER FUNCTIONS
-// ============================================================================
+
 
 /**
  * ⚠️ NOTE: Actual permissions come from backend via login response
@@ -56,9 +56,9 @@ export const hasAllPermissions = (
   return permissionList.every(perm => permissions[perm] === true);
 };
 
-// ============================================================================
+
 // EXPORTS
-// ============================================================================
+
 
 export default {
   hasPermission,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/UserProfile/tabs/PerformanceTab.tsx
 // Performance & Sales Stats Tab Component
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, Target, DollarSign, Award } from 'lucide-react'

@@ -1,12 +1,12 @@
 {
-    "common": {
-          "active": "Active",
+  "common": {
+    "active": "Active",
     "inactive": "Inactive",
     "verified": "Verified",
     "edit": "Edit",
     "saveChanges": "Save Changes",
     "settings": "Settings",
-       "clearSelection": "Clear Selection",
+    "clearSelection": "Clear Selection",
     "all": "All",
     "apply": "Apply",
     "clear": "Clear",

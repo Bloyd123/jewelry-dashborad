@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/button.tsx
 // Theme-based Button Component
-// ============================================================================
 
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'

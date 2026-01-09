@@ -1,7 +1,7 @@
-// ============================================================================
+//
 // FILE: src/hooks/customer/useCustomerPagination.ts
 // Custom Hook for Customer Pagination
-// ============================================================================
+//
 
 import { useCallback } from 'react'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'

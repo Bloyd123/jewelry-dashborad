@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/services/auth/permissionService.ts
 // Permission checking service for user authorization
-// ============================================================================
 
 import type { UserRole } from '@/types'
 
@@ -11,9 +9,7 @@ import {
   isSuperAdmin as checkSuperAdmin,
 } from './sessionService'
 
-// ============================================================================
 // PERMISSION CHECKING
-// ============================================================================
 
 /**
  * Check if user has a specific permission
@@ -120,9 +116,7 @@ export const canAccessAnyShop = (shopIds: string[]): boolean => {
   return shopIds.some(shopId => canAccessShop(shopId))
 }
 
-// ============================================================================
 // ROLE-BASED PERMISSIONS
-// ============================================================================
 
 /**
  * Check if user role has permission (role hierarchy)
@@ -173,9 +167,7 @@ export const isOrgAdminOrHigher = (): boolean => {
   return hasRoleLevel('org_admin' as UserRole)
 }
 
-// ============================================================================
 // MODULE-SPECIFIC PERMISSIONS
-// ============================================================================
 
 /**
  * Check if user can manage products
@@ -377,9 +369,7 @@ export const canViewProfitLoss = (): boolean => {
   return hasPermission('canViewProfitLoss')
 }
 
-// ============================================================================
 // PERMISSION UTILITIES
-// ============================================================================
 
 /**
  * Get all permissions for current user
@@ -423,9 +413,7 @@ export const countGrantedPermissions = (): number => {
   return getGrantedPermissions().length
 }
 
-// ============================================================================
 // PERMISSION GROUPS
-// ============================================================================
 
 /**
  * Check if user has full inventory permissions
@@ -479,9 +467,7 @@ export const hasFinancialAccess = (): boolean => {
   ])
 }
 
-// ============================================================================
 // DEFAULT EXPORT
-// ============================================================================
 
 export default {
   // Basic Permission Checks

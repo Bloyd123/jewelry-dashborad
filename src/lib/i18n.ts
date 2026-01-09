@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: lib/i18n.ts
 // i18n Configuration (react-i18next)
-// ============================================================================
 
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
@@ -11,9 +9,7 @@ import { APP_CONFIG } from '@/config/app.config'
 // CORRECT — import each language properly
 import { english, hindi, marathi } from '@/locales'
 
-// ============================================================================
 // RESOURCES
-// ============================================================================
 
 const resources = {
   en: {
@@ -27,9 +23,7 @@ const resources = {
   },
 }
 
-// ============================================================================
 // I18N CONFIGURATION
-// ============================================================================
 
 // Get saved language from memory (since localStorage is not available)
 
@@ -71,9 +65,7 @@ i18n
 
 export default i18n
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 // Change language (store in memory)
 export const changeLanguage = (lng: string) => {

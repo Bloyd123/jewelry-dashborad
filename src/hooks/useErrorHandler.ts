@@ -1,7 +1,7 @@
-// ============================================================================
+//
 // FILE: src/hooks/useErrorHandler.ts
 // Centralized error handler with i18n support
-// ============================================================================
+//
 
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -36,9 +36,8 @@ export const useErrorHandler = () => {
       // Log error for debugging (remove in production if needed)
       console.error('Error occurred:', error)
 
-      // ======================================
       // VALIDATION ERROR (400/422)
-      // ======================================
+
       if (ValidationError.isValidationError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.VALIDATION.FAILED)
         const title = t('errors.validation.title')
@@ -59,9 +58,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // AUTH ERROR (401)
-      // ======================================
+
       if (AuthError.isAuthError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.AUTH.FAILED)
         const title = t('errors.auth.title')
@@ -77,9 +75,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // PERMISSION ERROR (403)
-      // ======================================
+
       if (PermissionError.isPermissionError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.PERMISSION.DENIED)
         const title = t('errors.permission.title')
@@ -87,9 +84,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // NOT FOUND ERROR (404)
-      // ======================================
+
       if (NotFoundError.isNotFoundError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.NOT_FOUND.RESOURCE)
         const title = t('errors.notFound.title')
@@ -97,9 +93,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // RATE LIMIT ERROR (429)
-      // ======================================
+
       if (RateLimitError.isRateLimitError(error)) {
         const message = error.retryAfter
           ? t(ERROR_KEYS.RATE_LIMIT.RETRY_AFTER, { seconds: error.retryAfter })
@@ -109,9 +104,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // SERVER ERROR (500/503)
-      // ======================================
+
       if (ServerError.isServerError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.API.SERVER)
         const title = t('errors.server.title')
@@ -119,9 +113,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // NETWORK ERROR
-      // ======================================
+
       if (NetworkError.isNetworkError(error)) {
         const message = t(ERROR_KEYS.API.NETWORK)
         const title = t('errors.network.title')
@@ -129,9 +122,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // GENERIC API ERROR
-      // ======================================
+
       if (ApiError.isApiError(error)) {
         const message = t(error.messageKey || ERROR_KEYS.API.GENERIC)
         const title = t('errors.api.title')
@@ -139,9 +131,8 @@ export const useErrorHandler = () => {
         return
       }
 
-      // ======================================
       // FALLBACK (Unknown error)
-      // ======================================
+
       const message = t(ERROR_KEYS.API.GENERIC)
       const title = t('errors.unknown.title')
       showError(message, title)

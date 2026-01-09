@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/index.ts
 // Main Overlay Barrel Export
-// ============================================================================
 
 // Modal
 export { Modal, ModalHeader, ModalBody, ModalFooter } from './Modal'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/auth/2fa/index.ts
 // Barrel Export for All 2FA Components
-// ============================================================================
 
 // Enable 2FA Modal (with sub-steps)
 export { Enable2FAModal } from './Enable2FAModal'

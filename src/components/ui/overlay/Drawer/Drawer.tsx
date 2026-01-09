@@ -78,9 +78,7 @@ export const Drawer: React.FC<DrawerProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // EFFECTS
-  // ========================================================================
 
   useEffect(() => {
     if (open && onOpen) {
@@ -104,9 +102,7 @@ export const Drawer: React.FC<DrawerProps> = ({
     }
   }, [open, preventScroll])
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleOpenChange = (newOpen: boolean) => {
     onOpenChange(newOpen)
@@ -116,9 +112,7 @@ export const Drawer: React.FC<DrawerProps> = ({
     onOpenChange(false)
   }
 
-  // ========================================================================
   // POSITIONING
-  // ========================================================================
 
   const positionClasses = {
     left: 'left-0 top-0 bottom-0',
@@ -136,9 +130,7 @@ export const Drawer: React.FC<DrawerProps> = ({
     },
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>

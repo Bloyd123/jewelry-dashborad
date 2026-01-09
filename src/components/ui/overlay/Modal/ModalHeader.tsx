@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: src/components/ui/overlay/Modal/ModalHeader.tsx
-// ============================================================================
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'

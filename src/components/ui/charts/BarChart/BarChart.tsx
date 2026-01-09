@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/charts/BarChart/BarChart.tsx
 // Flexible Bar Chart Component
-// ============================================================================
 
 import * as React from 'react'
 import {

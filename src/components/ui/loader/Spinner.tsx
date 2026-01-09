@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/ui/loader/Spinner.tsx
 // Simple Inline Spinner Component
-// ============================================================================
 
 import type { SpinnerProps } from '@/types/loader.types'
 

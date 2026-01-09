@@ -1,15 +1,11 @@
-// ============================================================================
 // USAGE EXAMPLE: How to Use SaleForm Component
-// ============================================================================
 
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { SaleForm } from '@/components/sales/SalesForm'
 import type { SaleFormData } from '@/components/sales/SalesForm'
 
-// ============================================================================
 // EXAMPLE 1: Create New Sale Page
-// ============================================================================
 
 export const CreateSalePage = () => {
   const navigate = useNavigate()
@@ -35,9 +31,7 @@ export const CreateSalePage = () => {
   )
 }
 
-// ============================================================================
 // EXAMPLE 2: Edit Existing Sale Page
-// ============================================================================
 
 export const EditSalePage = () => {
   const navigate = useNavigate()

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/ui/filters/StatusFilter/StatusFilter.tsx
 // Generic Status Filter with Active/Inactive
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

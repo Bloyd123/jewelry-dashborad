@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: hooks/useMediaQuery.ts
 // Media Query Hook for Responsive Design
-// ============================================================================
 
 import { useState, useEffect } from 'react'
 

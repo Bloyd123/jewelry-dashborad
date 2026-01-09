@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/pages/customer/AddCustomer/mockdata.ts
 // Mock Customer Data for Development/Testing
-// ============================================================================
 
 import type { Customer } from '@/types'
 

@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: src/components/ui/layout/Separator/index.ts
-// ============================================================================
 
 export { Separator, SectionDivider } from './Separator'
 

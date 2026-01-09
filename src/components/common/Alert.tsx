@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/common/Alert/Alert.tsx
 // Flexible Alert Component - TypeScript Issues Fixed
-// ============================================================================
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,9 +14,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export type AlertVariant = 'default' | 'success' | 'warning' | 'error' | 'info'
 export type AlertSize = 'sm' | 'md' | 'lg'
@@ -49,15 +45,15 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
-// ============================================================================
 // HELPER: GET VARIANT CLASSES
-// ============================================================================
 
 const getVariantClasses = (variant: AlertVariant): string => {
   const variants: Record<AlertVariant, string> = {
     default: 'bg-bg-secondary border-border-primary text-text-primary',
-    success: 'bg-status-success/10 border-status-success/30 text-status-success',
-    warning: 'bg-status-warning/10 border-status-warning/30 text-status-warning',
+    success:
+      'bg-status-success/10 border-status-success/30 text-status-success',
+    warning:
+      'bg-status-warning/10 border-status-warning/30 text-status-warning',
     error: 'bg-status-error/10 border-status-error/30 text-status-error',
     info: 'bg-status-info/10 border-status-info/30 text-status-info',
   }
@@ -73,9 +69,7 @@ const getSizeClasses = (size: AlertSize): string => {
   return sizes[size]
 }
 
-// ============================================================================
 // HELPER: GET DEFAULT ICON
-// ============================================================================
 
 const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   const icons: Record<AlertVariant, LucideIcon> = {
@@ -88,9 +82,7 @@ const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   return icons[variant]
 }
 
-// ============================================================================
 // ALERT COMPONENT
-// ============================================================================
 
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
@@ -161,9 +153,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         <div className="flex w-full items-start gap-3">
           {/* Icon */}
           {showIcon && IconComponent && (
-            <div className={cn('flex-shrink-0', iconSize)}>
-              {IconComponent}
-            </div>
+            <div className={cn('flex-shrink-0', iconSize)}>{IconComponent}</div>
           )}
 
           {/* Content */}
@@ -193,9 +183,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = 'Alert'
 
-// ============================================================================
 // ALERT TITLE COMPONENT
-// ============================================================================
 
 export interface AlertTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -203,29 +191,26 @@ export interface AlertTitleProps
   className?: string
 }
 
-export const AlertTitle = React.forwardRef<
-  HTMLHeadingElement,
-  AlertTitleProps
->(({ className, children, ...props }, ref) => {
-  return (
-    <h5
-      ref={ref}
-      className={cn(
-        'mb-1 font-semibold leading-none tracking-tight',
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </h5>
-  )
-})
+export const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <h5
+        ref={ref}
+        className={cn(
+          'mb-1 font-semibold leading-none tracking-tight',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </h5>
+    )
+  }
+)
 
 AlertTitle.displayName = 'AlertTitle'
 
-// ============================================================================
 // ALERT DESCRIPTION COMPONENT
-// ============================================================================
 
 export interface AlertDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -250,9 +235,7 @@ export const AlertDescription = React.forwardRef<
 
 AlertDescription.displayName = 'AlertDescription'
 
-// ============================================================================
 // ALERT ACTION COMPONENT (Optional)
-// ============================================================================
 
 export interface AlertActionProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: purchase/mock.data.ts
 // Purchase Module Dummy Data - Ready for Testing
-// ============================================================================
 
 import type {
   IPurchase,
@@ -11,9 +9,7 @@ import type {
   PurchaseSummary,
 } from '@/types/purchase.types'
 
-// ============================================================================
 // DUMMY SUPPLIERS
-// ============================================================================
 
 export const dummySuppliers: ISupplierDetails[] = [
   {
@@ -45,9 +41,7 @@ export const dummySuppliers: ISupplierDetails[] = [
   },
 ]
 
-// ============================================================================
 // DUMMY PURCHASE ITEMS
-// ============================================================================
 
 export const dummyPurchaseItems: IPurchaseItem[] = [
   {
@@ -93,9 +87,7 @@ export const dummyPurchaseItems: IPurchaseItem[] = [
   },
 ]
 
-// ============================================================================
 // DUMMY PURCHASES
-// ============================================================================
 
 export const dummyPurchases: IPurchase[] = [
   {
@@ -415,9 +407,7 @@ export const dummyPurchases: IPurchase[] = [
   },
 ]
 
-// ============================================================================
 // DUMMY ANALYTICS
-// ============================================================================
 
 export const dummyPurchaseAnalytics: IPurchaseAnalytics = {
   totalPurchases: 5,
@@ -466,9 +456,7 @@ export const dummyPurchaseAnalytics: IPurchaseAnalytics = {
   ],
 }
 
-// ============================================================================
 // DUMMY PURCHASE SUMMARIES (for quick lists)
-// ============================================================================
 
 export const dummyPurchaseSummaries: PurchaseSummary[] = dummyPurchases.map(
   p => ({
@@ -481,9 +469,7 @@ export const dummyPurchaseSummaries: PurchaseSummary[] = dummyPurchases.map(
   })
 )
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 export const getPurchaseById = (id: string): IPurchase | undefined => {
   return dummyPurchases.find(p => p._id === id)
@@ -524,9 +510,7 @@ export const searchPurchases = (query: string): IPurchase[] => {
   )
 }
 
-// ============================================================================
 // EXPORT ALL
-// ============================================================================
 
 export default {
   purchases: dummyPurchases,

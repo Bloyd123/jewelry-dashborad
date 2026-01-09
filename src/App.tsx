@@ -3,26 +3,26 @@
 // Clean Main Application Component
 // ============================================================================
 
-import { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AppRouter } from './router';
-import  ToastContainer  from './components/common/ToastContainer';
-import { NotificationProvider } from './context/NotificationContext';
-import { NoInternetWrapper } from './components/common';
-import { useAppDispatch } from './store/hooks';
-import { initializeAuth } from './store/slices/authSlice';
-import { useThemeSync } from './hooks/useThemeSync';
+import { useEffect } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { AppRouter } from './router'
+import ToastContainer from './components/common/ToastContainer'
+import { NotificationProvider } from './context/NotificationContext'
+import { NoInternetWrapper } from './components/common'
+import { useAppDispatch } from './store/hooks'
+import { initializeAuth } from './store/slices/authSlice'
+import { useThemeSync } from './hooks/useThemeSync'
 
 function App() {
-  const dispatch = useAppDispatch();
-  
+  const dispatch = useAppDispatch()
+
   // Sync theme with system preferences
-  useThemeSync();
+  useThemeSync()
 
   // Initialize authentication state on app mount
   useEffect(() => {
-    dispatch(initializeAuth());
-  }, [dispatch]);
+    dispatch(initializeAuth())
+  }, [dispatch])
 
   return (
     <NoInternetWrapper>
@@ -33,7 +33,7 @@ function App() {
         </NotificationProvider>
       </BrowserRouter>
     </NoInternetWrapper>
-  );
+  )
 }
 
-export default App;
+export default App
