@@ -19,6 +19,7 @@ import type {
   UserShopAccess,
   ShopPermissions,
   PermissionKey,
+  
 } from '@/types'
 
 import type { RootState } from '../index'
@@ -36,7 +37,10 @@ interface AuthState {
   isAuthenticated: boolean
 
   // Loading States
-  isLoading: boolean
+  isLoading: boolean          // ✅ ONLY for login/logout/init
+  is2FALoading: boolean       // ✅ NEW: Only for 2FA operations
+  isPasswordChanging: boolean // ✅ NEW: Only for password
+  isProfileUpdating: boolean  // ✅ NEW: Only for profile
   isInitializing: boolean
   isRefreshing: boolean
 
@@ -52,6 +56,7 @@ interface AuthState {
   // Two-Factor
   requires2FA: boolean
   twoFactorEnabled: boolean
+   tempToken: string | null 
 
   // Last Activity
   lastActivity: number | null
@@ -69,6 +74,10 @@ const initialState: AuthState = {
   isAuthenticated: false,
 
   isLoading: false,
+    is2FALoading: false,        // ✅ Add this
+  isPasswordChanging: false,
+  isProfileUpdating: false,
+
   isInitializing: true,
   isRefreshing: false,
 
@@ -81,6 +90,7 @@ const initialState: AuthState = {
 
   requires2FA: false,
   twoFactorEnabled: false,
+  tempToken: null, 
 
   lastActivity: null,
 }
@@ -302,7 +312,89 @@ export const initializeAuth = createAsyncThunk(
     }
   }
 )
+/**
+ * Enable 2FA
+ */
+export const enable2FA = createAsyncThunk(
+  'auth/enable2FA',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await authService.enable2FA()
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
 
+/**
+ * Verify 2FA
+ */
+export const verify2FA = createAsyncThunk(
+  'auth/verify2FA',
+  async (token: string, { rejectWithValue }) => {
+    try {
+      const response = await authService.verify2FA(token)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+/**
+ * Disable 2FA
+ */
+export const disable2FA = createAsyncThunk(
+  'auth/disable2FA',
+  async (
+    { password, token }: { password: string; token: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await authService.disable2FA(password, token)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+/**
+ * Verify 2FA during login
+ */
+export const verify2FALogin = createAsyncThunk(
+  'auth/verify2FALogin',
+  async (
+    { tempToken, token }: { tempToken: string; token: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await authService.verify2FALogin(tempToken, token)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+/**
+ * Verify backup code during login
+ */
+export const verifyBackupCodeLogin = createAsyncThunk(
+  'auth/verifyBackupCode',
+  async (
+    { tempToken, backupCode }: { tempToken: string; backupCode: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await authService.verifyBackupCode(tempToken, backupCode)
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
 // ============================================================================
 // SLICE
 // ============================================================================
@@ -378,6 +470,13 @@ const authSlice = createSlice({
   login.fulfilled,
   (state, action: PayloadAction<LoginResponse['data']>) => {
     state.isLoading = false;
+        if (action.payload.requires2FA) {
+      state.requires2FA = true;
+     state.tempToken = action.payload.tempToken ?? null
+
+      state.isAuthenticated = false; // Not authenticated yet
+      return; // Don't proceed with normal login
+    }
     state.user = action.payload.user;
     state.accessToken = action.payload.accessToken;
     state.refreshToken = action.payload.refreshToken;
@@ -674,6 +773,119 @@ const authSlice = createSlice({
         state.isInitializing = false
         state.isAuthenticated = false
       })
+  .addCase(enable2FA.pending, state => {
+     state.is2FALoading = true  
+    state.error = null
+  })
+  .addCase(enable2FA.fulfilled, state => {
+    state.is2FALoading = false   
+  })
+  .addCase(enable2FA.rejected, (state, action) => {
+   state.is2FALoading = false   
+    state.error = action.payload as string
+  })
+
+// ========================================
+// VERIFY 2FA
+// ========================================
+builder
+  .addCase(verify2FA.pending, state => {
+     state.is2FALoading = true
+    state.error = null
+  })
+  .addCase(verify2FA.fulfilled, (state, action) => {
+   state.is2FALoading = false 
+    if (state.user) {
+      state.user.twoFactorEnabled = true
+      state.twoFactorEnabled = true
+
+      state.user.backupCodes = action.payload.backupCodes || []
+    }
+  })
+  .addCase(verify2FA.rejected, (state, action) => {
+    state.is2FALoading = false 
+    state.error = action.payload as string
+  })
+
+// ========================================
+// DISABLE 2FA
+// ========================================
+builder
+  .addCase(disable2FA.pending, state => {
+  state.is2FALoading = false
+    state.error = null
+  })
+  .addCase(disable2FA.fulfilled, (state) => {
+     state.is2FALoading = false
+    if (state.user) {
+      state.user.twoFactorEnabled = false
+      state.twoFactorEnabled = false
+    }
+  })
+  .addCase(disable2FA.rejected, (state, action) => {
+     state.is2FALoading = false
+    state.error = action.payload as string
+  })
+
+// ========================================
+// VERIFY 2FA LOGIN
+// ========================================
+builder
+  .addCase(verify2FALogin.pending, state => {
+    state.isLoading = true
+    state.error = null
+  })
+  .addCase(
+    verify2FALogin.fulfilled,
+    (state, action: PayloadAction<LoginResponse['data']>) => {
+      state.isLoading = false
+      state.requires2FA = false
+      state.tempToken = null
+      state.user = action.payload.user
+      state.accessToken = action.payload.accessToken
+      state.refreshToken = action.payload.refreshToken
+      state.tokenId = action.payload.tokenId
+      state.isAuthenticated = true
+      // ... handle shop accesses and permissions as in normal login
+      
+      tokenService.saveAccessToken(action.payload.accessToken)
+      tokenService.saveRefreshToken(action.payload.refreshToken)
+    }
+  )
+  .addCase(verify2FALogin.rejected, (state, action) => {
+    state.isLoading = false
+    state.error = action.payload as string
+  })
+
+// ========================================
+// VERIFY BACKUP CODE
+// ========================================
+builder
+  .addCase(verifyBackupCodeLogin.pending, state => {
+    state.isLoading = true
+    state.error = null
+  })
+  .addCase(
+    verifyBackupCodeLogin.fulfilled,
+    (state, action: PayloadAction<LoginResponse['data']>) => {
+      // Same as verify2FALogin.fulfilled
+      state.isLoading = false
+      state.requires2FA = false
+      state.tempToken = null
+      state.user = action.payload.user
+      state.accessToken = action.payload.accessToken
+      state.refreshToken = action.payload.refreshToken
+      state.tokenId = action.payload.tokenId
+      state.isAuthenticated = true
+      
+      tokenService.saveAccessToken(action.payload.accessToken)
+      tokenService.saveRefreshToken(action.payload.refreshToken)
+    }
+  )
+  .addCase(verifyBackupCodeLogin.rejected, (state, action) => {
+    state.isLoading = false
+    state.error = action.payload as string
+  })
   },
 })
 
@@ -689,7 +901,7 @@ export const {
   setError,
   updateUser,
   setRequires2FA,
-  resetAuthState,
+  resetAuthState
 } = authSlice.actions
 
 // ============================================================================

@@ -6,6 +6,7 @@ import React, { useState, useCallback } from 'react'
 
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '@/store/hooks/base'
 import { ROUTES } from '@/config/routes.config'
 // import { useTheme } from '@/hooks/useTheme';
 import { useAuth } from '@/hooks/useAuth'
@@ -28,7 +29,8 @@ const LoginForm: React.FC = () => {
     password: '',
     rememberMe: false,
   })
-
+  const requires2FA = useAppSelector(state => state.auth.requires2FA)
+  
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -82,16 +84,17 @@ const LoginForm: React.FC = () => {
         }
 
         await login(loginData)
-
+      if (!requires2FA) {
         showSuccess(t('auth.login.success'), t('auth.login.welcomeBack'))
         navigate(ROUTES.dashboard)
+      }
       } catch (error: any) {
         handleError(error, setErrors)
       } finally {
         setLoading(false)
       }
     },
-    [formData, validateForm, login, showSuccess, showError, navigate]
+    [formData, validateForm, login, showSuccess, showError, navigate, requires2FA]
   )
 
   // Handle Forgot Password

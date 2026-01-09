@@ -48,36 +48,5 @@
       "title": "Error",
       "message": "An unexpected error occurred"
     }
-  },
-  "auth": {
-    "login": {
-      "success": "Login successful!",
-      "welcomeBack": "Welcome back"
-    },
-    "logout": {
-      "button": "Logout",
-      "title": "Logout",
-      "success": "Logged out successfully",
-      "failed": "Logout failed",
-      "sessionCleared": "Your session has been cleared",
-      "confirmTitle": "Confirm Logout",
-      "confirmMessage": "Are you sure you want to logout?",
-      "confirm": "Yes, Logout"
-    },
-    "forgotPassword": {
-      "title": "Password Reset",
-      "success": "Password reset link sent!",
-      "checkEmail": "Check your email",
-      "failed": "Failed to send reset link"
-    },
-    "resetPassword": {
-      "title": "Reset Password",
-      "success": "Password reset successful!",
-      "successDescription": "You can now login with your new password",
-      "failed": "Password reset failed"
-    },
-    "register": {
-      "success": "Registration successful!"
-    }
   }
 }

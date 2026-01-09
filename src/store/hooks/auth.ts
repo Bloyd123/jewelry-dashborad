@@ -38,6 +38,19 @@ export const useCurrentShop = () => {
 }
 
 /**
+ * Hook to check if 2FA is enabled
+ */
+export const useTwoFactorEnabled = () => {
+  return useAppSelector(state => state.auth.twoFactorEnabled)
+}
+
+/**
+ * Hook to get temp token
+ */
+export const useTempToken = () => {
+  return useAppSelector(state => state.auth.tempToken)
+}
+/**
  * Hook to get permissions
  */
 export const usePermissions = () => {
@@ -175,6 +188,8 @@ export default {
   useIsSuperAdmin,
   useIsOrgAdmin,
   useIsShopAdmin,
+  useTwoFactorEnabled,
+  useTempToken,
 
   // Loading States
   useAuthLoading,

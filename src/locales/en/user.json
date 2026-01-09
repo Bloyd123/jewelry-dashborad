@@ -171,17 +171,5 @@
     "quality_check": "Quality Check",
     "customer_service": "Customer Service",
     "other": "Other"
-  },
-
-  "common": {
-    "active": "Active",
-    "inactive": "Inactive",
-    "verified": "Verified",
-    "edit": "Edit",
-    "save": "Save",
-    "cancel": "Cancel",
-    "saveChanges": "Save Changes",
-    "back": "Back",
-    "settings": "Settings"
   }
 }

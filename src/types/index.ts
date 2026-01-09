@@ -228,6 +228,11 @@ export type {
   FieldError,
   ValidationResult,
   PasswordStrength,
+  Verify2FALoginRequest ,
+  Disable2FARequest ,
+  Verify2FAResponse ,
+  Enable2FAResponse ,
+  VerifyBackupCodeLoginRequest ,
 
   // Events & Configuration
   AuthEventType,

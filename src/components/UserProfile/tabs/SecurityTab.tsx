@@ -30,10 +30,23 @@ import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { dummyUser } from '@/pages/user/data'
+import { 
+  Enable2FAModal, 
+  Disable2FAModal,
+  BackupCodesDisplay 
+} from '@/components/UserProfile/UserprofileModal/2fa'
+import { useTwoFactorEnabled } from '@/store/hooks/auth'
+import { useAppSelector } from '@/store/hooks/base'
 
 import { Eye, EyeOff } from 'lucide-react'
 export const SecurityTab = () => {
   const { t } = useTranslation()
+  const twoFactorEnabled = useTwoFactorEnabled()
+const user = useAppSelector(state => state.auth.user)
+const [showEnableModal, setShowEnableModal] = useState(false)
+const [showDisableModal, setShowDisableModal] = useState(false)
+const [showBackupCodes, setShowBackupCodes] = useState(false)
+const backupCodes = user?.backupCodes || []
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -44,6 +57,33 @@ const [loading, setLoading] = useState(false)
 const { changePassword } = useAuth()
 const { handleError } = useErrorHandler()
 const { showSuccess } = useNotification()
+const usedCodes = user?.backupCodesUsed ?? []
+
+  
+const handleEnable2FASuccess = () => {
+  // Redux will update automatically from API response
+  showSuccess(
+    t('userProfile.security.2faEnabled'),
+    t('userProfile.security.2faEnabledSuccess')
+  )
+}
+
+const handleDisable2FASuccess = () => {
+  // Redux will update automatically from API response
+  showSuccess(
+    t('userProfile.security.2faDisabled'),
+    t('userProfile.security.2faDisabledSuccess')
+  )
+}
+  // Handlers
+  const handleEnable2FA = () => {
+    setShowEnableModal(true)
+  }
+
+  const handleDisable2FA = () => {
+    setShowDisableModal(true)
+  }
+
 const handleChangePassword = useCallback(async () => {
   // Validate form
   const validation = validateChangePasswordForm(passwordData)
@@ -75,6 +115,7 @@ const handleChangePassword = useCallback(async () => {
       confirmPassword: '',
     })
   } catch (error: any) {
+
     handleError(error, setErrors)
   } finally {
     setLoading(false)
@@ -289,7 +330,7 @@ const handleChangePassword = useCallback(async () => {
 </Card>
 
       {/* Two-Factor Authentication Card */}
-      <Card>
+    <Card>
         <CardHeader>
           <CardTitle>
             <Shield className="mr-2 inline h-5 w-5" />
@@ -299,29 +340,82 @@ const handleChangePassword = useCallback(async () => {
             {t('userProfile.security.twoFactorAuthDesc')}
           </CardDescription>
         </CardHeader>
+        
         <CardContent className="space-y-4">
+          {/* Status */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Smartphone className="h-5 w-5 text-text-secondary" />
               <div>
                 <p className="text-sm font-medium text-text-primary">
                   {t('userProfile.security.twoFactorStatus')}
                 </p>
                 <p className="text-xs text-text-tertiary">
-                  {t('userProfile.security.twoFactorStatusDesc')}
+                  {twoFactorEnabled 
+                    ? t('userProfile.security.enabled') 
+                    : t('userProfile.security.disabled')}
                 </p>
               </div>
             </div>
-            <Switch checked={dummyUser.twoFactorEnabled} />
+            
+            <div className="flex items-center gap-2">
+              {twoFactorEnabled ? (
+                <Badge variant="success">Enabled</Badge>
+              ) : (
+                <Badge variant="default">Disabled</Badge>
+              )}
+              <Switch 
+                checked={twoFactorEnabled} 
+                onCheckedChange={twoFactorEnabled ? handleDisable2FA : handleEnable2FA}
+              />
+            </div>
           </div>
 
-          {!dummyUser.twoFactorEnabled && (
-            <Button variant="outline" className="w-full">
+          {/* Actions when enabled */}
+          {twoFactorEnabled && (
+            <div className="space-y-2 border-t border-border-primary pt-4">
+              <Button 
+                variant="outline" 
+                className="w-full"
+                onClick={() => setShowBackupCodes(!showBackupCodes)}
+              >
+                {showBackupCodes ? 'Hide' : 'View'} Backup Codes
+              </Button>
+              
+              {showBackupCodes && (
+                <BackupCodesDisplay 
+                  codes={backupCodes}
+                  usedCodes={usedCodes}
+                  showUsedStatus={true}
+                />
+              )}
+            </div>
+          )}
+
+          {/* Action when disabled */}
+          {!twoFactorEnabled && (
+            <Button 
+              variant="default" 
+              className="w-full"
+              onClick={handleEnable2FA}
+            >
               {t('userProfile.security.enableTwoFactor')}
             </Button>
           )}
         </CardContent>
       </Card>
+
+      {/* Modals */}
+      <Enable2FAModal
+        open={showEnableModal}
+        onOpenChange={setShowEnableModal}
+        onSuccess={handleEnable2FASuccess}
+      />
+
+      <Disable2FAModal
+        open={showDisableModal}
+        onOpenChange={setShowDisableModal}
+        onSuccess={handleDisable2FASuccess}
+      />
 
       {/* Active Sessions Card */}
       <Card>

@@ -6,13 +6,16 @@ import React from 'react'
 
 import loginImage from '../../../../assets/images/Loginimage.png'
 import { APP_CONFIG } from '@/config/app.config'
-
+import { useAppSelector } from '@/store/hooks/base'
+import { Login2FAStep } from './Login2FAStep'
 import LoginForm from './LoginForm'
 
 const LoginDesktop: React.FC = () => {
+  const requires2FA = useAppSelector(state => state.auth.requires2FA)
   return (
     <div className="flex min-h-screen">
       {/* Left Side - Image Section */}
+      
       <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
           src={loginImage}
@@ -25,6 +28,10 @@ const LoginDesktop: React.FC = () => {
 
       {/* Right Side - Login Form Section */}
       <div className="flex w-full items-center justify-center bg-stone-50 px-8 py-12 transition-colors duration-200 dark:bg-gray-900 lg:w-1/2">
+      {requires2FA ? (
+          // 🆕 Show 2FA verification step
+          <Login2FAStep />
+        ) : (
         <div className="w-full max-w-md">
           {/* Logo & Brand Section */}
           <div className="mb-8 flex items-center justify-center">
@@ -58,6 +65,7 @@ const LoginDesktop: React.FC = () => {
             </p>
           </div>
         </div>
+            )}
       </div>
     </div>
   )

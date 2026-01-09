@@ -1,7 +1,39 @@
 {
     "common": {
-    "dismiss": "Dismiss",
-    "close": "Close"
+          "active": "Active",
+    "inactive": "Inactive",
+    "verified": "Verified",
+    "edit": "Edit",
+    "saveChanges": "Save Changes",
+    "settings": "Settings",
+       "clearSelection": "Clear Selection",
+    "all": "All",
+    "apply": "Apply",
+    "clear": "Clear",
+    "search": "Search",
+    "filters": {
+      "minYear": "Minimum Year",
+      "maxYear": "Maximum Year"
+    },
+    "status": "Status",
+    "step": "Step",
+    "of": "of",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "update": "Update",
+    "cancel": "Cancel",
+    "close": "Close",
+    "add": "Add",
+    "browse": "Browse Files",
+    "other": "Other",
+    "by": "by",
+    "saving": "Saving...",
+    "required": "This field is required",
+    "continue": "Continue",
+    "back": "Back",
+    "copied": "Copied!",
+    "dismiss": "Dismiss"
   },
   "alert": {
     "success": "Success",

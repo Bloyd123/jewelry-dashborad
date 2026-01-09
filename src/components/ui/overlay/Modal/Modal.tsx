@@ -178,7 +178,7 @@ export const Modal: React.FC<ModalProps> = ({
             </div>
 
             {/* Content */}
-            <div className="max-h-[calc(90vh-3rem)] overflow-y-auto">
+            <div className="max-h-[90vh] overflow-y-auto">
               {children}
             </div>
           </DialogPrimitive.Content>
@@ -211,9 +211,10 @@ export const Modal: React.FC<ModalProps> = ({
             'translate-x-[-50%] translate-y-[-50%]',
             'w-full',
             sizeClasses[size],
-            'max-h-[90vh] overflow-hidden',
+            'max-h-[90vh] ',
             'rounded-lg border shadow-lg',
             'border-border-primary bg-bg-secondary',
+            'flex flex-col',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',

@@ -382,26 +382,6 @@
     "customerRequired": "Please select a customer",
     "itemsRequired": "Please add at least one item"
   },
-  "common": {
-    "clearSelection": "Clear Selection",
-    "all": "All",
-    "apply": "Apply",
-    "cancel": "Cancel",
-    "clear": "Clear",
-    "search": "Search",
-    "save": "Save Sale",
-    "update": "Update Sale",
-    "saving": "Saving...",
-    "add": "Add",
-    "step": "Step",
-    "of": "of",
-    "next": "Next",
-    "previous": "Previous",
-    "filters": {
-      "minYear": "Minimum Year",
-      "maxYear": "Maximum Year"
-    }
-  },
   "shop": {
     "filters": {
       "minPrice": "Min Price",

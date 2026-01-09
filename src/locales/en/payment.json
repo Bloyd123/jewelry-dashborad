@@ -226,23 +226,6 @@
     "sendReceipt": "Send Receipt"
   },
 
-  "common": {
-    "status": "Status",
-    "step": "Step",
-    "of": "of",
-    "next": "Next",
-    "previous": "Previous",
-    "save": "Save",
-    "update": "Update",
-    "cancel": "Cancel",
-    "close": "Close",
-    "add": "Add",
-    "browse": "Browse Files",
-    "other": "Other",
-    "by": "by",
-    "saving": "Saving...",
-    "required": "This field is required"
-  },
 
   "validation": {
     "required": "This field is required"

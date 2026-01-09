@@ -42,6 +42,11 @@ export const AUTH_ENDPOINTS = {
   // Session Management
   SESSIONS: `${AUTH_BASE}/sessions`,
   REVOKE_SESSION: `${AUTH_BASE}/sessions/:tokenId`,
+  ENABLE_2FA: `${AUTH_BASE}/2fa/enable`,
+  VERIFY_2FA: `${AUTH_BASE}/2fa/verify`,
+  DISABLE_2FA: `${AUTH_BASE}/2fa/disable`,
+  LOGIN_2FA: `${AUTH_BASE}/login/2fa`,
+  LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
 
 // ============================================================================

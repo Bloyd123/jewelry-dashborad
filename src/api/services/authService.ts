@@ -213,6 +213,66 @@ export const revokeSession = async (
   const response = await api.delete(url)
   return response.data
 }
+export const enable2FA = async (): Promise<
+  ApiResponse<{ secret: string; qrCodeDataURL: string }>
+> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.ENABLE_2FA)
+  return response.data
+}
+
+/**
+ * Verify and activate 2FA
+ */
+export const verify2FA = async (
+  token: string
+): Promise<ApiResponse<{ success: boolean; backupCodes: string[] }>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.VERIFY_2FA, { token })
+  return response.data
+}
+
+/**
+ * Disable 2FA
+ */
+export const disable2FA = async (
+  password: string,
+  token: string
+): Promise<ApiResponse<{ success: boolean }>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.DISABLE_2FA, {
+    password,
+    token,
+  })
+  return response.data
+}
+
+/**
+ * Verify 2FA code during login
+ */
+export const verify2FALogin = async (
+  tempToken: string,
+  token: string
+): Promise<ApiResponse<LoginResponse['data']>> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.LOGIN_2FA, {
+    tempToken,
+    token,
+  })
+  return response.data
+}
+
+/**
+ * Verify backup code during login
+ */
+export const verifyBackupCode = async (
+  tempToken: string,
+  backupCode: string
+): Promise<
+  ApiResponse<LoginResponse['data'] & { remainingBackupCodes: number }>
+> => {
+  const response = await api.post(API_ENDPOINTS.AUTH.LOGIN_BACKUP_CODE, {
+    tempToken,
+    backupCode,
+  })
+  return response.data
+}
 
 // ============================================================================
 // HELPER FUNCTIONS
@@ -269,6 +329,12 @@ export default {
   resendVerificationEmail,
   getActiveSessions,
   revokeSession,
+    enable2FA,
+  verify2FA,
+  disable2FA,
+  verify2FALogin,
+  verifyBackupCode,
+
 
   // Helpers
   checkEmailAvailability,

@@ -94,7 +94,50 @@ export interface ResendVerificationRequest {
 export interface EnableTwoFactorRequest {
   password: string
 }
+export interface Enable2FAResponse {
+  success: boolean
+  message: string
+  data: {
+    secret: string
+    qrCodeDataURL: string
+  }
+}
 
+/**
+ * Verify 2FA Response
+ */
+export interface Verify2FAResponse {
+  success: boolean
+  message: string
+  data: {
+    success: boolean
+    backupCodes: string[]
+  }
+}
+
+/**
+ * Disable 2FA Request
+ */
+export interface Disable2FARequest {
+  password: string
+  token: string
+}
+
+/**
+ * Verify 2FA Login Request
+ */
+export interface Verify2FALoginRequest {
+  tempToken: string
+  token: string
+}
+
+/**
+ * Verify Backup Code Login Request
+ */
+export interface VerifyBackupCodeLoginRequest {
+  tempToken: string
+  backupCode: string
+}
 /**
  * Verify Two-Factor Request
  */
@@ -160,6 +203,7 @@ export interface LoginResponse {
         shopAccesses?: UserShopAccess[];      // ✅ Optional now
     effectivePermissions?: ShopPermissions; // ✅ New field
     requires2FA?: boolean
+    tempToken?: string 
   }
 }
 
@@ -394,6 +438,9 @@ export interface AuthState {
 
   // Loading States
   isLoading: boolean
+    is2FALoading: boolean       // ✅ NEW: Only for 2FA operations
+  isPasswordChanging: boolean // ✅ NEW: Only for password
+  isProfileUpdating: boolean  // ✅ NEW: Only for profile
   isInitializing: boolean
   isRefreshing: boolean
 
