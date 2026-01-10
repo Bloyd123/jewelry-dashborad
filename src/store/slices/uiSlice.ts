@@ -93,7 +93,7 @@ const uiSlice = createSlice({
       // Note: CSS variables will be updated by useThemeSync hook
     },
 
-    // ✅ NEW: Cycle through themes
+    //  : Cycle through themes
     cycleTheme: state => {
       const themes: ThemeName[] = [
         'default',

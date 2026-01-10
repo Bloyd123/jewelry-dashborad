@@ -8,6 +8,12 @@ import { useNotification } from '@/hooks/useNotification'
 import { useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
+  selectActiveSessions,
+  selectIsSessionsLoading,
+  selectIsRevokingSession,
+} from '@/store/slices/authSlice'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import {
   Lock,
   Smartphone,
   Monitor,
@@ -38,6 +44,7 @@ import { useTwoFactorEnabled } from '@/store/hooks/auth'
 import { useAppSelector } from '@/store/hooks/base'
 
 import { Eye, EyeOff } from 'lucide-react'
+import { useEffect } from 'react'
 export const SecurityTab = () => {
   const { t } = useTranslation()
   const twoFactorEnabled = useTwoFactorEnabled()
@@ -51,9 +58,21 @@ export const SecurityTab = () => {
     newPassword: '',
     confirmPassword: '',
   })
+  const tokenId = useAppSelector(state => state.auth.tokenId) //
+
+  //  : Sessions state
+  const activeSessions = useAppSelector(selectActiveSessions) || []
+  const isSessionsLoading = useAppSelector(selectIsSessionsLoading)
+  const isRevokingSession = useAppSelector(selectIsRevokingSession)
+  const [revokingSessionId, setRevokingSessionId] = useState<string | null>(
+    null
+  ) //
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
-  const { changePassword } = useAuth()
+  const [showLogoutAllDialog, setShowLogoutAllDialog] = useState(false)
+  const [isLoggingOutAll, setIsLoggingOutAll] = useState(false)
+  const { changePassword, logoutAll, getSessions, revokeUserSession } =
+    useAuth()
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
   const usedCodes = user?.backupCodesUsed ?? []
@@ -95,11 +114,18 @@ export const SecurityTab = () => {
     setErrors({})
 
     try {
-      await changePassword({
+      // ✅ FIX: Check the result object
+      const result = await changePassword({
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword,
         confirmPassword: passwordData.confirmPassword,
       })
+
+      // ✅ FIX: Handle error in result
+      if (!result.success) {
+        handleError(result.error, setErrors)
+        return
+      }
 
       showSuccess(
         t('userProfile.security.passwordChanged'),
@@ -113,11 +139,65 @@ export const SecurityTab = () => {
         confirmPassword: '',
       })
     } catch (error: any) {
+      // This catch is for unexpected errors
       handleError(error, setErrors)
     } finally {
       setLoading(false)
     }
   }, [passwordData, changePassword, showSuccess, handleError, t])
+  //  : Fetch sessions on mount
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        await getSessions()
+      } catch (error) {
+        console.error('Failed to fetch sessions:', error)
+      }
+    }
+
+    fetchSessions()
+  }, [getSessions])
+  //  : Handle revoke session
+  const handleRevokeSession = useCallback(
+    async (sessionTokenId: string) => {
+      setRevokingSessionId(sessionTokenId)
+
+      try {
+        await revokeUserSession(sessionTokenId)
+
+        showSuccess(
+          t('userProfile.security.sessionRevoked'),
+          t('userProfile.security.sessionRevokedSuccess')
+        )
+      } catch (error: any) {
+        handleError(error)
+      } finally {
+        setRevokingSessionId(null)
+      }
+    },
+    [revokeUserSession, showSuccess, handleError, t]
+  )
+
+  //  : Handle logout all devices
+  const handleLogoutAllDevices = useCallback(async () => {
+    setIsLoggingOutAll(true)
+
+    try {
+      const result = await logoutAll()
+
+      if (result.success) {
+        showSuccess(
+          t('userProfile.security.logoutAllSuccess'),
+          t('userProfile.security.logoutAllSuccessDesc')
+        )
+        // User will be redirected to login automatically by Redux
+      }
+    } catch (error: any) {
+      handleError(error, setErrors)
+      setIsLoggingOutAll(false)
+    }
+    // Note: Don't reset loading on success - user will be redirected
+  }, [logoutAll, showSuccess, handleError, t])
 
   const [showPassword, setShowPassword] = useState({
     current: false,
@@ -440,7 +520,6 @@ export const SecurityTab = () => {
         onSuccess={handleDisable2FASuccess}
       />
 
-      {/* Active Sessions Card */}
       <Card>
         <CardHeader>
           <CardTitle>
@@ -452,56 +531,126 @@ export const SecurityTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-3">
-            {/* Current Session */}
-            <div className="flex items-center justify-between rounded-lg border border-border-primary bg-bg-tertiary p-3">
-              <div className="flex items-center gap-3">
-                <Monitor className="h-5 w-5 text-status-success" />
-                <div>
-                  <p className="text-sm font-medium text-text-primary">
-                    {t('userProfile.security.currentDevice')}
-                  </p>
-                  <p className="text-xs text-text-tertiary">
-                    {dummyUser.lastLoginIP}
-                  </p>
-                  <p className="text-xs text-text-tertiary">
-                    {t('userProfile.security.lastActive')}:{' '}
-                    {new Date(dummyUser.lastLogin!).toLocaleString()}
-                  </p>
-                </div>
-              </div>
-              <Badge variant="success">
-                {t('userProfile.security.active')}
-              </Badge>
+          {/* ✅ Loading State */}
+          {isSessionsLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-border-primary border-t-accent" />
             </div>
+          ) : activeSessions.length === 0 ? (
+            // ✅ Empty State
+            <div className="py-8 text-center text-text-tertiary">
+              <p>{t('userProfile.security.noActiveSessions')}</p>
+            </div>
+          ) : (
+            // ✅ Sessions List
+            <div className="space-y-3">
+              {activeSessions.map((session: any) => {
+                const isCurrent = session.id === tokenId
+                const isRevoking = revokingSessionId === session.id
 
-            {/* Dummy other sessions */}
-            <div className="flex items-center justify-between rounded-lg border border-border-primary p-3">
-              <div className="flex items-center gap-3">
-                <Smartphone className="h-5 w-5 text-text-secondary" />
-                <div>
-                  <p className="text-sm font-medium text-text-primary">
-                    Mobile Device
-                  </p>
-                  <p className="text-xs text-text-tertiary">192.168.1.105</p>
-                  <p className="text-xs text-text-tertiary">
-                    {t('userProfile.security.lastActive')}: 2 hours ago
-                  </p>
-                </div>
-              </div>
-              <Button variant="outline" size="sm">
-                {t('userProfile.security.revoke')}
-              </Button>
+                return (
+                  <div
+                    key={session.id}
+                    className={`flex items-center justify-between rounded-lg border p-3 ${
+                      isCurrent
+                        ? 'border-border-primary bg-bg-tertiary'
+                        : 'border-border-primary'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {session.device?.includes('Mobile') ? (
+                        <Smartphone
+                          className={`h-5 w-5 ${
+                            isCurrent
+                              ? 'text-status-success'
+                              : 'text-text-secondary'
+                          }`}
+                        />
+                      ) : (
+                        <Monitor
+                          className={`h-5 w-5 ${
+                            isCurrent
+                              ? 'text-status-success'
+                              : 'text-text-secondary'
+                          }`}
+                        />
+                      )}
+                      <div>
+                        <p className="text-sm font-medium text-text-primary">
+                          {session.device || 'Unknown Device'}
+                          {isCurrent &&
+                            ` (${t('userProfile.security.currentDevice')})`}
+                        </p>
+                        <p className="text-xs text-text-tertiary">
+                          {session.ipAddress || 'Unknown IP'}
+                        </p>
+                        <p className="text-xs text-text-tertiary">
+                          {t('userProfile.security.lastActive')}:{' '}
+                          {new Date(session.lastUsed).toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+
+                    {isCurrent ? (
+                      <Badge variant="success">
+                        {t('userProfile.security.active')}
+                      </Badge>
+                    ) : (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleRevokeSession(session.id)}
+                        disabled={isRevoking}
+                      >
+                        {isRevoking ? (
+                          <div className="flex items-center gap-2">
+                            <div className="h-3 w-3 animate-spin rounded-full border-2 border-text-secondary border-t-transparent" />
+                            {t('userProfile.security.revoking')}
+                          </div>
+                        ) : (
+                          t('userProfile.security.revoke')
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                )
+              })}
             </div>
-          </div>
+          )}
 
           <Separator />
 
-          <Button variant="destructive" className="w-full">
-            {t('userProfile.security.logoutAllDevices')}
+          <Button
+            variant="destructive"
+            className="w-full"
+            onClick={() => setShowLogoutAllDialog(true)}
+            disabled={isLoggingOutAll || activeSessions.length === 0}
+          >
+            {isLoggingOutAll ? (
+              <div className="flex items-center justify-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {t('userProfile.security.loggingOut')}
+              </div>
+            ) : (
+              t('userProfile.security.logoutAllDevices')
+            )}
           </Button>
         </CardContent>
       </Card>
+      <ConfirmDialog
+        open={showLogoutAllDialog}
+        onOpenChange={setShowLogoutAllDialog}
+        variant="danger"
+        title="userProfile.security.logoutAllConfirmTitle"
+        description="userProfile.security.logoutAllConfirmDesc"
+        confirmLabel="userProfile.security.logoutAllConfirm"
+        cancelLabel="common.cancel"
+        onConfirm={handleLogoutAllDevices}
+        loading={isLoggingOutAll}
+        showIcon={true}
+        closeOnConfirm={false}
+        testId="logout-all-devices-dialog"
+      />
     </div>
   )
 }

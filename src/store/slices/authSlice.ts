@@ -33,9 +33,12 @@ interface AuthState {
 
   // Loading States
   isLoading: boolean // ✅ ONLY for login/logout/init
-  is2FALoading: boolean // ✅ NEW: Only for 2FA operations
-  isPasswordChanging: boolean // ✅ NEW: Only for password
-  isProfileUpdating: boolean // ✅ NEW: Only for profile
+  is2FALoading: boolean //  : Only for 2FA operations
+  isPasswordChanging: boolean //  : Only for password
+  isProfileUpdating: boolean //  : Only for profile
+  activeSessions: any[]
+  isSessionsLoading: boolean //
+  isRevokingSession: boolean //
   isInitializing: boolean
   isRefreshing: boolean
 
@@ -75,6 +78,9 @@ const initialState: AuthState = {
   isRefreshing: false,
 
   error: null,
+  isSessionsLoading: false, //
+  isRevokingSession: false, //
+  activeSessions: [], //
 
   shopAccesses: [],
   currentShop: null,
@@ -386,6 +392,36 @@ export const verifyBackupCodeLogin = createAsyncThunk(
     }
   }
 )
+/**
+ * Get active sessions
+ */
+export const getActiveSessions = createAsyncThunk(
+  'auth/getActiveSessions',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await authService.getActiveSessions()
+      // response.data is the sessions array from your API
+      return response.data
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+/**
+ * Revoke a session
+ */
+export const revokeSession = createAsyncThunk(
+  'auth/revokeSession',
+  async (tokenId: string, { rejectWithValue }) => {
+    try {
+      await authService.revokeSession(tokenId)
+      return tokenId
+    } catch (error: any) {
+      return rejectWithValue(error)
+    }
+  }
+)
 
 // SLICE
 
@@ -479,7 +515,7 @@ const authSlice = createSlice({
           tokenService.saveAccessToken(action.payload.accessToken)
           tokenService.saveRefreshToken(action.payload.refreshToken)
 
-          // ✅ NEW: Handle both org-level and shop-level users
+          //  : Handle both org-level and shop-level users
           const { effectivePermissions, shopAccesses } = action.payload
 
           if (effectivePermissions) {
@@ -568,6 +604,46 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload as string
         state.isAuthenticated = false
+      })
+    // ========================================
+    // GET ACTIVE SESSIONS
+    // ========================================
+    builder
+      .addCase(getActiveSessions.pending, state => {
+        state.isSessionsLoading = true
+        state.error = null
+      })
+      .addCase(getActiveSessions.fulfilled, (state, action) => {
+        state.isSessionsLoading = false
+        // ✅ action.payload is already the sessions array
+        state.activeSessions = Array.isArray(action.payload)
+          ? action.payload
+          : []
+      })
+      .addCase(getActiveSessions.rejected, (state, action) => {
+        state.isSessionsLoading = false
+        state.error = action.payload as string
+        state.activeSessions = [] // Clear on error
+      })
+
+    // ========================================
+    // REVOKE SESSION
+    // ========================================
+    builder
+      .addCase(revokeSession.pending, state => {
+        state.isRevokingSession = true
+        state.error = null
+      })
+      .addCase(revokeSession.fulfilled, (state, action) => {
+        state.isRevokingSession = false
+        // Remove revoked session from list
+        state.activeSessions = state.activeSessions.filter(
+          session => session.id !== action.payload
+        )
+      })
+      .addCase(revokeSession.rejected, (state, action) => {
+        state.isRevokingSession = false
+        state.error = action.payload as string
       })
     // ========================================
     // FORGOT PASSWORD
@@ -903,6 +979,12 @@ export const selectAuth = (state: RootState) => state.auth
 export const selectUser = (state: RootState) => state.auth.user
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated
+export const selectActiveSessions = (state: RootState) =>
+  state.auth.activeSessions ?? []
+export const selectIsSessionsLoading = (state: RootState) =>
+  state.auth.isSessionsLoading ?? false
+export const selectIsRevokingSession = (state: RootState) =>
+  state.auth.isRevokingSession ?? false
 export const selectIsLoading = (state: RootState) => state.auth.isLoading
 export const selectError = (state: RootState) => state.auth.error
 export const selectCurrentShop = (state: RootState) => state.auth.currentShop

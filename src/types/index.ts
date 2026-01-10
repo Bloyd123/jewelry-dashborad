@@ -233,7 +233,6 @@ export type {
   Verify2FAResponse,
   Enable2FAResponse,
   VerifyBackupCodeLoginRequest,
-
   // Events & Configuration
   AuthEventType,
   AuthEvent,

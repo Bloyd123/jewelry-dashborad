@@ -40,6 +40,16 @@
     },
 
     "security": {
+      "logoutAllConfirmTitle": "Logout from All Devices?",
+      "logoutAllConfirmDesc": "This will end all your active sessions on every device, including this one. You will need to login again on all devices.",
+      "logoutAllConfirm": "Yes, Logout All",
+      "logoutAllSuccess": "Logged Out Successfully",
+      "logoutAllSuccessDesc": "You have been logged out from all devices. Redirecting to login...",
+      "loggingOut": "Logging out...",
+      "revoking": "Revoking...",
+      "noActiveSessions": "No active sessions found",
+      "sessionRevoked": "Session Revoked",
+      "sessionRevokedSuccess": "The session has been revoked successfully",
       "title": "Security Settings",
       "verificationStatus": "Verification Status",
       "verificationStatusDesc": "Your account verification details",

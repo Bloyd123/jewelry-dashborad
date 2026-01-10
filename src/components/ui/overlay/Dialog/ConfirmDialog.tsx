@@ -1,5 +1,5 @@
 // FILE: src/components/ui/overlay/Dialog/ConfirmDialog.tsx
-// Pre-built Confirmation Dialog
+// Pre-built Confirmation Dialog - Now Fully Responsive
 
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Dialog } from './Dialog'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
 export type ConfirmDialogVariant =
   | 'default'
   | 'danger'
@@ -122,21 +123,21 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       className={className}
       testId={testId}
     >
-      <div className="px-6 pb-6">
+      <div className="px-4 pb-4 pt-3 sm:px-6 sm:pb-6">
         {/* Icon & Content */}
-        <div className="flex gap-4">
+        <div className="flex gap-3 sm:gap-4">
           {showIcon && (
             <div className="flex-shrink-0">
-              <Icon className={cn('h-6 w-6', config.iconColor)} />
+              <Icon className={cn('h-5 w-5 sm:h-6 sm:w-6', config.iconColor)} />
             </div>
           )}
 
-          <div className="flex-1">
-            <h3 className="mb-2 text-lg font-semibold text-text-primary">
+          <div className="min-w-0 flex-1">
+            <h3 className="mb-2 break-words text-base font-semibold text-text-primary sm:text-lg">
               {t(title)}
             </h3>
             {description && (
-              <p className="mb-4 text-sm text-text-secondary">
+              <p className="mb-4 break-words text-xs text-text-secondary sm:text-sm">
                 {t(description)}
               </p>
             )}
@@ -144,11 +145,12 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="mt-4 flex flex-col-reverse justify-end gap-2 sm:mt-6 sm:flex-row sm:gap-3">
           <Button
             variant="outline"
             onClick={handleCancel}
             disabled={loading || disabled}
+            className="w-full sm:w-auto"
           >
             {t(cancelLabel)}
           </Button>
@@ -156,6 +158,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             variant={config.confirmVariant}
             onClick={handleConfirm}
             disabled={loading || disabled}
+            className="w-full sm:w-auto"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             {t(confirmLabel)}

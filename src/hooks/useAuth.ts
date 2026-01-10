@@ -30,6 +30,11 @@ import {
   selectCurrentShop,
   selectPermissions,
   selectShopAccesses,
+  getActiveSessions as getActiveSessionsAction,
+  revokeSession as revokeSessionAction,
+  selectActiveSessions,
+  selectIsSessionsLoading,
+  selectIsRevokingSession,
   selectHasPermission,
   selectHasRole,
   selectHasAnyPermission,
@@ -137,7 +142,28 @@ export const useAuth = () => {
       return { success: true }
     }
   }, [dispatch])
+  //  : GET ACTIVE SESSIONS
+  const getSessions = useCallback(async () => {
+    try {
+      const result = await dispatch(getActiveSessionsAction()).unwrap()
+      return { success: true, data: result }
+    } catch (error: any) {
+      throw error
+    }
+  }, [dispatch])
 
+  //  : REVOKE SESSION
+  const revokeUserSession = useCallback(
+    async (tokenId: string) => {
+      try {
+        await dispatch(revokeSessionAction(tokenId)).unwrap()
+        return { success: true }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    [dispatch]
+  )
   // GET CURRENT USER
 
   const getUser = useCallback(async () => {
@@ -207,7 +233,6 @@ export const useAuth = () => {
     },
     [dispatch]
   )
-
   const clearShop = useCallback(() => {
     dispatch(clearCurrentShop())
   }, [dispatch])
@@ -258,7 +283,8 @@ export const useAuth = () => {
     forgotPassword,
     refreshToken,
     initialize,
-
+    getSessions,
+    revokeUserSession,
     // Shop Management
     switchShop,
     clearShop,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: api/services/authService.ts
 // Authentication API Service
-// ============================================================================
 
 import api, { retryRequest } from '@/api/axios'
 import { API_ENDPOINTS } from '@/api/endpoints'
@@ -28,9 +26,7 @@ import type {
 } from '@/types'
 import { replacePathParams } from '@/utils/api'
 
-// ============================================================================
 // PUBLIC ENDPOINTS (No Auth Required)
-// ============================================================================
 
 /**
  * Register super admin (first user)
@@ -115,9 +111,7 @@ export const verifyEmail = async (
   return response.data
 }
 
-// ============================================================================
 // PROTECTED ENDPOINTS (Auth Required)
-// ============================================================================
 
 /**
  * Get current user profile
@@ -274,9 +268,7 @@ export const verifyBackupCode = async (
   return response.data
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Check if email is available
@@ -306,9 +298,7 @@ export const checkUsernameAvailability = async (
   }
 }
 
-// ============================================================================
 // EXPORTS
-// ============================================================================
 
 export default {
   // Public

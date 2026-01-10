@@ -201,7 +201,7 @@ export interface LoginResponse {
     tokenId: string
     expiresIn: number
     shopAccesses?: UserShopAccess[] // ✅ Optional now
-    effectivePermissions?: ShopPermissions // ✅ New field
+    effectivePermissions?: ShopPermissions //   field
     requires2FA?: boolean
     tempToken?: string
   }
@@ -438,9 +438,9 @@ export interface AuthState {
 
   // Loading States
   isLoading: boolean
-  is2FALoading: boolean // ✅ NEW: Only for 2FA operations
-  isPasswordChanging: boolean // ✅ NEW: Only for password
-  isProfileUpdating: boolean // ✅ NEW: Only for profile
+  is2FALoading: boolean //  : Only for 2FA operations
+  isPasswordChanging: boolean //  : Only for password
+  isProfileUpdating: boolean //  : Only for profile
   isInitializing: boolean
   isRefreshing: boolean
 

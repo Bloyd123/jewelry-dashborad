@@ -3,8 +3,7 @@
 
 import React, { useState } from 'react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import OverviewTab from //   HistoryTab, //   DocumentsTab, //   PaymentsTab,
-'@/components/sales/SalesDetailPage/tabs/OverviewTab'
+import OverviewTab from '@/components/sales/SalesDetailPage/tabs/OverviewTab' //   HistoryTab, //   DocumentsTab, //   PaymentsTab,
 import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
 import PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
 import HistoryTab from '@/components/sales/SalesDetailPage/tabs/HistoryTab'
