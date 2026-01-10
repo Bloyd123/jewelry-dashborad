@@ -23,17 +23,13 @@ export const ShopTable: React.FC = () => {
   // For demo purposes - in real app, get from Redux/Context
   const userRole = 'shop_admin' // 'super_admin' | 'org_admin' | 'shop_admin' | 'manager' | 'staff'
 
-  // ========================================================================
   // STATE
-  // ========================================================================
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleViewDetails = (shop: Shop) => {
     console.log('View Details:', shop)
@@ -114,9 +110,7 @@ export const ShopTable: React.FC = () => {
     setSelectedRows(new Set())
   }
 
-  // ========================================================================
   // ROW ACTIONS
-  // ========================================================================
 
   const rowActions = useMemo(
     () =>
@@ -133,17 +127,13 @@ export const ShopTable: React.FC = () => {
     [userRole]
   )
 
-  // ========================================================================
   // SELECTED SHOPS
-  // ========================================================================
 
   const selectedShops = useMemo(() => {
     return dummyShops.filter(shop => selectedRows.has(shop._id))
   }, [selectedRows])
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="w-full space-y-4">

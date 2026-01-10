@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: src/api/interceptors/authInterceptor.ts
 // Request interceptor to attach authentication token
-// ============================================================================
 
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 
 import { getAccessToken } from '@/services/auth/tokenService'
 
-// ============================================================================
 // AUTH INTERCEPTOR
-// ============================================================================
 
 /**
  * Setup authentication interceptor
@@ -51,9 +47,7 @@ export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
   )
 }
 
-// ============================================================================
 // HELPER FUNCTIONS
-// ============================================================================
 
 /**
  * Check if user is authenticated (has valid token)

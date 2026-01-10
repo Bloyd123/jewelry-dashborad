@@ -20,9 +20,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Product } from '@/types/product.types'
 import { dummyProducts } from '@/pages/product/mock.data'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface DesktopProductDetailHeaderProps {
   productId?: string

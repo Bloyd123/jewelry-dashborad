@@ -10,9 +10,8 @@ import type {
   PaginationMeta,
 } from '@/types/product.types'
 
-// ============================================
 // DUMMY CATEGORIES
-// ============================================
+
 export const dummyCategories: Category[] = [
   {
     _id: '674d8e9f1234567890abcdef',
@@ -79,9 +78,8 @@ export const dummyCategories: Category[] = [
   },
 ]
 
-// ============================================
 // DUMMY PRODUCTS
-// ============================================
+
 export const dummyProducts: Product[] = [
   {
     _id: '674d8e9f1234567890abc001',
@@ -505,9 +503,8 @@ export const dummyProducts: Product[] = [
   },
 ]
 
-// ============================================
 // DUMMY PAGINATION
-// ============================================
+
 export const dummyPagination: PaginationMeta = {
   currentPage: 1,
   totalPages: 1,
@@ -517,9 +514,8 @@ export const dummyPagination: PaginationMeta = {
   hasPrevPage: false,
 }
 
-// ============================================
 // DUMMY ANALYTICS
-// ============================================
+
 export const dummyAnalytics: ProductAnalytics = {
   overview: {
     totalProducts: 5,
@@ -557,9 +553,7 @@ export const dummyAnalytics: ProductAnalytics = {
   ],
 }
 
-// ============================================
 // HELPER FUNCTIONS TO SIMULATE API
-// ============================================
 
 /**
  * Simulate API delay

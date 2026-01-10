@@ -104,9 +104,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
   const { t } = useTranslation()
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleSearchChange = (value: string) => {
     onFiltersChange({ ...filters, search: value })
@@ -136,9 +134,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
     onFiltersChange({ ...filters, [filterKey]: undefined })
   }
 
-  // ========================================================================
   // ACTIVE FILTERS COUNT
-  // ========================================================================
 
   const activeFiltersCount = [
     filters.search,
@@ -149,9 +145,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
     filters.dateRange,
   ].filter(Boolean).length
 
-  // ========================================================================
   // GET LABEL FOR ACTIVE FILTER
-  // ========================================================================
 
   const getFilterLabel = (key: string, value: string) => {
     switch (key) {
@@ -170,9 +164,7 @@ export const ActivityLogFilters: React.FC<ActivityLogFiltersProps> = ({
     }
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="space-y-4">

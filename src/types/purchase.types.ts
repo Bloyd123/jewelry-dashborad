@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: types/purchase.types.ts
 // Purchase Module TypeScript Types - Matches Backend Schema
-// ============================================================================
 
 // Enums
 export type PurchaseType =

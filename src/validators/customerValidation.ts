@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/validations/customerValidation.ts
 // Customer Validation Schema for Frontend
-// ============================================================================
 
 import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'

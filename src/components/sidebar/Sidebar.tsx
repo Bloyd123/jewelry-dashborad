@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/sidebar/Sidebar.tsx
 // Main Sidebar Component
-// ============================================================================
 
 import { useTranslation } from 'react-i18next' // If using i18n
 import { SidebarHeader } from '../layout/sidebar/SidebarHeader'

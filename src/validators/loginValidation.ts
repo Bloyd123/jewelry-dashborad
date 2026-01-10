@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/validators/loginValidation.ts
 // Frontend Login Form Validation (with Zod)
-// ============================================================================
 
 import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'

@@ -444,9 +444,7 @@ const ItemsTab: React.FC<ItemsTabProps> = ({ items, oldGoldExchange }) => {
     },
   ]
 
-  // ========================================================================
   // OLD GOLD SECTION
-  // ========================================================================
 
   const OldGoldSection = () => {
     if (!oldGoldExchange?.hasExchange || oldGoldExchange.items.length === 0) {

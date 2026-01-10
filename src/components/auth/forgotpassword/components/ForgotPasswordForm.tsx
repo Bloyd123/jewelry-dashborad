@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: components/auth/forgotpassword/components/ForgotPasswordForm.tsx
-// ============================================================================
 
 import React, { useState, useCallback } from 'react'
 import { Mail, ArrowLeft } from 'lucide-react'

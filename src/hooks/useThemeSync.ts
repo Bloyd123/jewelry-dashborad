@@ -18,36 +18,36 @@ export const useThemeSync = () => {
 
     const { colors } = currentTheme
 
-    // ========== Header Colors ==========
+    //  Header Colors
     root.style.setProperty('--header-primary', colors.header.primary)
     root.style.setProperty('--header-secondary', colors.header.secondary)
 
-    // ========== Background Colors ==========
+    //  Background Colors
     root.style.setProperty('--bg-primary', colors.background.primary)
     root.style.setProperty('--bg-secondary', colors.background.secondary)
     root.style.setProperty('--bg-tertiary', colors.background.tertiary)
 
-    // ========== Text Colors ==========
+    //  Text Colors
     root.style.setProperty('--text-primary', colors.text.primary)
     root.style.setProperty('--text-secondary', colors.text.secondary)
     root.style.setProperty('--text-tertiary', colors.text.tertiary)
     root.style.setProperty('--text-accent', colors.text.accent)
 
-    // ========== Border Colors ==========
+    //  Border Colors
     root.style.setProperty('--border-primary', colors.border.primary)
     root.style.setProperty('--border-secondary', colors.border.secondary)
 
-    // ========== Status Colors ==========
+    //  Status Colors
     root.style.setProperty('--status-success', colors.status.success)
     root.style.setProperty('--status-warning', colors.status.warning)
     root.style.setProperty('--status-error', colors.status.error)
     root.style.setProperty('--status-info', colors.status.info)
 
-    // ========== Primary/Accent Colors ==========
+    //  Primary/Accent Colors
     root.style.setProperty('--primary-color', colors.primary)
     root.style.setProperty('--accent-color', colors.accent)
 
-    // ========== Sidebar Colors (Derived) ==========
+    //  Sidebar Colors (Derived)
     root.style.setProperty('--sidebar-bg', colors.background.secondary)
     root.style.setProperty('--sidebar-text', colors.text.primary)
     root.style.setProperty('--sidebar-text-muted', colors.text.secondary)
@@ -55,13 +55,13 @@ export const useThemeSync = () => {
     root.style.setProperty('--sidebar-active', colors.primary)
     root.style.setProperty('--sidebar-border', colors.border.primary)
 
-    // ========== Shadows ==========
+    //  Shadows
     root.style.setProperty('--shadow-sm', currentTheme.shadows.sm)
     root.style.setProperty('--shadow-md', currentTheme.shadows.md)
     root.style.setProperty('--shadow-lg', currentTheme.shadows.lg)
     root.style.setProperty('--shadow-xl', currentTheme.shadows.xl)
 
-    // ========== Spacing ==========
+    //  Spacing
     root.style.setProperty('--spacing-xs', currentTheme.spacing.xs)
     root.style.setProperty('--spacing-sm', currentTheme.spacing.sm)
     root.style.setProperty('--spacing-md', currentTheme.spacing.md)
@@ -69,14 +69,14 @@ export const useThemeSync = () => {
     root.style.setProperty('--spacing-xl', currentTheme.spacing.xl)
     root.style.setProperty('--spacing-2xl', currentTheme.spacing['2xl'])
 
-    // ========== Border Radius ==========
+    //  Border Radius
     root.style.setProperty('--radius-sm', currentTheme.borderRadius.sm)
     root.style.setProperty('--radius-md', currentTheme.borderRadius.md)
     root.style.setProperty('--radius-lg', currentTheme.borderRadius.lg)
     root.style.setProperty('--radius-xl', currentTheme.borderRadius.xl)
     root.style.setProperty('--radius-full', currentTheme.borderRadius.full)
 
-    // ========== Typography ==========
+    //  Typography
     root.style.setProperty(
       '--font-sans',
       currentTheme.typography.fontFamily.sans
@@ -86,7 +86,7 @@ export const useThemeSync = () => {
       currentTheme.typography.fontFamily.mono
     )
 
-    // ========== Transitions ==========
+    //  Transitions
     root.style.setProperty('--transition-fast', currentTheme.transitions.fast)
     root.style.setProperty(
       '--transition-normal',

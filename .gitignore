@@ -1,13 +1,13 @@
-# ========================================
+
 # Dependencies
-# ========================================
+
 node_modules/
 jspm_packages/
 bower_components/
 
-# ========================================
+
 # Build Outputs
-# ========================================
+
 dist/
 dist-ssr/
 build/
@@ -16,16 +16,16 @@ out/
 .vercel/
 .netlify/
 
-# ========================================
+
 # Vite
-# ========================================
+
 .vite/
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# ========================================
+
 # Testing
-# ========================================
+
 coverage/
 *.lcov
 .nyc_output/
@@ -33,15 +33,15 @@ test-results/
 playwright-report/
 playwright/.cache/
 
-# ========================================
+
 # TypeScript
-# ========================================
+
 *.tsbuildinfo
 next-env.d.ts
 
-# ========================================
+
 # Environment Variables
-# ========================================
+
 .env
 .env.local
 .env.development.local
@@ -49,9 +49,9 @@ next-env.d.ts
 .env.production.local
 .env*.local
 
-# ========================================
+
 # Logs
-# ========================================
+
 logs/
 *.log
 npm-debug.log*
@@ -60,9 +60,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# ========================================
+
 # Editor directories and files
-# ========================================
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -83,9 +83,9 @@ lerna-debug.log*
 .loadpath
 .factorypath
 
-# ========================================
+
 # OS Files
-# ========================================
+
 .DS_Store
 .DS_Store?
 ._*
@@ -96,9 +96,9 @@ Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
-# ========================================
+
 # Package Manager
-# ========================================
+
 package-lock.json
 yarn.lock
 pnpm-lock.yaml
@@ -110,9 +110,9 @@ pnpm-lock.yaml
 !.yarn/sdks
 !.yarn/versions
 
-# ========================================
+
 # Cache
-# ========================================
+
 .cache/
 .parcel-cache/
 .npm/
@@ -121,9 +121,9 @@ pnpm-lock.yaml
 .prettier-cache
 *.cache
 
-# ========================================
+
 # Temporary Files
-# ========================================
+
 *.tmp
 *.temp
 *.swp
@@ -132,90 +132,90 @@ pnpm-lock.yaml
 .tmp/
 temp/
 
-# ========================================
+
 # Optional npm cache directory
-# ========================================
+
 .npm
 
-# ========================================
+
 # Optional eslint cache
-# ========================================
+
 .eslintcache
 
-# ========================================
+
 # Optional REPL history
-# ========================================
+
 .node_repl_history
 
-# ========================================
+
 # Output of 'npm pack'
-# ========================================
+
 *.tgz
 
-# ========================================
+
 # Yarn Integrity file
-# ========================================
+
 .yarn-integrity
 
-# ========================================
+
 # dotenv environment variables file
-# ========================================
+
 .env
 .env.test
 .env.production
 .env.staging
 
-# ========================================
+
 # Next.js (if you add it later)
-# ========================================
+
 .next/
 next-env.d.ts
 
-# ========================================
+
 # Nuxt.js (if you add it later)
-# ========================================
+
 .nuxt/
 .nitro/
 
-# ========================================
+
 # Gatsby (if you add it later)
-# ========================================
+
 .cache/
 public/
 
-# ========================================
+
 # Storybook
-# ========================================
+
 storybook-static/
 
-# ========================================
+
 # Terraform
-# ========================================
+
 .terraform/
 *.tfstate
 *.tfstate.backup
 
-# ========================================
+
 # Docker
-# ========================================
+
 docker-compose.override.yml
 .dockerignore
 
-# ========================================
+
 # Local SSL certificates
-# ========================================
+
 *.pem
 *.key
 *.crt
 
-# ========================================
+
 # Sentry
-# ========================================
+
 .sentryclirc
 
-# ========================================
+
 # Miscellaneous
-# ========================================
+
 *.bak
 *.orig
 *.rej

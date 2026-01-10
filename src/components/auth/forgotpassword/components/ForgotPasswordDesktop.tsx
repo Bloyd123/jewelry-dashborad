@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: components/auth/forgotpassword/components/ForgotPasswordDesktop.tsx
-// ============================================================================
 
 import React from 'react'
 

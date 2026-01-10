@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: types/payment.types.ts
 // Payment Module - Complete TypeScript Type Definitions
-// ============================================================================
 
 export type PaymentType =
   | 'sale_payment'
@@ -46,9 +44,7 @@ export type ReceiptSendMethod = 'email' | 'sms' | 'whatsapp'
 
 export type ExportFormat = 'excel' | 'csv'
 
-// ============================================================================
 // MAIN PAYMENT INTERFACE
-// ============================================================================
 
 export interface Payment {
   _id: string
@@ -109,9 +105,7 @@ export interface Payment {
   deletedAt?: string
 }
 
-// ============================================================================
 // NESTED INTERFACES
-// ============================================================================
 
 export interface CardDetails {
   cardType?: 'credit' | 'debit'
@@ -193,9 +187,7 @@ export interface User {
   email?: string
 }
 
-// ============================================================================
 // API REQUEST TYPES
-// ============================================================================
 
 export interface CreatePaymentRequest {
   paymentType: PaymentType
@@ -278,9 +270,7 @@ export interface RejectPaymentRequest {
   reason: string
 }
 
-// ============================================================================
 // API RESPONSE TYPES
-// ============================================================================
 
 export interface ApiResponse<T> {
   success: boolean
@@ -306,9 +296,7 @@ export interface PaginatedResponse<T> {
 export interface PaymentResponse extends ApiResponse<Payment> {}
 export interface PaymentsResponse extends PaginatedResponse<Payment> {}
 
-// ============================================================================
 // FILTER & QUERY TYPES
-// ============================================================================
 
 export interface PaymentFilters {
   page?: number
@@ -329,9 +317,7 @@ export interface PaymentFilters {
   search?: string
 }
 
-// ============================================================================
 // ANALYTICS & DASHBOARD TYPES
-// ============================================================================
 
 export interface PaymentAnalytics {
   analytics: Array<{
@@ -415,9 +401,7 @@ export interface ReconciliationSummary {
   totalDiscrepancy: number
 }
 
-// ============================================================================
 // UTILITY TYPES
-// ============================================================================
 
 export interface PaymentStats {
   count: number
@@ -434,9 +418,7 @@ export interface BulkOperationResult {
   }
 }
 
-// ============================================================================
 // FORM TYPES (for React Hook Form or similar)
-// ============================================================================
 
 export interface PaymentFormData {
   paymentType: PaymentType
@@ -468,9 +450,7 @@ export interface PaymentFormData {
   cardHolderName?: string
 }
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
   pending: 'Pending',

@@ -1,7 +1,6 @@
-// ============================================================================
 // FILE: src/utils/errors/index.ts
 // Export all error classes
-// ============================================================================
+
 export { ApiError } from './ApiError'
 export { AuthError } from './AuthError'
 export { PermissionError } from './PermissionError'

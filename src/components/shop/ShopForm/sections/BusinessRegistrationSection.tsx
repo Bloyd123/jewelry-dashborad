@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/shop/ShopForm/sections/BusinessRegistrationSection.tsx
 // Business Registration Section
-// ============================================================================
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'

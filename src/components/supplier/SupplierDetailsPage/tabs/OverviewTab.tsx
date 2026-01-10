@@ -111,9 +111,7 @@ const SupplierOverviewTab = () => {
     setManagementAction(null)
   }
 
-  // ========================================================================
   // BASIC INFORMATION SECTION
-  // ========================================================================
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -363,9 +361,7 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // ADDRESS SECTION
-  // ========================================================================
 
   const AddressSection = () => {
     if (!supplierData.address) {
@@ -475,9 +471,7 @@ const SupplierOverviewTab = () => {
     )
   }
 
-  // ========================================================================
   // BUSINESS REGISTRATION SECTION
-  // ========================================================================
 
   const BusinessRegistrationSection = () => (
     <div className="space-y-4 p-4">
@@ -686,9 +680,7 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // PAYMENT TERMS SECTION
-  // ========================================================================
 
   const PaymentTermsSection = () => (
     <div className="space-y-4 p-4">
@@ -791,9 +783,7 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // BANK DETAILS SECTION
-  // ========================================================================
 
   const BankDetailsSection = () => {
     if (!supplierData.bankDetails) {
@@ -907,9 +897,7 @@ const SupplierOverviewTab = () => {
     )
   }
 
-  // ========================================================================
   // RATINGS & PERFORMANCE SECTION
-  // ========================================================================
 
   const RatingsPerformanceSection = () => (
     <div className="space-y-4 p-4">
@@ -1065,9 +1053,7 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // NOTES & DOCUMENTS SECTION
-  // ========================================================================
 
   const NotesDocumentsSection = () => (
     <div className="space-y-4 p-4">
@@ -1157,9 +1143,7 @@ const SupplierOverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // RENDER MAIN ACCORDION
-  // ========================================================================
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

@@ -1,11 +1,7 @@
-// ============================================================================
 // FILE: src/types/shop.types.ts
 // Shop Type Definitions for Frontend
-// ============================================================================
 
-// ============================================================================
 // ENUMS
-// ============================================================================
 
 export enum ShopType {
   RETAIL = 'retail',
@@ -61,9 +57,7 @@ export enum WeightUnit {
   CARAT = 'carat',
 }
 
-// ============================================================================
 // ADDRESS TYPES
-// ============================================================================
 
 export interface Coordinates {
   type: 'Point'
@@ -83,9 +77,7 @@ export interface ShopAddress {
   }
 }
 
-// ============================================================================
 // BANK & UPI DETAILS
-// ============================================================================
 
 export interface BankDetail {
   _id?: string
@@ -107,9 +99,7 @@ export interface UpiDetail {
   isPrimary?: boolean
 }
 
-// ============================================================================
 // BUSINESS HOURS
-// ============================================================================
 
 export interface TimeSlot {
   open: string // Format: "HH:MM" (24-hour)
@@ -130,9 +120,7 @@ export interface BusinessHours {
   holidays?: Holiday[] // Array of dates
 }
 
-// ============================================================================
 // METAL RATES
-// ============================================================================
 
 export interface MetalRate {
   rate24K?: number
@@ -169,9 +157,7 @@ export interface MetalRateHistory {
   notes?: string
 }
 
-// ============================================================================
 // SHOP SETTINGS
-// ============================================================================
 
 export interface GSTRates {
   gold?: number
@@ -219,9 +205,7 @@ export interface ShopSettings {
   timeFormat?: '12h' | '24h'
 }
 
-// ============================================================================
 // SHOP FEATURES
-// ============================================================================
 
 export interface ShopFeatures {
   enableInventory?: boolean
@@ -235,9 +219,7 @@ export interface ShopFeatures {
   enableWarehouse?: boolean
 }
 
-// ============================================================================
 // SHOP STATISTICS
-// ============================================================================
 
 export interface ShopStatistics {
   totalProducts?: number
@@ -251,9 +233,7 @@ export interface ShopStatistics {
   lastUpdated?: Date | string
 }
 
-// ============================================================================
 // COMPLIANCE
-// ============================================================================
 
 export interface Compliance {
   isGSTRegistered?: boolean
@@ -270,9 +250,7 @@ export interface Compliance {
   }>
 }
 
-// ============================================================================
 // USER REFERENCE (Minimal)
-// ============================================================================
 
 export interface ShopUser {
   _id: string
@@ -283,9 +261,7 @@ export interface ShopUser {
   profileImage?: string
 }
 
-// ============================================================================
 // ORGANIZATION REFERENCE (Minimal)
-// ============================================================================
 
 export interface Organization {
   _id: string
@@ -296,9 +272,7 @@ export interface Organization {
   logo?: string
 }
 
-// ============================================================================
 // MAIN SHOP INTERFACE
-// ============================================================================
 
 export interface Shop {
   _id: string
@@ -363,9 +337,7 @@ export interface Shop {
   deletedAt?: Date | string
 }
 
-// ============================================================================
 // SHOP FORM DATA (for Create/Update)
-// ============================================================================
 
 export interface ShopFormData {
   name: string
@@ -402,9 +374,7 @@ export interface ShopFormData {
   upiDetails?: UpiDetail[]
 }
 
-// ============================================================================
 // SHOP FILTERS (for List Page)
-// ============================================================================
 
 export interface ShopFilters {
   search?: string
@@ -417,9 +387,7 @@ export interface ShopFilters {
   organizationId?: string
 }
 
-// ============================================================================
 // SHOP QUERY PARAMS (with Pagination)
-// ============================================================================
 
 export interface ShopQueryParams extends ShopFilters {
   page?: number
@@ -428,9 +396,7 @@ export interface ShopQueryParams extends ShopFilters {
   fields?: string
 }
 
-// ============================================================================
 // API RESPONSE TYPES
-// ============================================================================
 
 export interface ShopPaginationMeta {
   totalDocs: number
@@ -477,9 +443,7 @@ export interface ShopStatisticsResponse {
   data: ShopStatistics
 }
 
-// ============================================================================
 // METAL RATES UPDATE PAYLOAD
-// ============================================================================
 
 export interface MetalRatesUpdatePayload {
   gold?: {
@@ -498,17 +462,13 @@ export interface MetalRatesUpdatePayload {
   }
 }
 
-// ============================================================================
 // SHOP SETTINGS UPDATE PAYLOAD
-// ============================================================================
 
 export interface ShopSettingsUpdatePayload {
   settings: Partial<ShopSettings>
 }
 
-// ============================================================================
 // SHOP TABLE COLUMN TYPE
-// ============================================================================
 
 export interface ShopTableColumn {
   key: string
@@ -518,9 +478,7 @@ export interface ShopTableColumn {
   align?: 'left' | 'center' | 'right'
 }
 
-// ============================================================================
 // SHOP CARD PROPS (for Grid View)
-// ============================================================================
 
 export interface ShopCardProps {
   shop: Shop
@@ -530,18 +488,14 @@ export interface ShopCardProps {
   onToggleStatus?: (shop: Shop) => void
 }
 
-// ============================================================================
 // SHOP VALIDATION ERROR
-// ============================================================================
 
 export interface ShopValidationError {
   field: string
   message: string
 }
 
-// ============================================================================
 // SHOP ACTION TYPES (for State Management)
-// ============================================================================
 
 export enum ShopActionType {
   FETCH_SHOPS_REQUEST = 'FETCH_SHOPS_REQUEST',
@@ -573,8 +527,6 @@ export enum ShopActionType {
   CLEAR_ERRORS = 'CLEAR_ERRORS',
 }
 
-// ============================================================================
 // EXPORT ALL TYPES
-// ============================================================================
 
 export type { Shop as default }

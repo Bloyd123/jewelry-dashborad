@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: types/sales.types.ts
 // Complete TypeScript Types for Sales Module
-// ============================================================================
 
 export type SaleStatus =
   | 'draft'
@@ -51,9 +49,7 @@ export type DocumentType =
   | 'warranty'
   | 'other'
 
-// ============================================================================
 // MAIN INTERFACES
-// ============================================================================
 
 export interface SaleItem {
   _id?: string
@@ -230,9 +226,7 @@ export interface Sale {
   totalQuantity?: number
 }
 
-// ============================================================================
 // API REQUEST/RESPONSE TYPES
-// ============================================================================
 
 export interface CreateSaleRequest {
   customerId: string

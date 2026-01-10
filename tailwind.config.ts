@@ -1,7 +1,7 @@
-// ============================================================================
+
 // FILE: tailwind.config.js
 // Tailwind Configuration with CSS Variables
-// ============================================================================
+
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +9,7 @@ export default {
   darkMode: 'class', // Enable dark mode via class
   theme: {
     extend: {
-      // ========== Colors (CSS Variables) ==========
+      //  Colors (CSS Variables) 
       colors: {
         // Header
         header: {
@@ -61,13 +61,13 @@ export default {
         },
       },
 
-      // ========== Spacing ==========
+      // Spacing
       spacing: {
         sidebar: 'var(--sidebar-width)',
         'sidebar-collapsed': 'var(--sidebar-collapsed-width)',
       },
 
-      // ========== Border Radius ==========
+      // Border Radius
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',
@@ -76,7 +76,7 @@ export default {
         full: 'var(--radius-full)',
       },
 
-      // ========== Box Shadow ==========
+      // Box Shadow
       boxShadow: {
         sm: 'var(--shadow-sm)',
         md: 'var(--shadow-md)',
@@ -84,13 +84,13 @@ export default {
         xl: 'var(--shadow-xl)',
       },
 
-      // ========== Font Family ==========
+      // Font Family
       fontFamily: {
         sans: 'var(--font-sans)',
         mono: 'var(--font-mono)',
       },
 
-      // ========== Font Size ==========
+      // Font Size
       fontSize: {
         xs: 'var(--font-size-xs)',
         sm: 'var(--font-size-sm)',
@@ -102,14 +102,14 @@ export default {
         '4xl': 'var(--font-size-4xl)',
       },
 
-      // ========== Transitions ==========
+      // Transitions
       transitionDuration: {
         fast: 'var(--transition-fast)',
         normal: 'var(--transition-normal)',
         slow: 'var(--transition-slow)',
       },
 
-      // ========== Z-Index ==========
+      // Z-Index
       zIndex: {
         dropdown: 'var(--z-dropdown)',
         sticky: 'var(--z-sticky)',

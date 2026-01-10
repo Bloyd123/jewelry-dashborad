@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/api/axios.ts
 // Axios instance with interceptors configured
-// ============================================================================
 
 import axios, { AxiosInstance } from 'axios'
 
@@ -9,9 +7,7 @@ import { setupAuthInterceptor } from './interceptors/authInterceptor'
 import { setupErrorInterceptor } from './interceptors/errorInterceptor'
 import { APP_CONFIG } from '@/config/app.config'
 
-// ============================================================================
 // CREATE AXIOS INSTANCE
-// ============================================================================
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: APP_CONFIG.API.BASE_URL,
@@ -23,9 +19,7 @@ const axiosInstance: AxiosInstance = axios.create({
   withCredentials: true, // For cookies/sessions if needed
 })
 
-// ============================================================================
 // SETUP INTERCEPTORS
-// ============================================================================
 
 // Setup authentication interceptor (attaches token to requests)
 setupAuthInterceptor(axiosInstance)
@@ -33,9 +27,7 @@ setupAuthInterceptor(axiosInstance)
 // Setup error interceptor (handles errors globally, token refresh, etc.)
 setupErrorInterceptor(axiosInstance)
 
-// ============================================================================
 // RETRY LOGIC (Optional)
-// ============================================================================
 
 /**
  * Retry failed requests with exponential backoff
@@ -95,9 +87,7 @@ export const retryRequest = async <T>(
   throw lastError!
 }
 
-// ============================================================================
 // EXPORT
-// ============================================================================
 
 export default axiosInstance
 

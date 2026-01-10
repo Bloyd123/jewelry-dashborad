@@ -21,9 +21,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { UpdateRatesModal } from '@/components/metal-rates/UpdateRatesModal/UpdateRatesModal'
 import { CompareRatesModal } from '@/components/metal-rates/CompareRates'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface DesktopMetalRatesDashboardHeaderProps {
   shopId?: string

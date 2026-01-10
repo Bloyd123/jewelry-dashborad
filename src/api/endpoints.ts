@@ -1,15 +1,11 @@
-// ============================================================================
 // FILE: src/api/endpoints.ts
 // API Endpoints Configuration
-// ============================================================================
 
 const API_BASE = '/api'
 const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
-// ============================================================================
 // AUTHENTICATION ENDPOINTS
-// ============================================================================
 
 const AUTH_BASE = `${BASE_URL}/auth`
 
@@ -49,9 +45,7 @@ export const AUTH_ENDPOINTS = {
   LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
 
-// ============================================================================
 // SHOP ENDPOINTS
-// ============================================================================
 
 const SHOPS_BASE = `${BASE_URL}/shops`
 
@@ -64,9 +58,7 @@ export const SHOPS_ENDPOINTS = {
   TRANSFER_INVENTORY: `${SHOPS_BASE}/:id/transfer-inventory`,
 }
 
-// ============================================================================
 // ORGANIZATION ENDPOINTS
-// ============================================================================
 
 const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`
 
@@ -79,9 +71,7 @@ export const ORGANIZATIONS_ENDPOINTS = {
   SUBSCRIPTION: `${ORGANIZATIONS_BASE}/:id/subscription`,
 }
 
-// ============================================================================
 // USER ENDPOINTS
-// ============================================================================
 
 const USERS_BASE = `${BASE_URL}/users`
 
@@ -96,9 +86,7 @@ export const USERS_ENDPOINTS = {
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
 }
 
-// ============================================================================
 // PRODUCT ENDPOINTS
-// ============================================================================
 
 const PRODUCTS_BASE = `${BASE_URL}/products`
 
@@ -111,9 +99,7 @@ export const PRODUCTS_ENDPOINTS = {
   TAGS: `${PRODUCTS_BASE}/tags`,
 }
 
-// ============================================================================
 // INVENTORY ENDPOINTS
-// ============================================================================
 
 const INVENTORY_BASE = `${BASE_URL}/inventory`
 
@@ -127,9 +113,7 @@ export const INVENTORY_ENDPOINTS = {
   HISTORY: `${INVENTORY_BASE}/:id/history`,
 }
 
-// ============================================================================
 // SALES ENDPOINTS
-// ============================================================================
 
 const SALES_BASE = `${BASE_URL}/sales`
 
@@ -145,9 +129,7 @@ export const SALES_ENDPOINTS = {
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
 }
 
-// ============================================================================
 // CUSTOMER ENDPOINTS
-// ============================================================================
 
 const CUSTOMERS_BASE = `${BASE_URL}/shops/:shopId/customers`
 
@@ -165,9 +147,7 @@ export const CUSTOMERS_ENDPOINTS = {
   LOYALTY_REDEEM: `${CUSTOMERS_BASE}/:id/loyalty/redeem`,
 }
 
-// ============================================================================
 // REPORTS ENDPOINTS
-// ============================================================================
 
 const REPORTS_BASE = `${BASE_URL}/reports`
 
@@ -180,9 +160,7 @@ export const REPORTS_ENDPOINTS = {
   DASHBOARD: `${REPORTS_BASE}/dashboard`,
 }
 
-// ============================================================================
 // CONSOLIDATED EXPORT
-// ============================================================================
 
 export const API_ENDPOINTS = {
   AUTH: AUTH_ENDPOINTS,

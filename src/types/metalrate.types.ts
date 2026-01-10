@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: types/metalrate.types.ts
 // Metal Rate Management - Complete Frontend TypeScript Types
-// ============================================================================
 
 /**
  * Weight unit options
@@ -48,9 +46,7 @@ export type PlatinumPurity = '950'
  */
 export type TrendDirection = 'up' | 'down' | 'stable'
 
-// ============================================================================
 // CORE DATA STRUCTURES
-// ============================================================================
 
 /**
  * Rate pair (buying and selling)
@@ -174,9 +170,7 @@ export interface TrendData {
   platinum: MovingAverageData
 }
 
-// ============================================================================
 // MAIN METAL RATE INTERFACE
-// ============================================================================
 
 /**
  * Main Metal Rate interface
@@ -242,9 +236,7 @@ export interface MetalRate {
   silverSpread?: number
 }
 
-// ============================================================================
 // API REQUEST PAYLOADS
-// ============================================================================
 
 /**
  * Request payload for creating/updating metal rate
@@ -272,9 +264,7 @@ export interface SyncToAllShopsPayload extends CreateMetalRatePayload {
   organizationId: string
 }
 
-// ============================================================================
 // API QUERY PARAMETERS
-// ============================================================================
 
 /**
  * Rate history query parameters
@@ -331,9 +321,7 @@ export interface RateFilterOptions {
   syncSource?: SyncSource
 }
 
-// ============================================================================
 // API RESPONSE STRUCTURES
-// ============================================================================
 
 /**
  * Pagination metadata
@@ -483,9 +471,7 @@ export interface RateDashboardSummary {
   monthTrend: TrendChartDataPoint[]
 }
 
-// ============================================================================
 // FORM STATE INTERFACES
-// ============================================================================
 
 /**
  * Rate pair form input (strings for controlled inputs)
@@ -572,9 +558,7 @@ export interface FormSubmissionState {
   error?: string
 }
 
-// ============================================================================
 // UI STATE INTERFACES
-// ============================================================================
 
 /**
  * Rate card display data
@@ -651,9 +635,7 @@ export interface ToastNotification {
   duration?: number
 }
 
-// ============================================================================
 // VALIDATION TYPES
-// ============================================================================
 
 /**
  * Validation error
@@ -673,9 +655,7 @@ export interface ApiErrorResponse {
   errors?: ValidationError[]
 }
 
-// ============================================================================
 // UTILITY TYPES
-// ============================================================================
 
 /**
  * Partial metal rate for updates
@@ -716,9 +696,7 @@ export function isTrendChartResponse(data: any): data is TrendChartResponse {
   )
 }
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 /**
  * Weight unit labels

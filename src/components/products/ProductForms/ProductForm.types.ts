@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/products/ProductForm/ProductForm.types.ts
 // ProductForm Types and Interfaces
-// ============================================================================
 
 import type {
   Metal,

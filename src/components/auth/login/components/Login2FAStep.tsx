@@ -38,9 +38,7 @@ export const Login2FAStep: React.FC = () => {
     }
   }, [code])
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleVerifyAuthenticator = async () => {
     if (code.length !== 6 || !tempToken || hasCalledRef.current) return
@@ -89,9 +87,7 @@ export const Login2FAStep: React.FC = () => {
     hasCalledRef.current = false
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="w-full max-w-md">

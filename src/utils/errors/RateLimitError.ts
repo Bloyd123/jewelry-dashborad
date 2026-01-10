@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/errors/RateLimitError.ts
 // Rate limit error class
-// ============================================================================
 
 import { ApiError } from './ApiError'
 import { ERROR_KEYS } from './errorMessages'

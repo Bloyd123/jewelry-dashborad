@@ -7,7 +7,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ========== Custom Utilities ========== */
+/*  Custom Utilities  */
 @layer utilities {
   /* Text Balance */
   .text-balance {
@@ -46,7 +46,7 @@
   }
 }
 
-/* ========== Animations ========== */
+/*  Animations  */
 @keyframes fadeIn {
   from {
     opacity: 0;

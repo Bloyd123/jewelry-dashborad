@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/products/ProductForm/ProductForm.tsx
 // Main ProductForm Component (Route Handler)
-// ============================================================================
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import ProductFormDesktop from './ProductForm.desktop'

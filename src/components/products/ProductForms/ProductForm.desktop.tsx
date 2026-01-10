@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/products/ProductForm/ProductForm.desktop.tsx
 // Desktop Layout for ProductForm (2-Column Grid)
-// ============================================================================
 
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

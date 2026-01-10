@@ -1,6 +1,5 @@
 // FILE: components/ui/loader/Loader.tsx
 // Main Flexible Loader Component
-// ============================================================================
 
 import { Loader2 } from 'lucide-react'
 import type { LoaderProps } from '@/types/loader.types'

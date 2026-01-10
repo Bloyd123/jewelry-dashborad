@@ -1,7 +1,7 @@
 // types/product.types.ts
-// ============================================
+
 // CATEGORY TYPES
-// ============================================
+
 export interface Category {
   _id: string
   parentId: string | null
@@ -15,9 +15,8 @@ export interface Category {
   updatedAt: string
 }
 
-// ============================================
 // PRODUCT ENUMS & BASIC TYPES
-// ============================================
+
 export type MetalType =
   | 'gold'
   | 'silver'
@@ -121,9 +120,8 @@ export type CertificateType =
   | 'other'
 export type WarrantyType = 'lifetime' | 'limited' | 'none'
 
-// ============================================
 // NESTED OBJECT TYPES
-// ============================================
+
 export interface Metal {
   type: MetalType
   purity: MetalPurity
@@ -282,9 +280,8 @@ export interface CustomField {
   fieldValue: any
 }
 
-// ============================================
 // MAIN PRODUCT INTERFACE
-// ============================================
+
 export interface Product {
   _id: string
   organizationId: string
@@ -366,9 +363,8 @@ export interface Product {
   deletedAt?: string
 }
 
-// ============================================
 // API RESPONSE TYPES
-// ============================================
+
 export interface PaginationMeta {
   currentPage: number
   totalPages: number
@@ -415,9 +411,8 @@ export interface LowStockResponse {
   }
 }
 
-// ============================================
 // FILTER & QUERY TYPES
-// ============================================
+
 export interface ProductFilters {
   page?: number
   limit?: number
@@ -438,9 +433,8 @@ export interface ProductFilters {
   isBestseller?: boolean
 }
 
-// ============================================
 // FORM TYPES (for Create/Update)
-// ============================================
+
 export interface ProductFormData {
   // Basic Info
   name: string
@@ -499,9 +493,8 @@ export interface ProductFormData {
   internalNotes?: string
 }
 
-// ============================================
 // STOCK OPERATION TYPES
-// ============================================
+
 export type StockOperation = 'add' | 'subtract' | 'set'
 export type ReferenceType =
   | 'product_creation'
@@ -535,9 +528,8 @@ export interface StockUpdateResponse {
   }
 }
 
-// ============================================
 // RESERVATION TYPES
-// ============================================
+
 export interface ReservationData {
   customerId: string
   reservationDays?: number
@@ -549,9 +541,8 @@ export interface ReservationResponse {
   reservedFor: ReservedFor
 }
 
-// ============================================
 // SALE TYPES
-// ============================================
+
 export interface SaleData {
   customerId: string
   saleId?: string
@@ -563,9 +554,8 @@ export interface SaleResponse {
   stock: Stock
 }
 
-// ============================================
 // PRICE CALCULATION TYPES
-// ============================================
+
 export interface PriceCalculationData {
   useCurrentRate?: boolean
   customRate?: number
@@ -579,9 +569,8 @@ export interface PriceCalculationResponse {
   pricing: Pricing
 }
 
-// ============================================
 // BULK OPERATION TYPES
-// ============================================
+
 export interface BulkDeleteData {
   productIds: string[]
 }
@@ -599,9 +588,8 @@ export interface BulkUpdateStatusResponse {
   modifiedCount: number
 }
 
-// ============================================
 // INVENTORY TRANSACTION TYPES
-// ============================================
+
 export interface InventoryTransaction {
   _id: string
   organizationId: string

@@ -21,7 +21,7 @@
   user-select: none;
 }
 
-/* ========== Global Reset ========== */
+/*  Global Reset  */
 @layer base {
   * {
     @apply m-0 box-border p-0;
@@ -96,7 +96,7 @@
   }
 }
 
-/* ========== Scrollbar Styling ========== */
+/*  Scrollbar Styling  */
 @layer utilities {
   /* Webkit browsers (Chrome, Safari, Edge) */
   ::-webkit-scrollbar {
@@ -123,7 +123,7 @@
   }
 }
 
-/* ========== Selection ========== */
+/*  Selection  */
 ::selection {
   background: var(--accent-color);
   color: white;
@@ -134,13 +134,13 @@
   color: white;
 }
 
-/* ========== Focus Styles ========== */
+/*  Focus Styles  */
 *:focus-visible {
   @apply outline-2 outline-offset-2;
   outline-color: var(--accent-color);
 }
 
-/* ========== Custom Component Styles ========== */
+/*  Custom Component Styles  */
 @layer components {
   /* Card */
   .card {

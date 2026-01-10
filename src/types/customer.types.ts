@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/types/customer.types.ts
 // Customer Types and Interfaces (Based on Backend Validation)
-// ============================================================================
 
 /**
  * MongoDB ID type

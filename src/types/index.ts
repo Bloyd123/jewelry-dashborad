@@ -1,11 +1,8 @@
-// ============================================================================
 // FILE: types/index.ts
 // Central Types Export - All TypeScript Types
-// ============================================================================
 
-// ============================================================================
 // USER TYPES
-// ============================================================================
+
 export type {
   UserRole,
   Department,
@@ -46,9 +43,8 @@ export type {
   UserPreferencesFormState,
 } from './user.types'
 
-// ============================================================================
 // USER SHOP ACCESS & PERMISSIONS TYPES
-// ============================================================================
+
 export type {
   // Enums & Literals
   ShopRole,
@@ -103,9 +99,8 @@ export type {
   DefaultPermissionsMap,
 } from './userShopAccess.types'
 
-// ============================================================================
 // REFRESH TOKEN & SESSION TYPES
-// ============================================================================
+
 export type {
   // Enums & Literals
   DeviceType,
@@ -164,9 +159,8 @@ export type {
   TokenAuditTrail,
 } from './refreshToken.types'
 
-// ============================================================================
 // AUTHENTICATION TYPES
-// ============================================================================
+
 export type {
   // Request Types
   RegisterRequest,
@@ -239,9 +233,8 @@ export type {
   AuthConfig,
 } from './auth.types'
 
-// ============================================================================
 // SHOP TYPES
-// ============================================================================
+
 export type {
   // Main Shop Interface
   Shop,
@@ -321,9 +314,8 @@ export {
   ShopActionType,
 } from './shop.types'
 
-// ============================================================================
 // API TYPES
-// ============================================================================
+
 export type {
   // Response Types
   ApiResponse,
@@ -442,9 +434,8 @@ export type {
   isRateLimitError,
 } from './api.types'
 
-// ============================================================================
 // COMMON TYPES & UTILITIES
-// ============================================================================
+
 export type {
   // Common Types
   Timestamp,

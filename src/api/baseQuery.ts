@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/api/baseQuery.ts
 // Base query with automatic token refresh
-// ============================================================================
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import type {
@@ -21,9 +19,8 @@ import { API_ENDPOINTS } from '@/api/endpoints'
 
 // Mutex to prevent multiple refresh requests
 const mutex = new Mutex()
-// ============================================================================
+
 // BASE QUERY
-// ============================================================================
 
 const baseQuery = fetchBaseQuery({
   baseUrl: APP_CONFIG.API.BASE_URL,
@@ -36,9 +33,7 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-// ============================================================================
 // BASE QUERY WITH RE-AUTH
-// ============================================================================
 
 export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,

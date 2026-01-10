@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/api/buildQueryString.ts
 // Build query string from object
-// ============================================================================
 
 /**
  * Build query string from object

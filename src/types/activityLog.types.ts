@@ -1,11 +1,7 @@
-// ============================================================================
 // FILE: src/types/activityLog.types.ts
 // Activity Log TypeScript Type Definitions
-// ============================================================================
 
-// ============================================================================
 // USER INFO
-// ============================================================================
 
 export interface ActivityLogUser {
   name: string
@@ -20,9 +16,7 @@ export interface ActivityLogUser {
   avatar: string // Used as seed for Avatar component
 }
 
-// ============================================================================
 // ACTIVITY ACTIONS
-// ============================================================================
 
 export type ActivityAction =
   | 'CREATE'
@@ -35,9 +29,7 @@ export type ActivityAction =
   | 'APPROVE'
   | 'REJECT'
 
-// ============================================================================
 // ACTIVITY MODULES
-// ============================================================================
 
 export type ActivityModule =
   | 'Shop Settings'
@@ -55,15 +47,11 @@ export type ActivityModule =
   | 'Authentication'
   | 'System'
 
-// ============================================================================
 // ACTIVITY STATUS
-// ============================================================================
 
 export type ActivityStatus = 'success' | 'pending' | 'failed'
 
-// ============================================================================
 // METADATA TYPES (Based on Activity Module)
-// ============================================================================
 
 export interface MetalRatesMetadata {
   oldRate?: number
@@ -173,9 +161,7 @@ export type ActivityMetadata =
   | PurchaseOrderMetadata
   | Record<string, any> // Fallback for custom metadata
 
-// ============================================================================
 // MAIN ACTIVITY LOG INTERFACE
-// ============================================================================
 
 export interface ActivityLog {
   id: string
@@ -188,9 +174,7 @@ export interface ActivityLog {
   metadata: ActivityMetadata
 }
 
-// ============================================================================
 // API RESPONSE TYPES
-// ============================================================================
 
 export interface ActivityLogResponse {
   success: boolean
@@ -216,9 +200,7 @@ export interface ActivityLogFilters {
   limit?: number
 }
 
-// ============================================================================
 // ACTIVITY LOG STATISTICS
-// ============================================================================
 
 export interface ActivityLogStats {
   totalActivities: number
@@ -233,6 +215,4 @@ export interface ActivityLogStats {
   recentActivities: ActivityLog[]
 }
 
-// ============================================================================
 // EXPORT ALL TYPES
-// ============================================================================

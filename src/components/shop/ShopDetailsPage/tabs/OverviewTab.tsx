@@ -29,9 +29,7 @@ import { Label } from '@/components/ui/label'
 import { dummyShops } from '@/pages/shops/data'
 import type { Shop, ShopUser, Organization } from '@/types'
 
-// ============================================================================
 // COPY BUTTON COMPONENT
-// ============================================================================
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -58,9 +56,7 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-// ============================================================================
 // TYPE GUARDS
-// ============================================================================
 
 const isShopUser = (
   value: string | ShopUser | undefined
@@ -74,9 +70,7 @@ const isOrganization = (
   return typeof value === 'object' && value !== null && '_id' in value
 }
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 const OverviewTab = () => {
   const { t } = useTranslation()
@@ -88,9 +82,7 @@ const OverviewTab = () => {
     ? shopData.organizationId
     : null
 
-  // ========================================================================
   // BASIC INFORMATION SECTION
-  // ========================================================================
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -162,9 +154,7 @@ const OverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // ADDRESS SECTION
-  // ========================================================================
 
   const AddressSection = () => (
     <div className="space-y-4 p-4">
@@ -228,9 +218,7 @@ const OverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // BUSINESS REGISTRATION SECTION
-  // ========================================================================
 
   const BusinessRegistrationSection = () => (
     <div className="space-y-4 p-4">
@@ -298,9 +286,7 @@ const OverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // MANAGER INFORMATION SECTION
-  // ========================================================================
 
   const ManagerInfoSection = () => {
     if (!manager) {
@@ -380,9 +366,7 @@ const OverviewTab = () => {
     )
   }
 
-  // ========================================================================
   // CONTACT SECTION (Additional - as shown in image)
-  // ========================================================================
 
   const ContactSection = () => (
     <div className="space-y-4 p-4">
@@ -466,9 +450,7 @@ const OverviewTab = () => {
     </div>
   )
 
-  // ========================================================================
   // RENDER MAIN ACCORDION
-  // ========================================================================
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

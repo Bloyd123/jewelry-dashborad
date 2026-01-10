@@ -20,9 +20,7 @@ import { AlertCircle } from 'lucide-react'
 const ActivityLogTab: React.FC = () => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // STATE
-  // ========================================================================
 
   const [filters, setFilters] = useState<ActivityLogFilterValues>({
     search: '',

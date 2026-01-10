@@ -48,9 +48,7 @@ export const SupplierManagementModal = ({
     handleClose()
   }
 
-  // ========================================================================
   // ACTION HANDLERS (Mock - No API Integration)
-  // ========================================================================
 
   const handleUpdateBalance = async (data: any) => {
     console.log('💰 Update Balance:', { supplierId: supplier._id, ...data })
@@ -100,9 +98,7 @@ export const SupplierManagementModal = ({
     handleActionSuccess()
   }
 
-  // ========================================================================
   // GET MODAL CONFIG
-  // ========================================================================
 
   const getModalConfig = (action: ManagementAction) => {
     const configs = {
@@ -133,9 +129,7 @@ export const SupplierManagementModal = ({
 
   const config = getModalConfig(action)
 
-  // ========================================================================
   // RENDER SECTION CONTENT
-  // ========================================================================
 
   const renderSection = () => {
     switch (action) {
@@ -192,9 +186,7 @@ export const SupplierManagementModal = ({
     }
   }
 
-  // ========================================================================
   // RENDER MOBILE SHEET
-  // ========================================================================
 
   if (isMobile) {
     return (
@@ -211,9 +203,7 @@ export const SupplierManagementModal = ({
     )
   }
 
-  // ========================================================================
   // RENDER DESKTOP MODAL
-  // ========================================================================
 
   return (
     <Modal

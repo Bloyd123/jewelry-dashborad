@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: auth.types.ts
 // Authentication Request/Response Types
-// ============================================================================
 
 import { RefreshToken, DeviceInfo } from './refreshToken.types'
 import { User, UserRole, Department } from './user.types'
@@ -11,9 +9,7 @@ import {
   PermissionKey,
 } from './userShopAccess.types'
 
-// ============================================================================
 // AUTH REQUEST TYPES
-// ============================================================================
 
 /**
  * Register Request
@@ -171,9 +167,7 @@ export interface VerifyBackupCodeRequest {
   backupCode: string
 }
 
-// ============================================================================
 // AUTH RESPONSE TYPES
-// ============================================================================
 
 /**
  * Register Response
@@ -421,9 +415,7 @@ export interface ValidateTokenResponse {
   }
 }
 
-// ============================================================================
 // AUTH STATE TYPES (for Frontend State Management)
-// ============================================================================
 
 /**
  * Auth State
@@ -557,9 +549,7 @@ export interface AuthGuardProps {
   loading?: React.ReactNode
 }
 
-// ============================================================================
 // FORM STATE TYPES
-// ============================================================================
 
 /**
  * Login Form State
@@ -629,9 +619,7 @@ export interface TwoFactorLoginFormState {
   useBackupCode: boolean
 }
 
-// ============================================================================
 // VALIDATION TYPES
-// ============================================================================
 
 /**
  * Field Error
@@ -664,9 +652,7 @@ export interface PasswordStrength {
   minLength: boolean
 }
 
-// ============================================================================
 // AUTH EVENT TYPES
-// ============================================================================
 
 /**
  * Auth Event Type
@@ -696,9 +682,7 @@ export interface AuthEvent {
   metadata?: Record<string, any>
 }
 
-// ============================================================================
 // AUTH CONFIGURATION
-// ============================================================================
 
 /**
  * Auth Configuration

@@ -29,9 +29,7 @@ export const ProductDetailsPage: React.FC = () => {
   const product: Product = dummyProducts[0]
   const isLoading = false
 
-  // ========================================================================
   // NAVIGATION HANDLERS
-  // ========================================================================
 
   const handleBackClick = () => {
     // TODO: Add navigation logic
@@ -45,18 +43,14 @@ export const ProductDetailsPage: React.FC = () => {
     // TODO: Implement product settings/edit modal
   }
 
-  // ========================================================================
   // TAB HANDLERS
-  // ========================================================================
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab)
     console.log('Active tab changed to:', tab)
   }
 
-  // ========================================================================
   // PRICING TAB HANDLERS
-  // ========================================================================
 
   const handleRecalculatePrice = async () => {
     console.log('Recalculating price for product:', product._id)
@@ -79,9 +73,7 @@ export const ProductDetailsPage: React.FC = () => {
     // }
   }
 
-  // ========================================================================
   // IMAGES TAB HANDLERS
-  // ========================================================================
 
   const handleUploadImage = async (files: FileList) => {
     console.log('Uploading images:', files)
@@ -150,9 +142,7 @@ export const ProductDetailsPage: React.FC = () => {
     // }
   }
 
-  // ========================================================================
   // HISTORY TAB HANDLERS
-  // ========================================================================
 
   const handleLoadMoreHistory = async () => {
     console.log('Loading more history for product:', product._id)
@@ -170,9 +160,7 @@ export const ProductDetailsPage: React.FC = () => {
     // }
   }
 
-  // ========================================================================
   // RENDER TAB CONTENT
-  // ========================================================================
 
   const renderTabContent = () => {
     if (isLoading) {
@@ -222,9 +210,7 @@ export const ProductDetailsPage: React.FC = () => {
     }
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="min-h-screen bg-bg-primary">

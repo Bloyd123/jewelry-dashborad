@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: themes/dark.theme.ts
 // Dark Theme Specific Overrides & Variations
-// ============================================================================
 
 import { darkTheme } from './default.theme'
 import type { Theme } from './default.theme'

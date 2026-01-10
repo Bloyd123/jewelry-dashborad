@@ -1,7 +1,6 @@
-// ============================================================================
 // FILE: src/components/customers/analytics/customerAnalytics.mock.ts
 // Mock Data for Customer Analytics Charts
-// ============================================================================
+
 // Mock data for charts (will be replaced with real data from API)
 export const mockGrowthData = [
   { month: 'Jan', customers: 850, newCustomers: 45 },

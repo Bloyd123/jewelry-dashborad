@@ -12,17 +12,13 @@ import { useAppSelector } from '@/store/hooks'
 import type { CustomerStatistics } from '@/components/customer/analytics'
 import { useNavigate } from 'react-router-dom'
 
-// ============================================================================
 // TYPES & INTERFACES
-// ============================================================================
 
 export interface AllCustomersProps {
   className?: string
 }
 
-// ============================================================================
 // MOCK DATA (Replace with actual API data)
-// ============================================================================
 
 const MOCK_STATISTICS: CustomerStatistics = {
   totalCustomers: 1247,
@@ -33,9 +29,7 @@ const MOCK_STATISTICS: CustomerStatistics = {
   avgLifetimeValue: 45230,
 }
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
 
 export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   const { t } = useTranslation()
@@ -48,9 +42,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   const [activeTab, setActiveTab] = useState('table')
   const [isLoading, setIsLoading] = useState(false)
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleAddCustomer = () => {
     console.log('Add New Customer clicked')
@@ -67,9 +59,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
     }, 1000)
   }
 
-  // ========================================================================
   // TAB CONFIGURATION
-  // ========================================================================
 
   const tabs = [
     {
@@ -84,9 +74,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
     },
   ]
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className={`min-h-screen bg-bg-primary ${className || ''}`}>

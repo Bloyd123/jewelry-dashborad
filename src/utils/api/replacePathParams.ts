@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/api/replacePathParams.ts
 // Replace path parameters in URL
-// ============================================================================
 
 /**
  * Create URL with path parameters replaced

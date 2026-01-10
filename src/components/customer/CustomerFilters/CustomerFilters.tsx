@@ -21,9 +21,7 @@ import {
   CustomerDateRangeFilter,
 } from './index'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface CustomerFilterValues {
   search: string
@@ -41,9 +39,7 @@ interface CustomerFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
 // CUSTOMER FILTERS COMPONENT
-// ============================================================================
 
 export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
   filters,
@@ -120,9 +116,8 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
     return count
   }, [filters])
 
-  // ============================================================================
   // DESKTOP VIEW
-  // ============================================================================
+
   if (isDesktop) {
     return (
       <>
@@ -227,9 +222,8 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
     )
   }
 
-  // ============================================================================
   // MOBILE VIEW WITH DRAWER
-  // ============================================================================
+
   return (
     <>
       <div className="space-y-3">

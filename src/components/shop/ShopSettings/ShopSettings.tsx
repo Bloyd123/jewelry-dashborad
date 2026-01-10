@@ -45,9 +45,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  // ========================================================================
   // STATE
-  // ========================================================================
 
   const [formData, setFormData] = useState<ShopSettingsFormData>({
     generalSettings: {
@@ -137,9 +135,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string>('')
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleChange = (
     section: keyof ShopSettingsFormData,
@@ -207,9 +203,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
     }
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <Dialog

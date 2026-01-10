@@ -1,11 +1,7 @@
-// ============================================================================
 // FILE: common.types.ts
 // Common Types, Utilities, and Constants
-// ============================================================================
 
-// ============================================================================
 // COMMON TYPES
-// ============================================================================
 
 /**
  * Common timestamp types
@@ -115,9 +111,7 @@ export type Prettify<T> = {
   [K in keyof T]: T[K]
 } & {}
 
-// ============================================================================
 // UTILITY TYPES FOR FORMS
-// ============================================================================
 
 /**
  * Convert all fields to string (for form inputs)
@@ -169,9 +163,7 @@ export interface FormValidationResult<T = any> {
   errors: FormErrors<T>
 }
 
-// ============================================================================
 // UTILITY TYPES FOR API
-// ============================================================================
 
 /**
  * Success response wrapper
@@ -215,9 +207,7 @@ export type AsyncReturnType<T extends (...args: any) => Promise<any>> =
 export type PromiseType<T extends Promise<any>> =
   T extends Promise<infer U> ? U : never
 
-// ============================================================================
 // UTILITY TYPES FOR STATE MANAGEMENT
-// ============================================================================
 
 /**
  * Loading state
@@ -294,9 +284,7 @@ export interface CacheState<T> {
   isStale: boolean
 }
 
-// ============================================================================
 // CONSTANTS
-// ============================================================================
 
 /**
  * Common HTTP status codes
@@ -512,9 +500,7 @@ export const Z_INDEX = {
   NOTIFICATION: 1080,
 } as const
 
-// ============================================================================
 // TYPE GUARD UTILITIES
-// ============================================================================
 
 /**
  * Check if value is defined (not null or undefined)
@@ -645,9 +631,7 @@ export function isError(value: any): value is Error {
   return value instanceof Error
 }
 
-// ============================================================================
 // UTILITY FUNCTIONS
-// ============================================================================
 
 /**
  * Sleep/delay function

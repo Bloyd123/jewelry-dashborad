@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/validators/changePasswordValidation.ts
 // Frontend Change Password Form Validation (with Zod)
-// ============================================================================
 
 import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'

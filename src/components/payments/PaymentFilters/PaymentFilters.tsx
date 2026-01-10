@@ -21,9 +21,7 @@ import { ReconciliationFilter } from './ReconciliationFilter'
 import type { DateRange } from 'react-day-picker'
 import type { PriceRange } from '@/components/ui/filters/PriceRangeFilter/PriceRangeFilter'
 
-// ============================================================================
 // TYPES
-// ============================================================================
 
 export interface PaymentFilterState {
   search: string
@@ -43,9 +41,7 @@ export interface PaymentFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
 // PAYMENT FILTERS COMPONENT
-// ============================================================================
 
 export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
   filters,
@@ -56,9 +52,7 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const [showAdvancedDrawer, setShowAdvancedDrawer] = React.useState(false)
 
-  // ============================================================================
   // COUNT ACTIVE FILTERS
-  // ============================================================================
 
   const activeFilterCount = React.useMemo(() => {
     let count = 0
@@ -86,9 +80,7 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
     return count
   }, [filters])
 
-  // ============================================================================
   // FILTER HANDLERS
-  // ============================================================================
 
   const handleSearchChange = (value: string | undefined) => {
     onFiltersChange({ ...filters, search: value || '' })
@@ -140,9 +132,7 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
     })
   }
 
-  // ============================================================================
   // DESKTOP VIEW
-  // ============================================================================
 
   if (isDesktop) {
     return (
@@ -261,9 +251,7 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
     )
   }
 
-  // ============================================================================
   // MOBILE VIEW
-  // ============================================================================
 
   return (
     <>

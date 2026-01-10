@@ -22,9 +22,7 @@ export const SalesTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // ========================================================================
   // STATE
-  // ========================================================================
 
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
@@ -41,9 +39,8 @@ export const SalesTable: React.FC = () => {
     amountRange: undefined, // ✅ CHANGED from minAmount/maxAmount
   })
 
-  // ========================================================================
   // FILTERED DATA
-  // ========================================================================
+
   // Add these handler functions before RENDER section
   const handleFiltersChange = (newFilters: SalesFilterValues) => {
     setFilters(newFilters)
@@ -104,9 +101,7 @@ export const SalesTable: React.FC = () => {
     return result
   }, [dummySales, filters])
 
-  // ========================================================================
   // HANDLERS
-  // ========================================================================
 
   const handleViewDetails = (sale: Sale) => {
     console.log('View Details:', sale)

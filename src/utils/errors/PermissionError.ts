@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/errors/PermissionError.ts
 // Permission denied error class
-// ============================================================================
 
 import { ApiError } from './ApiError'
 import { ERROR_KEYS } from './errorMessages'

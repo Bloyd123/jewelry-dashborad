@@ -23,19 +23,16 @@ import {
   Check,
 } from 'lucide-react'
 
-// ============================================================================
 // IMPORTS - Types
-// ============================================================================
+
 import type { Supplier } from '@/types/supplier.types'
 
-// ============================================================================
 // IMPORTS - Dummy Data
-// ============================================================================
+
 import { dummySupplier } from '@/pages/suppliers/data'
 
-// ============================================================================
 // IMPORTS - Reusable Components
-// ============================================================================
+
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
@@ -48,9 +45,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// ============================================================================
 // IMPORTS - Tab Components (Your provided components)
-// ============================================================================
+
 import SupplierOverviewTab from '@/components/supplier/SupplierDetailsPage/tabs/OverviewTab'
 import SupplierFinancialTab from '@/components/supplier/SupplierDetailsPage/tabs/FinancialTab'
 import SupplierDocumentsTab from '@/components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
@@ -58,9 +54,8 @@ import { SupplierManagementModal } from '@/components/supplier/SupplierManagemen
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 // import SupplierActivityTab from '@/components/supplier/SupplierDetailsPage/tabs/StatisticsTab'
 
-// ============================================================================
 // COPY BUTTON COMPONENT
-// ============================================================================
+
 const CopyButton: React.FC<{ text: string }> = ({ text }) => {
   const [copied, setCopied] = useState(false)
 
@@ -86,9 +81,8 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
   )
 }
 
-// ============================================================================
 // RATING STARS COMPONENT
-// ============================================================================
+
 const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   return (
     <div className="flex items-center gap-0.5">
@@ -107,9 +101,8 @@ const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   )
 }
 
-// ============================================================================
 // MAIN COMPONENT
-// ============================================================================
+
 const SupplierDetailPage: React.FC = () => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('overview')
@@ -161,14 +154,13 @@ const SupplierDetailPage: React.FC = () => {
     console.log('Navigate back to suppliers list')
   }
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
+
   return (
     <div className="min-h-screen bg-bg-primary">
-      {/* ========================================================================
+      {/* 
           HEADER SECTION
-          ======================================================================== */}
+           */}
       <div className="space-y-0">
         <div className="border-b border-border-secondary bg-bg-secondary">
           <div className="space-y-4 px-6 py-4">
@@ -335,9 +327,9 @@ const SupplierDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* ========================================================================
+      {/* 
           TAB CONTENT SECTION
-          ======================================================================== */}
+           */}
       <div className="p-6">
         {activeTab === 'overview' && <SupplierOverviewTab />}
         {activeTab === 'financial' && <SupplierFinancialTab />}

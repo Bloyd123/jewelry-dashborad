@@ -150,17 +150,13 @@ export const PaymentTable: React.FC = () => {
     []
   )
 
-  // ========================================================================
   // SELECTED PAYMENTS
-  // ========================================================================
 
   const selectedPayments = useMemo(() => {
     return MOCK_PAYMENTS.filter(payment => selectedRows.has(payment._id))
   }, [selectedRows])
 
-  // ========================================================================
   // RENDER
-  // ========================================================================
 
   return (
     <div className="w-full space-y-4">

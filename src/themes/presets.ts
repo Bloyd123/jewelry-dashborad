@@ -1,14 +1,11 @@
-// ============================================================================
 // FILE: themes/presets.ts
 // All Theme Presets (8 Themes)
-// ============================================================================
 
 import { Theme } from './default.theme'
 import { colors } from './colors'
 
-// ============================================================================
 // THEME 1: DEFAULT (Light with Orange)
-// ============================================================================
+
 export const defaultTheme: Theme = {
   name: 'default',
   mode: 'light',
@@ -91,9 +88,8 @@ export const defaultTheme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 2: DEFAULT DARK
-// ============================================================================
+
 export const defaultDarkTheme: Theme = {
   ...defaultTheme,
   name: 'defaultDark',
@@ -135,9 +131,8 @@ export const defaultDarkTheme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 3: LEGACY (Gold/Cream)
-// ============================================================================
+
 export const legacyTheme: Theme = {
   ...defaultTheme,
   name: 'legacy',
@@ -179,9 +174,8 @@ export const legacyTheme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 4: LIGHT (Dark Blue-Gray with Emerald)
-// ============================================================================
+
 export const emeraldDarkTheme: Theme = {
   ...defaultTheme,
   name: 'light',
@@ -223,9 +217,8 @@ export const emeraldDarkTheme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 5: LIGHT2 (Yellow/Amber Light)
-// ============================================================================
+
 export const light2Theme: Theme = {
   ...defaultTheme,
   name: 'light2',
@@ -261,9 +254,8 @@ export const light2Theme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 6: LIGHT3 (Deep Indigo/Purple Dark)
-// ============================================================================
+
 export const light3Theme: Theme = {
   ...defaultTheme,
   name: 'light3',
@@ -305,9 +297,8 @@ export const light3Theme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 7: LIGHT4 (Blue Light)
-// ============================================================================
+
 export const light4Theme: Theme = {
   ...defaultTheme,
   name: 'light4',
@@ -343,9 +334,8 @@ export const light4Theme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME 8: LIGHT5 (Teal Dark)
-// ============================================================================
+
 export const light5Theme: Theme = {
   ...defaultTheme,
   name: 'light5',
@@ -387,9 +377,8 @@ export const light5Theme: Theme = {
   },
 }
 
-// ============================================================================
 // THEME MAP
-// ============================================================================
+
 export const themes = {
   default: defaultTheme,
   defaultDark: defaultDarkTheme,

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: themes/index.ts
 // Theme System Exports
-// ============================================================================
 
 // Export color palette
 export { colors, getAccentColor } from './colors'

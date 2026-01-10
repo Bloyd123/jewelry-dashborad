@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/components/products/ProductForm/ProductForm.mobile.tsx
 // Mobile Layout for ProductForm (Tabbed Steps)
-// ============================================================================
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

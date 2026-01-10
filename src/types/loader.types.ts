@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: components/ui/loader/types.ts
 // TypeScript Interfaces for Loader Components
-// ============================================================================
 
 export type LoaderSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type LoaderVariant = 'spinner' | 'dots' | 'pulse' | 'bars'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/api/checkAxiosConfig.ts
 // Check and log axios configuration
-// ============================================================================
 
 import { AxiosInstance } from 'axios'
 

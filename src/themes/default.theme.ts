@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: themes/default.theme.ts
 // Default Theme Configuration & Interface
-// ============================================================================
 
 import { colors } from './colors'
 

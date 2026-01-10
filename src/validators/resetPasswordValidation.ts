@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/validators/resetPasswordValidation.ts
 // Frontend Reset Password Form Validation (with Zod)
-// ============================================================================
 
 import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'

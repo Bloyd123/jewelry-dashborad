@@ -25,9 +25,7 @@ import {
 
 import type { ProductFilterValues, PriceRange } from './types'
 
-// ============================================================================
 // PROPS INTERFACE
-// ============================================================================
 
 interface ProductFiltersProps {
   filters: ProductFilterValues
@@ -35,9 +33,7 @@ interface ProductFiltersProps {
   onClearAll: () => void
 }
 
-// ============================================================================
 // PRODUCT FILTERS COMPONENT
-// ============================================================================
 
 export const ProductFilters: React.FC<ProductFiltersProps> = ({
   filters,
@@ -48,9 +44,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const [showAdvancedDrawer, setShowAdvancedDrawer] = React.useState(false)
 
-  // ============================================================================
   // ACTIVE FILTERS COUNT
-  // ============================================================================
 
   const activeFilterCount = React.useMemo(() => {
     let count = 0
@@ -67,9 +61,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
 
   const hasActiveFilters = activeFilterCount > 0 || filters.search.length > 0
 
-  // ============================================================================
   // HANDLER FUNCTIONS
-  // ============================================================================
 
   const handleSearchChange = (value: string) => {
     onFiltersChange({ ...filters, search: value })
@@ -150,9 +142,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
     return count
   }, [filters])
 
-  // ============================================================================
   // DESKTOP VIEW
-  // ============================================================================
 
   if (isDesktop) {
     return (
@@ -276,9 +266,7 @@ export const ProductFilters: React.FC<ProductFiltersProps> = ({
     )
   }
 
-  // ============================================================================
   // MOBILE VIEW WITH DRAWER
-  // ============================================================================
 
   return (
     <>

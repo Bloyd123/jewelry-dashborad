@@ -24,9 +24,7 @@ import {
 } from '@/components/ui/layout/Accordion/Accordion'
 import type { Product } from '@/types/product.types'
 
-// ============================================================================
 // COMPONENT PROPS
-// ============================================================================
 
 interface PricingTabProps {
   product: Product
@@ -34,9 +32,7 @@ interface PricingTabProps {
   onRecalculatePrice?: () => void
 }
 
-// ============================================================================
 // PRICING TAB COMPONENT
-// ============================================================================
 
 export const PricingTab: React.FC<PricingTabProps> = ({
   product,
@@ -70,9 +66,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     )
   }
 
-  // ========================================================================
   // PRICE SUMMARY SECTION
-  // ========================================================================
 
   const PriceSummarySection = () => (
     <div className="space-y-4 p-4">
@@ -124,9 +118,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // METAL PRICING SECTION
-  // ========================================================================
 
   const MetalPricingSection = () => (
     <div className="space-y-4 p-4">
@@ -172,9 +164,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // MAKING CHARGES SECTION
-  // ========================================================================
 
   const MakingChargesSection = () => (
     <div className="space-y-4 p-4">
@@ -219,9 +209,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // STONE VALUE SECTION
-  // ========================================================================
 
   const StoneValueSection = () => {
     if (product.pricing.stoneValue === 0) {
@@ -262,9 +250,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     )
   }
 
-  // ========================================================================
   // PRICE BREAKDOWN SECTION
-  // ========================================================================
 
   const PriceBreakdownSection = () => (
     <div className="space-y-3 p-4">
@@ -381,9 +367,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // ADDITIONAL INFO SECTION
-  // ========================================================================
 
   const AdditionalInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -424,9 +408,7 @@ export const PricingTab: React.FC<PricingTabProps> = ({
     </div>
   )
 
-  // ========================================================================
   // RENDER MAIN ACCORDION
-  // ========================================================================
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">

@@ -26,9 +26,7 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Product } from './ProductTable.types'
 
-// ============================================================================
 // ROW ACTIONS (Individual Product Actions)
-// ============================================================================
 
 export const getProductRowActions = (
   onViewDetails: (product: Product) => void,
@@ -85,9 +83,7 @@ export const getProductRowActions = (
   },
 ]
 
-// ============================================================================
 // BULK ACTIONS BAR (Shows when rows are selected)
-// ============================================================================
 
 interface BulkActionsBarProps {
   selectedCount: number

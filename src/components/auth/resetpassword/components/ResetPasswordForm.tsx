@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: components/auth/resetpassword/components/ResetPasswordForm.tsx
-// ============================================================================
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { Eye, EyeOff, Lock, Shield } from 'lucide-react'

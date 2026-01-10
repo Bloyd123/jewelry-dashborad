@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/validators/forgotPasswordValidation.ts
 // Frontend Forgot Password Form Validation (with Zod)
-// ============================================================================
 
 import { z } from 'zod'
 import { VALIDATION_MESSAGES, getRequiredMessage } from '@/constants/messages'

@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: userShopAccess.types.ts
 // User Shop Access & Permissions Types
-// ============================================================================
 
 /**
  * Shop Role Types (for shop-level access)

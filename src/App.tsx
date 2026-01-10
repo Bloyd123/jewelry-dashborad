@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/App.tsx
 // Clean Main Application Component
-// ============================================================================
 
 import { useEffect } from 'react'
 import { BrowserRouter } from 'react-router-dom'

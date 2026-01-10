@@ -484,9 +484,8 @@ const authSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // ========================================
     // LOGIN
-    // ========================================
+
     builder
       .addCase(login.pending, state => {
         state.isLoading = true
@@ -605,9 +604,9 @@ const authSlice = createSlice({
         state.error = action.payload as string
         state.isAuthenticated = false
       })
-    // ========================================
+
     // GET ACTIVE SESSIONS
-    // ========================================
+
     builder
       .addCase(getActiveSessions.pending, state => {
         state.isSessionsLoading = true
@@ -626,9 +625,8 @@ const authSlice = createSlice({
         state.activeSessions = [] // Clear on error
       })
 
-    // ========================================
     // REVOKE SESSION
-    // ========================================
+
     builder
       .addCase(revokeSession.pending, state => {
         state.isRevokingSession = true
@@ -645,9 +643,9 @@ const authSlice = createSlice({
         state.isRevokingSession = false
         state.error = action.payload as string
       })
-    // ========================================
+
     // FORGOT PASSWORD
-    // ========================================
+
     builder
       .addCase(forgotPassword.pending, state => {
         state.isLoading = true
@@ -660,9 +658,9 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload as string
       })
-    // ========================================
+
     // REGISTER
-    // ========================================
+
     builder
       .addCase(register.pending, state => {
         state.isLoading = true
@@ -678,9 +676,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // GET CURRENT USER
-    // ========================================
+
     builder
       .addCase(getCurrentUser.pending, state => {
         state.isLoading = true
@@ -697,9 +694,9 @@ const authSlice = createSlice({
         state.error = action.payload as string
         state.isAuthenticated = false
       })
-    // ========================================
+
     // RESET PASSWORD
-    // ========================================
+
     builder
       .addCase(resetPassword.pending, state => {
         state.isLoading = true
@@ -713,9 +710,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // UPDATE PROFILE
-    // ========================================
+
     builder
       .addCase(updateProfile.pending, state => {
         state.isLoading = true
@@ -733,9 +729,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // CHANGE PASSWORD
-    // ========================================
+
     builder
       .addCase(changePassword.pending, state => {
         state.isLoading = true
@@ -750,9 +745,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // LOGOUT
-    // ========================================
+
     builder
       .addCase(logout.pending, state => {
         state.isLoading = true
@@ -767,9 +761,8 @@ const authSlice = createSlice({
         state.isInitializing = false
       })
 
-    // ========================================
     // LOGOUT ALL
-    // ========================================
+
     builder
       .addCase(logoutAll.pending, state => {
         state.isLoading = true
@@ -783,9 +776,8 @@ const authSlice = createSlice({
         state.isInitializing = false
       })
 
-    // ========================================
     // REFRESH TOKEN
-    // ========================================
+
     builder
       .addCase(refreshAccessToken.pending, state => {
         state.isRefreshing = true
@@ -808,9 +800,8 @@ const authSlice = createSlice({
         tokenService.clearTokens()
       })
 
-    // ========================================
     // INITIALIZE AUTH
-    // ========================================
+
     builder
       .addCase(initializeAuth.pending, state => {
         state.isInitializing = true
@@ -855,9 +846,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // VERIFY 2FA
-    // ========================================
+
     builder
       .addCase(verify2FA.pending, state => {
         state.is2FALoading = true
@@ -877,9 +867,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // DISABLE 2FA
-    // ========================================
+
     builder
       .addCase(disable2FA.pending, state => {
         state.is2FALoading = false
@@ -897,9 +886,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // VERIFY 2FA LOGIN
-    // ========================================
+
     builder
       .addCase(verify2FALogin.pending, state => {
         state.isLoading = true
@@ -927,9 +915,8 @@ const authSlice = createSlice({
         state.error = action.payload as string
       })
 
-    // ========================================
     // VERIFY BACKUP CODE
-    // ========================================
+
     builder
       .addCase(verifyBackupCodeLogin.pending, state => {
         state.isLoading = true

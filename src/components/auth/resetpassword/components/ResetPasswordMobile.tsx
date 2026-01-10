@@ -1,6 +1,4 @@
-// ============================================================================
 // FILE: components/auth/resetpassword/components/ResetPasswordMobile.tsx
-// ============================================================================
 
 import React from 'react'
 import { Shield } from 'lucide-react'

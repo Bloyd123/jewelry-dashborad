@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/errors/errorMessages.ts
 // Centralized error message keys and helpers
-// ============================================================================
 
 /**
  * Error message keys for i18n

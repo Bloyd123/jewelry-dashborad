@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/utils/errors/NotFoundError.ts
 // Not found error class
-// ============================================================================
 
 import { ApiError } from './ApiError'
 import { ERROR_KEYS } from './errorMessages'

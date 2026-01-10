@@ -1,7 +1,5 @@
-// ============================================================================
 // FILE: src/api/services/customerService.ts
 // Customer API Service with RTK Query
-// ============================================================================
 
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { baseQueryWithReauth } from '@/api/baseQuery'
@@ -22,10 +20,7 @@ import type {
   CustomerSearchResult,
   ID,
 } from '@/types'
-
-// ============================================================================
 // CUSTOMER API
-// ============================================================================
 
 export const customerApi = createApi({
   reducerPath: 'customerApi',
@@ -33,9 +28,8 @@ export const customerApi = createApi({
   tagTypes: ['Customer', 'Customers', 'CustomerStatistics'],
 
   endpoints: builder => ({
-    // ========================================================================
     // CREATE CUSTOMER
-    // ========================================================================
+
     createCustomer: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; data: CreateCustomerRequest }
@@ -51,9 +45,8 @@ export const customerApi = createApi({
       invalidatesTags: ['Customers', 'CustomerStatistics'],
     }),
 
-    // ========================================================================
     // GET ALL CUSTOMERS (with pagination & filters)
-    // ========================================================================
+
     getCustomers: builder.query<
       ApiResponse<PaginatedResponse<CustomerListItem>>,
       CustomerQueryParams
@@ -78,9 +71,8 @@ export const customerApi = createApi({
           : [{ type: 'Customers' as const, id: 'LIST' }],
     }),
 
-    // ========================================================================
     // GET SINGLE CUSTOMER BY ID
-    // ========================================================================
+
     getCustomer: builder.query<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID }
@@ -97,9 +89,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // SEARCH CUSTOMER (by phone/email/code)
-    // ========================================================================
+
     searchCustomer: builder.query<
       ApiResponse<{ exists: boolean; customer: CustomerSearchResult | null }>,
       {
@@ -122,9 +113,8 @@ export const customerApi = createApi({
       },
     }),
 
-    // ========================================================================
     // UPDATE CUSTOMER
-    // ========================================================================
+
     updateCustomer: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID; data: UpdateCustomerRequest }
@@ -146,9 +136,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // DELETE CUSTOMER (soft delete)
-    // ========================================================================
+
     deleteCustomer: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID }
@@ -166,9 +155,8 @@ export const customerApi = createApi({
       invalidatesTags: ['Customers', 'CustomerStatistics'],
     }),
 
-    // ========================================================================
     // BLACKLIST CUSTOMER
-    // ========================================================================
+
     blacklistCustomer: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID; data: BlacklistCustomerRequest }
@@ -193,9 +181,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // REMOVE BLACKLIST
-    // ========================================================================
+
     removeBlacklist: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID }
@@ -219,9 +206,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // ADD LOYALTY POINTS
-    // ========================================================================
+
     addLoyaltyPoints: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID; data: LoyaltyPointsRequest }
@@ -245,9 +231,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // REDEEM LOYALTY POINTS
-    // ========================================================================
+
     redeemLoyaltyPoints: builder.mutation<
       ApiResponse<{ customer: Customer }>,
       { shopId: ID; customerId: ID; data: LoyaltyPointsRequest }
@@ -271,9 +256,8 @@ export const customerApi = createApi({
       ],
     }),
 
-    // ========================================================================
     // GET CUSTOMER STATISTICS
-    // ========================================================================
+
     getCustomerStatistics: builder.query<
       ApiResponse<{ summary: CustomerStatistics }>,
       { shopId: ID }
@@ -290,9 +274,8 @@ export const customerApi = createApi({
       providesTags: ['CustomerStatistics'],
     }),
 
-    // ========================================================================
     // GET CUSTOMER ORDERS
-    // ========================================================================
+
     getCustomerOrders: builder.query<
       ApiResponse<PaginatedResponse<any>>,
       { shopId: ID; customerId: ID; page?: number; limit?: number }
@@ -307,9 +290,8 @@ export const customerApi = createApi({
       },
     }),
 
-    // ========================================================================
     // GET CUSTOMER TRANSACTIONS
-    // ========================================================================
+
     getCustomerTransactions: builder.query<
       ApiResponse<PaginatedResponse<any>>,
       { shopId: ID; customerId: ID; page?: number; limit?: number }
@@ -324,9 +306,8 @@ export const customerApi = createApi({
       },
     }),
 
-    // ========================================================================
     // GET CUSTOMER LOYALTY HISTORY
-    // ========================================================================
+
     getCustomerLoyalty: builder.query<
       ApiResponse<any>,
       { shopId: ID; customerId: ID }
@@ -342,9 +323,7 @@ export const customerApi = createApi({
   }),
 })
 
-// ============================================================================
 // EXPORT HOOKS
-// ============================================================================
 
 export const {
   // Mutations
@@ -371,8 +350,6 @@ export const {
   useLazySearchCustomerQuery,
 } = customerApi
 
-// ============================================================================
 // EXPORT API
-// ============================================================================
 
 export default customerApi
