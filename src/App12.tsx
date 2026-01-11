@@ -47,6 +47,7 @@ import ProductDetailsPage from './pages/product/ProductDetailsPage/ProductDetail
 import { PaymentTable } from './components/payments/PaymentTable'
 import SalesDetailsPage from './pages/sales/SalesDetails/SalesDetailsPage'
 import UserProfile from './pages/user/page'
+import AddUserPage from './pages/user/AddUser'
 // APP COMPONENT
 function App() {
   const dispatch = useAppDispatch()
@@ -104,7 +105,7 @@ function App() {
               <Route
                 path="/supplier/edit/:supplierId"
                 element={<AddSupplier />}
-              />
+                />
 
               <Route path="/products/add" element={<AddProduct />} />
               <Route
@@ -126,6 +127,9 @@ function App() {
               <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route path="/allpayments" element={<PaymentTable />} />
               <Route path="/userprofile" element={<UserProfile />} />
+              <Route path='/users/add' element={<AddUserPage/>}/>
+              <Route path='/users/edit/:userId' element={<AddUserPage/>}/>
+
               <Route
                 path="*"
                 element={<Navigate to={ROUTES.dashboard} replace />}

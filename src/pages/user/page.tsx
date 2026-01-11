@@ -1,4 +1,4 @@
-import { UserProfileHeader } from '@/components/UserProfile'
+import { UserProfileHeader } from '@/components/user/UserProfile'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -8,7 +8,7 @@ import {
   ShopAccessTab,
   PerformanceTab,
   ActivityLogsTab,
-} from '@/components/UserProfile'
+} from '@/components/user/UserProfile'
 
 export default function UserProfile() {
   const [activeTab, setActiveTab] = useState('personal')

@@ -39,7 +39,7 @@ import {
   Enable2FAModal,
   Disable2FAModal,
   BackupCodesDisplay,
-} from '@/components/UserProfile/UserprofileModal/2fa'
+} from '@/components/user/UserProfile/UserprofileModal/2fa'
 import { useTwoFactorEnabled } from '@/store/hooks/auth'
 import { useAppSelector } from '@/store/hooks/base'
 

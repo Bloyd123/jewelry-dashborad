@@ -21,7 +21,11 @@ export const ROUTE_PATHS = {
     EDIT: '/customers/edit/:customerId',
     DETAIL: '/customers/:id',
   },
-
+  USERS: {
+    ADD: '/users/add',
+    LIST: '/users',
+    EDIT: '/users/edit/:id',
+  },
   // Shop Routes
   SHOPS: {
     ROOT: '/shops',

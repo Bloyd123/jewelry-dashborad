@@ -110,7 +110,7 @@ const MetalRatesDashboardPage = lazy(() =>
 
 // User Profile
 const UserProfile = lazy(() => import('@/pages/user/page'));
-
+const AddUser =lazy(()=>import('@/pages/user/AddUser'))
 
 // Route Configurations
 
@@ -171,6 +171,23 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canViewCustomers',
     title: 'Customers',
   },
+  // Users
+
+{
+  path: ROUTE_PATHS.USERS.EDIT,
+  element: AddUser,
+  requiresAuth: true,
+  permission: 'canEditUsers',
+  title: 'Edit User',
+},
+{
+  path: ROUTE_PATHS.USERS.ADD,
+  element: AddUser,
+  requiresAuth: true,
+  permission: 'canCreateUsers',
+  title: 'Add User',
+},
+
   {
     path: ROUTE_PATHS.CUSTOMERS.ADD,
     element: AddCustomerPage,
@@ -383,6 +400,8 @@ export const ROUTES = {
 
   // Main
   dashboard: ROUTE_PATHS.DASHBOARD,
+   addUser: ROUTE_PATHS.USERS.ADD,
+   editUser:ROUTE_PATHS.USERS.EDIT,
 
   // Customers
   addCustomer: ROUTE_PATHS.CUSTOMERS.ADD,

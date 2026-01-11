@@ -495,25 +495,11 @@ const authSlice = createSlice({
         login.fulfilled,
         (state, action: PayloadAction<LoginResponse['data']>) => {
           state.isLoading = false
-          // ✅ ADD THESE DEBUG LOGS
-          console.log(
-            '🔐 [Redux] Login fulfilled - Full payload:',
-            action.payload
-          )
-          console.log('🔐 [Redux] requires2FA:', action.payload.requires2FA)
-          console.log('🔐 [Redux] tempToken:', action.payload.tempToken)
           if (action.payload.requires2FA) {
-            console.log('🔐 [Redux] Setting 2FA required state')
             state.requires2FA = true
             state.tempToken = action.payload.tempToken ?? null
 
-            state.isAuthenticated = false // Not authenticated yet
-            // ✅ ADD THIS LOG
-            console.log('🔐 [Redux] State after 2FA set:', {
-              requires2FA: state.requires2FA,
-              tempToken: state.tempToken,
-              isAuthenticated: state.isAuthenticated,
-            })
+            state.isAuthenticated = false 
             return // Don't proceed with normal login
           }
           state.user = action.payload.user

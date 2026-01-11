@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle,Info } from 'lucide-react'
 
 interface SelectOption {
   value: string
@@ -28,6 +28,7 @@ interface FormSelectProps {
   disabled?: boolean
   options: SelectOption[]
   className?: string
+  helpText?: string 
 }
 
 export const FormSelect = ({
@@ -41,6 +42,7 @@ export const FormSelect = ({
   required = false,
   disabled = false,
   options,
+   helpText,
   className = '',
 }: FormSelectProps) => {
   return (
@@ -80,6 +82,12 @@ export const FormSelect = ({
           ))}
         </SelectContent>
       </Select>
+      {helpText && !error && (
+  <div className="flex items-center gap-2 text-sm text-text-tertiary">
+    <Info className="h-3 w-3" />
+    <span>{helpText}</span>
+  </div>
+)}
 
       {error && (
         <div className="flex items-center gap-2 text-sm text-status-error">

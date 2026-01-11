@@ -1,84 +1,102 @@
-//
-// FILE: src/hooks/customer/useCustomers.ts
-// Combined Hook for Customer Management
-//
+// FILE: src/features/customer/hooks/useCustomer.ts
+// Custom hooks for customer operations
 
-import { useMemo } from 'react'
+import { useCallback } from 'react'
 import {
   useGetCustomersQuery,
+  useGetCustomerByIdQuery,
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
-} from '@/api/services/customerService'
-import { useCustomerFilters } from './useCustomerFilters'
-import { useCustomerPagination } from './useCustomerPagination'
-import { useCustomerSelection } from './useCustomerSelection'
-import type { ID } from '@/types'
+  useLazySearchCustomerQuery,
+} from '@/store/api/customerApi'
 
-export const useCustomers = (shopId: ID) => {
-  const filters = useCustomerFilters()
-  const pagination = useCustomerPagination()
-  const selection = useCustomerSelection()
+// 🔥 IMPORT FROM YOUR EXISTING TYPES FILE
+import type {
+  CustomerListParams,
+  CreateCustomerRequest,
+} from '@/types/customer.types'
 
-  // Build query parameters
-  const queryParams = useMemo(
-    () => ({
-      shopId,
-      page: pagination.currentPage,
-      limit: pagination.pageSize,
-      sort: `${pagination.sortOrder === 'desc' ? '-' : ''}${pagination.sortBy}`,
-      ...filters.filters,
-    }),
-    [shopId, pagination, filters.filters]
-  )
+export const useCustomer = (shopId: string, filters?: Partial<CustomerListParams>) => {
+  const {
+    data: customersData,
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useGetCustomersQuery({
+    shopId,
+    page: filters?.page || 1,
+    limit: filters?.limit || 20,
+    ...filters,
+  })
 
-  // Fetch customers
-  const { data, isLoading, isFetching, isError, error, refetch } =
-    useGetCustomersQuery(queryParams)
-
-  // Mutations
   const [createCustomer, createState] = useCreateCustomerMutation()
   const [updateCustomer, updateState] = useUpdateCustomerMutation()
   const [deleteCustomer, deleteState] = useDeleteCustomerMutation()
+  const [searchTrigger, searchResult] = useLazySearchCustomerQuery()
 
-  // Extract data
-  const customers = data?.data?.data || []
-  const meta = data?.data?.pagination
+  const handleCreate = useCallback(
+    async (data: CreateCustomerRequest) => {
+      try {
+        const result = await createCustomer({ shopId, ...data }).unwrap()
+        return { success: true, data: result }
+      } catch (error: any) {
+        return { 
+          success: false, 
+          error: error.data?.message || 'Failed to create customer' 
+        }
+      }
+    },
+    [createCustomer, shopId]
+  )
+
+  const handleSearch = useCallback(
+    async (query: { phone?: string; email?: string; customerCode?: string }) => {
+      try {
+        const result = await searchTrigger({ shopId, ...query }).unwrap()
+        return { success: true, data: result }
+      } catch (error: any) {
+        return { success: false, error: error.data?.message }
+      }
+    },
+    [searchTrigger, shopId]
+  )
 
   return {
-    // Data
-    customers,
-    meta,
+    customers: customersData?.data?.customers || [],
+    summary: customersData?.data?.summary,
+    pagination: customersData?.meta?.pagination,
 
-    // Loading states
-    isLoading,
-    isFetching,
-    isError,
-    error,
-
-    // Mutations
-    createCustomer,
-    updateCustomer,
-    deleteCustomer,
-
-    // Mutation states
+    isLoading: isLoading || isFetching,
     isCreating: createState.isLoading,
     isUpdating: updateState.isLoading,
     isDeleting: deleteState.isLoading,
+    isSearching: searchResult.isFetching,
 
-    // Filters
-    filters: filters.filters,
-    setFilters: filters.updateFilters,
-    clearFilters: filters.reset,
-    hasActiveFilters: filters.hasActiveFilters,
+    createCustomer: handleCreate,
+    updateCustomer,
+    deleteCustomer,
+    searchCustomer: handleSearch,
+    refetch,
 
-    // Pagination
-    pagination,
+    createState,
+    updateState,
+    deleteState,
+    searchResult,
+  }
+}
 
-    // Selection
-    selection,
+export const useCustomerById = (shopId: string, customerId: string) => {
+  const { data, isLoading, error, refetch } = useGetCustomerByIdQuery({
+    shopId,
+    customerId,
+  })
 
-    // Utilities
+  return {
+    customer: data,
+    isLoading,
+    error,
     refetch,
   }
 }

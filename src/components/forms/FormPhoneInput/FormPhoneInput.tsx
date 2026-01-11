@@ -3,7 +3,7 @@
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Phone, AlertCircle } from 'lucide-react'
+import { Phone, AlertCircle ,Info} from 'lucide-react'
 
 interface FormPhoneInputProps {
   name: string
@@ -17,6 +17,7 @@ interface FormPhoneInputProps {
   disabled?: boolean
   className?: string
   countryCode?: string
+  helpText?: string  
 }
 
 export const FormPhoneInput = ({
@@ -31,6 +32,7 @@ export const FormPhoneInput = ({
   disabled = false,
   className = '',
   countryCode = '+91',
+    helpText,
 }: FormPhoneInputProps) => {
   const handleChange = (val: string) => {
     // Only allow numbers
@@ -73,6 +75,12 @@ export const FormPhoneInput = ({
       </div>
 
       <div className="text-xs text-text-tertiary">{value.length}/10 digits</div>
+      {helpText && !error && (
+  <div className="flex items-center gap-2 text-sm text-text-tertiary">
+    <Info className="h-3 w-3" />
+    <span>{helpText}</span>
+  </div>
+)}
 
       {error && (
         <div className="flex items-center gap-2 text-sm text-status-error">

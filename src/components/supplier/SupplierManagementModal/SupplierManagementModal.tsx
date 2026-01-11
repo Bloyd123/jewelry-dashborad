@@ -43,7 +43,7 @@ export const SupplierManagementModal = ({
   }
 
   const handleActionSuccess = () => {
-    console.log('✅ Action completed:', action)
+    console.log(' Action completed:', action)
     onSuccess?.()
     handleClose()
   }
@@ -51,49 +51,49 @@ export const SupplierManagementModal = ({
   // ACTION HANDLERS (Mock - No API Integration)
 
   const handleUpdateBalance = async (data: any) => {
-    console.log('💰 Update Balance:', { supplierId: supplier._id, ...data })
+    console.log('Update Balance:', { supplierId: supplier._id, ...data })
     await new Promise(resolve => setTimeout(resolve, 1000)) // Mock delay
     handleActionSuccess()
   }
 
   const handleUpdateRating = async (data: any) => {
-    console.log('⭐ Update Rating:', { supplierId: supplier._id, ...data })
+    console.log(' Update Rating:', { supplierId: supplier._id, ...data })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleMarkPreferred = async () => {
-    console.log('❤️ Mark as Preferred:', { supplierId: supplier._id })
+    console.log(' Mark as Preferred:', { supplierId: supplier._id })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleRemovePreferred = async () => {
-    console.log('💔 Remove Preferred:', { supplierId: supplier._id })
+    console.log(' Remove Preferred:', { supplierId: supplier._id })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleBlacklist = async (reason: string) => {
-    console.log('🚫 Blacklist Supplier:', { supplierId: supplier._id, reason })
+    console.log(' Blacklist Supplier:', { supplierId: supplier._id, reason })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleRemoveBlacklist = async () => {
-    console.log('✅ Remove Blacklist:', { supplierId: supplier._id })
+    console.log(' Remove Blacklist:', { supplierId: supplier._id })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleDelete = async () => {
-    console.log('🗑️ Delete Supplier:', { supplierId: supplier._id })
+    console.log(' Delete Supplier:', { supplierId: supplier._id })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }
 
   const handleRestore = async () => {
-    console.log('♻️ Restore Supplier:', { supplierId: supplier._id })
+    console.log(' Restore Supplier:', { supplierId: supplier._id })
     await new Promise(resolve => setTimeout(resolve, 1000))
     handleActionSuccess()
   }

@@ -45,6 +45,29 @@ export const AUTH_ENDPOINTS = {
   LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
 
+// Customer endpoints
+const CUSTOMER_BASE = `${BASE_URL}/shops/:shopId/customers`
+
+export const CUSTOMER_ENDPOINTS = {
+  // List & Search
+  GET_ALL: CUSTOMER_BASE,
+  SEARCH: `${CUSTOMER_BASE}/search`,
+  ANALYTICS: `${CUSTOMER_BASE}/analytics`,
+  
+  // CRUD
+  GET_BY_ID: `${CUSTOMER_BASE}/:customerId`,
+  CREATE: CUSTOMER_BASE,
+  UPDATE: `${CUSTOMER_BASE}/:customerId`,
+  DELETE: `${CUSTOMER_BASE}/:customerId`,
+  
+  // Blacklist
+  BLACKLIST: `${CUSTOMER_BASE}/:customerId/blacklist`,
+  REMOVE_BLACKLIST: `${CUSTOMER_BASE}/:customerId/unblacklist`,
+  
+  // Loyalty
+  ADD_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/add`,
+  REDEEM_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/redeem`,
+}
 // SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`
@@ -129,23 +152,6 @@ export const SALES_ENDPOINTS = {
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
 }
 
-// CUSTOMER ENDPOINTS
-
-const CUSTOMERS_BASE = `${BASE_URL}/shops/:shopId/customers`
-
-export const CUSTOMERS_ENDPOINTS = {
-  BASE: CUSTOMERS_BASE,
-  BY_ID: `${CUSTOMERS_BASE}/:id`,
-  SEARCH: `${CUSTOMERS_BASE}/search`,
-  ANALYTICS: `${CUSTOMERS_BASE}/analytics`,
-  ORDERS: `${CUSTOMERS_BASE}/:id/orders`,
-  TRANSACTIONS: `${CUSTOMERS_BASE}/:id/transactions`,
-  LOYALTY: `${CUSTOMERS_BASE}/:id/loyalty`,
-  BLACKLIST: `${CUSTOMERS_BASE}/:id/blacklist`,
-  UNBLACKLIST: `${CUSTOMERS_BASE}/:id/unblacklist`,
-  LOYALTY_ADD: `${CUSTOMERS_BASE}/:id/loyalty/add`,
-  LOYALTY_REDEEM: `${CUSTOMERS_BASE}/:id/loyalty/redeem`,
-}
 
 // REPORTS ENDPOINTS
 
@@ -170,7 +176,7 @@ export const API_ENDPOINTS = {
   PRODUCTS: PRODUCTS_ENDPOINTS,
   INVENTORY: INVENTORY_ENDPOINTS,
   SALES: SALES_ENDPOINTS,
-  CUSTOMERS: CUSTOMERS_ENDPOINTS,
+  CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
 }
 

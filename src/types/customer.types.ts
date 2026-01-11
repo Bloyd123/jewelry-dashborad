@@ -380,3 +380,199 @@ export const VALIDATION_MESSAGES = {
     invalid: 'Invalid pincode (must be 6 digits)',
   },
 } as const
+/**
+ * Customer List API Response
+ */
+export interface CustomerListResponse {
+  success: boolean
+  message: string
+  data: {
+    customers: Customer[]
+    summary: CustomerAnalytics
+  }
+  meta: {
+    pagination: {
+      page: number
+      limit: number
+      total: number
+      pages: number
+      hasNext: boolean
+      hasPrev: boolean
+    }
+  }
+}
+
+/**
+ * Single Customer API Response
+ */
+export interface CustomerResponse {
+  success: boolean
+  message: string
+  data: {
+    customer: Customer
+  }
+}
+
+/**
+ * Customer Search Response
+ */
+export interface CustomerSearchResponse {
+  success: boolean
+  message: string
+  data: {
+    exists: boolean
+    customer: Customer | null
+  }
+}
+
+/**
+ * Customer Analytics/Summary
+ */
+export interface CustomerAnalytics {
+  totalCustomers: number
+  activeCustomers: number
+  vipCustomers: number
+  totalOutstanding: number
+  totalLoyaltyPoints: number
+  avgLifetimeValue: number
+}
+
+/**
+ * Customer Analytics API Response
+ */
+export interface CustomerAnalyticsResponse {
+  success: boolean
+  message: string
+  data: {
+    summary: CustomerAnalytics
+  }
+}
+
+/**
+ * Customer Mutation Response (Create/Update/Delete)
+ */
+export interface CustomerMutationResponse {
+  success: boolean
+  message: string
+  data: {
+    customer: Customer
+  }
+}
+
+/**
+ * Blacklist Operation Response
+ */
+export interface BlacklistResponse {
+  success: boolean
+  message: string
+  data: {
+    customer: Customer
+  }
+}
+
+/**
+ * Loyalty Points Operation Response
+ */
+export interface LoyaltyPointsResponse {
+  success: boolean
+  message: string
+  data: {
+    customer: {
+      _id: ID
+      fullName: string
+      loyaltyPoints: number
+    }
+  }
+}
+
+// ============================================
+// 🆕 RTK QUERY INPUT TYPES (ADD THESE)
+// ============================================
+
+/**
+ * Get Customers Query Input
+ */
+export interface GetCustomersInput extends CustomerListParams {
+  shopId: string
+}
+
+/**
+ * Get Customer By ID Input
+ */
+export interface GetCustomerByIdInput {
+  shopId: string
+  customerId: string
+}
+
+/**
+ * Search Customer Input
+ */
+export interface SearchCustomerInput extends CustomerSearchParams {
+  shopId: string
+}
+
+/**
+ * Create Customer Input (with shopId)
+ */
+export interface CreateCustomerInput extends CreateCustomerRequest {
+  shopId: string
+}
+
+/**
+ * Update Customer Input (with shopId and customerId)
+ */
+export interface UpdateCustomerInput extends UpdateCustomerRequest {
+  shopId: string
+  customerId: string
+}
+
+/**
+ * Delete Customer Input
+ */
+export interface DeleteCustomerInput {
+  shopId: string
+  customerId: string
+}
+
+/**
+ * Blacklist Customer Input
+ */
+export interface BlacklistCustomerInput {
+  shopId: string
+  customerId: string
+  reason: string
+}
+
+/**
+ * Remove Blacklist Input
+ */
+export interface RemoveBlacklistInput {
+  shopId: string
+  customerId: string
+}
+
+/**
+ * Add Loyalty Points Input
+ */
+export interface AddLoyaltyPointsInput {
+  shopId: string
+  customerId: string
+  points: number
+  reason?: string
+}
+
+/**
+ * Redeem Loyalty Points Input
+ */
+export interface RedeemLoyaltyPointsInput {
+  shopId: string
+  customerId: string
+  points: number
+}
+
+/**
+ * Get Analytics Input
+ */
+export interface GetAnalyticsInput {
+  shopId: string
+}

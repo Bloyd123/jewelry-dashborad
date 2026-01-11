@@ -12,8 +12,8 @@ import {
 } from '@/store/slices/authSlice'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { Button } from '@/components/ui/button'
-import { TwoFactorCodeInput } from '@/components/UserProfile/UserprofileModal/2fa/TwoFactorCodeInput'
-import { BackupCodeInput } from '@/components/UserProfile/UserprofileModal/2fa/BackupCodeInput'
+import { TwoFactorCodeInput } from '@/components/user/UserProfile/UserprofileModal/2fa/TwoFactorCodeInput'
+import { BackupCodeInput } from '@/components/user/UserProfile/UserprofileModal/2fa/BackupCodeInput'
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 

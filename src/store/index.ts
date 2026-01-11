@@ -19,7 +19,8 @@ import authReducer from './slices/authSlice'
 import notificationReducer from './slices/notificationSlice'
 // import shopReducer from './slices/shopSlice'
 import uiReducer from './slices/uiSlice'
-import { customerApi } from '@/api/services/customerService'
+import { baseApi } from './api/baseApi'
+// import { customerApi } from '@/api/services/customerService'
 
 // Import reducers
 // import userReducer from './slices/userSlice';
@@ -35,15 +36,11 @@ const uiPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  // shop: shopReducer,
   ui: persistReducer(uiPersistConfig, uiReducer),
-
-  // user: userReducer,
-  // shop: shopReducer,
   notification: notificationReducer,
   // RTK Query reducer
-  [customerApi.reducerPath]: customerApi.reducer,
-  // customer: customerReducer,
+   [baseApi.reducerPath]: baseApi.reducer,
+  // [customerApi.reducerPath]: customerApi.reducer,
   // ... other reducers
 })
 
@@ -71,8 +68,9 @@ export const store = configureStore({
       },
     })
       // RTK Query middleware added here
-      .concat(customerApi.middleware),
-  devTools: import.meta.env.DEV, // Enable Redux DevTools in development
+      .concat(baseApi.middleware),
+      // .concat(customerApi.middleware),
+  // devTools: import.meta.env.DEV, // Enable Redux DevTools in development
 })
 
 export const persistor = persistStore(store)
