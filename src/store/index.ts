@@ -39,7 +39,7 @@ const rootReducer = combineReducers({
   ui: persistReducer(uiPersistConfig, uiReducer),
   notification: notificationReducer,
   // RTK Query reducer
-   [baseApi.reducerPath]: baseApi.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
   // [customerApi.reducerPath]: customerApi.reducer,
   // ... other reducers
 })
@@ -69,7 +69,7 @@ export const store = configureStore({
     })
       // RTK Query middleware added here
       .concat(baseApi.middleware),
-      // .concat(customerApi.middleware),
+  // .concat(customerApi.middleware),
   // devTools: import.meta.env.DEV, // Enable Redux DevTools in development
 })
 

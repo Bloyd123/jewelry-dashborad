@@ -53,17 +53,17 @@ export const CUSTOMER_ENDPOINTS = {
   GET_ALL: CUSTOMER_BASE,
   SEARCH: `${CUSTOMER_BASE}/search`,
   ANALYTICS: `${CUSTOMER_BASE}/analytics`,
-  
+
   // CRUD
   GET_BY_ID: `${CUSTOMER_BASE}/:customerId`,
   CREATE: CUSTOMER_BASE,
   UPDATE: `${CUSTOMER_BASE}/:customerId`,
   DELETE: `${CUSTOMER_BASE}/:customerId`,
-  
+
   // Blacklist
   BLACKLIST: `${CUSTOMER_BASE}/:customerId/blacklist`,
   REMOVE_BLACKLIST: `${CUSTOMER_BASE}/:customerId/unblacklist`,
-  
+
   // Loyalty
   ADD_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/add`,
   REDEEM_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/redeem`,
@@ -151,7 +151,6 @@ export const SALES_ENDPOINTS = {
   RETURNS: `${SALES_BASE}/returns`,
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
 }
-
 
 // REPORTS ENDPOINTS
 

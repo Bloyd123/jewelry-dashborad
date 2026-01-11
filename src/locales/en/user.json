@@ -1,42 +1,41 @@
 {
-
   "user": {
     "addUser": "Add New User",
     "editUser": "Edit User",
     "addUserDescription": "Create a new user account with appropriate roles and permissions",
     "editUserDescription": "Update user information and permissions",
-    
+
     "basicInformation": "Basic Information",
     "roleAndPermissions": "Role & Permissions",
     "contactInformation": "Contact Information",
     "employeeInformation": "Employee Information",
     "salesInformation": "Sales Information",
     "preferences": "Preferences",
-    
+
     "username": "Username",
     "usernamePlaceholder": "john_doe",
     "usernameHelpText": "3-30 characters, letters, numbers, and underscores only",
-    
+
     "email": "Email Address",
     "emailPlaceholder": "john.doe@example.com",
-    
+
     "password": "Password",
     "passwordPlaceholder": "Enter password",
     "confirmPassword": "Confirm Password",
     "confirmPasswordPlaceholder": "Re-enter password",
     "passwordsMatch": "Passwords match",
-    
+
     "passwordStrength": {
       "weak": "Weak",
       "medium": "Medium",
       "strong": "Strong"
     },
-    
+
     "firstName": "First Name",
     "firstNamePlaceholder": "John",
     "lastName": "Last Name",
     "lastNamePlaceholder": "Doe",
-    
+
     "role": "User Role",
     "selectRole": "Select a role",
     "roles": {
@@ -48,7 +47,7 @@
       "accountant": "Accountant",
       "viewer": "Viewer"
     },
-    
+
     "roleDescriptions": {
       "superAdmin": "Full system access. Can manage all organizations, shops, and users.",
       "orgAdmin": "Can manage organization settings, shops, and users within the organization.",
@@ -58,14 +57,14 @@
       "accountant": "Can view and manage financial records and reports.",
       "viewer": "Read-only access to shop data and reports."
     },
-    
+
     "organization": "Organization",
     "selectOrganization": "Select organization",
-    
+
     "primaryShop": "Primary Shop",
     "selectShop": "Select primary shop",
     "primaryShopHelpText": "The default shop where this user will work",
-    
+
     "rolePermissions": "Role Permissions",
     "permissions": {
       "fullSystemAccess": "Full system access across all organizations",
@@ -76,13 +75,13 @@
       "viewReports": "View and generate reports",
       "limitedAccess": "Role-specific limited access"
     },
-    
+
     "phone": "Phone Number",
     "phoneHelpText": "10-digit mobile number",
-    
+
     "designation": "Designation",
     "designationPlaceholder": "Store Manager",
-    
+
     "department": "Department",
     "selectDepartment": "Select department",
     "departments": {
@@ -96,28 +95,28 @@
       "customerService": "Customer Service",
       "other": "Other"
     },
-    
+
     "employeeId": "Employee ID",
     "employeeIdPlaceholder": "EMP001",
     "employeeIdHelpText": "Unique employee identifier",
-    
+
     "joiningDate": "Joining Date",
     "selectDate": "Select date",
-    
+
     "salesInfoNotApplicable": "Sales information is only applicable for sales department staff",
     "salesInfoDescription": "Set sales targets and commission rates for performance tracking",
-    
+
     "salesTarget": "Monthly Sales Target",
     "salesTargetHelpText": "Target sales amount in INR per month",
-    
+
     "commissionRate": "Commission Rate",
     "commissionRateHelpText": "Commission percentage on sales (0-100%)",
-    
+
     "salesPerformanceTracking": "Sales Performance Tracking",
     "salesPerformanceDescription": "These targets will be used to track performance and calculate incentives",
-    
+
     "preferencesDescription": "Customize user interface and system preferences",
-    
+
     "language": "Language",
     "selectLanguage": "Select language",
     "languages": {
@@ -128,7 +127,7 @@
       "tamil": "தமிழ் (Tamil)",
       "telugu": "తెలుగు (Telugu)"
     },
-    
+
     "theme": "Theme",
     "selectTheme": "Select theme",
     "themes": {
@@ -136,16 +135,16 @@
       "dark": "Dark",
       "auto": "Auto (System)"
     },
-    
+
     "currency": "Currency",
     "selectCurrency": "Select currency",
-    
+
     "dateFormat": "Date Format",
     "selectDateFormat": "Select format",
-    
+
     "timezone": "Timezone",
     "selectTimezone": "Select timezone",
-    
+
     "notifications": "Notifications",
     "notificationsDescription": "Enable push notifications and email alerts"
   },

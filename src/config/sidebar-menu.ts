@@ -34,7 +34,7 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     url: ROUTES.dashboard,
     icon: LayoutDashboard,
   },
-    {
+  {
     title: t('sidebar.registeruser'),
     url: ROUTES.addUser,
     icon: LayoutDashboard,
@@ -177,7 +177,6 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       },
     ],
   },
-  
 
   // {
   //   title: t('sidebar.oldGold'),

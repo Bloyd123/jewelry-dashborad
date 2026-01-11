@@ -499,7 +499,7 @@ const authSlice = createSlice({
             state.requires2FA = true
             state.tempToken = action.payload.tempToken ?? null
 
-            state.isAuthenticated = false 
+            state.isAuthenticated = false
             return // Don't proceed with normal login
           }
           state.user = action.payload.user

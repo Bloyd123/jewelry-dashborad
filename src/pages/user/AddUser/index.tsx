@@ -11,9 +11,7 @@ import type { CreateUserInput } from '@/validators/userValidator'
 /**
  * HELPER: Convert User to Form Data
  */
-const convertUserToFormData = (
-  user: User
-): Partial<CreateUserInput> => {
+const convertUserToFormData = (user: User): Partial<CreateUserInput> => {
   return {
     username: user.username,
     email: user.email,

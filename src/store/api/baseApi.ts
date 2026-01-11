@@ -7,15 +7,10 @@ import { baseQueryWithReauth } from '@/api/baseQuery'
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  
+
   // Tag types for cache invalidation
-  tagTypes: [
-    'Customer',
-    'CustomerList',
-    'CustomerAnalytics',
-    'CustomerSearch',
-  ],
-  
+  tagTypes: ['Customer', 'CustomerList', 'CustomerAnalytics', 'CustomerSearch'],
+
   endpoints: () => ({}), // Endpoints will be injected
 })
 

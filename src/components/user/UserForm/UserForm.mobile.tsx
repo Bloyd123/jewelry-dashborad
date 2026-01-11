@@ -3,10 +3,7 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  validateUser,
-  validateField,
-} from '@/validators/userValidator'
+import { validateUser, validateField } from '@/validators/userValidator'
 import type { CreateUserInput } from '@/validators/userValidator'
 import type { UserFormProps } from './UserForm.types'
 import { Button } from '@/components/ui/button'
@@ -94,14 +91,40 @@ export default function UserFormMobile({
       setTouched(allTouched)
 
       // Navigate to first step with errors
-      const firstErrorStep = STEPS.findIndex((step) => {
-        return Object.keys(validation.errors).some((key) => {
-          if (step.id === 'basic' && ['username', 'email', 'password', 'confirmPassword', 'firstName', 'lastName'].includes(key)) return true
-          if (step.id === 'role' && ['role', 'organizationId', 'primaryShop'].includes(key)) return true
+      const firstErrorStep = STEPS.findIndex(step => {
+        return Object.keys(validation.errors).some(key => {
+          if (
+            step.id === 'basic' &&
+            [
+              'username',
+              'email',
+              'password',
+              'confirmPassword',
+              'firstName',
+              'lastName',
+            ].includes(key)
+          )
+            return true
+          if (
+            step.id === 'role' &&
+            ['role', 'organizationId', 'primaryShop'].includes(key)
+          )
+            return true
           if (step.id === 'contact' && key === 'phone') return true
-          if (step.id === 'employee' && ['designation', 'department', 'employeeId', 'joiningDate'].includes(key)) return true
-          if (step.id === 'sales' && ['salesTarget', 'commissionRate'].includes(key)) return true
-          if (step.id === 'preferences' && key.startsWith('preferences.')) return true
+          if (
+            step.id === 'employee' &&
+            ['designation', 'department', 'employeeId', 'joiningDate'].includes(
+              key
+            )
+          )
+            return true
+          if (
+            step.id === 'sales' &&
+            ['salesTarget', 'commissionRate'].includes(key)
+          )
+            return true
+          if (step.id === 'preferences' && key.startsWith('preferences.'))
+            return true
           return false
         })
       })
@@ -154,9 +177,7 @@ export default function UserFormMobile({
       {/* Header */}
       <div className="sticky top-0 z-10 border-b border-border-primary bg-bg-secondary p-4">
         <h1 className="text-xl font-bold text-text-primary">
-          {mode === 'create'
-            ? t('user.addUser')
-            : t('user.editUser')}
+          {mode === 'create' ? t('user.addUser') : t('user.editUser')}
         </h1>
 
         {/* Step Indicator */}

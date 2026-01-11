@@ -105,7 +105,7 @@ function App() {
               <Route
                 path="/supplier/edit/:supplierId"
                 element={<AddSupplier />}
-                />
+              />
 
               <Route path="/products/add" element={<AddProduct />} />
               <Route
@@ -127,8 +127,8 @@ function App() {
               <Route path="/payments/add" element={<PaymentFormPage />} />
               <Route path="/allpayments" element={<PaymentTable />} />
               <Route path="/userprofile" element={<UserProfile />} />
-              <Route path='/users/add' element={<AddUserPage/>}/>
-              <Route path='/users/edit/:userId' element={<AddUserPage/>}/>
+              <Route path="/users/add" element={<AddUserPage />} />
+              <Route path="/users/edit/:userId" element={<AddUserPage />} />
 
               <Route
                 path="*"

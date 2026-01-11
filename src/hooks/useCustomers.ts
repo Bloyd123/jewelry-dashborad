@@ -17,7 +17,10 @@ import type {
   CreateCustomerRequest,
 } from '@/types/customer.types'
 
-export const useCustomer = (shopId: string, filters?: Partial<CustomerListParams>) => {
+export const useCustomer = (
+  shopId: string,
+  filters?: Partial<CustomerListParams>
+) => {
   const {
     data: customersData,
     isLoading,
@@ -42,9 +45,9 @@ export const useCustomer = (shopId: string, filters?: Partial<CustomerListParams
         const result = await createCustomer({ shopId, ...data }).unwrap()
         return { success: true, data: result }
       } catch (error: any) {
-        return { 
-          success: false, 
-          error: error.data?.message || 'Failed to create customer' 
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to create customer',
         }
       }
     },
@@ -52,7 +55,11 @@ export const useCustomer = (shopId: string, filters?: Partial<CustomerListParams
   )
 
   const handleSearch = useCallback(
-    async (query: { phone?: string; email?: string; customerCode?: string }) => {
+    async (query: {
+      phone?: string
+      email?: string
+      customerCode?: string
+    }) => {
       try {
         const result = await searchTrigger({ shopId, ...query }).unwrap()
         return { success: true, data: result }

@@ -41,8 +41,7 @@ export const RolePermissionsSection = ({
   ]
 
   // Show/hide fields based on role
-  const showOrganization =
-    data.role && data.role !== 'super_admin'
+  const showOrganization = data.role && data.role !== 'super_admin'
   const showShop =
     data.role &&
     ['shop_admin', 'manager', 'staff', 'accountant', 'viewer'].includes(

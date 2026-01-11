@@ -1,13 +1,9 @@
-
 // FILE: src/components/user/UserForm/UserForm.desktop.tsx
 // Desktop Layout for UserForm (2-Column Cards)
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  validateUser,
-  validateField,
-} from '@/validators/userValidator'
+import { validateUser, validateField } from '@/validators/userValidator'
 import type { CreateUserInput } from '@/validators/userValidator'
 import type { UserFormProps } from './UserForm.types'
 import { Button } from '@/components/ui/button'
@@ -93,9 +89,7 @@ export default function UserFormDesktop({
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-text-primary">
-          {mode === 'create'
-            ? t('user.addUser')
-            : t('user.editUser')}
+          {mode === 'create' ? t('user.addUser') : t('user.editUser')}
         </h1>
         <p className="mt-1 text-text-secondary">
           {mode === 'create'

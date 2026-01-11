@@ -135,7 +135,10 @@ export const PreferencesSection = ({
       {/* Notifications Toggle */}
       <div className="flex items-center justify-between rounded-md border border-border-primary bg-bg-secondary p-4">
         <div className="space-y-0.5">
-          <Label htmlFor="notifications" className="text-sm font-medium text-text-primary">
+          <Label
+            htmlFor="notifications"
+            className="text-sm font-medium text-text-primary"
+          >
             {t('user.notifications')}
           </Label>
           <p className="text-sm text-text-tertiary">
@@ -145,7 +148,7 @@ export const PreferencesSection = ({
         <Switch
           id="notifications"
           checked={data.preferences?.notificationsEnabled ?? true}
-          onCheckedChange={(checked) =>
+          onCheckedChange={checked =>
             handlePreferenceChange('notificationsEnabled', checked)
           }
           disabled={disabled}

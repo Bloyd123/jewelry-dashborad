@@ -2,7 +2,7 @@
 // Theme-based Form Input Component
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AlertCircle,Info  } from 'lucide-react'
+import { AlertCircle, Info } from 'lucide-react'
 
 interface FormInputProps {
   name: string
@@ -18,7 +18,7 @@ interface FormInputProps {
   className?: string
   maxLength?: number
   minLength?: number
-    min?: number
+  min?: number
   max?: number
   step?: number | string
   helpText?: string
@@ -39,12 +39,11 @@ export const FormInput = ({
   className = '',
   maxLength,
   minLength,
-    min,
+  min,
   max,
   step,
   helpText,
   showCharCount = false,
-
 }: FormInputProps) => {
   return (
     <div className={`space-y-2 ${className}`}>
@@ -67,17 +66,17 @@ export const FormInput = ({
         required={required}
         maxLength={maxLength}
         minLength={minLength}
-          min={min}           
-  max={max}           
-  step={step} 
+        min={min}
+        max={max}
+        step={step}
         className={`border-border-primary bg-bg-secondary text-text-primary placeholder:text-text-tertiary focus:border-accent focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${error ? 'border-status-error focus:border-status-error focus:ring-status-error' : ''} `}
       />
-{helpText && !error && (
-  <div className="flex items-center gap-2 text-sm text-text-tertiary">
-    <Info className="h-3 w-3" />
-    <span>{helpText}</span>
-  </div>
-)}
+      {helpText && !error && (
+        <div className="flex items-center gap-2 text-sm text-text-tertiary">
+          <Info className="h-3 w-3" />
+          <span>{helpText}</span>
+        </div>
+      )}
       {error && (
         <div className="flex items-center gap-2 text-sm text-status-error">
           <AlertCircle className="h-4 w-4" />

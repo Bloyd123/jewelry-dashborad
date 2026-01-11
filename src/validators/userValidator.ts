@@ -2,7 +2,14 @@
 // User Validation Logic using Zod
 
 import { z } from 'zod'
-import type { UserRole, Department, Language, Theme, DateFormat, Currency } from '@/types/user.types'
+import type {
+  UserRole,
+  Department,
+  Language,
+  Theme,
+  DateFormat,
+  Currency,
+} from '@/types/user.types'
 
 /**
  * Username Validation Schema
@@ -11,7 +18,10 @@ const usernameSchema = z
   .string()
   .min(3, 'Username must be at least 3 characters')
   .max(30, 'Username cannot exceed 30 characters')
-  .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores')
+  .regex(
+    /^[a-zA-Z0-9_]+$/,
+    'Username can only contain letters, numbers, and underscores'
+  )
 
 /**
  * Email Validation Schema
@@ -91,8 +101,15 @@ export const createUserSchema = z
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: z.string().min(1, 'Please confirm your password'),
-    firstName: z.string().min(1, 'First name is required').max(50, 'First name cannot exceed 50 characters'),
-    lastName: z.string().max(50, 'Last name cannot exceed 50 characters').optional().or(z.literal('')),
+    firstName: z
+      .string()
+      .min(1, 'First name is required')
+      .max(50, 'First name cannot exceed 50 characters'),
+    lastName: z
+      .string()
+      .max(50, 'Last name cannot exceed 50 characters')
+      .optional()
+      .or(z.literal('')),
 
     // Role & Access
     role: roleSchema,
@@ -103,24 +120,41 @@ export const createUserSchema = z
     phone: phoneSchema,
 
     // Employee Info
-    designation: z.string().max(100, 'Designation cannot exceed 100 characters').optional().or(z.literal('')),
+    designation: z
+      .string()
+      .max(100, 'Designation cannot exceed 100 characters')
+      .optional()
+      .or(z.literal('')),
     department: departmentSchema.optional(),
-    employeeId: z.string().max(50, 'Employee ID cannot exceed 50 characters').optional().or(z.literal('')),
+    employeeId: z
+      .string()
+      .max(50, 'Employee ID cannot exceed 50 characters')
+      .optional()
+      .or(z.literal('')),
     joiningDate: z.string().optional().or(z.literal('')),
 
     // Sales Info
-    salesTarget: z.number().min(0, 'Sales target cannot be negative').optional().or(z.literal(0)),
-    commissionRate: z.number().min(0, 'Commission rate cannot be negative').max(100, 'Commission rate cannot exceed 100%').optional().or(z.literal(0)),
+    salesTarget: z
+      .number()
+      .min(0, 'Sales target cannot be negative')
+      .optional()
+      .or(z.literal(0)),
+    commissionRate: z
+      .number()
+      .min(0, 'Commission rate cannot be negative')
+      .max(100, 'Commission rate cannot exceed 100%')
+      .optional()
+      .or(z.literal(0)),
 
     // Preferences
     preferences: userPreferencesSchema.optional(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
   .refine(
-    (data) => {
+    data => {
       // Super admin cannot have organization or shop
       if (data.role === 'super_admin') {
         return !data.organizationId && !data.primaryShop
@@ -133,7 +167,7 @@ export const createUserSchema = z
     }
   )
   .refine(
-    (data) => {
+    data => {
       // Org admin must have organization
       if (data.role === 'org_admin') {
         return !!data.organizationId
@@ -146,9 +180,13 @@ export const createUserSchema = z
     }
   )
   .refine(
-    (data) => {
+    data => {
       // Shop-level users must have primary shop
-      if (['shop_admin', 'manager', 'staff', 'accountant', 'viewer'].includes(data.role)) {
+      if (
+        ['shop_admin', 'manager', 'staff', 'accountant', 'viewer'].includes(
+          data.role
+        )
+      ) {
         return !!data.primaryShop
       }
       return true
@@ -183,25 +221,28 @@ export interface FieldValidationResult {
 /**
  * Validate Complete User Form
  */
-export const validateUser = (data: Partial<CreateUserInput>): ValidationResult => {
+export const validateUser = (
+  data: Partial<CreateUserInput>
+): ValidationResult => {
   try {
     createUserSchema.parse(data)
     return {
       isValid: true,
       errors: {},
     }
-} catch (error) {
-  if (error instanceof z.ZodError) {
-    const errors: Record<string, string> = {}
-    error.issues.forEach((err) => {  // ✅ CORRECT: error.issues
-      const path = err.path.join('.')
-      errors[path] = err.message
-    })
-    return {
-      isValid: false,
-      errors,
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errors: Record<string, string> = {}
+      error.issues.forEach(err => {
+        // ✅ CORRECT: error.issues
+        const path = err.path.join('.')
+        errors[path] = err.message
+      })
+      return {
+        isValid: false,
+        errors,
+      }
     }
-  }
     return {
       isValid: false,
       errors: { _form: 'Validation failed' },
@@ -219,7 +260,7 @@ export const validateField = (
   try {
     // Get the schema for this specific field
     const fieldSchema = createUserSchema.shape[name]
-    
+
     if (!fieldSchema) {
       return { isValid: true }
     }
@@ -230,7 +271,7 @@ export const validateField = (
     if (error instanceof z.ZodError) {
       return {
         isValid: false,
-         error: error.issues[0]?.message || 'Invalid value', 
+        error: error.issues[0]?.message || 'Invalid value',
       }
     }
     return { isValid: true }
@@ -240,7 +281,9 @@ export const validateField = (
 /**
  * Validate Password Strength
  */
-export const validatePasswordStrength = (password: string): {
+export const validatePasswordStrength = (
+  password: string
+): {
   isStrong: boolean
   strength: 'weak' | 'medium' | 'strong'
   feedback: string[]
@@ -259,7 +302,8 @@ export const validatePasswordStrength = (password: string): {
   if (!/[a-z]/.test(password)) feedback.push('Add lowercase letters')
   if (!/[A-Z]/.test(password)) feedback.push('Add uppercase letters')
   if (!/[0-9]/.test(password)) feedback.push('Add numbers')
-  if (!/[^a-zA-Z0-9]/.test(password)) feedback.push('Add special characters for better security')
+  if (!/[^a-zA-Z0-9]/.test(password))
+    feedback.push('Add special characters for better security')
 
   let strength: 'weak' | 'medium' | 'strong' = 'weak'
   if (score >= 5) strength = 'strong'
@@ -275,9 +319,11 @@ export const validatePasswordStrength = (password: string): {
 /**
  * Validate Username Availability (Mock - Replace with API call)
  */
-export const validateUsernameAvailability = async (username: string): Promise<boolean> => {
+export const validateUsernameAvailability = async (
+  username: string
+): Promise<boolean> => {
   // Mock validation - Replace with actual API call
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  await new Promise(resolve => setTimeout(resolve, 500))
   const unavailableUsernames = ['admin', 'root', 'test', 'user']
   return !unavailableUsernames.includes(username.toLowerCase())
 }
@@ -285,9 +331,11 @@ export const validateUsernameAvailability = async (username: string): Promise<bo
 /**
  * Validate Email Availability (Mock - Replace with API call)
  */
-export const validateEmailAvailability = async (email: string): Promise<boolean> => {
+export const validateEmailAvailability = async (
+  email: string
+): Promise<boolean> => {
   // Mock validation - Replace with actual API call
-  await new Promise((resolve) => setTimeout(resolve, 500))
+  await new Promise(resolve => setTimeout(resolve, 500))
   const unavailableEmails = ['admin@example.com', 'test@example.com']
   return !unavailableEmails.includes(email.toLowerCase())
 }

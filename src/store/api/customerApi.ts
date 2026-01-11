@@ -25,7 +25,6 @@ import type {
 
 export const customerApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    
     // GET ALL CUSTOMERS
     getCustomers: build.query<CustomerListResponse, GetCustomersInput>({
       query: ({ shopId, ...filters }) => ({
@@ -49,7 +48,8 @@ export const customerApi = baseApi.injectEndpoints({
           customerId,
         }),
       }),
-      transformResponse: (response: CustomerMutationResponse) => response.data.customer,
+      transformResponse: (response: CustomerMutationResponse) =>
+        response.data.customer,
       providesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
@@ -61,7 +61,8 @@ export const customerApi = baseApi.injectEndpoints({
         url: replacePathParams(CUSTOMER_ENDPOINTS.SEARCH, { shopId }),
         params,
       }),
-      transformResponse: (response: CustomerSearchResponse) => response.data.customer,
+      transformResponse: (response: CustomerSearchResponse) =>
+        response.data.customer,
       providesTags: ['CustomerSearch'],
     }),
 
@@ -72,7 +73,8 @@ export const customerApi = baseApi.injectEndpoints({
         method: 'POST',
         body: data,
       }),
-      transformResponse: (response: CustomerMutationResponse) => response.data.customer,
+      transformResponse: (response: CustomerMutationResponse) =>
+        response.data.customer,
       invalidatesTags: (result, error, { shopId }) => [
         { type: 'CustomerList', id: shopId },
         'CustomerAnalytics',
@@ -89,7 +91,8 @@ export const customerApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
-      transformResponse: (response: CustomerMutationResponse) => response.data.customer,
+      transformResponse: (response: CustomerMutationResponse) =>
+        response.data.customer,
       invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
         { type: 'CustomerList', id: shopId },
@@ -122,7 +125,8 @@ export const customerApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: { reason },
       }),
-      transformResponse: (response: CustomerMutationResponse) => response.data.customer,
+      transformResponse: (response: CustomerMutationResponse) =>
+        response.data.customer,
       invalidatesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
@@ -137,19 +141,23 @@ export const customerApi = baseApi.injectEndpoints({
         }),
         method: 'PATCH',
       }),
-      transformResponse: (response: CustomerMutationResponse) => response.data.customer,
+      transformResponse: (response: CustomerMutationResponse) =>
+        response.data.customer,
       invalidatesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
     }),
 
     // ADD LOYALTY POINTS
-    addLoyaltyPoints: build.mutation<Customer, {
-      shopId: string
-      customerId: string
-      points: number
-      reason?: string
-    }>({
+    addLoyaltyPoints: build.mutation<
+      Customer,
+      {
+        shopId: string
+        customerId: string
+        points: number
+        reason?: string
+      }
+    >({
       query: ({ shopId, customerId, points, reason }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.ADD_LOYALTY, {
           shopId,
@@ -158,18 +166,22 @@ export const customerApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { points, reason },
       }),
-      transformResponse: (response: LoyaltyPointsResponse) => response.data.customer as any,
+      transformResponse: (response: LoyaltyPointsResponse) =>
+        response.data.customer as any,
       invalidatesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
     }),
 
     // REDEEM LOYALTY POINTS
-    redeemLoyaltyPoints: build.mutation<Customer, {
-      shopId: string
-      customerId: string
-      points: number
-    }>({
+    redeemLoyaltyPoints: build.mutation<
+      Customer,
+      {
+        shopId: string
+        customerId: string
+        points: number
+      }
+    >({
       query: ({ shopId, customerId, points }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.REDEEM_LOYALTY, {
           shopId,
@@ -178,21 +190,25 @@ export const customerApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { points },
       }),
-      transformResponse: (response: LoyaltyPointsResponse) => response.data.customer as any,
+      transformResponse: (response: LoyaltyPointsResponse) =>
+        response.data.customer as any,
       invalidatesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
     }),
 
     // GET ANALYTICS
-    getCustomerAnalytics: build.query<CustomerAnalyticsResponse['data']['summary'], GetAnalyticsInput>({
+    getCustomerAnalytics: build.query<
+      CustomerAnalyticsResponse['data']['summary'],
+      GetAnalyticsInput
+    >({
       query: ({ shopId }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.ANALYTICS, { shopId }),
       }),
-      transformResponse: (response: CustomerAnalyticsResponse) => response.data.summary,
+      transformResponse: (response: CustomerAnalyticsResponse) =>
+        response.data.summary,
       providesTags: ['CustomerAnalytics'],
     }),
-
   }),
 })
 

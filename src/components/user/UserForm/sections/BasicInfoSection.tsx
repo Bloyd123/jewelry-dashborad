@@ -86,7 +86,11 @@ export const BasicInfoSection = ({
           className="absolute right-3 top-9 text-text-tertiary hover:text-text-primary"
           tabIndex={-1}
         >
-          {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          {showPassword ? (
+            <EyeOff className="h-4 w-4" />
+          ) : (
+            <Eye className="h-4 w-4" />
+          )}
         </button>
 
         {/* Password Strength Indicator */}
@@ -99,8 +103,8 @@ export const BasicInfoSection = ({
                     passwordStrength.strength === 'weak'
                       ? 'w-1/3 bg-status-error'
                       : passwordStrength.strength === 'medium'
-                      ? 'w-2/3 bg-status-warning'
-                      : 'w-full bg-status-success'
+                        ? 'w-2/3 bg-status-warning'
+                        : 'w-full bg-status-success'
                   }`}
                 />
               </div>
