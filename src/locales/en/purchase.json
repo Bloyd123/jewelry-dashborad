@@ -136,19 +136,6 @@
     "selectDateRange": "Select date range",
     "title": "Filter Purchases"
   },
-  "common": {
-    "apply": "Apply",
-    "clearSelection": "Clear Selection",
-    "step": "Step",
-    "of": "of",
-    "next": "Next",
-    "previous": "Previous",
-    "cancel": "Cancel",
-    "save": "Save",
-    "update": "Update",
-    "saving": "Saving...",
-    "selectDate": "Select Date"
-  },
   "table": {
     "purchaseNumber": "Purchase Number",
     "supplier": "Supplier",

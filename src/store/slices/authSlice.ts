@@ -495,11 +495,25 @@ const authSlice = createSlice({
         login.fulfilled,
         (state, action: PayloadAction<LoginResponse['data']>) => {
           state.isLoading = false
+          // ✅ ADD THESE DEBUG LOGS
+          console.log(
+            '🔐 [Redux] Login fulfilled - Full payload:',
+            action.payload
+          )
+          console.log('🔐 [Redux] requires2FA:', action.payload.requires2FA)
+          console.log('🔐 [Redux] tempToken:', action.payload.tempToken)
           if (action.payload.requires2FA) {
+            console.log('🔐 [Redux] Setting 2FA required state')
             state.requires2FA = true
             state.tempToken = action.payload.tempToken ?? null
 
             state.isAuthenticated = false // Not authenticated yet
+            // ✅ ADD THIS LOG
+            console.log('🔐 [Redux] State after 2FA set:', {
+              requires2FA: state.requires2FA,
+              tempToken: state.tempToken,
+              isAuthenticated: state.isAuthenticated,
+            })
             return // Don't proceed with normal login
           }
           state.user = action.payload.user
@@ -508,6 +522,7 @@ const authSlice = createSlice({
           state.tokenId = action.payload.tokenId
           state.isAuthenticated = true
           state.requires2FA = action.payload.requires2FA || false
+          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false // ✅ Sync on login
           state.lastActivity = Date.now()
 
           // Store tokens
@@ -603,6 +618,14 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload as string
         state.isAuthenticated = false
+        state.user = null
+        state.accessToken = null
+        state.refreshToken = null
+        state.tokenId = null
+
+        // 🔥 yehi main fix hai
+        state.requires2FA = false
+        state.tempToken = null
       })
 
     // GET ACTIVE SESSIONS
@@ -688,6 +711,8 @@ const authSlice = createSlice({
         state.user = action.payload.user
         state.shopAccesses = action.payload.shopAccesses || []
         state.isAuthenticated = true
+        // ✅ Sync 2FA status from user object
+        state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false
@@ -815,6 +840,8 @@ const authSlice = createSlice({
           state.refreshToken = action.payload.refreshToken
           state.isAuthenticated = true
 
+          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false
+
           // Restore current shop
           const storedShop = localStorage.getItem('currentShop')
           if (
@@ -857,9 +884,9 @@ const authSlice = createSlice({
         state.is2FALoading = false
         if (state.user) {
           state.user.twoFactorEnabled = true
-          state.twoFactorEnabled = true
-
+          state.twoFactorEnabled = true // ✅ Sync Redux state
           state.user.backupCodes = action.payload.backupCodes || []
+          state.user.backupCodesUsed = [] // ✅ Reset used codes
         }
       })
       .addCase(verify2FA.rejected, (state, action) => {
@@ -871,14 +898,16 @@ const authSlice = createSlice({
 
     builder
       .addCase(disable2FA.pending, state => {
-        state.is2FALoading = false
+        state.is2FALoading = true // ✅ Fixed
         state.error = null
       })
       .addCase(disable2FA.fulfilled, state => {
         state.is2FALoading = false
         if (state.user) {
           state.user.twoFactorEnabled = false
-          state.twoFactorEnabled = false
+          state.twoFactorEnabled = false // ✅ Sync Redux state
+          state.user.backupCodes = [] // ✅ Clear backup codes
+          state.user.backupCodesUsed = [] // ✅ Clear used codes
         }
       })
       .addCase(disable2FA.rejected, (state, action) => {
@@ -904,10 +933,58 @@ const authSlice = createSlice({
           state.refreshToken = action.payload.refreshToken
           state.tokenId = action.payload.tokenId
           state.isAuthenticated = true
-          // ... handle shop accesses and permissions as in normal login
+          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false
+          state.lastActivity = Date.now()
 
+          // Store tokens
           tokenService.saveAccessToken(action.payload.accessToken)
           tokenService.saveRefreshToken(action.payload.refreshToken)
+
+          // ✅ COMPLETE shop logic (same as login.fulfilled)
+          const { effectivePermissions, shopAccesses } = action.payload
+
+          if (effectivePermissions) {
+            // Org-level user (super_admin, org_admin)
+            state.permissions = effectivePermissions
+            state.shopAccesses = []
+            state.currentShop = null
+            state.currentShopAccess = null
+
+            console.log(
+              `[Auth] ${action.payload.user.role} logged in via 2FA with effective permissions`
+            )
+          } else {
+            // Shop-level user (shop_admin, manager, staff, etc.)
+            state.shopAccesses = shopAccesses || []
+
+            if (state.shopAccesses.length > 0) {
+              // Restore last selected shop or use first
+              const storedShop = localStorage.getItem('currentShop')
+              const shopExists = state.shopAccesses.some(
+                access => access.shopId === storedShop
+              )
+
+              if (storedShop && shopExists) {
+                state.currentShop = storedShop
+              } else {
+                state.currentShop = state.shopAccesses[0].shopId
+                localStorage.setItem('currentShop', state.currentShop)
+              }
+
+              // Set permissions from current shop access
+              const shopAccess = state.shopAccesses.find(
+                access => access.shopId === state.currentShop
+              )
+              state.currentShopAccess = shopAccess || null
+              state.permissions = shopAccess?.permissions || null
+
+              console.log(
+                `[Auth] Shop-level user logged in via 2FA to shop: ${state.currentShop}`
+              )
+            } else {
+              console.warn('[Auth] Shop-level user has no shop access!')
+            }
+          }
         }
       )
       .addCase(verify2FALogin.rejected, (state, action) => {
@@ -925,7 +1002,6 @@ const authSlice = createSlice({
       .addCase(
         verifyBackupCodeLogin.fulfilled,
         (state, action: PayloadAction<LoginResponse['data']>) => {
-          // Same as verify2FALogin.fulfilled
           state.isLoading = false
           state.requires2FA = false
           state.tempToken = null
@@ -934,9 +1010,58 @@ const authSlice = createSlice({
           state.refreshToken = action.payload.refreshToken
           state.tokenId = action.payload.tokenId
           state.isAuthenticated = true
+          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false
+          state.lastActivity = Date.now()
 
+          // Store tokens
           tokenService.saveAccessToken(action.payload.accessToken)
           tokenService.saveRefreshToken(action.payload.refreshToken)
+
+          // ✅ COMPLETE shop logic (same as login.fulfilled)
+          const { effectivePermissions, shopAccesses } = action.payload
+
+          if (effectivePermissions) {
+            // Org-level user (super_admin, org_admin)
+            state.permissions = effectivePermissions
+            state.shopAccesses = []
+            state.currentShop = null
+            state.currentShopAccess = null
+
+            console.log(
+              `[Auth] ${action.payload.user.role} logged in via backup code with effective permissions`
+            )
+          } else {
+            // Shop-level user (shop_admin, manager, staff, etc.)
+            state.shopAccesses = shopAccesses || []
+
+            if (state.shopAccesses.length > 0) {
+              // Restore last selected shop or use first
+              const storedShop = localStorage.getItem('currentShop')
+              const shopExists = state.shopAccesses.some(
+                access => access.shopId === storedShop
+              )
+
+              if (storedShop && shopExists) {
+                state.currentShop = storedShop
+              } else {
+                state.currentShop = state.shopAccesses[0].shopId
+                localStorage.setItem('currentShop', state.currentShop)
+              }
+
+              // Set permissions from current shop access
+              const shopAccess = state.shopAccesses.find(
+                access => access.shopId === state.currentShop
+              )
+              state.currentShopAccess = shopAccess || null
+              state.permissions = shopAccess?.permissions || null
+
+              console.log(
+                `[Auth] Shop-level user logged in via backup code to shop: ${state.currentShop}`
+              )
+            } else {
+              console.warn('[Auth] Shop-level user has no shop access!')
+            }
+          }
         }
       )
       .addCase(verifyBackupCodeLogin.rejected, (state, action) => {

@@ -65,9 +65,13 @@ export const useAuth = () => {
   const login = useCallback(
     async (credentials: LoginRequest) => {
       try {
+        console.log('🔐 [useAuth] Calling login with:', credentials.email)
         const result = await dispatch(loginAction(credentials)).unwrap()
+        console.log('🔐 [useAuth] Login result:', result)
+        console.log('🔐 [useAuth] requires2FA:', result.requires2FA)
         return { success: true, data: result }
       } catch (error: any) {
+        console.error('🔐 [useAuth] Login error:', error)
         // ✅ Just throw - LoginForm will catch and handle
         throw error
       }

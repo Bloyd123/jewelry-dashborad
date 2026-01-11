@@ -40,6 +40,14 @@
     },
 
     "security": {
+      "enabled": "Enabled",
+      "2faEnabled": "Two-factor authentication enabled",
+      "2faEnabledSuccess": "Two-factor authentication has been enabled successfully",
+      "disabled": "Disabled",
+      "passwordChanged": "Password changed successfully",
+      "passwordChangedSuccess": "Your password has been updated successfully",
+      "2faDisabled": "Two-factor authentication disabled",
+      "2faDisabledSuccess": "Two-factor authentication has been disabled successfully",
       "logoutAllConfirmTitle": "Logout from All Devices?",
       "logoutAllConfirmDesc": "This will end all your active sessions on every device, including this one. You will need to login again on all devices.",
       "logoutAllConfirm": "Yes, Logout All",

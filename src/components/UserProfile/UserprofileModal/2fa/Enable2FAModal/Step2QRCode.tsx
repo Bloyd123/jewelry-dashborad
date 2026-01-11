@@ -19,7 +19,15 @@ export interface Step2QRCodeProps {
   loading?: boolean
   error?: string | null
 }
+const formatSecret = (secret: string): string => {
+  if (!secret) return ''
 
+  // Remove any existing spaces
+  const cleaned = secret.replace(/\s/g, '')
+
+  // Add space every 4 characters
+  return cleaned.match(/.{1,4}/g)?.join('') || cleaned
+}
 // COMPONENT
 
 export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
@@ -83,7 +91,9 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
           </p>
           <div className="flex items-center gap-2">
             <div className="flex-1 rounded-lg border border-border-primary bg-bg-tertiary px-3 py-2">
-              <code className="text-sm text-text-primary">{secret}</code>
+              <code className="break-all font-mono text-sm tracking-wider text-text-primary">
+                {formatSecret(secret)}
+              </code>
             </div>
             <Button variant="outline" size="icon" onClick={handleCopySecret}>
               {secretCopied ? (
@@ -93,9 +103,9 @@ export const Step2QRCode: React.FC<Step2QRCodeProps> = ({
               )}
             </Button>
           </div>
-          {secretCopied && (
+          {/* {secretCopied && (
             <p className="text-xs text-status-success">{t('common.copied')}</p>
-          )}
+          )} */}
         </div>
 
         {/* Helper Info */}

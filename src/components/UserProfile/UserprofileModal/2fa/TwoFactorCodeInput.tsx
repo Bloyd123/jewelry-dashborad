@@ -144,7 +144,6 @@ export const TwoFactorCodeInput: React.FC<TwoFactorCodeInputProps> = ({
               'h-12 w-12 text-center text-lg font-semibold',
               'rounded-lg border-2 transition-all',
               'bg-bg-secondary text-text-primary',
-              'focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
               error
                 ? 'border-status-error'
                 : 'border-border-primary focus:border-accent',

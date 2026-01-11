@@ -80,13 +80,21 @@ const LoginForm: React.FC = () => {
           password: formData.password,
           rememberMe: formData.rememberMe,
         }
-
-        await login(loginData)
+        console.log('📝 [LoginForm] Submitting login for:', loginData.email)
+        const result = await login(loginData)
+        console.log('📝 [LoginForm] Login result:', result)
+        console.log('📝 [LoginForm] requires2FA from Redux:', requires2FA)
         if (!requires2FA) {
+          console.log(
+            '📝 [LoginForm] No 2FA required - navigating to dashboard'
+          )
           showSuccess(t('auth.login.success'), t('auth.login.welcomeBack'))
           navigate(ROUTES.dashboard)
+        } else {
+          console.log('📝 [LoginForm] 2FA required - staying on login page')
         }
       } catch (error: any) {
+        console.error('📝 [LoginForm] Login error:', error)
         handleError(error, setErrors)
       } finally {
         setLoading(false)
