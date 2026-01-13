@@ -194,7 +194,7 @@ export interface LoginResponse {
     refreshToken: string
     tokenId: string
     expiresIn: number
-    shopAccesses?: UserShopAccess[] // ✅ Optional now
+    shopAccesses?: UserShopAccess[] // Optional now
     effectivePermissions?: ShopPermissions //   field
     requires2FA?: boolean
     tempToken?: string

@@ -168,7 +168,7 @@ export const customerApi = baseApi.injectEndpoints({
     }),
 
     // ============================================
-    // ✅ REMOVE BLACKLIST
+    // REMOVE BLACKLIST
     // ============================================
     removeBlacklist: build.mutation<Customer, RemoveBlacklistInput>({
       query: ({ shopId, customerId }) => ({

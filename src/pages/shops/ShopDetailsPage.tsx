@@ -30,7 +30,7 @@ export const ShopDetailsPage: React.FC = () => {
 
   const handleSaveSettings = async (settings: ShopSettingsFormData) => {
     console.log('Saving settings:', settings)
-    // ✅ API call example
+    // API call example
     // await updateShopSettings(shop._id, settings)
     setIsSettingsOpen(false)
   }
@@ -96,7 +96,7 @@ export const ShopDetailsPage: React.FC = () => {
         onSettingsClick={() => setIsSettingsOpen(true)}
       />
 
-      {/* Tab Content - BAHAR render ho raha hai ✅ */}
+      {/* Tab Content - BAHAR render ho raha hai */}
       {renderTabContent()}
 
       {/* Settings Modal */}

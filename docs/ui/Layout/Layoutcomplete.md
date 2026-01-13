@@ -810,7 +810,7 @@ export const Toolbar = () => {
 
 ---
 
-## ✅ Best Practices
+## Best Practices
 
 ### 1. Always Use i18n
 ```typescript
@@ -819,7 +819,7 @@ const items = [
   { value: 'settings', title: 'Settings', content: <div>Content</div> }
 ]
 
-// ✅ CORRECT
+// CORRECT
 const items = [
   { value: 'settings', title: t('settings.title'), content: <div>{t('settings.content')}</div> }
 ]
@@ -827,16 +827,16 @@ const items = [
 
 ### 2. Use Appropriate Accordion Type
 ```typescript
-// ✅ FAQs - Single open (user reads one at a time)
+// FAQs - Single open (user reads one at a time)
 <Accordion type="single" items={faqs} />
 
-// ✅ Settings - Multiple open (user configures multiple sections)
+// Settings - Multiple open (user configures multiple sections)
 <Accordion type="multiple" items={settings} />
 ```
 
 ### 3. Separator Spacing
 ```typescript
-// ✅ CORRECT - Use spacing prop instead of manual margins
+// CORRECT - Use spacing prop instead of manual margins
 <Separator spacing="lg" />
 
 // ❌ WRONG - Manual margins
@@ -847,10 +847,10 @@ const items = [
 
 ### 4. Semantic Separators
 ```typescript
-// ✅ CORRECT - Decorative separator
+// CORRECT - Decorative separator
 <Separator decorative={true} />
 
-// ✅ CORRECT - Meaningful separator (screen readers announce)
+// CORRECT - Meaningful separator (screen readers announce)
 <Separator 
   decorative={false}
   aria-label="End of profile section"
@@ -859,16 +859,16 @@ const items = [
 
 ### 5. Icon Consistency
 ```typescript
-// ✅ Import from lucide-react
+// Import from lucide-react
 import { Settings, Bell, Shield } from 'lucide-react'
 
-// ✅ Consistent size
+// Consistent size
 icon: <Settings className="h-5 w-5" />
 ```
 
 ### 6. Accordion Content Structure
 ```typescript
-// ✅ CORRECT - Proper content structure
+// CORRECT - Proper content structure
 {
   value: 'section',
   title: t('title'),
@@ -905,7 +905,7 @@ theme: {
 // ❌ WRONG - No height for vertical separator
 <Separator orientation="vertical" />
 
-// ✅ CORRECT - Parent provides height
+// CORRECT - Parent provides height
 <div className="flex items-center h-20">
   <Separator orientation="vertical" />
 </div>
@@ -914,7 +914,7 @@ theme: {
 ### Issue: Accordion content cut off
 **Solution:** Check parent container overflow
 ```typescript
-// ✅ Ensure parent doesn't hide overflow
+// Ensure parent doesn't hide overflow
 <div className="overflow-visible">
   <Accordion items={items} />
 </div>
@@ -929,7 +929,7 @@ const items = [
   { value: 'item', title: 'Second' }, // Duplicate!
 ]
 
-// ✅ CORRECT - Unique values
+// CORRECT - Unique values
 const items = [
   { value: 'item-1', title: 'First' },
   { value: 'item-2', title: 'Second' },
@@ -1007,7 +1007,7 @@ variant="ghost"      // Minimal
 
 ## ⭐ Rating: 9.5/10
 
-### Strengths ✅
+### Strengths
 - **Accordion**: 4 variants, smooth animations, icons, badges, controlled/uncontrolled
 - **Separator**: 4 styles, 6 colors, labels, icons, spacing control
 - Fully responsive and accessible

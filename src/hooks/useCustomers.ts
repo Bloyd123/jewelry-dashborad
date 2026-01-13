@@ -65,7 +65,7 @@ export const useCustomer = (
       try {
         const result = await createMutation({ shopId, ...data }).unwrap()
 
-        // ✅ Success notification (i18n)
+        // Success notification (i18n)
         showSuccess('customer.success.created', 'customer.success.createdTitle')
 
         return { success: true, data: result }
@@ -163,7 +163,7 @@ export const useCustomer = (
   )
 
   // ============================================
-  // ✅ REMOVE BLACKLIST
+  // REMOVE BLACKLIST
   // ============================================
   const removeBlacklist = useCallback(
     async (customerId: string) => {

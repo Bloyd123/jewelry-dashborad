@@ -1211,12 +1211,12 @@ const handleUpdate = () => {
   setData(data)
 }
 
-// ✅ Correct
+// Correct
 const handleUpdate = () => {
   setData([...data, newItem]) // New reference
 }
 
-// ✅ Or with Redux
+// Or with Redux
 dispatch(addCustomer(newItem)) // Redux internally new reference banata hai
 ```
 
@@ -1228,7 +1228,7 @@ dispatch(addCustomer(newItem)) // Redux internally new reference banata hai
 
 **Solution:**
 ```typescript
-// ✅ Correct
+// Correct
 {
   id: 'name',
   header: 'Name',
@@ -1278,7 +1278,7 @@ rowActions={{
 
 **Client-Side Pagination:**
 ```typescript
-// ✅ Correct - totalItems mat do
+// Correct - totalItems mat do
 pagination={{
   enabled: true,
   pageSize: 20,
@@ -1288,7 +1288,7 @@ pagination={{
 
 **Server-Side Pagination:**
 ```typescript
-// ✅ Correct - totalItems zaruri hai
+// Correct - totalItems zaruri hai
 pagination={{
   enabled: true,
   pageSize: 20,
@@ -1301,7 +1301,7 @@ pagination={{
 <a name="best-practices"></a>
 ## 7. Best Practices - Yeh Follow Karo
 
-### ✅ DO's
+### DO's
 
 1. **Column definitions ko useMemo mein wrap karo**
 ```typescript
@@ -1313,7 +1313,7 @@ const columns = useMemo(() => [
 
 2. **Data ko prop drilling se bachao, Redux/Context use karo**
 ```typescript
-// ✅ Good
+// Good
 const data = useAppSelector(selectCustomers)
 
 // ❌ Avoid
@@ -1328,7 +1328,7 @@ const data = useAppSelector(selectCustomers)
 
 3. **Translation keys use karo, hardcoded text avoid karo**
 ```typescript
-// ✅ Good
+// Good
 { header: 'customer.fields.name' }
 
 // ❌ Bad
@@ -1366,7 +1366,7 @@ cell: ({ value }) => {
   return formatted
 }
 
-// ✅ Good
+// Good
 cell: ({ value }) => formatDate(value)
 ```
 
@@ -1378,7 +1378,7 @@ cell: ({ row }) => {
   return result
 }
 
-// ✅ Good - Pehle compute karo
+// Good - Pehle compute karo
 const processedData = useMemo(
   () => data.map(row => ({ ...row, computed: heavyComputation(row) })),
   [data]
@@ -1390,7 +1390,7 @@ const processedData = useMemo(
 // ❌ Bad - Simple list ke liye DataTable overkill hai
 <DataTable data={[1, 2, 3]} columns={...} />
 
-// ✅ Good - Simple list use karo
+// Good - Simple list use karo
 <ul>
   {items.map(item => <li key={item}>{item}</li>)}
 </ul>

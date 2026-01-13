@@ -48,6 +48,9 @@ import { PaymentTable } from './components/payments/PaymentTable'
 import SalesDetailsPage from './pages/sales/SalesDetails/SalesDetailsPage'
 import UserProfile from './pages/user/page'
 import AddUserPage from './pages/user/AddUser'
+import VerifyEmail from './pages/user/AddUser/VerifyEmail'
+import ResendVerification from './pages/user/AddUser/ResendVerification'
+import VerificationSuccess from './pages/user/AddUser/VerificationSuccess'
 // APP COMPONENT
 function App() {
   const dispatch = useAppDispatch()
@@ -76,6 +79,9 @@ function App() {
               path={ROUTES.resetPassword}
               element={<ResetPasswordPage />}
             />
+                          <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/resend-verification" element={<ResendVerification />} />
+<Route path="/verification-success" element={<VerificationSuccess />} />
             {/* Protected Routes with Layout */}
             <Route path="/" element={<MainLayout />}>
               <Route
@@ -128,7 +134,8 @@ function App() {
               <Route path="/allpayments" element={<PaymentTable />} />
               <Route path="/userprofile" element={<UserProfile />} />
               <Route path="/users/add" element={<AddUserPage />} />
-              <Route path="/users/edit/:userId" element={<AddUserPage />} />
+              <Route path="/users/edit/:id" element={<AddUserPage />} />
+
 
               <Route
                 path="*"

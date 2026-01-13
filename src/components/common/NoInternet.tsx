@@ -2,14 +2,14 @@
 // No Internet Connection Screen
 
 import { WifiOff, RotateCw } from 'lucide-react'
-import { useTranslation } from 'react-i18next' // ✅ ADD
+import { useTranslation } from 'react-i18next' // ADD
 
 interface NoInternetProps {
   checkInternetConnection: () => void
 }
 
 export const NoInternet = ({ checkInternetConnection }: NoInternetProps) => {
-  const { t } = useTranslation() // ✅ ADD
+  const { t } = useTranslation() // ADD
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-bg-primary">
       <div className="flex max-w-md flex-col items-center space-y-4 px-4">

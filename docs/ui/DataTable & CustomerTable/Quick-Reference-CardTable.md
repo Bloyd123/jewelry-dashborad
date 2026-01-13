@@ -161,7 +161,7 @@ const [selected, setSelected] = useState(new Set())
 
 ## ❌ Common Mistakes
 
-| ❌ Wrong | ✅ Correct |
+| ❌ Wrong | Correct |
 |---------|-----------|
 | `data={data}` when loading | `data={data || []}` |
 | Hardcoded text in header | Use i18n: `header: 'customer.name'` |
@@ -235,16 +235,16 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 
 ## 🎯 Best Practices
 
-1. ✅ `useMemo` for columns
-2. ✅ `useCallback` for handlers
-3. ✅ Error boundaries
-4. ✅ Loading states
-5. ✅ Empty states
-6. ✅ i18n for all text
-7. ✅ CSS variables for colors
-8. ✅ TypeScript types
-9. ✅ Responsive design
-10. ✅ Permission checks
+1. `useMemo` for columns
+2. `useCallback` for handlers
+3. Error boundaries
+4. Loading states
+5. Empty states
+6. i18n for all text
+7. CSS variables for colors
+8. TypeScript types
+9. Responsive design
+10. Permission checks
 
 ---
 

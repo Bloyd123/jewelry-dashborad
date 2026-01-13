@@ -371,17 +371,17 @@ const { data, isLoading } = useGetSalesDataQuery()
 <LineChart data={data} />  // ❌ data might be undefined
 ```
 
-### ✅ Correct
+### Correct
 ```tsx
 // Use CSS variables
 <LineChart
-  lines={[{ dataKey: 'sales', color: 'hsl(var(--accent))' }]}  // ✅ Theme-aware
+  lines={[{ dataKey: 'sales', color: 'hsl(var(--accent))' }]}  // Theme-aware
 />
 
 // Handle loading/empty states
 <LineChart 
   data={data || []} 
-  loading={isLoading}  // ✅ Built-in loading
+  loading={isLoading}  // Built-in loading
 />
 ```
 
@@ -407,7 +407,7 @@ const { data, isLoading } = useGetSalesDataQuery()
 
 4. **Use theme colors for consistency:**
    ```tsx
-   color: 'hsl(var(--accent))'  // ✅ Consistent across app
+   color: 'hsl(var(--accent))'  // Consistent across app
    ```
 
 5. **Wrap in Card for better presentation:**

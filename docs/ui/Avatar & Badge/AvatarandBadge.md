@@ -360,7 +360,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 1. Always Provide Name When Possible
 
 ```tsx
-// ✅ Good - provides fallback and color
+// Good - provides fallback and color
 <Avatar name="John Doe" src={imageUrl} />
 
 // ❌ Avoid - no fallback information
@@ -370,7 +370,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 2. Use Appropriate Sizes for Context
 
 ```tsx
-// ✅ Good - size matches context
+// Good - size matches context
 <div className="table-row">
   <Avatar name="User" size="sm" /> {/* Compact for tables */}
 </div>
@@ -383,7 +383,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 3. Status Indicators Should Be Meaningful
 
 ```tsx
-// ✅ Good - real-time status
+// Good - real-time status
 <Avatar 
   name={user.name}
   status={user.isOnline ? 'online' : 'offline'}
@@ -398,7 +398,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 1. Choose Semantically Appropriate Variants
 
 ```tsx
-// ✅ Good - variant matches meaning
+// Good - variant matches meaning
 <Badge variant="success">Paid</Badge>
 <Badge variant="warning">Payment Due</Badge>
 <Badge variant="error">Overdue</Badge>
@@ -410,7 +410,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 2. Don't Overuse Interactive Badges
 
 ```tsx
-// ✅ Good - interactive when it makes sense
+// Good - interactive when it makes sense
 <Badge variant="outline" onClick={removeFilter}>
   {filterName} ×
 </Badge>
@@ -424,7 +424,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 #### 3. Use Consistent Variants for Same Concepts
 
 ```tsx
-// ✅ Good - consistent mapping
+// Good - consistent mapping
 const statusVariants = {
   active: 'active',
   inactive: 'inactive',
@@ -441,7 +441,7 @@ const statusVariants = {
 #### Avatar Accessibility
 
 ```tsx
-// ✅ Provide meaningful alt text
+// Provide meaningful alt text
 <Avatar 
   src={imageUrl}
   alt={`${user.name}'s profile picture`}
@@ -452,14 +452,14 @@ const statusVariants = {
 #### Badge Accessibility
 
 ```tsx
-// ✅ Use semantic HTML when interactive
+// Use semantic HTML when interactive
 {isClickable ? (
   <Badge onClick={handler}>Tag</Badge>
 ) : (
   <Badge>Status</Badge>
 )}
 
-// ✅ Add aria-label for icon-only badges
+// Add aria-label for icon-only badges
 <Badge 
   variant="success"
   icon={<Check />}

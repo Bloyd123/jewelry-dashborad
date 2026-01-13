@@ -556,11 +556,11 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 <a name="best-practices"></a>
 ## 8. Best Practices
 
-### ✅ DO's
+### DO's
 
 1. **Use Preset Components for Common Cases**
 ```typescript
-// ✅ Good
+// Good
 <EmptySearchResults query={query} onClear={clear} />
 
 // ❌ Bad - Reinventing the wheel
@@ -569,7 +569,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 
 2. **Provide Actions When Possible**
 ```typescript
-// ✅ Good - Helps user know what to do
+// Good - Helps user know what to do
 <EmptyState
   title="No customers"
   action={{ label: 'Add Customer', onClick: handleAdd }}
@@ -581,7 +581,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 
 3. **Use Appropriate Variants**
 ```typescript
-// ✅ Good
+// Good
 <EmptySearchResults /> // variant="search"
 <EmptyErrorState />     // variant="error"
 
@@ -591,7 +591,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 
 4. **Use i18n Keys**
 ```typescript
-// ✅ Good
+// Good
 title="customer.empty.title"
 
 // ❌ Bad
@@ -600,7 +600,7 @@ title="No customers found"
 
 5. **Match Size to Context**
 ```typescript
-// ✅ Good
+// Good
 <Card>
   <EmptyState size="sm" compact />
 </Card>
@@ -620,7 +620,7 @@ title="No customers found"
 // ❌ Wrong
 if (isLoading) return <EmptyState title="Loading..." />
 
-// ✅ Correct
+// Correct
 if (isLoading) return <Skeleton />
 ```
 
@@ -629,7 +629,7 @@ if (isLoading) return <Skeleton />
 // ❌ Wrong
 <EmptyState title="No data" />
 
-// ✅ Correct
+// Correct
 <EmptyState title="ui.emptyState.noData" />
 ```
 
@@ -642,7 +642,7 @@ if (isLoading) return <Skeleton />
   children={<Button>Third action</Button>}
 />
 
-// ✅ Clear
+// Clear
 <EmptyState
   action={{ label: 'Add', onClick: handleAdd }}
 />
@@ -653,7 +653,7 @@ if (isLoading) return <Skeleton />
 // ❌ Confusing
 <EmptyState variant="success" icon={AlertCircle} />
 
-// ✅ Consistent
+// Consistent
 <EmptyState variant="success" icon={CheckCircle} />
 ```
 

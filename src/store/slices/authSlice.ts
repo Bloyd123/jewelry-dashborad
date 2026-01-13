@@ -32,7 +32,7 @@ interface AuthState {
   isAuthenticated: boolean
 
   // Loading States
-  isLoading: boolean // ✅ ONLY for login/logout/init
+  isLoading: boolean // ONLY for login/logout/init
   is2FALoading: boolean //  : Only for 2FA operations
   isPasswordChanging: boolean //  : Only for password
   isProfileUpdating: boolean //  : Only for profile
@@ -70,7 +70,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
 
   isLoading: false,
-  is2FALoading: false, // ✅ Add this
+  is2FALoading: false, // Add this
   isPasswordChanging: false,
   isProfileUpdating: false,
 
@@ -106,7 +106,7 @@ export const login = createAsyncThunk(
       const response = await authService.login(credentials)
       return response.data
     } catch (error: any) {
-      // ✅ Just pass the error as-is (already custom error from interceptor)
+      // Just pass the error as-is (already custom error from interceptor)
       return rejectWithValue(error)
     }
   }
@@ -133,7 +133,7 @@ export const logout = createAsyncThunk(
     } catch (error: any) {
       // Even if API call fails, clear local state
       tokenService.clearTokens()
-      // ✅ Pass the error as-is (already custom error from interceptor)
+      // Pass the error as-is (already custom error from interceptor)
       return rejectWithValue(error)
     }
   }
@@ -508,7 +508,7 @@ const authSlice = createSlice({
           state.tokenId = action.payload.tokenId
           state.isAuthenticated = true
           state.requires2FA = action.payload.requires2FA || false
-          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false // ✅ Sync on login
+          state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false // Sync on login
           state.lastActivity = Date.now()
 
           // Store tokens
@@ -519,7 +519,7 @@ const authSlice = createSlice({
           const { effectivePermissions, shopAccesses } = action.payload
 
           if (effectivePermissions) {
-            // ✅ Org-level user (super_admin, org_admin)
+            // Org-level user (super_admin, org_admin)
             state.permissions = effectivePermissions
             state.shopAccesses = []
             state.currentShop = null
@@ -529,7 +529,7 @@ const authSlice = createSlice({
               `[Auth] ${action.payload.user.role} logged in with effective permissions`
             )
           } else {
-            // ✅ Shop-level user (shop_admin, manager, staff, etc.)
+            // Shop-level user (shop_admin, manager, staff, etc.)
             state.shopAccesses = shopAccesses || []
 
             if (state.shopAccesses.length > 0) {
@@ -623,7 +623,7 @@ const authSlice = createSlice({
       })
       .addCase(getActiveSessions.fulfilled, (state, action) => {
         state.isSessionsLoading = false
-        // ✅ action.payload is already the sessions array
+        // action.payload is already the sessions array
         state.activeSessions = Array.isArray(action.payload)
           ? action.payload
           : []
@@ -697,7 +697,7 @@ const authSlice = createSlice({
         state.user = action.payload.user
         state.shopAccesses = action.payload.shopAccesses || []
         state.isAuthenticated = true
-        // ✅ Sync 2FA status from user object
+        // Sync 2FA status from user object
         state.twoFactorEnabled = action.payload.user.twoFactorEnabled || false
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
@@ -870,9 +870,9 @@ const authSlice = createSlice({
         state.is2FALoading = false
         if (state.user) {
           state.user.twoFactorEnabled = true
-          state.twoFactorEnabled = true // ✅ Sync Redux state
+          state.twoFactorEnabled = true // Sync Redux state
           state.user.backupCodes = action.payload.backupCodes || []
-          state.user.backupCodesUsed = [] // ✅ Reset used codes
+          state.user.backupCodesUsed = [] // Reset used codes
         }
       })
       .addCase(verify2FA.rejected, (state, action) => {
@@ -884,16 +884,16 @@ const authSlice = createSlice({
 
     builder
       .addCase(disable2FA.pending, state => {
-        state.is2FALoading = true // ✅ Fixed
+        state.is2FALoading = true // Fixed
         state.error = null
       })
       .addCase(disable2FA.fulfilled, state => {
         state.is2FALoading = false
         if (state.user) {
           state.user.twoFactorEnabled = false
-          state.twoFactorEnabled = false // ✅ Sync Redux state
-          state.user.backupCodes = [] // ✅ Clear backup codes
-          state.user.backupCodesUsed = [] // ✅ Clear used codes
+          state.twoFactorEnabled = false // Sync Redux state
+          state.user.backupCodes = [] // Clear backup codes
+          state.user.backupCodesUsed = [] // Clear used codes
         }
       })
       .addCase(disable2FA.rejected, (state, action) => {
@@ -926,7 +926,7 @@ const authSlice = createSlice({
           tokenService.saveAccessToken(action.payload.accessToken)
           tokenService.saveRefreshToken(action.payload.refreshToken)
 
-          // ✅ COMPLETE shop logic (same as login.fulfilled)
+          // COMPLETE shop logic (same as login.fulfilled)
           const { effectivePermissions, shopAccesses } = action.payload
 
           if (effectivePermissions) {
@@ -1003,7 +1003,7 @@ const authSlice = createSlice({
           tokenService.saveAccessToken(action.payload.accessToken)
           tokenService.saveRefreshToken(action.payload.refreshToken)
 
-          // ✅ COMPLETE shop logic (same as login.fulfilled)
+          // COMPLETE shop logic (same as login.fulfilled)
           const { effectivePermissions, shopAccesses } = action.payload
 
           if (effectivePermissions) {

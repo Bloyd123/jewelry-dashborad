@@ -8,6 +8,9 @@ export const ROUTE_PATHS = {
     SIGNUP: '/signup',
     FORGOT_PASSWORD: '/forgot-password',
     RESET_PASSWORD: '/reset-password',
+        VERIFY_EMAIL: '/verify-email',
+    RESEND_VERIFICATION: '/resend-verification',
+    VERIFICATION_SUCCESS: '/verification-success',
   },
 
   // Core Routes

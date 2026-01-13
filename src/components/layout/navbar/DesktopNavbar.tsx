@@ -78,13 +78,13 @@ export const DesktopNavbar = () => {
           </button>
           {/* Theme Picker (Open Modal) */}
           <button
-            onClick={() => setShowThemePicker(true)} // ✅ Open modal
+            onClick={() => setShowThemePicker(true)} // Open modal
             className="rounded-lg p-2 text-text-secondary transition-colors hover:bg-bg-secondary hover:text-accent"
             title="Choose theme"
           >
             <Palette size={20} />
           </button>
-          {/* Language Switcher */} {/* ✅ ADD THIS WHOLE SECTION */}
+          {/* Language Switcher */} {/* ADD THIS WHOLE SECTION */}
           <div className="relative">
             <button
               onClick={() => setShowLanguageMenu(!showLanguageMenu)}

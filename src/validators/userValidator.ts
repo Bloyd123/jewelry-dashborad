@@ -234,7 +234,7 @@ export const validateUser = (
     if (error instanceof z.ZodError) {
       const errors: Record<string, string> = {}
       error.issues.forEach(err => {
-        // ✅ CORRECT: error.issues
+        // CORRECT: error.issues
         const path = err.path.join('.')
         errors[path] = err.message
       })

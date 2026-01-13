@@ -427,12 +427,12 @@ interface FilterSheetProps {
 
 That's the complete updated Sheet section! Key changes:
 
-1. ✅ **New component structure** (SheetHeader, SheetBody, SheetFooter)
-2. ✅ **Size variants** (sm, md, lg, xl, full)
-3. ✅ **SheetTrigger** component
-4. ✅ **FilterSheet** specialized component
-5. ✅ **More examples** (filters, menu, actions, forms)
-6. ✅ **Best practices** section
-7. ✅ **Props reference** for all components
+1. **New component structure** (SheetHeader, SheetBody, SheetFooter)
+2. **Size variants** (sm, md, lg, xl, full)
+3. **SheetTrigger** component
+4. **FilterSheet** specialized component
+5. **More examples** (filters, menu, actions, forms)
+6. **Best practices** section
+7. **Props reference** for all components
 
 Replace the entire Section 3 with this! 🚀

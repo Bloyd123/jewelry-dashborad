@@ -114,14 +114,14 @@ export const SecurityTab = () => {
     setErrors({})
 
     try {
-      // ✅ FIX: Check the result object
+      // FIX: Check the result object
       const result = await changePassword({
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword,
         confirmPassword: passwordData.confirmPassword,
       })
 
-      // ✅ FIX: Handle error in result
+      // FIX: Handle error in result
       if (!result.success) {
         handleError(result.error, setErrors)
         return
@@ -531,18 +531,18 @@ export const SecurityTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* ✅ Loading State */}
+          {/* Loading State */}
           {isSessionsLoading ? (
             <div className="flex items-center justify-center py-8">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-border-primary border-t-accent" />
             </div>
           ) : activeSessions.length === 0 ? (
-            // ✅ Empty State
+            // Empty State
             <div className="py-8 text-center text-text-tertiary">
               <p>{t('userProfile.security.noActiveSessions')}</p>
             </div>
           ) : (
-            // ✅ Sessions List
+            // Sessions List
             <div className="space-y-3">
               {activeSessions.map((session: any) => {
                 const isCurrent = session.id === tokenId

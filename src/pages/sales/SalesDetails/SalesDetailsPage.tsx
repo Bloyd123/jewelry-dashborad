@@ -126,7 +126,7 @@ export const SalesDetailsPage: React.FC = () => {
         onSendClick={handleSendClick}
       />
 
-      {/* Tab Content - BAHAR render ho raha hai ✅ */}
+      {/* Tab Content - BAHAR render ho raha hai */}
       {renderTabContent()}
     </div>
   )

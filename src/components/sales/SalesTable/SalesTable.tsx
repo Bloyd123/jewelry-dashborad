@@ -34,9 +34,9 @@ export const SalesTable: React.FC = () => {
     status: undefined,
     paymentStatus: undefined,
     saleType: undefined,
-    paymentMode: undefined, // ✅ ADD THIS
-    dateRange: undefined, // ✅ CHANGED from startDate/endDate
-    amountRange: undefined, // ✅ CHANGED from minAmount/maxAmount
+    paymentMode: undefined, // ADD THIS
+    dateRange: undefined, // CHANGED from startDate/endDate
+    amountRange: undefined, // CHANGED from minAmount/maxAmount
   })
 
   // FILTERED DATA

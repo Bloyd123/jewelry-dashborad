@@ -40,7 +40,7 @@ export const TwoFactorCodeInput: React.FC<TwoFactorCodeInputProps> = ({
   }, [autoFocus])
   const hasCalledRef = useRef(false)
   useEffect(() => {
-    // ✅ Only call once when reaching 6 digits
+    // Only call once when reaching 6 digits
     if (
       value.length === 6 &&
       onComplete &&
@@ -51,7 +51,7 @@ export const TwoFactorCodeInput: React.FC<TwoFactorCodeInputProps> = ({
       onComplete()
     }
 
-    // ✅ Reset when code is cleared/changed
+    // Reset when code is cleared/changed
     if (value.length < 6) {
       hasCalledRef.current = false
     }

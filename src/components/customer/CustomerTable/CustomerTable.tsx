@@ -7,7 +7,7 @@ import { DataTable } from '@/components/ui/data-display/DataTable'
 import { customerTableColumns } from './CustomerTableColumns'
 import { getCustomerRowActions, BulkActionsBar } from './CustomerTableActions'
 import { MOCK_CUSTOMERS, type Customer } from './CustomerTable.types'
-// ✅ ADD THIS IMPORT
+// ADD THIS IMPORT
 import { CustomerFilters } from '@/components/customer/CustomerFilters'
 import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
 import { useNavigate } from 'react-router-dom'
@@ -22,7 +22,7 @@ export const CustomerTable: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
-  // ✅ ADD FILTER STATE
+  // ADD FILTER STATE
   const [filters, setFilters] = useState<CustomerFilterValues>({
     search: '',
     customerType: undefined,
@@ -43,7 +43,7 @@ export const CustomerTable: React.FC = () => {
 
   const handleEdit = (customer: Customer) => {
     console.log('Edit Customer:', customer)
-    navigate(`/customers/edit/${customer._id}`) // ✅ Fixed!
+    navigate(`/customers/edit/${customer._id}`) // Fixed!
   }
 
   const handleAddPoints = (customer: Customer) => {
@@ -77,7 +77,7 @@ export const CustomerTable: React.FC = () => {
   // }
   const handleBulkEdit = () => {
     if (selectedCustomers.length === 1) {
-      navigate(`/customers/edit/${selectedCustomers[0]._id}`) // ✅ Fixed!
+      navigate(`/customers/edit/${selectedCustomers[0]._id}`) // Fixed!
     }
   }
 

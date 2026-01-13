@@ -6,6 +6,7 @@ import React from 'react'
 
 import { ROUTE_PATHS, RouteMetadata } from '@/constants/routePaths';
 import { lazy } from 'react';
+import { resendVerificationEmail } from '@/api/services/authService';
 
 
 // Lazy Loaded Components
@@ -77,6 +78,10 @@ const PurchaseTable = lazy(() =>
   }))
 )
 const AddPurchasePage = lazy(() => import('@/pages/purchase/AddPurchase'));
+const VerifyEmail = lazy(() => import('@/pages/user/AddUser/VerifyEmail'))
+const ResendVerification = lazy(() => import('@/pages/user/AddUser/ResendVerification'))
+const VerificationSuccess = lazy(() => import('@/pages/user/AddUser/VerificationSuccess'))
+
 
 // Sales Pages
 const SalesTable = lazy(() =>
@@ -125,9 +130,30 @@ export const publicRoutes: RouteConfig[] = [
   {
     path: ROUTE_PATHS.AUTH.LOGIN,
     element: LoginPage,
-    requiresAuth: false,
+    requiresAuth: true,
     layout: 'auth',
     title: 'Login',
+  },
+    {
+    path: ROUTE_PATHS.AUTH.VERIFY_EMAIL,
+    element: VerifyEmail,
+    requiresAuth: false,
+    layout: 'auth',
+    title: 'Verify Email',
+  },
+  {
+    path: ROUTE_PATHS.AUTH.RESEND_VERIFICATION,
+    element: ResendVerification,
+    requiresAuth: false,
+    layout: 'auth',
+    title: 'Resend Verification'
+  },
+  {
+    path: ROUTE_PATHS.AUTH.VERIFICATION_SUCCESS,
+    element: VerificationSuccess,
+    requiresAuth: false,
+    layout: 'auth',
+    title: 'Verification Successful',
   },
   // {
   //   path: ROUTE_PATHS.AUTH.SIGNUP,
@@ -431,6 +457,10 @@ export const ROUTES = {
   sales: ROUTE_PATHS.SALES.LIST,
   addSale: ROUTE_PATHS.SALES.ADD,
   detailsales: ROUTE_PATHS.SALES.DETAIL,
+    // Email Verification Flow
+  verifyEmail: ROUTE_PATHS.AUTH.VERIFY_EMAIL,
+  resendVerification: ROUTE_PATHS.AUTH.RESEND_VERIFICATION,
+  verificationSuccess: ROUTE_PATHS.AUTH.VERIFICATION_SUCCESS,
 
   // Payments
   addpayments: ROUTE_PATHS.PAYMENTS.ADD,

@@ -83,7 +83,7 @@ export default function UserFormDesktop({
     setIsLoading(true)
 
     try {
-      // ✅ API Call
+      // API Call
       const result = await register(formData as RegisterRequest)
 
       if (result.success) {

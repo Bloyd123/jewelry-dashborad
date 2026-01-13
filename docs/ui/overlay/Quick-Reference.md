@@ -130,11 +130,11 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'
 ```
 
 ### Use For
-- ✅ Mobile filters
-- ✅ Quick actions
-- ✅ Mobile menus
-- ✅ Mobile forms
-- ✅ Bottom selections
+- Mobile filters
+- Quick actions
+- Mobile menus
+- Mobile forms
+- Bottom selections
 
 ---
 
@@ -159,7 +159,7 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'
 
 ---
 
-## ✅ 4. ConfirmDialog (Pre-built)
+## 4. ConfirmDialog (Pre-built)
 
 ### Basic Template
 ```typescript
@@ -307,7 +307,7 @@ showIcon?: boolean               // Default: true
 
 ---
 
-## ✅ Best Practices Checklist
+## Best Practices Checklist
 
 - [ ] Use Modal for forms (auto-adapts mobile)
 - [ ] Use ConfirmDialog for confirmations
@@ -327,7 +327,7 @@ showIcon?: boolean               // Default: true
 
 ## 🐛 Common Mistakes
 
-| ❌ Wrong | ✅ Correct |
+| ❌ Wrong | Correct |
 |---------|-----------|
 | `<Modal><Dialog></Dialog></Modal>` | Use separate state |
 | `title="Add Customer"` | `title="customer.modal.add"` |
@@ -446,25 +446,25 @@ import { Modal, Sheet, Drawer, Dialog, ConfirmDialog } from '@/components/ui/ove
 ### When to use what?
 
 **Modal** 
-- ✅ Forms that work on both desktop & mobile
-- ✅ Auto-converts to sheet on mobile
-- ✅ Most versatile option
+- Forms that work on both desktop & mobile
+- Auto-converts to sheet on mobile
+- Most versatile option
 
 **Sheet**
-- ✅ Mobile-first experiences
-- ✅ Quick filters and actions
-- ✅ Native mobile feel with drag handle
-- ✅ Use `FilterSheet` for quick implementation
+- Mobile-first experiences
+- Quick filters and actions
+- Native mobile feel with drag handle
+- Use `FilterSheet` for quick implementation
 
 **Drawer**
-- ✅ Desktop side panels
-- ✅ Settings and navigation
-- ✅ Avoid on mobile (use Sheet instead)
+- Desktop side panels
+- Settings and navigation
+- Avoid on mobile (use Sheet instead)
 
 **Dialog/ConfirmDialog**
-- ✅ Simple confirmations and alerts
-- ✅ Delete confirmations (use `variant="danger"`)
-- ✅ Quick yes/no decisions
+- Simple confirmations and alerts
+- Delete confirmations (use `variant="danger"`)
+- Quick yes/no decisions
 
 ---
 

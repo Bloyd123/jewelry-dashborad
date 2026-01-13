@@ -72,7 +72,7 @@ export const useAuth = () => {
         return { success: true, data: result }
       } catch (error: any) {
         console.error('🔐 [useAuth] Login error:', error)
-        // ✅ Just throw - LoginForm will catch and handle
+        // Just throw - LoginForm will catch and handle
         throw error
       }
     },

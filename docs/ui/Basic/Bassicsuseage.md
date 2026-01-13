@@ -1101,7 +1101,7 @@ const [step, setStep] = useState(1)
 
 1. **Always use labels**: Every input should have an associated label
 ```tsx
-// ✅ Good
+// Good
 <div className="space-y-2">
   <Label htmlFor="email">Email</Label>
   <Input id="email" type="email" />
@@ -1131,7 +1131,7 @@ const [step, setStep] = useState(1)
 
 3. **Provide helpful placeholder text**
 ```tsx
-// ✅ Good - specific guidance
+// Good - specific guidance
 <Input placeholder="e.g., john@company.com" />
 
 // ❌ Avoid - vague
@@ -1171,7 +1171,7 @@ const [step, setStep] = useState(1)
 
 1. **Use consistent padding**
 ````tsx
-// ✅ Good - uses CardContent for consistent padding
+// Good - uses CardContent for consistent padding
 <Card>
   <CardContent className="space-y-4">
     {/* Content with proper spacing */}
@@ -1181,7 +1181,7 @@ const [step, setStep] = useState(1)
 
 2. **Group related content**
 ````tsx
-// ✅ Good - logically grouped
+// Good - logically grouped
 <Card>
   <CardHeader>
     <CardTitle>User Profile</CardTitle>

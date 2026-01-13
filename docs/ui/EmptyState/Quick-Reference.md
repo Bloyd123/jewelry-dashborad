@@ -192,7 +192,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 
 ---
 
-## ✅ Checklist
+## Checklist
 
 Before using EmptyState, check:
 
@@ -221,11 +221,11 @@ Before using EmptyState, check:
 
 ## 💡 Tips
 
-1. ✅ Use preset components when possible
-2. ✅ Always provide action if user can do something
-3. ✅ Match variant to context (error for errors, search for search)
-4. ✅ Use i18n keys for all text
-5. ✅ Test on mobile (use compact mode)
+1. Use preset components when possible
+2. Always provide action if user can do something
+3. Match variant to context (error for errors, search for search)
+4. Use i18n keys for all text
+5. Test on mobile (use compact mode)
 
 ---
 

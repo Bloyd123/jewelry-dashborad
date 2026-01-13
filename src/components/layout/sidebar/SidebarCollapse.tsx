@@ -48,7 +48,7 @@ export const SidebarCollapse = ({ item }: SidebarCollapseProps) => {
         onClick={toggleOpen}
         className={`group relative flex w-full items-center justify-between gap-3 px-4 py-3 transition-all duration-200 hover:bg-sidebar-hover hover:text-accent active:scale-95 ${
           isAnyChildActive
-            ? 'bg-sidebar-hover font-medium text-accent' // ✅ Same as hover
+            ? 'bg-sidebar-hover font-medium text-accent' // Same as hover
             : 'text-sidebar-text'
         } ${isCollapsed ? 'justify-center' : ''} `}
       >

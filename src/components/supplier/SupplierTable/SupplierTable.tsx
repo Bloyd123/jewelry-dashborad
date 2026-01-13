@@ -29,7 +29,7 @@ export const SupplierTable: React.FC = () => {
     new Set()
   )
 
-  // ✅ Filter State
+  // Filter State
   const [filters, setFilters] = useState<SupplierFilterValues>({
     search: '',
     supplierType: undefined,

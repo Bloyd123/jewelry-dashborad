@@ -45,7 +45,7 @@ const getInitialTheme = (): ThemeName => {
 const initialState: UIState = {
   sidebarOpen: true,
   sidebarCollapsed: false,
-  themeName: getInitialTheme(), // ✅ CHANGED
+  themeName: getInitialTheme(), // CHANGED
   isLoading: false,
   loadingMessage: null,
   mobileMenuOpen: false,

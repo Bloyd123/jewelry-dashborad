@@ -19,7 +19,7 @@ interface RouteGuardOptions {
 export const useRouteGuard = (options: RouteGuardOptions) => {
   const navigate = useNavigate()
   const location = useLocation()
-  // ✅ FIXED: Access correct state properties
+  // FIXED: Access correct state properties
   const { permissions, isAuthenticated } = useAppSelector(state => state.auth)
 
   useEffect(() => {
@@ -87,7 +87,7 @@ interface NavigateWithPermissionOptions {
 
 export const useNavigateWithPermission = () => {
   const navigate = useNavigate()
-  // ✅ FIXED: Access correct state property
+  // FIXED: Access correct state property
   const { permissions } = useAppSelector(state => state.auth)
 
   const navigateWithPermission = (

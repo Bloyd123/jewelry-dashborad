@@ -194,7 +194,7 @@ const options = [
 // Inventory Module
 <TypeFilter options={productCategories} ... />
 
-// Same component, different data! ✅
+// Same component, different data!
 ```
 
 ### Props
@@ -550,7 +550,7 @@ export const CustomerFilters = () => {
 
 ### Theme Colors (Always Use These)
 ```tsx
-// ✅ Correct - Uses CSS variables
+// Correct - Uses CSS variables
 <TypeFilter className="bg-bg-secondary border-border-primary" />
 
 // ❌ Wrong - Hardcoded colors
@@ -575,11 +575,11 @@ export const CustomerFilters = () => {
 | **Mobile (<768px)** | Search + Sheet button | Filters in bottom drawer |
 
 **New:** FilterSheet now includes:
-- ✅ Built-in header with clear button
-- ✅ Scrollable body area (SheetBody)
-- ✅ Fixed footer with Cancel/Apply buttons
-- ✅ Configurable size (sm, md, lg, xl, full)
-- ✅ Drag handle for native mobile feel
+- Built-in header with clear button
+- Scrollable body area (SheetBody)
+- Fixed footer with Cancel/Apply buttons
+- Configurable size (sm, md, lg, xl, full)
+- Drag handle for native mobile feel
 
 ---
 
@@ -645,23 +645,23 @@ const [type, setType] = useState()  // ❌ Lost on page refresh
 import { FilterSheet } from '@/components/ui/filters'  // ❌
 ```
 
-### ✅ Correct
+### Correct
 ```tsx
 // Use i18n
-<TypeFilter placeholder={t('filters.selectType')} />  // ✅
+<TypeFilter placeholder={t('filters.selectType')} />  //
 
 // Handle undefined properly
 <TypeFilter 
   value={type} 
-  onChange={(v) => setType(v)}  // ✅ onChange handles undefined
+  onChange={(v) => setType(v)}  // onChange handles undefined
 />
 
 // Redux for persistence
 const type = useAppSelector(selectCustomerType)
-dispatch(setCustomerTypeFilter(newType))  // ✅ Persisted
+dispatch(setCustomerTypeFilter(newType))  // Persisted
 
 // New FilterSheet import
-import { FilterSheet } from '@/components/ui/overlay/Sheet'  // ✅
+import { FilterSheet } from '@/components/ui/overlay/Sheet'  //
 ```
 
 ---
@@ -672,7 +672,7 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'  // ✅
    ```tsx
    setCustomerTypeFilter: (state, action) => {
      state.filters.customerType = action.payload
-     state.currentPage = 1  // ✅ Reset to page 1
+     state.currentPage = 1  // Reset to page 1
    }
    ```
 
@@ -698,21 +698,21 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'  // ✅
    // ❌ Bad - Lost on unmount
    const [filters, setFilters] = useState({})
    
-   // ✅ Good - Persisted in Redux
+   // Good - Persisted in Redux
    const filters = useAppSelector(selectFilters)
    ```
 
 5. **Use TypeFilter for any dropdown:**
    ```tsx
    // Customer types, Product categories, Payment methods
-   // Same component, just different options! ✅
+   // Same component, just different options!
    ```
 
 6. **FilterSheet has built-in structure:**
    ```tsx
-   // ✅ Content automatically goes into scrollable body
-   // ✅ Footer with actions is fixed at bottom
-   // ✅ Header with clear button is fixed at top
+   // Content automatically goes into scrollable body
+   // Footer with actions is fixed at bottom
+   // Header with clear button is fixed at top
    <FilterSheet>
      {/* Just add your filters, structure is handled! */}
    </FilterSheet>
@@ -787,12 +787,12 @@ Before deploying filters:
 - **Size Prop**: Added `size` prop with 5 options (sm, md, lg, xl, full)
 
 ### Added
-- ✅ `onApply` callback for apply button
-- ✅ `showTrigger` prop to control button visibility
-- ✅ `size` prop for height control
-- ✅ Built-in scrollable body
-- ✅ Fixed footer with actions
-- ✅ Drag handle for mobile feel
+- `onApply` callback for apply button
+- `showTrigger` prop to control button visibility
+- `size` prop for height control
+- Built-in scrollable body
+- Fixed footer with actions
+- Drag handle for mobile feel
 
 ### Migration
 ```tsx

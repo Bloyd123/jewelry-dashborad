@@ -31,13 +31,13 @@ export const RolePermissionsSection = ({
     { value: 'viewer', label: t('user.roles.viewer') },
   ]
 
-  // ✅ TODO: Replace with actual API when ready
+  // TODO: Replace with actual API when ready
   // const { data: organizations = [] } = useGetOrganizationsQuery()
   // const { data: shops = [] } = useGetShopsQuery({
   //   organizationId: data.organizationId
   // }, { skip: !data.organizationId })
 
-  // ✅ TEMPORARY: Use current user's org as single option
+  // TEMPORARY: Use current user's org as single option
   const organizationOptions = currentUser?.organizationId
     ? [
         {
@@ -47,7 +47,7 @@ export const RolePermissionsSection = ({
       ]
     : []
 
-  // ✅ TEMPORARY: Empty shops (until API is ready)
+  // TEMPORARY: Empty shops (until API is ready)
   // const shopOptions: Array<{ value: string; label: string }> = []
   // 🔜 When shop API is ready:
   // const shopOptions = shops.map(shop => ({

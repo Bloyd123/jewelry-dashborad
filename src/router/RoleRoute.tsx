@@ -30,7 +30,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   fallbackPath = ROUTE_PATHS.DASHBOARD,
   showError = true,
 }) => {
-  // ✅ FIXED: Access correct state properties
+  // FIXED: Access correct state properties
   const { permissions, user } = useAppSelector(state => state.auth)
 
   // If no permissions specified, allow access
@@ -38,7 +38,7 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
     return <>{children}</>
   }
 
-  // ✅ FIXED: Check if permissions object exists
+  // FIXED: Check if permissions object exists
   if (!permissions) {
     console.warn('[RoleRoute] No permissions found for user:', user?.role)
     return showError ? (
@@ -131,7 +131,7 @@ const AccessDeniedError: React.FC = () => {
 // PERMISSION CHECKER HOOK
 
 export const usePermission = () => {
-  // ✅ FIXED: Access correct state properties
+  // FIXED: Access correct state properties
   const { permissions, user, currentShopAccess } = useAppSelector(
     state => state.auth
   )

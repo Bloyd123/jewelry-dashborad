@@ -50,14 +50,14 @@ export default function AddUserPage() {
   const { userId } = useParams()
   const isEditMode = Boolean(userId)
 
-  // ✅ Get current user from Redux
+  // Get current user from Redux
   const currentUser = useCurrentUser()
   const shopAccesses = useShopAccesses()
-  const organizationId = currentUser?.organizationId || undefined // ✅ Convert null to undefined
+  const organizationId = currentUser?.organizationId || undefined // Convert null to undefined
   const defaultPrimaryShop =
     currentUser?.primaryShop ||
     (shopAccesses.length > 0 ? shopAccesses[0].shopId : undefined)
-  // ✅ TODO: Replace with real API call to fetch user by ID
+  // TODO: Replace with real API call to fetch user by ID
   // Example: const { data: user, isLoading } = useGetUserQuery(userId)
   const mockUser = useMemo(() => {
     if (!isEditMode || !userId) return undefined
@@ -74,7 +74,7 @@ export default function AddUserPage() {
 
   return (
     <UserForm
-      organizationId={organizationId} // ✅ Now type-safe (string | undefined)
+      organizationId={organizationId} // Now type-safe (string | undefined)
       userId={userId}
       initialData={initialData}
       onSuccess={() => {
