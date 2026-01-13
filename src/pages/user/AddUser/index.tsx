@@ -1,12 +1,12 @@
 // FILE: src/pages/user/AddUser/index.tsx
-// Add/Edit User Page
+// Add/Edit User Page - Real API Integration
 
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserForm } from '@/components/user/UserForm'
 import type { User } from '@/types/user.types'
-import { MOCK_USERS } from './mockdata'
 import type { CreateUserInput } from '@/validators/userValidator'
+import { useCurrentUser, useShopAccesses } from '@/hooks/useAuth'
 
 /**
  * HELPER: Convert User to Form Data
@@ -50,13 +50,19 @@ export default function AddUserPage() {
   const { userId } = useParams()
   const isEditMode = Boolean(userId)
 
-  // Mock organization ID (Replace with actual from Redux/Context)
-  const organizationId = 'org_123'
-
-  // Fetch mock user data if editing
+  // ✅ Get current user from Redux
+  const currentUser = useCurrentUser()
+  const shopAccesses = useShopAccesses()
+  const organizationId = currentUser?.organizationId || undefined // ✅ Convert null to undefined
+const defaultPrimaryShop = currentUser?.primaryShop || 
+  (shopAccesses.length > 0 ? shopAccesses[0].shopId : undefined)
+  // ✅ TODO: Replace with real API call to fetch user by ID
+  // Example: const { data: user, isLoading } = useGetUserQuery(userId)
   const mockUser = useMemo(() => {
     if (!isEditMode || !userId) return undefined
-    return MOCK_USERS.find(u => u._id === userId)
+    // 🔜 Replace this with actual API call
+    // return user
+    return undefined // No mock data
   }, [userId, isEditMode])
 
   // Convert user to form data
@@ -67,11 +73,10 @@ export default function AddUserPage() {
 
   return (
     <UserForm
-      organizationId={organizationId}
+      organizationId={organizationId} // ✅ Now type-safe (string | undefined)
       userId={userId}
       initialData={initialData}
       onSuccess={() => {
-        console.log('Mock Success - Navigate to /users')
         navigate('/users')
       }}
       onCancel={() => {

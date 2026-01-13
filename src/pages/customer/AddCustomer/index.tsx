@@ -1,16 +1,15 @@
-//
 // FILE: src/pages/customer/AddCustomer/index.tsx
-// Add/Edit Customer Page
-//
+// Add/Edit Customer Page - Production Ready
 
 import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAppSelector } from '@/store/hooks'
-// import { useGetCustomerQuery } from '@/api/services/customerService'
+import { useTranslation } from 'react-i18next'
+import { Loader2 } from 'lucide-react'
+
+import { useCurrentShop } from '@/hooks/useAuth'
+import { useGetCustomerByIdQuery } from '@/store/api/customerApi'
 import { CustomerForm } from '@/components/customer/CustomerForm'
-// import { Loader2 } from 'lucide-react'
 import type { Customer } from '@/types'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 
 //
@@ -26,30 +25,19 @@ const convertCustomerToFormData = (
     alternatePhone: customer.alternatePhone,
     whatsappNumber: customer.whatsappNumber,
     email: customer.email,
-
-    // Dates - Convert to YYYY-MM-DD format
     dateOfBirth: customer.dateOfBirth?.split('T')[0],
-
     gender: customer.gender,
-
     anniversaryDate: customer.anniversaryDate?.split('T')[0],
-
     address: customer.address,
-
     aadharNumber: customer.aadharNumber,
     panNumber: customer.panNumber,
     gstNumber: customer.gstNumber,
-
     customerType: customer.customerType,
     customerCategory: customer.customerCategory,
-
     creditLimit: customer.creditLimit,
-
     preferences: customer.preferences,
-
     source: customer.source,
     referredBy: customer.referredBy,
-
     notes: customer.notes,
     tags: customer.tags,
   }
@@ -61,78 +49,94 @@ const convertCustomerToFormData = (
 export default function AddCustomerPage() {
   const navigate = useNavigate()
   const { customerId } = useParams()
+  const { t } = useTranslation()
   const isEditMode = Boolean(customerId)
 
-  // Get current shop ID from Redux
-  // const currentShopId = useAppSelector(state => state.auth.currentShop)
-  const shopId = 'shop_123'
+  // Get current shop from Redux
+  const currentShop = useCurrentShop()
+  const shopId = currentShop || ''
 
-  // Fetch customer data if editing
-  // const { data: customerData, isLoading } = useGetCustomerQuery(
-  //   { shopId: currentShopId!, customerId: customerId! },
-  //   { skip: !isEditMode || !customerId || !currentShopId }
-  // )
-  const mockCustomer = useMemo(() => {
-    if (!isEditMode || !customerId) return undefined
-    return MOCK_CUSTOMERS.find(c => c._id === customerId)
-  }, [customerId, isEditMode])
+  // Fetch customer data (only in edit mode)
+  const { 
+    data: customer, 
+    isLoading, 
+    error 
+  } = useGetCustomerByIdQuery(
+    { shopId, customerId: customerId! },
+    { skip: !isEditMode || !shopId || !customerId }
+  )
 
-  // ✅ CHANGE: Use mock data
+  // Convert customer to form data
   const initialData = useMemo(() => {
-    if (!mockCustomer) return undefined
-    return convertCustomerToFormData(mockCustomer)
-  }, [mockCustomer])
-
-  // ← CONVERT: Customer to form data
-  // const initialData = useMemo(() => {
-  //   if (!customerData?.data?.customer) return undefined
-  //   return convertCustomerToFormData(customerData.data.customer)
-  // }, [customerData])
-
-  // Loading state
-  // if (isEditMode && isLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <Loader2 className="h-8 w-8 animate-spin text-accent" />
-  //     </div>
-  //   )
-  // }
+    if (!customer) return undefined
+    return convertCustomerToFormData(customer)
+  }, [customer])
 
   // No shop selected
-  // if (!currentShopId) {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <p className="text-text-secondary">Please select a shop first</p>
-  //     </div>
-  //   )
-  // }
+  if (!shopId) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-text-secondary">
+          {t('common.selectShopFirst')}
+        </p>
+      </div>
+    )
+  }
 
-  // return (
-  //   <CustomerForm
-  //     shopId={currentShopId}
-  //     customerId={customerId}
-  //     initialData={initialData}
-  //     onSuccess={() => {
-  //       navigate('/customers')
-  //     }}
-  //     onCancel={() => {
-  //       navigate('/customers')
-  //     }}
-  //     mode={isEditMode ? 'edit' : 'create'}
-  //   />
-  // )
+  // Loading state
+  if (isEditMode && isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-accent" />
+      </div>
+    )
+  }
+
+  // Error state
+  if (isEditMode && error) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <p className="text-status-error mb-4">
+            {t('customer.errors.fetchFailed')}
+          </p>
+          <button
+            onClick={() => navigate('/customers')}
+            className="text-accent hover:underline"
+          >
+            {t('common.goBack')}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Not found
+  if (isEditMode && !customer) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-center">
+          <p className="text-text-secondary mb-4">
+            {t('customer.errors.notFound')}
+          </p>
+          <button
+            onClick={() => navigate('/customers')}
+            className="text-accent hover:underline"
+          >
+            {t('common.goBack')}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <CustomerForm
       shopId={shopId}
       customerId={customerId}
       initialData={initialData}
-      onSuccess={() => {
-        console.log('Mock Success - Navigate to /customers')
-        navigate('/customers')
-      }}
-      onCancel={() => {
-        navigate('/customers')
-      }}
+      onSuccess={() => navigate('/customers')}
+      onCancel={() => navigate('/customers')}
       mode={isEditMode ? 'edit' : 'create'}
     />
   )

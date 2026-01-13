@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'
 import { AlertCircle } from 'lucide-react'
 import type { FormSectionProps } from '../UserForm.types'
-
+import { useCurrentUser } from '@/hooks/useAuth' 
 export const RolePermissionsSection = ({
   data,
   errors,
@@ -14,10 +14,10 @@ export const RolePermissionsSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-
+const currentUser = useCurrentUser()
   // Role options
   const roleOptions = [
-    { value: 'super_admin', label: t('user.roles.superAdmin') },
+    // { value: 'super_admin', label: t('user.roles.superAdmin') },
     { value: 'org_admin', label: t('user.roles.orgAdmin') },
     { value: 'shop_admin', label: t('user.roles.shopAdmin') },
     { value: 'manager', label: t('user.roles.manager') },
@@ -26,19 +26,29 @@ export const RolePermissionsSection = ({
     { value: 'viewer', label: t('user.roles.viewer') },
   ]
 
-  // Mock organizations (Replace with actual data)
-  const organizationOptions = [
-    { value: 'org_001', label: 'Rajesh Jewellers Pvt Ltd' },
-    { value: 'org_002', label: 'Kumar Gems & Jewels' },
-    { value: 'org_003', label: 'Sharma Ornaments Ltd' },
-  ]
+// ✅ TODO: Replace with actual API when ready
+// const { data: organizations = [] } = useGetOrganizationsQuery()
+// const { data: shops = [] } = useGetShopsQuery({ 
+//   organizationId: data.organizationId 
+// }, { skip: !data.organizationId })
 
-  // Mock shops (Replace with actual data)
-  const shopOptions = [
-    { value: 'shop_001', label: 'Main Branch - Connaught Place' },
-    { value: 'shop_002', label: 'Lajpat Nagar Branch' },
-    { value: 'shop_003', label: 'Karol Bagh Showroom' },
-  ]
+// ✅ TEMPORARY: Use current user's org as single option
+const organizationOptions = currentUser?.organizationId
+  ? [
+      {
+        value: currentUser.organizationId,
+        label: 'Current Organization', // TODO: Replace with actual org name
+      },
+    ]
+  : []
+
+// ✅ TEMPORARY: Empty shops (until API is ready)
+const shopOptions: Array<{ value: string; label: string }> = []
+// 🔜 When shop API is ready:
+// const shopOptions = shops.map(shop => ({
+//   value: shop._id,
+//   label: shop.name || shop.displayName
+// }))
 
   // Show/hide fields based on role
   const showOrganization = data.role && data.role !== 'super_admin'

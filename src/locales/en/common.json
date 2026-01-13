@@ -1,5 +1,12 @@
 {
   "common": {
+        "selectShopFirst": "Please select a shop first",
+    "selectOption": "Select an option",
+    "create": "Create",
+    "delete": "Delete",
+    "pageOfPages": "Page {{page}} of {{pages}}",
+    "loading": "Loading...",
+    "noResults": "No results found",
     "goBack": "Go back",
     "selectDate": "Select Date",
     "active": "Active",

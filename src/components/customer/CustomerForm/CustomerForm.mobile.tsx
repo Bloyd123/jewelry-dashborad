@@ -3,12 +3,11 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  validateCustomer,
-  validateField,
-} from '@/validators/customerValidation'
+import { createCustomerSchema } from '@/validators/customerValidation' 
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
+
+import { useCustomer } from '@/hooks/useCustomers'  
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Save, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -19,10 +18,6 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-// import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
-// import { toast } from 'sonner'
-// import { MESSAGES } from '@/constants/messages'
-// import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
   { id: 'contact', label: 'Contact' },
@@ -47,13 +42,11 @@ export default function CustomerFormMobile({
     useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
-  // ← ADD: RTK Query mutations
-  // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
-  // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
 
-  // const isLoading = isCreating || isUpdating
 
+  const { createCustomer, updateCustomer, isCreating, isUpdating } = useCustomer(shopId)  // ← ADD THIS
+
+const isLoading = isCreating || isUpdating  // ← CHANGE THIS
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
@@ -69,15 +62,24 @@ export default function CustomerFormMobile({
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
 
-    const fieldValue = formData[name as keyof CreateCustomerInput]
-    const fieldValidation = validateField(
-      name as keyof CreateCustomerInput,
-      fieldValue
+    try {
+    createCustomerSchema.shape[name as keyof typeof createCustomerSchema.shape]?.parse(
+      formData[name as keyof CreateCustomerInput]
     )
-
-    if (!fieldValidation.isValid && fieldValidation.error) {
-      setErrors(prev => ({ ...prev, [name]: fieldValidation.error! }))
+    // Clear error if valid
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
     }
+  } catch (error: any) {
+    // Set error if invalid
+    if (error.errors?.[0]?.message) {
+      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
+    }
+  }
   }
 
   const handleNext = () => {
@@ -91,64 +93,38 @@ export default function CustomerFormMobile({
       setCurrentStep(currentStep - 1)
     }
   }
-
-  // const handleSubmit = async () => {
-  //   const validation = validateCustomer(formData)
-
-  //   if (!validation.isValid) {
-  //     setErrors(validation.errors)
-  //     const allTouched = Object.keys(validation.errors).reduce(
-  //       (acc, key) => ({ ...acc, [key]: true }),
-  //       {}
-  //     )
-  //     setTouched(allTouched)
-
-  //     // Navigate to first step with errors
-  //     const firstErrorStep = STEPS.findIndex((step) => {
-  //       return Object.keys(validation.errors).some((key) => {
-  //         // Map error keys to steps (simplified logic)
-  //         if (step.id === 'basic' && ['firstName', 'lastName', 'dateOfBirth', 'gender'].includes(key)) return true
-  //         if (step.id === 'contact' && ['phone', 'email', 'alternatePhone', 'whatsappNumber'].includes(key)) return true
-  //         if (step.id === 'address' && key.startsWith('address.')) return true
-  //         if (step.id === 'type' && ['customerType', 'customerCategory'].includes(key)) return true
-  //         if (step.id === 'kyc' && ['aadharNumber', 'panNumber', 'gstNumber'].includes(key)) return true
-  //         if (step.id === 'preferences' && key.startsWith('preferences.')) return true
-  //         if (step.id === 'notes' && ['notes', 'tags'].includes(key)) return true
-  //         return false
-  //       })
-  //     })
-
-  //     if (firstErrorStep !== -1) {
-  //       setCurrentStep(firstErrorStep)
-  //     }
-  //     return
-  //   }
-
-  //   try {
-  //     if (mode === 'create') {
-  //       await createCustomer({ shopId, data: formData as CreateCustomerRequest }).unwrap()
-  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
-  //     } else {
-  //       await updateCustomer({ shopId, customerId: customerId!, data: formData as UpdateCustomerRequest }).unwrap()
-  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
-  //     }
-
-  //     onSuccess?.()
-  //   } catch (error: any) {
-  //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
-  //   }
-  // }
   const handleSubmit = async () => {
-    // ... validation logic same ...
+  // 1. Validate entire form with Zod
+  try {
+    createCustomerSchema.parse(formData)
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.errors?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[err.path[0]] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    return
+  }
 
-    setIsLoading(true)
+  // 2. After validation passes, formData is now valid CreateCustomerInput
+  const validatedData = formData as CreateCustomerInput  // ← Type assertion after validation
 
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, customerId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+  // 3. Callback for setting field errors from API
+  const setFormErrors = (apiErrors: Record<string, string>) => {
+    setErrors(apiErrors)
+  }
+
+  // 4. Call API with validated data
+  const result = mode === 'edit' && customerId
+    ? await updateCustomer(customerId, validatedData, setFormErrors)
+    : await createCustomer(validatedData, setFormErrors)
+
+  // 5. Handle success
+  if (result.success) {
+    onSuccess?.()
+  }
   }
 
   const renderCurrentStep = () => {

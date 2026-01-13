@@ -1,28 +1,41 @@
 // FILE: src/features/customer/hooks/useCustomer.ts
-// Custom hooks for customer operations
+// Customer Business Logic Hook with Error Handling
 
-import { useCallback } from 'react'
+import { useCallback } from 'react';
 import {
   useGetCustomersQuery,
-  useGetCustomerByIdQuery,
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
-  useLazySearchCustomerQuery,
-} from '@/store/api/customerApi'
-
-// 🔥 IMPORT FROM YOUR EXISTING TYPES FILE
+  useBlacklistCustomerMutation,
+  useRemoveBlacklistMutation,
+  useAddLoyaltyPointsMutation,
+  useRedeemLoyaltyPointsMutation,
+} from '@/store/api/customerApi';
+import { useErrorHandler } from '@/hooks/useErrorHandler';
+import { useNotification } from '@/hooks/useNotification';
 import type {
+  CreateCustomerInput,
+  UpdateCustomerInput,
   CustomerListParams,
-  CreateCustomerRequest,
-} from '@/types/customer.types'
+} from '@/types/customer.types';
 
+/**
+ * Custom hook for customer operations
+ * Handles all customer-related business logic with error handling
+ */
 export const useCustomer = (
   shopId: string,
   filters?: Partial<CustomerListParams>
 ) => {
+  const { handleError } = useErrorHandler();
+  const { showSuccess } = useNotification();
+
+  // ============================================
+  // 📊 FETCH DATA (with auto-caching)
+  // ============================================
   const {
-    data: customersData,
+    data,
     isLoading,
     isFetching,
     error,
@@ -32,78 +45,260 @@ export const useCustomer = (
     page: filters?.page || 1,
     limit: filters?.limit || 20,
     ...filters,
-  })
+  });
 
-  const [createCustomer, createState] = useCreateCustomerMutation()
-  const [updateCustomer, updateState] = useUpdateCustomerMutation()
-  const [deleteCustomer, deleteState] = useDeleteCustomerMutation()
-  const [searchTrigger, searchResult] = useLazySearchCustomerQuery()
+  // ============================================
+  // 🔧 MUTATIONS
+  // ============================================
+  const [createMutation, createState] = useCreateCustomerMutation();
+  const [updateMutation, updateState] = useUpdateCustomerMutation();
+  const [deleteMutation, deleteState] = useDeleteCustomerMutation();
+  const [blacklistMutation, blacklistState] = useBlacklistCustomerMutation();
+  const [removeBlacklistMutation, removeBlacklistState] = useRemoveBlacklistMutation();
+  const [addLoyaltyMutation, addLoyaltyState] = useAddLoyaltyPointsMutation();
+  const [redeemLoyaltyMutation, redeemLoyaltyState] = useRedeemLoyaltyPointsMutation();
 
-  const handleCreate = useCallback(
-    async (data: CreateCustomerRequest) => {
+  // ============================================
+  // ➕ CREATE CUSTOMER with error handling
+  // ============================================
+  const createCustomer = useCallback(
+    async (
+      data: Omit<CreateCustomerInput, 'shopId'>,
+      setErrors?: (errors: Record<string, string>) => void
+    ) => {
       try {
-        const result = await createCustomer({ shopId, ...data }).unwrap()
-        return { success: true, data: result }
+        const result = await createMutation({ shopId, ...data }).unwrap();
+
+        // ✅ Success notification (i18n)
+        showSuccess(
+          'customer.success.created',
+          'customer.success.createdTitle'
+        );
+
+        return { success: true, data: result };
       } catch (error: any) {
+        // ❌ Handle error (shows toast + sets form errors)
+        handleError(error, setErrors);
         return {
           success: false,
           error: error.data?.message || 'Failed to create customer',
-        }
+        };
       }
     },
-    [createCustomer, shopId]
-  )
+    [createMutation, shopId, handleError, showSuccess]
+  );
 
-  const handleSearch = useCallback(
-    async (query: {
-      phone?: string
-      email?: string
-      customerCode?: string
-    }) => {
+  // ============================================
+  // ✏️ UPDATE CUSTOMER with error handling
+  // ============================================
+  const updateCustomer = useCallback(
+    async (
+      customerId: string,
+      data: Omit<UpdateCustomerInput, 'shopId' | 'customerId'>,
+      setErrors?: (errors: Record<string, string>) => void
+    ) => {
       try {
-        const result = await searchTrigger({ shopId, ...query }).unwrap()
-        return { success: true, data: result }
+        const result = await updateMutation({ 
+          shopId, 
+          customerId, 
+          ...data 
+        }).unwrap();
+
+        showSuccess(
+          'customer.success.updated',
+          'customer.success.updatedTitle'
+        );
+
+        return { success: true, data: result };
       } catch (error: any) {
-        return { success: false, error: error.data?.message }
+        handleError(error, setErrors);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to update customer',
+        };
       }
     },
-    [searchTrigger, shopId]
-  )
+    [updateMutation, shopId, handleError, showSuccess]
+  );
 
+  // ============================================
+  // 🗑 DELETE CUSTOMER with confirmation
+  // ============================================
+  const deleteCustomer = useCallback(
+    async (customerId: string) => {
+      try {
+        await deleteMutation({ shopId, customerId }).unwrap();
+
+        showSuccess(
+          'customer.success.deleted',
+          'customer.success.deletedTitle'
+        );
+
+        return { success: true };
+      } catch (error: any) {
+        handleError(error);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to delete customer',
+        };
+      }
+    },
+    [deleteMutation, shopId, handleError, showSuccess]
+  );
+
+  // ============================================
+  // 🚫 BLACKLIST CUSTOMER
+  // ============================================
+  const blacklistCustomer = useCallback(
+    async (customerId: string, reason: string) => {
+      try {
+        const result = await blacklistMutation({ 
+          shopId, 
+          customerId, 
+          reason 
+        }).unwrap();
+
+        showSuccess(
+          'customer.success.blacklisted',
+          'customer.success.blacklistedTitle'
+        );
+
+        return { success: true, data: result };
+      } catch (error: any) {
+        handleError(error);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to blacklist customer',
+        };
+      }
+    },
+    [blacklistMutation, shopId, handleError, showSuccess]
+  );
+
+  // ============================================
+  // ✅ REMOVE BLACKLIST
+  // ============================================
+  const removeBlacklist = useCallback(
+    async (customerId: string) => {
+      try {
+        const result = await removeBlacklistMutation({ 
+          shopId, 
+          customerId 
+        }).unwrap();
+
+        showSuccess(
+          'customer.success.blacklistRemoved',
+          'customer.success.blacklistRemovedTitle'
+        );
+
+        return { success: true, data: result };
+      } catch (error: any) {
+        handleError(error);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to remove blacklist',
+        };
+      }
+    },
+    [removeBlacklistMutation, shopId, handleError, showSuccess]
+  );
+
+  // ============================================
+  // ➕ ADD LOYALTY POINTS
+  // ============================================
+  const addLoyaltyPoints = useCallback(
+    async (customerId: string, points: number, reason?: string) => {
+      try {
+        const result = await addLoyaltyMutation({ 
+          shopId, 
+          customerId, 
+          points,
+          reason 
+        }).unwrap();
+
+        showSuccess(
+          'customer.success.loyaltyAdded',
+          'customer.success.loyaltyAddedTitle'
+        );
+
+        return { success: true, data: result };
+      } catch (error: any) {
+        handleError(error);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to add loyalty points',
+        };
+      }
+    },
+    [addLoyaltyMutation, shopId, handleError, showSuccess]
+  );
+
+  // ============================================
+  // 🎁 REDEEM LOYALTY POINTS
+  // ============================================
+  const redeemLoyaltyPoints = useCallback(
+    async (customerId: string, points: number) => {
+      try {
+        const result = await redeemLoyaltyMutation({ 
+          shopId, 
+          customerId, 
+          points 
+        }).unwrap();
+
+        showSuccess(
+          'customer.success.loyaltyRedeemed',
+          'customer.success.loyaltyRedeemedTitle'
+        );
+
+        return { success: true, data: result };
+      } catch (error: any) {
+        handleError(error);
+        return {
+          success: false,
+          error: error.data?.message || 'Failed to redeem loyalty points',
+        };
+      }
+    },
+    [redeemLoyaltyMutation, shopId, handleError, showSuccess]
+  );
+
+  // ============================================
+  // 📤 RETURN API
+  // ============================================
   return {
-    customers: customersData?.data?.customers || [],
-    summary: customersData?.data?.summary,
-    pagination: customersData?.meta?.pagination,
+    // Data
+    customers: data?.data?.customers || [],
+    summary: data?.data?.summary,
+    pagination: data?.meta?.pagination,
 
+    // Loading states
     isLoading: isLoading || isFetching,
     isCreating: createState.isLoading,
     isUpdating: updateState.isLoading,
     isDeleting: deleteState.isLoading,
-    isSearching: searchResult.isFetching,
+    isBlacklisting: blacklistState.isLoading,
+    isRemovingBlacklist: removeBlacklistState.isLoading,
+    isAddingLoyalty: addLoyaltyState.isLoading,
+    isRedeemingLoyalty: redeemLoyaltyState.isLoading,
 
-    createCustomer: handleCreate,
+    // Actions
+    createCustomer,
     updateCustomer,
     deleteCustomer,
-    searchCustomer: handleSearch,
+    blacklistCustomer,
+    removeBlacklist,
+    addLoyaltyPoints,
+    redeemLoyaltyPoints,
     refetch,
 
+    // States
     createState,
     updateState,
     deleteState,
-    searchResult,
-  }
-}
-
-export const useCustomerById = (shopId: string, customerId: string) => {
-  const { data, isLoading, error, refetch } = useGetCustomerByIdQuery({
-    shopId,
-    customerId,
-  })
-
-  return {
-    customer: data,
-    isLoading,
+    blacklistState,
+    removeBlacklistState,
+    addLoyaltyState,
+    redeemLoyaltyState,
     error,
-    refetch,
-  }
-}
+  };
+};

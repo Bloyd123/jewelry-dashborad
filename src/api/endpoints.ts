@@ -46,28 +46,28 @@ export const AUTH_ENDPOINTS = {
 }
 
 // Customer endpoints
-const CUSTOMER_BASE = `${BASE_URL}/shops/:shopId/customers`
-
 export const CUSTOMER_ENDPOINTS = {
   // List & Search
-  GET_ALL: CUSTOMER_BASE,
-  SEARCH: `${CUSTOMER_BASE}/search`,
-  ANALYTICS: `${CUSTOMER_BASE}/analytics`,
-
+  GET_ALL: `${BASE_URL}/shops/:shopId/customers`,
+  GET_BY_ID: `${BASE_URL}/shops/:shopId/customers/:customerId`,
+  SEARCH: `${BASE_URL}/shops/:shopId/customers/search`,
+  
   // CRUD
-  GET_BY_ID: `${CUSTOMER_BASE}/:customerId`,
-  CREATE: CUSTOMER_BASE,
-  UPDATE: `${CUSTOMER_BASE}/:customerId`,
-  DELETE: `${CUSTOMER_BASE}/:customerId`,
-
-  // Blacklist
-  BLACKLIST: `${CUSTOMER_BASE}/:customerId/blacklist`,
-  REMOVE_BLACKLIST: `${CUSTOMER_BASE}/:customerId/unblacklist`,
-
-  // Loyalty
-  ADD_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/add`,
-  REDEEM_LOYALTY: `${CUSTOMER_BASE}/:customerId/loyalty/redeem`,
-}
+  CREATE: `${BASE_URL}/shops/:shopId/customers`,
+  UPDATE: `${BASE_URL}/shops/:shopId/customers/:customerId`,
+  DELETE: `${BASE_URL}/shops/:shopId/customers/:customerId`,
+  
+  // Blacklist Operations
+  BLACKLIST: `${BASE_URL}/shops/:shopId/customers/:customerId/blacklist`,
+  UNBLACKLIST: `${BASE_URL}/shops/:shopId/customers/:customerId/unblacklist`,
+  
+  // Loyalty Operations
+  ADD_LOYALTY: `${BASE_URL}/shops/:shopId/customers/:customerId/loyalty/add`,
+  REDEEM_LOYALTY: `${BASE_URL}/shops/:shopId/customers/:customerId/loyalty/redeem`,
+  
+  // Analytics
+  ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
+} as const;
 // SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`

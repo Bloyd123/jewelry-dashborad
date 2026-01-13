@@ -1,17 +1,17 @@
 // FILE: src/store/api/customerApi.ts
-// Customer API with RTK Query
+// Customer RTK Query API Slice
 
-import { baseApi } from './baseApi'
-import { CUSTOMER_ENDPOINTS } from '@/api/endpoints'
-import { replacePathParams } from '@/utils/api'
-
-// IMPORT FROM YOUR EXISTING TYPES FILE
+import { baseApi } from './baseApi';
+import { CUSTOMER_ENDPOINTS } from '@/api/endpoints';
+import { replacePathParams } from '@/utils/api';
 import type {
   Customer,
   CustomerListResponse,
+  CustomerResponse,
   CustomerSearchResponse,
   CustomerAnalyticsResponse,
   CustomerMutationResponse,
+  BlacklistResponse,
   LoyaltyPointsResponse,
   GetCustomersInput,
   GetCustomerByIdInput,
@@ -20,204 +20,223 @@ import type {
   UpdateCustomerInput,
   DeleteCustomerInput,
   BlacklistCustomerInput,
+  RemoveBlacklistInput,
+  AddLoyaltyPointsInput,
+  RedeemLoyaltyPointsInput,
   GetAnalyticsInput,
-} from '@/types/customer.types'
+} from '@/types/customer.types';
 
+/**
+ * Customer API Slice
+ * Handles all customer-related API calls with caching
+ */
 export const customerApi = baseApi.injectEndpoints({
-  endpoints: build => ({
-    // GET ALL CUSTOMERS
+  endpoints: (build) => ({
+    // ============================================
+    // 📋 GET ALL CUSTOMERS (with filters & pagination)
+    // ============================================
     getCustomers: build.query<CustomerListResponse, GetCustomersInput>({
-      query: ({ shopId, ...filters }) => ({
+      query: ({ shopId, ...params }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.GET_ALL, { shopId }),
-        params: filters,
+        params, // page, limit, search, filters
       }),
+      
+      // 🔥 Cache tags for auto-refetch
       providesTags: (result, error, { shopId }) => [
         { type: 'CustomerList', id: shopId },
-        ...(result?.data?.customers || []).map(({ _id }) => ({
+        ...(result?.data?.customers || []).map((customer) => ({
           type: 'Customer' as const,
-          id: _id,
+          id: customer._id,
         })),
       ],
     }),
 
-    // GET CUSTOMER BY ID
+    // ============================================
+    // 👤 GET SINGLE CUSTOMER BY ID
+    // ============================================
     getCustomerById: build.query<Customer, GetCustomerByIdInput>({
       query: ({ shopId, customerId }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.GET_BY_ID, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.GET_BY_ID, { shopId, customerId }),
       }),
-      transformResponse: (response: CustomerMutationResponse) =>
-        response.data.customer,
+      
+      // 🔥 Transform response (extract data)
+      transformResponse: (response: CustomerResponse) => response.data.customer,
+      
       providesTags: (result, error, { customerId }) => [
         { type: 'Customer', id: customerId },
       ],
     }),
 
-    // SEARCH CUSTOMER
+    // ============================================
+    // 🔍 SEARCH CUSTOMER
+    // ============================================
     searchCustomer: build.query<Customer | null, SearchCustomerInput>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.SEARCH, { shopId }),
         params,
       }),
-      transformResponse: (response: CustomerSearchResponse) =>
-        response.data.customer,
+      
+      transformResponse: (response: CustomerSearchResponse) => 
+        response.data.exists ? response.data.customer : null,
+      
       providesTags: ['CustomerSearch'],
     }),
 
-    // CREATE CUSTOMER
+    // ============================================
+    // ➕ CREATE CUSTOMER
+    // ============================================
     createCustomer: build.mutation<Customer, CreateCustomerInput>({
       query: ({ shopId, ...data }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.CREATE, { shopId }),
         method: 'POST',
         body: data,
       }),
-      transformResponse: (response: CustomerMutationResponse) =>
+      
+      transformResponse: (response: CustomerMutationResponse) => 
         response.data.customer,
+      
+      // 🔥 Invalidate cache to auto-refetch lists
       invalidatesTags: (result, error, { shopId }) => [
         { type: 'CustomerList', id: shopId },
-        'CustomerAnalytics',
       ],
     }),
 
-    // UPDATE CUSTOMER
+    // ============================================
+    // ✏️ UPDATE CUSTOMER
+    // ============================================
     updateCustomer: build.mutation<Customer, UpdateCustomerInput>({
       query: ({ shopId, customerId, ...data }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.UPDATE, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.UPDATE, { shopId, customerId }),
         method: 'PUT',
         body: data,
       }),
-      transformResponse: (response: CustomerMutationResponse) =>
+      
+      transformResponse: (response: CustomerMutationResponse) => 
         response.data.customer,
+      
+      // 🔥 Invalidate both single item and list
       invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
         { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    // DELETE CUSTOMER
+    // ============================================
+    // 🗑 DELETE CUSTOMER
+    // ============================================
     deleteCustomer: build.mutation<void, DeleteCustomerInput>({
       query: ({ shopId, customerId }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.DELETE, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.DELETE, { shopId, customerId }),
         method: 'DELETE',
       }),
+      
       invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
         { type: 'CustomerList', id: shopId },
-        'CustomerAnalytics',
       ],
     }),
 
-    // BLACKLIST CUSTOMER
+    // ============================================
+    // 🚫 BLACKLIST CUSTOMER
+    // ============================================
     blacklistCustomer: build.mutation<Customer, BlacklistCustomerInput>({
       query: ({ shopId, customerId, reason }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.BLACKLIST, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.BLACKLIST, { shopId, customerId }),
         method: 'PATCH',
         body: { reason },
       }),
-      transformResponse: (response: CustomerMutationResponse) =>
+      
+      transformResponse: (response: BlacklistResponse) => 
         response.data.customer,
-      invalidatesTags: (result, error, { customerId }) => [
+      
+      invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
+        { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    // REMOVE BLACKLIST
-    removeBlacklist: build.mutation<Customer, DeleteCustomerInput>({
+    // ============================================
+    // ✅ REMOVE BLACKLIST
+    // ============================================
+    removeBlacklist: build.mutation<Customer, RemoveBlacklistInput>({
       query: ({ shopId, customerId }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.REMOVE_BLACKLIST, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.UNBLACKLIST, { shopId, customerId }),
         method: 'PATCH',
       }),
-      transformResponse: (response: CustomerMutationResponse) =>
+      
+      transformResponse: (response: BlacklistResponse) => 
         response.data.customer,
-      invalidatesTags: (result, error, { customerId }) => [
+      
+      invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
+        { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    // ADD LOYALTY POINTS
-    addLoyaltyPoints: build.mutation<
-      Customer,
-      {
-        shopId: string
-        customerId: string
-        points: number
-        reason?: string
-      }
-    >({
+    // ============================================
+    // ➕ ADD LOYALTY POINTS
+    // ============================================
+    addLoyaltyPoints: build.mutation<Customer, AddLoyaltyPointsInput>({
       query: ({ shopId, customerId, points, reason }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.ADD_LOYALTY, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.ADD_LOYALTY, { shopId, customerId }),
         method: 'POST',
         body: { points, reason },
       }),
-      transformResponse: (response: LoyaltyPointsResponse) =>
+      
+      transformResponse: (response: LoyaltyPointsResponse) => 
         response.data.customer as any,
-      invalidatesTags: (result, error, { customerId }) => [
+      
+      invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
+        { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    // REDEEM LOYALTY POINTS
-    redeemLoyaltyPoints: build.mutation<
-      Customer,
-      {
-        shopId: string
-        customerId: string
-        points: number
-      }
-    >({
+    // ============================================
+    // 🎁 REDEEM LOYALTY POINTS
+    // ============================================
+    redeemLoyaltyPoints: build.mutation<Customer, RedeemLoyaltyPointsInput>({
       query: ({ shopId, customerId, points }) => ({
-        url: replacePathParams(CUSTOMER_ENDPOINTS.REDEEM_LOYALTY, {
-          shopId,
-          customerId,
-        }),
+        url: replacePathParams(CUSTOMER_ENDPOINTS.REDEEM_LOYALTY, { shopId, customerId }),
         method: 'POST',
         body: { points },
       }),
-      transformResponse: (response: LoyaltyPointsResponse) =>
+      
+      transformResponse: (response: LoyaltyPointsResponse) => 
         response.data.customer as any,
-      invalidatesTags: (result, error, { customerId }) => [
+      
+      invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
+        { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    // GET ANALYTICS
-    getCustomerAnalytics: build.query<
-      CustomerAnalyticsResponse['data']['summary'],
-      GetAnalyticsInput
-    >({
+    // ============================================
+    // 📊 GET CUSTOMER ANALYTICS
+    // ============================================
+    getCustomerAnalytics: build.query<CustomerAnalyticsResponse['data']['summary'], GetAnalyticsInput>({
       query: ({ shopId }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.ANALYTICS, { shopId }),
       }),
-      transformResponse: (response: CustomerAnalyticsResponse) =>
+      
+      transformResponse: (response: CustomerAnalyticsResponse) => 
         response.data.summary,
-      providesTags: ['CustomerAnalytics'],
+      
+      providesTags: (result, error, { shopId }) => [
+        { type: 'CustomerAnalytics', id: shopId },
+      ],
     }),
   }),
-})
+});
 
-// Export hooks for usage in components
+// ============================================
+// 🎣 EXPORT HOOKS (Auto-generated by RTK Query)
+// ============================================
 export const {
   useGetCustomersQuery,
   useGetCustomerByIdQuery,
   useSearchCustomerQuery,
-  useLazySearchCustomerQuery,
+  useLazySearchCustomerQuery, // Manual trigger
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
@@ -226,4 +245,4 @@ export const {
   useAddLoyaltyPointsMutation,
   useRedeemLoyaltyPointsMutation,
   useGetCustomerAnalyticsQuery,
-} = customerApi
+} = customerApi;

@@ -3,12 +3,11 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  validateCustomer,
-  validateField,
-} from '@/validators/customerValidation'
+import { useCustomer } from '@/hooks/useCustomers'  
+
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
+import { createCustomerSchema } from '@/validators/customerValidation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2 } from 'lucide-react'
@@ -19,10 +18,6 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-// import { useCreateCustomerMutation, useUpdateCustomerMutation } from '@/api/services/customerService'
-// import { toast } from 'sonner'
-// import type { CreateCustomerRequest, UpdateCustomerRequest } from '@/types'
-// import { MESSAGES } from '@/constants/messages'
 
 export default function CustomerFormDesktop({
   initialData = {},
@@ -34,16 +29,13 @@ export default function CustomerFormDesktop({
 }: CustomerFormProps) {
   const { t } = useTranslation()
   const [formData, setFormData] =
-    useState<Partial<CreateCustomerInput>>(initialData)
+  useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+  
+  const { createCustomer, updateCustomer, isCreating, isUpdating } = useCustomer(shopId)
+  const isLoading = isCreating || isUpdating
 
-  // ← ADD: RTK Query mutations
-  // const [createCustomer, { isLoading: isCreating }] = useCreateCustomerMutation()
-  // const [updateCustomer, { isLoading: isUpdating }] = useUpdateCustomerMutation()
-
-  // const isLoading = isCreating || isUpdating
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
@@ -60,68 +52,57 @@ export default function CustomerFormDesktop({
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
 
-    // Validate field on blur
-    const fieldValue = formData[name as keyof CreateCustomerInput]
-    const fieldValidation = validateField(
-      name as keyof CreateCustomerInput,
-      fieldValue
+ try {
+    createCustomerSchema.shape[name as keyof typeof createCustomerSchema.shape]?.parse(
+      formData[name as keyof CreateCustomerInput]
     )
-
-    if (!fieldValidation.isValid && fieldValidation.error) {
-      setErrors(prev => ({ ...prev, [name]: fieldValidation.error! }))
+    // Clear error if valid
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
+  } catch (error: any) {
+    // Set error if invalid
+    if (error.errors?.[0]?.message) {
+      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
     }
   }
-
-  // const handleSubmit = async () => {
-  //   // Validate entire form
-  //   const validation = validateCustomer(formData)
-
-  //   if (!validation.isValid) {
-  //     setErrors(validation.errors)
-  //     // Mark all fields as touched
-  //     const allTouched = Object.keys(validation.errors).reduce(
-  //       (acc, key) => ({ ...acc, [key]: true }),
-  //       {}
-  //     )
-  //     setTouched(allTouched)
-  //     return
-  //   }
-
-  //   // ← REPLACE: Submit logic with RTK Query
-  //   try {
-  //     if (mode === 'create') {
-  //       await createCustomer({
-  //         shopId,
-  //         data: formData as CreateCustomerRequest,
-  //       }).unwrap()
-
-  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_CREATED)
-  //     } else {
-  //       await updateCustomer({
-  //         shopId,
-  //         customerId: customerId!,
-  //         data: formData as UpdateCustomerRequest,
-  //       }).unwrap()
-
-  //       toast.success(MESSAGES.CUSTOMER.CUSTOMER_UPDATED)
-  //     }
-
-  //     onSuccess?.() // ← Call success callback
-  //   } catch (error: any) {
-  //     toast.error(error.message || MESSAGES.GENERAL.SOMETHING_WENT_WRONG)
-  //   }
-  // }
+  }
   const handleSubmit = async () => {
-    // ... validation logic same ...
+  // 1. Validate entire form with Zod
+  try {
+    createCustomerSchema.parse(formData)
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.errors?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[err.path[0]] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    return
+  }
 
-    setIsLoading(true)
+  // 2. After validation passes, formData is now valid CreateCustomerInput
+  const validatedData = formData as CreateCustomerInput  // ← Type assertion after validation
 
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, customerId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+  // 3. Callback for setting field errors from API
+  const setFormErrors = (apiErrors: Record<string, string>) => {
+    setErrors(apiErrors)
+  }
+
+  // 4. Call API with validated data
+  const result = mode === 'edit' && customerId
+    ? await updateCustomer(customerId, validatedData, setFormErrors)
+    : await createCustomer(validatedData, setFormErrors)
+
+  // 5. Handle success
+  if (result.success) {
+    onSuccess?.()
+  }
   }
 
   return (

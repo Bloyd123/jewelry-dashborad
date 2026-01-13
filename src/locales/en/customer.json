@@ -1,5 +1,38 @@
 {
   "customer": {
+    "addNew": "Add Customer",
+    "searchPlaceholder": "Search by name, phone, or code...",
+    "empty": "No customers found",
+    "deleteConfirm": "Are you sure you want to delete {{name}}?",
+    
+    "success": {
+      "created": "Customer created successfully",
+      "createdTitle": "Customer Created",
+      "updated": "Customer updated successfully",
+      "updatedTitle": "Customer Updated",
+      "deleted": "Customer deleted successfully",
+      "deletedTitle": "Customer Deleted",
+      "blacklisted": "Customer blacklisted successfully",
+      "blacklistedTitle": "Customer Blacklisted",
+      "blacklistRemoved": "Blacklist removed successfully",
+      "blacklistRemovedTitle": "Blacklist Removed",
+      "loyaltyAdded": "Loyalty points added successfully",
+      "loyaltyAddedTitle": "Loyalty Points Added",
+      "loyaltyRedeemed": "Loyalty points redeemed successfully",
+      "loyaltyRedeemedTitle": "Loyalty Points Redeemed"
+    },
+    
+    "errors": {
+      "notFound": "Customer not found",
+      "createFailed": "Failed to create customer",
+      "updateFailed": "Failed to update customer",
+      "deleteFailed": "Failed to delete customer",
+      "fetchFailed": "Failed to fetch customers",
+      "blacklistFailed": "Failed to blacklist customer",
+      "removeBlacklistFailed": "Failed to remove blacklist",
+      "loyaltyAddFailed": "Failed to add loyalty points",
+      "loyaltyRedeemFailed": "Failed to redeem loyalty points"
+    },
     "title": "Customers",
     "common": {
       "na": "N/A",
@@ -123,6 +156,8 @@
       "daysOverdue": "days overdue"
     },
     "actions": {
+      "addLoyalty": "Add Loyalty Points",
+      "redeemLoyalty": "Redeem Loyalty Points",
       "addNew": "Add New Customer",
       "add": "Add",
       "viewDetails": "View Details",
