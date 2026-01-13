@@ -1088,6 +1088,20 @@ export const selectError = (state: RootState) => state.auth.error
 export const selectCurrentShop = (state: RootState) => state.auth.currentShop
 export const selectPermissions = (state: RootState) => state.auth.permissions
 export const selectShopAccesses = (state: RootState) => state.auth.shopAccesses
+export const selectShopOptions = (state: RootState) => {
+  return state.auth.shopAccesses.map(access => {
+    const shop =
+      typeof access.shopId === 'string'
+        ? { _id: access.shopId, name: 'Shop' }
+        : access.shopId
+
+    return {
+      value: shop._id,
+      label: shop.name,
+    }
+  })
+}
+
 
 // Permission checker selector
 export const selectHasPermission = (

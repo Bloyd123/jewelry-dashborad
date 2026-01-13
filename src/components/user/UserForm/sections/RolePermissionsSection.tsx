@@ -6,6 +6,11 @@ import { FormSelect } from '@/components/forms/FormSelect'
 import { AlertCircle } from 'lucide-react'
 import type { FormSectionProps } from '../UserForm.types'
 import { useCurrentUser } from '@/hooks/useAuth' 
+import { useAppSelector } from '@/store/hooks'
+import {
+  selectShopOptions,
+  selectCurrentShop,
+} from '@/store/slices/authSlice'
 export const RolePermissionsSection = ({
   data,
   errors,
@@ -15,6 +20,9 @@ export const RolePermissionsSection = ({
 }: FormSectionProps) => {
   const { t } = useTranslation()
 const currentUser = useCurrentUser()
+
+const shopOptions = useAppSelector(selectShopOptions)
+const currentShopId = useAppSelector(selectCurrentShop)
   // Role options
   const roleOptions = [
     // { value: 'super_admin', label: t('user.roles.superAdmin') },
@@ -43,7 +51,7 @@ const organizationOptions = currentUser?.organizationId
   : []
 
 // ✅ TEMPORARY: Empty shops (until API is ready)
-const shopOptions: Array<{ value: string; label: string }> = []
+// const shopOptions: Array<{ value: string; label: string }> = []
 // 🔜 When shop API is ready:
 // const shopOptions = shops.map(shop => ({
 //   value: shop._id,
@@ -121,7 +129,9 @@ const shopOptions: Array<{ value: string; label: string }> = []
         <FormSelect
           name="primaryShop"
           label={t('user.primaryShop')}
-          value={data.primaryShop || ''}
+          // value={data.primaryShop || ''}
+          value={data.primaryShop || currentShopId || ''}
+
           onChange={onChange}
           onBlur={onBlur}
           error={errors.primaryShop}
