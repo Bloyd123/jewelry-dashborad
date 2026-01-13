@@ -5,12 +5,9 @@ import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'
 import { AlertCircle } from 'lucide-react'
 import type { FormSectionProps } from '../UserForm.types'
-import { useCurrentUser } from '@/hooks/useAuth' 
+import { useCurrentUser } from '@/hooks/useAuth'
 import { useAppSelector } from '@/store/hooks'
-import {
-  selectShopOptions,
-  selectCurrentShop,
-} from '@/store/slices/authSlice'
+import { selectShopOptions, selectCurrentShop } from '@/store/slices/authSlice'
 export const RolePermissionsSection = ({
   data,
   errors,
@@ -19,10 +16,10 @@ export const RolePermissionsSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-const currentUser = useCurrentUser()
+  const currentUser = useCurrentUser()
 
-const shopOptions = useAppSelector(selectShopOptions)
-const currentShopId = useAppSelector(selectCurrentShop)
+  const shopOptions = useAppSelector(selectShopOptions)
+  const currentShopId = useAppSelector(selectCurrentShop)
   // Role options
   const roleOptions = [
     // { value: 'super_admin', label: t('user.roles.superAdmin') },
@@ -34,29 +31,29 @@ const currentShopId = useAppSelector(selectCurrentShop)
     { value: 'viewer', label: t('user.roles.viewer') },
   ]
 
-// ✅ TODO: Replace with actual API when ready
-// const { data: organizations = [] } = useGetOrganizationsQuery()
-// const { data: shops = [] } = useGetShopsQuery({ 
-//   organizationId: data.organizationId 
-// }, { skip: !data.organizationId })
+  // ✅ TODO: Replace with actual API when ready
+  // const { data: organizations = [] } = useGetOrganizationsQuery()
+  // const { data: shops = [] } = useGetShopsQuery({
+  //   organizationId: data.organizationId
+  // }, { skip: !data.organizationId })
 
-// ✅ TEMPORARY: Use current user's org as single option
-const organizationOptions = currentUser?.organizationId
-  ? [
-      {
-        value: currentUser.organizationId,
-        label: 'Current Organization', // TODO: Replace with actual org name
-      },
-    ]
-  : []
+  // ✅ TEMPORARY: Use current user's org as single option
+  const organizationOptions = currentUser?.organizationId
+    ? [
+        {
+          value: currentUser.organizationId,
+          label: 'Current Organization', // TODO: Replace with actual org name
+        },
+      ]
+    : []
 
-// ✅ TEMPORARY: Empty shops (until API is ready)
-// const shopOptions: Array<{ value: string; label: string }> = []
-// 🔜 When shop API is ready:
-// const shopOptions = shops.map(shop => ({
-//   value: shop._id,
-//   label: shop.name || shop.displayName
-// }))
+  // ✅ TEMPORARY: Empty shops (until API is ready)
+  // const shopOptions: Array<{ value: string; label: string }> = []
+  // 🔜 When shop API is ready:
+  // const shopOptions = shops.map(shop => ({
+  //   value: shop._id,
+  //   label: shop.name || shop.displayName
+  // }))
 
   // Show/hide fields based on role
   const showOrganization = data.role && data.role !== 'super_admin'
@@ -131,7 +128,6 @@ const organizationOptions = currentUser?.organizationId
           label={t('user.primaryShop')}
           // value={data.primaryShop || ''}
           value={data.primaryShop || currentShopId || ''}
-
           onChange={onChange}
           onBlur={onBlur}
           error={errors.primaryShop}

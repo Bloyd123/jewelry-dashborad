@@ -15,10 +15,10 @@ import { ContactInfoSection } from './sections/ContactInfoSection'
 import { EmployeeInfoSection } from './sections/EmployeeInfoSection'
 import { SalesInfoSection } from './sections/SalesInfoSection'
 import { PreferencesSection } from './sections/PreferencesSection'
-import { useAuth } from '@/hooks/useAuth' 
-import { useNotification } from '@/hooks/useNotification' 
-import { useErrorHandler } from '@/hooks/useErrorHandler' 
-import {RegisterRequest} from '@/types'
+import { useAuth } from '@/hooks/useAuth'
+import { useNotification } from '@/hooks/useNotification'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
+import { RegisterRequest } from '@/types'
 
 export default function UserFormDesktop({
   initialData = {},
@@ -35,8 +35,8 @@ export default function UserFormDesktop({
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
   const { register } = useAuth()
-const { showSuccess, showError } = useNotification()
-const { handleError } = useErrorHandler()
+  const { showSuccess, showError } = useNotification()
+  const { handleError } = useErrorHandler()
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -66,39 +66,39 @@ const { handleError } = useErrorHandler()
     }
   }
 
-const handleSubmit = async () => {
-  // Validate entire form
-  const validation = validateUser(formData)
+  const handleSubmit = async () => {
+    // Validate entire form
+    const validation = validateUser(formData)
 
-  if (!validation.isValid) {
-    setErrors(validation.errors)
-    const allTouched = Object.keys(validation.errors).reduce(
-      (acc, key) => ({ ...acc, [key]: true }),
-      {}
-    )
-    setTouched(allTouched)
-    return
-  }
-
-  setIsLoading(true)
-
-  try {
-    // ✅ API Call
-    const result = await register(formData as RegisterRequest)
-    
-    if (result.success) {
-      showSuccess(
-        mode === 'create' ? t('user.userCreated') : t('user.userUpdated'),
-        t('user.userCreatedDescription')
+    if (!validation.isValid) {
+      setErrors(validation.errors)
+      const allTouched = Object.keys(validation.errors).reduce(
+        (acc, key) => ({ ...acc, [key]: true }),
+        {}
       )
-      onSuccess?.()
+      setTouched(allTouched)
+      return
     }
-  } catch (error: any) {
-    handleError(error, setErrors)
-  } finally {
-    setIsLoading(false)
+
+    setIsLoading(true)
+
+    try {
+      // ✅ API Call
+      const result = await register(formData as RegisterRequest)
+
+      if (result.success) {
+        showSuccess(
+          mode === 'create' ? t('user.userCreated') : t('user.userUpdated'),
+          t('user.userCreatedDescription')
+        )
+        onSuccess?.()
+      }
+    } catch (error: any) {
+      handleError(error, setErrors)
+    } finally {
+      setIsLoading(false)
+    }
   }
-}
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
@@ -150,7 +150,6 @@ const handleSubmit = async () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isLoading}
-                
               />
             </CardContent>
           </Card>

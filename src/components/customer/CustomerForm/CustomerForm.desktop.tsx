@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useCustomer } from '@/hooks/useCustomers'  
+import { useCustomer } from '@/hooks/useCustomers'
 
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
@@ -29,11 +29,12 @@ export default function CustomerFormDesktop({
 }: CustomerFormProps) {
   const { t } = useTranslation()
   const [formData, setFormData] =
-  useState<Partial<CreateCustomerInput>>(initialData)
+    useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  
-  const { createCustomer, updateCustomer, isCreating, isUpdating } = useCustomer(shopId)
+
+  const { createCustomer, updateCustomer, isCreating, isUpdating } =
+    useCustomer(shopId)
   const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
@@ -52,57 +53,58 @@ export default function CustomerFormDesktop({
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
 
- try {
-    createCustomerSchema.shape[name as keyof typeof createCustomerSchema.shape]?.parse(
-      formData[name as keyof CreateCustomerInput]
-    )
-    // Clear error if valid
-    if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+    try {
+      createCustomerSchema.shape[
+        name as keyof typeof createCustomerSchema.shape
+      ]?.parse(formData[name as keyof CreateCustomerInput])
+      // Clear error if valid
+      if (errors[name]) {
+        setErrors(prev => {
+          const newErrors = { ...prev }
+          delete newErrors[name]
+          return newErrors
+        })
+      }
+    } catch (error: any) {
+      // Set error if invalid
+      if (error.errors?.[0]?.message) {
+        setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
+      }
     }
-  } catch (error: any) {
-    // Set error if invalid
-    if (error.errors?.[0]?.message) {
-      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
-    }
-  }
   }
   const handleSubmit = async () => {
-  // 1. Validate entire form with Zod
-  try {
-    createCustomerSchema.parse(formData)
-  } catch (error: any) {
-    const validationErrors: Record<string, string> = {}
-    error.errors?.forEach((err: any) => {
-      if (err.path?.[0]) {
-        validationErrors[err.path[0]] = err.message
-      }
-    })
-    setErrors(validationErrors)
-    return
-  }
+    // 1. Validate entire form with Zod
+    try {
+      createCustomerSchema.parse(formData)
+    } catch (error: any) {
+      const validationErrors: Record<string, string> = {}
+      error.errors?.forEach((err: any) => {
+        if (err.path?.[0]) {
+          validationErrors[err.path[0]] = err.message
+        }
+      })
+      setErrors(validationErrors)
+      return
+    }
 
-  // 2. After validation passes, formData is now valid CreateCustomerInput
-  const validatedData = formData as CreateCustomerInput  // ← Type assertion after validation
+    // 2. After validation passes, formData is now valid CreateCustomerInput
+    const validatedData = formData as CreateCustomerInput // ← Type assertion after validation
 
-  // 3. Callback for setting field errors from API
-  const setFormErrors = (apiErrors: Record<string, string>) => {
-    setErrors(apiErrors)
-  }
+    // 3. Callback for setting field errors from API
+    const setFormErrors = (apiErrors: Record<string, string>) => {
+      setErrors(apiErrors)
+    }
 
-  // 4. Call API with validated data
-  const result = mode === 'edit' && customerId
-    ? await updateCustomer(customerId, validatedData, setFormErrors)
-    : await createCustomer(validatedData, setFormErrors)
+    // 4. Call API with validated data
+    const result =
+      mode === 'edit' && customerId
+        ? await updateCustomer(customerId, validatedData, setFormErrors)
+        : await createCustomer(validatedData, setFormErrors)
 
-  // 5. Handle success
-  if (result.success) {
-    onSuccess?.()
-  }
+    // 5. Handle success
+    if (result.success) {
+      onSuccess?.()
+    }
   }
 
   return (

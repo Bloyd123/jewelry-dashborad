@@ -1102,7 +1102,6 @@ export const selectShopOptions = (state: RootState) => {
   })
 }
 
-
 // Permission checker selector
 export const selectHasPermission = (
   state: RootState,

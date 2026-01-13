@@ -51,23 +51,23 @@ export const CUSTOMER_ENDPOINTS = {
   GET_ALL: `${BASE_URL}/shops/:shopId/customers`,
   GET_BY_ID: `${BASE_URL}/shops/:shopId/customers/:customerId`,
   SEARCH: `${BASE_URL}/shops/:shopId/customers/search`,
-  
+
   // CRUD
   CREATE: `${BASE_URL}/shops/:shopId/customers`,
   UPDATE: `${BASE_URL}/shops/:shopId/customers/:customerId`,
   DELETE: `${BASE_URL}/shops/:shopId/customers/:customerId`,
-  
+
   // Blacklist Operations
   BLACKLIST: `${BASE_URL}/shops/:shopId/customers/:customerId/blacklist`,
   UNBLACKLIST: `${BASE_URL}/shops/:shopId/customers/:customerId/unblacklist`,
-  
+
   // Loyalty Operations
   ADD_LOYALTY: `${BASE_URL}/shops/:shopId/customers/:customerId/loyalty/add`,
   REDEEM_LOYALTY: `${BASE_URL}/shops/:shopId/customers/:customerId/loyalty/redeem`,
-  
+
   // Analytics
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
-} as const;
+} as const
 // SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`

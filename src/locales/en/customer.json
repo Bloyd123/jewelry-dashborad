@@ -4,7 +4,7 @@
     "searchPlaceholder": "Search by name, phone, or code...",
     "empty": "No customers found",
     "deleteConfirm": "Are you sure you want to delete {{name}}?",
-    
+
     "success": {
       "created": "Customer created successfully",
       "createdTitle": "Customer Created",
@@ -21,7 +21,7 @@
       "loyaltyRedeemed": "Loyalty points redeemed successfully",
       "loyaltyRedeemedTitle": "Loyalty Points Redeemed"
     },
-    
+
     "errors": {
       "notFound": "Customer not found",
       "createFailed": "Failed to create customer",

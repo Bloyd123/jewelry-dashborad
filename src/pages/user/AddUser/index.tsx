@@ -54,8 +54,9 @@ export default function AddUserPage() {
   const currentUser = useCurrentUser()
   const shopAccesses = useShopAccesses()
   const organizationId = currentUser?.organizationId || undefined // ✅ Convert null to undefined
-const defaultPrimaryShop = currentUser?.primaryShop || 
-  (shopAccesses.length > 0 ? shopAccesses[0].shopId : undefined)
+  const defaultPrimaryShop =
+    currentUser?.primaryShop ||
+    (shopAccesses.length > 0 ? shopAccesses[0].shopId : undefined)
   // ✅ TODO: Replace with real API call to fetch user by ID
   // Example: const { data: user, isLoading } = useGetUserQuery(userId)
   const mockUser = useMemo(() => {

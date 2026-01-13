@@ -1,7 +1,7 @@
 // FILE: src/validations/customerValidation.ts
 // Customer Zod Validation Schemas
 
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Custom validation messages
@@ -19,7 +19,8 @@ const MESSAGES = {
   },
   phone: {
     required: 'Phone number is required',
-    invalid: 'Invalid Indian phone number (must start with 6-9 and be 10 digits)',
+    invalid:
+      'Invalid Indian phone number (must start with 6-9 and be 10 digits)',
   },
   email: {
     invalid: 'Invalid email address',
@@ -48,29 +49,53 @@ const MESSAGES = {
   tags: {
     maxLength: 'Each tag cannot exceed 50 characters',
   },
-};
+}
 
 /**
  * Address Schema
  */
-const addressSchema = z.object({
-  street: z.string().trim().max(200, 'Street address cannot exceed 200 characters').optional().or(z.literal('')),
-  city: z.string().trim().max(50, 'City name cannot exceed 50 characters').optional().or(z.literal('')),
-  state: z.string().trim().max(50, 'State name cannot exceed 50 characters').optional().or(z.literal('')),
-  pincode: z.string()
-    .trim()
-    .regex(/^[1-9][0-9]{5}$/, MESSAGES.pincode.invalid)
-    .optional()
-    .or(z.literal('')),
-}).optional();
+const addressSchema = z
+  .object({
+    street: z
+      .string()
+      .trim()
+      .max(200, 'Street address cannot exceed 200 characters')
+      .optional()
+      .or(z.literal('')),
+    city: z
+      .string()
+      .trim()
+      .max(50, 'City name cannot exceed 50 characters')
+      .optional()
+      .or(z.literal('')),
+    state: z
+      .string()
+      .trim()
+      .max(50, 'State name cannot exceed 50 characters')
+      .optional()
+      .or(z.literal('')),
+    pincode: z
+      .string()
+      .trim()
+      .regex(/^[1-9][0-9]{5}$/, MESSAGES.pincode.invalid)
+      .optional()
+      .or(z.literal('')),
+  })
+  .optional()
 
 /**
  * Customer Preferences Schema
  */
-const preferencesSchema = z.object({
-  preferredMetal: z.enum(['gold', 'silver', 'platinum', 'diamond']).optional(),
-  communicationPreference: z.enum(['email', 'sms', 'whatsapp', 'call', 'none']).optional(),
-}).optional();
+const preferencesSchema = z
+  .object({
+    preferredMetal: z
+      .enum(['gold', 'silver', 'platinum', 'diamond'])
+      .optional(),
+    communicationPreference: z
+      .enum(['email', 'sms', 'whatsapp', 'call', 'none'])
+      .optional(),
+  })
+  .optional()
 
 /**
  * Create Customer Schema
@@ -125,12 +150,12 @@ export const createCustomerSchema = z.object({
   // Personal Details
   dateOfBirth: z
     .string()
-    .refine((date) => {
-      if (!date) return true;
-      const dob = new Date(date);
-      const now = new Date();
-      const age = now.getFullYear() - dob.getFullYear();
-      return age >= 18 && age <= 120;
+    .refine(date => {
+      if (!date) return true
+      const dob = new Date(date)
+      const now = new Date()
+      const age = now.getFullYear() - dob.getFullYear()
+      return age >= 18 && age <= 120
     }, MESSAGES.age.range)
     .optional()
     .or(z.literal('')),
@@ -139,9 +164,9 @@ export const createCustomerSchema = z.object({
 
   anniversaryDate: z
     .string()
-    .refine((date) => {
-      if (!date) return true;
-      return !isNaN(Date.parse(date));
+    .refine(date => {
+      if (!date) return true
+      return !isNaN(Date.parse(date))
     }, 'Invalid anniversary date')
     .optional()
     .or(z.literal('')),
@@ -169,33 +194,37 @@ export const createCustomerSchema = z.object({
     .string()
     .trim()
     .toUpperCase()
-    .regex(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/, MESSAGES.gst.invalid)
+    .regex(
+      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/,
+      MESSAGES.gst.invalid
+    )
     .optional()
     .or(z.literal('')),
 
   // Customer Classification
   customerType: z.enum(['retail', 'wholesale', 'vip', 'regular']).optional(),
-  customerCategory: z.enum(['gold', 'silver', 'diamond', 'platinum', 'mixed']).optional(),
+  customerCategory: z
+    .enum(['gold', 'silver', 'diamond', 'platinum', 'mixed'])
+    .optional(),
 
   // Financial
-  creditLimit: z
-    .number()
-    .min(0, MESSAGES.creditLimit.positive)
-    .optional(),
+  creditLimit: z.number().min(0, MESSAGES.creditLimit.positive).optional(),
 
   // Preferences
   preferences: preferencesSchema,
 
   // Source & Referral
-  source: z.enum([
-    'walk_in',
-    'referral',
-    'online',
-    'phone',
-    'social_media',
-    'advertisement',
-    'other',
-  ]).optional(),
+  source: z
+    .enum([
+      'walk_in',
+      'referral',
+      'online',
+      'phone',
+      'social_media',
+      'advertisement',
+      'other',
+    ])
+    .optional(),
 
   referredBy: z.string().optional().or(z.literal('')),
 
@@ -207,17 +236,13 @@ export const createCustomerSchema = z.object({
     .optional()
     .or(z.literal('')),
 
-  tags: z
-    .array(
-      z.string().trim().max(50, MESSAGES.tags.maxLength)
-    )
-    .optional(),
-});
+  tags: z.array(z.string().trim().max(50, MESSAGES.tags.maxLength)).optional(),
+})
 
 /**
  * Update Customer Schema (all fields optional)
  */
-export const updateCustomerSchema = createCustomerSchema.partial();
+export const updateCustomerSchema = createCustomerSchema.partial()
 
 /**
  * Blacklist Customer Schema
@@ -229,7 +254,7 @@ export const blacklistCustomerSchema = z.object({
     .min(1, 'Blacklist reason is required')
     .min(10, 'Reason must be at least 10 characters')
     .max(500, 'Reason cannot exceed 500 characters'),
-});
+})
 
 /**
  * Loyalty Points Schema
@@ -239,19 +264,19 @@ export const loyaltyPointsSchema = z.object({
     .number()
     .int('Points must be a whole number')
     .positive('Points must be a positive number'),
-  
+
   reason: z
     .string()
     .trim()
     .max(200, 'Reason cannot exceed 200 characters')
     .optional()
     .or(z.literal('')),
-});
+})
 
 /**
  * Type Exports
  */
-export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
-export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>;
-export type BlacklistCustomerInput = z.infer<typeof blacklistCustomerSchema>;
-export type LoyaltyPointsInput = z.infer<typeof loyaltyPointsSchema>;
+export type CreateCustomerInput = z.infer<typeof createCustomerSchema>
+export type UpdateCustomerInput = z.infer<typeof updateCustomerSchema>
+export type BlacklistCustomerInput = z.infer<typeof blacklistCustomerSchema>
+export type LoyaltyPointsInput = z.infer<typeof loyaltyPointsSchema>

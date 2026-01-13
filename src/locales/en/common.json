@@ -1,6 +1,6 @@
 {
   "common": {
-        "selectShopFirst": "Please select a shop first",
+    "selectShopFirst": "Please select a shop first",
     "selectOption": "Select an option",
     "create": "Create",
     "delete": "Delete",

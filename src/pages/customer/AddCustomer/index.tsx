@@ -57,10 +57,10 @@ export default function AddCustomerPage() {
   const shopId = currentShop || ''
 
   // Fetch customer data (only in edit mode)
-  const { 
-    data: customer, 
-    isLoading, 
-    error 
+  const {
+    data: customer,
+    isLoading,
+    error,
   } = useGetCustomerByIdQuery(
     { shopId, customerId: customerId! },
     { skip: !isEditMode || !shopId || !customerId }
@@ -76,9 +76,7 @@ export default function AddCustomerPage() {
   if (!shopId) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="text-text-secondary">
-          {t('common.selectShopFirst')}
-        </p>
+        <p className="text-text-secondary">{t('common.selectShopFirst')}</p>
       </div>
     )
   }
@@ -97,7 +95,7 @@ export default function AddCustomerPage() {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-status-error mb-4">
+          <p className="mb-4 text-status-error">
             {t('customer.errors.fetchFailed')}
           </p>
           <button
@@ -116,7 +114,7 @@ export default function AddCustomerPage() {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
-          <p className="text-text-secondary mb-4">
+          <p className="mb-4 text-text-secondary">
             {t('customer.errors.notFound')}
           </p>
           <button
