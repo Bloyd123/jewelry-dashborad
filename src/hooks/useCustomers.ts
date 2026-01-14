@@ -55,7 +55,7 @@ export const useCustomer = (
     useRedeemLoyaltyPointsMutation()
 
   // ============================================
-  // ➕ CREATE CUSTOMER with error handling
+  //  CREATE CUSTOMER with error handling
   // ============================================
   const createCustomer = useCallback(
     async (
@@ -191,7 +191,7 @@ export const useCustomer = (
   )
 
   // ============================================
-  // ➕ ADD LOYALTY POINTS
+  //  ADD LOYALTY POINTS
   // ============================================
   const addLoyaltyPoints = useCallback(
     async (customerId: string, points: number, reason?: string) => {

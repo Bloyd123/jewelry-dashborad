@@ -86,7 +86,7 @@ export const customerApi = baseApi.injectEndpoints({
     }),
 
     // ============================================
-    // ➕ CREATE CUSTOMER
+    //  CREATE CUSTOMER
     // ============================================
     createCustomer: build.mutation<Customer, CreateCustomerInput>({
       query: ({ shopId, ...data }) => ({
@@ -189,7 +189,7 @@ export const customerApi = baseApi.injectEndpoints({
     }),
 
     // ============================================
-    // ➕ ADD LOYALTY POINTS
+    //  ADD LOYALTY POINTS
     // ============================================
     addLoyaltyPoints: build.mutation<Customer, AddLoyaltyPointsInput>({
       query: ({ shopId, customerId, points, reason }) => ({

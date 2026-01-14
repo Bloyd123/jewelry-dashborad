@@ -26,7 +26,7 @@ import type {
 
 export const productApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    // 📋 GET ALL PRODUCTS (with filters & pagination)
+    //  GET ALL PRODUCTS (with filters & pagination)
 
     getProducts: build.query<
       ProductListResponse,
@@ -45,7 +45,7 @@ export const productApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // 👤 GET SINGLE PRODUCT BY ID
+    //  GET SINGLE PRODUCT BY ID
 
     getProductById: build.query<Product, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
@@ -55,7 +55,7 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: (result, error, { id }) => [{ type: 'Product', id }],
     }),
 
-    // 🔍 SEARCH PRODUCTS (Quick search for POS)
+    //  SEARCH PRODUCTS (Quick search for POS)
 
     searchProducts: build.query<
       Product[],
@@ -73,7 +73,7 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: ['ProductSearch'],
     }),
 
-    // 📊 GET LOW STOCK PRODUCTS
+    //  GET LOW STOCK PRODUCTS
 
     getLowStock: build.query<
       LowStockResponse,
@@ -95,7 +95,7 @@ export const productApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // 📈 GET PRODUCT ANALYTICS
+    //  GET PRODUCT ANALYTICS
 
     getProductAnalytics: build.query<ProductAnalytics, { shopId: string }>({
       query: ({ shopId }) => ({
@@ -107,7 +107,7 @@ export const productApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // 📜 GET PRODUCT HISTORY
+    //  GET PRODUCT HISTORY
 
     getProductHistory: build.query<
       ProductHistoryResponse,
@@ -125,7 +125,7 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: (result, error, { id }) => [{ type: 'ProductHistory', id }],
     }),
 
-    // ➕ CREATE PRODUCT
+    //  CREATE PRODUCT
 
     createProduct: build.mutation<
       Product,
