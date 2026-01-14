@@ -75,7 +75,7 @@ export const retryRequest = async <T>(
       // Log retry attempt in development
       if (import.meta.env.DEV) {
         console.log(
-          `🔄 Retrying request (attempt ${attempt}/${maxRetries}) after ${waitTime}ms...`
+          ` Retrying request (attempt ${attempt}/${maxRetries}) after ${waitTime}ms...`
         )
       }
 

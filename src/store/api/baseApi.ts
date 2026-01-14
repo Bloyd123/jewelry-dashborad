@@ -9,7 +9,20 @@ export const baseApi = createApi({
   baseQuery: baseQueryWithReauth,
 
   // Tag types for cache invalidation
-  tagTypes: ['Customer', 'CustomerList', 'CustomerAnalytics', 'CustomerSearch'],
+  tagTypes: [
+    // Customer Module
+    'Customer',
+    'CustomerList',
+    'CustomerAnalytics',
+    'CustomerSearch',
+    
+    // Product Module 
+    'Product',
+    'ProductList',
+    'ProductAnalytics',
+    'ProductSearch',
+    'ProductHistory',
+  ],
 
   endpoints: () => ({}), // Endpoints will be injected
 })

@@ -1,5 +1,41 @@
 {
   "product": {
+     "messages": {
+      "createSuccess": "Product created successfully",
+      "created": "Product Created",
+      "updateSuccess": "Product updated successfully",
+      "updated": "Product Updated",
+      "deleteSuccess": "Product deleted successfully",
+      "deleted": "Product Deleted",
+      "stockUpdateSuccess": "Stock updated successfully",
+      "stockUpdated": "Stock Updated",
+      "reserveSuccess": "Product reserved successfully",
+      "reserved": "Product Reserved",
+      "cancelReservationSuccess": "Reservation cancelled successfully",
+      "reservationCancelled": "Reservation Cancelled",
+      "markAsSoldSuccess": "Product marked as sold successfully",
+      "sold": "Product Sold",
+      "calculatePriceSuccess": "Price calculated successfully",
+      "priceCalculated": "Price Calculated",
+      "bulkDeleteSuccess": "{{count}} products deleted successfully",
+      "bulkDeleted": "Products Deleted",
+      "bulkUpdateSuccess": "{{count}} products updated successfully",
+      "bulkUpdated": "Products Updated"
+    },
+    
+    "errors": {
+      "createFailed": "Failed to create product",
+      "updateFailed": "Failed to update product",
+      "deleteFailed": "Failed to delete product",
+      "stockUpdateFailed": "Failed to update stock",
+      "reserveFailed": "Failed to reserve product",
+      "cancelReservationFailed": "Failed to cancel reservation",
+      "markAsSoldFailed": "Failed to mark product as sold",
+      "calculatePriceFailed": "Failed to calculate price",
+      "bulkDeleteFailed": "Failed to delete products",
+      "bulkUpdateFailed": "Failed to update products",
+      "loadFailed": "Failed to load products"
+    },
     "statustext": "Status",
     "productTypestext": "ProductTypes",
     "makingChargeTypestext": "MakingChargeTypes",

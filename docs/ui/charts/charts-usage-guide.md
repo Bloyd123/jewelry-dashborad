@@ -277,7 +277,7 @@ All charts are **automatically responsive**:
 
 ---
 
-## 🔄 Loading State
+##  Loading State
 
 ```tsx
 const { data, isLoading } = useGetSalesDataQuery()

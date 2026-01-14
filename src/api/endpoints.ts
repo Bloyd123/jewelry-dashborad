@@ -109,17 +109,37 @@ export const USERS_ENDPOINTS = {
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
 }
 
+// ============================================
 // PRODUCT ENDPOINTS
+// ============================================
+export const PRODUCT_ENDPOINTS = {
+  // List & Search
+  GET_ALL: `${BASE_URL}/shops/:shopId/products`,
+  GET_BY_ID: `${BASE_URL}/shops/:shopId/products/:id`,
+  SEARCH: `${BASE_URL}/shops/:shopId/products/search`,
+  LOW_STOCK: `${BASE_URL}/shops/:shopId/products/low-stock`,
+  ANALYTICS: `${BASE_URL}/shops/:shopId/products/analytics`,
+  HISTORY: `${BASE_URL}/shops/:shopId/products/:id/history`,
 
-const PRODUCTS_BASE = `${BASE_URL}/products`
+  // CRUD
+  CREATE: `${BASE_URL}/shops/:shopId/products`,
+  UPDATE: `${BASE_URL}/shops/:shopId/products/:id`,
+  DELETE: `${BASE_URL}/shops/:shopId/products/:id`,
 
-export const PRODUCTS_ENDPOINTS = {
-  BASE: PRODUCTS_BASE,
-  BY_ID: `${PRODUCTS_BASE}/:id`,
-  BULK_UPLOAD: `${PRODUCTS_BASE}/bulk-upload`,
-  EXPORT: `${PRODUCTS_BASE}/export`,
-  CATEGORIES: `${PRODUCTS_BASE}/categories`,
-  TAGS: `${PRODUCTS_BASE}/tags`,
+  // Stock Management
+  UPDATE_STOCK: `${BASE_URL}/shops/:shopId/products/:id/stock`,
+
+  // Product Status
+  RESERVE: `${BASE_URL}/shops/:shopId/products/:id/reserve`,
+  CANCEL_RESERVATION: `${BASE_URL}/shops/:shopId/products/:id/cancel-reservation`,
+  MARK_AS_SOLD: `${BASE_URL}/shops/:shopId/products/:id/sold`,
+
+  // Pricing
+  CALCULATE_PRICE: `${BASE_URL}/shops/:shopId/products/:id/calculate-price`,
+
+  // Bulk Operations
+  BULK_DELETE: `${BASE_URL}/shops/:shopId/products/bulk-delete`,
+  BULK_UPDATE_STATUS: `${BASE_URL}/shops/:shopId/products/bulk-update-status`,
 }
 
 // INVENTORY ENDPOINTS
@@ -172,7 +192,7 @@ export const API_ENDPOINTS = {
   SHOPS: SHOPS_ENDPOINTS,
   ORGANIZATIONS: ORGANIZATIONS_ENDPOINTS,
   USERS: USERS_ENDPOINTS,
-  PRODUCTS: PRODUCTS_ENDPOINTS,
+  PRODUCTS: PRODUCT_ENDPOINTS,
   INVENTORY: INVENTORY_ENDPOINTS,
   SALES: SALES_ENDPOINTS,
   CUSTOMERS: CUSTOMER_ENDPOINTS,
