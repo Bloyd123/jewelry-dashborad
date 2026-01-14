@@ -26,15 +26,15 @@ export default function VerificationSuccess() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-primary p-4">
+    <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
       <Card className="w-full max-w-md border-border-primary bg-bg-secondary">
-        <CardHeader className="text-center pb-4">
+        <CardHeader className="pb-4 text-center">
           {/* Success Icon with Animation */}
-          <div className="mx-auto mb-4 relative">
+          <div className="relative mx-auto mb-4">
             <div className="absolute inset-0 animate-ping">
-              <div className="h-16 w-16 rounded-full bg-status-success/20" />
+              <div className="bg-status-success/20 h-16 w-16 rounded-full" />
             </div>
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-status-success/10 mx-auto">
+            <div className="bg-status-success/10 relative mx-auto flex h-16 w-16 items-center justify-center rounded-full">
               <CheckCircle2 className="h-8 w-8 text-status-success" />
             </div>
           </div>
@@ -46,7 +46,7 @@ export default function VerificationSuccess() {
 
         <CardContent className="space-y-6">
           {/* Success Message */}
-          <div className="text-center space-y-2">
+          <div className="space-y-2 text-center">
             <p className="text-text-secondary">
               {t('auth.verifyEmail.successMessage')}
             </p>
@@ -57,7 +57,7 @@ export default function VerificationSuccess() {
           </div>
 
           {/* Benefits List */}
-          <div className="rounded-lg bg-bg-tertiary p-4 space-y-3">
+          <div className="space-y-3 rounded-lg bg-bg-tertiary p-4">
             <p className="text-sm font-medium text-text-primary">
               {t('auth.verifyEmail.nowYouCan')}
             </p>
@@ -67,11 +67,11 @@ export default function VerificationSuccess() {
                 t('auth.verifyEmail.benefit2'),
                 t('auth.verifyEmail.benefit3'),
               ].map((benefit, index) => (
-                <li 
+                <li
                   key={index}
                   className="flex items-start gap-2 text-sm text-text-secondary"
                 >
-                  <CheckCircle2 className="h-4 w-4 text-status-success mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-status-success" />
                   <span>{benefit}</span>
                 </li>
               ))}
@@ -79,11 +79,7 @@ export default function VerificationSuccess() {
           </div>
 
           {/* Action Button */}
-          <Button
-            onClick={handleContinue}
-            className="w-full"
-            size="lg"
-          >
+          <Button onClick={handleContinue} className="w-full" size="lg">
             {t('auth.verifyEmail.continueToLogin')}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

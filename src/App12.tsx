@@ -79,9 +79,15 @@ function App() {
               path={ROUTES.resetPassword}
               element={<ResetPasswordPage />}
             />
-                          <Route path="/verify-email" element={<VerifyEmail />} />
-              <Route path="/resend-verification" element={<ResendVerification />} />
-<Route path="/verification-success" element={<VerificationSuccess />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route
+              path="/resend-verification"
+              element={<ResendVerification />}
+            />
+            <Route
+              path="/verification-success"
+              element={<VerificationSuccess />}
+            />
             {/* Protected Routes with Layout */}
             <Route path="/" element={<MainLayout />}>
               <Route
@@ -135,7 +141,6 @@ function App() {
               <Route path="/userprofile" element={<UserProfile />} />
               <Route path="/users/add" element={<AddUserPage />} />
               <Route path="/users/edit/:id" element={<AddUserPage />} />
-
 
               <Route
                 path="*"

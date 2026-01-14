@@ -1,4 +1,3 @@
-
 // FILE: src/pages/auth/ResendVerification.tsx
 // Resend Email Verification Page
 
@@ -15,7 +14,7 @@ import { useAuth } from '@/hooks/useAuth'
 export default function ResendVerification() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-//   const { resendVerification } = useAuth()
+  //   const { resendVerification } = useAuth()
 
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -34,7 +33,7 @@ export default function ResendVerification() {
     setIsLoading(true)
 
     try {
-    //   await resendVerification(email)
+      //   await resendVerification(email)
       setIsSuccess(true)
     } catch (error: any) {
       setError(error.message || t('auth.verifyEmail.resendError'))
@@ -49,9 +48,9 @@ export default function ResendVerification() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-bg-primary p-4">
+      <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
         <Card className="w-full max-w-md border-border-primary bg-bg-secondary">
-          <CardHeader className="text-center pb-4">
+          <CardHeader className="pb-4 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-bg-tertiary">
               <CheckCircle2 className="h-8 w-8 text-status-success" />
             </div>
@@ -67,12 +66,10 @@ export default function ResendVerification() {
             </p>
 
             <div className="rounded-lg bg-bg-tertiary p-4">
-              <p className="text-sm font-medium text-text-primary mb-2">
+              <p className="mb-2 text-sm font-medium text-text-primary">
                 {t('auth.verifyEmail.checkInbox')}
               </p>
-              <p className="text-sm text-text-secondary">
-                {email}
-              </p>
+              <p className="text-sm text-text-secondary">{email}</p>
             </div>
 
             <Button
@@ -95,9 +92,9 @@ export default function ResendVerification() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-primary p-4">
+    <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
       <Card className="w-full max-w-md border-border-primary bg-bg-secondary">
-        <CardHeader className="text-center pb-4">
+        <CardHeader className="pb-4 text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-bg-tertiary">
             <Mail className="h-8 w-8 text-accent" />
           </div>
@@ -106,7 +103,7 @@ export default function ResendVerification() {
             {t('auth.verifyEmail.resendTitle')}
           </h1>
 
-          <p className="text-text-secondary mt-2">
+          <p className="mt-2 text-text-secondary">
             {t('auth.verifyEmail.resendDescription')}
           </p>
         </CardHeader>
@@ -115,27 +112,24 @@ export default function ResendVerification() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Input */}
             <div className="space-y-2">
-              <Label 
-                htmlFor="email" 
-                className="text-text-primary"
-              >
+              <Label htmlFor="email" className="text-text-primary">
                 {t('auth.verifyEmail.emailLabel')}
               </Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 placeholder={t('auth.verifyEmail.emailPlaceholder')}
                 disabled={isLoading}
-                className="bg-bg-tertiary border-border-primary text-text-primary"
+                className="border-border-primary bg-bg-tertiary text-text-primary"
                 required
               />
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="rounded-lg bg-status-error/10 border border-status-error/20 p-3">
+              <div className="bg-status-error/10 border-status-error/20 rounded-lg border p-3">
                 <p className="text-sm text-status-error">{error}</p>
               </div>
             )}
@@ -176,7 +170,7 @@ export default function ResendVerification() {
 
             {/* Help Text */}
             <div className="rounded-lg bg-bg-tertiary p-4">
-              <p className="text-sm text-text-secondary text-center">
+              <p className="text-center text-sm text-text-secondary">
                 {t('auth.verifyEmail.helpTextResend')}
               </p>
             </div>
