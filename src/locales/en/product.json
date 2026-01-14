@@ -1,6 +1,6 @@
 {
   "product": {
-     "messages": {
+    "messages": {
       "createSuccess": "Product created successfully",
       "created": "Product Created",
       "updateSuccess": "Product updated successfully",
@@ -22,7 +22,7 @@
       "bulkUpdateSuccess": "{{count}} products updated successfully",
       "bulkUpdated": "Products Updated"
     },
-    
+
     "errors": {
       "createFailed": "Failed to create product",
       "updateFailed": "Failed to update product",

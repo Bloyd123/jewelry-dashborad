@@ -35,22 +35,14 @@ export const useProduct = (
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-
   // FETCH PRODUCTS
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetProductsQuery({
+  const { data, isLoading, isFetching, error, refetch } = useGetProductsQuery({
     shopId,
     page: filters?.page || 1,
     limit: filters?.limit || 20,
     ...filters,
   })
-
 
   //  MUTATIONS
 
@@ -59,12 +51,14 @@ export const useProduct = (
   const [deleteMutation, deleteState] = useDeleteProductMutation()
   const [updateStockMutation, updateStockState] = useUpdateStockMutation()
   const [reserveMutation, reserveState] = useReserveProductMutation()
-  const [cancelReservationMutation, cancelReservationState] = useCancelReservationMutation()
+  const [cancelReservationMutation, cancelReservationState] =
+    useCancelReservationMutation()
   const [markAsSoldMutation, markAsSoldState] = useMarkAsSoldMutation()
-  const [calculatePriceMutation, calculatePriceState] = useCalculatePriceMutation()
+  const [calculatePriceMutation, calculatePriceState] =
+    useCalculatePriceMutation()
   const [bulkDeleteMutation, bulkDeleteState] = useBulkDeleteProductsMutation()
-  const [bulkUpdateStatusMutation, bulkUpdateStatusState] = useBulkUpdateStatusMutation()
-
+  const [bulkUpdateStatusMutation, bulkUpdateStatusState] =
+    useBulkUpdateStatusMutation()
 
   //  CREATE PRODUCT
 
@@ -84,13 +78,12 @@ export const useProduct = (
         handleError(error, setErrors)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.createFailed')
+          error: error.data?.message || t('product.errors.createFailed'),
         }
       }
     },
     [createMutation, shopId, handleError, showSuccess, t]
   )
-
 
   //  UPDATE PRODUCT
 
@@ -111,13 +104,12 @@ export const useProduct = (
         handleError(error, setErrors)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.updateFailed')
+          error: error.data?.message || t('product.errors.updateFailed'),
         }
       }
     },
     [updateMutation, shopId, handleError, showSuccess, t]
   )
-
 
   // DELETE PRODUCT
 
@@ -134,23 +126,23 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.deleteFailed')
+          error: error.data?.message || t('product.errors.deleteFailed'),
         }
       }
     },
     [deleteMutation, shopId, handleError, showSuccess, t]
   )
 
-
   // UPDATE STOCK
 
   const updateStock = useCallback(
-    async (
-      id: string,
-      data: Omit<StockUpdateData, 'shopId' | 'id'>
-    ) => {
+    async (id: string, data: Omit<StockUpdateData, 'shopId' | 'id'>) => {
       try {
-        const result = await updateStockMutation({ shopId, id, ...data }).unwrap()
+        const result = await updateStockMutation({
+          shopId,
+          id,
+          ...data,
+        }).unwrap()
         showSuccess(
           t('product.messages.stockUpdateSuccess'),
           t('product.messages.stockUpdated')
@@ -160,21 +152,17 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.stockUpdateFailed')
+          error: error.data?.message || t('product.errors.stockUpdateFailed'),
         }
       }
     },
     [updateStockMutation, shopId, handleError, showSuccess, t]
   )
 
-
   //  RESERVE PRODUCT
 
   const reserveProduct = useCallback(
-    async (
-      id: string,
-      data: Omit<ReservationData, 'shopId' | 'id'>
-    ) => {
+    async (id: string, data: Omit<ReservationData, 'shopId' | 'id'>) => {
       try {
         const result = await reserveMutation({ shopId, id, ...data }).unwrap()
         showSuccess(
@@ -186,13 +174,12 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.reserveFailed')
+          error: error.data?.message || t('product.errors.reserveFailed'),
         }
       }
     },
     [reserveMutation, shopId, handleError, showSuccess, t]
   )
-
 
   // CANCEL RESERVATION
 
@@ -209,23 +196,24 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.cancelReservationFailed')
+          error:
+            error.data?.message || t('product.errors.cancelReservationFailed'),
         }
       }
     },
     [cancelReservationMutation, shopId, handleError, showSuccess, t]
   )
 
-
   // MARK AS SOLD
 
   const markAsSold = useCallback(
-    async (
-      id: string,
-      data: Omit<SaleData, 'shopId' | 'id'>
-    ) => {
+    async (id: string, data: Omit<SaleData, 'shopId' | 'id'>) => {
       try {
-        const result = await markAsSoldMutation({ shopId, id, ...data }).unwrap()
+        const result = await markAsSoldMutation({
+          shopId,
+          id,
+          ...data,
+        }).unwrap()
         showSuccess(
           t('product.messages.markAsSoldSuccess'),
           t('product.messages.sold')
@@ -235,23 +223,23 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.markAsSoldFailed')
+          error: error.data?.message || t('product.errors.markAsSoldFailed'),
         }
       }
     },
     [markAsSoldMutation, shopId, handleError, showSuccess, t]
   )
 
-
   // CALCULATE PRICE
 
   const calculatePrice = useCallback(
-    async (
-      id: string,
-      data: Omit<PriceCalculationData, 'shopId' | 'id'>
-    ) => {
+    async (id: string, data: Omit<PriceCalculationData, 'shopId' | 'id'>) => {
       try {
-        const result = await calculatePriceMutation({ shopId, id, ...data }).unwrap()
+        const result = await calculatePriceMutation({
+          shopId,
+          id,
+          ...data,
+        }).unwrap()
         showSuccess(
           t('product.messages.calculatePriceSuccess'),
           t('product.messages.priceCalculated')
@@ -261,13 +249,13 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.calculatePriceFailed')
+          error:
+            error.data?.message || t('product.errors.calculatePriceFailed'),
         }
       }
     },
     [calculatePriceMutation, shopId, handleError, showSuccess, t]
   )
-
 
   // BULK DELETE
 
@@ -276,7 +264,9 @@ export const useProduct = (
       try {
         const result = await bulkDeleteMutation({ shopId, ...data }).unwrap()
         showSuccess(
-          t('product.messages.bulkDeleteSuccess', { count: result.deletedCount }),
+          t('product.messages.bulkDeleteSuccess', {
+            count: result.deletedCount,
+          }),
           t('product.messages.bulkDeleted')
         )
         return { success: true, data: result }
@@ -284,22 +274,26 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.bulkDeleteFailed')
+          error: error.data?.message || t('product.errors.bulkDeleteFailed'),
         }
       }
     },
     [bulkDeleteMutation, shopId, handleError, showSuccess, t]
   )
 
-
   // BULK UPDATE STATUS
 
   const bulkUpdateStatus = useCallback(
     async (data: Omit<BulkUpdateStatusData, 'shopId'>) => {
       try {
-        const result = await bulkUpdateStatusMutation({ shopId, ...data }).unwrap()
+        const result = await bulkUpdateStatusMutation({
+          shopId,
+          ...data,
+        }).unwrap()
         showSuccess(
-          t('product.messages.bulkUpdateSuccess', { count: result.modifiedCount }),
+          t('product.messages.bulkUpdateSuccess', {
+            count: result.modifiedCount,
+          }),
           t('product.messages.bulkUpdated')
         )
         return { success: true, data: result }
@@ -307,13 +301,12 @@ export const useProduct = (
         handleError(error)
         return {
           success: false,
-          error: error.data?.message || t('product.errors.bulkUpdateFailed')
+          error: error.data?.message || t('product.errors.bulkUpdateFailed'),
         }
       }
     },
     [bulkUpdateStatusMutation, shopId, handleError, showSuccess, t]
   )
-
 
   // RETURN API
 

@@ -7,40 +7,82 @@ import { z } from 'zod'
 
 const metalSchema = z.object({
   type: z.enum(['gold', 'silver', 'platinum', 'diamond', 'gemstone', 'mixed']),
-  purity: z.enum(['24K', '22K', '18K', '14K', '10K', '916', '999', '925', '850', '950', 'other']),
+  purity: z.enum([
+    '24K',
+    '22K',
+    '18K',
+    '14K',
+    '10K',
+    '916',
+    '999',
+    '925',
+    '850',
+    '950',
+    'other',
+  ]),
   purityPercentage: z.number().min(0).max(100).optional(),
-  color: z.enum(['yellow', 'white', 'rose', 'mixed']).optional().default('yellow'),
+  color: z
+    .enum(['yellow', 'white', 'rose', 'mixed'])
+    .optional()
+    .default('yellow'),
 })
 
 const weightSchema = z.object({
   grossWeight: z.number().min(0.001, 'Gross weight must be greater than 0'),
   stoneWeight: z.number().min(0).optional().default(0),
-  wastage: z.object({
-    percentage: z.number().min(0).max(100).optional().default(0),
-    weight: z.number().min(0).optional().default(0),
-  }).optional(),
-  unit: z.enum(['gram', 'kg', 'tola', 'ounce', 'carat']).optional().default('gram'),
+  wastage: z
+    .object({
+      percentage: z.number().min(0).max(100).optional().default(0),
+      weight: z.number().min(0).optional().default(0),
+    })
+    .optional(),
+  unit: z
+    .enum(['gram', 'kg', 'tola', 'ounce', 'carat'])
+    .optional()
+    .default('gram'),
 })
 
-const stoneCertificateSchema = z.object({
-  certificateNumber: z.string().optional(),
-  certificateUrl: z.string().url().optional(),
-  issuedBy: z.string().optional(),
-}).optional()
+const stoneCertificateSchema = z
+  .object({
+    certificateNumber: z.string().optional(),
+    certificateUrl: z.string().url().optional(),
+    issuedBy: z.string().optional(),
+  })
+  .optional()
 
 const stoneSchema = z.object({
   stoneType: z.enum([
-    'diamond', 'ruby', 'emerald', 'sapphire', 'pearl',
-    'topaz', 'amethyst', 'garnet', 'other'
+    'diamond',
+    'ruby',
+    'emerald',
+    'sapphire',
+    'pearl',
+    'topaz',
+    'amethyst',
+    'garnet',
+    'other',
   ]),
   stoneName: z.string().optional(),
-  stoneQuality: z.enum(['VS', 'VVS', 'SI', 'IF', 'FL', 'A', 'AA', 'AAA', 'B', 'C']).optional(),
+  stoneQuality: z
+    .enum(['VS', 'VVS', 'SI', 'IF', 'FL', 'A', 'AA', 'AAA', 'B', 'C'])
+    .optional(),
   stoneColor: z.string().optional(),
-  stoneShape: z.enum([
-    'round', 'oval', 'square', 'rectangular', 'pear',
-    'marquise', 'heart', 'emerald_cut', 'other'
-  ]).optional(),
-  stoneCut: z.enum(['excellent', 'very_good', 'good', 'fair', 'poor']).optional(),
+  stoneShape: z
+    .enum([
+      'round',
+      'oval',
+      'square',
+      'rectangular',
+      'pear',
+      'marquise',
+      'heart',
+      'emerald_cut',
+      'other',
+    ])
+    .optional(),
+  stoneCut: z
+    .enum(['excellent', 'very_good', 'good', 'fair', 'poor'])
+    .optional(),
   stoneClarity: z.string().optional(),
   caratWeight: z.number().min(0).optional(),
   stoneWeight: z.number().min(0).optional(),
@@ -80,34 +122,42 @@ const stockSchema = z.object({
   reorderLevel: z.number().int().min(0).optional().default(0),
 })
 
-const sizeSchema = z.object({
-  value: z.string(),
-  unit: z.enum(['mm', 'cm', 'inch']).default('mm'),
-}).optional()
+const sizeSchema = z
+  .object({
+    value: z.string(),
+    unit: z.enum(['mm', 'cm', 'inch']).default('mm'),
+  })
+  .optional()
 
-const dimensionsSchema = z.object({
-  length: z.number().min(0),
-  width: z.number().min(0),
-  height: z.number().min(0),
-  unit: z.enum(['mm', 'cm', 'inch']).default('mm'),
-}).optional()
+const dimensionsSchema = z
+  .object({
+    length: z.number().min(0),
+    width: z.number().min(0),
+    height: z.number().min(0),
+    unit: z.enum(['mm', 'cm', 'inch']).default('mm'),
+  })
+  .optional()
 
-const hallmarkingSchema = z.object({
-  isHallmarked: z.boolean().default(false),
-  hallmarkNumber: z.string().optional(),
-  hallmarkingCenter: z.string().optional(),
-  bisLicenseNumber: z.string().optional(),
-  huid: z.string().optional(),
-  hallmarkDate: z.string().optional(),
-}).optional()
+const hallmarkingSchema = z
+  .object({
+    isHallmarked: z.boolean().default(false),
+    hallmarkNumber: z.string().optional(),
+    hallmarkingCenter: z.string().optional(),
+    bisLicenseNumber: z.string().optional(),
+    huid: z.string().optional(),
+    hallmarkDate: z.string().optional(),
+  })
+  .optional()
 
-const supplierDetailsSchema = z.object({
-  supplierName: z.string().optional(),
-  supplierCode: z.string().optional(),
-  purchaseDate: z.string().optional(),
-  purchasePrice: z.number().min(0).optional(),
-  invoiceNumber: z.string().optional(),
-}).optional()
+const supplierDetailsSchema = z
+  .object({
+    supplierName: z.string().optional(),
+    supplierCode: z.string().optional(),
+    purchaseDate: z.string().optional(),
+    purchasePrice: z.number().min(0).optional(),
+    invoiceNumber: z.string().optional(),
+  })
+  .optional()
 
 const imageSchema = z.object({
   url: z.string().url(),
@@ -115,23 +165,43 @@ const imageSchema = z.object({
   caption: z.string().optional(),
 })
 
-const designSchema = z.object({
-  designNumber: z.string().optional(),
-  designer: z.string().optional(),
-  collection: z.string().optional(),
-  style: z.enum(['traditional', 'modern', 'antique', 'contemporary', 'ethnic', 'western']).optional(),
-  pattern: z.string().optional(),
-}).optional()
+const designSchema = z
+  .object({
+    designNumber: z.string().optional(),
+    designer: z.string().optional(),
+    collection: z.string().optional(),
+    style: z
+      .enum([
+        'traditional',
+        'modern',
+        'antique',
+        'contemporary',
+        'ethnic',
+        'western',
+      ])
+      .optional(),
+    pattern: z.string().optional(),
+  })
+  .optional()
 
-const warrantySchema = z.object({
-  hasWarranty: z.boolean().default(false),
-  warrantyPeriod: z.number().int().min(0).default(0),
-  warrantyType: z.enum(['lifetime', 'limited', 'none']).default('none'),
-  warrantyTerms: z.string().optional(),
-}).optional()
+const warrantySchema = z
+  .object({
+    hasWarranty: z.boolean().default(false),
+    warrantyPeriod: z.number().int().min(0).default(0),
+    warrantyType: z.enum(['lifetime', 'limited', 'none']).default('none'),
+    warrantyTerms: z.string().optional(),
+  })
+  .optional()
 
 const certificateSchema = z.object({
-  certificateType: z.enum(['hallmark', 'diamond', 'gemstone', 'purity', 'authenticity', 'other']),
+  certificateType: z.enum([
+    'hallmark',
+    'diamond',
+    'gemstone',
+    'purity',
+    'authenticity',
+    'other',
+  ]),
   certificateNumber: z.string().optional(),
   issuedBy: z.string().optional(),
   issueDate: z.string().optional(),
@@ -144,16 +214,19 @@ const certificateSchema = z.object({
 // ============================================
 export const createProductSchema = z.object({
   // Basic Info
-  name: z.string()
+  name: z
+    .string()
     .trim()
     .min(3, 'Product name must be at least 3 characters')
     .max(200, 'Product name cannot exceed 200 characters'),
   description: z.string().trim().max(2000).optional(),
-  
+
   // Category
   categoryId: z.string().min(1, 'Category is required'),
   subCategoryId: z.string().optional(),
-  productType: z.enum(['ready_made', 'custom_made', 'on_order', 'repair', 'exchange']).default('ready_made'),
+  productType: z
+    .enum(['ready_made', 'custom_made', 'on_order', 'repair', 'exchange'])
+    .default('ready_made'),
 
   // Identification
   barcode: z.string().trim().optional(),
@@ -182,10 +255,22 @@ export const createProductSchema = z.object({
 
   // Classification
   gender: z.enum(['male', 'female', 'unisex', 'kids']).default('unisex'),
-  occasion: z.array(z.enum([
-    'wedding', 'engagement', 'party', 'daily_wear', 'festival',
-    'gift', 'bridal', 'traditional', 'modern', 'casual'
-  ])).optional(),
+  occasion: z
+    .array(
+      z.enum([
+        'wedding',
+        'engagement',
+        'party',
+        'daily_wear',
+        'festival',
+        'gift',
+        'bridal',
+        'traditional',
+        'modern',
+        'casual',
+      ])
+    )
+    .optional(),
   design: designSchema,
 
   // Warranty & Certificates
@@ -219,10 +304,19 @@ export const stockUpdateSchema = z.object({
   operation: z.enum(['add', 'subtract', 'set']),
   quantity: z.number().int().min(1, 'Quantity must be at least 1'),
   reason: z.string().max(500).optional(),
-  referenceType: z.enum([
-    'product_creation', 'sale', 'purchase', 'return',
-    'manual_adjustment', 'transfer', 'damage', 'reservation', 'stock_update'
-  ]).optional(),
+  referenceType: z
+    .enum([
+      'product_creation',
+      'sale',
+      'purchase',
+      'return',
+      'manual_adjustment',
+      'transfer',
+      'damage',
+      'reservation',
+      'stock_update',
+    ])
+    .optional(),
   referenceId: z.string().optional(),
 })
 
@@ -246,13 +340,14 @@ export const markAsSoldSchema = z.object({
 // ============================================
 // PRICE CALCULATION SCHEMA
 // ============================================
-export const priceCalculationSchema = z.object({
-  useCurrentRate: z.boolean().optional().default(true),
-  customRate: z.number().min(0).optional(),
-}).refine(
-  (data) => data.useCurrentRate || data.customRate !== undefined,
-  { message: 'Either useCurrentRate or customRate must be provided' }
-)
+export const priceCalculationSchema = z
+  .object({
+    useCurrentRate: z.boolean().optional().default(true),
+    customRate: z.number().min(0).optional(),
+  })
+  .refine(data => data.useCurrentRate || data.customRate !== undefined, {
+    message: 'Either useCurrentRate or customRate must be provided',
+  })
 
 // ============================================
 // BULK DELETE SCHEMA
@@ -266,7 +361,13 @@ export const bulkDeleteSchema = z.object({
 // ============================================
 export const bulkUpdateStatusSchema = z.object({
   productIds: z.array(z.string()).min(1, 'At least one product ID is required'),
-  status: z.enum(['in_stock', 'out_of_stock', 'low_stock', 'on_order', 'discontinued']),
+  status: z.enum([
+    'in_stock',
+    'out_of_stock',
+    'low_stock',
+    'on_order',
+    'discontinued',
+  ]),
 })
 
 // ============================================

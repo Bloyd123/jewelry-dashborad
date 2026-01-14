@@ -15,8 +15,8 @@ export const baseApi = createApi({
     'CustomerList',
     'CustomerAnalytics',
     'CustomerSearch',
-    
-    // Product Module 
+
+    // Product Module
     'Product',
     'ProductList',
     'ProductAnalytics',
