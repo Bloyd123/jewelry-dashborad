@@ -1,5 +1,5 @@
 // FILE: src/components/ui/overlay/Dialog/ConfirmDialog.tsx
-// Pre-built Confirmation Dialog - Now Fully Responsive
+// Pre-built Confirmation Dialog - Now Fully Responsive & Accessible
 
 import { AlertCircle, CheckCircle, Info, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -119,11 +119,12 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
     <Dialog
       open={open}
       onOpenChange={onOpenChange}
+      title={title}
       closeOnOutsideClick={false}
       className={className}
       testId={testId}
     >
-      <div className="px-4 pb-4 pt-3 sm:px-6 sm:pb-6">
+      <div className="px-4 pb-4 sm:px-6 sm:pb-6">
         {/* Icon & Content */}
         <div className="flex gap-3 sm:gap-4">
           {showIcon && (
@@ -133,11 +134,8 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
           )}
 
           <div className="min-w-0 flex-1">
-            <h3 className="mb-2 break-words text-base font-semibold text-text-primary sm:text-lg">
-              {t(title)}
-            </h3>
             {description && (
-              <p className="mb-4 break-words text-xs text-text-secondary sm:text-sm">
+              <p className="break-words text-xs text-text-secondary sm:text-sm">
                 {t(description)}
               </p>
             )}
@@ -160,7 +158,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             disabled={loading || disabled}
             className="w-full sm:w-auto"
           >
-            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             {t(confirmLabel)}
           </Button>
         </div>

@@ -1,5 +1,20 @@
 {
   "user": {
+        "form": {
+      "cancelTitle": "Discard Changes?",
+      "cancelDescription": "You have unsaved changes. Are you sure you want to discard them?",
+      "saveTitle": "Create User?",
+      "saveDescription": "Are you sure you want to create this user?",
+      "updateTitle": "Update User?",
+      "updateDescription": "Are you sure you want to update this user?",
+      "validationError": "Validation Failed",
+      "validationErrorDescription": "Please fix the errors before saving"
+    },
+       "validationError": "Validation Error",
+    "validationErrorDescription": "Some fields are invalid. Please check and try again.",
+        "userCreated": "User Created",
+    "userUpdated": "User Updated",
+    "userCreatedDescription": "User has been created successfully",
     "addUser": "Add New User",
     "editUser": "Edit User",
     "addUserDescription": "Create a new user account with appropriate roles and permissions",

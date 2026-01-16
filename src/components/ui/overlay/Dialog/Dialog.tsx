@@ -1,5 +1,5 @@
 // FILE: src/components/ui/overlay/Dialog/Dialog.tsx
-// Simple Dialog Component (Confirmation, Alerts, etc.)
+// Simple Dialog Component (Confirmation, Alerts, etc.) - Accessibility Fixed
 
 import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,6 +35,26 @@ export interface DialogProps {
   // Additional
   testId?: string
 }
+
+// VISUALLY HIDDEN COMPONENT (for accessibility)
+const VisuallyHidden: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span
+    style={{
+      position: 'absolute',
+      border: 0,
+      width: 1,
+      height: 1,
+      padding: 0,
+      margin: -1,
+      overflow: 'hidden',
+      clip: 'rect(0, 0, 0, 0)',
+      whiteSpace: 'nowrap',
+      wordWrap: 'normal',
+    }}
+  >
+    {children}
+  </span>
+)
 
 // DIALOG COMPONENT
 
@@ -113,22 +133,31 @@ export const Dialog: React.FC<DialogProps> = ({
           onPointerDownOutside={
             closeOnOutsideClick ? undefined : e => e.preventDefault()
           }
+          aria-describedby={description ? undefined : 'dialog-description'}
           data-testid={testId}
         >
-          {/* Header */}
-          {(title || description) && (
-            <div className="px-6 pb-4 pt-6">
-              {title && (
-                <DialogPrimitive.Title className="mb-2 text-lg font-semibold text-text-primary">
-                  {t(title)}
-                </DialogPrimitive.Title>
-              )}
-              {description && (
-                <DialogPrimitive.Description className="text-sm text-text-secondary">
-                  {t(description)}
-                </DialogPrimitive.Description>
-              )}
-            </div>
+          {/* Title - Required for Accessibility */}
+          {title ? (
+            <DialogPrimitive.Title className="mb-2 px-6 pt-6 text-lg font-semibold text-text-primary">
+              {t(title)}
+            </DialogPrimitive.Title>
+          ) : (
+            <VisuallyHidden>
+              <DialogPrimitive.Title>Dialog</DialogPrimitive.Title>
+            </VisuallyHidden>
+          )}
+
+          {/* Description - Required for Accessibility */}
+          {description ? (
+            <DialogPrimitive.Description className="px-6 pb-4 text-sm text-text-secondary">
+              {t(description)}
+            </DialogPrimitive.Description>
+          ) : (
+            <VisuallyHidden>
+              <DialogPrimitive.Description id="dialog-description">
+                Dialog content
+              </DialogPrimitive.Description>
+            </VisuallyHidden>
           )}
 
           {/* Content */}
