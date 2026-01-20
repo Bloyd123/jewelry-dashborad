@@ -9,7 +9,7 @@ import type { ThemeName } from '@/themes/presets'
 interface UIState {
   sidebarOpen: boolean
   sidebarCollapsed: boolean
-  themeName: ThemeName //  CHANGED: from 'theme' to 'themeName'
+  themeName: ThemeName 
   isLoading: boolean
   loadingMessage: string | null
   mobileMenuOpen: boolean
@@ -133,7 +133,7 @@ const uiSlice = createSlice({
         state.loadingMessage = null
       }
     },
-    setLanguage: (state, action: PayloadAction<'en' | 'hi'>) => {
+    setLanguage: (state, action: PayloadAction<'en' | 'hi' | 'mr'>) => {
       state.language = action.payload
       localStorage.setItem('language', action.payload)
     },

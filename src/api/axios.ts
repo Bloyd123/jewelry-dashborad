@@ -23,8 +23,7 @@ const axiosInstance: AxiosInstance = axios.create({
 
 // Setup authentication interceptor (attaches token to requests)
 setupAuthInterceptor(axiosInstance)
-
-// Setup error interceptor (handles errors globally, token refresh, etc.)
+//Wo sirf errors classify karta hai.
 setupErrorInterceptor(axiosInstance)
 
 // RETRY LOGIC (Optional)

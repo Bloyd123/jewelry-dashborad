@@ -6,7 +6,7 @@
 export const APP_CONFIG = {
   NAME: 'Karat Log',
   VERSION: '1.0.0',
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
+  // API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api',
   
   DEFAULT_LANGUAGE: 'en',
   SUPPORTED_LANGUAGES: ['en', 'hi', 'mr'],
