@@ -31,9 +31,9 @@ export const useCustomer = (
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  // ============================================
+  // 
   // 📊 FETCH DATA (with auto-caching)
-  // ============================================
+  // 
   const { data, isLoading, isFetching, error, refetch } = useGetCustomersQuery({
     shopId,
     page: filters?.page || 1,
@@ -41,9 +41,9 @@ export const useCustomer = (
     ...filters,
   })
 
-  // ============================================
+  // 
   // 🔧 MUTATIONS
-  // ============================================
+  // 
   const [createMutation, createState] = useCreateCustomerMutation()
   const [updateMutation, updateState] = useUpdateCustomerMutation()
   const [deleteMutation, deleteState] = useDeleteCustomerMutation()
@@ -54,9 +54,9 @@ export const useCustomer = (
   const [redeemLoyaltyMutation, redeemLoyaltyState] =
     useRedeemLoyaltyPointsMutation()
 
-  // ============================================
+  // 
   //  CREATE CUSTOMER with error handling
-  // ============================================
+  // 
   const createCustomer = useCallback(
     async (
       data: Omit<CreateCustomerInput, 'shopId'>,
@@ -70,7 +70,7 @@ export const useCustomer = (
 
         return { success: true, data: result }
       } catch (error: any) {
-        // ❌ Handle error (shows toast + sets form errors)
+        //  Handle error (shows toast + sets form errors)
         handleError(error, setErrors)
         return {
           success: false,
@@ -81,9 +81,9 @@ export const useCustomer = (
     [createMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // ✏️ UPDATE CUSTOMER with error handling
-  // ============================================
+  // 
   const updateCustomer = useCallback(
     async (
       customerId: string,
@@ -111,9 +111,9 @@ export const useCustomer = (
     [updateMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // 🗑 DELETE CUSTOMER with confirmation
-  // ============================================
+  // 
   const deleteCustomer = useCallback(
     async (customerId: string) => {
       try {
@@ -133,9 +133,9 @@ export const useCustomer = (
     [deleteMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // 🚫 BLACKLIST CUSTOMER
-  // ============================================
+  // 
   const blacklistCustomer = useCallback(
     async (customerId: string, reason: string) => {
       try {
@@ -162,9 +162,9 @@ export const useCustomer = (
     [blacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // REMOVE BLACKLIST
-  // ============================================
+  // 
   const removeBlacklist = useCallback(
     async (customerId: string) => {
       try {
@@ -190,9 +190,9 @@ export const useCustomer = (
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   //  ADD LOYALTY POINTS
-  // ============================================
+  // 
   const addLoyaltyPoints = useCallback(
     async (customerId: string, points: number, reason?: string) => {
       try {
@@ -220,9 +220,9 @@ export const useCustomer = (
     [addLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // 🎁 REDEEM LOYALTY POINTS
-  // ============================================
+  // 
   const redeemLoyaltyPoints = useCallback(
     async (customerId: string, points: number) => {
       try {
@@ -249,9 +249,9 @@ export const useCustomer = (
     [redeemLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
+  // 
   // 📤 RETURN API
-  // ============================================
+  // 
   return {
     // Data
     customers: data?.data?.customers || [],

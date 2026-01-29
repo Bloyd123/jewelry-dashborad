@@ -39,7 +39,7 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
   const handleDownload = () => {
     const text = [
       '2FA Backup Codes',
-      '==================',
+      '',
       '',
       'Save these codes in a safe place!',
       'Each code can only be used once.',

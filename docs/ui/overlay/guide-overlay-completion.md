@@ -363,14 +363,14 @@ interface FilterSheetProps {
 
 ### Features
 
-✅ **Drag Handle** - Native mobile feel
-✅ **Smooth Animations** - Slide up/down with easing
-✅ **Auto Scroll Lock** - Prevents body scroll when open
-✅ **Backdrop Blur** - Modern glassmorphism effect
-✅ **Keyboard Support** - ESC to close
-✅ **Touch Gestures** - Swipe down to close (coming soon)
-✅ **Flexible Sizing** - 5 size options
-✅ **Structured Layout** - Header, Body, Footer components
+ **Drag Handle** - Native mobile feel
+ **Smooth Animations** - Slide up/down with easing
+ **Auto Scroll Lock** - Prevents body scroll when open
+ **Backdrop Blur** - Modern glassmorphism effect
+ **Keyboard Support** - ESC to close
+ **Touch Gestures** - Swipe down to close (coming soon)
+ **Flexible Sizing** - 5 size options
+ **Structured Layout** - Header, Body, Footer components
 
 ### Best Practices
 

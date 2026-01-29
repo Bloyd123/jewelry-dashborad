@@ -109,9 +109,9 @@ export const USERS_ENDPOINTS = {
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
 }
 
-// ============================================
+// 
 // PRODUCT ENDPOINTS
-// ============================================
+// 
 export const PRODUCT_ENDPOINTS = {
   // List & Search
   GET_ALL: `${BASE_URL}/shops/:shopId/products`,

@@ -1,22 +1,23 @@
-
+// 
 // FILE: src/config/routes.config.ts
-// Route Configuration with Permissions
+// Route Configuration with Permissions - FULLY TYPED
+// 
 
-import React from 'react'
+import React, { lazy } from 'react'
+import { ROUTE_PATHS, RouteMetadata } from '@/constants/routePaths'
+import type { PermissionKey, UserRole } from '@/types'
 
-import { ROUTE_PATHS, RouteMetadata } from '@/constants/routePaths';
-import { lazy } from 'react';
-import { resendVerificationEmail } from '@/api/services/authService';
-
-
-// Lazy Loaded Components
-
+// 
+// LAZY LOADED COMPONENTS
+// 
 
 // Auth Pages
-const LoginPage = lazy(() => import('@/components/auth/login/pages'));
-// const SignupPage = lazy(() => import('@/components/auth/Signp'));
-const ForgotPasswordPage = lazy(() => import('@/components/auth/forgotpassword/pages'));
-const ResetPasswordPage = lazy(() => import('@/components/auth/resetpassword/pages'));
+const LoginPage = lazy(() => import('@/components/auth/login/pages'))
+const ForgotPasswordPage = lazy(() => import('@/components/auth/forgotpassword/pages'))
+const ResetPasswordPage = lazy(() => import('@/components/auth/resetpassword/pages'))
+const VerifyEmail = lazy(() => import('@/pages/user/AddUser/VerifyEmail'))
+const ResendVerification = lazy(() => import('@/pages/user/AddUser/ResendVerification'))
+const VerificationSuccess = lazy(() => import('@/pages/user/AddUser/VerificationSuccess'))
 
 // Dashboard
 const Dashboard = lazy(() =>
@@ -26,13 +27,13 @@ const Dashboard = lazy(() =>
 )
 
 // Customer Pages
-const AddCustomerPage = lazy(() => import('@/pages/customer/AddCustomer'));
+const AddCustomerPage = lazy(() => import('@/pages/customer/AddCustomer'))
 const AllCustomers = lazy(() =>
   import('@/pages/customer/Allcustomer').then(m => ({
     default: m.AllCustomers,
   }))
 )
-const CustomerDetailPage = lazy(() => import('@/pages/customer/page'));
+const CustomerDetailPage = lazy(() => import('@/pages/customer/page'))
 
 // Shop Pages
 const ShopListPage = lazy(() =>
@@ -40,22 +41,23 @@ const ShopListPage = lazy(() =>
     default: m.ShopListPage,
   }))
 )
-const AddShopPage = lazy(() => import('@/pages/shops/Addshop'));
-const ShopDetailsPage = lazy(() => import('@/pages/shops/ShopDetailsPage'));
+const AddShopPage = lazy(() => import('@/pages/shops/Addshop'))
+const ShopDetailsPage = lazy(() => import('@/pages/shops/ShopDetailsPage'))
 
 // Product Pages
-const AddProduct = React.lazy(() =>
+const AddProduct = lazy(() =>
   import('@/pages/product/AddProduct').then(m => ({
     default: m.AddProduct,
   }))
 )
-
 const ProductTable = lazy(() =>
   import('@/components/products/ProductTable').then(m => ({
     default: m.ProductTable,
   }))
 )
-const ProductDetailsPage = lazy(() => import('@/pages/product/ProductDetailsPage/ProductDetailsPage'));
+const ProductDetailsPage = lazy(() => 
+  import('@/pages/product/ProductDetailsPage/ProductDetailsPage')
+)
 
 // Supplier Pages
 const SupplierTable = lazy(() =>
@@ -63,13 +65,14 @@ const SupplierTable = lazy(() =>
     default: m.SupplierTable,
   }))
 )
-
 const AddSupplier = lazy(() =>
   import('@/pages/suppliers/AddSupplier').then(m => ({
     default: m.AddSupplier,
   }))
 )
-const SupplierDetailPage = lazy(() => import('@/components/supplier/SupplierDetailsPage/SupplierDetailsPage'));
+const SupplierDetailPage = lazy(() => 
+  import('@/components/supplier/SupplierDetailsPage/SupplierDetailsPage')
+)
 
 // Purchase Pages
 const PurchaseTable = lazy(() =>
@@ -77,11 +80,7 @@ const PurchaseTable = lazy(() =>
     default: m.PurchaseTable,
   }))
 )
-const AddPurchasePage = lazy(() => import('@/pages/purchase/AddPurchase'));
-const VerifyEmail = lazy(() => import('@/pages/user/AddUser/VerifyEmail'))
-const ResendVerification = lazy(() => import('@/pages/user/AddUser/ResendVerification'))
-const VerificationSuccess = lazy(() => import('@/pages/user/AddUser/VerificationSuccess'))
-
+const AddPurchasePage = lazy(() => import('@/pages/purchase/AddPurchase'))
 
 // Sales Pages
 const SalesTable = lazy(() =>
@@ -89,9 +88,13 @@ const SalesTable = lazy(() =>
     default: m.SalesTable,
   }))
 )
-const CreateSalePage = lazy(() => import('@/pages/sales/AddSales').then(m => ({ default: m.CreateSalePage })));
-const EditSalePage = lazy(() => import('@/pages/sales/AddSales').then(m => ({ default: m.EditSalePage })));
-const SalesDetailsPage = lazy(() => import('@/pages/sales/SalesDetails/SalesDetailsPage'));
+const CreateSalePage = lazy(() => 
+  import('@/pages/sales/AddSales').then(m => ({ default: m.CreateSalePage }))
+)
+const EditSalePage = lazy(() => 
+  import('@/pages/sales/AddSales').then(m => ({ default: m.EditSalePage }))
+)
+const SalesDetailsPage = lazy(() => import('@/pages/sales/SalesDetails/SalesDetailsPage'))
 
 // Payment Pages
 const PaymentFormPage = lazy(() =>
@@ -99,7 +102,6 @@ const PaymentFormPage = lazy(() =>
     default: m.PaymentFormPage,
   }))
 )
-
 const PaymentTable = lazy(() =>
   import('@/components/payments/PaymentTable').then(m => ({
     default: m.PaymentTable,
@@ -113,28 +115,39 @@ const MetalRatesDashboardPage = lazy(() =>
   }))
 )
 
-// User Profile
-const UserProfile = lazy(() => import('@/pages/user/page'));
-const AddUser =lazy(()=>import('@/pages/user/AddUser'))
+// User Pages
+const UserProfile = lazy(() => import('@/pages/user/page'))
+const AddUser = lazy(() => import('@/pages/user/AddUser'))
 
-// Route Configurations
-
+// 
+// ROUTE CONFIG INTERFACE - Enhanced with proper types
+// 
 
 export interface RouteConfig extends RouteMetadata {
-  element: React.LazyExoticComponent<React.ComponentType<any>>;
-  children?: RouteConfig[];
+  element: React.LazyExoticComponent<React.ComponentType<any>>
+  children?: RouteConfig[]
+  
+  //  Enhanced with proper types
+  permission?: PermissionKey
+  requiredPermissions?: PermissionKey[]
+  requiredRole?: UserRole
+  requiredRoles?: UserRole[]
+  requireAll?: boolean
 }
 
-// Public Routes (No Authentication Required)
+// 
+// PUBLIC ROUTES (No Authentication Required)
+// 
+
 export const publicRoutes: RouteConfig[] = [
   {
     path: ROUTE_PATHS.AUTH.LOGIN,
     element: LoginPage,
-    requiresAuth: true,
+    requiresAuth: false,
     layout: 'auth',
     title: 'Login',
   },
-    {
+  {
     path: ROUTE_PATHS.AUTH.VERIFY_EMAIL,
     element: VerifyEmail,
     requiresAuth: false,
@@ -146,7 +159,7 @@ export const publicRoutes: RouteConfig[] = [
     element: ResendVerification,
     requiresAuth: false,
     layout: 'auth',
-    title: 'Resend Verification'
+    title: 'Resend Verification',
   },
   {
     path: ROUTE_PATHS.AUTH.VERIFICATION_SUCCESS,
@@ -155,13 +168,6 @@ export const publicRoutes: RouteConfig[] = [
     layout: 'auth',
     title: 'Verification Successful',
   },
-  // {
-  //   path: ROUTE_PATHS.AUTH.SIGNUP,
-  //   element: SignupPage,
-  //   requiresAuth: false,
-  //   layout: 'auth',
-  //   title: 'Sign Up',
-  // },
   {
     path: ROUTE_PATHS.AUTH.FORGOT_PASSWORD,
     element: ForgotPasswordPage,
@@ -176,11 +182,16 @@ export const publicRoutes: RouteConfig[] = [
     layout: 'auth',
     title: 'Reset Password',
   },
-];
+]
 
-// Protected Routes (Authentication Required)
+// 
+// PROTECTED ROUTES (Authentication Required)
+// 
+
 export const protectedRoutes: RouteConfig[] = [
-  // Dashboard
+  // 
+  // DASHBOARD
+  // 
   {
     path: ROUTE_PATHS.DASHBOARD,
     element: Dashboard,
@@ -189,7 +200,27 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Dashboard',
   },
 
-  // Customers
+  // 
+  // USERS
+  // 
+  {
+    path: ROUTE_PATHS.USERS.ADD,
+    element: AddUser,
+    requiresAuth: true,
+    permission: 'canCreateUsers',
+    title: 'Add User',
+  },
+  {
+    path: ROUTE_PATHS.USERS.EDIT,
+    element: AddUser,
+    requiresAuth: true,
+    permission: 'canEditUsers',
+    title: 'Edit User',
+  },
+
+  // 
+  // CUSTOMERS
+  // 
   {
     path: ROUTE_PATHS.CUSTOMERS.LIST,
     element: AllCustomers,
@@ -197,23 +228,6 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canViewCustomers',
     title: 'Customers',
   },
-  // Users
-
-{
-  path: ROUTE_PATHS.USERS.EDIT,
-  element: AddUser,
-  requiresAuth: true,
-  permission: 'canEditUsers',
-  title: 'Edit User',
-},
-{
-  path: ROUTE_PATHS.USERS.ADD,
-  element: AddUser,
-  requiresAuth: true,
-  permission: 'canCreateUsers',
-  title: 'Add User',
-},
-
   {
     path: ROUTE_PATHS.CUSTOMERS.ADD,
     element: AddCustomerPage,
@@ -236,7 +250,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Customer Details',
   },
 
-  // Shops
+  // 
+  // SHOPS
+  // 
   {
     path: ROUTE_PATHS.SHOPS.LIST,
     element: ShopListPage,
@@ -266,7 +282,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Shop Details',
   },
 
-  // Products
+  // 
+  // PRODUCTS
+  // 
   {
     path: ROUTE_PATHS.PRODUCTS.LIST,
     element: ProductTable,
@@ -296,7 +314,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Product Details',
   },
 
-  // Suppliers
+  // 
+  // SUPPLIERS
+  // 
   {
     path: ROUTE_PATHS.SUPPLIERS.LIST,
     element: SupplierTable,
@@ -326,7 +346,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Supplier Details',
   },
 
-  // Purchases
+  // 
+  // PURCHASES
+  // 
   {
     path: ROUTE_PATHS.PURCHASES.LIST,
     element: PurchaseTable,
@@ -349,7 +371,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Edit Purchase',
   },
 
-  // Sales
+  // 
+  // SALES
+  // 
   {
     path: ROUTE_PATHS.SALES.LIST,
     element: SalesTable,
@@ -379,7 +403,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Sale Details',
   },
 
-  // Payments
+  // 
+  // PAYMENTS
+  // 
   {
     path: ROUTE_PATHS.PAYMENTS.LIST,
     element: PaymentTable,
@@ -395,7 +421,9 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Add Payment',
   },
 
-  // Metal Rates
+  // 
+  // METAL RATES
+  // 
   {
     path: ROUTE_PATHS.METAL_RATES,
     element: MetalRatesDashboardPage,
@@ -404,18 +432,20 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Metal Rates',
   },
 
-  // User Profile
+  // 
+  // USER PROFILE
+  // 
   {
     path: ROUTE_PATHS.USER_PROFILE,
     element: UserProfile,
     requiresAuth: true,
     title: 'Profile',
   },
-];
+]
 
-
-// Legacy Routes Support (for backward compatibility)
-
+// 
+// LEGACY ROUTES SUPPORT (for backward compatibility)
+// 
 
 export const ROUTES = {
   // Auth
@@ -423,11 +453,16 @@ export const ROUTES = {
   signup: ROUTE_PATHS.AUTH.SIGNUP,
   forgotPassword: ROUTE_PATHS.AUTH.FORGOT_PASSWORD,
   resetPassword: ROUTE_PATHS.AUTH.RESET_PASSWORD,
+  verifyEmail: ROUTE_PATHS.AUTH.VERIFY_EMAIL,
+  resendVerification: ROUTE_PATHS.AUTH.RESEND_VERIFICATION,
+  verificationSuccess: ROUTE_PATHS.AUTH.VERIFICATION_SUCCESS,
 
   // Main
   dashboard: ROUTE_PATHS.DASHBOARD,
-   addUser: ROUTE_PATHS.USERS.ADD,
-   editUser:ROUTE_PATHS.USERS.EDIT,
+
+  // Users
+  addUser: ROUTE_PATHS.USERS.ADD,
+  editUser: ROUTE_PATHS.USERS.EDIT,
 
   // Customers
   addCustomer: ROUTE_PATHS.CUSTOMERS.ADD,
@@ -457,10 +492,6 @@ export const ROUTES = {
   sales: ROUTE_PATHS.SALES.LIST,
   addSale: ROUTE_PATHS.SALES.ADD,
   detailsales: ROUTE_PATHS.SALES.DETAIL,
-    // Email Verification Flow
-  verifyEmail: ROUTE_PATHS.AUTH.VERIFY_EMAIL,
-  resendVerification: ROUTE_PATHS.AUTH.RESEND_VERIFICATION,
-  verificationSuccess: ROUTE_PATHS.AUTH.VERIFICATION_SUCCESS,
 
   // Payments
   addpayments: ROUTE_PATHS.PAYMENTS.ADD,
@@ -468,4 +499,4 @@ export const ROUTES = {
 
   // Metal Rates
   metalRates: ROUTE_PATHS.METAL_RATES,
-} as const;
+} as const

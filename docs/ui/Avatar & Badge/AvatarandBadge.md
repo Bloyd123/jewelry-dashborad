@@ -363,7 +363,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 // Good - provides fallback and color
 <Avatar name="John Doe" src={imageUrl} />
 
-// ❌ Avoid - no fallback information
+//  Avoid - no fallback information
 <Avatar src={imageUrl} />
 ```
 
@@ -389,7 +389,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
   status={user.isOnline ? 'online' : 'offline'}
 />
 
-// ❌ Avoid - don't show status if not tracking it
+//  Avoid - don't show status if not tracking it
 <Avatar name={user.name} status="online" /> {/* If not real-time */}
 ```
 
@@ -403,7 +403,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
 <Badge variant="warning">Payment Due</Badge>
 <Badge variant="error">Overdue</Badge>
 
-// ❌ Avoid - misleading colors
+//  Avoid - misleading colors
 <Badge variant="success">Failed</Badge> {/* Confusing! */}
 ```
 
@@ -415,7 +415,7 @@ import { Check, Clock, AlertCircle } from 'lucide-react'
   {filterName} ×
 </Badge>
 
-// ❌ Avoid - status shouldn't be clickable
+//  Avoid - status shouldn't be clickable
 <Badge variant="completed" onClick={something}>
   Completed
 </Badge>

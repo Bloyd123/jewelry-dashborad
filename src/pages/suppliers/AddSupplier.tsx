@@ -59,7 +59,7 @@ export const AddSupplier = () => {
 
   const handleSuccess = () => {
     // Show success message (you can add toast here later)
-    console.log('✅ Supplier saved successfully!')
+    console.log(' Supplier saved successfully!')
     console.log('Mode:', mode)
     console.log('SupplierId:', supplierId)
 

@@ -1,224 +1,159 @@
-// FILE: hooks/auth.ts
-// Authentication Hooks - Custom hooks for auth operations
+// 
+// FILE: hooks/useAuth.ts
+// Authentication Hook - Complete with all methods
+//  REFACTORED: Uses single source of truth for shop accesses
+// 
 
 import { useCallback, useEffect, useMemo } from 'react'
-
-import * as tokenService from '@/services/auth/tokenService'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import * as tokenService from '@/services/auth/tokenService'
+
+// Auth Slice
 import {
   login as loginAction,
-  register as registerAction,
   logout as logoutAction,
-  logoutAll as logoutAllAction,
-  getCurrentUser,
-  updateProfile as updateProfileAction,
-  changePassword as changePasswordAction,
-  refreshAccessToken as refreshTokenAction,
   initializeAuth,
+  refreshAccessToken as refreshTokenAction,
   setCurrentShop,
   clearCurrentShop,
+  complete2FALogin,
   updateLastActivity,
   clearError,
   setError,
+  resetAuthState,
   selectAuth,
-  selectUser,
   selectIsAuthenticated,
+  selectUserId,
+  selectUserRole,
+  selectCurrentShopId,
+  selectShopIds,
   selectIsLoading,
-  forgotPassword as forgotPasswordAction,
   selectError,
-  resetPassword as resetPasswordAction,
-  selectCurrentShop,
-  selectPermissions,
+} from '@/store/slices/authSlice'
+
+// User Slice
+import {
+  fetchUserProfile,
+  updateUserProfile as updateProfileAction,
+  clearUserProfile,
+  setUserFromLogin,
+  selectUserProfile,
+  selectUserLoading,
+} from '@/store/slices/userSlice'
+
+// Permissions Slice
+import {
+  setCurrentShopPermissions,
+  setPermissionsFromLogin,
+  clearPermissions,
   selectShopAccesses,
-  getActiveSessions as getActiveSessionsAction,
-  revokeSession as revokeSessionAction,
-  selectActiveSessions,
-  selectIsSessionsLoading,
-  selectIsRevokingSession,
+  selectCurrentShopPermissions,
+  selectEffectivePermissions,
   selectHasPermission,
-  selectHasRole,
   selectHasAnyPermission,
   selectHasAllPermissions,
-} from '@/store/slices/authSlice'
+  selectActiveShopsCount, //  NEW: Get active shops count from permissionsSlice
+} from '@/store/slices/permissionsSlice'
+
+// Types
 import type {
   LoginRequest,
   RegisterRequest,
   UpdateProfileRequest,
-  ResetPasswordRequest,
   ChangePasswordRequest,
+  ResetPasswordRequest,
   PermissionKey,
-  ForgetRequest,
+  UserRole,
 } from '@/types'
 
+// Additional services
+import * as authService from '@/api/services/authService'
+
+// 
 // MAIN AUTH HOOK
+// 
 
 /**
  * Main authentication hook
- * Provides all auth state and actions
+ *  REFACTORED: Uses single source of truth from permissionsSlice
  */
 export const useAuth = () => {
   const dispatch = useAppDispatch()
-  const auth = useAppSelector(selectAuth)
 
-  // LOGIN
+  //  Auth State (from authSlice) 
+  const auth = useAppSelector(selectAuth)
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const userId = useAppSelector(selectUserId)
+  const userRole = useAppSelector(selectUserRole)
+  const currentShopId = useAppSelector(selectCurrentShopId)
+  const shopIds = useAppSelector(selectShopIds)
+  const isLoading = useAppSelector(selectIsLoading)
+  const error = useAppSelector(selectError)
+
+  //  User State (from userSlice) 
+  const userProfile = useAppSelector(selectUserProfile)
+  const isUserLoading = useAppSelector(selectUserLoading)
+
+  //  Permissions State (from permissionsSlice - SINGLE SOURCE) 
+  const shopAccesses = useAppSelector(selectShopAccesses)
+  const currentShopPermissions = useAppSelector(selectCurrentShopPermissions)
+  const effectivePermissions = useAppSelector(selectEffectivePermissions)
+  const activeShops = useAppSelector(selectActiveShopsCount) //  From permissionsSlice
+
+  // 
+  // AUTH ACTIONS
+  // 
 
   const login = useCallback(
     async (credentials: LoginRequest) => {
       try {
-        console.log('🔐 [useAuth] Calling login with:', credentials.email)
+        console.log('🔐 [useAuth] Login started:', credentials.email)
         const result = await dispatch(loginAction(credentials)).unwrap()
-        console.log('🔐 [useAuth] Login result:', result)
-        console.log('🔐 [useAuth] requires2FA:', result.requires2FA)
+        console.log(' [useAuth] Login successful')
+        
         return { success: true, data: result }
       } catch (error: any) {
-        console.error('🔐 [useAuth] Login error:', error)
-        // Just throw - LoginForm will catch and handle
+        console.error(' [useAuth] Login failed:', error)
         throw error
       }
     },
     [dispatch]
   )
-
-  // FORGOT PASSWORD
-
-  const forgotPassword = useCallback(
-    async (credentials: ForgetRequest) => {
-      try {
-        const result = await dispatch(
-          forgotPasswordAction(credentials)
-        ).unwrap()
-        return { success: true, data: result }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    [dispatch]
-  )
-
-  // RESET PASSWORD
-
-  const resetPassword = useCallback(
-    async (credentials: ResetPasswordRequest) => {
-      try {
-        const result = await dispatch(resetPasswordAction(credentials)).unwrap()
-        return { success: true, data: result }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    [dispatch]
-  )
-
-  // REGISTER
 
   const register = useCallback(
     async (userData: RegisterRequest) => {
       try {
-        const result = await dispatch(registerAction(userData)).unwrap()
-        return { success: true, data: result }
+        const response = await authService.register(userData)
+        return { success: true, data: response.data }
       } catch (error: any) {
-        return { success: false, error: error || 'Registration failed' }
+        throw error
       }
     },
-    [dispatch]
+    []
   )
-
-  // LOGOUT
 
   const logout = useCallback(async () => {
     try {
       await dispatch(logoutAction()).unwrap()
       return { success: true }
     } catch (error: any) {
-      //  Throw error for component to handle with useErrorHandler
-      // Note: User is still logged out locally (tokens cleared in thunk)
       throw error
     }
   }, [dispatch])
-
-  // LOGOUT ALL DEVICES
 
   const logoutAll = useCallback(async () => {
     try {
-      await dispatch(logoutAllAction()).unwrap()
+      await authService.logoutAllDevices()
+      
+      dispatch(resetAuthState())
+      dispatch(clearUserProfile())
+      dispatch(clearPermissions())
+      
       return { success: true }
-    } catch (error: any) {
-      return { success: true }
-    }
-  }, [dispatch])
-  //  : GET ACTIVE SESSIONS
-  const getSessions = useCallback(async () => {
-    try {
-      const result = await dispatch(getActiveSessionsAction()).unwrap()
-      return { success: true, data: result }
     } catch (error: any) {
       throw error
     }
   }, [dispatch])
-
-  //  : REVOKE SESSION
-  const revokeUserSession = useCallback(
-    async (tokenId: string) => {
-      try {
-        await dispatch(revokeSessionAction(tokenId)).unwrap()
-        return { success: true }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    [dispatch]
-  )
-  // GET CURRENT USER
-
-  const getUser = useCallback(async () => {
-    try {
-      const result = await dispatch(getCurrentUser()).unwrap()
-      return { success: true, data: result }
-    } catch (error: any) {
-      return { success: false, error: error || 'Failed to fetch user' }
-    }
-  }, [dispatch])
-
-  // UPDATE PROFILE
-
-  const updateProfile = useCallback(
-    async (updates: UpdateProfileRequest) => {
-      try {
-        const result = await dispatch(updateProfileAction(updates)).unwrap()
-        return { success: true, data: result }
-      } catch (error: any) {
-        return { success: false, error: error || 'Profile update failed' }
-      }
-    },
-    [dispatch]
-  )
-
-  // CHANGE PASSWORD
-
-  const changePassword = useCallback(
-    async (data: ChangePasswordRequest) => {
-      try {
-        await dispatch(changePasswordAction(data)).unwrap()
-        return { success: true }
-      } catch (error: any) {
-        return { success: false, error: error || 'Password change failed' }
-      }
-    },
-    [dispatch]
-  )
-
-  // REFRESH TOKEN
-
-  const refreshToken = useCallback(async () => {
-    try {
-      await dispatch(refreshTokenAction()).unwrap()
-      return { success: true }
-    } catch (error: any) {
-      return { success: false, error: error || 'Token refresh failed' }
-    }
-  }, [dispatch])
-
-  // INITIALIZE AUTH
 
   const initialize = useCallback(async () => {
     try {
@@ -229,25 +164,209 @@ export const useAuth = () => {
     }
   }, [dispatch])
 
+  const refreshToken = useCallback(async () => {
+    try {
+      await dispatch(refreshTokenAction()).unwrap()
+      return { success: true }
+    } catch (error: any) {
+      throw error
+    }
+  }, [dispatch])
+
+  // 
+  // USER PROFILE ACTIONS
+  // 
+
+  const getUser = useCallback(async () => {
+    try {
+      const result = await dispatch(fetchUserProfile()).unwrap()
+      return { success: true, data: result }
+    } catch (error: any) {
+      throw error
+    }
+  }, [dispatch])
+
+  const updateProfile = useCallback(
+    async (updates: UpdateProfileRequest) => {
+      try {
+        const result = await dispatch(updateProfileAction(updates)).unwrap()
+        return { success: true, data: result }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    [dispatch]
+  )
+
+  // 
+  // PASSWORD MANAGEMENT
+  // 
+
+  const changePassword = useCallback(
+    async (data: ChangePasswordRequest) => {
+      try {
+        const response = await authService.changePassword(data)
+        await logout()
+        return { success: true, data: response.data }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    [logout]
+  )
+
+  const forgotPassword = useCallback(async (email: string) => {
+    try {
+      const response = await authService.forgotPassword(email)
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
+
+  const resetPassword = useCallback(
+    async (data: ResetPasswordRequest) => {
+      try {
+        const response = await authService.resetPassword(data)
+        return { success: true, data: response.data }
+      } catch (error: any) {
+        throw error
+      }
+    },
+    []
+  )
+
+  // 
+  // 2FA MANAGEMENT
+  // 
+
+  const enable2FA = useCallback(async () => {
+    try {
+      const response = await authService.enable2FA()
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
+
+  const verify2FA = useCallback(async (token: string) => {
+    try {
+      const response = await authService.verify2FA(token)
+      
+      if (response.data.success) {
+        await dispatch(fetchUserProfile())
+      }
+      
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [dispatch])
+
+  const disable2FA = useCallback(async (password: string, token: string) => {
+    try {
+      const response = await authService.disable2FA(password, token)
+      
+      if (response.data.success) {
+        await dispatch(fetchUserProfile())
+      }
+      
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [dispatch])
+
+
+const verify2FALogin = useCallback(async (tempToken: string, token: string) => {
+  try {
+    // ✅ Use the new thunk instead of calling service directly
+    const result = await dispatch(complete2FALogin({ 
+      tempToken, 
+      code: token, 
+      isBackupCode: false 
+    })).unwrap()
+    
+    if (import.meta.env.DEV) {
+      console.log('✅ [useAuth] 2FA verification successful')
+    }
+    
+    return { success: true, data: result }
+  } catch (error: any) {
+    console.error('❌ [useAuth] 2FA verification failed:', error)
+    throw error
+  }
+}, [dispatch])
+
+const verifyBackupCode = useCallback(async (tempToken: string, backupCode: string) => {
+  try {
+    // ✅ Use the new thunk instead of calling service directly
+    const result = await dispatch(complete2FALogin({ 
+      tempToken, 
+      code: backupCode, 
+      isBackupCode: true 
+    })).unwrap()
+    
+    if (import.meta.env.DEV) {
+      console.log('✅ [useAuth] Backup code verification successful')
+    }
+    
+    return { success: true, data: result }
+  } catch (error: any) {
+    console.error('❌ [useAuth] Backup code verification failed:', error)
+    throw error
+  }
+}, [dispatch])
+
+  // 
   // SHOP MANAGEMENT
+  // 
 
   const switchShop = useCallback(
     (shopId: string) => {
       dispatch(setCurrentShop(shopId))
+      dispatch(setCurrentShopPermissions(shopId))
     },
     [dispatch]
   )
+
   const clearShop = useCallback(() => {
     dispatch(clearCurrentShop())
   }, [dispatch])
 
+  // 
+  // SESSION MANAGEMENT
+  // 
+
+  const getSessions = useCallback(async () => {
+    try {
+      const response = await authService.getActiveSessions()
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
+
+  const revokeSession = useCallback(async (tokenId: string) => {
+    try {
+      const response = await authService.revokeSession(tokenId)
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
+
+  // 
   // ACTIVITY TRACKING
+  // 
 
   const trackActivity = useCallback(() => {
     dispatch(updateLastActivity())
   }, [dispatch])
 
+  // 
   // ERROR HANDLING
+  // 
 
   const clearAuthError = useCallback(() => {
     dispatch(clearError())
@@ -260,7 +379,9 @@ export const useAuth = () => {
     [dispatch]
   )
 
+  // 
   // TOKEN UTILITIES
+  // 
 
   const checkTokenValidity = useCallback(() => {
     return tokenService.isAccessTokenValid()
@@ -271,147 +392,151 @@ export const useAuth = () => {
     return token ? tokenService.getTokenExpiration(token) : null
   }, [])
 
-  return {
-    // State
-    ...auth,
+  // 
+  // RETURN HOOK API
+  // 
 
-    // Actions
+  return {
+    //  Auth State 
+    isAuthenticated,
+    userId,
+    userRole,
+    currentShopId,
+    shopIds,
+    isLoading,
+    error,
+    requires2FA: auth.requires2FA,
+    tempToken: auth.tempToken,
+    isInitializing: auth.isInitializing,
+    
+    //  User Profile 
+    user: userProfile,
+    isUserLoading,
+    
+    //  Permissions (SINGLE SOURCE) 
+    shopAccesses, //  From permissionsSlice
+    currentShopPermissions,
+    effectivePermissions,
+    activeShops, //  Derived from permissionsSlice
+    
+    //  Auth Actions 
     login,
     register,
     logout,
     logoutAll,
+    initialize,
+    refreshToken,
+    
+    //  User Actions 
     getUser,
     updateProfile,
+    
+    //  Password Actions 
     changePassword,
-    resetPassword,
     forgotPassword,
-    refreshToken,
-    initialize,
-    getSessions,
-    revokeUserSession,
-    // Shop Management
+    resetPassword,
+    
+    //  2FA Actions 
+    enable2FA,
+    verify2FA,
+    disable2FA,
+    verify2FALogin,
+    verifyBackupCode,
+    
+    //  Shop Actions 
     switchShop,
     clearShop,
-
-    // Activity
+    
+    //  Session Actions 
+    getSessions,
+    revokeSession,
+    
+    //  Activity 
     trackActivity,
-
-    // Error Handling
+    
+    //  Error Handling 
     clearAuthError,
     setAuthError,
-
-    // Token Utilities
+    
+    //  Token Utilities 
     checkTokenValidity,
     getTokenExpiration,
   }
 }
 
+// 
 // SIMPLIFIED HOOKS
+// 
 
-/**
- * Check if user is authenticated
- */
 export const useIsAuthenticated = () => {
   return useAppSelector(selectIsAuthenticated)
 }
 
-/**
- * Get current user
- */
 export const useCurrentUser = () => {
-  return useAppSelector(selectUser)
+  return useAppSelector(selectUserProfile)
 }
 
-/**
- * Get current shop
- */
-export const useCurrentShop = () => {
-  return useAppSelector(selectCurrentShop)
+export const useUserRole = () => {
+  return useAppSelector(selectUserRole)
 }
 
-/**
- * Get user permissions for current shop
- */
-export const usePermissions = () => {
-  return useAppSelector(selectPermissions)
+export const useCurrentShopId = () => {
+  return useAppSelector(selectCurrentShopId)
 }
 
-/**
- * Get all shop accesses
- */
+export const useShopIds = () => {
+  return useAppSelector(selectShopIds)
+}
+
 export const useShopAccesses = () => {
-  return useAppSelector(selectShopAccesses)
+  return useAppSelector(selectShopAccesses) //  From permissionsSlice
 }
 
-/**
- * Check if user has specific permission
- */
+export const usePermissions = () => {
+  return useAppSelector(selectEffectivePermissions)
+}
+
 export const useHasPermission = (permission: PermissionKey): boolean => {
   return useAppSelector(state => selectHasPermission(state, permission))
 }
 
-/**
- * Check if user has any of the specified permissions
- */
 export const useHasAnyPermission = (permissions: PermissionKey[]): boolean => {
   return useAppSelector(state => selectHasAnyPermission(state, permissions))
 }
 
-/**
- * Check if user has all specified permissions
- */
 export const useHasAllPermissions = (permissions: PermissionKey[]): boolean => {
   return useAppSelector(state => selectHasAllPermissions(state, permissions))
 }
 
-/**
- * Check if user has specific role
- */
-export const useHasRole = (role: string): boolean => {
-  return useAppSelector(state => selectHasRole(state, role))
+export const useHasRole = (role: UserRole): boolean => {
+  const userRole = useAppSelector(selectUserRole)
+  return userRole === role
 }
 
-/**
- * Check if user is super admin
- */
 export const useIsSuperAdmin = (): boolean => {
   return useHasRole('super_admin')
 }
 
-/**
- * Check if user is organization admin
- */
 export const useIsOrgAdmin = (): boolean => {
   return useHasRole('org_admin')
 }
 
-/**
- * Check if user is shop admin
- */
 export const useIsShopAdmin = (): boolean => {
   return useHasRole('shop_admin')
 }
 
-/**
- * Get auth loading state
- */
 export const useAuthLoading = () => {
   return useAppSelector(selectIsLoading)
 }
 
-/**
- * Get auth error
- */
 export const useAuthError = () => {
   return useAppSelector(selectError)
 }
 
+// 
 // COMPOSITE HOOKS
+// 
 
-/**
- * Hook for login form
- * Provides login function and state
- */
 export const useLoginForm = () => {
   const dispatch = useAppDispatch()
   const isLoading = useAuthLoading()
@@ -420,10 +545,10 @@ export const useLoginForm = () => {
   const login = useCallback(
     async (credentials: LoginRequest) => {
       try {
-        await dispatch(loginAction(credentials)).unwrap()
-        return { success: true }
+        const result = await dispatch(loginAction(credentials)).unwrap()
+        return { success: true, data: result }
       } catch (error: any) {
-        return { success: false, error }
+        throw error
       }
     },
     [dispatch]
@@ -441,55 +566,25 @@ export const useLoginForm = () => {
   }
 }
 
-/**
- * Hook for register form
- */
-export const useRegisterForm = () => {
-  const dispatch = useAppDispatch()
-  const isLoading = useAuthLoading()
-  const error = useAuthError()
-
-  const register = useCallback(
-    async (userData: RegisterRequest) => {
-      try {
-        await dispatch(registerAction(userData)).unwrap()
-        return { success: true }
-      } catch (error: any) {
-        return { success: false, error }
-      }
-    },
-    [dispatch]
-  )
-
-  const clearAuthError = useCallback(() => {
-    dispatch(clearError())
-  }, [dispatch])
-
-  return {
-    register,
-    isLoading,
-    error,
-    clearError: clearAuthError,
-  }
-}
-
-/**
- * Hook for auto-initialization on app start
- */
 export const useAuthInitialization = () => {
   const dispatch = useAppDispatch()
   const { isInitializing } = useAppSelector(selectAuth)
 
   useEffect(() => {
-    dispatch(initializeAuth())
+    const init = async () => {
+      try {
+        await dispatch(initializeAuth()).unwrap()
+      } catch (error) {
+        console.error('Auth initialization failed:', error)
+      }
+    }
+    
+    init()
   }, [dispatch])
 
   return { isInitializing }
 }
 
-/**
- * Hook for automatic token refresh
- */
 export const useTokenRefresh = (intervalMinutes: number = 5) => {
   const dispatch = useAppDispatch()
   const isAuthenticated = useIsAuthenticated()
@@ -502,7 +597,6 @@ export const useTokenRefresh = (intervalMinutes: number = 5) => {
         const token = tokenService.getAccessToken()
         if (token) {
           const timeLeft = tokenService.getTimeUntilExpiration(token)
-          // Refresh if less than 5 minutes left
           if (timeLeft < 300) {
             await dispatch(refreshTokenAction())
           }
@@ -515,9 +609,6 @@ export const useTokenRefresh = (intervalMinutes: number = 5) => {
   }, [isAuthenticated, dispatch, intervalMinutes])
 }
 
-/**
- * Hook for activity tracking
- */
 export const useActivityTracking = () => {
   const dispatch = useAppDispatch()
   const isAuthenticated = useIsAuthenticated()
@@ -529,44 +620,43 @@ export const useActivityTracking = () => {
       dispatch(updateLastActivity())
     }
 
-    // Track various user activities
-    window.addEventListener('click', handleActivity)
-    window.addEventListener('keypress', handleActivity)
-    window.addEventListener('scroll', handleActivity)
-    window.addEventListener('mousemove', handleActivity)
+    const events = ['click', 'keypress', 'scroll', 'mousemove']
+    events.forEach(event => {
+      window.addEventListener(event, handleActivity)
+    })
 
     return () => {
-      window.removeEventListener('click', handleActivity)
-      window.removeEventListener('keypress', handleActivity)
-      window.removeEventListener('scroll', handleActivity)
-      window.removeEventListener('mousemove', handleActivity)
+      events.forEach(event => {
+        window.removeEventListener(event, handleActivity)
+      })
     }
   }, [isAuthenticated, dispatch])
 }
 
 /**
- * Hook for shop-specific operations
+ *  REFACTORED: Shop context from permissionsSlice
  */
 export const useShopContext = () => {
   const dispatch = useAppDispatch()
-  const currentShop = useCurrentShop()
-  const shopAccesses = useShopAccesses()
+  const currentShopId = useCurrentShopId()
+  const shopAccesses = useShopAccesses() //  From permissionsSlice
   const permissions = usePermissions()
 
   const switchShop = useCallback(
     (shopId: string) => {
       dispatch(setCurrentShop(shopId))
+      dispatch(setCurrentShopPermissions(shopId))
     },
     [dispatch]
   )
 
   const currentShopAccess = useMemo(() => {
-    if (!currentShop) return null
-    return shopAccesses.find(access => access.shopId === currentShop) || null
-  }, [currentShop, shopAccesses])
+    if (!currentShopId) return null
+    return shopAccesses.find(access => access.shopId === currentShopId) || null
+  }, [currentShopId, shopAccesses])
 
   return {
-    currentShop,
+    currentShopId,
     currentShopAccess,
     shopAccesses,
     permissions,
@@ -576,9 +666,6 @@ export const useShopContext = () => {
   }
 }
 
-/**
- * Hook for permission-based rendering
- */
 export const usePermissionCheck = () => {
   const permissions = usePermissions()
 
@@ -605,7 +692,5 @@ export const usePermissionCheck = () => {
 
   return { can, canAny, canAll, permissions }
 }
-
-// DEFAULT EXPORT
 
 export default useAuth

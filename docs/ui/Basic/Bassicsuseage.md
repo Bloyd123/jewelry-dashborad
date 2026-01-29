@@ -1107,7 +1107,7 @@ const [step, setStep] = useState(1)
   <Input id="email" type="email" />
 </div>
 
-// ❌ Avoid
+//  Avoid
 <Input type="email" placeholder="Email" />
 ```
 
@@ -1134,7 +1134,7 @@ const [step, setStep] = useState(1)
 // Good - specific guidance
 <Input placeholder="e.g., john@company.com" />
 
-// ❌ Avoid - vague
+//  Avoid - vague
 <Input placeholder="Enter value" />
 ```
 

@@ -360,15 +360,15 @@ const { data, isLoading } = useGetSalesDataQuery()
 
 ## ⚠️ Common Mistakes
 
-### ❌ Wrong
+###  Wrong
 ```tsx
 // Hardcoded colors (won't work with themes)
 <LineChart
-  lines={[{ dataKey: 'sales', color: '#3b82f6' }]}  // ❌ Don't do this
+  lines={[{ dataKey: 'sales', color: '#3b82f6' }]}  //  Don't do this
 />
 
 // Missing data validation
-<LineChart data={data} />  // ❌ data might be undefined
+<LineChart data={data} />  //  data might be undefined
 ```
 
 ### Correct

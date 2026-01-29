@@ -327,7 +327,7 @@ showIcon?: boolean               // Default: true
 
 ## 🐛 Common Mistakes
 
-| ❌ Wrong | Correct |
+|  Wrong | Correct |
 |---------|-----------|
 | `<Modal><Dialog></Dialog></Modal>` | Use separate state |
 | `title="Add Customer"` | `title="customer.modal.add"` |

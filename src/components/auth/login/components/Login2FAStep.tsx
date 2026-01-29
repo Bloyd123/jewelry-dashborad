@@ -1,15 +1,12 @@
 // FILE: components/auth/login/components/Login2FAStep.tsx
 // Two-Factor Authentication Step for Login
+// ✅ FIXED: Proper Redux integration with complete2FALogin thunk
 
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Shield, ArrowLeft, Key } from 'lucide-react'
-import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
-import {
-  verify2FALogin,
-  verifyBackupCodeLogin,
-  setRequires2FA,
-} from '@/store/slices/authSlice'
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { useAuth } from '@/hooks/useAuth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { Button } from '@/components/ui/button'
 import { TwoFactorCodeInput } from '@/components/user/UserProfile/UserprofileModal/2fa/TwoFactorCodeInput'
@@ -17,58 +14,157 @@ import { BackupCodeInput } from '@/components/user/UserProfile/UserprofileModal/
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 
+// ✅ FIXED: Import correct selectors and actions
+import { 
+  setRequires2FA, 
+  selectIsLoading, 
+  selectTempToken 
+} from '@/store/slices/authSlice'
+
 export const Login2FAStep: React.FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
+  
+  // ✅ FIXED: Use useAuth hook for 2FA verification (now uses thunk)
+  const { verify2FALogin, verifyBackupCode } = useAuth()
 
-  const loading = useAppSelector(state => state.auth.isLoading)
-  const tempToken = useAppSelector(state => state.auth.tempToken)
+  // ✅ FIXED: Get state from authSlice using selectors
+  const loading = useAppSelector(selectIsLoading)
+  const tempToken = useAppSelector(selectTempToken)
 
   const [mode, setMode] = useState<'authenticator' | 'backup'>('authenticator')
   const [code, setCode] = useState('')
   const [backupCode, setBackupCode] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [isVerifying, setIsVerifying] = useState(false)
   const hasCalledRef = useRef(false)
+  const isMountedRef = useRef(true)
 
-  // Reset hasCalledRef when code changes
+  // ✅ FIXED: Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
+
+  // ✅ FIXED: Reset hasCalledRef when code changes
   useEffect(() => {
     if (code.length < 6) {
       hasCalledRef.current = false
     }
   }, [code])
 
+  // ✅ FIXED: Reset hasCalledRef when backup code changes
+  useEffect(() => {
+    if (backupCode.length < 14) {
+      hasCalledRef.current = false
+    }
+  }, [backupCode])
+
   // HANDLERS
 
   const handleVerifyAuthenticator = async () => {
-    if (code.length !== 6 || !tempToken || hasCalledRef.current) return
+    if (code.length !== 6 || !tempToken || hasCalledRef.current || isVerifying) return
 
     hasCalledRef.current = true
+    setIsVerifying(true)
     setError(null)
 
     try {
-      await dispatch(verify2FALogin({ tempToken, token: code })).unwrap()
-      // Success - Redux will handle auth state
+      // ✅ FIXED: This now calls the complete2FALogin thunk
+      const result = await verify2FALogin(tempToken, code)
+      
+      if (!isMountedRef.current) return
+
+      if (result.success) {
+        // ✅ Success - Redux state updated, navigation happens automatically
+        if (import.meta.env.DEV) {
+          console.log('✅ [Login2FAStep] 2FA verification successful')
+        }
+        // Auth state is now updated - App.tsx will handle redirect
+      } else {
+        hasCalledRef.current = false
+        setError(t('auth.2fa.invalidCode') || 'Invalid verification code')
+      }
     } catch (err: any) {
+      if (!isMountedRef.current) return
+      
       hasCalledRef.current = false
-      handleError(err, errors => {
-        setError(Object.values(errors)[0] as string)
-      })
+      
+      // ✅ FIXED: Proper error handling
+      if (err?.message) {
+        setError(err.message)
+      } else {
+        handleError(err, (errors) => {
+          if (typeof errors === 'string') {
+            setError(errors)
+          } else if (errors && typeof errors === 'object') {
+            const firstError = Object.values(errors)[0]
+            setError(String(firstError))
+          } else {
+            setError(t('auth.2fa.verificationFailed') || 'Verification failed')
+          }
+        })
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsVerifying(false)
+      }
     }
   }
 
   const handleVerifyBackup = async () => {
-    if (backupCode.length !== 14 || !tempToken) return
+    if (backupCode.length !== 14 || !tempToken || isVerifying) return
 
+    setIsVerifying(true)
     setError(null)
 
     try {
-      await dispatch(verifyBackupCodeLogin({ tempToken, backupCode })).unwrap()
-      // Success - Redux will handle auth state
+      // ✅ FIXED: This now calls the complete2FALogin thunk
+      const result = await verifyBackupCode(tempToken, backupCode)
+      
+      if (!isMountedRef.current) return
+      
+      if (result.success) {
+        // ✅ Success - Redux state updated
+        if (import.meta.env.DEV) {
+          console.log('✅ [Login2FAStep] Backup code verification successful')
+        }
+        
+        // ✅ FIXED: Show remaining backup codes warning if applicable
+        if (result.data?.remainingBackupCodes !== undefined) {
+          const remaining = result.data.remainingBackupCodes
+          if (remaining <= 2) {
+            console.warn(`⚠️ Only ${remaining} backup codes remaining`)
+            // Optional: Show toast notification to user
+          }
+        }
+      } else {
+        setError(t('auth.2fa.invalidBackupCode') || 'Invalid backup code')
+      }
     } catch (err: any) {
-      handleError(err, errors => {
-        setError(Object.values(errors)[0] as string)
-      })
+      if (!isMountedRef.current) return
+      
+      // ✅ FIXED: Proper error handling
+      if (err?.message) {
+        setError(err.message)
+      } else {
+        handleError(err, (errors) => {
+          if (typeof errors === 'string') {
+            setError(errors)
+          } else if (errors && typeof errors === 'object') {
+            const firstError = Object.values(errors)[0]
+            setError(String(firstError))
+          } else {
+            setError(t('auth.2fa.verificationFailed') || 'Verification failed')
+          }
+        })
+      }
+    } finally {
+      if (isMountedRef.current) {
+        setIsVerifying(false)
+      }
     }
   }
 
@@ -77,6 +173,8 @@ export const Login2FAStep: React.FC = () => {
     setCode('')
     setBackupCode('')
     setError(null)
+    hasCalledRef.current = false
+    setIsVerifying(false)
   }
 
   const handleSwitchMode = () => {
@@ -85,7 +183,11 @@ export const Login2FAStep: React.FC = () => {
     setBackupCode('')
     setError(null)
     hasCalledRef.current = false
+    setIsVerifying(false)
   }
+
+  // ✅ FIXED: Combined loading state
+  const isLoading = loading || isVerifying
 
   // RENDER
 
@@ -117,9 +219,9 @@ export const Login2FAStep: React.FC = () => {
               <TwoFactorCodeInput
                 value={code}
                 onChange={setCode}
-                onComplete={loading ? undefined : handleVerifyAuthenticator}
+                onComplete={isLoading ? undefined : handleVerifyAuthenticator}
                 error={error}
-                disabled={loading}
+                disabled={isLoading}
                 autoFocus
               />
             </div>
@@ -127,10 +229,10 @@ export const Login2FAStep: React.FC = () => {
             {/* Verify Button */}
             <Button
               onClick={handleVerifyAuthenticator}
-              disabled={loading || code.length !== 6}
+              disabled={isLoading || code.length !== 6}
               className="w-full"
             >
-              {loading && <Loader size="xs" variant="spinner" />}
+              {isLoading && <Loader size="xs" variant="spinner" />}
               {t('auth.2fa.verify')}
             </Button>
           </>
@@ -143,7 +245,7 @@ export const Login2FAStep: React.FC = () => {
                 onChange={setBackupCode}
                 onSubmit={handleVerifyBackup}
                 error={error}
-                disabled={loading}
+                disabled={isLoading}
                 label={t('auth.2fa.backupCode')}
               />
             </div>
@@ -151,10 +253,10 @@ export const Login2FAStep: React.FC = () => {
             {/* Verify Button */}
             <Button
               onClick={handleVerifyBackup}
-              disabled={loading || backupCode.length !== 14}
+              disabled={isLoading || backupCode.length !== 14}
               className="w-full"
             >
-              {loading && <Loader size="xs" variant="spinner" />}
+              {isLoading && <Loader size="xs" variant="spinner" />}
               {t('auth.2fa.verify')}
             </Button>
           </>
@@ -172,7 +274,7 @@ export const Login2FAStep: React.FC = () => {
           <Button
             variant="ghost"
             onClick={handleSwitchMode}
-            disabled={loading}
+            disabled={isLoading}
             className="w-full"
           >
             <Key className="mr-2 h-4 w-4" />
@@ -187,7 +289,7 @@ export const Login2FAStep: React.FC = () => {
           <Button
             variant="ghost"
             onClick={handleBack}
-            disabled={loading}
+            disabled={isLoading}
             className="w-full"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />

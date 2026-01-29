@@ -5,20 +5,3 @@
 export { useAppDispatch, useAppSelector } from './base'
 
 // Re-export all auth hooks
-export {
-  useAuth,
-  useIsAuthenticated,
-  useCurrentUser,
-  useCurrentShop,
-  usePermissions,
-  useShopAccesses,
-  useHasPermission,
-  useHasAnyPermission,
-  useHasAllPermissions,
-  useHasRole,
-  useIsSuperAdmin,
-  useIsOrgAdmin,
-  useIsShopAdmin,
-  useAuthLoading,
-  useAuthError,
-} from './auth.ts'

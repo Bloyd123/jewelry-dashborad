@@ -1,5 +1,6 @@
 // FILE: src/components/auth/2fa/Enable2FAModal/Enable2FAModal.tsx
 // Enable 2FA Modal - Main Container with Step Navigation
+//  UPDATED: Uses new Redux architecture and useAuth hook
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,8 +9,8 @@ import { Step1Introduction } from './Step1Introduction'
 import { Step2QRCode } from './Step2QRCode'
 import { Step3VerifyCode } from './Step3VerifyCode'
 import { Step4BackupCodes } from './Step4BackupCodes'
-import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
-import { enable2FA, verify2FA } from '@/store/slices/authSlice'
+import { useAppSelector } from '@/store/hooks'
+import { useAuth } from '@/hooks/useAuth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 
 // TYPES
@@ -30,9 +31,10 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
-  const loading = useAppSelector(state => state.auth.isLoading)
+  
+  //  NEW: Use useAuth hook instead of direct dispatch
+  const { enable2FA, verify2FA, isLoading } = useAuth()
 
   const [step, setStep] = useState<Step>(1)
   const [error, setError] = useState<string | null>(null)
@@ -46,29 +48,14 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
   const handleStep1Next = async () => {
     setError(null)
     try {
-      const result = await dispatch(enable2FA()).unwrap()
-      setQrCode(result.qrCodeDataURL)
-      setSecret(result.secret)
-      setStep(2)
-    } catch (err: any) {
-      handleError(err, errors => {
-        setError(Object.values(errors)[0] as string)
-      })
-    }
-  }
-
-  // 🆕 REPLACE handleStep3Verify
-  const handleStep3Verify = async () => {
-    if (verificationCode.length !== 6) {
-      setError('Please enter a 6-digit code')
-      return
-    }
-
-    setError(null)
-    try {
-      const result = await dispatch(verify2FA(verificationCode)).unwrap()
-      setBackupCodes(result.backupCodes)
-      setStep(4)
+      //  NEW: Use enable2FA from useAuth hook
+      const result = await enable2FA()
+      
+      if (result.success && result.data) {
+        setQrCode(result.data.qrCodeDataURL)
+        setSecret(result.data.secret)
+        setStep(2)
+      }
     } catch (err: any) {
       handleError(err, errors => {
         setError(Object.values(errors)[0] as string)
@@ -94,6 +81,28 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
   }
 
   // STEP 3 HANDLERS
+
+  const handleStep3Verify = async () => {
+    if (verificationCode.length !== 6) {
+      setError('Please enter a 6-digit code')
+      return
+    }
+
+    setError(null)
+    try {
+      //  NEW: Use verify2FA from useAuth hook
+      const result = await verify2FA(verificationCode)
+      
+      if (result.success && result.data) {
+        setBackupCodes(result.data.backupCodes)
+        setStep(4)
+      }
+    } catch (err: any) {
+      handleError(err, errors => {
+        setError(Object.values(errors)[0] as string)
+      })
+    }
+  }
 
   const handleStep3Back = () => {
     setStep(2)
@@ -150,7 +159,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
         <Step1Introduction
           onNext={handleStep1Next}
           onCancel={handleStep1Cancel}
-          loading={loading}
+          loading={isLoading}
           error={error}
         />
       )}
@@ -161,7 +170,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
           secret={secret}
           onNext={handleStep2Next}
           onBack={handleStep2Back}
-          loading={loading}
+          loading={isLoading}
           error={error}
         />
       )}
@@ -172,7 +181,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
           onChange={setVerificationCode}
           onVerify={handleStep3Verify}
           onBack={handleStep3Back}
-          loading={loading}
+          loading={isLoading}
           error={error}
         />
       )}

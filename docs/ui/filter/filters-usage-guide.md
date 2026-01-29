@@ -553,7 +553,7 @@ export const CustomerFilters = () => {
 // Correct - Uses CSS variables
 <TypeFilter className="bg-bg-secondary border-border-primary" />
 
-// ❌ Wrong - Hardcoded colors
+//  Wrong - Hardcoded colors
 <TypeFilter className="bg-white border-gray-300" />
 ```
 
@@ -630,19 +630,19 @@ export const selectHasActiveFilters = (state) => {
 
 ## ⚠️ Common Mistakes
 
-### ❌ Wrong
+###  Wrong
 ```tsx
 // Hardcoded text
-<TypeFilter placeholder="Select Customer Type" />  // ❌
+<TypeFilter placeholder="Select Customer Type" />  // 
 
 // Not handling undefined
-<TypeFilter value={type} onChange={setType} />  // ❌ value can be undefined
+<TypeFilter value={type} onChange={setType} />  //  value can be undefined
 
 // No Redux integration
-const [type, setType] = useState()  // ❌ Lost on page refresh
+const [type, setType] = useState()  //  Lost on page refresh
 
 // Old FilterSheet import
-import { FilterSheet } from '@/components/ui/filters'  // ❌
+import { FilterSheet } from '@/components/ui/filters'  // 
 ```
 
 ### Correct
@@ -695,7 +695,7 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'  //
 
 4. **Keep filter state in Redux, not local:**
    ```tsx
-   // ❌ Bad - Lost on unmount
+   //  Bad - Lost on unmount
    const [filters, setFilters] = useState({})
    
    // Good - Persisted in Redux
@@ -796,7 +796,7 @@ Before deploying filters:
 
 ### Migration
 ```tsx
-// OLD (❌)
+// OLD ()
 import { FilterSheet } from '@/components/ui/filters'
 <FilterSheet title="Filters">
   <div className="space-y-4">
@@ -804,7 +804,7 @@ import { FilterSheet } from '@/components/ui/filters'
   </div>
 </FilterSheet>
 
-// NEW (✅)
+// NEW ()
 import { FilterSheet } from '@/components/ui/overlay/Sheet'
 <FilterSheet 
   title="Filters"

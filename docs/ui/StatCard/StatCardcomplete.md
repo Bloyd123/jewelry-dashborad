@@ -624,7 +624,7 @@ const RevenueCard: React.FC<{ data: AnalyticsData }> = ({ data }) => {
 
 ### 1. Always Use i18n
 ```typescript
-// ❌ WRONG
+//  WRONG
 <StatCard title="Total Sales" />
 
 // CORRECT
@@ -633,7 +633,7 @@ const RevenueCard: React.FC<{ data: AnalyticsData }> = ({ data }) => {
 
 ### 2. Format Numbers Properly
 ```typescript
-// ❌ WRONG
+//  WRONG
 <StatCard value={123456} />
 
 // CORRECT
@@ -658,7 +658,7 @@ import {
 
 ### 4. Grid Responsiveness
 ```typescript
-// ❌ WRONG - Fixed columns
+//  WRONG - Fixed columns
 <div className="grid grid-cols-4">
   {cards}
 </div>
@@ -671,7 +671,7 @@ import {
 
 ### 5. Loading States
 ```typescript
-// ❌ WRONG - No loading state
+//  WRONG - No loading state
 <StatCard title="Revenue" value={data?.revenue} />
 
 // CORRECT - Proper loading
@@ -684,7 +684,7 @@ import {
 
 ### 6. Click Handlers
 ```typescript
-// ❌ WRONG - Inline navigation
+//  WRONG - Inline navigation
 <StatCard 
   onClick={() => window.location.href = '/orders'}
 />
@@ -852,7 +852,7 @@ export const SalesDashboard: React.FC = () => {
 ### Issue: Icons not displaying
 **Solution:** Import from lucide-react
 ```typescript
-// ❌ WRONG
+//  WRONG
 import * as Icons from 'lucide-react'
 
 // CORRECT
@@ -862,7 +862,7 @@ import { DollarSign, ShoppingCart } from 'lucide-react'
 ### Issue: Grid not responsive
 **Solution:** Use StatCardGrid component
 ```typescript
-// ❌ WRONG
+//  WRONG
 <div className="grid grid-cols-4">
 
 // CORRECT
@@ -874,7 +874,7 @@ import { DollarSign, ShoppingCart } from 'lucide-react'
 ```typescript
 <StatCard
   onClick={() => navigate('/path')}  //
-  // onClick={navigate('/path')}     // ❌ Wrong
+  // onClick={navigate('/path')}     //  Wrong
 />
 ```
 

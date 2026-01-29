@@ -20,12 +20,12 @@ Two essential layout components for organizing and structuring content:
 - **Separator** - Visual dividers with multiple styles and label support
 
 ### ✨ Common Features
-✅ Fully responsive (mobile, tablet, desktop)
-✅ Theme-aware (CSS variables only)
-✅ i18n ready (all text translatable)
-✅ TypeScript support with full types
-✅ Accessible (ARIA, keyboard navigation)
-✅ Multiple variants and sizes
+ Fully responsive (mobile, tablet, desktop)
+ Theme-aware (CSS variables only)
+ i18n ready (all text translatable)
+ TypeScript support with full types
+ Accessible (ARIA, keyboard navigation)
+ Multiple variants and sizes
 
 ---
 
@@ -814,7 +814,7 @@ export const Toolbar = () => {
 
 ### 1. Always Use i18n
 ```typescript
-// ❌ WRONG
+//  WRONG
 const items = [
   { value: 'settings', title: 'Settings', content: <div>Content</div> }
 ]
@@ -839,7 +839,7 @@ const items = [
 // CORRECT - Use spacing prop instead of manual margins
 <Separator spacing="lg" />
 
-// ❌ WRONG - Manual margins
+//  WRONG - Manual margins
 <div className="my-8">
   <Separator />
 </div>
@@ -902,7 +902,7 @@ theme: {
 ### Issue: Separator not showing
 **Solution:** Ensure parent has proper dimensions
 ```typescript
-// ❌ WRONG - No height for vertical separator
+//  WRONG - No height for vertical separator
 <Separator orientation="vertical" />
 
 // CORRECT - Parent provides height
@@ -923,7 +923,7 @@ theme: {
 ### Issue: Multiple accordions conflicting
 **Solution:** Use unique values for each item
 ```typescript
-// ❌ WRONG - Duplicate values
+//  WRONG - Duplicate values
 const items = [
   { value: 'item', title: 'First' },
   { value: 'item', title: 'Second' }, // Duplicate!

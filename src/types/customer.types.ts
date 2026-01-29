@@ -485,9 +485,9 @@ export interface LoyaltyPointsResponse {
   }
 }
 
-// ============================================
+// 
 // 🆕 RTK QUERY INPUT TYPES (ADD THESE)
-// ============================================
+// 
 
 /**
  * Get Customers Query Input

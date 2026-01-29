@@ -159,9 +159,9 @@ const [selected, setSelected] = useState(new Set())
 
 ---
 
-## ❌ Common Mistakes
+##  Common Mistakes
 
-| ❌ Wrong | Correct |
+|  Wrong | Correct |
 |---------|-----------|
 | `data={data}` when loading | `data={data || []}` |
 | Hardcoded text in header | Use i18n: `header: 'customer.name'` |

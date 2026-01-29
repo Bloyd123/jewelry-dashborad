@@ -40,7 +40,7 @@ export const setupAuthInterceptor = (axiosInstance: AxiosInstance): void => {
     (error: AxiosError) => {
       // Log request error in development
       if (import.meta.env.DEV) {
-        console.error('❌ Request Error:', error)
+        console.error(' Request Error:', error)
       }
       return Promise.reject(error)
     }

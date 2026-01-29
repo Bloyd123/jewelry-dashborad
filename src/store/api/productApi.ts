@@ -248,7 +248,7 @@ export const productApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ✅ MARK AS SOLD
+    //  MARK AS SOLD
 
     markAsSold: build.mutation<
       SaleResponse,
@@ -339,9 +339,9 @@ export const productApi = baseApi.injectEndpoints({
   }),
 })
 
-// ============================================
+// 
 // 🎣 EXPORT HOOKS
-// ============================================
+// 
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,

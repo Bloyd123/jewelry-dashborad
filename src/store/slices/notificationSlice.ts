@@ -91,9 +91,9 @@ const generateNotificationId = (): string => {
 const getDefaultIcon = (variant: NotificationVariant): string => {
   const iconMap: Record<NotificationVariant, string> = {
     info: 'ℹ️',
-    success: '✅',
+    success: '',
     warning: '⚠️',
-    error: '❌',
+    error: '',
   }
   return iconMap[variant] || 'ℹ️'
 }

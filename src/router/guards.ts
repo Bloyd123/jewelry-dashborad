@@ -1,26 +1,54 @@
+// 
 // FILE: src/router/guards.ts
-// Navigation Guards and Route Utilities - FIXED VERSION
+// Navigation Guards and Route Utilities - FULLY ALIGNED
+// 
 
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
 import { ROUTE_PATHS } from '@/constants/routePaths'
+import type { PermissionKey, UserRole } from '@/types'
 
-// Route Guard Hook - Programmatic route protection
+// 
+// TYPES
+// 
 
 interface RouteGuardOptions {
-  permission?: string
-  requiredPermissions?: string[]
+  permission?: PermissionKey
+  requiredPermissions?: PermissionKey[]
   requireAll?: boolean
+  requiredRole?: UserRole
+  requiredRoles?: UserRole[]
   redirectTo?: string
   onAccessDenied?: () => void
 }
 
+interface NavigateWithPermissionOptions {
+  permission?: PermissionKey
+  requiredPermissions?: PermissionKey[]
+  requireAll?: boolean
+  fallback?: string
+}
+
+export interface Breadcrumb {
+  label: string
+  path?: string
+  isActive?: boolean
+}
+
+// 
+// ROUTE GUARD HOOK - Programmatic route protection
+// 
+
 export const useRouteGuard = (options: RouteGuardOptions) => {
   const navigate = useNavigate()
   const location = useLocation()
-  // FIXED: Access correct state properties
-  const { permissions, isAuthenticated } = useAppSelector(state => state.auth)
+  
+  //  Access from correct slices
+  const { isAuthenticated, role } = useAppSelector(state => state.auth)
+  const effectivePermissions = useAppSelector(state => 
+    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  )
 
   useEffect(() => {
     // Check authentication
@@ -32,10 +60,23 @@ export const useRouteGuard = (options: RouteGuardOptions) => {
       return
     }
 
+    // Check role if specified
+    if (options.requiredRole || options.requiredRoles) {
+      const hasRole = options.requiredRole
+        ? role === options.requiredRole
+        : options.requiredRoles?.includes(role!)
+
+      if (!hasRole) {
+        options.onAccessDenied?.()
+        navigate(options.redirectTo || ROUTE_PATHS.DASHBOARD, { replace: true })
+        return
+      }
+    }
+
     // Check permissions if specified
     if (options.permission || options.requiredPermissions) {
       const hasAccess = checkPermissions(
-        permissions,
+        effectivePermissions,
         options.permission,
         options.requiredPermissions,
         options.requireAll
@@ -46,15 +87,17 @@ export const useRouteGuard = (options: RouteGuardOptions) => {
         navigate(options.redirectTo || ROUTE_PATHS.DASHBOARD, { replace: true })
       }
     }
-  }, [isAuthenticated, permissions, location.pathname])
+  }, [isAuthenticated, effectivePermissions, role, location.pathname])
 }
 
-// Permission Checker Utility - FIXED
+// 
+// PERMISSION CHECKER UTILITY
+// 
 
 export const checkPermissions = (
-  permissions: any,
-  permission?: string,
-  requiredPermissions?: string[],
+  permissions: Record<string, boolean> | null,
+  permission?: PermissionKey,
+  requiredPermissions?: PermissionKey[],
   requireAll = false
 ): boolean => {
   if (!permissions) return false
@@ -76,19 +119,17 @@ export const checkPermissions = (
   return true
 }
 
-// Navigation Helper with Permission Check - FIXED
-
-interface NavigateWithPermissionOptions {
-  permission?: string
-  requiredPermissions?: string[]
-  requireAll?: boolean
-  fallback?: string
-}
+// 
+// NAVIGATION WITH PERMISSION CHECK
+// 
 
 export const useNavigateWithPermission = () => {
   const navigate = useNavigate()
-  // FIXED: Access correct state property
-  const { permissions } = useAppSelector(state => state.auth)
+  
+  //  Access from permissions slice
+  const effectivePermissions = useAppSelector(state => 
+    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  )
 
   const navigateWithPermission = (
     path: string,
@@ -100,7 +141,7 @@ export const useNavigateWithPermission = () => {
     }
 
     const hasAccess = checkPermissions(
-      permissions,
+      effectivePermissions,
       options.permission,
       options.requiredPermissions,
       options.requireAll
@@ -116,13 +157,62 @@ export const useNavigateWithPermission = () => {
   return { navigateWithPermission }
 }
 
-// Breadcrumb Generator
+// 
+// ROLE CHECKER UTILITY
+// 
 
-export interface Breadcrumb {
-  label: string
-  path?: string
-  isActive?: boolean
+export const checkRole = (
+  userRole: UserRole | null,
+  requiredRole?: UserRole,
+  requiredRoles?: UserRole[]
+): boolean => {
+  if (!userRole) return false
+  
+  if (requiredRole) {
+    return userRole === requiredRole
+  }
+  
+  if (requiredRoles && requiredRoles.length > 0) {
+    return requiredRoles.includes(userRole)
+  }
+  
+  return true
 }
+
+// 
+// NAVIGATION WITH ROLE CHECK
+// 
+
+export const useNavigateWithRole = () => {
+  const navigate = useNavigate()
+  const { role } = useAppSelector(state => state.auth)
+
+  const navigateWithRole = (
+    path: string,
+    requiredRole?: UserRole,
+    requiredRoles?: UserRole[],
+    fallback: string = ROUTE_PATHS.DASHBOARD
+  ) => {
+    if (!requiredRole && !requiredRoles) {
+      navigate(path)
+      return
+    }
+
+    const hasAccess = checkRole(role, requiredRole, requiredRoles)
+
+    if (hasAccess) {
+      navigate(path)
+    } else {
+      navigate(fallback)
+    }
+  }
+
+  return { navigateWithRole }
+}
+
+// 
+// BREADCRUMB GENERATOR
+// 
 
 export const generateBreadcrumbs = (pathname: string): Breadcrumb[] => {
   const paths = pathname.split('/').filter(Boolean)
@@ -151,7 +241,9 @@ export const generateBreadcrumbs = (pathname: string): Breadcrumb[] => {
   return breadcrumbs
 }
 
-// Route Title Hook
+// 
+// ROUTE TITLE HOOK
+// 
 
 export const useRouteTitle = (title?: string) => {
   const location = useLocation()
@@ -174,4 +266,99 @@ export const useRouteTitle = (title?: string) => {
         : 'Jewelry Management System'
     }
   }, [title, location.pathname])
+}
+
+// 
+// SHOP CONTEXT GUARD
+// 
+
+export const useShopContextGuard = (redirectTo: string = ROUTE_PATHS.DASHBOARD) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  const { currentShopId, role } = useAppSelector(state => state.auth)
+
+  useEffect(() => {
+    // Skip for org-level users
+    if (role === 'super_admin' || role === 'org_admin') {
+      return
+    }
+
+    // Shop-level users must have a current shop
+    if (!currentShopId) {
+      navigate(redirectTo, {
+        state: { from: location },
+        replace: true,
+      })
+    }
+  }, [currentShopId, role, location.pathname])
+}
+
+// 
+// EMAIL VERIFICATION GUARD
+// 
+
+export const useEmailVerificationGuard = (
+  redirectTo: string = ROUTE_PATHS.AUTH.VERIFY_EMAIL
+) => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  const userProfile = useAppSelector(state => state.user.profile)
+
+  useEffect(() => {
+    if (userProfile && !userProfile.isEmailVerified) {
+      navigate(redirectTo, {
+        state: { from: location },
+        replace: true,
+      })
+    }
+  }, [userProfile?.isEmailVerified, location.pathname])
+}
+
+// 
+// COMBINED ACCESS CHECK
+// 
+
+interface AccessCheckOptions {
+  permission?: PermissionKey
+  requiredPermissions?: PermissionKey[]
+  requireAll?: boolean
+  requiredRole?: UserRole
+  requiredRoles?: UserRole[]
+}
+
+export const useAccessCheck = (options: AccessCheckOptions) => {
+  const { role } = useAppSelector(state => state.auth)
+  const effectivePermissions = useAppSelector(state => 
+    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  )
+
+  const hasRoleAccess = checkRole(role, options.requiredRole, options.requiredRoles)
+  
+  const hasPermissionAccess = checkPermissions(
+    effectivePermissions,
+    options.permission,
+    options.requiredPermissions,
+    options.requireAll
+  )
+
+  const hasAccess = hasRoleAccess && hasPermissionAccess
+
+  return {
+    hasAccess,
+    hasRoleAccess,
+    hasPermissionAccess,
+    role,
+    permissions: effectivePermissions,
+  }
+}
+
+// 
+// EXPORTS
+// 
+
+export type {
+  RouteGuardOptions,
+  NavigateWithPermissionOptions,
 }

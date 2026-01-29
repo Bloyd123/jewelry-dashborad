@@ -198,6 +198,7 @@ export interface LoginResponse {
     effectivePermissions?: ShopPermissions //   field
     requires2FA?: boolean
     tempToken?: string
+    remainingBackupCodes?: number 
   }
 }
 

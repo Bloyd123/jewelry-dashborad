@@ -63,7 +63,7 @@ export const AddProduct = () => {
 
   const handleSuccess = () => {
     // Show success message (you can add toast here later)
-    console.log('✅ Product saved successfully!')
+    console.log(' Product saved successfully!')
     console.log('Mode:', mode)
     console.log('ProductId:', productId)
     console.log('Form Data:', initialData)

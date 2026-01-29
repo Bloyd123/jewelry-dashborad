@@ -1,5 +1,7 @@
+// 
 // FILE: src/router/RoleRoute.tsx
-// Permission-Based Route Protection - FIXED VERSION
+// Permission-Based Route Protection - FULLY ALIGNED WITH REDUX ARCHITECTURE
+// 
 
 import { Navigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -8,41 +10,87 @@ import { ROUTE_PATHS } from '@/constants/routePaths'
 import { Alert, AlertDescription, AlertTitle } from '@/components/common/Alert'
 import { Button } from '@/components/ui/button'
 import { ShieldAlert, ArrowLeft } from 'lucide-react'
+import type { PermissionKey, UserRole } from '@/types'
 
+// 
 // TYPES & INTERFACES
+// 
 
 interface RoleRouteProps {
   children: React.ReactNode
-  permission?: string
-  requiredPermissions?: string[]
-  requireAll?: boolean
+  
+  // Permission-Based Protection
+  permission?: PermissionKey
+  requiredPermissions?: PermissionKey[]
+  requireAll?: boolean // If true, user must have ALL permissions
+  
+  // Role-Based Protection
+  requiredRole?: UserRole
+  requiredRoles?: UserRole[]
+  
+  // Fallback & Error Handling
   fallbackPath?: string
   showError?: boolean
 }
 
+// 
 // ROLE ROUTE COMPONENT
+// 
 
 export const RoleRoute: React.FC<RoleRouteProps> = ({
   children,
   permission,
   requiredPermissions = [],
   requireAll = false,
+  requiredRole,
+  requiredRoles = [],
   fallbackPath = ROUTE_PATHS.DASHBOARD,
   showError = true,
 }) => {
-  // FIXED: Access correct state properties
-  const { permissions, user } = useAppSelector(state => state.auth)
+  //  FIXED: Access from correct slices
+  const { role: userRole } = useAppSelector(state => state.auth)
+  const effectivePermissions = useAppSelector(state => 
+    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  )
 
-  // If no permissions specified, allow access
+  // 
+  // ROLE-BASED CHECKS (if specified)
+  // 
+
+  if (requiredRole || requiredRoles.length > 0) {
+    const hasRole = requiredRole 
+      ? userRole === requiredRole 
+      : requiredRoles.includes(userRole!)
+
+    if (!hasRole) {
+      console.warn('[RoleRoute] Role check failed:', {
+        userRole,
+        requiredRole,
+        requiredRoles,
+      })
+
+      return showError ? (
+        <AccessDeniedError reason="insufficient_role" />
+      ) : (
+        <Navigate to={fallbackPath} replace />
+      )
+    }
+  }
+
+  // 
+  // PERMISSION-BASED CHECKS
+  // 
+
+  // If no permissions specified, allow access (role check already passed if any)
   if (!permission && requiredPermissions.length === 0) {
     return <>{children}</>
   }
 
-  // FIXED: Check if permissions object exists
-  if (!permissions) {
-    console.warn('[RoleRoute] No permissions found for user:', user?.role)
+  // Check if permissions are loaded
+  if (!effectivePermissions) {
+    console.warn('[RoleRoute] No permissions loaded for user:', userRole)
     return showError ? (
-      <AccessDeniedError />
+      <AccessDeniedError reason="no_permissions" />
     ) : (
       <Navigate to={fallbackPath} replace />
     )
@@ -50,16 +98,16 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
 
   // Check single permission
   if (permission) {
-    const hasPermission = permissions[permission] === true
+    const hasPermission = effectivePermissions[permission] === true
 
     if (!hasPermission) {
       console.warn(`[RoleRoute] Permission denied: ${permission}`, {
-        role: user?.role,
+        role: userRole,
         hasPermission,
       })
 
       return showError ? (
-        <AccessDeniedError />
+        <AccessDeniedError reason="missing_permission" permission={permission} />
       ) : (
         <Navigate to={fallbackPath} replace />
       )
@@ -69,18 +117,22 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   // Check multiple permissions
   if (requiredPermissions.length > 0) {
     const checkPermissions = requireAll
-      ? requiredPermissions.every(perm => permissions[perm] === true)
-      : requiredPermissions.some(perm => permissions[perm] === true)
+      ? requiredPermissions.every(perm => effectivePermissions[perm] === true)
+      : requiredPermissions.some(perm => effectivePermissions[perm] === true)
 
     if (!checkPermissions) {
       console.warn('[RoleRoute] Multiple permissions check failed:', {
         required: requiredPermissions,
         requireAll,
-        role: user?.role,
+        role: userRole,
       })
 
       return showError ? (
-        <AccessDeniedError />
+        <AccessDeniedError 
+          reason="missing_permissions" 
+          permissions={requiredPermissions}
+          requireAll={requireAll}
+        />
       ) : (
         <Navigate to={fallbackPath} replace />
       )
@@ -90,13 +142,48 @@ export const RoleRoute: React.FC<RoleRouteProps> = ({
   return <>{children}</>
 }
 
+// 
 // ACCESS DENIED ERROR COMPONENT
+// 
 
-const AccessDeniedError: React.FC = () => {
+interface AccessDeniedErrorProps {
+  reason?: 'insufficient_role' | 'no_permissions' | 'missing_permission' | 'missing_permissions'
+  permission?: PermissionKey
+  permissions?: PermissionKey[]
+  requireAll?: boolean
+}
+
+const AccessDeniedError: React.FC<AccessDeniedErrorProps> = ({ 
+  reason = 'missing_permission',
+  permission,
+  permissions,
+  requireAll
+}) => {
   const { t } = useTranslation()
 
   const handleGoBack = () => {
     window.history.back()
+  }
+
+  const getErrorMessage = () => {
+    switch (reason) {
+      case 'insufficient_role':
+        return t('authAlert.accessDenied.insufficientRole')
+      case 'no_permissions':
+        return t('authAlert.accessDenied.noPermissions')
+      case 'missing_permission':
+        return t('authAlert.accessDenied.missingPermission', { permission })
+      case 'missing_permissions':
+        return requireAll
+          ? t('authAlert.accessDenied.missingAllPermissions', { 
+              count: permissions?.length 
+            })
+          : t('authAlert.accessDenied.missingAnyPermission', { 
+              count: permissions?.length 
+            })
+      default:
+        return t('authAlert.accessDenied.description')
+    }
   }
 
   return (
@@ -108,7 +195,7 @@ const AccessDeniedError: React.FC = () => {
             {t('authAlert.accessDenied.title')}
           </AlertTitle>
           <AlertDescription className="mt-2">
-            {t('authAlert.accessDenied.description')}
+            {getErrorMessage()}
           </AlertDescription>
         </Alert>
 
@@ -128,37 +215,9 @@ const AccessDeniedError: React.FC = () => {
   )
 }
 
-// PERMISSION CHECKER HOOK
 
-export const usePermission = () => {
-  // FIXED: Access correct state properties
-  const { permissions, user, currentShopAccess } = useAppSelector(
-    state => state.auth
-  )
+// 
+// EXPORT TYPES
+// 
 
-  const hasPermission = (permission: string): boolean => {
-    return permissions?.[permission] === true
-  }
-
-  const hasAnyPermission = (permissionList: string[]): boolean => {
-    return permissionList.some(perm => permissions?.[perm] === true)
-  }
-
-  const hasAllPermissions = (permissionList: string[]): boolean => {
-    return permissionList.every(perm => permissions?.[perm] === true)
-  }
-
-  const getRole = (): string | null => {
-    return user?.role || null
-  }
-
-  return {
-    hasPermission,
-    hasAnyPermission,
-    hasAllPermissions,
-    getRole,
-    permissions,
-    currentShopAccess,
-    user,
-  }
-}
+export type { RoleRouteProps }

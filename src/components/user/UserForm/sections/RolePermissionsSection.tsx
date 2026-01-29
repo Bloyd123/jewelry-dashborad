@@ -1,13 +1,17 @@
 // FILE: src/components/user/UserForm/sections/RolePermissionsSection.tsx
 // Role & Permissions Section - Role, Organization, Shop
+//  UPDATED: Uses new Redux architecture (authSlice + userSlice)
 
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'
 import { AlertCircle } from 'lucide-react'
 import type { FormSectionProps } from '../UserForm.types'
-import { useCurrentUser } from '@/hooks/useAuth'
 import { useAppSelector } from '@/store/hooks'
-import { selectShopOptions, selectCurrentShop } from '@/store/slices/authSlice'
+
+//  NEW: Import from correct slices
+import { selectCurrentShopId, selectShopIds } from '@/store/slices/authSlice'
+import { selectUserProfile } from '@/store/slices/userSlice'
+
 export const RolePermissionsSection = ({
   data,
   errors,
@@ -16,10 +20,12 @@ export const RolePermissionsSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-  const currentUser = useCurrentUser()
+  
+  //  NEW: Get data from correct slices
+  const currentUser = useAppSelector(selectUserProfile)
+  const currentShopId = useAppSelector(selectCurrentShopId)
+  const shopIds = useAppSelector(selectShopIds)
 
-  const shopOptions = useAppSelector(selectShopOptions)
-  const currentShopId = useAppSelector(selectCurrentShop)
   // Role options
   const roleOptions = [
     // { value: 'super_admin', label: t('user.roles.superAdmin') },
@@ -47,9 +53,15 @@ export const RolePermissionsSection = ({
       ]
     : []
 
-  // TEMPORARY: Empty shops (until API is ready)
-  // const shopOptions: Array<{ value: string; label: string }> = []
+  //  NEW: Create shop options from shopIds
+  // TEMPORARY: Until shop details API is ready
+  const shopOptions = shopIds.map((shopId) => ({
+    value: shopId,
+    label: `Shop ${shopId.slice(-4)}`, // TODO: Replace with actual shop name from API
+  }))
+
   // 🔜 When shop API is ready:
+  // const { data: shops = [] } = useGetShopsQuery({ shopIds })
   // const shopOptions = shops.map(shop => ({
   //   value: shop._id,
   //   label: shop.name || shop.displayName
@@ -126,7 +138,6 @@ export const RolePermissionsSection = ({
         <FormSelect
           name="primaryShop"
           label={t('user.primaryShop')}
-          // value={data.primaryShop || ''}
           value={data.primaryShop || currentShopId || ''}
           onChange={onChange}
           onBlur={onBlur}

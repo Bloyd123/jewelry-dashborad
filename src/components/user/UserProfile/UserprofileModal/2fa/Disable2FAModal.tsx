@@ -1,9 +1,9 @@
 // FILE: src/components/auth/2fa/Disable2FAModal.tsx
 // Disable 2FA Confirmation Modal
+//  UPDATED: Uses new Redux architecture and useAuth hook
 
 import { useState } from 'react'
-import { useAppDispatch, useAppSelector } from '@/store/hooks/base'
-import { disable2FA } from '@/store/slices/authSlice'
+import { useAuth } from '@/hooks/useAuth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
 import { AlertTriangle, Eye, EyeOff } from 'lucide-react'
@@ -36,9 +36,10 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
-  const loading = useAppSelector(state => state.auth.is2FALoading)
+  
+  //  NEW: Use useAuth hook instead of direct dispatch
+  const { disable2FA, isLoading } = useAuth()
 
   // State
   const [password, setPassword] = useState('')
@@ -62,16 +63,20 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
     }
 
     try {
-      await dispatch(disable2FA({ password, token: code })).unwrap()
-      onOpenChange(false)
-      onSuccess?.()
+      //  NEW: Use disable2FA from useAuth hook
+      const result = await disable2FA(password, code)
+      
+      if (result.success) {
+        onOpenChange(false)
+        onSuccess?.()
 
-      // Reset state
-      setTimeout(() => {
-        setPassword('')
-        setCode('')
-        setError(null)
-      }, 300)
+        // Reset state
+        setTimeout(() => {
+          setPassword('')
+          setCode('')
+          setError(null)
+        }, 300)
+      }
     } catch (err: any) {
       handleError(err, errors => {
         setError(Object.values(errors)[0] as string)
@@ -166,15 +171,15 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
       </ModalBody>
 
       <ModalFooter align="right">
-        <Button variant="outline" onClick={handleCancel} disabled={loading}>
+        <Button variant="outline" onClick={handleCancel} disabled={isLoading}>
           {t('common.cancel')}
         </Button>
         <Button
           variant="destructive"
           onClick={handleDisable}
-          disabled={loading || !password || code.length !== 6}
+          disabled={isLoading || !password || code.length !== 6}
         >
-          {loading && <Loader size="xs" variant="spinner" />}
+          {isLoading && <Loader size="xs" variant="spinner" />}
           {t('auth.2fa.disable2FA')}
         </Button>
       </ModalFooter>

@@ -1,7 +1,8 @@
 // FILE: src/pages/UserProfile/tabs/PersonalInfoTab.tsx
 // Personal Information Tab Component
+//  FIXED: Uses userSlice instead of authSlice, proper state management
 
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   User,
@@ -31,61 +32,110 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-// import { dummyUser } from '@/pages/user/data'
 import { useAppSelector } from '@/store/hooks/base'
 import { useAuth } from '@/hooks/useAuth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
-import type { User as UserType, UpdateProfileRequest } from '@/types'
+import type { UpdateProfileRequest } from '@/types'
+
+//  NEW: Import from userSlice
+import { selectUserProfile } from '@/store/slices/userSlice'
 
 export const PersonalInfoTab = () => {
   const { t } = useTranslation()
-  // const [isEditing, setIsEditing] = useState(false)
-  // const [formData, setFormData] = useState(dummyUser)
-  const user = useAppSelector(state => state.auth.user) as UserType | null
-    const [isEditing, setIsEditing] = useState(false)
-  const [formData, setFormData] = useState<Partial<UserType>>(user || {})
+  
+  //  FIXED: Get user from userSlice instead of authSlice
+  const user = useAppSelector(selectUserProfile)
+  
+  const [isEditing, setIsEditing] = useState(false)
+  const [formData, setFormData] = useState({
+    username: user?.username || '',
+    email: user?.email || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    phone: user?.phone || '',
+    designation: user?.designation || '',
+    department: user?.department || 'other',
+    employeeId: user?.employeeId || '',
+    joiningDate: user?.joiningDate || null,
+    profileImage: user?.profileImage || '',
+  })
+  
   const { updateProfile } = useAuth()
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
   const [isLoading, setIsLoading] = useState(false)
-    const fullName = formData.fullName || 
-    `${formData.firstName || ''} ${formData.lastName || ''}`.trim() || 
+  
+  //  FIXED: Compute fullName properly
+  const fullName = user?.fullName || 
+    `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 
     'User'
-    useEffect(() => {
+  
+  //  FIXED: Update form when user changes
+  useEffect(() => {
     if (user) {
-      setFormData(user)
+      setFormData({
+        username: user.username || '',
+        email: user.email || '',
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        phone: user.phone || '',
+        designation: user.designation || '',
+        department: user.department || 'other',
+        employeeId: user.employeeId || '',
+        joiningDate: user.joiningDate || null,
+        profileImage: user.profileImage || '',
+      })
     }
   }, [user])
-    const handleCancel = () => {
-    setFormData(user || {})
+  
+  //  FIXED: Cancel handler resets to original user data
+  const handleCancel = () => {
+    if (user) {
+      setFormData({
+        username: user.username || '',
+        email: user.email || '',
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        phone: user.phone || '',
+        designation: user.designation || '',
+        department: user.department || 'other',
+        employeeId: user.employeeId || '',
+        joiningDate: user.joiningDate || null,
+        profileImage: user.profileImage || '',
+      })
+    }
     setIsEditing(false)
   }
 
+  //  FIXED: Save handler with proper error handling
   const handleSave = async () => {
     setIsLoading(true)
     try {
-      // Only send allowed fields
+      // Only send allowed fields (matching backend validation)
       const updateData: UpdateProfileRequest = {
         firstName: formData.firstName,
         lastName: formData.lastName,
         phone: formData.phone,
         designation: formData.designation,
-        // profileImage: formData.profileImage,
+        // profileImage: formData.profileImage, // Uncomment when image upload is ready
       }
       
       await updateProfile(updateData)
+      
       showSuccess(
         t('userProfile.personalInfo.updateSuccess'),
         t('userProfile.personalInfo.profileUpdated')
       )
       setIsEditing(false)
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Profile update error:', error)
       handleError(error)
     } finally {
       setIsLoading(false)
     }
   }
+
   return (
     <div className="space-y-6">
       {/* Profile Picture Card */}
@@ -99,14 +149,14 @@ export const PersonalInfoTab = () => {
         <CardContent className="flex items-center gap-6">
           <Avatar
             src={formData.profileImage || undefined}
-             name={fullName}
+            name={fullName}
             size="xl"
           />
           <div className="flex gap-3">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" disabled>
               {t('userProfile.personalInfo.changePhoto')}
             </Button>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" disabled>
               {t('userProfile.personalInfo.removePhoto')}
             </Button>
           </div>
@@ -154,7 +204,7 @@ export const PersonalInfoTab = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
-            {/* Username */}
+            {/* Username - READ ONLY */}
             <div className="space-y-2">
               <Label htmlFor="username">
                 <User className="mr-2 inline h-4 w-4" />
@@ -164,13 +214,11 @@ export const PersonalInfoTab = () => {
                 id="username"
                 value={formData.username}
                 disabled={true}
-                onChange={e =>
-                  setFormData({ ...formData, username: e.target.value })
-                }
+                className="bg-bg-tertiary cursor-not-allowed"
               />
             </div>
 
-            {/* Email */}
+            {/* Email - READ ONLY */}
             <div className="space-y-2">
               <Label htmlFor="email">
                 <Mail className="mr-2 inline h-4 w-4" />
@@ -180,14 +228,12 @@ export const PersonalInfoTab = () => {
                 id="email"
                 type="email"
                 value={formData.email}
-                 disabled={true}
-                onChange={e =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                disabled={true}
+                className="bg-bg-tertiary cursor-not-allowed"
               />
             </div>
 
-            {/* First Name */}
+            {/* First Name - EDITABLE */}
             <div className="space-y-2">
               <Label htmlFor="firstName">
                 {t('userProfile.personalInfo.firstName')}
@@ -199,25 +245,27 @@ export const PersonalInfoTab = () => {
                 onChange={e =>
                   setFormData({ ...formData, firstName: e.target.value })
                 }
+                placeholder={t('userProfile.personalInfo.firstNamePlaceholder')}
               />
             </div>
 
-            {/* Last Name */}
+            {/* Last Name - EDITABLE */}
             <div className="space-y-2">
               <Label htmlFor="lastName">
                 {t('userProfile.personalInfo.lastName')}
               </Label>
               <Input
                 id="lastName"
-                value={formData.lastName || ''}
+                value={formData.lastName}
                 disabled={!isEditing}
                 onChange={e =>
                   setFormData({ ...formData, lastName: e.target.value })
                 }
+                placeholder={t('userProfile.personalInfo.lastNamePlaceholder')}
               />
             </div>
 
-            {/* Phone */}
+            {/* Phone - EDITABLE */}
             <div className="space-y-2">
               <Label htmlFor="phone">
                 <Phone className="mr-2 inline h-4 w-4" />
@@ -225,11 +273,13 @@ export const PersonalInfoTab = () => {
               </Label>
               <Input
                 id="phone"
-                value={formData.phone || ''}
+                value={formData.phone}
                 disabled={!isEditing}
                 onChange={e =>
                   setFormData({ ...formData, phone: e.target.value })
                 }
+                placeholder="9999999999"
+                maxLength={10}
               />
             </div>
           </div>
@@ -248,7 +298,7 @@ export const PersonalInfoTab = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
-            {/* Designation */}
+            {/* Designation - EDITABLE */}
             <div className="space-y-2">
               <Label htmlFor="designation">
                 <Briefcase className="mr-2 inline h-4 w-4" />
@@ -256,15 +306,16 @@ export const PersonalInfoTab = () => {
               </Label>
               <Input
                 id="designation"
-                value={formData.designation || ''}
+                value={formData.designation}
                 disabled={!isEditing}
                 onChange={e =>
                   setFormData({ ...formData, designation: e.target.value })
                 }
+                placeholder={t('userProfile.personalInfo.designationPlaceholder')}
               />
             </div>
 
-            {/* Department */}
+            {/* Department - READ ONLY */}
             <div className="space-y-2">
               <Label htmlFor="department">
                 <Building2 className="mr-2 inline h-4 w-4" />
@@ -272,12 +323,9 @@ export const PersonalInfoTab = () => {
               </Label>
               <Select
                 value={formData.department}
-                disabled={true} 
-                onValueChange={value =>
-                  setFormData({ ...formData, department: value as any })
-                }
+                disabled={true}
               >
-                <SelectTrigger id="department">
+                <SelectTrigger id="department" className="bg-bg-tertiary cursor-not-allowed">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -312,7 +360,7 @@ export const PersonalInfoTab = () => {
               </Select>
             </div>
 
-            {/* Employee ID */}
+            {/* Employee ID - READ ONLY */}
             <div className="space-y-2">
               <Label htmlFor="employeeId">
                 <Hash className="mr-2 inline h-4 w-4" />
@@ -320,12 +368,13 @@ export const PersonalInfoTab = () => {
               </Label>
               <Input
                 id="employeeId"
-                value={formData.employeeId || ''}
+                value={formData.employeeId}
                 disabled
+                className="bg-bg-tertiary cursor-not-allowed"
               />
             </div>
 
-            {/* Joining Date */}
+            {/* Joining Date - READ ONLY */}
             <div className="space-y-2">
               <Label htmlFor="joiningDate">
                 <Calendar className="mr-2 inline h-4 w-4" />
@@ -340,6 +389,7 @@ export const PersonalInfoTab = () => {
                     : ''
                 }
                 disabled
+                className="bg-bg-tertiary cursor-not-allowed"
               />
             </div>
           </div>

@@ -24,16 +24,16 @@
 
 ### Features
 
-✅ **Fully Flexible** - Any module mein use karo  
-✅ **Responsive** - Mobile, tablet, desktop perfect  
-✅ **Theme-Based** - CSS variables only  
-✅ **i18n Ready** - All text translatable  
-✅ **Multiple Variants** - Default, error, success, info, search, filter  
-✅ **Multiple Sizes** - sm, md, lg  
-✅ **Actions Support** - Primary & secondary buttons  
-✅ **Custom Content** - Complete flexibility  
-✅ **Preset Components** - Common use cases ready  
-✅ **TypeScript** - Full type safety  
+ **Fully Flexible** - Any module mein use karo  
+ **Responsive** - Mobile, tablet, desktop perfect  
+ **Theme-Based** - CSS variables only  
+ **i18n Ready** - All text translatable  
+ **Multiple Variants** - Default, error, success, info, search, filter  
+ **Multiple Sizes** - sm, md, lg  
+ **Actions Support** - Primary & secondary buttons  
+ **Custom Content** - Complete flexibility  
+ **Preset Components** - Common use cases ready  
+ **TypeScript** - Full type safety  
 
 ---
 
@@ -55,10 +55,10 @@
 
 ### Don't Use When:
 
-❌ Loading state (use Skeleton instead)  
-❌ Single item missing (use inline message)  
-❌ Temporary states (use Toast/Alert)  
-❌ Form validation errors (use form error messages)  
+ Loading state (use Skeleton instead)  
+ Single item missing (use inline message)  
+ Temporary states (use Toast/Alert)  
+ Form validation errors (use form error messages)  
 
 ---
 
@@ -563,7 +563,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 // Good
 <EmptySearchResults query={query} onClear={clear} />
 
-// ❌ Bad - Reinventing the wheel
+//  Bad - Reinventing the wheel
 <EmptyState icon={Search} title="No results" ... />
 ```
 
@@ -585,7 +585,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 <EmptySearchResults /> // variant="search"
 <EmptyErrorState />     // variant="error"
 
-// ❌ Bad - Wrong context
+//  Bad - Wrong context
 <EmptyState variant="error" title="No customers" />
 ```
 
@@ -594,7 +594,7 @@ const isMobile = useMediaQuery('(max-width: 768px)')
 // Good
 title="customer.empty.title"
 
-// ❌ Bad
+//  Bad
 title="No customers found"
 ```
 
@@ -605,7 +605,7 @@ title="No customers found"
   <EmptyState size="sm" compact />
 </Card>
 
-// ❌ Bad - Too big for card
+//  Bad - Too big for card
 <Card>
   <EmptyState size="lg" fullHeight />
 </Card>
@@ -613,11 +613,11 @@ title="No customers found"
 
 ---
 
-### ❌ DON'Ts
+###  DON'Ts
 
 1. **Don't Use for Loading**
 ```typescript
-// ❌ Wrong
+//  Wrong
 if (isLoading) return <EmptyState title="Loading..." />
 
 // Correct
@@ -626,7 +626,7 @@ if (isLoading) return <Skeleton />
 
 2. **Don't Hardcode Text**
 ```typescript
-// ❌ Wrong
+//  Wrong
 <EmptyState title="No data" />
 
 // Correct
@@ -635,7 +635,7 @@ if (isLoading) return <Skeleton />
 
 3. **Don't Use Multiple Actions Without Purpose**
 ```typescript
-// ❌ Confusing
+//  Confusing
 <EmptyState
   action={{...}}
   secondaryAction={{...}}
@@ -650,7 +650,7 @@ if (isLoading) return <Skeleton />
 
 4. **Don't Mix Variants Randomly**
 ```typescript
-// ❌ Confusing
+//  Confusing
 <EmptyState variant="success" icon={AlertCircle} />
 
 // Consistent
