@@ -1,5 +1,6 @@
 // FILE: src/types/customer.types.ts
 // Customer Types and Interfaces (Based on Backend Validation)
+// ✅ 100% ALIGNED WITH BACKEND
 
 /**
  * MongoDB ID type
@@ -25,6 +26,11 @@ export type CustomerCategory =
   | 'diamond'
   | 'platinum'
   | 'mixed'
+
+/**
+ * Membership Tier Enum
+ */
+export type MembershipTier = 'standard' | 'silver' | 'gold' | 'platinum'
 
 /**
  * Preferred Metal Enum
@@ -72,15 +78,33 @@ export interface CustomerPreferences {
 }
 
 /**
+ * Customer Statistics Interface (from backend)
+ */
+export interface CustomerStatistics {
+  totalOrders: number
+  completedOrders: number
+  cancelledOrders: number
+  totalSpent: number
+  averageOrderValue: number
+  lastOrderDate: string | null
+  lastVisitDate: string | null
+  firstOrderDate: string | null
+}
+
+/**
  * Customer Interface (Main Entity)
+ * ✅ MATCHES BACKEND EXACTLY
  */
 export interface Customer {
   _id: ID
+  organizationId: ID
   shopId: ID
+  customerCode: string // Auto-generated: CUST00001
 
   // Basic Information
   firstName: string
   lastName?: string
+  fullName: string // Virtual field: firstName + lastName
   phone: string
   alternatePhone?: string
   whatsappNumber?: string
@@ -102,12 +126,16 @@ export interface Customer {
   // Customer Classification
   customerType?: CustomerType
   customerCategory?: CustomerCategory
+  membershipTier: MembershipTier // Default: 'standard'
 
   // Financial
   creditLimit?: number
-  totalPurchases?: number
+  currentBalance: number // Current outstanding
+  totalPurchases: number // Lifetime purchases
+  totalPaid: number // Total payments made
+  totalDue: number // Outstanding balance
   lastPurchaseDate?: string // ISO8601 format
-  loyaltyPoints?: number
+  loyaltyPoints: number
 
   // Preferences
   preferences?: CustomerPreferences
@@ -120,12 +148,26 @@ export interface Customer {
   notes?: string
   tags?: string[]
 
+  // Blacklist
+  isBlacklisted: boolean
+  blacklistReason?: string
+  blacklistedAt?: string
+  blacklistedBy?: ID
+
   // Status
   isActive: boolean
+
+  // Statistics
+  statistics: CustomerStatistics
+
+  // Audit Fields
+  createdBy?: ID
+  updatedBy?: ID
 
   // Timestamps
   createdAt: string
   updatedAt: string
+  deletedAt?: string | null
 }
 
 /**
@@ -222,9 +264,10 @@ export interface CustomerListParams {
   limit?: number // Min: 1, Max: 100
   search?: string // Max 100 chars
   customerType?: CustomerType
-  membershipTier?: 'standard' | 'silver' | 'gold' | 'platinum'
+  membershipTier?: MembershipTier
   isActive?: boolean
   hasBalance?: boolean
+  vipOnly?: boolean
   startDate?: string // ISO8601
   endDate?: string // ISO8601
   sort?: string // Format: "-firstName" or "totalPurchases"
@@ -262,15 +305,6 @@ export interface BulkImportCustomerItem {
 export interface BulkImportRequest {
   customers: BulkImportCustomerItem[] // 1-1000 items
 }
-
-/**
- * Bulk Update Request
- */
-// export interface BulkUpdateRequest {
-//   customerIds: ID[] // 1-100 MongoDB IDs
-//   updateData: Partial<UpdateCustomerRequest>
-//   // Cannot include: customerCode, phone in updateData
-// }
 
 /**
  * Export Customers Query Parameters
@@ -380,6 +414,7 @@ export const VALIDATION_MESSAGES = {
     invalid: 'Invalid pincode (must be 6 digits)',
   },
 } as const
+
 /**
  * Customer List API Response
  */
@@ -486,7 +521,7 @@ export interface LoyaltyPointsResponse {
 }
 
 // 
-// 🆕 RTK QUERY INPUT TYPES (ADD THESE)
+// 🆕 RTK QUERY INPUT TYPES
 // 
 
 /**
