@@ -7,7 +7,10 @@ import { RecentOrders } from '../components/RecentOrders'
 import { QuickActions } from '../components/QuickActions'
 import { StockAlerts } from '../components/StockAlerts'
 import { TopProducts } from '../components/TopProducts'
+import { useAuth } from '@/hooks/useAuth'
 export const Dashboard = () => {
+   const { currentShopId } = useAuth()
+     console.log('Current Shop ID:', currentShopId)
   return (
     <div className="space-y-6">
       {/* Page Header */}

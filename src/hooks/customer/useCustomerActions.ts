@@ -1,9 +1,8 @@
-// FILE: src/features/customer/hooks/useCustomer.ts
-// Customer Business Logic Hook with Error Handling
+// FILE: src/features/customer/hooks/useCustomerActions.ts
+// Hook for customer mutations (create, update, delete, blacklist, loyalty)
 
 import { useCallback } from 'react'
 import {
-  useGetCustomersQuery,
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,
@@ -17,33 +16,17 @@ import { useNotification } from '@/hooks/useNotification'
 import type {
   CreateCustomerInput,
   UpdateCustomerInput,
-  CustomerListParams,
 } from '@/types/customer.types'
 
 /**
- * Custom hook for customer operations
- * Handles all customer-related business logic with error handling
+ * Hook for customer mutation operations
+ * Handles create, update, delete, blacklist, and loyalty operations
  */
-export const useCustomer = (
-  shopId: string,
-  filters?: Partial<CustomerListParams>
-) => {
+export const useCustomerActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  // 
-  // 📊 FETCH DATA (with auto-caching)
-  // 
-  const { data, isLoading, isFetching, error, refetch } = useGetCustomersQuery({
-    shopId,
-    page: filters?.page || 1,
-    limit: filters?.limit || 20,
-    ...filters,
-  })
-
-  // 
-  // 🔧 MUTATIONS
-  // 
+  // Mutations
   const [createMutation, createState] = useCreateCustomerMutation()
   const [updateMutation, updateState] = useUpdateCustomerMutation()
   const [deleteMutation, deleteState] = useDeleteCustomerMutation()
@@ -54,9 +37,9 @@ export const useCustomer = (
   const [redeemLoyaltyMutation, redeemLoyaltyState] =
     useRedeemLoyaltyPointsMutation()
 
-  // 
-  //  CREATE CUSTOMER with error handling
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CREATE CUSTOMER
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const createCustomer = useCallback(
     async (
       data: Omit<CreateCustomerInput, 'shopId'>,
@@ -65,25 +48,39 @@ export const useCustomer = (
       try {
         const result = await createMutation({ shopId, ...data }).unwrap()
 
-        // Success notification (i18n)
-        showSuccess('customer.success.created', 'customer.success.createdTitle')
+        // showSuccess('customer.success.created', 'customer.success.createdTitle')
 
         return { success: true, data: result }
       } catch (error: any) {
-        //  Handle error (shows toast + sets form errors)
-        handleError(error, setErrors)
+        // handleError(error, setErrors)
+              if (error.data?.errors && Array.isArray(error.data.errors)) {
+        const validationErrors: Record<string, string> = {}
+        
+        error.data.errors.forEach((err: any) => {
+          // Extract field name from error detail
+          // "referredBy: Cast to ObjectId failed..." → "referredBy"
+          const fieldMatch = err.detail?.match(/(\w+):/)
+          if (fieldMatch) {
+            validationErrors[fieldMatch[1]] = err.detail || err.message
+          }
+        })
+        
+        if (Object.keys(validationErrors).length > 0 && setErrors) {
+          setErrors(validationErrors)
+        }
+      }
         return {
           success: false,
           error: error.data?.message || 'Failed to create customer',
         }
       }
     },
-    [createMutation, shopId, handleError, showSuccess]
+    [createMutation, shopId]
   )
 
-  // 
-  // ✏️ UPDATE CUSTOMER with error handling
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // UPDATE CUSTOMER
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const updateCustomer = useCallback(
     async (
       customerId: string,
@@ -97,23 +94,37 @@ export const useCustomer = (
           ...data,
         }).unwrap()
 
-        showSuccess('customer.success.updated', 'customer.success.updatedTitle')
+        // showSuccess('customer.success.updated', 'customer.success.updatedTitle')
 
         return { success: true, data: result }
       } catch (error: any) {
-        handleError(error, setErrors)
+        // handleError(error, setErrors)
+              if (error.data?.errors && Array.isArray(error.data.errors)) {
+        const validationErrors: Record<string, string> = {}
+        
+        error.data.errors.forEach((err: any) => {
+          const fieldMatch = err.detail?.match(/(\w+):/)
+          if (fieldMatch) {
+            validationErrors[fieldMatch[1]] = err.detail || err.message
+          }
+        })
+        
+        if (Object.keys(validationErrors).length > 0 && setErrors) {
+          setErrors(validationErrors)
+        }
+      }
         return {
           success: false,
           error: error.data?.message || 'Failed to update customer',
         }
       }
     },
-    [updateMutation, shopId, handleError, showSuccess]
+    [updateMutation, shopId]
   )
 
-  // 
-  // 🗑 DELETE CUSTOMER with confirmation
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // DELETE CUSTOMER
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const deleteCustomer = useCallback(
     async (customerId: string) => {
       try {
@@ -133,9 +144,9 @@ export const useCustomer = (
     [deleteMutation, shopId, handleError, showSuccess]
   )
 
-  // 
-  // 🚫 BLACKLIST CUSTOMER
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // BLACKLIST CUSTOMER
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const blacklistCustomer = useCallback(
     async (customerId: string, reason: string) => {
       try {
@@ -162,9 +173,9 @@ export const useCustomer = (
     [blacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // REMOVE BLACKLIST
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const removeBlacklist = useCallback(
     async (customerId: string) => {
       try {
@@ -190,9 +201,9 @@ export const useCustomer = (
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // 
-  //  ADD LOYALTY POINTS
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // ADD LOYALTY POINTS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const addLoyaltyPoints = useCallback(
     async (customerId: string, points: number, reason?: string) => {
       try {
@@ -220,9 +231,9 @@ export const useCustomer = (
     [addLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // 
-  // 🎁 REDEEM LOYALTY POINTS
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // REDEEM LOYALTY POINTS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const redeemLoyaltyPoints = useCallback(
     async (customerId: string, points: number) => {
       try {
@@ -249,17 +260,24 @@ export const useCustomer = (
     [redeemLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // 
-  // 📤 RETURN API
-  // 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // RETURN API
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   return {
-    // Data
-    customers: data?.data?.customers || [],
-    summary: data?.data?.summary,
-    pagination: data?.meta?.pagination,
+    // CRUD Actions
+    createCustomer,
+    updateCustomer,
+    deleteCustomer,
 
-    // Loading states
-    isLoading: isLoading || isFetching,
+    // Blacklist Actions
+    blacklistCustomer,
+    removeBlacklist,
+
+    // Loyalty Actions
+    addLoyaltyPoints,
+    redeemLoyaltyPoints,
+
+    // Loading States
     isCreating: createState.isLoading,
     isUpdating: updateState.isLoading,
     isDeleting: deleteState.isLoading,
@@ -268,17 +286,7 @@ export const useCustomer = (
     isAddingLoyalty: addLoyaltyState.isLoading,
     isRedeemingLoyalty: redeemLoyaltyState.isLoading,
 
-    // Actions
-    createCustomer,
-    updateCustomer,
-    deleteCustomer,
-    blacklistCustomer,
-    removeBlacklist,
-    addLoyaltyPoints,
-    redeemLoyaltyPoints,
-    refetch,
-
-    // States
+    // Mutation States (for advanced usage)
     createState,
     updateState,
     deleteState,
@@ -286,6 +294,5 @@ export const useCustomer = (
     removeBlacklistState,
     addLoyaltyState,
     redeemLoyaltyState,
-    error,
   }
 }

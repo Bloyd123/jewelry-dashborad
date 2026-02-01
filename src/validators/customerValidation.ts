@@ -226,7 +226,14 @@ export const createCustomerSchema = z.object({
     ])
     .optional(),
 
-  referredBy: z.string().optional().or(z.literal('')),
+  referredBy: z
+  .string()
+  .optional()
+  .transform(val => val === '' ? undefined : val) // ✅ Convert empty string to undefined
+  .refine(
+    val => !val || val.length === 24, // MongoDB ObjectId is 24 chars
+    { message: 'Invalid customer reference ID' }
+  ),
 
   // Additional Info
   notes: z

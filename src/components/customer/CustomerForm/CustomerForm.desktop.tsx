@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useCustomer } from '@/hooks/useCustomers'
+import { useCustomerActions } from '@/hooks/customer/useCustomerActions'
 
 import type { CreateCustomerInput } from '@/validators/customerValidation'
 import type { CustomerFormProps } from './CustomerForm.types'
@@ -18,6 +18,8 @@ import { KYCSection } from './sections/KYCSection'
 import { PreferencesSection } from './sections/PreferencesSection'
 import { CustomerTypeSection } from './sections/CustomerTypeSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useNotification } from '@/hooks/useNotification'
 
 export default function CustomerFormDesktop({
   initialData = {},
@@ -32,10 +34,47 @@ export default function CustomerFormDesktop({
     useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-
-  const { createCustomer, updateCustomer, isCreating, isUpdating } =
-    useCustomer(shopId)
+  const { showSuccess, showError } = useNotification()
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+const { createCustomer, updateCustomer, isCreating, isUpdating } =
+  useCustomerActions(shopId)
   const isLoading = isCreating || isUpdating
+  
+  const cleanFormData = (data: Partial<CreateCustomerInput>): Partial<CreateCustomerInput> => {
+  const cleaned = { ...data }
+
+  // Convert empty strings to undefined for optional fields
+  if (cleaned.referredBy === '') cleaned.referredBy = undefined
+  if (cleaned.email === '') cleaned.email = undefined
+  if (cleaned.alternatePhone === '') cleaned.alternatePhone = undefined
+  if (cleaned.whatsappNumber === '') cleaned.whatsappNumber = undefined
+  if (cleaned.dateOfBirth === '') cleaned.dateOfBirth = undefined
+  if (cleaned.anniversaryDate === '') cleaned.anniversaryDate = undefined
+  if (cleaned.aadharNumber === '') cleaned.aadharNumber = undefined
+  if (cleaned.panNumber === '') cleaned.panNumber = undefined
+  if (cleaned.gstNumber === '') cleaned.gstNumber = undefined
+  if (cleaned.notes === '') cleaned.notes = undefined
+
+  // Clean address
+  if (cleaned.address) {
+    if (cleaned.address.street === '') cleaned.address.street = undefined
+    if (cleaned.address.city === '') cleaned.address.city = undefined
+    if (cleaned.address.state === '') cleaned.address.state = undefined
+    if (cleaned.address.pincode === '') cleaned.address.pincode = undefined
+    
+    // Remove address if all fields are empty
+    if (
+      !cleaned.address.street &&
+      !cleaned.address.city &&
+      !cleaned.address.state &&
+      !cleaned.address.pincode
+    ) {
+      cleaned.address = undefined
+    }
+  }
+
+  return cleaned
+}
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -72,7 +111,7 @@ export default function CustomerFormDesktop({
       }
     }
   }
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     // 1. Validate entire form with Zod
     try {
       createCustomerSchema.parse(formData)
@@ -84,28 +123,76 @@ export default function CustomerFormDesktop({
         }
       })
       setErrors(validationErrors)
+      
+      // ✅ NEW: Show error notification with first error
+      const firstError = Object.values(validationErrors)[0]
+      if (firstError) {
+        showError(
+          String(firstError),
+          t('customer.errors.validationFailed')
+        )
+      } else {
+        showError(
+          t('customer.errors.pleaseFillRequired'),
+          t('customer.errors.validationFailed')
+        )
+      }
+      
       return
     }
 
-    // 2. After validation passes, formData is now valid CreateCustomerInput
-    const validatedData = formData as CreateCustomerInput // ← Type assertion after validation
+    // ✅ NEW: Show confirmation dialog
+    setShowConfirmDialog(true)
+  }
 
-    // 3. Callback for setting field errors from API
-    const setFormErrors = (apiErrors: Record<string, string>) => {
-      setErrors(apiErrors)
-    }
+  // ✅ NEW: Actual submit after confirmation
+const handleConfirmedSubmit = async () => {
+  // Clean the data before sending
+  const validatedData = cleanFormData(formData) as CreateCustomerInput
 
-    // 4. Call API with validated data
+  // ✅ MODIFIED: Remove duplicate error notification
+  const setFormErrors = (apiErrors: Record<string, string>) => {
+    setErrors(apiErrors)
+    // DON'T show notification here - it's handled in catch block
+  }
+
+  try {
     const result =
       mode === 'edit' && customerId
         ? await updateCustomer(customerId, validatedData, setFormErrors)
         : await createCustomer(validatedData, setFormErrors)
 
-    // 5. Handle success
     if (result.success) {
+      showSuccess(
+        mode === 'create'
+          ? t('customer.success.created')
+          : t('customer.success.updated'),
+        mode === 'create'
+          ? t('customer.success.createdTitle')
+          : t('customer.success.updatedTitle')
+      )
+      
+      setShowConfirmDialog(false)
       onSuccess?.()
+    } else {
+      // ✅ Only show error if result has error message
+      if (result.error) {
+        showError(
+          result.error,
+          t('customer.errors.errorTitle')
+        )
+      }
     }
+  } catch (error: any) {
+    console.error('❌ [CustomerForm] Save error:', error)
+    
+    // ✅ Show error only once
+    showError(
+      error?.message || t('customer.errors.unexpectedError'),
+      t('customer.errors.errorTitle')
+    )
   }
+}
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
@@ -290,6 +377,27 @@ export default function CustomerFormDesktop({
               </>
             )}
           </Button>
+            {/* ✅ NEW: Confirmation Dialog */}
+      <ConfirmDialog
+        open={showConfirmDialog}
+        onOpenChange={setShowConfirmDialog}
+        title={
+          mode === 'create'
+            ? t('customer.confirmCreate')
+            : t('customer.confirmUpdate')
+        }
+        description={
+          mode === 'create'
+            ? t('customer.confirmCreateDescription')
+            : t('customer.confirmUpdateDescription')
+        }
+        variant={mode === 'create' ? 'success' : 'info'}
+        confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+        cancelLabel={t('common.cancel')}
+        onConfirm={handleConfirmedSubmit}
+        onCancel={() => setShowConfirmDialog(false)}
+        loading={isLoading}
+      />
         </div>
       </div>
     </div>

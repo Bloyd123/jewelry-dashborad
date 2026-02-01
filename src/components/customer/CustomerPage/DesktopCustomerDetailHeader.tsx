@@ -23,7 +23,7 @@ import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
-
+import { useAuth } from '@/hooks/useAuth'
 // COMPONENT PROPS
 
 interface DesktopCustomerDetailHeaderProps {
@@ -47,7 +47,7 @@ export const DesktopCustomerDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-
+   const { currentShopId } = useAuth()
   // Get customer data from mock data
   const customer: Customer = customerId
     ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]

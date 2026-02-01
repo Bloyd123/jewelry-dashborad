@@ -8,7 +8,6 @@ import { AlertCircle } from 'lucide-react'
 import type { FormSectionProps } from '../UserForm.types'
 import { useAppSelector } from '@/store/hooks'
 
-//  NEW: Import from correct slices
 import { selectCurrentShopId, selectShopIds } from '@/store/slices/authSlice'
 import { selectUserProfile } from '@/store/slices/userSlice'
 

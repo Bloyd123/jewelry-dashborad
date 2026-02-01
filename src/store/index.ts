@@ -158,14 +158,36 @@ export const store = configureStore({
   
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        // Ignore redux-persist actions
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        
-        // Ignore specific paths if needed
-        ignoredActionPaths: ['meta.arg', 'payload.timestamp'],
-        ignoredPaths: ['notification.notifications'],
-      },
+serializableCheck: {
+  // redux-persist actions
+  ignoredActions: [
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+
+    // RTK Query actions (IMPORTANT)
+    'api/executeQuery/pending',
+    'api/executeQuery/fulfilled',
+    'api/executeQuery/rejected',
+  ],
+
+  // Ignore RTK Query fetch metadata
+  ignoredActionPaths: [
+    'meta.arg',
+    'payload.timestamp',
+    'meta.baseQueryMeta.request',
+    'meta.baseQueryMeta.response',
+  ],
+
+  // Ignore known non-serializable state paths
+  ignoredPaths: [
+    'notification.notifications',
+  ],
+},
+
     })
       // Add RTK Query middleware
       .concat(baseApi.middleware),
