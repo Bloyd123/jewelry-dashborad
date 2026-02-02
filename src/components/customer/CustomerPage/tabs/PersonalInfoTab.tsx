@@ -22,7 +22,6 @@ import {
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
 // COPY BUTTON COMPONENT
@@ -55,20 +54,16 @@ const CopyButton = ({ text }: { text: string }) => {
 // COMPONENT PROPS
 
 interface PersonalInfoTabProps {
-  customerId?: string
+   customer: Customer
 }
 
 // PERSONAL INFO TAB COMPONENT
 
 export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
-  customerId,
+  customer,
 }) => {
   const { t } = useTranslation()
 
-  // Get customer data from mock
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   // BASIC INFORMATION SECTION
 

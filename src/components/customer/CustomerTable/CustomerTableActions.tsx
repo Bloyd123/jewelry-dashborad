@@ -21,7 +21,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import type { RowAction } from '@/components/ui/data-display/DataTable'
-import type { Customer } from './CustomerTable.types'
+import type { Customer } from '@/types/customer.types'
+
 
 // ROW ACTIONS (Individual Customer Actions)
 

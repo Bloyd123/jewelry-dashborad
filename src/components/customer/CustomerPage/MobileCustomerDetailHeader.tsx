@@ -18,12 +18,11 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 
 // COMPONENT PROPS
 
 interface MobileCustomerDetailHeaderProps {
-  customerId?: string
+  customer: Customer
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
@@ -35,7 +34,7 @@ interface MobileCustomerDetailHeaderProps {
 export const MobileCustomerDetailHeader: React.FC<
   MobileCustomerDetailHeaderProps
 > = ({
-  customerId,
+  customer,
   activeTab = 'personal',
   onTabChange,
   onBackClick,
@@ -43,11 +42,6 @@ export const MobileCustomerDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-
-  // Get customer data from mock data
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   // Handle tab change
   const handleTabChange = (tab: string) => {

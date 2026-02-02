@@ -13,7 +13,6 @@ import {
   Award,
   Activity,
   MapPin,
-  Calendar,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
@@ -22,12 +21,10 @@ import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
-import { useAuth } from '@/hooks/useAuth'
 // COMPONENT PROPS
 
 interface DesktopCustomerDetailHeaderProps {
-  customerId?: string
+  customer: Customer
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
@@ -39,7 +36,7 @@ interface DesktopCustomerDetailHeaderProps {
 export const DesktopCustomerDetailHeader: React.FC<
   DesktopCustomerDetailHeaderProps
 > = ({
-  customerId,
+  customer,
   activeTab = 'personal',
   onTabChange,
   onBackClick,
@@ -47,11 +44,6 @@ export const DesktopCustomerDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-   const { currentShopId } = useAuth()
-  // Get customer data from mock data
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   // Handle tab change
   const handleTabChange = (tab: string) => {

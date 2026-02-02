@@ -5,11 +5,11 @@ import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileCustomerDetailHeader } from './MobileCustomerDetailHeader'
 import { DesktopCustomerDetailHeader } from './DesktopCustomerDetailHeader'
-
+import type { Customer } from '@/types/customer.types'
 // COMPONENT PROPS
 
 interface CustomerDetailHeaderProps {
-  customerId?: string
+   customer: Customer
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void

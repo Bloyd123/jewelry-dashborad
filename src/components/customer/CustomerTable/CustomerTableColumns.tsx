@@ -5,7 +5,8 @@ import { Copy, Award } from 'lucide-react'
 import { Avatar } from '@/components/ui/data-display/Avatar'
 import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
-import type { Customer } from './CustomerTable.types'
+import type { Customer } from '@/types/customer.types'
+
 
 // HELPER FUNCTIONS
 
@@ -113,18 +114,21 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     sortable: true,
     width: '130px',
     cell: ({ row }) => {
-      const typeVariants = {
-        vip: 'vip',
-        retail: 'retail',
-        wholesale: 'wholesale',
-        regular: 'default',
-      } as const
+const customerType = row.customerType ?? 'regular'
 
-      return (
-        <Badge variant={typeVariants[row.customerType]}>
-          {row.customerType.toUpperCase()}
-        </Badge>
-      )
+const typeVariants = {
+  vip: 'vip',
+  retail: 'retail',
+  wholesale: 'wholesale',
+  regular: 'default',
+} as const
+
+return (
+  <Badge variant={typeVariants[customerType]}>
+    {customerType.toUpperCase()}
+  </Badge>
+)
+
     },
   },
 
@@ -135,29 +139,31 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     accessorKey: 'membershipTier',
     sortable: true,
     width: '140px',
-    cell: ({ row }) => {
-      const tierVariants = {
-        platinum: 'vip',
-        gold: 'warning',
-        silver: 'info',
-        standard: 'default',
-      } as const
+cell: ({ row }) => {
+  const tier = row.membershipTier ?? 'standard'
 
-      const tierIcons = {
-        platinum: '💎',
-        gold: '🥇',
-        silver: '🥈',
-        standard: '⭐',
-      }
+  const tierVariants = {
+    platinum: 'vip',
+    gold: 'warning',
+    silver: 'info',
+    standard: 'default',
+  } as const
 
-      return (
-        <Badge variant={tierVariants[row.membershipTier]}>
-          <span className="mr-1">{tierIcons[row.membershipTier]}</span>
-          {row.membershipTier.charAt(0).toUpperCase() +
-            row.membershipTier.slice(1)}
-        </Badge>
-      )
-    },
+  const tierIcons = {
+    platinum: '💎',
+    gold: '🥇',
+    silver: '🥈',
+    standard: '⭐',
+  }
+
+  return (
+    <Badge variant={tierVariants[tier]}>
+      <span className="mr-1">{tierIcons[tier]}</span>
+      {tier.charAt(0).toUpperCase() + tier.slice(1)}
+    </Badge>
+  )
+},
+
   },
 
   // 6. Total Purchases (Formatted Currency)

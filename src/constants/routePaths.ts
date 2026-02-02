@@ -22,7 +22,8 @@ export const ROUTE_PATHS = {
     LIST: '/customers',
     ADD: '/customers/add',
     EDIT: '/customers/edit/:customerId',
-    DETAIL: '/customers/:id',
+    DETAIL: '/customers/:customerId',
+
   },
   USERS: {
     ADD: '/users/add',

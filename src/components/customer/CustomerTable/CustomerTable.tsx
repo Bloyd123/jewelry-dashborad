@@ -6,11 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { customerTableColumns } from './CustomerTableColumns'
 import { getCustomerRowActions, BulkActionsBar } from './CustomerTableActions'
-import { MOCK_CUSTOMERS, type Customer } from './CustomerTable.types'
+// import { MOCK_CUSTOMERS, type Customer } from './CustomerTable.types'
+import type { Customer } from '@/types/customer.types'
 // ADD THIS IMPORT
 import { CustomerFilters } from '@/components/customer/CustomerFilters'
 import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/useAuth'
+import { useCustomersList } from '@/hooks/customer/useCustomersList'
 
 // MAIN COMPONENT
 
@@ -35,6 +38,54 @@ export const CustomerTable: React.FC = () => {
   const navigate = useNavigate()
 
   // HANDLERS
+  const { currentShopId } = useAuth()
+const {
+  customers,
+  pagination,
+  isLoading,
+  error,
+} = useCustomersList(
+  currentShopId!,
+  {
+    page: 1,
+    limit: 10,
+    search: filters.search || undefined,
+customerType: filters.customerType as
+  | 'retail'
+  | 'wholesale'
+  | 'vip'
+  | 'regular'
+  | undefined,
+
+membershipTier: filters.membershipTier as
+  | 'standard'
+  | 'silver'
+  | 'gold'
+  | 'platinum'
+  | undefined,
+
+    isActive:
+      filters.status === 'active'
+        ? true
+        : filters.status === 'inactive'
+        ? false
+        : undefined,
+    hasBalance:
+      filters.balance === 'due'
+        ? true
+        : filters.balance === 'clear'
+        ? false
+        : undefined,
+    vipOnly:
+  filters.vipOnly === 'true'
+    ? true
+    : filters.vipOnly === 'false'
+    ? false
+    : undefined,
+
+  }
+)
+
 
   const handleViewDetails = (customer: Customer) => {
     console.log('View Details:', customer)
@@ -63,7 +114,8 @@ export const CustomerTable: React.FC = () => {
 
   // Bulk Actions Handlers
   const handleBulkViewDetails = () => {
-    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
+const selected = customers.filter(c => selectedRows.has(c._id))
+
     if (selected.length === 1) {
       handleViewDetails(selected[0])
     }
@@ -82,19 +134,19 @@ export const CustomerTable: React.FC = () => {
   }
 
   const handleBulkAddPoints = () => {
-    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
+    const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Add Points:', selected)
     // TODO: Open bulk add points modal
   }
 
   const handleBulkBlacklist = () => {
-    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
+    const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Blacklist:', selected)
     // TODO: Handle bulk blacklist
   }
 
   const handleBulkDelete = () => {
-    const selected = MOCK_CUSTOMERS.filter(c => selectedRows.has(c._id))
+    const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Delete:', selected)
     // TODO: Show confirmation and bulk delete
   }
@@ -121,23 +173,33 @@ export const CustomerTable: React.FC = () => {
 
   // ROW ACTIONS
 
-  const rowActions = useMemo(
-    () =>
-      getCustomerRowActions(
-        handleViewDetails,
-        handleEdit,
-        handleAddPoints,
-        handleBlacklist,
-        handleDelete
-      ),
-    []
-  )
+const rowActions = useMemo(
+  () =>
+    getCustomerRowActions(
+      handleViewDetails,
+      handleEdit,
+      handleAddPoints,
+      handleBlacklist,
+      handleDelete
+    ),
+  [
+    handleViewDetails,
+    handleEdit,
+    handleAddPoints,
+    handleBlacklist,
+    handleDelete,
+  ]
+)
+
 
   // SELECTED CUSTOMERS
 
-  const selectedCustomers = useMemo(() => {
-    return MOCK_CUSTOMERS.filter(customer => selectedRows.has(customer._id))
-  }, [selectedRows])
+const selectedCustomers = useMemo(() => {
+  return customers.filter(customer =>
+    selectedRows.has(customer._id)
+  )
+}, [customers, selectedRows])
+
 
   // RENDER
 
@@ -164,7 +226,7 @@ export const CustomerTable: React.FC = () => {
 
       {/* DataTable */}
       <DataTable
-        data={MOCK_CUSTOMERS}
+        data={customers}
         columns={customerTableColumns}
         // Sorting Configuration
         sorting={{
@@ -194,9 +256,12 @@ export const CustomerTable: React.FC = () => {
           position: 'end',
         }}
         // Empty State Configuration
-        emptyState={{
-          message: t('table.noCustomers'),
-        }}
+emptyState={{
+  message: isLoading
+    ? t('table.loading')
+    : t('table.noCustomers'),
+}}
+
         // Style Configuration
         style={{
           variant: 'default',

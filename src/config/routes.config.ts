@@ -33,7 +33,7 @@ const AllCustomers = lazy(() =>
     default: m.AllCustomers,
   }))
 )
-const CustomerDetailPage = lazy(() => import('@/pages/customer/page'))
+const CustomerDetailPage = lazy(() => import('@/pages/customer/CustomerDetail/page'))
 
 // Shop Pages
 const ShopListPage = lazy(() =>

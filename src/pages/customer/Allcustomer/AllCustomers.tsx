@@ -1,4 +1,4 @@
-// FILE: src/pages/customer/CustomerDetailsPage.tsx
+// FILE: src/pages/customer/AllCustomer/AllCustomers.tsx
 // Customer Details Page with Tabbed Interface
 
 import React, { useState } from 'react'
@@ -8,7 +8,7 @@ import { Tabs, TabsContent } from '@/components/ui/navigation/Tabs'
 import { CustomerTable } from '@/components/customer/CustomerTable'
 import { CustomerAnalytics } from '@/components/customer/analytics'
 import { Button } from '@/components/ui/button'
-import { useAppSelector } from '@/store/hooks'
+import { useAuth } from '@/hooks/useAuth'
 import type { CustomerStatistics } from '@/components/customer/analytics'
 import { useNavigate } from 'react-router-dom'
 
@@ -36,7 +36,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
 
   const navigate = useNavigate()
   // Redux State
-  const currentShop = useAppSelector(state => state.shop?.currentShop)
+   const { currentShopId } = useAuth()
 
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
@@ -131,12 +131,15 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="focus-visible:outline-none">
             <div className="mt-4">
-              <CustomerAnalytics
-                shopId={currentShop?._id || 'default-shop-id'}
-                statistics={MOCK_STATISTICS}
-                loading={isLoading}
-                onRefresh={handleRefreshAnalytics}
-              />
+              {currentShopId ? (
+  <CustomerAnalytics
+    shopId={currentShopId}
+    statistics={MOCK_STATISTICS}
+    loading={isLoading}
+    onRefresh={handleRefreshAnalytics}
+  />
+) : null}
+
             </div>
           </TabsContent>
         </Tabs>
