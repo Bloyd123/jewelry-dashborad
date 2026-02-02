@@ -5,7 +5,7 @@
 
 import { validateChangePasswordForm } from '@/validators/changePasswordValidation'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useNotification } from '@/hooks/useNotification'
 import { useState, useCallback, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'

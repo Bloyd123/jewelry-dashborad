@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { Eye, EyeOff, Lock, Shield } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useNotification } from '@/hooks/useNotification'
 import { ROUTES } from '@/config/routes.config'
 import type {

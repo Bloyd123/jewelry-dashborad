@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { CheckCircle2, XCircle, Loader2, Mail, ArrowRight } from 'lucide-react'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 
 type VerificationStatus = 'verifying' | 'success' | 'error' | 'expired'
 

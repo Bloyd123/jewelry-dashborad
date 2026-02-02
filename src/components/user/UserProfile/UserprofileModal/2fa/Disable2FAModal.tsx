@@ -3,7 +3,7 @@
 //  UPDATED: Uses new Redux architecture and useAuth hook
 
 import { useState } from 'react'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
 import { AlertTriangle, Eye, EyeOff } from 'lucide-react'

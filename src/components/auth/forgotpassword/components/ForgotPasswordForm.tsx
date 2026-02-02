@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react'
 import { Mail, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/config/routes.config'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useNotification } from '@/hooks/useNotification'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
@@ -73,7 +73,8 @@ const ForgotPasswordForm: React.FC = () => {
         const forgotPasswordData: ForgotPasswordRequest = {
           email: formData.email.trim(),
         }
-        await forgotPassword(forgotPasswordData)
+        await forgotPassword(forgotPasswordData.email)
+
         showSuccess(
           t('auth.forgotPassword.success'),
           t('auth.forgotPassword.title')

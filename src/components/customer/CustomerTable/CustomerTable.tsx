@@ -12,7 +12,7 @@ import type { Customer } from '@/types/customer.types'
 import { CustomerFilters } from '@/components/customer/CustomerFilters'
 import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useCustomersList } from '@/hooks/customer/useCustomersList'
 
 // MAIN COMPONENT

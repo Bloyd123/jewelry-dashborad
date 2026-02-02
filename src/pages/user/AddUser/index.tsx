@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { UserForm } from '@/components/user/UserForm'
 import type { User } from '@/types/user.types'
 import type { CreateUserInput } from '@/validators/userValidator'
-import { useCurrentUser, useShopAccesses } from '@/hooks/useAuth'
+import { useCurrentUser, useShopAccesses } from '@/hooks/auth'
 
 /**
  * HELPER: Convert User to Form Data

@@ -8,7 +8,7 @@ import { Tabs, TabsContent } from '@/components/ui/navigation/Tabs'
 import { CustomerTable } from '@/components/customer/CustomerTable'
 import { CustomerAnalytics } from '@/components/customer/analytics'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import type { CustomerStatistics } from '@/components/customer/analytics'
 import { useNavigate } from 'react-router-dom'
 

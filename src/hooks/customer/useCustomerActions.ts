@@ -37,9 +37,9 @@ export const useCustomerActions = (shopId: string) => {
   const [redeemLoyaltyMutation, redeemLoyaltyState] =
     useRedeemLoyaltyPointsMutation()
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // CREATE CUSTOMER
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const createCustomer = useCallback(
     async (
       data: Omit<CreateCustomerInput, 'shopId'>,
@@ -78,9 +78,9 @@ export const useCustomerActions = (shopId: string) => {
     [createMutation, shopId]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // UPDATE CUSTOMER
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const updateCustomer = useCallback(
     async (
       customerId: string,
@@ -122,9 +122,9 @@ export const useCustomerActions = (shopId: string) => {
     [updateMutation, shopId]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // DELETE CUSTOMER
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const deleteCustomer = useCallback(
     async (customerId: string) => {
       try {
@@ -144,9 +144,9 @@ export const useCustomerActions = (shopId: string) => {
     [deleteMutation, shopId, handleError, showSuccess]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // BLACKLIST CUSTOMER
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const blacklistCustomer = useCallback(
     async (customerId: string, reason: string) => {
       try {
@@ -173,9 +173,9 @@ export const useCustomerActions = (shopId: string) => {
     [blacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // REMOVE BLACKLIST
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const removeBlacklist = useCallback(
     async (customerId: string) => {
       try {
@@ -201,9 +201,9 @@ export const useCustomerActions = (shopId: string) => {
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // ADD LOYALTY POINTS
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const addLoyaltyPoints = useCallback(
     async (customerId: string, points: number, reason?: string) => {
       try {
@@ -231,9 +231,9 @@ export const useCustomerActions = (shopId: string) => {
     [addLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // REDEEM LOYALTY POINTS
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   const redeemLoyaltyPoints = useCallback(
     async (customerId: string, points: number) => {
       try {
@@ -260,9 +260,9 @@ export const useCustomerActions = (shopId: string) => {
     [redeemLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   // RETURN API
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
   return {
     // CRUD Actions
     createCustomer,

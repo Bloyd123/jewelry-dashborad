@@ -9,7 +9,7 @@ import {
 } from '@/components/customer/CustomerPage/tabs'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useCustomerById } from '@/hooks/customer/useCustomerById'
 export default function CustomerDetailPage() {
   const [activeTab, setActiveTab] = useState('personal')

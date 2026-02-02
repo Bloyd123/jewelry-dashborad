@@ -1,8 +1,8 @@
-// FILE: src/features/product/hooks/useProduct.ts
+// FILE: src/features/product/hooks/useProductActions.ts
+
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  useGetProductsQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
@@ -11,41 +11,29 @@ import {
   useCancelReservationMutation,
   useMarkAsSoldMutation,
   useCalculatePriceMutation,
-  useBulkDeleteProductsMutation,
-  useBulkUpdateStatusMutation,
 } from '@/store/api/productApi'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
 import type {
-  ProductFilters,
   ProductFormData,
   StockUpdateData,
   ReservationData,
   SaleData,
   PriceCalculationData,
-  BulkDeleteData,
-  BulkUpdateStatusData,
 } from '@/types/product.types'
 
-export const useProduct = (
-  shopId: string,
-  filters?: Partial<ProductFilters>
-) => {
+/**
+ *  PRODUCT ACTIONS HOOK
+ * Handles all product CRUD and inventory operations
+ */
+export const useProductActions = (shopId: string) => {
   const { t } = useTranslation()
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  // FETCH PRODUCTS
-
-  const { data, isLoading, isFetching, error, refetch } = useGetProductsQuery({
-    shopId,
-    page: filters?.page || 1,
-    limit: filters?.limit || 20,
-    ...filters,
-  })
-
+  
   //  MUTATIONS
-
+  
   const [createMutation, createState] = useCreateProductMutation()
   const [updateMutation, updateState] = useUpdateProductMutation()
   const [deleteMutation, deleteState] = useDeleteProductMutation()
@@ -56,12 +44,10 @@ export const useProduct = (
   const [markAsSoldMutation, markAsSoldState] = useMarkAsSoldMutation()
   const [calculatePriceMutation, calculatePriceState] =
     useCalculatePriceMutation()
-  const [bulkDeleteMutation, bulkDeleteState] = useBulkDeleteProductsMutation()
-  const [bulkUpdateStatusMutation, bulkUpdateStatusState] =
-    useBulkUpdateStatusMutation()
 
+  
   //  CREATE PRODUCT
-
+  
   const createProduct = useCallback(
     async (
       data: Omit<ProductFormData, 'shopId'>,
@@ -85,8 +71,9 @@ export const useProduct = (
     [createMutation, shopId, handleError, showSuccess, t]
   )
 
+  
   //  UPDATE PRODUCT
-
+  
   const updateProduct = useCallback(
     async (
       id: string,
@@ -111,8 +98,9 @@ export const useProduct = (
     [updateMutation, shopId, handleError, showSuccess, t]
   )
 
-  // DELETE PRODUCT
-
+  
+  // 🗑 DELETE PRODUCT
+  
   const deleteProduct = useCallback(
     async (id: string) => {
       try {
@@ -133,8 +121,9 @@ export const useProduct = (
     [deleteMutation, shopId, handleError, showSuccess, t]
   )
 
-  // UPDATE STOCK
-
+  
+  //  UPDATE STOCK
+  
   const updateStock = useCallback(
     async (id: string, data: Omit<StockUpdateData, 'shopId' | 'id'>) => {
       try {
@@ -159,8 +148,9 @@ export const useProduct = (
     [updateStockMutation, shopId, handleError, showSuccess, t]
   )
 
+  
   //  RESERVE PRODUCT
-
+  
   const reserveProduct = useCallback(
     async (id: string, data: Omit<ReservationData, 'shopId' | 'id'>) => {
       try {
@@ -181,8 +171,9 @@ export const useProduct = (
     [reserveMutation, shopId, handleError, showSuccess, t]
   )
 
-  // CANCEL RESERVATION
-
+  
+  //  CANCEL RESERVATION
+  
   const cancelReservation = useCallback(
     async (id: string) => {
       try {
@@ -204,8 +195,9 @@ export const useProduct = (
     [cancelReservationMutation, shopId, handleError, showSuccess, t]
   )
 
-  // MARK AS SOLD
-
+  
+  //  MARK AS SOLD
+  
   const markAsSold = useCallback(
     async (id: string, data: Omit<SaleData, 'shopId' | 'id'>) => {
       try {
@@ -230,8 +222,9 @@ export const useProduct = (
     [markAsSoldMutation, shopId, handleError, showSuccess, t]
   )
 
-  // CALCULATE PRICE
-
+  
+  //  CALCULATE PRICE
+  
   const calculatePrice = useCallback(
     async (id: string, data: Omit<PriceCalculationData, 'shopId' | 'id'>) => {
       try {
@@ -257,77 +250,10 @@ export const useProduct = (
     [calculatePriceMutation, shopId, handleError, showSuccess, t]
   )
 
-  // BULK DELETE
-
-  const bulkDeleteProducts = useCallback(
-    async (data: Omit<BulkDeleteData, 'shopId'>) => {
-      try {
-        const result = await bulkDeleteMutation({ shopId, ...data }).unwrap()
-        showSuccess(
-          t('product.messages.bulkDeleteSuccess', {
-            count: result.deletedCount,
-          }),
-          t('product.messages.bulkDeleted')
-        )
-        return { success: true, data: result }
-      } catch (error: any) {
-        handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || t('product.errors.bulkDeleteFailed'),
-        }
-      }
-    },
-    [bulkDeleteMutation, shopId, handleError, showSuccess, t]
-  )
-
-  // BULK UPDATE STATUS
-
-  const bulkUpdateStatus = useCallback(
-    async (data: Omit<BulkUpdateStatusData, 'shopId'>) => {
-      try {
-        const result = await bulkUpdateStatusMutation({
-          shopId,
-          ...data,
-        }).unwrap()
-        showSuccess(
-          t('product.messages.bulkUpdateSuccess', {
-            count: result.modifiedCount,
-          }),
-          t('product.messages.bulkUpdated')
-        )
-        return { success: true, data: result }
-      } catch (error: any) {
-        handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || t('product.errors.bulkUpdateFailed'),
-        }
-      }
-    },
-    [bulkUpdateStatusMutation, shopId, handleError, showSuccess, t]
-  )
-
-  // RETURN API
-
+  
+  //  RETURN API
+  
   return {
-    // Data
-    products: data?.data || [],
-    pagination: data?.pagination,
-
-    // Loading states
-    isLoading: isLoading || isFetching,
-    isCreating: createState.isLoading,
-    isUpdating: updateState.isLoading,
-    isDeleting: deleteState.isLoading,
-    isUpdatingStock: updateStockState.isLoading,
-    isReserving: reserveState.isLoading,
-    isCancellingReservation: cancelReservationState.isLoading,
-    isMarkingAsSold: markAsSoldState.isLoading,
-    isCalculatingPrice: calculatePriceState.isLoading,
-    isBulkDeleting: bulkDeleteState.isLoading,
-    isBulkUpdating: bulkUpdateStatusState.isLoading,
-
     // Actions
     createProduct,
     updateProduct,
@@ -337,11 +263,18 @@ export const useProduct = (
     cancelReservation,
     markAsSold,
     calculatePrice,
-    bulkDeleteProducts,
-    bulkUpdateStatus,
-    refetch,
 
-    // States
+    // Loading states
+    isCreating: createState.isLoading,
+    isUpdating: updateState.isLoading,
+    isDeleting: deleteState.isLoading,
+    isUpdatingStock: updateStockState.isLoading,
+    isReserving: reserveState.isLoading,
+    isCancellingReservation: cancelReservationState.isLoading,
+    isMarkingAsSold: markAsSoldState.isLoading,
+    isCalculatingPrice: calculatePriceState.isLoading,
+
+    // States (for advanced usage)
     createState,
     updateState,
     deleteState,
@@ -350,8 +283,5 @@ export const useProduct = (
     cancelReservationState,
     markAsSoldState,
     calculatePriceState,
-    bulkDeleteState,
-    bulkUpdateStatusState,
-    error,
   }
 }

@@ -1,9 +1,7 @@
-// FILE: src/features/supplier/hooks/useSupplier.ts
+// FILE: src/features/supplier/hooks/useSupplierActions.ts
 
 import { useCallback } from 'react'
 import {
-  useGetSuppliersQuery,
-  useGetSupplierByIdQuery,
   useCreateSupplierMutation,
   useUpdateSupplierMutation,
   useDeleteSupplierMutation,
@@ -14,66 +12,27 @@ import {
   useMarkSupplierAsPreferredMutation,
   useRemoveSupplierPreferredMutation,
   useUpdateSupplierBalanceMutation,
-  useGetSupplierStatsQuery,
-  useGetTopSuppliersQuery,
 } from '@/store/api/supplierApi'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
 import type {
   CreateSupplierDto,
   UpdateSupplierDto,
-  SupplierFilters,
   UpdateRatingDto,
   UpdateBalanceDto,
 } from '@/types/supplier.types'
 
 /**
- * 🎯 SUPPLIER CUSTOM HOOK
- * Handles all supplier-related operations with error handling and notifications
+ *  SUPPLIER ACTIONS HOOK
+ * Handles all supplier mutation operations with error handling and notifications
  */
-export const useSupplier = (
-  shopId: string,
-  filters?: Partial<SupplierFilters>
-) => {
+export const useSupplierActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess, showWarning } = useNotification()
 
-  // ============================================
-  // 📊 FETCH DATA (with auto-caching)
-  // ============================================
-  const {
-    data,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetSuppliersQuery({
-    shopId,
-    page: filters?.page || 1,
-    limit: filters?.limit || 20,
-    ...filters,
-  })
-
-  // ============================================
-  // 📊 FETCH STATISTICS
-  // ============================================
-  const {
-    data: statsData,
-    isLoading: isLoadingStats,
-    refetch: refetchStats,
-  } = useGetSupplierStatsQuery({ shopId })
-
-  // ============================================
-  // 🏆 FETCH TOP SUPPLIERS
-  // ============================================
-  const {
-    data: topSuppliers,
-    isLoading: isLoadingTopSuppliers,
-  } = useGetTopSuppliersQuery({ shopId, limit: filters?.limit || 10 })
-
-  // ============================================
-  // 🔧 MUTATIONS
-  // ============================================
+  
+  //  MUTATIONS
+  
   const [createMutation, createState] = useCreateSupplierMutation()
   const [updateMutation, updateState] = useUpdateSupplierMutation()
   const [deleteMutation, deleteState] = useDeleteSupplierMutation()
@@ -85,9 +44,9 @@ export const useSupplier = (
   const [removePreferredMutation, removePreferredState] = useRemoveSupplierPreferredMutation()
   const [updateBalanceMutation, updateBalanceState] = useUpdateSupplierBalanceMutation()
 
-  // ============================================
-  // ➕ CREATE SUPPLIER
-  // ============================================
+  
+  //  CREATE SUPPLIER
+  
   const createSupplier = useCallback(
     async (
       data: Omit<CreateSupplierDto, 'shopId'>,
@@ -113,9 +72,9 @@ export const useSupplier = (
     [createMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // ✏️ UPDATE SUPPLIER
-  // ============================================
+  
+  //  UPDATE SUPPLIER
+  
   const updateSupplier = useCallback(
     async (
       id: string,
@@ -142,9 +101,9 @@ export const useSupplier = (
     [updateMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // 🗑 DELETE SUPPLIER
-  // ============================================
+  
+  //  DELETE SUPPLIER
+  
   const deleteSupplier = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -169,9 +128,9 @@ export const useSupplier = (
     [deleteMutation, shopId, handleError, showWarning]
   )
 
-  // ============================================
-  // 🔄 RESTORE SUPPLIER
-  // ============================================
+  
+  //  RESTORE SUPPLIER
+  
   const restoreSupplier = useCallback(
     async (id: string) => {
       try {
@@ -194,9 +153,9 @@ export const useSupplier = (
     [restoreMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // ⭐ UPDATE RATING
-  // ============================================
+  
+  //  UPDATE RATING
+  
   const updateRating = useCallback(
     async (id: string, ratings: UpdateRatingDto) => {
       try {
@@ -219,9 +178,9 @@ export const useSupplier = (
     [updateRatingMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // 🚫 BLACKLIST SUPPLIER
-  // ============================================
+  
+  //  BLACKLIST SUPPLIER
+  
   const blacklistSupplier = useCallback(
     async (id: string, reason: string, businessName?: string) => {
       try {
@@ -246,9 +205,9 @@ export const useSupplier = (
     [blacklistMutation, shopId, handleError, showWarning]
   )
 
-  // ============================================
-  // ✅ REMOVE FROM BLACKLIST
-  // ============================================
+  
+  //  REMOVE FROM BLACKLIST
+  
   const removeBlacklist = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -273,9 +232,9 @@ export const useSupplier = (
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // ⭐ MARK AS PREFERRED
-  // ============================================
+  
+  //  MARK AS PREFERRED
+  
   const markAsPreferred = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -300,9 +259,9 @@ export const useSupplier = (
     [markPreferredMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // ❌ REMOVE FROM PREFERRED
-  // ============================================
+  
+  //  REMOVE FROM PREFERRED
+  
   const removePreferred = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -327,9 +286,9 @@ export const useSupplier = (
     [removePreferredMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // 💰 UPDATE BALANCE
-  // ============================================
+  
+  //  UPDATE BALANCE
+  
   const updateBalance = useCallback(
     async (
       id: string,
@@ -369,31 +328,10 @@ export const useSupplier = (
     [updateBalanceMutation, shopId, handleError, showSuccess]
   )
 
-  // ============================================
-  // 📤 RETURN API
-  // ============================================
+  
+  // RETURN API
+  
   return {
-    // Data
-    suppliers: data?.data || [],
-    pagination: data?.pagination,
-    stats: statsData,
-    topSuppliers: topSuppliers || [],
-
-    // Loading states
-    isLoading: isLoading || isFetching,
-    isLoadingStats,
-    isLoadingTopSuppliers,
-    isCreating: createState.isLoading,
-    isUpdating: updateState.isLoading,
-    isDeleting: deleteState.isLoading,
-    isRestoring: restoreState.isLoading,
-    isUpdatingRating: updateRatingState.isLoading,
-    isBlacklisting: blacklistState.isLoading,
-    isRemovingBlacklist: removeBlacklistState.isLoading,
-    isMarkingPreferred: markPreferredState.isLoading,
-    isRemovingPreferred: removePreferredState.isLoading,
-    isUpdatingBalance: updateBalanceState.isLoading,
-
     // Actions
     createSupplier,
     updateSupplier,
@@ -406,9 +344,17 @@ export const useSupplier = (
     removePreferred,
     updateBalance,
 
-    // Refetch
-    refetch,
-    refetchStats,
+    // Loading states
+    isCreating: createState.isLoading,
+    isUpdating: updateState.isLoading,
+    isDeleting: deleteState.isLoading,
+    isRestoring: restoreState.isLoading,
+    isUpdatingRating: updateRatingState.isLoading,
+    isBlacklisting: blacklistState.isLoading,
+    isRemovingBlacklist: removeBlacklistState.isLoading,
+    isMarkingPreferred: markPreferredState.isLoading,
+    isRemovingPreferred: removePreferredState.isLoading,
+    isUpdatingBalance: updateBalanceState.isLoading,
 
     // States (for advanced usage)
     createState,
@@ -421,32 +367,5 @@ export const useSupplier = (
     markPreferredState,
     removePreferredState,
     updateBalanceState,
-
-    // Error
-    error,
-  }
-}
-
-/**
- * 🎯 SINGLE SUPPLIER HOOK
- * For fetching a single supplier by ID
- */
-export const useSupplierById = (shopId: string, supplierId: string) => {
-  const {
-    data: supplier,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetSupplierByIdQuery(
-    { shopId, id: supplierId },
-    { skip: !supplierId }
-  )
-
-  return {
-    supplier,
-    isLoading: isLoading || isFetching,
-    error,
-    refetch,
   }
 }

@@ -10,7 +10,7 @@ import { Step2QRCode } from './Step2QRCode'
 import { Step3VerifyCode } from './Step3VerifyCode'
 import { Step4BackupCodes } from './Step4BackupCodes'
 import { useAppSelector } from '@/store/hooks'
-import { useAuth } from '@/hooks/useAuth'
+import { useAuth } from '@/hooks/auth'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 
 // TYPES
