@@ -68,6 +68,30 @@ export const CUSTOMER_ENDPOINTS = {
   // Analytics
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
 } as const
+
+
+export const SUPPLIER_ENDPOINTS = {
+  // List & CRUD
+  GET_ALL: `${BASE_URL}/suppliers`,
+  GET_BY_ID: `${BASE_URL}/suppliers/:id`,
+  CREATE: `${BASE_URL}/suppliers`,
+  UPDATE: `${BASE_URL}/suppliers/:id`,
+  DELETE: `${BASE_URL}/suppliers/:id`,
+  SEARCH: `${BASE_URL}/suppliers/search`,
+
+  // Management Actions
+  RESTORE: `${BASE_URL}/suppliers/:id/restore`,
+  UPDATE_RATING: `${BASE_URL}/suppliers/:id/rating`,
+  BLACKLIST: `${BASE_URL}/suppliers/:id/blacklist`,
+  REMOVE_BLACKLIST: `${BASE_URL}/suppliers/:id/remove-blacklist`,
+  MARK_PREFERRED: `${BASE_URL}/suppliers/:id/preferred`,
+  REMOVE_PREFERRED: `${BASE_URL}/suppliers/:id/preferred`,
+  UPDATE_BALANCE: `${BASE_URL}/suppliers/:id/balance`,
+
+  // Statistics
+  STATS: `${BASE_URL}/suppliers/stats`,
+  TOP: `${BASE_URL}/suppliers/top`,
+} as const 
 // SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`
@@ -197,6 +221,7 @@ export const API_ENDPOINTS = {
   SALES: SALES_ENDPOINTS,
   CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
+  SUPPLIER:SUPPLIER_ENDPOINTS
 }
 
 export default API_ENDPOINTS

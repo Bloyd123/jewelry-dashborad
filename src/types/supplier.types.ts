@@ -241,6 +241,10 @@ export interface UpdateSupplierDto extends Partial<CreateSupplierDto> {
   isVerified?: boolean
   isPreferred?: boolean
 }
+export interface DeleteSupplierResponse {
+  success: boolean
+  message: string
+}
 
 // Query/Filter Types
 export interface SupplierFilters {
@@ -262,6 +266,8 @@ export interface PaginationMeta {
   page: number
   limit: number
   pages: number
+    hasNext?: boolean    // ✅ NEW - Next page hai ya nahi
+  hasPrev?: boolean 
 }
 
 export interface SupplierListResponse {

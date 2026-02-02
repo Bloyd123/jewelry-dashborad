@@ -22,6 +22,10 @@ export const baseApi = createApi({
     'ProductAnalytics',
     'ProductSearch',
     'ProductHistory',
+        // Supplier Module
+    'Supplier',
+    'SupplierList',
+    'SupplierSearch',
   ],
 
   endpoints: () => ({}), // Endpoints will be injected
