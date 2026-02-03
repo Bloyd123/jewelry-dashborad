@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Customer } from '@/types/customer.types'
 
-
 // HELPER FUNCTIONS
 
 /**
@@ -114,21 +113,20 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     sortable: true,
     width: '130px',
     cell: ({ row }) => {
-const customerType = row.customerType ?? 'regular'
+      const customerType = row.customerType ?? 'regular'
 
-const typeVariants = {
-  vip: 'vip',
-  retail: 'retail',
-  wholesale: 'wholesale',
-  regular: 'default',
-} as const
+      const typeVariants = {
+        vip: 'vip',
+        retail: 'retail',
+        wholesale: 'wholesale',
+        regular: 'default',
+      } as const
 
-return (
-  <Badge variant={typeVariants[customerType]}>
-    {customerType.toUpperCase()}
-  </Badge>
-)
-
+      return (
+        <Badge variant={typeVariants[customerType]}>
+          {customerType.toUpperCase()}
+        </Badge>
+      )
     },
   },
 
@@ -139,31 +137,30 @@ return (
     accessorKey: 'membershipTier',
     sortable: true,
     width: '140px',
-cell: ({ row }) => {
-  const tier = row.membershipTier ?? 'standard'
+    cell: ({ row }) => {
+      const tier = row.membershipTier ?? 'standard'
 
-  const tierVariants = {
-    platinum: 'vip',
-    gold: 'warning',
-    silver: 'info',
-    standard: 'default',
-  } as const
+      const tierVariants = {
+        platinum: 'vip',
+        gold: 'warning',
+        silver: 'info',
+        standard: 'default',
+      } as const
 
-  const tierIcons = {
-    platinum: '💎',
-    gold: '🥇',
-    silver: '🥈',
-    standard: '⭐',
-  }
+      const tierIcons = {
+        platinum: '💎',
+        gold: '🥇',
+        silver: '🥈',
+        standard: '',
+      }
 
-  return (
-    <Badge variant={tierVariants[tier]}>
-      <span className="mr-1">{tierIcons[tier]}</span>
-      {tier.charAt(0).toUpperCase() + tier.slice(1)}
-    </Badge>
-  )
-},
-
+      return (
+        <Badge variant={tierVariants[tier]}>
+          <span className="mr-1">{tierIcons[tier]}</span>
+          {tier.charAt(0).toUpperCase() + tier.slice(1)}
+        </Badge>
+      )
+    },
   },
 
   // 6. Total Purchases (Formatted Currency)

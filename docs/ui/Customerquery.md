@@ -191,17 +191,17 @@ const { data, isLoading, error, refetch } = useGetCustomersQuery({
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `shopId` | string | ✅ | Shop identifier |
-| `page` | number | ❌ | Page number (default: 1) |
-| `limit` | number | ❌ | Items per page (default: 20, max: 100) |
-| `search` | string | ❌ | Search by name, phone, email, code |
-| `customerType` | enum | ❌ | Filter: retail, wholesale, vip, regular |
-| `membershipTier` | enum | ❌ | Filter: standard, silver, gold, platinum |
-| `isActive` | boolean | ❌ | Filter active/inactive customers |
-| `hasBalance` | boolean | ❌ | Filter customers with outstanding balance |
-| `vipOnly` | boolean | ❌ | Show only VIP customers |
-| `startDate` | string | ❌ | Filter by creation date (ISO8601) |
-| `endDate` | string | ❌ | Filter by creation date (ISO8601) |
-| `sort` | string | ❌ | Sort field (e.g., "-createdAt", "firstName") |
+| `page` | number |  | Page number (default: 1) |
+| `limit` | number |  | Items per page (default: 20, max: 100) |
+| `search` | string |  | Search by name, phone, email, code |
+| `customerType` | enum |  | Filter: retail, wholesale, vip, regular |
+| `membershipTier` | enum |  | Filter: standard, silver, gold, platinum |
+| `isActive` | boolean |  | Filter active/inactive customers |
+| `hasBalance` | boolean |  | Filter customers with outstanding balance |
+| `vipOnly` | boolean |  | Show only VIP customers |
+| `startDate` | string |  | Filter by creation date (ISO8601) |
+| `endDate` | string |  | Filter by creation date (ISO8601) |
+| `sort` | string |  | Sort field (e.g., "-createdAt", "firstName") |
 
 ---
 
@@ -1118,11 +1118,11 @@ try {
    import { createCustomerSchema } from '@/validations/customerValidation'
    ```
 
-### DON'T ❌
+### DON'T 
 
 1. **Don't fetch data manually**
    ```typescript
-   // ❌ BAD
+   //  BAD
    const fetchCustomers = async () => {
      const res = await fetch('/api/customers')
      const data = await res.json()
@@ -1135,7 +1135,7 @@ try {
 
 2. **Don't use Axios in components**
    ```typescript
-   // ❌ BAD
+   //  BAD
    import axios from 'axios'
    await axios.post('/api/customers', data)
    
@@ -1145,7 +1145,7 @@ try {
 
 3. **Don't manage loading states manually**
    ```typescript
-   // ❌ BAD
+   //  BAD
    const [isLoading, setIsLoading] = useState(false)
    
    // ✅ GOOD - Already provided
@@ -1154,7 +1154,7 @@ try {
 
 4. **Don't hardcode API endpoints**
    ```typescript
-   // ❌ BAD
+   //  BAD
    fetch('/api/v1/shops/123/customers')
    
    // ✅ GOOD - Handled automatically
@@ -1377,7 +1377,7 @@ return (
 ```typescript
 const { data, isLoading } = useGetCustomersQuery({ shopId })
 
-// ❌ BAD
+//  BAD
 const customers = data.data.customers  // Crashes!
 
 // ✅ GOOD
@@ -1411,7 +1411,7 @@ await updateCustomer(customerId, data)
 ```typescript
 const { setError } = useForm()
 
-// ❌ BAD
+//  BAD
 await createCustomer(data)
 
 // ✅ GOOD
@@ -1443,7 +1443,7 @@ await createCustomer(data).unwrap()
 
 ---
 
-## 📊 Performance Tips
+##  Performance Tips
 
 1. **Use pagination** - Don't load all customers at once
    ```typescript

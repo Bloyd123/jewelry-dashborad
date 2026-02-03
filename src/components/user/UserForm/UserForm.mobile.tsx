@@ -40,13 +40,14 @@ export default function UserFormMobile({
 }: UserFormProps) {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState<Partial<CreateUserInput>>(initialData)
+  const [formData, setFormData] =
+    useState<Partial<CreateUserInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showSaveDialog, setShowSaveDialog] = useState(false)
-  
+
   const { register } = useAuth()
   const { showSuccess, showError } = useNotification()
   const { handleError } = useErrorHandler()
@@ -246,8 +247,14 @@ export default function UserFormMobile({
         open={showSaveDialog}
         onOpenChange={setShowSaveDialog}
         variant="success"
-        title={mode === 'create' ? 'user.form.saveTitle' : 'user.form.updateTitle'}
-        description={mode === 'create' ? 'user.form.saveDescription' : 'user.form.updateDescription'}
+        title={
+          mode === 'create' ? 'user.form.saveTitle' : 'user.form.updateTitle'
+        }
+        description={
+          mode === 'create'
+            ? 'user.form.saveDescription'
+            : 'user.form.updateDescription'
+        }
         confirmLabel="common.yesSave"
         cancelLabel="common.cancel"
         onConfirm={async () => {
@@ -290,9 +297,12 @@ export default function UserFormMobile({
                 if (step.id === 'contact' && key === 'phone') return true
                 if (
                   step.id === 'employee' &&
-                  ['designation', 'department', 'employeeId', 'joiningDate'].includes(
-                    key
-                  )
+                  [
+                    'designation',
+                    'department',
+                    'employeeId',
+                    'joiningDate',
+                  ].includes(key)
                 )
                   return true
                 if (
@@ -320,7 +330,9 @@ export default function UserFormMobile({
             const result = await register(formData as RegisterRequest)
             if (result.success) {
               showSuccess(
-                mode === 'create' ? t('user.userCreated') : t('user.userUpdated'),
+                mode === 'create'
+                  ? t('user.userCreated')
+                  : t('user.userUpdated'),
                 t('user.userCreatedDescription')
               )
               onSuccess?.()

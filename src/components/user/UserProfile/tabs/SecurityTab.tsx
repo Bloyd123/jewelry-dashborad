@@ -58,41 +58,43 @@ interface Session {
 
 export const SecurityTab = () => {
   const { t } = useTranslation()
-  
+
   //  Get user data from userSlice
   const user = useAppSelector(selectUserProfile)
   const twoFactorEnabled = user?.twoFactorEnabled || false
   const backupCodes = user?.backupCodes || []
   const usedCodes = user?.backupCodesUsed || []
-  
+
   // Modal states
   const [showEnableModal, setShowEnableModal] = useState(false)
   const [showDisableModal, setShowDisableModal] = useState(false)
   const [showBackupCodes, setShowBackupCodes] = useState(false)
-  
+
   // Password form state
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
   })
-  
+
   const [showPassword, setShowPassword] = useState({
     current: false,
     new: false,
     confirm: false,
   })
-  
+
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
-  
+
   // Sessions state
   const [showLogoutAllDialog, setShowLogoutAllDialog] = useState(false)
   const [isLoggingOutAll, setIsLoggingOutAll] = useState(false)
-  const [revokingSessionId, setRevokingSessionId] = useState<string | null>(null)
+  const [revokingSessionId, setRevokingSessionId] = useState<string | null>(
+    null
+  )
   const [activeSessions, setActiveSessions] = useState<Session[]>([])
   const [isSessionsLoading, setIsSessionsLoading] = useState(false)
-  
+
   // Hooks
   const { changePassword, logoutAll, getSessions, revokeSession } = useAuth()
   const { handleError } = useErrorHandler()
@@ -165,15 +167,15 @@ export const SecurityTab = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       setIsSessionsLoading(true)
-      
+
       try {
         const result = await getSessions()
-        
-        console.log('📊 Sessions Response:', result)
-        
+
+        console.log(' Sessions Response:', result)
+
         //  Handle multiple response structures
         let sessionsData: any[] = []
-        
+
         if (result) {
           // Case 1: { success: true, data: [...] }
           if (result.success && Array.isArray(result.data)) {
@@ -181,7 +183,9 @@ export const SecurityTab = () => {
           }
           // Case 2: { success: true, data: { sessions: [...] } }
           else if (result.success && result.data?.sessions) {
-            sessionsData = Array.isArray(result.data.sessions) ? result.data.sessions : []
+            sessionsData = Array.isArray(result.data.sessions)
+              ? result.data.sessions
+              : []
           }
           // Case 3: Direct array response
           else if (Array.isArray(result)) {
@@ -192,20 +196,24 @@ export const SecurityTab = () => {
             sessionsData = result.data
           }
         }
-        
+
         //  Normalize session data (handle tokenId vs id, lastUsedAt vs lastUsed)
-        const normalizedSessions: Session[] = sessionsData.map((session: any) => ({
-          ...session,
-          id: session.id || session.tokenId, // Support both
-          tokenId: session.tokenId || session.id,
-          device: typeof session.device === 'string' ? session.device : (session.device?.type || 'Unknown Device'),
-          lastUsed: session.lastUsed || session.lastUsedAt,
-          lastUsedAt: session.lastUsedAt || session.lastUsed,
-        }))
-        
+        const normalizedSessions: Session[] = sessionsData.map(
+          (session: any) => ({
+            ...session,
+            id: session.id || session.tokenId, // Support both
+            tokenId: session.tokenId || session.id,
+            device:
+              typeof session.device === 'string'
+                ? session.device
+                : session.device?.type || 'Unknown Device',
+            lastUsed: session.lastUsed || session.lastUsedAt,
+            lastUsedAt: session.lastUsedAt || session.lastUsed,
+          })
+        )
+
         console.log(' Normalized sessions:', normalizedSessions)
         setActiveSessions(normalizedSessions)
-        
       } catch (error: any) {
         console.error(' Sessions fetch error:', error)
         setActiveSessions([])
@@ -224,12 +232,14 @@ export const SecurityTab = () => {
 
       try {
         await revokeSession(sessionTokenId)
-        
+
         //  Remove from local state (check both id and tokenId)
-        setActiveSessions(prev => 
-          prev.filter(s => s.id !== sessionTokenId && s.tokenId !== sessionTokenId)
+        setActiveSessions(prev =>
+          prev.filter(
+            s => s.id !== sessionTokenId && s.tokenId !== sessionTokenId
+          )
         )
-        
+
         showSuccess(
           t('userProfile.security.sessionRevoked'),
           t('userProfile.security.sessionRevokedSuccess')
@@ -256,10 +266,10 @@ export const SecurityTab = () => {
         t('userProfile.security.logoutAllSuccess'),
         t('userProfile.security.logoutAllSuccessDesc')
       )
-      
+
       // Close dialog
       setShowLogoutAllDialog(false)
-      
+
       // User will be redirected automatically by Redux
     } catch (error: any) {
       console.error('Logout all error:', error)
@@ -292,9 +302,7 @@ export const SecurityTab = () => {
                 <p className="text-sm font-medium text-text-primary">
                   {t('userProfile.security.emailVerified')}
                 </p>
-                <p className="text-xs text-text-tertiary">
-                  {user?.email}
-                </p>
+                <p className="text-xs text-text-tertiary">{user?.email}</p>
               </div>
             </div>
             {user?.isEmailVerified ? (
@@ -320,9 +328,7 @@ export const SecurityTab = () => {
                 <p className="text-sm font-medium text-text-primary">
                   {t('userProfile.security.phoneVerified')}
                 </p>
-                <p className="text-xs text-text-tertiary">
-                  {user?.phone}
-                </p>
+                <p className="text-xs text-text-tertiary">{user?.phone}</p>
               </div>
             </div>
             {user?.isPhoneVerified ? (
@@ -626,10 +632,12 @@ export const SecurityTab = () => {
                 const isCurrent = session.isCurrent
                 const sessionId = session.id || session.tokenId || '' // Use either
                 const isRevoking = revokingSessionId === sessionId
-                const deviceName = typeof session.device === 'string' 
-                  ? session.device 
-                  : (session.device as any)?.type || 'Unknown Device'
-                const lastActive = session.lastUsed || session.lastUsedAt || new Date()
+                const deviceName =
+                  typeof session.device === 'string'
+                    ? session.device
+                    : (session.device as any)?.type || 'Unknown Device'
+                const lastActive =
+                  session.lastUsed || session.lastUsedAt || new Date()
 
                 return (
                   <div

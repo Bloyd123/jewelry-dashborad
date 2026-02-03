@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/useAuthActions.ts
 // Auth Actions - login / register / logout / refresh / initialize
-// 
+//
 
 import { useCallback } from 'react'
 import { useAppDispatch } from '@/store/hooks'
@@ -15,20 +15,16 @@ import {
   setError,
 } from '@/store/slices/authSlice'
 
-import {
-  clearUserProfile,
-} from '@/store/slices/userSlice'
+import { clearUserProfile } from '@/store/slices/userSlice'
 
-import {
-  clearPermissions,
-} from '@/store/slices/permissionsSlice'
+import { clearPermissions } from '@/store/slices/permissionsSlice'
 
 import type { LoginRequest, RegisterRequest } from '@/types'
 import * as authService from '@/api/services/authService'
 
-// 
+//
 // AUTH ACTIONS HOOK
-// 
+//
 
 export const useAuthActions = () => {
   const dispatch = useAppDispatch()
@@ -39,27 +35,24 @@ export const useAuthActions = () => {
         console.log('🔐 [useAuth] Login started:', credentials.email)
         const result = await dispatch(loginAction(credentials)).unwrap()
         console.log('✅ [useAuth] Login successful')
-        
+
         return { success: true, data: result }
       } catch (error: any) {
-        console.error('❌ [useAuth] Login failed:', error)
+        console.error(' [useAuth] Login failed:', error)
         throw error
       }
     },
     [dispatch]
   )
 
-  const register = useCallback(
-    async (userData: RegisterRequest) => {
-      try {
-        const response = await authService.register(userData)
-        return { success: true, data: response.data }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    []
-  )
+  const register = useCallback(async (userData: RegisterRequest) => {
+    try {
+      const response = await authService.register(userData)
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
 
   const logout = useCallback(async () => {
     try {
@@ -73,11 +66,11 @@ export const useAuthActions = () => {
   const logoutAll = useCallback(async () => {
     try {
       await authService.logoutAllDevices()
-      
+
       dispatch(resetAuthState())
       dispatch(clearUserProfile())
       dispatch(clearPermissions())
-      
+
       return { success: true }
     } catch (error: any) {
       throw error

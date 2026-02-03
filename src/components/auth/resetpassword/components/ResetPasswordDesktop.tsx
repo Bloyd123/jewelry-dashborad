@@ -22,7 +22,7 @@ const ResetPasswordDesktop: React.FC = () => {
       {/* Right Side - Form + Heading */}
       <div className="flex w-full items-center justify-center bg-white p-8 dark:bg-gray-950 lg:w-1/2">
         <div className="w-full max-w-md">
-          {/* ⭐ Top Header (shifted from form to desktop) */}
+          {/*  Top Header (shifted from form to desktop) */}
           <div className="mb-8 text-center">
             <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900">
               <Shield className="h-8 w-8 text-amber-600 dark:text-amber-400" />

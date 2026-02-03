@@ -22,16 +22,14 @@ export const useProductBulkActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  
   // 🔧 MUTATIONS
-  
+
   const [bulkDeleteMutation, bulkDeleteState] = useBulkDeleteProductsMutation()
   const [bulkUpdateStatusMutation, bulkUpdateStatusState] =
     useBulkUpdateStatusMutation()
 
-  
   // 🗑 BULK DELETE
-  
+
   const bulkDeleteProducts = useCallback(
     async (data: Omit<BulkDeleteData, 'shopId'>) => {
       try {
@@ -54,9 +52,8 @@ export const useProductBulkActions = (shopId: string) => {
     [bulkDeleteMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  BULK UPDATE STATUS
-  
+
   const bulkUpdateStatus = useCallback(
     async (data: Omit<BulkUpdateStatusData, 'shopId'>) => {
       try {
@@ -82,9 +79,8 @@ export const useProductBulkActions = (shopId: string) => {
     [bulkUpdateStatusMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  RETURN API
-  
+
   return {
     // Actions
     bulkDeleteProducts,

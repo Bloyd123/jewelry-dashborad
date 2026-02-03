@@ -23,16 +23,15 @@ import type {
  */
 export const supplierApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    // ============================================
-    // 📋 GET ALL SUPPLIERS (with filters & pagination)
-    // ============================================
+    //  GET ALL SUPPLIERS (with filters & pagination)
+
     getSuppliers: build.query<SupplierListResponse, SupplierFilters>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.GET_ALL, { shopId }),
         params, // page, limit, search, filters
       }),
 
-      // 🔥 Cache tags for auto-refetch
+      //  Cache tags for auto-refetch
       providesTags: (result, error, { shopId }) => [
         { type: 'SupplierList', id: shopId },
         ...(result?.data || []).map(supplier => ({
@@ -42,25 +41,23 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // 👤 GET SINGLE SUPPLIER BY ID
-    // ============================================
+    //  GET SINGLE SUPPLIER BY ID
+
     getSupplierById: build.query<Supplier, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.GET_BY_ID, { shopId, id }),
       }),
 
-      // 🔥 Transform response (extract data)
+      //  Transform response (extract data)
       transformResponse: (response: SingleSupplierResponse) => response.data,
 
       providesTags: (result, error, { id }) => [{ type: 'Supplier', id }],
     }),
 
-    // ============================================
     // 🔍 SEARCH SUPPLIERS
-    // ============================================
+
     searchSuppliers: build.query<
-     Supplier[],
+      Supplier[],
       {
         shopId: string
         search: string
@@ -77,10 +74,12 @@ export const supplierApi = baseApi.injectEndpoints({
       providesTags: ['SupplierSearch'],
     }),
 
-    // ============================================
     // ➕ CREATE SUPPLIER
-    // ============================================
-    createSupplier: build.mutation<Supplier, CreateSupplierDto & { shopId: string }>({
+
+    createSupplier: build.mutation<
+      Supplier,
+      CreateSupplierDto & { shopId: string }
+    >({
       query: ({ shopId, ...data }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.CREATE, { shopId }),
         method: 'POST',
@@ -89,16 +88,15 @@ export const supplierApi = baseApi.injectEndpoints({
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
 
-      // 🔥 Invalidate cache to auto-refetch lists
+      //  Invalidate cache to auto-refetch lists
       invalidatesTags: (result, error, { shopId }) => [
         { type: 'SupplierList', id: shopId },
         'SupplierSearch',
       ],
     }),
 
-    // ============================================
     // ✏️ UPDATE SUPPLIER
-    // ============================================
+
     updateSupplier: build.mutation<
       Supplier,
       UpdateSupplierDto & { shopId: string; id: string }
@@ -111,7 +109,7 @@ export const supplierApi = baseApi.injectEndpoints({
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
 
-      // 🔥 Invalidate both single item and list
+      //  Invalidate both single item and list
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
@@ -119,9 +117,8 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
     // 🗑 DELETE SUPPLIER (soft delete)
-    // ============================================
+
     deleteSupplier: build.mutation<void, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.DELETE, { shopId, id }),
@@ -135,9 +132,8 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
     // 🔄 RESTORE SUPPLIER
-    // ============================================
+
     restoreSupplier: build.mutation<Supplier, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.RESTORE, { shopId, id }),
@@ -152,15 +148,17 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // ⭐ UPDATE SUPPLIER RATING
-    // ============================================
+    //  UPDATE SUPPLIER RATING
+
     updateSupplierRating: build.mutation<
       Supplier,
       UpdateRatingDto & { shopId: string; id: string }
     >({
       query: ({ shopId, id, ...ratings }) => ({
-        url: replacePathParams(SUPPLIER_ENDPOINTS.UPDATE_RATING, { shopId, id }),
+        url: replacePathParams(SUPPLIER_ENDPOINTS.UPDATE_RATING, {
+          shopId,
+          id,
+        }),
         method: 'PATCH',
         body: ratings,
       }),
@@ -173,9 +171,8 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // 🚫 BLACKLIST SUPPLIER
-    // ============================================
+    //  BLACKLIST SUPPLIER
+
     blacklistSupplier: build.mutation<
       Supplier,
       BlacklistSupplierDto & { shopId: string; id: string }
@@ -194,12 +191,17 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // ✅ REMOVE FROM BLACKLIST
-    // ============================================
-    removeSupplierBlacklist: build.mutation<Supplier, { shopId: string; id: string }>({
+    //  REMOVE FROM BLACKLIST
+
+    removeSupplierBlacklist: build.mutation<
+      Supplier,
+      { shopId: string; id: string }
+    >({
       query: ({ shopId, id }) => ({
-        url: replacePathParams(SUPPLIER_ENDPOINTS.REMOVE_BLACKLIST, { shopId, id }),
+        url: replacePathParams(SUPPLIER_ENDPOINTS.REMOVE_BLACKLIST, {
+          shopId,
+          id,
+        }),
         method: 'POST',
       }),
 
@@ -211,12 +213,17 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // ⭐ MARK AS PREFERRED
-    // ============================================
-    markSupplierAsPreferred: build.mutation<Supplier, { shopId: string; id: string }>({
+    //  MARK AS PREFERRED
+
+    markSupplierAsPreferred: build.mutation<
+      Supplier,
+      { shopId: string; id: string }
+    >({
       query: ({ shopId, id }) => ({
-        url: replacePathParams(SUPPLIER_ENDPOINTS.MARK_PREFERRED, { shopId, id }),
+        url: replacePathParams(SUPPLIER_ENDPOINTS.MARK_PREFERRED, {
+          shopId,
+          id,
+        }),
         method: 'POST',
       }),
 
@@ -228,12 +235,17 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // ❌ REMOVE FROM PREFERRED
-    // ============================================
-    removeSupplierPreferred: build.mutation<Supplier, { shopId: string; id: string }>({
+    //  REMOVE FROM PREFERRED
+
+    removeSupplierPreferred: build.mutation<
+      Supplier,
+      { shopId: string; id: string }
+    >({
       query: ({ shopId, id }) => ({
-        url: replacePathParams(SUPPLIER_ENDPOINTS.REMOVE_PREFERRED, { shopId, id }),
+        url: replacePathParams(SUPPLIER_ENDPOINTS.REMOVE_PREFERRED, {
+          shopId,
+          id,
+        }),
         method: 'DELETE',
       }),
 
@@ -245,15 +257,17 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // 💰 UPDATE SUPPLIER BALANCE
-    // ============================================
+    //  UPDATE SUPPLIER BALANCE
+
     updateSupplierBalance: build.mutation<
       Supplier,
       UpdateBalanceDto & { shopId: string; id: string }
     >({
       query: ({ shopId, id, amount, type, note }) => ({
-        url: replacePathParams(SUPPLIER_ENDPOINTS.UPDATE_BALANCE, { shopId, id }),
+        url: replacePathParams(SUPPLIER_ENDPOINTS.UPDATE_BALANCE, {
+          shopId,
+          id,
+        }),
         method: 'POST',
         body: { amount, type, note },
       }),
@@ -266,10 +280,12 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // 📊 GET SUPPLIER STATISTICS
-    // ============================================
-    getSupplierStats: build.query<SupplierStatsResponse['data'], { shopId: string }>({
+    //  GET SUPPLIER STATISTICS
+
+    getSupplierStats: build.query<
+      SupplierStatsResponse['data'],
+      { shopId: string }
+    >({
       query: ({ shopId }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.STATS, { shopId }),
       }),
@@ -281,9 +297,8 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
-    // 🏆 GET TOP SUPPLIERS
-    // ============================================
+    //  GET TOP SUPPLIERS
+
     getTopSuppliers: build.query<
       Supplier[],
       { shopId: string; limit?: number }
@@ -302,9 +317,8 @@ export const supplierApi = baseApi.injectEndpoints({
   }),
 })
 
-// ============================================
-// 🎣 EXPORT HOOKS (Auto-generated by RTK Query)
-// ============================================
+//  EXPORT HOOKS (Auto-generated by RTK Query)
+
 export const {
   // Queries
   useGetSuppliersQuery,

@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/router/guards.ts
 // Navigation Guards and Route Utilities - FULLY ALIGNED
-// 
+//
 
 import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -9,9 +9,9 @@ import { useAppSelector } from '@/store/hooks'
 import { ROUTE_PATHS } from '@/constants/routePaths'
 import type { PermissionKey, UserRole } from '@/types'
 
-// 
+//
 // TYPES
-// 
+//
 
 interface RouteGuardOptions {
   permission?: PermissionKey
@@ -36,18 +36,20 @@ export interface Breadcrumb {
   isActive?: boolean
 }
 
-// 
+//
 // ROUTE GUARD HOOK - Programmatic route protection
-// 
+//
 
 export const useRouteGuard = (options: RouteGuardOptions) => {
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   //  Access from correct slices
   const { isAuthenticated, role } = useAppSelector(state => state.auth)
-  const effectivePermissions = useAppSelector(state => 
-    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  const effectivePermissions = useAppSelector(
+    state =>
+      state.permissions.currentShopPermissions ||
+      state.permissions.orgPermissions
   )
 
   useEffect(() => {
@@ -90,9 +92,9 @@ export const useRouteGuard = (options: RouteGuardOptions) => {
   }, [isAuthenticated, effectivePermissions, role, location.pathname])
 }
 
-// 
+//
 // PERMISSION CHECKER UTILITY
-// 
+//
 
 export const checkPermissions = (
   permissions: Record<string, boolean> | null,
@@ -119,16 +121,18 @@ export const checkPermissions = (
   return true
 }
 
-// 
+//
 // NAVIGATION WITH PERMISSION CHECK
-// 
+//
 
 export const useNavigateWithPermission = () => {
   const navigate = useNavigate()
-  
+
   //  Access from permissions slice
-  const effectivePermissions = useAppSelector(state => 
-    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  const effectivePermissions = useAppSelector(
+    state =>
+      state.permissions.currentShopPermissions ||
+      state.permissions.orgPermissions
   )
 
   const navigateWithPermission = (
@@ -157,9 +161,9 @@ export const useNavigateWithPermission = () => {
   return { navigateWithPermission }
 }
 
-// 
+//
 // ROLE CHECKER UTILITY
-// 
+//
 
 export const checkRole = (
   userRole: UserRole | null,
@@ -167,21 +171,21 @@ export const checkRole = (
   requiredRoles?: UserRole[]
 ): boolean => {
   if (!userRole) return false
-  
+
   if (requiredRole) {
     return userRole === requiredRole
   }
-  
+
   if (requiredRoles && requiredRoles.length > 0) {
     return requiredRoles.includes(userRole)
   }
-  
+
   return true
 }
 
-// 
+//
 // NAVIGATION WITH ROLE CHECK
-// 
+//
 
 export const useNavigateWithRole = () => {
   const navigate = useNavigate()
@@ -210,9 +214,9 @@ export const useNavigateWithRole = () => {
   return { navigateWithRole }
 }
 
-// 
+//
 // BREADCRUMB GENERATOR
-// 
+//
 
 export const generateBreadcrumbs = (pathname: string): Breadcrumb[] => {
   const paths = pathname.split('/').filter(Boolean)
@@ -241,9 +245,9 @@ export const generateBreadcrumbs = (pathname: string): Breadcrumb[] => {
   return breadcrumbs
 }
 
-// 
+//
 // ROUTE TITLE HOOK
-// 
+//
 
 export const useRouteTitle = (title?: string) => {
   const location = useLocation()
@@ -268,14 +272,16 @@ export const useRouteTitle = (title?: string) => {
   }, [title, location.pathname])
 }
 
-// 
+//
 // SHOP CONTEXT GUARD
-// 
+//
 
-export const useShopContextGuard = (redirectTo: string = ROUTE_PATHS.DASHBOARD) => {
+export const useShopContextGuard = (
+  redirectTo: string = ROUTE_PATHS.DASHBOARD
+) => {
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   const { currentShopId, role } = useAppSelector(state => state.auth)
 
   useEffect(() => {
@@ -294,16 +300,16 @@ export const useShopContextGuard = (redirectTo: string = ROUTE_PATHS.DASHBOARD) 
   }, [currentShopId, role, location.pathname])
 }
 
-// 
+//
 // EMAIL VERIFICATION GUARD
-// 
+//
 
 export const useEmailVerificationGuard = (
   redirectTo: string = ROUTE_PATHS.AUTH.VERIFY_EMAIL
 ) => {
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   const userProfile = useAppSelector(state => state.user.profile)
 
   useEffect(() => {
@@ -316,9 +322,9 @@ export const useEmailVerificationGuard = (
   }, [userProfile?.isEmailVerified, location.pathname])
 }
 
-// 
+//
 // COMBINED ACCESS CHECK
-// 
+//
 
 interface AccessCheckOptions {
   permission?: PermissionKey
@@ -330,12 +336,18 @@ interface AccessCheckOptions {
 
 export const useAccessCheck = (options: AccessCheckOptions) => {
   const { role } = useAppSelector(state => state.auth)
-  const effectivePermissions = useAppSelector(state => 
-    state.permissions.currentShopPermissions || state.permissions.orgPermissions
+  const effectivePermissions = useAppSelector(
+    state =>
+      state.permissions.currentShopPermissions ||
+      state.permissions.orgPermissions
   )
 
-  const hasRoleAccess = checkRole(role, options.requiredRole, options.requiredRoles)
-  
+  const hasRoleAccess = checkRole(
+    role,
+    options.requiredRole,
+    options.requiredRoles
+  )
+
   const hasPermissionAccess = checkPermissions(
     effectivePermissions,
     options.permission,
@@ -354,11 +366,8 @@ export const useAccessCheck = (options: AccessCheckOptions) => {
   }
 }
 
-// 
+//
 // EXPORTS
-// 
+//
 
-export type {
-  RouteGuardOptions,
-  NavigateWithPermissionOptions,
-}
+export type { RouteGuardOptions, NavigateWithPermissionOptions }

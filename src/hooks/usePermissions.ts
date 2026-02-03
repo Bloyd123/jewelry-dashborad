@@ -1,8 +1,8 @@
-// 
+//
 // FILE: hooks/usePermissions.ts
 // Custom Hooks for Permission Checking
 //  REFACTORED: Works with single source of truth from permissionsSlice
-// 
+//
 
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/store'
@@ -133,7 +133,7 @@ export const useShopAccessesFromPermissions = () => {
 /**
  * Combined permissions check hook with detailed info
  *  ENHANCED: Added shop access info
- * Usage: 
+ * Usage:
  * const { hasPermission, permissionCount, isOrgLevel, shopAccesses, activeShops } = usePermissionInfo()
  */
 export const usePermissionInfo = () => {
@@ -144,23 +144,23 @@ export const usePermissionInfo = () => {
   const currentShopId = useCurrentShopId() //  NEW
   const activeShops = useActiveShopsCount() //  NEW
   const shopAccesses = useShopAccessesFromPermissions() //  NEW
-  
+
   return {
     // Permissions
     permissions,
     permissionCount,
-    
+
     // User type
     hasShopAccess,
     isOrgLevel,
-    
+
     //  NEW: Shop context
     currentShopId,
     activeShops,
     shopAccesses,
-    
+
     // Helper functions
-    hasPermission: (permission: PermissionKey) => 
+    hasPermission: (permission: PermissionKey) =>
       permissions?.[permission] === true,
     hasAnyPermission: (permissionList: PermissionKey[]) =>
       permissionList.some(perm => permissions?.[perm] === true),
@@ -176,7 +176,9 @@ export const usePermissionInfo = () => {
 export const useHasShopAccessById = (shopId: string): boolean => {
   return useSelector((state: RootState) => {
     const shopAccesses = selectShopAccesses(state)
-    return shopAccesses.some(access => access.shopId === shopId && access.isActive)
+    return shopAccesses.some(
+      access => access.shopId === shopId && access.isActive
+    )
   })
 }
 
@@ -212,9 +214,11 @@ export const useIsCurrentShopActive = (): boolean => {
   return useSelector((state: RootState) => {
     const currentShopId = selectCurrentShopId(state)
     if (!currentShopId) return false
-    
+
     const shopAccesses = selectShopAccesses(state)
-    const currentShop = shopAccesses.find(access => access.shopId === currentShopId)
+    const currentShop = shopAccesses.find(
+      access => access.shopId === currentShopId
+    )
     return currentShop?.isActive || false
   })
 }
@@ -226,27 +230,27 @@ export default {
   useAnyPermission,
   useAllPermissions,
   usePermissions,
-  
+
   // User type hooks
   useHasShopAccess,
   useIsOrgLevel,
-  
+
   // Permission getters
   useCurrentShopPermissions,
   useOrgPermissions,
   usePermissionCount,
-  
+
   //  NEW: Shop context hooks
   useCurrentShopId,
   useActiveShopsCount,
   useShopAccessesFromPermissions,
-  
+
   //  NEW: Shop-specific hooks
   useHasShopAccessById,
   useShopPermissionsById,
   useShopRoleById,
   useIsCurrentShopActive,
-  
+
   // Combined info hook
   usePermissionInfo,
 }

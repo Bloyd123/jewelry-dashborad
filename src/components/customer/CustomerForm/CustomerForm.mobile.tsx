@@ -43,47 +43,49 @@ export default function CustomerFormMobile({
     useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-    const { showSuccess, showError } = useNotification() // ✅ ADD
+  const { showSuccess, showError } = useNotification() // ✅ ADD
   const [showConfirmDialog, setShowConfirmDialog] = useState(false) // ✅ ADD
 
-const { createCustomer, updateCustomer, isCreating, isUpdating } =
-  useCustomerActions(shopId)
+  const { createCustomer, updateCustomer, isCreating, isUpdating } =
+    useCustomerActions(shopId)
   const isLoading = isCreating || isUpdating
-  const cleanFormData = (data: Partial<CreateCustomerInput>): Partial<CreateCustomerInput> => {
-  const cleaned = { ...data }
+  const cleanFormData = (
+    data: Partial<CreateCustomerInput>
+  ): Partial<CreateCustomerInput> => {
+    const cleaned = { ...data }
 
-  // Convert empty strings to undefined for optional fields
-  if (cleaned.referredBy === '') cleaned.referredBy = undefined
-  if (cleaned.email === '') cleaned.email = undefined
-  if (cleaned.alternatePhone === '') cleaned.alternatePhone = undefined
-  if (cleaned.whatsappNumber === '') cleaned.whatsappNumber = undefined
-  if (cleaned.dateOfBirth === '') cleaned.dateOfBirth = undefined
-  if (cleaned.anniversaryDate === '') cleaned.anniversaryDate = undefined
-  if (cleaned.aadharNumber === '') cleaned.aadharNumber = undefined
-  if (cleaned.panNumber === '') cleaned.panNumber = undefined
-  if (cleaned.gstNumber === '') cleaned.gstNumber = undefined
-  if (cleaned.notes === '') cleaned.notes = undefined
+    // Convert empty strings to undefined for optional fields
+    if (cleaned.referredBy === '') cleaned.referredBy = undefined
+    if (cleaned.email === '') cleaned.email = undefined
+    if (cleaned.alternatePhone === '') cleaned.alternatePhone = undefined
+    if (cleaned.whatsappNumber === '') cleaned.whatsappNumber = undefined
+    if (cleaned.dateOfBirth === '') cleaned.dateOfBirth = undefined
+    if (cleaned.anniversaryDate === '') cleaned.anniversaryDate = undefined
+    if (cleaned.aadharNumber === '') cleaned.aadharNumber = undefined
+    if (cleaned.panNumber === '') cleaned.panNumber = undefined
+    if (cleaned.gstNumber === '') cleaned.gstNumber = undefined
+    if (cleaned.notes === '') cleaned.notes = undefined
 
-  // Clean address
-  if (cleaned.address) {
-    if (cleaned.address.street === '') cleaned.address.street = undefined
-    if (cleaned.address.city === '') cleaned.address.city = undefined
-    if (cleaned.address.state === '') cleaned.address.state = undefined
-    if (cleaned.address.pincode === '') cleaned.address.pincode = undefined
-    
-    // Remove address if all fields are empty
-    if (
-      !cleaned.address.street &&
-      !cleaned.address.city &&
-      !cleaned.address.state &&
-      !cleaned.address.pincode
-    ) {
-      cleaned.address = undefined
+    // Clean address
+    if (cleaned.address) {
+      if (cleaned.address.street === '') cleaned.address.street = undefined
+      if (cleaned.address.city === '') cleaned.address.city = undefined
+      if (cleaned.address.state === '') cleaned.address.state = undefined
+      if (cleaned.address.pincode === '') cleaned.address.pincode = undefined
+
+      // Remove address if all fields are empty
+      if (
+        !cleaned.address.street &&
+        !cleaned.address.city &&
+        !cleaned.address.state &&
+        !cleaned.address.pincode
+      ) {
+        cleaned.address = undefined
+      }
     }
-  }
 
-  return cleaned
-}
+    return cleaned
+  }
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
@@ -141,7 +143,7 @@ const { createCustomer, updateCustomer, isCreating, isUpdating } =
         }
       })
       setErrors(validationErrors)
-      
+
       const firstError = Object.values(validationErrors)[0]
       if (firstError) {
         showError(String(firstError), t('customer.errors.validationFailed'))
@@ -156,46 +158,45 @@ const { createCustomer, updateCustomer, isCreating, isUpdating } =
 
     setShowConfirmDialog(true)
   }
-const handleConfirmedSubmit = async () => {
-  const validatedData = cleanFormData(formData) as CreateCustomerInput
-  
-  const setFormErrors = (apiErrors: Record<string, string>) => {
-    setErrors(apiErrors)
-    // DON'T show notification here
-  }
+  const handleConfirmedSubmit = async () => {
+    const validatedData = cleanFormData(formData) as CreateCustomerInput
 
-  try {
-    const result =
-      mode === 'edit' && customerId
-        ? await updateCustomer(customerId, validatedData, setFormErrors)
-        : await createCustomer(validatedData, setFormErrors)
-
-    if (result.success) {
-      showSuccess(
-        mode === 'create'
-          ? t('customer.success.created')
-          : t('customer.success.updated'),
-        mode === 'create'
-          ? t('customer.success.createdTitle')
-          : t('customer.success.updatedTitle')
-      )
-      
-      setShowConfirmDialog(false)
-      onSuccess?.()
-    } else {
-      if (result.error) {
-        showError(result.error, t('customer.errors.errorTitle'))
-      }
+    const setFormErrors = (apiErrors: Record<string, string>) => {
+      setErrors(apiErrors)
+      // DON'T show notification here
     }
-  } catch (error: any) {
-    console.error('❌ [CustomerForm] Save error:', error)
-    showError(
-      error?.message || t('customer.errors.unexpectedError'),
-      t('customer.errors.errorTitle')
-    )
-  }
-}
 
+    try {
+      const result =
+        mode === 'edit' && customerId
+          ? await updateCustomer(customerId, validatedData, setFormErrors)
+          : await createCustomer(validatedData, setFormErrors)
+
+      if (result.success) {
+        showSuccess(
+          mode === 'create'
+            ? t('customer.success.created')
+            : t('customer.success.updated'),
+          mode === 'create'
+            ? t('customer.success.createdTitle')
+            : t('customer.success.updatedTitle')
+        )
+
+        setShowConfirmDialog(false)
+        onSuccess?.()
+      } else {
+        if (result.error) {
+          showError(result.error, t('customer.errors.errorTitle'))
+        }
+      }
+    } catch (error: any) {
+      console.error(' [CustomerForm] Save error:', error)
+      showError(
+        error?.message || t('customer.errors.unexpectedError'),
+        t('customer.errors.errorTitle')
+      )
+    }
+  }
 
   const renderCurrentStep = () => {
     const sectionProps = {
@@ -321,26 +322,28 @@ const handleConfirmedSubmit = async () => {
               )}
             </Button>
           )}
-              <ConfirmDialog
-        open={showConfirmDialog}
-        onOpenChange={setShowConfirmDialog}
-        title={
-          mode === 'create'
-            ? t('customer.confirmCreate')
-            : t('customer.confirmUpdate')
-        }
-        description={
-          mode === 'create'
-            ? t('customer.confirmCreateDescription')
-            : t('customer.confirmUpdateDescription')
-        }
-        variant={mode === 'create' ? 'success' : 'info'}
-        confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
-        cancelLabel={t('common.cancel')}
-        onConfirm={handleConfirmedSubmit}
-        onCancel={() => setShowConfirmDialog(false)}
-        loading={isLoading}
-      />
+          <ConfirmDialog
+            open={showConfirmDialog}
+            onOpenChange={setShowConfirmDialog}
+            title={
+              mode === 'create'
+                ? t('customer.confirmCreate')
+                : t('customer.confirmUpdate')
+            }
+            description={
+              mode === 'create'
+                ? t('customer.confirmCreateDescription')
+                : t('customer.confirmUpdateDescription')
+            }
+            variant={mode === 'create' ? 'success' : 'info'}
+            confirmLabel={
+              mode === 'create' ? t('common.create') : t('common.update')
+            }
+            cancelLabel={t('common.cancel')}
+            onConfirm={handleConfirmedSubmit}
+            onCancel={() => setShowConfirmDialog(false)}
+            loading={isLoading}
+          />
         </div>
       </div>
     </div>

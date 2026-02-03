@@ -11,13 +11,7 @@ export const useSuppliersList = (
   shopId: string,
   filters?: Partial<SupplierFilters>
 ) => {
-  const {
-    data,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetSuppliersQuery({
+  const { data, isLoading, isFetching, error, refetch } = useGetSuppliersQuery({
     shopId,
     page: filters?.page || 1,
     limit: filters?.limit || 20,

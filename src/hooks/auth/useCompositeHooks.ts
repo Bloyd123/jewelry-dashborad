@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/useCompositeHooks.ts
 // Composite Hooks - Specialized hooks that combine multiple concerns
-// 
+//
 
 import { useCallback } from 'react'
 import { useAppDispatch } from '@/store/hooks'
@@ -9,9 +9,9 @@ import { login as loginAction, clearError } from '@/store/slices/authSlice'
 import { useAuthLoading, useAuthError } from './useAuthState'
 import type { LoginRequest } from '@/types'
 
-// 
+//
 // LOGIN FORM HOOK
-// 
+//
 
 export const useLoginForm = () => {
   const dispatch = useAppDispatch()

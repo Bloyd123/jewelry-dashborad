@@ -20,9 +20,11 @@ import type {
 /**
  * Get customer's full name
  */
-export const getCustomerFullName = (customer: Customer | Partial<Customer>): string => {
+export const getCustomerFullName = (
+  customer: Customer | Partial<Customer>
+): string => {
   if (!customer.firstName) return 'Unknown Customer'
-  
+
   const lastName = customer.lastName ? ` ${customer.lastName}` : ''
   return `${customer.firstName}${lastName}`.trim()
 }
@@ -38,12 +40,16 @@ export const getCustomerDisplayName = (customer: Customer): string => {
 /**
  * Get customer initials for avatar
  */
-export const getCustomerInitials = (customer: Customer | Partial<Customer>): string => {
+export const getCustomerInitials = (
+  customer: Customer | Partial<Customer>
+): string => {
   if (!customer.firstName) return '??'
-  
+
   const firstInitial = customer.firstName.charAt(0).toUpperCase()
-  const lastInitial = customer.lastName ? customer.lastName.charAt(0).toUpperCase() : ''
-  
+  const lastInitial = customer.lastName
+    ? customer.lastName.charAt(0).toUpperCase()
+    : ''
+
   return firstInitial + lastInitial
 }
 
@@ -59,15 +65,15 @@ export const getCustomerInitials = (customer: Customer | Partial<Customer>): str
  */
 export const formatPhoneNumber = (phone: string): string => {
   if (!phone) return ''
-  
+
   // Remove any existing formatting
   const cleaned = phone.replace(/\D/g, '')
-  
+
   // Format as +91 XXXXX XXXXX
   if (cleaned.length === 10) {
     return `+91 ${cleaned.slice(0, 5)} ${cleaned.slice(5)}`
   }
-  
+
   return phone
 }
 
@@ -92,13 +98,17 @@ export const getWhatsAppURL = (phone: string, message?: string): string => {
 /**
  * Get email mailto link
  */
-export const getEmailLink = (email: string, subject?: string, body?: string): string => {
+export const getEmailLink = (
+  email: string,
+  subject?: string,
+  body?: string
+): string => {
   if (!email) return ''
-  
+
   const params = []
   if (subject) params.push(`subject=${encodeURIComponent(subject)}`)
   if (body) params.push(`body=${encodeURIComponent(body)}`)
-  
+
   const queryString = params.length > 0 ? `?${params.join('&')}` : ''
   return `mailto:${email}${queryString}`
 }
@@ -146,7 +156,9 @@ export const getCustomerTypeColor = (type: CustomerType): string => {
 /**
  * Get customer category label
  */
-export const getCustomerCategoryLabel = (category: CustomerCategory): string => {
+export const getCustomerCategoryLabel = (
+  category: CustomerCategory
+): string => {
   const labels: Record<CustomerCategory, string> = {
     gold: 'Gold',
     silver: 'Silver',
@@ -160,7 +172,9 @@ export const getCustomerCategoryLabel = (category: CustomerCategory): string => 
 /**
  * Get customer category color
  */
-export const getCustomerCategoryColor = (category: CustomerCategory): string => {
+export const getCustomerCategoryColor = (
+  category: CustomerCategory
+): string => {
   const colors: Record<CustomerCategory, string> = {
     gold: 'text-yellow-600 bg-yellow-50',
     silver: 'text-gray-600 bg-gray-50',
@@ -176,7 +190,7 @@ export const getCustomerCategoryColor = (category: CustomerCategory): string => 
  */
 export const getGenderLabel = (gender?: Gender): string => {
   if (!gender) return 'Not specified'
-  
+
   const labels: Record<Gender, string> = {
     male: 'Male',
     female: 'Female',
@@ -202,7 +216,7 @@ export const getGenderIcon = (gender?: Gender): string => {
  */
 export const getCustomerSourceLabel = (source?: CustomerSource): string => {
   if (!source) return 'Unknown'
-  
+
   const labels: Record<CustomerSource, string> = {
     walk_in: 'Walk-in',
     referral: 'Referral',
@@ -233,7 +247,7 @@ export const getActiveStatusLabel = (isActive: boolean): string => {
 
 /**
  * ============================================
- * 💰 FINANCIAL UTILITIES
+ *  FINANCIAL UTILITIES
  * ============================================
  */
 
@@ -243,7 +257,7 @@ export const getActiveStatusLabel = (isActive: boolean): string => {
 export const formatCurrency = (amount: number): string => {
   if (amount === 0) return '₹0'
   if (!amount) return '₹0'
-  
+
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
@@ -264,7 +278,10 @@ export const formatLoyaltyPoints = (points: number): string => {
  * Calculate loyalty points from amount
  * Example: 1 point per ₹100 spent
  */
-export const calculateLoyaltyPointsFromAmount = (amount: number, rate = 0.01): number => {
+export const calculateLoyaltyPointsFromAmount = (
+  amount: number,
+  rate = 0.01
+): number => {
   return Math.floor(amount * rate)
 }
 
@@ -272,14 +289,20 @@ export const calculateLoyaltyPointsFromAmount = (amount: number, rate = 0.01): n
  * Calculate discount from loyalty points
  * Example: 1 point = ₹1 discount
  */
-export const calculateDiscountFromPoints = (points: number, conversionRate = 1): number => {
+export const calculateDiscountFromPoints = (
+  points: number,
+  conversionRate = 1
+): number => {
   return points * conversionRate
 }
 
 /**
  * Get credit limit usage percentage
  */
-export const getCreditLimitUsage = (totalDue: number, creditLimit?: number): number => {
+export const getCreditLimitUsage = (
+  totalDue: number,
+  creditLimit?: number
+): number => {
   if (!creditLimit || creditLimit === 0) return 0
   return Math.min((totalDue / creditLimit) * 100, 100)
 }
@@ -311,17 +334,17 @@ export const hasOutstandingBalance = (customer: Customer): boolean => {
  */
 export const calculateAge = (dateOfBirth: string): number => {
   if (!dateOfBirth) return 0
-  
+
   const dob = new Date(dateOfBirth)
   const today = new Date()
-  
+
   let age = today.getFullYear() - dob.getFullYear()
   const monthDiff = today.getMonth() - dob.getMonth()
-  
+
   if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
     age--
   }
-  
+
   return age
 }
 
@@ -330,7 +353,7 @@ export const calculateAge = (dateOfBirth: string): number => {
  */
 export const formatDate = (date: string | Date): string => {
   if (!date) return 'N/A'
-  
+
   return new Intl.DateTimeFormat('en-IN', {
     day: '2-digit',
     month: 'short',
@@ -343,12 +366,12 @@ export const formatDate = (date: string | Date): string => {
  */
 export const formatRelativeDate = (date: string | Date): string => {
   if (!date) return 'Never'
-  
+
   const now = new Date()
   const past = new Date(date)
   const diffInMs = now.getTime() - past.getTime()
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
-  
+
   if (diffInDays === 0) return 'Today'
   if (diffInDays === 1) return 'Yesterday'
   if (diffInDays < 7) return `${diffInDays} days ago`
@@ -362,11 +385,13 @@ export const formatRelativeDate = (date: string | Date): string => {
  */
 export const isBirthdayToday = (dateOfBirth?: string): boolean => {
   if (!dateOfBirth) return false
-  
+
   const dob = new Date(dateOfBirth)
   const today = new Date()
-  
-  return dob.getMonth() === today.getMonth() && dob.getDate() === today.getDate()
+
+  return (
+    dob.getMonth() === today.getMonth() && dob.getDate() === today.getDate()
+  )
 }
 
 /**
@@ -374,11 +399,14 @@ export const isBirthdayToday = (dateOfBirth?: string): boolean => {
  */
 export const isAnniversaryToday = (anniversaryDate?: string): boolean => {
   if (!anniversaryDate) return false
-  
+
   const anniversary = new Date(anniversaryDate)
   const today = new Date()
-  
-  return anniversary.getMonth() === today.getMonth() && anniversary.getDate() === today.getDate()
+
+  return (
+    anniversary.getMonth() === today.getMonth() &&
+    anniversary.getDate() === today.getDate()
+  )
 }
 
 /**
@@ -386,20 +414,20 @@ export const isAnniversaryToday = (anniversaryDate?: string): boolean => {
  */
 export const getDaysUntilBirthday = (dateOfBirth?: string): number | null => {
   if (!dateOfBirth) return null
-  
+
   const dob = new Date(dateOfBirth)
   const today = new Date()
-  
+
   const thisYearBirthday = new Date(
     today.getFullYear(),
     dob.getMonth(),
     dob.getDate()
   )
-  
+
   if (thisYearBirthday < today) {
     thisYearBirthday.setFullYear(today.getFullYear() + 1)
   }
-  
+
   const diffInMs = thisYearBirthday.getTime() - today.getTime()
   return Math.ceil(diffInMs / (1000 * 60 * 60 * 24))
 }
@@ -407,22 +435,24 @@ export const getDaysUntilBirthday = (dateOfBirth?: string): number | null => {
 /**
  * Get upcoming anniversary (days remaining)
  */
-export const getDaysUntilAnniversary = (anniversaryDate?: string): number | null => {
+export const getDaysUntilAnniversary = (
+  anniversaryDate?: string
+): number | null => {
   if (!anniversaryDate) return null
-  
+
   const anniversary = new Date(anniversaryDate)
   const today = new Date()
-  
+
   const thisYearAnniversary = new Date(
     today.getFullYear(),
     anniversary.getMonth(),
     anniversary.getDate()
   )
-  
+
   if (thisYearAnniversary < today) {
     thisYearAnniversary.setFullYear(today.getFullYear() + 1)
   }
-  
+
   const diffInMs = thisYearAnniversary.getTime() - today.getTime()
   return Math.ceil(diffInMs / (1000 * 60 * 60 * 24))
 }
@@ -447,7 +477,7 @@ export const getTagColor = (tag: string): string => {
     'bg-indigo-100 text-indigo-700',
     'bg-teal-100 text-teal-700',
   ]
-  
+
   // Use tag length for deterministic color
   const index = tag.length % colors.length
   return colors[index]
@@ -486,7 +516,9 @@ export const isValidPAN = (pan: string): boolean => {
  * Validate GST number
  */
 export const isValidGST = (gst: string): boolean => {
-  return /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gst.toUpperCase())
+  return /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(
+    gst.toUpperCase()
+  )
 }
 
 /**
@@ -511,15 +543,15 @@ export const filterCustomersBySearch = (
   searchQuery: string
 ): Customer[] => {
   if (!searchQuery) return customers
-  
+
   const query = searchQuery.toLowerCase().trim()
-  
-  return customers.filter((customer) => {
+
+  return customers.filter(customer => {
     const fullName = getCustomerFullName(customer).toLowerCase()
     const phone = customer.phone || ''
     const email = (customer.email || '').toLowerCase()
     const code = (customer.customerCode || '').toLowerCase()
-    
+
     return (
       fullName.includes(query) ||
       phone.includes(query) ||
@@ -540,7 +572,7 @@ export const sortCustomers = (
   const sorted = [...customers].sort((a, b) => {
     let aValue: any
     let bValue: any
-    
+
     switch (sortBy) {
       case 'name':
         aValue = getCustomerFullName(a)
@@ -565,32 +597,37 @@ export const sortCustomers = (
       default:
         return 0
     }
-    
+
     if (aValue < bValue) return order === 'asc' ? -1 : 1
     if (aValue > bValue) return order === 'asc' ? 1 : -1
     return 0
   })
-  
+
   return sorted
 }
 
 /**
  * Group customers by first letter
  */
-export const groupCustomersByLetter = (customers: Customer[]): Record<string, Customer[]> => {
-  return customers.reduce((groups, customer) => {
-    const letter = customer.firstName?.charAt(0).toUpperCase() || '#'
-    if (!groups[letter]) {
-      groups[letter] = []
-    }
-    groups[letter].push(customer)
-    return groups
-  }, {} as Record<string, Customer[]>)
+export const groupCustomersByLetter = (
+  customers: Customer[]
+): Record<string, Customer[]> => {
+  return customers.reduce(
+    (groups, customer) => {
+      const letter = customer.firstName?.charAt(0).toUpperCase() || '#'
+      if (!groups[letter]) {
+        groups[letter] = []
+      }
+      groups[letter].push(customer)
+      return groups
+    },
+    {} as Record<string, Customer[]>
+  )
 }
 
 /**
  * ============================================
- * 📊 STATISTICS UTILITIES
+ *  STATISTICS UTILITIES
  * ============================================
  */
 
@@ -604,7 +641,10 @@ export const calculateCustomerLifetimeValue = (customer: Customer): number => {
 /**
  * Calculate average order value
  */
-export const calculateAverageOrderValue = (totalSpent: number, orderCount: number): number => {
+export const calculateAverageOrderValue = (
+  totalSpent: number,
+  orderCount: number
+): number => {
   if (orderCount === 0) return 0
   return totalSpent / orderCount
 }
@@ -670,7 +710,9 @@ export const getCustomerCSVHeaders = (): string[] => {
  * Check if customer is VIP
  */
 export const isVIPCustomer = (customer: Customer): boolean => {
-  return customer.customerType === 'vip' || (customer.totalPurchases || 0) >= 100000
+  return (
+    customer.customerType === 'vip' || (customer.totalPurchases || 0) >= 100000
+  )
 }
 
 /**
@@ -678,11 +720,11 @@ export const isVIPCustomer = (customer: Customer): boolean => {
  */
 export const isAtRiskCustomer = (lastPurchaseDate?: string): boolean => {
   if (!lastPurchaseDate) return true
-  
+
   const daysSinceLastPurchase = Math.floor(
     (Date.now() - new Date(lastPurchaseDate).getTime()) / (1000 * 60 * 60 * 24)
   )
-  
+
   return daysSinceLastPurchase > 180 // 6 months
 }
 
@@ -693,9 +735,12 @@ export const getCustomerEngagement = (
   customer: Customer
 ): 'highly-engaged' | 'engaged' | 'at-risk' | 'inactive' => {
   const daysSinceLastPurchase = customer.lastPurchaseDate
-    ? Math.floor((Date.now() - new Date(customer.lastPurchaseDate).getTime()) / (1000 * 60 * 60 * 24))
+    ? Math.floor(
+        (Date.now() - new Date(customer.lastPurchaseDate).getTime()) /
+          (1000 * 60 * 60 * 24)
+      )
     : 999
-  
+
   if (daysSinceLastPurchase <= 30) return 'highly-engaged'
   if (daysSinceLastPurchase <= 90) return 'engaged'
   if (daysSinceLastPurchase <= 180) return 'at-risk'
@@ -713,22 +758,22 @@ export const getRecommendedAction = (customer: Customer): string => {
   if (isAnniversaryToday(customer.anniversaryDate)) {
     return 'Send anniversary wishes'
   }
-  
+
   // Outstanding balance
   if (hasOutstandingBalance(customer) && (customer.totalDue || 0) > 10000) {
     return 'Follow up on payment'
   }
-  
+
   // At risk
   if (isAtRiskCustomer(customer.lastPurchaseDate)) {
     return 'Send re-engagement offer'
   }
-  
+
   // High value customer
   if (isVIPCustomer(customer)) {
     return 'Provide VIP service'
   }
-  
+
   return 'Keep engaged'
 }
 
@@ -757,11 +802,13 @@ export const maskPAN = (pan: string): string => {
 /**
  * Check KYC completion status
  */
-export const getKYCStatus = (customer: Customer): 'complete' | 'partial' | 'incomplete' => {
+export const getKYCStatus = (
+  customer: Customer
+): 'complete' | 'partial' | 'incomplete' => {
   const hasAadhar = Boolean(customer.aadharNumber)
   const hasPAN = Boolean(customer.panNumber)
   const hasAddress = Boolean(customer.address?.pincode)
-  
+
   if (hasAadhar && hasPAN && hasAddress) return 'complete'
   if (hasAadhar || hasPAN) return 'partial'
   return 'incomplete'
@@ -801,11 +848,11 @@ export const canSendEmail = (customer: Customer): boolean => {
  */
 export const getAvailableContactMethods = (customer: Customer): string[] => {
   const methods: string[] = []
-  
+
   if (customer.phone) methods.push('phone')
   if (customer.whatsappNumber || customer.phone) methods.push('whatsapp')
   if (customer.email) methods.push('email')
-  
+
   return methods
 }
 
@@ -818,14 +865,14 @@ export default {
   getCustomerFullName,
   getCustomerDisplayName,
   getCustomerInitials,
-  
+
   // Contact
   formatPhoneNumber,
   formatPhoneForWhatsApp,
   getWhatsAppURL,
   getEmailLink,
   getCallLink,
-  
+
   // Status & Types
   getCustomerTypeLabel,
   getCustomerTypeColor,
@@ -836,7 +883,7 @@ export default {
   getCustomerSourceLabel,
   getActiveStatusColor,
   getActiveStatusLabel,
-  
+
   // Financial
   formatCurrency,
   formatLoyaltyPoints,
@@ -845,7 +892,7 @@ export default {
   getCreditLimitUsage,
   getCreditLimitColor,
   hasOutstandingBalance,
-  
+
   // Date & Time
   calculateAge,
   formatDate,
@@ -854,42 +901,42 @@ export default {
   isAnniversaryToday,
   getDaysUntilBirthday,
   getDaysUntilAnniversary,
-  
+
   // Tags
   getTagColor,
-  
+
   // Validation
   isValidIndianPhone,
   isValidAadhar,
   isValidPAN,
   isValidGST,
   isValidAge,
-  
+
   // Search & Filter
   filterCustomersBySearch,
   sortCustomers,
   groupCustomersByLetter,
-  
+
   // Statistics
   calculateCustomerLifetimeValue,
   calculateAverageOrderValue,
   getCustomerSegment,
-  
+
   // Export
   customerToCSVRow,
   getCustomerCSVHeaders,
-  
+
   // Business Logic
   isVIPCustomer,
   isAtRiskCustomer,
   getCustomerEngagement,
   getRecommendedAction,
-  
+
   // KYC
   maskAadhar,
   maskPAN,
   getKYCStatus,
-  
+
   // Communication
   getPreferredCommunicationChannel,
   canSendWhatsApp,

@@ -54,7 +54,7 @@ const CopyButton = ({ text }: { text: string }) => {
 // COMPONENT PROPS
 
 interface PersonalInfoTabProps {
-   customer: Customer
+  customer: Customer
 }
 
 // PERSONAL INFO TAB COMPONENT
@@ -63,7 +63,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
   customer,
 }) => {
   const { t } = useTranslation()
-
 
   // BASIC INFORMATION SECTION
 

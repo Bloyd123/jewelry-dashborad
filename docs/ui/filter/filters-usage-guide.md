@@ -64,7 +64,7 @@ import { FilterSheet } from '@/components/ui/overlay/Sheet'
 
 ---
 
-## 📊 1. FilterBar (Container)
+##  1. FilterBar (Container)
 
 ### Basic Usage
 ```tsx
@@ -284,7 +284,7 @@ const filters = useAppSelector(state => state.customer.filters)
 
 ---
 
-## 💰 5. PriceRangeFilter
+##  5. PriceRangeFilter
 
 ### Basic Usage
 ```tsx

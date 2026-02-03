@@ -845,7 +845,7 @@ import { Pagination } from '@/components/ui/navigation'
 
 ---
 
-## ⭐ Rating: 9.5/10
+##  Rating: 9.5/10
 
 ### Strengths
 - Fully responsive across all devices

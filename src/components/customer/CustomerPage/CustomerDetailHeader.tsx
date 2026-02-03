@@ -9,7 +9,7 @@ import type { Customer } from '@/types/customer.types'
 // COMPONENT PROPS
 
 interface CustomerDetailHeaderProps {
-   customer: Customer
+  customer: Customer
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void

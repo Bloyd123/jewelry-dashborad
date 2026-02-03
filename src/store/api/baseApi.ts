@@ -22,7 +22,7 @@ export const baseApi = createApi({
     'ProductAnalytics',
     'ProductSearch',
     'ProductHistory',
-        // Supplier Module
+    // Supplier Module
     'Supplier',
     'SupplierList',
     'SupplierSearch',

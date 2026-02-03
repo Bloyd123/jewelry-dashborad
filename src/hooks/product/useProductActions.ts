@@ -31,9 +31,8 @@ export const useProductActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  
   //  MUTATIONS
-  
+
   const [createMutation, createState] = useCreateProductMutation()
   const [updateMutation, updateState] = useUpdateProductMutation()
   const [deleteMutation, deleteState] = useDeleteProductMutation()
@@ -45,9 +44,8 @@ export const useProductActions = (shopId: string) => {
   const [calculatePriceMutation, calculatePriceState] =
     useCalculatePriceMutation()
 
-  
   //  CREATE PRODUCT
-  
+
   const createProduct = useCallback(
     async (
       data: Omit<ProductFormData, 'shopId'>,
@@ -71,9 +69,8 @@ export const useProductActions = (shopId: string) => {
     [createMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  UPDATE PRODUCT
-  
+
   const updateProduct = useCallback(
     async (
       id: string,
@@ -98,9 +95,8 @@ export const useProductActions = (shopId: string) => {
     [updateMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   // 🗑 DELETE PRODUCT
-  
+
   const deleteProduct = useCallback(
     async (id: string) => {
       try {
@@ -121,9 +117,8 @@ export const useProductActions = (shopId: string) => {
     [deleteMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  UPDATE STOCK
-  
+
   const updateStock = useCallback(
     async (id: string, data: Omit<StockUpdateData, 'shopId' | 'id'>) => {
       try {
@@ -148,9 +143,8 @@ export const useProductActions = (shopId: string) => {
     [updateStockMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  RESERVE PRODUCT
-  
+
   const reserveProduct = useCallback(
     async (id: string, data: Omit<ReservationData, 'shopId' | 'id'>) => {
       try {
@@ -171,9 +165,8 @@ export const useProductActions = (shopId: string) => {
     [reserveMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  CANCEL RESERVATION
-  
+
   const cancelReservation = useCallback(
     async (id: string) => {
       try {
@@ -195,9 +188,8 @@ export const useProductActions = (shopId: string) => {
     [cancelReservationMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  MARK AS SOLD
-  
+
   const markAsSold = useCallback(
     async (id: string, data: Omit<SaleData, 'shopId' | 'id'>) => {
       try {
@@ -222,9 +214,8 @@ export const useProductActions = (shopId: string) => {
     [markAsSoldMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  CALCULATE PRICE
-  
+
   const calculatePrice = useCallback(
     async (id: string, data: Omit<PriceCalculationData, 'shopId' | 'id'>) => {
       try {
@@ -250,9 +241,8 @@ export const useProductActions = (shopId: string) => {
     [calculatePriceMutation, shopId, handleError, showSuccess, t]
   )
 
-  
   //  RETURN API
-  
+
   return {
     // Actions
     createProduct,

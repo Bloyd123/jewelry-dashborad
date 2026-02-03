@@ -1,10 +1,10 @@
 {
   "customer": {
-     "confirmCreate": "Create Customer?",
-  "confirmCreateDescription": "Are you sure you want to create this customer?",
-  "confirmUpdate": "Update Customer?",
-  "confirmUpdateDescription": "Are you sure you want to save these changes?",
-  
+    "confirmCreate": "Create Customer?",
+    "confirmCreateDescription": "Are you sure you want to create this customer?",
+    "confirmUpdate": "Update Customer?",
+    "confirmUpdateDescription": "Are you sure you want to save these changes?",
+
     "addNew": "Add Customer",
     "searchPlaceholder": "Search by name, phone, or code...",
     "empty": "No customers found",
@@ -28,11 +28,11 @@
     },
 
     "errors": {
-          "validationFailed": "Validation Failed",
-    "pleaseFillRequired": "Please fill all required fields marked with *",
-    "saveFailed": "Save Failed",
-    "errorTitle": "Error",
-    "unexpectedError": "An unexpected error occurred. Please try again.",
+      "validationFailed": "Validation Failed",
+      "pleaseFillRequired": "Please fill all required fields marked with *",
+      "saveFailed": "Save Failed",
+      "errorTitle": "Error",
+      "unexpectedError": "An unexpected error occurred. Please try again.",
       "notFound": "Customer not found",
       "createFailed": "Failed to create customer",
       "updateFailed": "Failed to update customer",

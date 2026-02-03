@@ -23,7 +23,6 @@ import {
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Customer } from '@/types/customer.types'
 
-
 // ROW ACTIONS (Individual Customer Actions)
 
 export const getCustomerRowActions = (

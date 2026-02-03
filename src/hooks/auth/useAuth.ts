@@ -1,8 +1,8 @@
-// 
+//
 // FILE: hooks/auth/useAuth.ts
 // Main Auth Hook - Aggregates all auth functionality
 //  REFACTORED: Modular structure with separated concerns
-// 
+//
 
 import { useAuthState } from './useAuthState'
 import { useAuthActions } from './useAuthActions'
@@ -14,9 +14,9 @@ import { useSession } from './useSession'
 import { useActivityAction } from './useActivity'
 import { useToken } from './useToken'
 
-// 
+//
 // MAIN AUTH HOOK
-// 
+//
 
 /**
  * Main authentication hook
@@ -25,7 +25,7 @@ import { useToken } from './useToken'
 export const useAuth = () => {
   // Get all state
   const state = useAuthState()
-  
+
   // Get all actions
   const authActions = useAuthActions()
   const userActions = useUserProfile()
@@ -36,12 +36,12 @@ export const useAuth = () => {
   const activityActions = useActivityAction()
   const tokenUtils = useToken()
 
-  // 
+  //
   // RETURN HOOK API
-  // 
+  //
 
   return {
-    //  Auth State 
+    //  Auth State
     isAuthenticated: state.isAuthenticated,
     userId: state.userId,
     userRole: state.userRole,
@@ -52,57 +52,57 @@ export const useAuth = () => {
     requires2FA: state.requires2FA,
     tempToken: state.tempToken,
     isInitializing: state.isInitializing,
-    
-    //  User Profile 
+
+    //  User Profile
     user: state.user,
     isUserLoading: state.isUserLoading,
-    
-    //  Permissions (SINGLE SOURCE) 
+
+    //  Permissions (SINGLE SOURCE)
     shopAccesses: state.shopAccesses,
     currentShopPermissions: state.currentShopPermissions,
     effectivePermissions: state.effectivePermissions,
     activeShops: state.activeShops,
-    
-    //  Auth Actions 
+
+    //  Auth Actions
     login: authActions.login,
     register: authActions.register,
     logout: authActions.logout,
     logoutAll: authActions.logoutAll,
     initialize: authActions.initialize,
     refreshToken: authActions.refreshToken,
-    
-    //  User Actions 
+
+    //  User Actions
     getUser: userActions.getUser,
     updateProfile: userActions.updateProfile,
-    
-    //  Password Actions 
+
+    //  Password Actions
     changePassword: passwordActions.changePassword,
     forgotPassword: passwordActions.forgotPassword,
     resetPassword: passwordActions.resetPassword,
-    
-    //  2FA Actions 
+
+    //  2FA Actions
     enable2FA: twoFAActions.enable2FA,
     verify2FA: twoFAActions.verify2FA,
     disable2FA: twoFAActions.disable2FA,
     verify2FALogin: twoFAActions.verify2FALogin,
     verifyBackupCode: twoFAActions.verifyBackupCode,
-    
-    //  Shop Actions 
+
+    //  Shop Actions
     switchShop: shopActions.switchShop,
     clearShop: shopActions.clearShop,
-    
-    //  Session Actions 
+
+    //  Session Actions
     getSessions: sessionActions.getSessions,
     revokeSession: sessionActions.revokeSession,
-    
-    //  Activity 
+
+    //  Activity
     trackActivity: activityActions.trackActivity,
-    
-    //  Error Handling 
+
+    //  Error Handling
     clearAuthError: authActions.clearAuthError,
     setAuthError: authActions.setAuthError,
-    
-    //  Token Utilities 
+
+    //  Token Utilities
     checkTokenValidity: tokenUtils.checkTokenValidity,
     getTokenExpiration: tokenUtils.getTokenExpiration,
   }

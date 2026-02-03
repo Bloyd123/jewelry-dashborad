@@ -1,16 +1,16 @@
-// 
+//
 // FILE: hooks/auth/usePasswordActions.ts
 // Password Actions - changePassword / forgotPassword / resetPassword
-// 
+//
 
 import { useCallback } from 'react'
 import type { ChangePasswordRequest, ResetPasswordRequest } from '@/types'
 import * as authService from '@/api/services/authService'
 import { useAuthActions } from './useAuthActions'
 
-// 
+//
 // PASSWORD ACTIONS HOOK
-// 
+//
 
 export const usePasswordActions = () => {
   const { logout } = useAuthActions()
@@ -37,17 +37,14 @@ export const usePasswordActions = () => {
     }
   }, [])
 
-  const resetPassword = useCallback(
-    async (data: ResetPasswordRequest) => {
-      try {
-        const response = await authService.resetPassword(data)
-        return { success: true, data: response.data }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    []
-  )
+  const resetPassword = useCallback(async (data: ResetPasswordRequest) => {
+    try {
+      const response = await authService.resetPassword(data)
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  }, [])
 
   return {
     changePassword,

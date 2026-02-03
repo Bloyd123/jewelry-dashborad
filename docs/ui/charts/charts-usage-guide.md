@@ -1,4 +1,4 @@
-# 📊 Chart Components - Usage Guide
+#  Chart Components - Usage Guide
 
 ## 🎯 Quick Start
 
@@ -91,7 +91,7 @@ const data = [
 
 ---
 
-## 📊 2. BarChart
+##  2. BarChart
 
 ### Basic Usage
 ```tsx
@@ -292,7 +292,7 @@ const { data, isLoading } = useGetSalesDataQuery()
 
 ---
 
-## 📊 Real-World Examples
+##  Real-World Examples
 
 ### 1. Sales Dashboard
 ```tsx

@@ -37,7 +37,9 @@ export interface DialogProps {
 }
 
 // VISUALLY HIDDEN COMPONENT (for accessibility)
-const VisuallyHidden: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+const VisuallyHidden: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => (
   <span
     style={{
       position: 'absolute',

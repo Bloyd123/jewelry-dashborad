@@ -36,7 +36,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
 
   const navigate = useNavigate()
   // Redux State
-   const { currentShopId } = useAuth()
+  const { currentShopId } = useAuth()
 
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
@@ -132,14 +132,13 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
           <TabsContent value="analytics" className="focus-visible:outline-none">
             <div className="mt-4">
               {currentShopId ? (
-  <CustomerAnalytics
-    shopId={currentShopId}
-    statistics={MOCK_STATISTICS}
-    loading={isLoading}
-    onRefresh={handleRefreshAnalytics}
-  />
-) : null}
-
+                <CustomerAnalytics
+                  shopId={currentShopId}
+                  statistics={MOCK_STATISTICS}
+                  loading={isLoading}
+                  onRefresh={handleRefreshAnalytics}
+                />
+              ) : null}
             </div>
           </TabsContent>
         </Tabs>

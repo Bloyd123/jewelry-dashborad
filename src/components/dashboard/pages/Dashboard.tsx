@@ -9,8 +9,8 @@ import { StockAlerts } from '../components/StockAlerts'
 import { TopProducts } from '../components/TopProducts'
 import { useAuth } from '@/hooks/auth'
 export const Dashboard = () => {
-   const { currentShopId } = useAuth()
-     console.log('Current Shop ID:', currentShopId)
+  const { currentShopId } = useAuth()
+  console.log('Current Shop ID:', currentShopId)
   return (
     <div className="space-y-6">
       {/* Page Header */}

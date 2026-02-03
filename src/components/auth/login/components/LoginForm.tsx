@@ -102,35 +102,39 @@ const LoginForm: React.FC = () => {
         if (requires2FA) {
           // 2FA is required - LoginPage component will handle showing 2FA step
           if (import.meta.env.DEV) {
-            console.log('🔐 [LoginForm] 2FA required - waiting for verification')
+            console.log(
+              '🔐 [LoginForm] 2FA required - waiting for verification'
+            )
           }
           // Don't show success message or navigate - let 2FA step handle it
         } else {
           // ✅ FIXED: Login successful without 2FA
           if (import.meta.env.DEV) {
-            console.log('✅ [LoginForm] Login successful - navigating to dashboard')
+            console.log(
+              '✅ [LoginForm] Login successful - navigating to dashboard'
+            )
           }
-          
+
           showSuccess(
             t('auth.login.success') || 'Login Successful',
             t('auth.login.welcomeBack') || 'Welcome back!'
           )
-          
+
           // Navigate to dashboard or intended route
           navigate(ROUTES.dashboard, { replace: true })
         }
       } catch (error: any) {
-        console.error('❌ [LoginForm] Login error:', error)
-        
+        console.error(' [LoginForm] Login error:', error)
+
         // ✅ FIXED: Proper error handling
-        handleError(error, (validationErrors) => {
+        handleError(error, validationErrors => {
           if (typeof validationErrors === 'string') {
             // Single error message
             showError(validationErrors)
           } else if (validationErrors && typeof validationErrors === 'object') {
             // Validation errors object
             setErrors(validationErrors as Record<string, string>)
-            
+
             // Show first error as notification
             const firstError = Object.values(validationErrors)[0]
             if (firstError) {
@@ -138,7 +142,9 @@ const LoginForm: React.FC = () => {
             }
           } else {
             // Generic error
-            showError(t('auth.login.error') || 'Login failed. Please try again.')
+            showError(
+              t('auth.login.error') || 'Login failed. Please try again.'
+            )
           }
         })
       } finally {
@@ -194,8 +200,8 @@ const LoginForm: React.FC = () => {
             placeholder={t('auth.login.emailPlaceholder') || 'Enter your email'}
             autoComplete="email"
             className={`w-full border bg-white py-3 pl-12 pr-4 dark:bg-gray-900 ${
-              errors.email 
-                ? 'border-red-500 dark:border-red-500' 
+              errors.email
+                ? 'border-red-500 dark:border-red-500'
                 : 'border-gray-300 dark:border-gray-700'
             } rounded-lg text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white dark:placeholder-gray-600`}
           />
@@ -226,11 +232,13 @@ const LoginForm: React.FC = () => {
             value={formData.password}
             onChange={handleInputChange('password')}
             disabled={isLoading}
-            placeholder={t('auth.login.passwordPlaceholder') || 'Enter your password'}
+            placeholder={
+              t('auth.login.passwordPlaceholder') || 'Enter your password'
+            }
             autoComplete="current-password"
             className={`w-full border bg-white py-3 pl-12 pr-12 dark:bg-gray-900 ${
-              errors.password 
-                ? 'border-red-500 dark:border-red-500' 
+              errors.password
+                ? 'border-red-500 dark:border-red-500'
                 : 'border-gray-300 dark:border-gray-700'
             } rounded-lg text-gray-900 placeholder-gray-400 transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-white dark:placeholder-gray-600`}
           />

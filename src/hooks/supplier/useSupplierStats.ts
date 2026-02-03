@@ -16,10 +16,8 @@ export const useSupplierStats = (shopId: string, topSuppliersLimit = 10) => {
     refetch: refetchStats,
   } = useGetSupplierStatsQuery({ shopId })
 
-  const {
-    data: topSuppliers,
-    isLoading: isLoadingTopSuppliers,
-  } = useGetTopSuppliersQuery({ shopId, limit: topSuppliersLimit })
+  const { data: topSuppliers, isLoading: isLoadingTopSuppliers } =
+    useGetTopSuppliersQuery({ shopId, limit: topSuppliersLimit })
 
   return {
     stats: statsData,

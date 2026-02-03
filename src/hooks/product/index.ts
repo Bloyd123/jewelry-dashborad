@@ -2,7 +2,7 @@
 
 /**
  * 📦 PRODUCT HOOKS BARREL EXPORT
- * 
+ *
  * Centralized export for all product-related hooks
  * Each hook has a single, focused responsibility
  */

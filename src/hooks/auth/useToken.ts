@@ -1,14 +1,14 @@
-// 
+//
 // FILE: hooks/auth/useToken.ts
 // Token Utilities - validity / expiration checks
-// 
+//
 
 import { useCallback } from 'react'
 import * as tokenService from '@/services/auth/tokenService'
 
-// 
+//
 // TOKEN HOOK
-// 
+//
 
 export const useToken = () => {
   const checkTokenValidity = useCallback(() => {

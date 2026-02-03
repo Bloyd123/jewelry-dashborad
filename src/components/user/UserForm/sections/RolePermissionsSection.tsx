@@ -19,7 +19,7 @@ export const RolePermissionsSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-  
+
   //  NEW: Get data from correct slices
   const currentUser = useAppSelector(selectUserProfile)
   const currentShopId = useAppSelector(selectCurrentShopId)
@@ -54,7 +54,7 @@ export const RolePermissionsSection = ({
 
   //  NEW: Create shop options from shopIds
   // TEMPORARY: Until shop details API is ready
-  const shopOptions = shopIds.map((shopId) => ({
+  const shopOptions = shopIds.map(shopId => ({
     value: shopId,
     label: `Shop ${shopId.slice(-4)}`, // TODO: Replace with actual shop name from API
   }))

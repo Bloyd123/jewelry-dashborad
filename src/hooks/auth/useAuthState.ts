@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/useAuthState.ts
 // Auth State Selectors - Exports all state from auth/user/permissions slices
-// 
+//
 
 import { useAppSelector } from '@/store/hooks'
 import {
@@ -15,10 +15,7 @@ import {
   selectError,
 } from '@/store/slices/authSlice'
 
-import {
-  selectUserProfile,
-  selectUserLoading,
-} from '@/store/slices/userSlice'
+import { selectUserProfile, selectUserLoading } from '@/store/slices/userSlice'
 
 import {
   selectShopAccesses,
@@ -27,12 +24,12 @@ import {
   selectActiveShopsCount,
 } from '@/store/slices/permissionsSlice'
 
-// 
+//
 // MAIN STATE HOOK
-// 
+//
 
 export const useAuthState = () => {
-  //  Auth State (from authSlice) 
+  //  Auth State (from authSlice)
   const auth = useAppSelector(selectAuth)
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const userId = useAppSelector(selectUserId)
@@ -42,18 +39,18 @@ export const useAuthState = () => {
   const isLoading = useAppSelector(selectIsLoading)
   const error = useAppSelector(selectError)
 
-  //  User State (from userSlice) 
+  //  User State (from userSlice)
   const userProfile = useAppSelector(selectUserProfile)
   const isUserLoading = useAppSelector(selectUserLoading)
 
-  //  Permissions State (from permissionsSlice - SINGLE SOURCE) 
+  //  Permissions State (from permissionsSlice - SINGLE SOURCE)
   const shopAccesses = useAppSelector(selectShopAccesses)
   const currentShopPermissions = useAppSelector(selectCurrentShopPermissions)
   const effectivePermissions = useAppSelector(selectEffectivePermissions)
   const activeShops = useAppSelector(selectActiveShopsCount)
 
   return {
-    //  Auth State 
+    //  Auth State
     auth,
     isAuthenticated,
     userId,
@@ -65,12 +62,12 @@ export const useAuthState = () => {
     requires2FA: auth.requires2FA,
     tempToken: auth.tempToken,
     isInitializing: auth.isInitializing,
-    
-    //  User Profile 
+
+    //  User Profile
     user: userProfile,
     isUserLoading,
-    
-    //  Permissions (SINGLE SOURCE) 
+
+    //  Permissions (SINGLE SOURCE)
     shopAccesses,
     currentShopPermissions,
     effectivePermissions,
@@ -78,9 +75,9 @@ export const useAuthState = () => {
   }
 }
 
-// 
+//
 // SIMPLE SELECTORS
-// 
+//
 
 export const useIsAuthenticated = () => {
   return useAppSelector(selectIsAuthenticated)

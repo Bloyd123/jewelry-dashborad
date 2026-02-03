@@ -39,7 +39,10 @@ const contactPersonSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^[6-9][0-9]{9}$/, 'Invalid phone number (must be 10 digits starting with 6-9)'),
+    .regex(
+      /^[6-9][0-9]{9}$/,
+      'Invalid phone number (must be 10 digits starting with 6-9)'
+    ),
   alternatePhone: z
     .string()
     .trim()
@@ -132,14 +135,18 @@ const bankDetailsSchema = z.object({
     .max(100, 'Branch name must not exceed 100 characters')
     .optional()
     .or(z.literal('')),
-  accountType: z
-    .enum(['savings', 'current', 'overdraft'])
-    .optional(),
+  accountType: z.enum(['savings', 'current', 'overdraft']).optional(),
 })
 
 // Certification Schema
 const certificationSchema = z.object({
-  certificationType: z.enum(['bis', 'hallmarking', 'iso', 'gemological', 'other']),
+  certificationType: z.enum([
+    'bis',
+    'hallmarking',
+    'iso',
+    'gemological',
+    'other',
+  ]),
   certificateNumber: z
     .string()
     .trim()
@@ -169,7 +176,13 @@ const certificationSchema = z.object({
 
 // Document Schema
 const documentSchema = z.object({
-  documentType: z.enum(['gst_certificate', 'pan_card', 'trade_license', 'contract', 'other']),
+  documentType: z.enum([
+    'gst_certificate',
+    'pan_card',
+    'trade_license',
+    'contract',
+    'other',
+  ]),
   documentNumber: z
     .string()
     .trim()
@@ -194,7 +207,7 @@ export const createSupplierSchema = z.object({
     .min(1, 'Business name is required')
     .min(2, 'Business name must be at least 2 characters')
     .max(200, 'Business name must not exceed 200 characters'),
-  
+
   displayName: z
     .string()
     .trim()
@@ -212,14 +225,14 @@ export const createSupplierSchema = z.object({
     .email('Invalid business email')
     .optional()
     .or(z.literal('')),
-  
+
   businessPhone: z
     .string()
     .trim()
     .regex(/^[6-9][0-9]{9}$/, 'Invalid business phone number')
     .optional()
     .or(z.literal('')),
-  
+
   website: z
     .string()
     .trim()
@@ -240,21 +253,21 @@ export const createSupplierSchema = z.object({
     )
     .optional()
     .or(z.literal('')),
-  
+
   panNumber: z
     .string()
     .trim()
     .regex(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN number format')
     .optional()
     .or(z.literal('')),
-  
+
   tanNumber: z
     .string()
     .trim()
     .max(20, 'TAN number must not exceed 20 characters')
     .optional()
     .or(z.literal('')),
-  
+
   registrationNumber: z
     .string()
     .trim()
@@ -264,11 +277,28 @@ export const createSupplierSchema = z.object({
 
   // Type & Category (Optional with defaults)
   supplierType: z
-    .enum(['manufacturer', 'wholesaler', 'distributor', 'artisan', 'importer', 'other'])
+    .enum([
+      'manufacturer',
+      'wholesaler',
+      'distributor',
+      'artisan',
+      'importer',
+      'other',
+    ])
     .optional(),
-  
+
   supplierCategory: z
-    .enum(['gold', 'silver', 'diamond', 'platinum', 'gemstone', 'pearls', 'making', 'packaging', 'mixed'])
+    .enum([
+      'gold',
+      'silver',
+      'diamond',
+      'platinum',
+      'gemstone',
+      'pearls',
+      'making',
+      'packaging',
+      'mixed',
+    ])
     .optional(),
 
   // Products (Optional)
@@ -279,22 +309,19 @@ export const createSupplierSchema = z.object({
   paymentTerms: z
     .enum(['immediate', 'cod', 'net15', 'net30', 'net45', 'net60', 'custom'])
     .optional(),
-  
+
   creditPeriod: z
     .number()
     .int('Credit period must be an integer')
     .min(0, 'Credit period must be positive')
     .max(365, 'Credit period must not exceed 365 days')
     .optional(),
-  
-  creditLimit: z
-    .number()
-    .min(0, 'Credit limit must be positive')
-    .optional(),
+
+  creditLimit: z.number().min(0, 'Credit limit must be positive').optional(),
 
   // Bank Details (Optional)
   bankDetails: bankDetailsSchema.optional(),
-  
+
   upiId: z
     .string()
     .trim()
@@ -313,14 +340,14 @@ export const createSupplierSchema = z.object({
     .max(1000, 'Notes must not exceed 1000 characters')
     .optional()
     .or(z.literal('')),
-  
+
   internalNotes: z
     .string()
     .trim()
     .max(1000, 'Internal notes must not exceed 1000 characters')
     .optional()
     .or(z.literal('')),
-  
+
   tags: z.array(z.string().trim()).optional(),
 })
 
@@ -337,12 +364,12 @@ export const updateRatingSchema = z.object({
     .number()
     .min(1, 'Quality rating must be at least 1')
     .max(5, 'Quality rating must not exceed 5'),
-  
+
   deliveryRating: z
     .number()
     .min(1, 'Delivery rating must be at least 1')
     .max(5, 'Delivery rating must not exceed 5'),
-  
+
   priceRating: z
     .number()
     .min(1, 'Price rating must be at least 1')
@@ -365,12 +392,10 @@ export const blacklistSupplierSchema = z.object({
 // BALANCE UPDATE SCHEMA
 // ============================================
 export const updateBalanceSchema = z.object({
-  amount: z
-    .number()
-    .min(0.01, 'Amount must be greater than 0'),
-  
+  amount: z.number().min(0.01, 'Amount must be greater than 0'),
+
   type: z.enum(['payment', 'purchase', 'adjustment']),
-  
+
   note: z
     .string()
     .trim()

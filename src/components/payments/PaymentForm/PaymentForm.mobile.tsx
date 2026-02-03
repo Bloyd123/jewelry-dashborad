@@ -176,7 +176,7 @@ export default function PaymentFormMobile({
         <Card className="mt-4 border-border-primary bg-bg-secondary">
           <CardContent className="p-4">
             <h3 className="mb-3 font-bold text-text-primary">
-              💰 {t('payment.summary')}
+              {t('payment.summary')}
             </h3>
             <div className="space-y-2 text-sm">
               {formData.amount && (

@@ -268,11 +268,7 @@ export const productTableColumns: DataTableColumn<Product>[] = [
             HM
           </Badge>
         )}
-        {row.isFeatured && (
-          <Badge variant="warning" size="sm">
-            ⭐
-          </Badge>
-        )}
+        {row.isFeatured && <Badge variant="warning" size="sm"></Badge>}
         {row.isNewArrival && (
           <Badge variant="info" size="sm">
             NEW

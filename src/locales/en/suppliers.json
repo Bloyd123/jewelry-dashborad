@@ -1,5 +1,9 @@
 {
   "suppliers": {
+    "confirmCreate": "Create Supplier",
+    "confirmCreateDescription": "Are you sure you want to create this supplier?",
+    "confirmUpdate": "Update Supplier",
+    "confirmUpdateDescription": "Are you sure you want to update this supplier?",
     "addSupplier": "Add New Supplier",
     "editSupplier": "Edit Supplier",
     "addSupplierDescription": "Enter supplier information to add them to your system",

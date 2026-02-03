@@ -37,7 +37,6 @@ export const useCustomerActions = (shopId: string) => {
   const [redeemLoyaltyMutation, redeemLoyaltyState] =
     useRedeemLoyaltyPointsMutation()
 
-
   // CREATE CUSTOMER
 
   const createCustomer = useCallback(
@@ -53,22 +52,22 @@ export const useCustomerActions = (shopId: string) => {
         return { success: true, data: result }
       } catch (error: any) {
         // handleError(error, setErrors)
-              if (error.data?.errors && Array.isArray(error.data.errors)) {
-        const validationErrors: Record<string, string> = {}
-        
-        error.data.errors.forEach((err: any) => {
-          // Extract field name from error detail
-          // "referredBy: Cast to ObjectId failed..." → "referredBy"
-          const fieldMatch = err.detail?.match(/(\w+):/)
-          if (fieldMatch) {
-            validationErrors[fieldMatch[1]] = err.detail || err.message
+        if (error.data?.errors && Array.isArray(error.data.errors)) {
+          const validationErrors: Record<string, string> = {}
+
+          error.data.errors.forEach((err: any) => {
+            // Extract field name from error detail
+            // "referredBy: Cast to ObjectId failed..." → "referredBy"
+            const fieldMatch = err.detail?.match(/(\w+):/)
+            if (fieldMatch) {
+              validationErrors[fieldMatch[1]] = err.detail || err.message
+            }
+          })
+
+          if (Object.keys(validationErrors).length > 0 && setErrors) {
+            setErrors(validationErrors)
           }
-        })
-        
-        if (Object.keys(validationErrors).length > 0 && setErrors) {
-          setErrors(validationErrors)
         }
-      }
         return {
           success: false,
           error: error.data?.message || 'Failed to create customer',
@@ -77,7 +76,6 @@ export const useCustomerActions = (shopId: string) => {
     },
     [createMutation, shopId]
   )
-
 
   // UPDATE CUSTOMER
 
@@ -99,20 +97,20 @@ export const useCustomerActions = (shopId: string) => {
         return { success: true, data: result }
       } catch (error: any) {
         // handleError(error, setErrors)
-              if (error.data?.errors && Array.isArray(error.data.errors)) {
-        const validationErrors: Record<string, string> = {}
-        
-        error.data.errors.forEach((err: any) => {
-          const fieldMatch = err.detail?.match(/(\w+):/)
-          if (fieldMatch) {
-            validationErrors[fieldMatch[1]] = err.detail || err.message
+        if (error.data?.errors && Array.isArray(error.data.errors)) {
+          const validationErrors: Record<string, string> = {}
+
+          error.data.errors.forEach((err: any) => {
+            const fieldMatch = err.detail?.match(/(\w+):/)
+            if (fieldMatch) {
+              validationErrors[fieldMatch[1]] = err.detail || err.message
+            }
+          })
+
+          if (Object.keys(validationErrors).length > 0 && setErrors) {
+            setErrors(validationErrors)
           }
-        })
-        
-        if (Object.keys(validationErrors).length > 0 && setErrors) {
-          setErrors(validationErrors)
         }
-      }
         return {
           success: false,
           error: error.data?.message || 'Failed to update customer',
@@ -121,7 +119,6 @@ export const useCustomerActions = (shopId: string) => {
     },
     [updateMutation, shopId]
   )
-
 
   // DELETE CUSTOMER
 
@@ -143,7 +140,6 @@ export const useCustomerActions = (shopId: string) => {
     },
     [deleteMutation, shopId, handleError, showSuccess]
   )
-
 
   // BLACKLIST CUSTOMER
 
@@ -173,7 +169,6 @@ export const useCustomerActions = (shopId: string) => {
     [blacklistMutation, shopId, handleError, showSuccess]
   )
 
-
   // REMOVE BLACKLIST
 
   const removeBlacklist = useCallback(
@@ -200,7 +195,6 @@ export const useCustomerActions = (shopId: string) => {
     },
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
-
 
   // ADD LOYALTY POINTS
 
@@ -231,7 +225,6 @@ export const useCustomerActions = (shopId: string) => {
     [addLoyaltyMutation, shopId, handleError, showSuccess]
   )
 
-
   // REDEEM LOYALTY POINTS
 
   const redeemLoyaltyPoints = useCallback(
@@ -259,7 +252,6 @@ export const useCustomerActions = (shopId: string) => {
     },
     [redeemLoyaltyMutation, shopId, handleError, showSuccess]
   )
-
 
   // RETURN API
 

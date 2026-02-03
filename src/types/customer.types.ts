@@ -520,9 +520,9 @@ export interface LoyaltyPointsResponse {
   }
 }
 
-// 
+//
 // 🆕 RTK QUERY INPUT TYPES
-// 
+//
 
 /**
  * Get Customers Query Input

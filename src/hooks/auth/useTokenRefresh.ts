@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/useTokenRefresh.ts
 // Token Refresh - Auto refresh token hook
-// 
+//
 
 import { useEffect } from 'react'
 import { useAppDispatch } from '@/store/hooks'
@@ -9,9 +9,9 @@ import { refreshAccessToken as refreshTokenAction } from '@/store/slices/authSli
 import * as tokenService from '@/services/auth/tokenService'
 import { useIsAuthenticated } from './useAuthState'
 
-// 
+//
 // TOKEN REFRESH HOOK
-// 
+//
 
 export const useTokenRefresh = (intervalMinutes: number = 5) => {
   const dispatch = useAppDispatch()

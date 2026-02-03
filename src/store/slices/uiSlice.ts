@@ -9,7 +9,7 @@ import type { ThemeName } from '@/themes/presets'
 interface UIState {
   sidebarOpen: boolean
   sidebarCollapsed: boolean
-  themeName: ThemeName 
+  themeName: ThemeName
   isLoading: boolean
   loadingMessage: string | null
   mobileMenuOpen: boolean

@@ -1,9 +1,9 @@
 // FILE: src/validations/productValidation.ts
 import { z } from 'zod'
 
-// 
+//
 // SUB-SCHEMAS
-// 
+//
 
 const metalSchema = z.object({
   type: z.enum(['gold', 'silver', 'platinum', 'diamond', 'gemstone', 'mixed']),
@@ -209,9 +209,9 @@ const certificateSchema = z.object({
   certificateUrl: z.string().url().optional(),
 })
 
-// 
+//
 // CREATE PRODUCT SCHEMA
-// 
+//
 export const createProductSchema = z.object({
   // Basic Info
   name: z
@@ -292,14 +292,14 @@ export const createProductSchema = z.object({
   internalNotes: z.string().optional(),
 })
 
-// 
+//
 // UPDATE PRODUCT SCHEMA (All fields optional)
-// 
+//
 export const updateProductSchema = createProductSchema.partial()
 
-// 
+//
 // STOCK UPDATE SCHEMA
-// 
+//
 export const stockUpdateSchema = z.object({
   operation: z.enum(['add', 'subtract', 'set']),
   quantity: z.number().int().min(1, 'Quantity must be at least 1'),
@@ -320,26 +320,26 @@ export const stockUpdateSchema = z.object({
   referenceId: z.string().optional(),
 })
 
-// 
+//
 // RESERVATION SCHEMA
-// 
+//
 export const reservationSchema = z.object({
   customerId: z.string().min(1, 'Customer ID is required'),
   reservationDays: z.number().int().min(1).max(365).optional().default(7),
   notes: z.string().max(500).optional(),
 })
 
-// 
+//
 // MARK AS SOLD SCHEMA
-// 
+//
 export const markAsSoldSchema = z.object({
   customerId: z.string().min(1, 'Customer ID is required'),
   saleId: z.string().optional(),
 })
 
-// 
+//
 // PRICE CALCULATION SCHEMA
-// 
+//
 export const priceCalculationSchema = z
   .object({
     useCurrentRate: z.boolean().optional().default(true),
@@ -349,16 +349,16 @@ export const priceCalculationSchema = z
     message: 'Either useCurrentRate or customRate must be provided',
   })
 
-// 
+//
 // BULK DELETE SCHEMA
-// 
+//
 export const bulkDeleteSchema = z.object({
   productIds: z.array(z.string()).min(1, 'At least one product ID is required'),
 })
 
-// 
+//
 // BULK UPDATE STATUS SCHEMA
-// 
+//
 export const bulkUpdateStatusSchema = z.object({
   productIds: z.array(z.string()).min(1, 'At least one product ID is required'),
   status: z.enum([
@@ -370,9 +370,9 @@ export const bulkUpdateStatusSchema = z.object({
   ]),
 })
 
-// 
+//
 // TYPE EXPORTS
-// 
+//
 export type CreateProductInput = z.infer<typeof createProductSchema>
 export type UpdateProductInput = z.infer<typeof updateProductSchema>
 export type StockUpdateInput = z.infer<typeof stockUpdateSchema>

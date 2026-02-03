@@ -1,6 +1,6 @@
 {
   "user": {
-        "form": {
+    "form": {
       "cancelTitle": "Discard Changes?",
       "cancelDescription": "You have unsaved changes. Are you sure you want to discard them?",
       "saveTitle": "Create User?",
@@ -10,9 +10,9 @@
       "validationError": "Validation Failed",
       "validationErrorDescription": "Please fix the errors before saving"
     },
-       "validationError": "Validation Error",
+    "validationError": "Validation Error",
     "validationErrorDescription": "Some fields are invalid. Please check and try again.",
-        "userCreated": "User Created",
+    "userCreated": "User Created",
     "userUpdated": "User Updated",
     "userCreatedDescription": "User has been created successfully",
     "addUser": "Add New User",

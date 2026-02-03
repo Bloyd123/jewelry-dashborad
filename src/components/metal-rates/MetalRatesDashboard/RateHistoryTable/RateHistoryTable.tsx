@@ -112,7 +112,7 @@ export const RateHistoryTable: React.FC = () => {
       {/* Header with Title and Actions */}
       <div className="flex items-center justify-between">
         <h2 className="flex items-center gap-2 text-xl font-semibold text-text-primary">
-          📊 {t('rateHistory.title')}
+          {t('rateHistory.title')}
         </h2>
         <Button
           variant="outline"

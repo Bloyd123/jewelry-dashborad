@@ -266,8 +266,8 @@ export interface PaginationMeta {
   page: number
   limit: number
   pages: number
-    hasNext?: boolean    // ✅ NEW - Next page hai ya nahi
-  hasPrev?: boolean 
+  hasNext?: boolean // ✅ NEW - Next page hai ya nahi
+  hasPrev?: boolean
 }
 
 export interface SupplierListResponse {

@@ -39,53 +39,46 @@ export const CustomerTable: React.FC = () => {
 
   // HANDLERS
   const { currentShopId } = useAuth()
-const {
-  customers,
-  pagination,
-  isLoading,
-  error,
-} = useCustomersList(
-  currentShopId!,
-  {
-    page: 1,
-    limit: 10,
-    search: filters.search || undefined,
-customerType: filters.customerType as
-  | 'retail'
-  | 'wholesale'
-  | 'vip'
-  | 'regular'
-  | undefined,
+  const { customers, pagination, isLoading, error } = useCustomersList(
+    currentShopId!,
+    {
+      page: 1,
+      limit: 10,
+      search: filters.search || undefined,
+      customerType: filters.customerType as
+        | 'retail'
+        | 'wholesale'
+        | 'vip'
+        | 'regular'
+        | undefined,
 
-membershipTier: filters.membershipTier as
-  | 'standard'
-  | 'silver'
-  | 'gold'
-  | 'platinum'
-  | undefined,
+      membershipTier: filters.membershipTier as
+        | 'standard'
+        | 'silver'
+        | 'gold'
+        | 'platinum'
+        | undefined,
 
-    isActive:
-      filters.status === 'active'
-        ? true
-        : filters.status === 'inactive'
-        ? false
-        : undefined,
-    hasBalance:
-      filters.balance === 'due'
-        ? true
-        : filters.balance === 'clear'
-        ? false
-        : undefined,
-    vipOnly:
-  filters.vipOnly === 'true'
-    ? true
-    : filters.vipOnly === 'false'
-    ? false
-    : undefined,
-
-  }
-)
-
+      isActive:
+        filters.status === 'active'
+          ? true
+          : filters.status === 'inactive'
+            ? false
+            : undefined,
+      hasBalance:
+        filters.balance === 'due'
+          ? true
+          : filters.balance === 'clear'
+            ? false
+            : undefined,
+      vipOnly:
+        filters.vipOnly === 'true'
+          ? true
+          : filters.vipOnly === 'false'
+            ? false
+            : undefined,
+    }
+  )
 
   const handleViewDetails = (customer: Customer) => {
     console.log('View Details:', customer)
@@ -114,7 +107,7 @@ membershipTier: filters.membershipTier as
 
   // Bulk Actions Handlers
   const handleBulkViewDetails = () => {
-const selected = customers.filter(c => selectedRows.has(c._id))
+    const selected = customers.filter(c => selectedRows.has(c._id))
 
     if (selected.length === 1) {
       handleViewDetails(selected[0])
@@ -173,33 +166,29 @@ const selected = customers.filter(c => selectedRows.has(c._id))
 
   // ROW ACTIONS
 
-const rowActions = useMemo(
-  () =>
-    getCustomerRowActions(
+  const rowActions = useMemo(
+    () =>
+      getCustomerRowActions(
+        handleViewDetails,
+        handleEdit,
+        handleAddPoints,
+        handleBlacklist,
+        handleDelete
+      ),
+    [
       handleViewDetails,
       handleEdit,
       handleAddPoints,
       handleBlacklist,
-      handleDelete
-    ),
-  [
-    handleViewDetails,
-    handleEdit,
-    handleAddPoints,
-    handleBlacklist,
-    handleDelete,
-  ]
-)
-
+      handleDelete,
+    ]
+  )
 
   // SELECTED CUSTOMERS
 
-const selectedCustomers = useMemo(() => {
-  return customers.filter(customer =>
-    selectedRows.has(customer._id)
-  )
-}, [customers, selectedRows])
-
+  const selectedCustomers = useMemo(() => {
+    return customers.filter(customer => selectedRows.has(customer._id))
+  }, [customers, selectedRows])
 
   // RENDER
 
@@ -256,12 +245,9 @@ const selectedCustomers = useMemo(() => {
           position: 'end',
         }}
         // Empty State Configuration
-emptyState={{
-  message: isLoading
-    ? t('table.loading')
-    : t('table.noCustomers'),
-}}
-
+        emptyState={{
+          message: isLoading ? t('table.loading') : t('table.noCustomers'),
+        }}
         // Style Configuration
         style={{
           variant: 'default',

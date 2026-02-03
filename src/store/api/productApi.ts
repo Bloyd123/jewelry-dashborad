@@ -271,7 +271,7 @@ export const productApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // 💰 CALCULATE PRICE
+    //  CALCULATE PRICE
 
     calculatePrice: build.mutation<
       PriceCalculationResponse,
@@ -339,9 +339,9 @@ export const productApi = baseApi.injectEndpoints({
   }),
 })
 
-// 
+//
 // 🎣 EXPORT HOOKS
-// 
+//
 export const {
   useGetProductsQuery,
   useGetProductByIdQuery,

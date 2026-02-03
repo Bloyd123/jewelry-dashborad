@@ -1005,7 +1005,7 @@ variant="ghost"      // Minimal
 
 ---
 
-## ⭐ Rating: 9.5/10
+##  Rating: 9.5/10
 
 ### Strengths
 - **Accordion**: 4 variants, smooth animations, icons, badges, controlled/uncontrolled

@@ -13,10 +13,7 @@ export const useSupplierById = (shopId: string, supplierId: string) => {
     isFetching,
     error,
     refetch,
-  } = useGetSupplierByIdQuery(
-    { shopId, id: supplierId },
-    { skip: !supplierId }
-  )
+  } = useGetSupplierByIdQuery({ shopId, id: supplierId }, { skip: !supplierId })
 
   return {
     supplier,

@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/index.ts
 // Main Export File - Exports all auth hooks
-// 
+//
 
 // Main Hook
 export { useAuth, default } from './useAuth'

@@ -262,7 +262,7 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       <div className="flex flex-wrap gap-1">
         {row.isPreferred && (
           <Badge variant="vip" size="sm">
-            ⭐ Preferred
+            Preferred
           </Badge>
         )}
         {row.isBlacklisted && (

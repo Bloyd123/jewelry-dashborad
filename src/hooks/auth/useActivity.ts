@@ -1,16 +1,16 @@
-// 
+//
 // FILE: hooks/auth/useActivity.ts
 // Activity Tracking - trackActivity / useActivityTracking
-// 
+//
 
 import { useCallback, useEffect } from 'react'
 import { useAppDispatch } from '@/store/hooks'
 import { updateLastActivity } from '@/store/slices/authSlice'
 import { useIsAuthenticated } from './useAuthState'
 
-// 
+//
 // ACTIVITY ACTION HOOK
-// 
+//
 
 export const useActivityAction = () => {
   const dispatch = useAppDispatch()
@@ -24,9 +24,9 @@ export const useActivityAction = () => {
   }
 }
 
-// 
+//
 // ACTIVITY TRACKING HOOK
-// 
+//
 
 export const useActivityTracking = () => {
   const dispatch = useAppDispatch()

@@ -32,7 +32,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const { handleError } = useErrorHandler()
-  
+
   //  NEW: Use useAuth hook instead of direct dispatch
   const { enable2FA, verify2FA, isLoading } = useAuth()
 
@@ -50,7 +50,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
     try {
       //  NEW: Use enable2FA from useAuth hook
       const result = await enable2FA()
-      
+
       if (result.success && result.data) {
         setQrCode(result.data.qrCodeDataURL)
         setSecret(result.data.secret)
@@ -92,7 +92,7 @@ export const Enable2FAModal: React.FC<Enable2FAModalProps> = ({
     try {
       //  NEW: Use verify2FA from useAuth hook
       const result = await verify2FA(verificationCode)
-      
+
       if (result.success && result.data) {
         setBackupCodes(result.data.backupCodes)
         setStep(4)

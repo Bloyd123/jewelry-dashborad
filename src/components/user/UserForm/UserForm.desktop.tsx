@@ -9,7 +9,7 @@ import type { CreateUserInput } from '@/validators/userValidator'
 import type { UserFormProps } from './UserForm.types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Save, X, Loader2  } from 'lucide-react'
+import { Save, X, Loader2 } from 'lucide-react'
 import { BasicInfoSection } from './sections/BasicInfoSection'
 import { RolePermissionsSection } from './sections/RolePermissionsSection'
 import { ContactInfoSection } from './sections/ContactInfoSection'
@@ -36,7 +36,7 @@ export default function UserFormDesktop({
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [showCancelDialog, setShowCancelDialog] = useState(false)
-const [showSaveDialog, setShowSaveDialog] = useState(false)
+  const [showSaveDialog, setShowSaveDialog] = useState(false)
   const { register } = useAuth()
   const { showSuccess, showError } = useNotification()
   const { handleError } = useErrorHandler()
@@ -53,9 +53,9 @@ const [showSaveDialog, setShowSaveDialog] = useState(false)
       })
     }
   }
-const hasFormChanged = () => {
-  return Object.keys(formData).length > 0
-}
+  const hasFormChanged = () => {
+    return Object.keys(formData).length > 0
+  }
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
 
@@ -237,99 +237,107 @@ const hasFormChanged = () => {
       </div>
 
       {/* Form Actions - Sticky Bottom */}
-{/* Form Actions - Sticky Bottom */}
-<div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
-  <div className="flex justify-end gap-3">
-    <Button
-      type="button"
-      variant="outline"
-      onClick={() => {
-        if (hasFormChanged()) {
-          setShowCancelDialog(true)
-        } else {
+      {/* Form Actions - Sticky Bottom */}
+      <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
+        <div className="flex justify-end gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              if (hasFormChanged()) {
+                setShowCancelDialog(true)
+              } else {
+                onCancel?.()
+              }
+            }}
+            disabled={isLoading}
+          >
+            <X className="mr-2 h-4 w-4" />
+            {t('common.cancel')}
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => {
+              // Validate first
+              const validation = validateUser(formData)
+              if (!validation.isValid) {
+                setErrors(validation.errors)
+                showError(
+                  t('user.validationError'),
+                  t('user.validationErrorDescription')
+                )
+                return
+              }
+              setShowSaveDialog(true)
+            }}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                {t('common.saving')}
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                {mode === 'create' ? t('common.save') : t('common.update')}
+              </>
+            )}
+          </Button>
+        </div>
+      </div>
+
+      {/* Dialogs - Outside form actions */}
+      <ConfirmDialog
+        open={showCancelDialog}
+        onOpenChange={setShowCancelDialog}
+        variant="warning"
+        title="user.form.cancelTitle"
+        description="user.form.cancelDescription"
+        confirmLabel="common.yesDiscard"
+        cancelLabel="common.noKeepEditing"
+        onConfirm={() => {
+          setShowCancelDialog(false)
           onCancel?.()
+        }}
+      />
+
+      <ConfirmDialog
+        open={showSaveDialog}
+        onOpenChange={setShowSaveDialog}
+        variant="success"
+        title={
+          mode === 'create' ? 'user.form.saveTitle' : 'user.form.updateTitle'
         }
-      }}
-      disabled={isLoading}
-    >
-      <X className="mr-2 h-4 w-4" />
-      {t('common.cancel')}
-    </Button>
-
-    <Button
-      type="button"
-      onClick={() => {
-        // Validate first
-        const validation = validateUser(formData)
-        if (!validation.isValid) {
-          setErrors(validation.errors)
-          showError(
-            t('user.validationError'),
-            t('user.validationErrorDescription')
-          )
-          return
+        description={
+          mode === 'create'
+            ? 'user.form.saveDescription'
+            : 'user.form.updateDescription'
         }
-        setShowSaveDialog(true)
-      }}
-      disabled={isLoading}
-    >
-      {isLoading ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          {t('common.saving')}
-        </>
-      ) : (
-        <>
-          <Save className="mr-2 h-4 w-4" />
-          {mode === 'create' ? t('common.save') : t('common.update')}
-        </>
-      )}
-    </Button>
-  </div>
-</div>
-
-{/* Dialogs - Outside form actions */}
-<ConfirmDialog
-  open={showCancelDialog}
-  onOpenChange={setShowCancelDialog}
-  variant="warning"
-  title="user.form.cancelTitle"
-  description="user.form.cancelDescription"
-  confirmLabel="common.yesDiscard"
-  cancelLabel="common.noKeepEditing"
-  onConfirm={() => {
-    setShowCancelDialog(false)
-    onCancel?.()
-  }}
-/>
-
-<ConfirmDialog
-  open={showSaveDialog}
-  onOpenChange={setShowSaveDialog}
-  variant="success"
-  title={mode === 'create' ? 'user.form.saveTitle' : 'user.form.updateTitle'}
-  description={mode === 'create' ? 'user.form.saveDescription' : 'user.form.updateDescription'}
-  confirmLabel="common.yesSave"
-  cancelLabel="common.cancel"
-  onConfirm={async () => {
-    setIsLoading(true)
-    try {
-      const result = await register(formData as RegisterRequest)
-      if (result.success) {
-        showSuccess(
-          mode === 'create' ? t('user.userCreated') : t('user.userUpdated'),
-          t('user.userCreatedDescription')
-        )
-        onSuccess?.()
-      }
-    } catch (error: any) {
-      handleError(error, setErrors)
-    } finally {
-      setIsLoading(false)
-    }
-  }}
-  loading={isLoading}
-/>
+        confirmLabel="common.yesSave"
+        cancelLabel="common.cancel"
+        onConfirm={async () => {
+          setIsLoading(true)
+          try {
+            const result = await register(formData as RegisterRequest)
+            if (result.success) {
+              showSuccess(
+                mode === 'create'
+                  ? t('user.userCreated')
+                  : t('user.userUpdated'),
+                t('user.userCreatedDescription')
+              )
+              onSuccess?.()
+            }
+          } catch (error: any) {
+            handleError(error, setErrors)
+          } finally {
+            setIsLoading(false)
+          }
+        }}
+        loading={isLoading}
+      />
     </div>
   )
 }

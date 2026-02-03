@@ -15,17 +15,17 @@ import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 
 // ✅ FIXED: Import correct selectors and actions
-import { 
-  setRequires2FA, 
-  selectIsLoading, 
-  selectTempToken 
+import {
+  setRequires2FA,
+  selectIsLoading,
+  selectTempToken,
 } from '@/store/slices/authSlice'
 
 export const Login2FAStep: React.FC = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
-  
+
   // ✅ FIXED: Use useAuth hook for 2FA verification (now uses thunk)
   const { verify2FALogin, verifyBackupCode } = useAuth()
 
@@ -65,7 +65,8 @@ export const Login2FAStep: React.FC = () => {
   // HANDLERS
 
   const handleVerifyAuthenticator = async () => {
-    if (code.length !== 6 || !tempToken || hasCalledRef.current || isVerifying) return
+    if (code.length !== 6 || !tempToken || hasCalledRef.current || isVerifying)
+      return
 
     hasCalledRef.current = true
     setIsVerifying(true)
@@ -74,7 +75,7 @@ export const Login2FAStep: React.FC = () => {
     try {
       // ✅ FIXED: This now calls the complete2FALogin thunk
       const result = await verify2FALogin(tempToken, code)
-      
+
       if (!isMountedRef.current) return
 
       if (result.success) {
@@ -89,14 +90,14 @@ export const Login2FAStep: React.FC = () => {
       }
     } catch (err: any) {
       if (!isMountedRef.current) return
-      
+
       hasCalledRef.current = false
-      
+
       // ✅ FIXED: Proper error handling
       if (err?.message) {
         setError(err.message)
       } else {
-        handleError(err, (errors) => {
+        handleError(err, errors => {
           if (typeof errors === 'string') {
             setError(errors)
           } else if (errors && typeof errors === 'object') {
@@ -123,15 +124,15 @@ export const Login2FAStep: React.FC = () => {
     try {
       // ✅ FIXED: This now calls the complete2FALogin thunk
       const result = await verifyBackupCode(tempToken, backupCode)
-      
+
       if (!isMountedRef.current) return
-      
+
       if (result.success) {
         // ✅ Success - Redux state updated
         if (import.meta.env.DEV) {
           console.log('✅ [Login2FAStep] Backup code verification successful')
         }
-        
+
         // ✅ FIXED: Show remaining backup codes warning if applicable
         if (result.data?.remainingBackupCodes !== undefined) {
           const remaining = result.data.remainingBackupCodes
@@ -145,12 +146,12 @@ export const Login2FAStep: React.FC = () => {
       }
     } catch (err: any) {
       if (!isMountedRef.current) return
-      
+
       // ✅ FIXED: Proper error handling
       if (err?.message) {
         setError(err.message)
       } else {
-        handleError(err, (errors) => {
+        handleError(err, errors => {
           if (typeof errors === 'string') {
             setError(errors)
           } else if (errors && typeof errors === 'object') {

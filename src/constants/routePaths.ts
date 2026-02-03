@@ -23,7 +23,6 @@ export const ROUTE_PATHS = {
     ADD: '/customers/add',
     EDIT: '/customers/edit/:customerId',
     DETAIL: '/customers/:customerId',
-
   },
   USERS: {
     ADD: '/users/add',

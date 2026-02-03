@@ -30,23 +30,26 @@ export const useSupplierActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess, showWarning } = useNotification()
 
-  
   //  MUTATIONS
-  
+
   const [createMutation, createState] = useCreateSupplierMutation()
   const [updateMutation, updateState] = useUpdateSupplierMutation()
   const [deleteMutation, deleteState] = useDeleteSupplierMutation()
   const [restoreMutation, restoreState] = useRestoreSupplierMutation()
-  const [updateRatingMutation, updateRatingState] = useUpdateSupplierRatingMutation()
+  const [updateRatingMutation, updateRatingState] =
+    useUpdateSupplierRatingMutation()
   const [blacklistMutation, blacklistState] = useBlacklistSupplierMutation()
-  const [removeBlacklistMutation, removeBlacklistState] = useRemoveSupplierBlacklistMutation()
-  const [markPreferredMutation, markPreferredState] = useMarkSupplierAsPreferredMutation()
-  const [removePreferredMutation, removePreferredState] = useRemoveSupplierPreferredMutation()
-  const [updateBalanceMutation, updateBalanceState] = useUpdateSupplierBalanceMutation()
+  const [removeBlacklistMutation, removeBlacklistState] =
+    useRemoveSupplierBlacklistMutation()
+  const [markPreferredMutation, markPreferredState] =
+    useMarkSupplierAsPreferredMutation()
+  const [removePreferredMutation, removePreferredState] =
+    useRemoveSupplierPreferredMutation()
+  const [updateBalanceMutation, updateBalanceState] =
+    useUpdateSupplierBalanceMutation()
 
-  
   //  CREATE SUPPLIER
-  
+
   const createSupplier = useCallback(
     async (
       data: Omit<CreateSupplierDto, 'shopId'>,
@@ -72,9 +75,8 @@ export const useSupplierActions = (shopId: string) => {
     [createMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  UPDATE SUPPLIER
-  
+
   const updateSupplier = useCallback(
     async (
       id: string,
@@ -101,9 +103,8 @@ export const useSupplierActions = (shopId: string) => {
     [updateMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  DELETE SUPPLIER
-  
+
   const deleteSupplier = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -128,9 +129,8 @@ export const useSupplierActions = (shopId: string) => {
     [deleteMutation, shopId, handleError, showWarning]
   )
 
-  
   //  RESTORE SUPPLIER
-  
+
   const restoreSupplier = useCallback(
     async (id: string) => {
       try {
@@ -153,13 +153,16 @@ export const useSupplierActions = (shopId: string) => {
     [restoreMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  UPDATE RATING
-  
+
   const updateRating = useCallback(
     async (id: string, ratings: UpdateRatingDto) => {
       try {
-        const result = await updateRatingMutation({ shopId, id, ...ratings }).unwrap()
+        const result = await updateRatingMutation({
+          shopId,
+          id,
+          ...ratings,
+        }).unwrap()
 
         showSuccess(
           `Rating updated for "${result.businessName}"`,
@@ -178,9 +181,8 @@ export const useSupplierActions = (shopId: string) => {
     [updateRatingMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  BLACKLIST SUPPLIER
-  
+
   const blacklistSupplier = useCallback(
     async (id: string, reason: string, businessName?: string) => {
       try {
@@ -205,9 +207,8 @@ export const useSupplierActions = (shopId: string) => {
     [blacklistMutation, shopId, handleError, showWarning]
   )
 
-  
   //  REMOVE FROM BLACKLIST
-  
+
   const removeBlacklist = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -232,9 +233,8 @@ export const useSupplierActions = (shopId: string) => {
     [removeBlacklistMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  MARK AS PREFERRED
-  
+
   const markAsPreferred = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -259,9 +259,8 @@ export const useSupplierActions = (shopId: string) => {
     [markPreferredMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  REMOVE FROM PREFERRED
-  
+
   const removePreferred = useCallback(
     async (id: string, businessName?: string) => {
       try {
@@ -286,9 +285,8 @@ export const useSupplierActions = (shopId: string) => {
     [removePreferredMutation, shopId, handleError, showSuccess]
   )
 
-  
   //  UPDATE BALANCE
-  
+
   const updateBalance = useCallback(
     async (
       id: string,
@@ -306,8 +304,8 @@ export const useSupplierActions = (shopId: string) => {
           balanceData.type === 'payment'
             ? 'Payment recorded'
             : balanceData.type === 'purchase'
-            ? 'Purchase recorded'
-            : 'Balance adjusted'
+              ? 'Purchase recorded'
+              : 'Balance adjusted'
 
         showSuccess(
           businessName
@@ -328,9 +326,8 @@ export const useSupplierActions = (shopId: string) => {
     [updateBalanceMutation, shopId, handleError, showSuccess]
   )
 
-  
   // RETURN API
-  
+
   return {
     // Actions
     createSupplier,

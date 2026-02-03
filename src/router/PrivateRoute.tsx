@@ -1,7 +1,7 @@
-// 
+//
 // FILE: src/router/PrivateRoute.tsx
 // Protected Route Wrapper - FULLY ALIGNED WITH REDUX ARCHITECTURE
-// 
+//
 
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAppSelector } from '@/store/hooks'
@@ -9,9 +9,9 @@ import { ROUTE_PATHS } from '@/constants/routePaths'
 import { Suspense } from 'react'
 import { Spinner } from '@/components/ui/loader/Spinner'
 
-// 
+//
 // TYPES
-// 
+//
 
 interface PrivateRouteProps {
   children: React.ReactNode
@@ -25,9 +25,9 @@ interface PublicRouteProps {
   restricted?: boolean // If true, authenticated users can't access
 }
 
-// 
+//
 // PRIVATE ROUTE - Protects authenticated-only pages
-// 
+//
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   children,
@@ -35,9 +35,11 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   requireEmailVerification = false,
 }) => {
   const location = useLocation()
-  
+
   //  Access from correct slices
-  const { isAuthenticated, isInitializing } = useAppSelector(state => state.auth)
+  const { isAuthenticated, isInitializing } = useAppSelector(
+    state => state.auth
+  )
   const userProfile = useAppSelector(state => state.user.profile)
 
   // Show loading state while initializing auth
@@ -57,10 +59,10 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   // Optional: Check email verification
   if (requireEmailVerification && userProfile && !userProfile.isEmailVerified) {
     return (
-      <Navigate 
-        to={ROUTE_PATHS.AUTH.VERIFY_EMAIL} 
-        state={{ from: location }} 
-        replace 
+      <Navigate
+        to={ROUTE_PATHS.AUTH.VERIFY_EMAIL}
+        state={{ from: location }}
+        replace
       />
     )
   }
@@ -69,9 +71,9 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   return <Suspense fallback={<Spinner />}>{children}</Suspense>
 }
 
-// 
+//
 // PUBLIC ROUTE - Redirects authenticated users away from auth pages
-// 
+//
 
 export const PublicRoute: React.FC<PublicRouteProps> = ({
   children,
@@ -79,7 +81,9 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
   restricted = true,
 }) => {
   //  Access from auth slice
-  const { isAuthenticated, isInitializing } = useAppSelector(state => state.auth)
+  const { isAuthenticated, isInitializing } = useAppSelector(
+    state => state.auth
+  )
 
   // Show loading state while initializing
   if (isInitializing) {
@@ -99,9 +103,9 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
   return <Suspense fallback={<Spinner />}>{children}</Suspense>
 }
 
-// 
+//
 // CONDITIONAL ROUTE - Shows different content based on auth status
-// 
+//
 
 interface ConditionalRouteProps {
   authenticatedComponent: React.ReactNode
@@ -112,7 +116,9 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({
   authenticatedComponent,
   publicComponent,
 }) => {
-  const { isAuthenticated, isInitializing } = useAppSelector(state => state.auth)
+  const { isAuthenticated, isInitializing } = useAppSelector(
+    state => state.auth
+  )
 
   if (isInitializing) {
     return (
@@ -129,9 +135,9 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({
   )
 }
 
-// 
+//
 // LOADING ROUTE - Shows loading state while auth initializes
-// 
+//
 
 interface LoadingRouteProps {
   children: React.ReactNode
@@ -159,9 +165,9 @@ export const LoadingRoute: React.FC<LoadingRouteProps> = ({
   return <Suspense fallback={<Spinner />}>{children}</Suspense>
 }
 
-// 
+//
 // SHOP CONTEXT ROUTE - Ensures user has shop context
-// 
+//
 
 interface ShopContextRouteProps {
   children: React.ReactNode
@@ -173,9 +179,11 @@ export const ShopContextRoute: React.FC<ShopContextRouteProps> = ({
   redirectTo = ROUTE_PATHS.SELECT_SHOP,
 }) => {
   const location = useLocation()
-  
+
   //  Access from correct slices
-  const { isAuthenticated, currentShopId, role } = useAppSelector(state => state.auth)
+  const { isAuthenticated, currentShopId, role } = useAppSelector(
+    state => state.auth
+  )
   const { isInitializing } = useAppSelector(state => state.auth)
 
   // Loading state
@@ -189,7 +197,13 @@ export const ShopContextRoute: React.FC<ShopContextRouteProps> = ({
 
   // Must be authenticated
   if (!isAuthenticated) {
-    return <Navigate to={ROUTE_PATHS.AUTH.LOGIN} state={{ from: location }} replace />
+    return (
+      <Navigate
+        to={ROUTE_PATHS.AUTH.LOGIN}
+        state={{ from: location }}
+        replace
+      />
+    )
   }
 
   // Skip shop context check for org-level users (super_admin, org_admin)
@@ -205,13 +219,13 @@ export const ShopContextRoute: React.FC<ShopContextRouteProps> = ({
   return <Suspense fallback={<Spinner />}>{children}</Suspense>
 }
 
-// 
+//
 // TYPES EXPORT
-// 
+//
 
-export type { 
-  PrivateRouteProps, 
-  PublicRouteProps, 
+export type {
+  PrivateRouteProps,
+  PublicRouteProps,
   ConditionalRouteProps,
   LoadingRouteProps,
   ShopContextRouteProps,

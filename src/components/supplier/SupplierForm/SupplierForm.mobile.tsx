@@ -12,6 +12,8 @@ import { Save, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
 import { BasicInfoSection } from './sections/BasicInfoStep'
 import { ContactInfoSection } from './sections/ContactInfoStep'
 import { AddressSection } from './sections/AddressStep'
+import { useSupplierActions } from '@/hooks/supplier'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
 import { PaymentTermsSection } from './sections/PaymentTermsStep'
 import { BankDetailsSection } from './sections/BankDetailsSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
@@ -38,11 +40,25 @@ export default function SupplierFormMobile({
   const [formData, setFormData] =
     useState<Partial<SupplierFormData>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [showConfirm, setShowConfirm] = useState(false)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+  const { createSupplier, updateSupplier, isCreating, isUpdating } =
+    useSupplierActions(shopId!)
+  const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
-    setFormData(prev => ({ ...prev, [name]: value }))
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.')
+      setFormData(prev => ({
+        ...prev,
+        [parent]: {
+          ...(prev[parent as keyof typeof prev] as any),
+          [child]: value,
+        },
+      }))
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }))
+    }
 
     if (errors[name]) {
       setErrors(prev => {
@@ -55,6 +71,20 @@ export default function SupplierFormMobile({
 
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }))
+
+    const requiredFields: Record<string, string> = {
+      businessName: 'Business name is required',
+      'contactPerson.firstName': 'First name is required',
+      'contactPerson.phone': 'Phone is required',
+    }
+
+    const value = name.includes('.')
+      ? name.split('.').reduce<any>((obj, key) => obj?.[key], formData)
+      : formData[name as keyof typeof formData]
+
+    if (requiredFields[name] && (!value || String(value).trim() === '')) {
+      setErrors(prev => ({ ...prev, [name]: requiredFields[name] }))
+    }
   }
 
   const handleNext = () => {
@@ -69,15 +99,50 @@ export default function SupplierFormMobile({
     }
   }
 
-  const handleSubmit = async () => {
-    setIsLoading(true)
+  const handleSaveClick = () => {
+    const requiredFields: Record<string, { value: any; message: string }> = {
+      businessName: {
+        value: formData.businessName,
+        message: 'Business name is required',
+      },
+      'contactPerson.firstName': {
+        value: formData.contactPerson?.firstName,
+        message: 'First name is required',
+      },
+      'contactPerson.phone': {
+        value: formData.contactPerson?.phone,
+        message: 'Phone is required',
+      },
+    }
 
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, supplierId, formData })
-      setIsLoading(false)
+    const newErrors: Record<string, string> = {}
+
+    Object.entries(requiredFields).forEach(([field, { value, message }]) => {
+      if (!value || String(value).trim() === '') {
+        newErrors[field] = message
+      }
+    })
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(prev => ({ ...prev, ...newErrors }))
+      return
+    }
+
+    setShowConfirm(true)
+  }
+
+  const handleSubmit = async () => {
+    const payload = formData as SupplierFormData
+
+    const result =
+      mode === 'edit' && supplierId
+        ? await updateSupplier(supplierId, payload, setErrors)
+        : await createSupplier(payload, setErrors)
+
+    if (result.success) {
+      setShowConfirm(false)
       onSuccess?.()
-    }, 1000)
+    }
   }
 
   const renderCurrentStep = () => {
@@ -186,7 +251,7 @@ export default function SupplierFormMobile({
           ) : (
             <Button
               type="button"
-              onClick={handleSubmit}
+              onClick={handleSaveClick}
               disabled={isLoading}
               className="flex-1"
             >
@@ -206,6 +271,27 @@ export default function SupplierFormMobile({
             </Button>
           )}
         </div>
+        <ConfirmDialog
+          open={showConfirm}
+          onOpenChange={setShowConfirm}
+          title={
+            mode === 'create'
+              ? t('suppliers.confirmCreate')
+              : t('suppliers.confirmUpdate')
+          }
+          description={
+            mode === 'create'
+              ? t('suppliers.confirmCreateDescription')
+              : t('suppliers.confirmUpdateDescription')
+          }
+          variant={mode === 'create' ? 'info' : 'warning'}
+          confirmLabel={
+            mode === 'create' ? t('common.create') : t('common.update')
+          }
+          cancelLabel={t('common.cancel')}
+          onConfirm={handleSubmit}
+          loading={isLoading}
+        />
       </div>
     </div>
   )

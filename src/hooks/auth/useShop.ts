@@ -1,25 +1,20 @@
-// 
+//
 // FILE: hooks/auth/useShop.ts
 // Shop Management - switchShop / clearShop / useShopContext
-// 
+//
 
 import { useCallback, useMemo } from 'react'
 import { useAppDispatch } from '@/store/hooks'
-import {
-  setCurrentShop,
-  clearCurrentShop,
-} from '@/store/slices/authSlice'
+import { setCurrentShop, clearCurrentShop } from '@/store/slices/authSlice'
 
-import {
-  setCurrentShopPermissions,
-} from '@/store/slices/permissionsSlice'
+import { setCurrentShopPermissions } from '@/store/slices/permissionsSlice'
 
 import { useCurrentShopId, useShopAccesses } from './useAuthState'
 import { usePermissions } from './usePermissions'
 
-// 
+//
 // SHOP ACTIONS HOOK
-// 
+//
 
 export const useShopActions = () => {
   const dispatch = useAppDispatch()
@@ -42,9 +37,9 @@ export const useShopActions = () => {
   }
 }
 
-// 
+//
 // SHOP CONTEXT HOOK
-// 
+//
 
 /**
  *  REFACTORED: Shop context from permissionsSlice

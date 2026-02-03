@@ -11,13 +11,7 @@ export const useProductsList = (
   shopId: string,
   filters?: Partial<ProductFilters>
 ) => {
-  const {
-    data,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetProductsQuery({
+  const { data, isLoading, isFetching, error, refetch } = useGetProductsQuery({
     shopId,
     page: filters?.page || 1,
     limit: filters?.limit || 20,

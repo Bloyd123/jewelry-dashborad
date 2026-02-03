@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/usePermissions.ts
 // Permission Selectors & Helpers
-// 
+//
 
 import { useCallback } from 'react'
 import { useAppSelector } from '@/store/hooks'
@@ -15,9 +15,9 @@ import {
 import type { PermissionKey, UserRole } from '@/types'
 import { useUserRole } from './useAuthState'
 
-// 
+//
 // PERMISSIONS HOOK
-// 
+//
 
 export const usePermissions = () => {
   return useAppSelector(selectEffectivePermissions)
@@ -35,9 +35,9 @@ export const useHasAllPermissions = (permissions: PermissionKey[]): boolean => {
   return useAppSelector(state => selectHasAllPermissions(state, permissions))
 }
 
-// 
+//
 // ROLE HOOKS
-// 
+//
 
 export const useHasRole = (role: UserRole): boolean => {
   const userRole = useUserRole()
@@ -56,9 +56,9 @@ export const useIsShopAdmin = (): boolean => {
   return useHasRole('shop_admin')
 }
 
-// 
+//
 // PERMISSION CHECK HOOK
-// 
+//
 
 export const usePermissionCheck = () => {
   const permissions = usePermissions()

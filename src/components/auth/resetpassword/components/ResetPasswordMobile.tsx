@@ -34,7 +34,7 @@ const ResetPasswordMobile: React.FC = () => {
         <div className="w-full max-w-md">
           <ResetPasswordForm />
 
-          {/* ⭐ Contact Support (Added for Mobile) */}
+          {/*  Contact Support (Added for Mobile) */}
           <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Need help?{' '}
             <button

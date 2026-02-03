@@ -43,10 +43,10 @@ import { selectUserProfile } from '@/store/slices/userSlice'
 
 export const PersonalInfoTab = () => {
   const { t } = useTranslation()
-  
+
   //  FIXED: Get user from userSlice instead of authSlice
   const user = useAppSelector(selectUserProfile)
-  
+
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
     username: user?.username || '',
@@ -60,17 +60,18 @@ export const PersonalInfoTab = () => {
     joiningDate: user?.joiningDate || null,
     profileImage: user?.profileImage || '',
   })
-  
+
   const { updateProfile } = useAuth()
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
   const [isLoading, setIsLoading] = useState(false)
-  
+
   //  FIXED: Compute fullName properly
-  const fullName = user?.fullName || 
-    `${user?.firstName || ''} ${user?.lastName || ''}`.trim() || 
+  const fullName =
+    user?.fullName ||
+    `${user?.firstName || ''} ${user?.lastName || ''}`.trim() ||
     'User'
-  
+
   //  FIXED: Update form when user changes
   useEffect(() => {
     if (user) {
@@ -88,7 +89,7 @@ export const PersonalInfoTab = () => {
       })
     }
   }, [user])
-  
+
   //  FIXED: Cancel handler resets to original user data
   const handleCancel = () => {
     if (user) {
@@ -120,9 +121,9 @@ export const PersonalInfoTab = () => {
         designation: formData.designation,
         // profileImage: formData.profileImage, // Uncomment when image upload is ready
       }
-      
+
       await updateProfile(updateData)
-      
+
       showSuccess(
         t('userProfile.personalInfo.updateSuccess'),
         t('userProfile.personalInfo.profileUpdated')
@@ -214,7 +215,7 @@ export const PersonalInfoTab = () => {
                 id="username"
                 value={formData.username}
                 disabled={true}
-                className="bg-bg-tertiary cursor-not-allowed"
+                className="cursor-not-allowed bg-bg-tertiary"
               />
             </div>
 
@@ -229,7 +230,7 @@ export const PersonalInfoTab = () => {
                 type="email"
                 value={formData.email}
                 disabled={true}
-                className="bg-bg-tertiary cursor-not-allowed"
+                className="cursor-not-allowed bg-bg-tertiary"
               />
             </div>
 
@@ -311,7 +312,9 @@ export const PersonalInfoTab = () => {
                 onChange={e =>
                   setFormData({ ...formData, designation: e.target.value })
                 }
-                placeholder={t('userProfile.personalInfo.designationPlaceholder')}
+                placeholder={t(
+                  'userProfile.personalInfo.designationPlaceholder'
+                )}
               />
             </div>
 
@@ -321,11 +324,11 @@ export const PersonalInfoTab = () => {
                 <Building2 className="mr-2 inline h-4 w-4" />
                 {t('userProfile.personalInfo.department')}
               </Label>
-              <Select
-                value={formData.department}
-                disabled={true}
-              >
-                <SelectTrigger id="department" className="bg-bg-tertiary cursor-not-allowed">
+              <Select value={formData.department} disabled={true}>
+                <SelectTrigger
+                  id="department"
+                  className="cursor-not-allowed bg-bg-tertiary"
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -370,7 +373,7 @@ export const PersonalInfoTab = () => {
                 id="employeeId"
                 value={formData.employeeId}
                 disabled
-                className="bg-bg-tertiary cursor-not-allowed"
+                className="cursor-not-allowed bg-bg-tertiary"
               />
             </div>
 
@@ -389,7 +392,7 @@ export const PersonalInfoTab = () => {
                     : ''
                 }
                 disabled
-                className="bg-bg-tertiary cursor-not-allowed"
+                className="cursor-not-allowed bg-bg-tertiary"
               />
             </div>
           </div>

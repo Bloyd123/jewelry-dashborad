@@ -2,7 +2,7 @@
 
 /**
  *  SUPPLIER HOOKS BARREL EXPORT
- * 
+ *
  * Centralized export for all supplier-related hooks
  * Each hook has a single, focused responsibility
  */

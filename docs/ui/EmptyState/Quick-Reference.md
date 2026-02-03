@@ -46,7 +46,7 @@ import { EmptyState, EmptyStateIcons } from '@/components/ui/feedback/EmptyState
 
 ---
 
-## 📊 Props Quick Reference
+##  Props Quick Reference
 
 | Prop | Type | Example |
 |------|------|---------|

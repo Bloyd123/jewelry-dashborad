@@ -231,7 +231,7 @@ export default function PaymentFormDesktop({
           <Card className="sticky top-6 border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
-                💰 {t('payment.paymentSummary')}
+                {t('payment.paymentSummary')}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">

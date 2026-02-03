@@ -3,7 +3,7 @@
 
 export { AppRouter } from './AppRouter'
 export { PrivateRoute, PublicRoute } from './PrivateRoute'
-export { RoleRoute} from './RoleRoute'
+export { RoleRoute } from './RoleRoute'
 
 // Re-export route constants for convenience
 export { ROUTE_PATHS, buildRoute } from '@/constants/routePaths'

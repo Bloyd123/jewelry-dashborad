@@ -69,7 +69,6 @@ export const CUSTOMER_ENDPOINTS = {
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
 } as const
 
-
 export const SUPPLIER_ENDPOINTS = {
   // List & CRUD
   GET_ALL: `${BASE_URL}/suppliers`,
@@ -91,7 +90,7 @@ export const SUPPLIER_ENDPOINTS = {
   // Statistics
   STATS: `${BASE_URL}/suppliers/stats`,
   TOP: `${BASE_URL}/suppliers/top`,
-} as const 
+} as const
 // SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`
@@ -133,9 +132,9 @@ export const USERS_ENDPOINTS = {
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
 }
 
-// 
+//
 // PRODUCT ENDPOINTS
-// 
+//
 export const PRODUCT_ENDPOINTS = {
   // List & Search
   GET_ALL: `${BASE_URL}/shops/:shopId/products`,
@@ -221,7 +220,7 @@ export const API_ENDPOINTS = {
   SALES: SALES_ENDPOINTS,
   CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
-  SUPPLIER:SUPPLIER_ENDPOINTS
+  SUPPLIER: SUPPLIER_ENDPOINTS,
 }
 
 export default API_ENDPOINTS

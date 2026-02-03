@@ -1,7 +1,7 @@
-// 
+//
 // FILE: hooks/auth/useUserProfile.ts
 // User Profile Actions - getUser / updateProfile
-// 
+//
 
 import { useCallback } from 'react'
 import { useAppDispatch } from '@/store/hooks'
@@ -12,9 +12,9 @@ import {
 
 import type { UpdateProfileRequest } from '@/types'
 
-// 
+//
 // USER PROFILE HOOK
-// 
+//
 
 export const useUserProfile = () => {
   const dispatch = useAppDispatch()

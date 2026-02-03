@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Loader2 } from 'lucide-react'
-import { Alert, AlertDescription ,AlertTitle} from '@/components/common/Alert'
+import { Alert, AlertDescription, AlertTitle } from '@/components/common/Alert'
 import { useAuth } from '@/hooks/auth'
 import { Button } from '@/components/ui/button'
 import { useCustomerById } from '@/hooks/customer/useCustomerById'
@@ -23,22 +23,22 @@ const convertCustomerToFormData = (
     // Basic Information
     firstName: customer.firstName || '',
     lastName: customer.lastName || '',
-    
+
     // Contact Information
     phone: customer.phone || '',
     alternatePhone: customer.alternatePhone || '',
     whatsappNumber: customer.whatsappNumber || '',
     email: customer.email || '',
-    
+
     // Personal Details - ✅ FIX: Convert ISO date to YYYY-MM-DD
     dateOfBirth: customer.dateOfBirth
-      ? customer.dateOfBirth.split('T')[0]  // "2026-02-01T05:11:48.283Z" → "2026-02-01"
+      ? customer.dateOfBirth.split('T')[0] // "2026-02-01T05:11:48.283Z" → "2026-02-01"
       : '',
     gender: customer.gender,
     anniversaryDate: customer.anniversaryDate
       ? customer.anniversaryDate.split('T')[0]
       : '',
-    
+
     // Address - ✅ FIX: Handle nested object properly
     address: customer.address
       ? {
@@ -48,19 +48,19 @@ const convertCustomerToFormData = (
           pincode: customer.address.pincode || '',
         }
       : undefined,
-    
+
     // KYC Details
     aadharNumber: customer.aadharNumber || '',
     panNumber: customer.panNumber || '',
     gstNumber: customer.gstNumber || '',
-    
+
     // Customer Classification
     customerType: customer.customerType,
     customerCategory: customer.customerCategory,
-    
+
     // Financial
     creditLimit: customer.creditLimit,
-    
+
     // Preferences - ✅ FIX: Handle nested object properly
     preferences: customer.preferences
       ? {
@@ -68,11 +68,11 @@ const convertCustomerToFormData = (
           communicationPreference: customer.preferences.communicationPreference,
         }
       : undefined,
-    
+
     // Source & Referral
     source: customer.source,
     referredBy: customer.referredBy || '',
-    
+
     // Additional Info
     notes: customer.notes || '',
     tags: customer.tags || [],
@@ -83,7 +83,7 @@ const convertCustomerToFormData = (
 // PAGE COMPONENT
 //
 export default function AddCustomerPage() {
-     const { currentShopId } = useAuth()
+  const { currentShopId } = useAuth()
   const navigate = useNavigate()
   const { customerId } = useParams()
   const { t } = useTranslation()
@@ -93,11 +93,10 @@ export default function AddCustomerPage() {
   const shopId = currentShopId || ''
 
   // Fetch customer data (only in edit mode)
-const {
-  customer,
-  isLoading,
-  error,
-} = useCustomerById(shopId, customerId || '')
+  const { customer, isLoading, error } = useCustomerById(
+    shopId,
+    customerId || ''
+  )
 
   // Convert customer to form data
   const initialData = useMemo(() => {
@@ -124,27 +123,27 @@ const {
   }
 
   // Error state
-if (isEditMode && error) {
-  return (
-    <div className="flex h-screen items-center justify-center p-4">
-      <Alert  className="max-w-md">
-        <AlertTitle>{t('customer.errors.fetchFailed')}</AlertTitle>
-        <AlertDescription className="mt-2">
-          <p className="mb-4">
-            {t('customer.errors.fetchFailedDescription')}
-          </p>
-          <Button
-            variant="outline"
-            onClick={() => navigate('/customers')}
-            className="w-full"
-          >
-            {t('common.goBack')}
-          </Button>
-        </AlertDescription>
-      </Alert>
-    </div>
-  )
-}
+  if (isEditMode && error) {
+    return (
+      <div className="flex h-screen items-center justify-center p-4">
+        <Alert className="max-w-md">
+          <AlertTitle>{t('customer.errors.fetchFailed')}</AlertTitle>
+          <AlertDescription className="mt-2">
+            <p className="mb-4">
+              {t('customer.errors.fetchFailedDescription')}
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => navigate('/customers')}
+              className="w-full"
+            >
+              {t('common.goBack')}
+            </Button>
+          </AlertDescription>
+        </Alert>
+      </div>
+    )
+  }
 
   // Not found
   if (isEditMode && !customer) {

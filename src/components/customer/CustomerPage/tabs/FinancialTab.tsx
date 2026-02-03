@@ -13,15 +13,13 @@ import type { Customer } from '@/types/customer.types'
 // COMPONENT PROPS
 
 interface FinancialTabProps {
-    customer: Customer
+  customer: Customer
 }
 
 // FINANCIAL TAB COMPONENT
 
-export const FinancialTab: React.FC<FinancialTabProps> = ({   customer }) => {
+export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
   const { t } = useTranslation()
-
-
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
@@ -97,11 +95,10 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({   customer }) => {
               {t('customerFinancial.customerType')}
             </Label>
             {customer.customerType && (
-  <Badge variant="default" size="sm">
-    {t(`customers.customerType.${customer.customerType}`)}
-  </Badge>
-)}
-
+              <Badge variant="default" size="sm">
+                {t(`customers.customerType.${customer.customerType}`)}
+              </Badge>
+            )}
           </div>
         </div>
       </div>

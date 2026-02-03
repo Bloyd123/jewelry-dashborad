@@ -1,14 +1,14 @@
-// 
+//
 // FILE: hooks/auth/useSession.ts
 // Session Management - getSessions / revokeSession / logoutAll
-// 
+//
 
 import { useCallback } from 'react'
 import * as authService from '@/api/services/authService'
 
-// 
+//
 // SESSION HOOK
-// 
+//
 
 export const useSession = () => {
   const getSessions = useCallback(async () => {

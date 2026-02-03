@@ -1,4 +1,4 @@
-# 📊 StatCard Component - Complete Developer Guide
+#  StatCard Component - Complete Developer Guide
 
 ## 📑 Table of Contents
 1. [Overview](#overview)
@@ -315,7 +315,7 @@ const InventoryAnalytics = () => {
 }
 ```
 
-### 📊 Orders Module
+###  Orders Module
 ```typescript
 import { ShoppingBag, Clock, CheckCircle, XCircle } from 'lucide-react'
 

@@ -37,7 +37,7 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const { handleError } = useErrorHandler()
-  
+
   //  NEW: Use useAuth hook instead of direct dispatch
   const { disable2FA, isLoading } = useAuth()
 
@@ -65,7 +65,7 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
     try {
       //  NEW: Use disable2FA from useAuth hook
       const result = await disable2FA(password, code)
-      
+
       if (result.success) {
         onOpenChange(false)
         onSuccess?.()
