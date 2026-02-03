@@ -257,7 +257,7 @@ export interface SupplierFilters {
   isPreferred?: boolean
   isBlacklisted?: boolean
   sort?: string
-  shopId?: string
+  shopId: string
 }
 
 // API Response Types

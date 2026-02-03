@@ -68,6 +68,50 @@ export const CUSTOMER_ENDPOINTS = {
   // Analytics
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
 } as const
+export const PURCHASE_ENDPOINTS = {
+
+  // CRUD Operations
+  GET_ALL: `${BASE_URL}/shops/:shopId/purchases`,
+  GET_BY_ID: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+  CREATE: `${BASE_URL}/shops/:shopId/purchases`,
+  UPDATE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+  DELETE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+
+  // Status Management
+  UPDATE_STATUS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/status`,
+  RECEIVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/receive`,
+  CANCEL: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/cancel`,
+
+  // Approval
+  APPROVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/approve`,
+  REJECT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/reject`,
+
+  // Payment Management
+  ADD_PAYMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
+  GET_PAYMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
+
+  // Supplier-Specific
+  GET_BY_SUPPLIER: `${BASE_URL}/shops/:shopId/purchases/supplier/:supplierId`,
+
+  // Analytics & Reports
+  GET_ANALYTICS: `${BASE_URL}/shops/:shopId/purchases/analytics`,
+  GET_PENDING: `${BASE_URL}/shops/:shopId/purchases/pending`,
+  GET_UNPAID: `${BASE_URL}/shops/:shopId/purchases/unpaid`,
+
+  // Bulk Operations
+  BULK_DELETE: `${BASE_URL}/shops/:shopId/purchases/bulk-delete`,
+  BULK_APPROVE: `${BASE_URL}/shops/:shopId/purchases/bulk-approve`,
+
+  // Documents
+  UPLOAD_DOCUMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
+  GET_DOCUMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
+
+  // Search & Filters
+  SEARCH: `${BASE_URL}/shops/:shopId/purchases/search`,
+  BY_DATE_RANGE: `${BASE_URL}/shops/:shopId/purchases/by-date-range`,
+} as const
+
+
 
 export const SUPPLIER_ENDPOINTS = {
   // List & CRUD
@@ -221,6 +265,7 @@ export const API_ENDPOINTS = {
   CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
   SUPPLIER: SUPPLIER_ENDPOINTS,
+  PURCHASE:PURCHASE_ENDPOINTS,
 }
 
 export default API_ENDPOINTS

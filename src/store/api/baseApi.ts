@@ -26,6 +26,10 @@ export const baseApi = createApi({
     'Supplier',
     'SupplierList',
     'SupplierSearch',
+        'Purchase',           // Single purchase by ID
+    'PurchaseList',       // List of purchases (with filters)
+    'PurchaseAnalytics',  // Analytics & reports
+    'PurchaseSearch',     // Search results
   ],
 
   endpoints: () => ({}), // Endpoints will be injected
