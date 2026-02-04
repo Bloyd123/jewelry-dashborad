@@ -32,9 +32,9 @@ export const UpdateBalanceSection = ({
   supplier,
   onSubmit,
   onCancel,
+   isLoading = false, 
 }: UpdateBalanceSectionProps) => {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     type: 'payment' as BalanceUpdateType,
@@ -92,13 +92,7 @@ export const UpdateBalanceSection = ({
 
   const handleSubmit = async () => {
     if (!validate()) return
-
-    setIsLoading(true)
-    try {
-      await onSubmit(formData)
-    } finally {
-      setIsLoading(false)
-    }
+    await onSubmit(formData)
   }
 
   return (

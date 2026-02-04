@@ -16,9 +16,10 @@ export const BlacklistSupplierSection = ({
   onBlacklist,
   onRemoveBlacklist,
   onCancel,
+    isBlacklisting = false,        
+  isRemovingBlacklist = false, 
 }: BlacklistSupplierSectionProps) => {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
   const [reason, setReason] = useState('')
   const [error, setError] = useState('')
 
@@ -29,22 +30,11 @@ export const BlacklistSupplierSection = ({
       setError(t('suppliers.blacklist.reasonMinLength'))
       return
     }
-
-    setIsLoading(true)
-    try {
-      await onBlacklist(reason)
-    } finally {
-      setIsLoading(false)
-    }
+    await onBlacklist(reason)
   }
 
   const handleRemoveBlacklist = async () => {
-    setIsLoading(true)
-    try {
-      await onRemoveBlacklist()
-    } finally {
-      setIsLoading(false)
-    }
+    await onRemoveBlacklist()
   }
 
   const handleReasonChange = (_: string, value: string) => {
@@ -102,10 +92,10 @@ export const BlacklistSupplierSection = ({
           <Button
             variant="default"
             onClick={handleRemoveBlacklist}
-            disabled={isLoading}
+            disabled={isRemovingBlacklist}
             className="w-full"
           >
-            {isLoading ? (
+            {isRemovingBlacklist  ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {t('common.processing')}
@@ -118,7 +108,7 @@ export const BlacklistSupplierSection = ({
             )}
           </Button>
 
-          <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+          <Button variant="outline" onClick={onCancel} disabled={isRemovingBlacklist}>
             {t('common.cancel')}
           </Button>
         </div>
@@ -164,7 +154,7 @@ export const BlacklistSupplierSection = ({
         onChange={handleReasonChange}
         error={error}
         placeholder={t('suppliers.blacklist.reasonPlaceholder')}
-        disabled={isLoading}
+        disabled={isBlacklisting}
         rows={4}
         maxLength={500}
         showCharCount
@@ -189,10 +179,10 @@ export const BlacklistSupplierSection = ({
         <Button
           variant="destructive"
           onClick={handleBlacklist}
-          disabled={isLoading || !reason.trim()}
+           disabled={isBlacklisting || !reason.trim()}
           className="w-full"
         >
-          {isLoading ? (
+          {isBlacklisting  ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               {t('common.processing')}
@@ -205,7 +195,7 @@ export const BlacklistSupplierSection = ({
           )}
         </Button>
 
-        <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+        <Button variant="outline" onClick={onCancel} disabled={isBlacklisting}>
           {t('common.cancel')}
         </Button>
       </div>

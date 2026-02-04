@@ -15,28 +15,20 @@ export const PreferredSupplierSection = ({
   onMarkPreferred,
   onRemovePreferred,
   onCancel,
+    isMarkingPreferred = false,   
+  isRemovingPreferred = false,  
 }: PreferredSupplierSectionProps) => {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
+
 
   const isPreferred = supplier.isPreferred
 
   const handleMarkPreferred = async () => {
-    setIsLoading(true)
-    try {
-      await onMarkPreferred()
-    } finally {
-      setIsLoading(false)
-    }
+    await onMarkPreferred()
   }
 
   const handleRemovePreferred = async () => {
-    setIsLoading(true)
-    try {
-      await onRemovePreferred()
-    } finally {
-      setIsLoading(false)
-    }
+    await onRemovePreferred()
   }
 
   const benefits = [
@@ -166,10 +158,10 @@ export const PreferredSupplierSection = ({
             <Button
               variant="destructive"
               onClick={handleRemovePreferred}
-              disabled={isLoading}
+                   disabled={isRemovingPreferred} 
               className="w-full"
             >
-              {isLoading ? (
+              {isRemovingPreferred  ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('common.processing')}
@@ -182,7 +174,7 @@ export const PreferredSupplierSection = ({
               )}
             </Button>
 
-            <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+            <Button variant="outline" onClick={onCancel}  disabled={isRemovingPreferred}>
               {t('common.cancel')}
             </Button>
           </>
@@ -190,10 +182,10 @@ export const PreferredSupplierSection = ({
           <>
             <Button
               onClick={handleMarkPreferred}
-              disabled={isLoading}
+            disabled={isMarkingPreferred}  
               className="w-full"
             >
-              {isLoading ? (
+              {isMarkingPreferred  ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('common.processing')}
@@ -206,7 +198,7 @@ export const PreferredSupplierSection = ({
               )}
             </Button>
 
-            <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+            <Button variant="outline" onClick={onCancel} disabled={isMarkingPreferred}>
               {t('common.cancel')}
             </Button>
           </>

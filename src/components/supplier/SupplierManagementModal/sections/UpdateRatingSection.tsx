@@ -78,9 +78,9 @@ export const UpdateRatingSection = ({
   supplier,
   onSubmit,
   onCancel,
+  isLoading = false,
 }: UpdateRatingSectionProps) => {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     qualityRating: supplier.qualityRating || 5,
@@ -98,12 +98,7 @@ export const UpdateRatingSection = ({
   }
 
   const handleSubmit = async () => {
-    setIsLoading(true)
-    try {
-      await onSubmit(formData)
-    } finally {
-      setIsLoading(false)
-    }
+    await onSubmit(formData)
   }
 
   return (

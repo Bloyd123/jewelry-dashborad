@@ -29,7 +29,9 @@ import type { Supplier } from '@/types/supplier.types'
 
 // IMPORTS - Dummy Data
 
-import { dummySupplier } from '@/pages/suppliers/data'
+// import { dummySupplier } from '@/pages/suppliers/data'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSupplierById } from '@/hooks/supplier'
 
 // IMPORTS - Reusable Components
 
@@ -52,7 +54,8 @@ import SupplierFinancialTab from '@/components/supplier/SupplierDetailsPage/tabs
 import SupplierDocumentsTab from '@/components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
-// import SupplierActivityTab from '@/components/supplier/SupplierDetailsPage/tabs/StatisticsTab'
+import { useAuth } from '@/hooks/auth'
+
 
 // COPY BUTTON COMPONENT
 
@@ -101,28 +104,66 @@ const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   )
 }
 
-// MAIN COMPONENT
+// MAIN 
 
 const SupplierDetailPage: React.FC = () => {
+  const { supplierId } = useParams<{ supplierId: string }>()
+const navigate = useNavigate()
+  const { currentShopId } = useAuth()
+  
+
+
+if (!currentShopId) {
+  return (
+    <div className="p-6 text-status-error">
+      No shop selected
+    </div>
+  )
+}
+
+const shopId = currentShopId
+
+const {
+  supplier,
+  isLoading,
+  error,
+  refetch,
+} = useSupplierById(shopId, supplierId!)
+
+
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('overview')
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
   const [managementAction, setManagementAction] =
     useState<ManagementAction | null>(null)
-  const handleManagementSuccess = () => {
-    console.log('Action completed:', managementAction)
-    // TODO: refetch supplier details
-    setIsManagementModalOpen(false)
-    setManagementAction(null)
-  }
+const handleManagementSuccess = async () => {
+  await refetch()
+  setIsManagementModalOpen(false)
+  setManagementAction(null)
+}
 
-  const supplierData: Supplier = dummySupplier
+  if (isLoading) {
+  return <div className="p-6">Loading supplier...</div>
+}
 
-  // Breadcrumb items
-  const breadcrumbItems = [
-    { label: t('suppliers.title'), onClick: () => {} },
-    { label: supplierData.businessName },
-  ]
+if (error || !supplier) {
+  return (
+    <div className="p-6 text-status-error">
+      Failed to load supplier
+    </div>
+  )
+}
+
+  const supplierData = supplier 
+
+
+const breadcrumbItems = [
+  { 
+    label: t('suppliers.title'), 
+    onClick: () => navigate('/suppliers')  
+  },
+  { label: supplierData.businessName },
+]
 
   // Tab items
   const tabItems = [
@@ -149,10 +190,11 @@ const SupplierDetailPage: React.FC = () => {
   ]
 
   // Handle back navigation
-  const handleBackClick = () => {
-    // Navigate to suppliers list
-    console.log('Navigate back to suppliers list')
-  }
+const handleBackClick = () => {
+  navigate('/suppliers')
+}
+
+
 
   // RENDER
 
@@ -188,7 +230,9 @@ const SupplierDetailPage: React.FC = () => {
                   <Download className="h-4 w-4" />
                   {t('common.export')}
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2"
+                 onClick={() => navigate(`/suppliers/edit/${supplierId}`)} 
+                >
                   <Edit className="h-4 w-4" />
                   {t('common.edit')}
                 </Button>
@@ -199,10 +243,11 @@ const SupplierDetailPage: React.FC = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                      <RefreshCw className="mr-2 h-4 w-4" />
-                      {t('suppliers.refreshData')}
-                    </DropdownMenuItem>
+ <DropdownMenuItem onClick={refetch}>
+  <RefreshCw className="mr-2 h-4 w-4" />
+  {t('suppliers.refreshData')}
+</DropdownMenuItem>
+
                     <DropdownMenuItem
                       onClick={() => {
                         setManagementAction('blacklist')
@@ -334,7 +379,7 @@ const SupplierDetailPage: React.FC = () => {
         {activeTab === 'overview' && <SupplierOverviewTab />}
         {activeTab === 'financial' && <SupplierFinancialTab />}
         {activeTab === 'documents' && <SupplierDocumentsTab />}
-        {/* {activeTab === 'activity' && <SupplierActivityTab />} */}
+        {/* {activeTab === 'activity' && <SupplierActivityTab />}  */}
       </div>
       <SupplierManagementModal
         open={isManagementModalOpen}

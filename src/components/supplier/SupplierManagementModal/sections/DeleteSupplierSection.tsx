@@ -14,28 +14,20 @@ export const DeleteSupplierSection = ({
   onDelete,
   onRestore,
   onCancel,
+   isDeleting = false,   
+  isRestoring = false,  
 }: DeleteSupplierSectionProps) => {
   const { t } = useTranslation()
-  const [isLoading, setIsLoading] = useState(false)
+
 
   const isDeleted = !!supplier.deletedAt
 
   const handleDelete = async () => {
-    setIsLoading(true)
-    try {
-      await onDelete()
-    } finally {
-      setIsLoading(false)
-    }
+    await onDelete()
   }
 
   const handleRestore = async () => {
-    setIsLoading(true)
-    try {
-      await onRestore()
-    } finally {
-      setIsLoading(false)
-    }
+    await onRestore()
   }
 
   // If already deleted - show restore UI
@@ -76,10 +68,10 @@ export const DeleteSupplierSection = ({
           <Button
             variant="default"
             onClick={handleRestore}
-            disabled={isLoading}
+            disabled={isRestoring}
             className="w-full"
           >
-            {isLoading ? (
+            {isRestoring ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {t('common.processing')}
@@ -92,7 +84,7 @@ export const DeleteSupplierSection = ({
             )}
           </Button>
 
-          <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+          <Button variant="outline" onClick={onCancel} disabled={isRestoring}>
             {t('common.cancel')}
           </Button>
         </div>
@@ -184,10 +176,10 @@ export const DeleteSupplierSection = ({
         <Button
           variant="destructive"
           onClick={handleDelete}
-          disabled={isLoading}
+          disabled={isDeleting}
           className="w-full"
         >
-          {isLoading ? (
+          {isDeleting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               {t('common.deleting')}
@@ -200,7 +192,7 @@ export const DeleteSupplierSection = ({
           )}
         </Button>
 
-        <Button variant="outline" onClick={onCancel} disabled={isLoading}>
+        <Button variant="outline" onClick={onCancel} disabled={isDeleting}>
           {t('common.cancel')}
         </Button>
       </div>

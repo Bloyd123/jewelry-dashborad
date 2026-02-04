@@ -25,6 +25,7 @@ import { UpdateRatingSection } from './sections/UpdateRatingSection'
 import { PreferredSupplierSection } from './sections/PreferredSupplierSection'
 import { BlacklistSupplierSection } from './sections/BlacklistSupplierSection'
 import { DeleteSupplierSection } from './sections/DeleteSupplierSection'
+import { useSupplierActions } from '@/hooks/supplier'
 
 export const SupplierManagementModal = ({
   open,
@@ -34,6 +35,27 @@ export const SupplierManagementModal = ({
   onSuccess,
 }: SupplierManagementModalProps) => {
   const { t } = useTranslation()
+  if (!supplier?.shopId) return null
+  const {
+  deleteSupplier,
+  blacklistSupplier,
+  removeBlacklist,
+  markAsPreferred, 
+  restoreSupplier,
+  removePreferred,
+  updateBalance,
+  updateRating,
+    isDeleting,
+  isBlacklisting,
+  isRemovingBlacklist,
+  isMarkingPreferred,
+  isRestoring,
+  isRemovingPreferred,
+  isUpdatingBalance,
+  isUpdatingRating,
+} = useSupplierActions(supplier.shopId)
+
+
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   if (!supplier || !action) return null
@@ -50,53 +72,67 @@ export const SupplierManagementModal = ({
 
   // ACTION HANDLERS (Mock - No API Integration)
 
-  const handleUpdateBalance = async (data: any) => {
-    console.log('Update Balance:', { supplierId: supplier._id, ...data })
-    await new Promise(resolve => setTimeout(resolve, 1000)) // Mock delay
-    handleActionSuccess()
+// ✅ GOOD - Error handling
+const handleUpdateBalance = async (data: any) => {
+  try {
+    const result = await updateBalance(
+      supplier._id, 
+      data, 
+      supplier.businessName
+    )
+    
+    if (result.success) {
+      handleActionSuccess()
+    }
+    // Error notification already shown by hook
+  } catch (error) {
+    // Hook already handles error notification
+    console.error('Balance update failed:', error)
   }
+}
 
-  const handleUpdateRating = async (data: any) => {
-    console.log(' Update Rating:', { supplierId: supplier._id, ...data })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
 
-  const handleMarkPreferred = async () => {
-    console.log(' Mark as Preferred:', { supplierId: supplier._id })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
+const handleUpdateRating = async (data: any) => {
+  await updateRating(supplier._id, data)
+  handleActionSuccess()
+}
 
-  const handleRemovePreferred = async () => {
-    console.log(' Remove Preferred:', { supplierId: supplier._id })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
+const handleMarkPreferred = async () => {
+  await markAsPreferred(supplier._id, supplier.businessName)
+  handleActionSuccess()
+}
 
-  const handleBlacklist = async (reason: string) => {
-    console.log(' Blacklist Supplier:', { supplierId: supplier._id, reason })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
+const handleRemovePreferred = async () => {
+  await removePreferred(supplier._id, supplier.businessName)
+  handleActionSuccess()
+}
 
-  const handleRemoveBlacklist = async () => {
-    console.log(' Remove Blacklist:', { supplierId: supplier._id })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
 
-  const handleDelete = async () => {
-    console.log(' Delete Supplier:', { supplierId: supplier._id })
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    handleActionSuccess()
-  }
+const handleBlacklist = async (reason: string) => {
+  await blacklistSupplier(supplier._id, reason, supplier.businessName)
+  handleActionSuccess()
+}
 
-  const handleRestore = async () => {
-    console.log(' Restore Supplier:', { supplierId: supplier._id })
-    await new Promise(resolve => setTimeout(resolve, 1000))
+const handleRemoveBlacklist = async () => {
+  await removeBlacklist(supplier._id, supplier.businessName)
+  handleActionSuccess()
+}
+
+
+const handleDelete = async () => {
+  const result = await deleteSupplier(supplier._id, supplier.businessName)
+
+  if (result?.success) {
     handleActionSuccess()
   }
+}
+
+
+const handleRestore = async () => {
+  await restoreSupplier(supplier._id)
+  handleActionSuccess()
+}
+
 
   // GET MODAL CONFIG
 
@@ -139,6 +175,7 @@ export const SupplierManagementModal = ({
             supplier={supplier}
             onSubmit={handleUpdateBalance}
             onCancel={handleClose}
+             isLoading={isUpdatingBalance}
           />
         )
 
@@ -148,6 +185,7 @@ export const SupplierManagementModal = ({
             supplier={supplier}
             onSubmit={handleUpdateRating}
             onCancel={handleClose}
+              isLoading={isUpdatingRating}
           />
         )
 
@@ -158,6 +196,7 @@ export const SupplierManagementModal = ({
             onMarkPreferred={handleMarkPreferred}
             onRemovePreferred={handleRemovePreferred}
             onCancel={handleClose}
+
           />
         )
 
@@ -178,6 +217,8 @@ export const SupplierManagementModal = ({
             onDelete={handleDelete}
             onRestore={handleRestore}
             onCancel={handleClose}
+              isDeleting={isDeleting}       // ⭐ ADD THIS
+  isRestoring={isRestoring}   
           />
         )
 

@@ -53,7 +53,7 @@ export const ROUTE_PATHS = {
     LIST: '/suppliers',
     ADD: '/suppliers/add',
     EDIT: '/suppliers/edit/:supplierId',
-    DETAIL: '/suppliers/:id',
+    DETAIL: '/suppliers/:supplierId',
   },
 
   // Purchase Routes
