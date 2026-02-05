@@ -376,8 +376,11 @@ const handleBackClick = () => {
           TAB CONTENT SECTION
            */}
       <div className="p-6">
-        {activeTab === 'overview' && <SupplierOverviewTab />}
-        {activeTab === 'financial' && <SupplierFinancialTab />}
+{activeTab === 'overview' && (
+  <SupplierOverviewTab supplier={supplierData} />
+)}
+
+        {activeTab === 'financial' && <SupplierFinancialTab supplier={supplierData}  />}
         {activeTab === 'documents' && <SupplierDocumentsTab />}
         {/* {activeTab === 'activity' && <SupplierActivityTab />}  */}
       </div>

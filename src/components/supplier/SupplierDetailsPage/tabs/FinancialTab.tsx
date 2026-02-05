@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   TrendingUp,
-  TrendingDown,
   DollarSign,
   Calendar,
   CreditCard,
@@ -14,13 +13,18 @@ import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { DataTable } from '@/components/ui/data-display/DataTable/DataTable'
 import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
-import { dummySupplier } from '@/pages/suppliers/data'
+// import { dummySupplier } from '@/pages/suppliers/data'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
+import type { Supplier } from '@/types/supplier.types'
 
 //
 // PAYMENT HISTORY TYPE
 //
+interface SupplierFinancialTabProps {
+  supplier: Supplier
+}
+
 
 interface PaymentHistory {
   _id: string
@@ -133,7 +137,8 @@ const dummyPaymentHistory: PaymentHistory[] = [
 // MAIN COMPONENT
 //
 
-const SupplierFinancialTab: React.FC = () => {
+const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier }) => {
+
   const { t } = useTranslation()
 
   const [paymentHistory] = useState<PaymentHistory[]>(dummyPaymentHistory)
@@ -166,9 +171,12 @@ const SupplierFinancialTab: React.FC = () => {
   }
 
   // Calculate credit utilization percentage
-  const creditUtilization = Math.round(
-    (Math.abs(dummySupplier.currentBalance) / dummySupplier.creditLimit) * 100
-  )
+const creditUtilization =
+  supplier.creditLimit > 0
+    ? Math.round(
+        (Math.abs(supplier.currentBalance) / supplier.creditLimit) * 100
+      )
+    : 0
 
   // Payment history table columns
   const paymentColumns: DataTableColumn<PaymentHistory>[] = [
@@ -256,12 +264,12 @@ const SupplierFinancialTab: React.FC = () => {
         {/* Current Balance */}
         <StatCard
           title={t('suppliers.financial.currentBalance')}
-          value={formatCurrency(dummySupplier.currentBalance)}
+          value={formatCurrency(supplier.currentBalance)}
           icon={DollarSign}
-          variant={dummySupplier.currentBalance > 0 ? 'error' : 'success'}
+          variant={supplier.currentBalance > 0 ? 'error' : 'success'}
           size="md"
           subtitle={
-            dummySupplier.currentBalance > 0
+            supplier.currentBalance > 0
               ? t('suppliers.financial.due')
               : t('suppliers.financial.advance')
           }
@@ -270,7 +278,7 @@ const SupplierFinancialTab: React.FC = () => {
         {/* Total Due */}
         <StatCard
           title={t('suppliers.financial.totalDue')}
-          value={formatCurrency(dummySupplier.totalDue)}
+          value={formatCurrency(supplier.totalDue)}
           icon={AlertCircle}
           variant="warning"
           size="md"
@@ -280,7 +288,7 @@ const SupplierFinancialTab: React.FC = () => {
         {/* Total Purchases */}
         <StatCard
           title={t('suppliers.financial.totalPurchases')}
-          value={formatCurrency(dummySupplier.totalPurchases)}
+          value={formatCurrency(supplier.totalPurchases)}
           icon={TrendingUp}
           variant="info"
           size="md"
@@ -290,7 +298,7 @@ const SupplierFinancialTab: React.FC = () => {
         {/* Total Paid */}
         <StatCard
           title={t('suppliers.financial.totalPaid')}
-          value={formatCurrency(dummySupplier.totalPaid)}
+          value={formatCurrency(supplier.totalPaid)}
           icon={CreditCard}
           variant="success"
           size="md"
@@ -325,7 +333,7 @@ const SupplierFinancialTab: React.FC = () => {
                 {t('suppliers.financial.advancePayment')}
               </span>
               <span className="font-medium text-status-success">
-                {formatCurrency(dummySupplier.advancePayment || 0)}
+                {formatCurrency(supplier.advancePayment || 0)}
               </span>
             </div>
 
@@ -334,7 +342,7 @@ const SupplierFinancialTab: React.FC = () => {
                 {t('suppliers.financial.creditLimit')}
               </span>
               <span className="font-medium text-text-primary">
-                {formatCurrency(dummySupplier.creditLimit)}
+                {formatCurrency(supplier.creditLimit)}
               </span>
             </div>
 
@@ -343,7 +351,7 @@ const SupplierFinancialTab: React.FC = () => {
                 {t('suppliers.financial.creditUsed')}
               </span>
               <span className="font-medium text-text-primary">
-                {formatCurrency(Math.abs(dummySupplier.currentBalance))} (
+                {formatCurrency(Math.abs(supplier.currentBalance))} (
                 {creditUtilization}%)
               </span>
             </div>
@@ -354,8 +362,8 @@ const SupplierFinancialTab: React.FC = () => {
               </span>
               <span className="font-medium text-status-success">
                 {formatCurrency(
-                  dummySupplier.creditLimit -
-                    Math.abs(dummySupplier.currentBalance)
+                  supplier.creditLimit -
+                    Math.abs(supplier.currentBalance)
                 )}
               </span>
             </div>
@@ -394,7 +402,7 @@ const SupplierFinancialTab: React.FC = () => {
                     {t('suppliers.financial.paymentTerms')}
                   </p>
                   <p className="mt-1 text-xs text-text-secondary">
-                    {dummySupplier.paymentTerms} • {dummySupplier.creditPeriod}{' '}
+                    {supplier.paymentTerms} • {supplier.creditPeriod}{' '}
                     {t('suppliers.financial.days')}
                   </p>
                 </div>
@@ -454,7 +462,7 @@ const SupplierFinancialTab: React.FC = () => {
       <SupplierManagementModal
         open={isManagementModalOpen}
         onOpenChange={setIsManagementModalOpen}
-        supplier={dummySupplier}
+        supplier={supplier}
         action={managementAction}
         onSuccess={handleManagementSuccess}
       />

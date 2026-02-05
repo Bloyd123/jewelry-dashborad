@@ -8,7 +8,6 @@ import {
   Phone,
   Mail,
   Globe,
-  Calendar,
   Building2,
   User,
   Copy,
@@ -17,7 +16,6 @@ import {
   Verified,
   CreditCard,
   Star,
-  TrendingUp,
   Package,
   AlertCircle,
   DollarSign,
@@ -27,8 +25,6 @@ import {
   XCircle,
   ShieldCheck,
   Ban,
-  Target,
-  TrendingDown,
   Activity,
 } from 'lucide-react'
 import {
@@ -41,8 +37,10 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { dummySupplier } from '@/pages/suppliers/data'
 import type { Supplier } from '@/types/supplier.types'
+interface SupplierOverviewTabProps {
+  supplier: Supplier
+}
 
 //
 // COPY BUTTON COMPONENT
@@ -99,9 +97,9 @@ const RatingStars = ({ rating }: { rating: number }) => {
 // MAIN COMPONENT
 //
 
-const SupplierOverviewTab = () => {
+const SupplierOverviewTab: React.FC<SupplierOverviewTabProps> = ({ supplier }) => {
   const { t } = useTranslation()
-  const supplierData: Supplier = dummySupplier
+  const supplierData: Supplier = supplier
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
   const [managementAction, setManagementAction] =
     useState<ManagementAction | null>(null)

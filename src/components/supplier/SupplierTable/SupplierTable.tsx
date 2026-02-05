@@ -8,7 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { supplierTableColumns } from './SupplierTableColumns'
 import { getSupplierRowActions, BulkActionsBar } from './SupplierTableActions'
-import { dummySuppliers, type Supplier } from './SupplierTable.types'
+import type { Supplier } from '@/types/supplier.types'
+import { useSuppliersList } from '@/hooks/supplier'
+import { useSupplierActions } from '@/hooks/supplier'
+import { SupplierType, SupplierCategory } from '@/types/supplier.types'
 import { useNavigate } from 'react-router-dom'
 import { SupplierFilters } from '@/components/supplier/SupplierFilters'
 import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters'
@@ -20,14 +23,16 @@ import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters
 export const SupplierTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+const shopId = 'CURRENT_SHOP_ID' // replace with real source
+const [page, setPage] = useState(1)
+const [limit, setLimit] = useState(10)
 
   //
   // STATE
   //
+const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
 
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
-    new Set()
-  )
+
 
   // Filter State
   const [filters, setFilters] = useState<SupplierFilterValues>({
@@ -38,27 +43,81 @@ export const SupplierTable: React.FC = () => {
     isPreferred: undefined,
     isVerified: undefined,
   })
+const apiFilters = useMemo(
+  () => ({
+    search: filters.search || undefined,
+
+    supplierType: filters.supplierType
+      ? (filters.supplierType as SupplierType)
+      : undefined,
+
+    supplierCategory: filters.supplierCategory
+      ? (filters.supplierCategory as SupplierCategory)
+      : undefined,
+
+    isActive:
+      filters.isActive === 'active'
+        ? true
+        : filters.isActive === 'inactive'
+          ? false
+          : undefined,
+
+    isPreferred:
+      filters.isPreferred === 'preferred'
+        ? true
+        : filters.isPreferred === 'not_preferred'
+          ? false
+          : undefined,
+
+    isVerified:
+      filters.isVerified === 'verified'
+        ? true
+        : filters.isVerified === 'not_verified'
+          ? false
+          : undefined,
+  }),
+  [filters]
+)
+
+const {
+  suppliers,
+  pagination,
+  isLoading,
+} = useSuppliersList(shopId, {
+  page,
+  limit,
+  ...apiFilters,
+})
+
+const {
+  deleteSupplier,
+  blacklistSupplier,
+  removeBlacklist,
+  markAsPreferred,
+  removePreferred,
+} = useSupplierActions(shopId)
 
   //
   // FILTER HANDLERS
   //
+const handleFiltersChange = (newFilters: SupplierFilterValues) => {
+  setFilters(newFilters)
+  setPage(1)
+}
 
-  const handleFiltersChange = (newFilters: SupplierFilterValues) => {
-    setFilters(newFilters)
-    // TODO: Call API with filters or filter dummySuppliers locally
-    console.log('Filters changed:', newFilters)
-  }
 
-  const handleClearAllFilters = () => {
-    setFilters({
-      search: '',
-      supplierType: undefined,
-      supplierCategory: undefined,
-      isActive: undefined,
-      isPreferred: undefined,
-      isVerified: undefined,
-    })
-  }
+const handleClearAllFilters = () => {
+  setFilters({
+    search: '',
+    supplierType: undefined,
+    supplierCategory: undefined,
+    isActive: undefined,
+    isPreferred: undefined,
+    isVerified: undefined,
+  })
+  setPage(1)
+}
+
 
   //
   // HANDLERS
@@ -79,20 +138,25 @@ export const SupplierTable: React.FC = () => {
     // TODO: Open rating modal
   }
 
-  const handleBlacklist = (supplier: Supplier) => {
-    console.log('Blacklist/Remove Blacklist:', supplier)
-    // TODO: Handle blacklist action
+const handleBlacklist = async (supplier: Supplier) => {
+  if (supplier.isBlacklisted) {
+    await removeBlacklist(supplier._id, supplier.businessName)
+  } else {
+    await blacklistSupplier(supplier._id, 'Blacklisted by admin', supplier.businessName)
   }
+}
 
-  const handleMarkPreferred = (supplier: Supplier) => {
-    console.log('Mark/Remove Preferred:', supplier)
-    // TODO: Handle preferred action
+const handleMarkPreferred = async (supplier: Supplier) => {
+  if (supplier.isPreferred) {
+    await removePreferred(supplier._id, supplier.businessName)
+  } else {
+    await markAsPreferred(supplier._id, supplier.businessName)
   }
+}
 
-  const handleDelete = (supplier: Supplier) => {
-    console.log('Delete Supplier:', supplier)
-    // TODO: Show confirmation and delete
-  }
+const handleDelete = async (supplier: Supplier) => {
+  await deleteSupplier(supplier._id, supplier.businessName)
+}
 
   // Bulk Actions Handlers
   const handleBulkViewDetails = () => {
@@ -143,26 +207,36 @@ export const SupplierTable: React.FC = () => {
   // ROW ACTIONS
   //
 
-  const rowActions = useMemo(
-    () =>
-      getSupplierRowActions(
-        handleViewDetails,
-        handleEdit,
-        handleUpdateRating,
-        handleBlacklist,
-        handleMarkPreferred,
-        handleDelete
-      ),
-    []
-  )
+const rowActions = useMemo(
+  () =>
+    getSupplierRowActions(
+      handleViewDetails,
+      handleEdit,
+      handleUpdateRating,
+      handleBlacklist,
+      handleMarkPreferred,
+      handleDelete
+    ),
+  [
+    handleViewDetails,
+    handleEdit,
+    handleUpdateRating,
+    handleBlacklist,
+    handleMarkPreferred,
+    handleDelete,
+  ]
+)
+
 
   //
   // SELECTED SUPPLIERS
   //
 
-  const selectedSuppliers = useMemo(() => {
-    return dummySuppliers.filter(supplier => selectedRows.has(supplier._id))
-  }, [selectedRows])
+const selectedSuppliers = useMemo(
+  () => suppliers.filter(s => selectedRows.has(s._id)),
+  [suppliers, selectedRows]
+)
+
 
   //
   // RENDER
@@ -200,21 +274,23 @@ export const SupplierTable: React.FC = () => {
 
       {/* DataTable */}
       <DataTable
-        data={dummySuppliers}
+        data={suppliers}
+          loading={{ isLoading }}
         columns={supplierTableColumns}
         // Sorting Configuration
         sorting={{
           enabled: true,
         }}
         // Pagination Configuration
-        pagination={{
-          enabled: true,
-          pageSize: 10,
-          pageSizeOptions: [10, 20, 50],
-          showPageSizeSelector: true,
-          showPageInfo: true,
-          showFirstLastButtons: true,
-        }}
+pagination={{
+  enabled: true,
+  pageSize: limit,
+  showPageSizeSelector: true,
+  showPageInfo: true,
+}}
+
+
+
         // Selection Configuration
         selection={{
           enabled: true,
