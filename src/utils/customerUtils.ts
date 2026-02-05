@@ -856,9 +856,9 @@ export const getAvailableContactMethods = (customer: Customer): string[] => {
   return methods
 }
 
-// ============================================
+
 // DEFAULT EXPORT
-// ============================================
+
 
 export default {
   // Name & Display

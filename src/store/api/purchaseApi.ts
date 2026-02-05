@@ -25,9 +25,9 @@ import type {
  */
 export const purchaseApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    // ============================================
+    
     // 📋 GET ALL PURCHASES (with filters & pagination)
-    // ============================================
+    
     getPurchases: build.query<
       IPurchaseListResponse,
       { shopId: string } & IPurchaseFilters
@@ -45,9 +45,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 👤 GET SINGLE PURCHASE BY ID
-    // ============================================
+    
     getPurchaseById: build.query<
       IPurchase,
       { shopId: string; purchaseId: string }
@@ -64,9 +64,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 🔍 SEARCH PURCHASES
-    // ============================================
+    
     searchPurchases: build.query<
       IPurchase[],
       { shopId: string; q: string; limit?: number }
@@ -80,9 +80,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       providesTags: ['PurchaseSearch'],
     }),
 
-    // ============================================
+    
     // ➕ CREATE PURCHASE
-    // ============================================
+    
     createPurchase: build.mutation<
       IPurchase,
       { shopId: string } & ICreatePurchaseForm
@@ -99,9 +99,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // ✏️ UPDATE PURCHASE
-    // ============================================
+    
     updatePurchase: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string } & IUpdatePurchaseForm
@@ -121,9 +121,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 🗑️ DELETE PURCHASE
-    // ============================================
+    
     deletePurchase: build.mutation<
       void,
       { shopId: string; purchaseId: string }
@@ -141,9 +141,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 🔄 UPDATE PURCHASE STATUS
-    // ============================================
+    
     updatePurchaseStatus: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string; status: PurchaseStatus }
@@ -163,9 +163,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 📦 RECEIVE PURCHASE
-    // ============================================
+    
     receivePurchase: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string } & IReceivePurchaseForm
@@ -186,9 +186,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // ❌ CANCEL PURCHASE
-    // ============================================
+    
     cancelPurchase: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string; reason: string }
@@ -208,9 +208,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // ✅ APPROVE PURCHASE
-    // ============================================
+    
     approvePurchase: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string; notes?: string }
@@ -230,9 +230,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // ❌ REJECT PURCHASE
-    // ============================================
+    
     rejectPurchase: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string; reason: string }
@@ -252,9 +252,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 💰 ADD PAYMENT
-    // ============================================
+    
     addPayment: build.mutation<
       IPurchase,
       { shopId: string; purchaseId: string } & IAddPaymentForm
@@ -274,9 +274,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 💵 GET PAYMENTS
-    // ============================================
+    
     getPayments: build.query<
       IPaymentRecord[],
       { shopId: string; purchaseId: string }
@@ -296,9 +296,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 🏢 GET PURCHASES BY SUPPLIER
-    // ============================================
+    
     getPurchasesBySupplier: build.query<
       IPurchaseListResponse,
       { shopId: string; supplierId: string } & Partial<IPurchaseFilters>
@@ -315,9 +315,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 📊 GET PURCHASE ANALYTICS
-    // ============================================
+    
     getPurchaseAnalytics: build.query<
       IPurchaseAnalytics,
       { shopId: string; startDate?: string; endDate?: string }
@@ -333,9 +333,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       providesTags: ['PurchaseAnalytics'],
     }),
 
-    // ============================================
+    
     // ⏳ GET PENDING PURCHASES
-    // ============================================
+    
     getPendingPurchases: build.query<IPurchase[], { shopId: string }>({
       query: ({ shopId }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.GET_PENDING, { shopId }),
@@ -347,9 +347,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 💳 GET UNPAID PURCHASES
-    // ============================================
+    
     getUnpaidPurchases: build.query<IPurchase[], { shopId: string }>({
       query: ({ shopId }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.GET_UNPAID, { shopId }),
@@ -361,9 +361,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 🗑️ BULK DELETE PURCHASES
-    // ============================================
+    
     bulkDeletePurchases: build.mutation<
       { deletedCount: number },
       { shopId: string; purchaseIds: string[] }
@@ -378,9 +378,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // ✅ BULK APPROVE PURCHASES
-    // ============================================
+    
     bulkApprovePurchases: build.mutation<
       { approvedCount: number },
       { shopId: string; purchaseIds: string[] }
@@ -395,9 +395,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 📄 UPLOAD DOCUMENT
-    // ============================================
+    
     uploadDocument: build.mutation<
       IPurchase,
       {
@@ -422,9 +422,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 📄 GET DOCUMENTS
-    // ============================================
+    
     getDocuments: build.query<
       IDocument[],
       { shopId: string; purchaseId: string }
@@ -442,9 +442,9 @@ export const purchaseApi = baseApi.injectEndpoints({
       ],
     }),
 
-    // ============================================
+    
     // 📅 GET PURCHASES BY DATE RANGE
-    // ============================================
+    
     getPurchasesByDateRange: build.query<
       IPurchaseListResponse,
       {
@@ -466,9 +466,9 @@ export const purchaseApi = baseApi.injectEndpoints({
   }),
 })
 
-// ============================================
+
 // 🎣 EXPORT HOOKS (Auto-generated by RTK Query)
-// ============================================
+
 export const {
   // Queries
   useGetPurchasesQuery,

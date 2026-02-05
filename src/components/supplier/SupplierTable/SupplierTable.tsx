@@ -1,6 +1,6 @@
 //
 // FILE: src/components/features/SupplierTable/SupplierTable.tsx
-// Main Supplier Table Component
+// Main Supplier Table Component - COMPLETE FIXED VERSION
 //
 
 import React, { useState, useMemo } from 'react'
@@ -8,14 +8,15 @@ import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { supplierTableColumns } from './SupplierTableColumns'
 import { getSupplierRowActions, BulkActionsBar } from './SupplierTableActions'
-import type { Supplier } from '@/types/supplier.types'
-import { useSuppliersList } from '@/hooks/supplier'
-import { useSupplierActions } from '@/hooks/supplier'
-import { SupplierType, SupplierCategory } from '@/types/supplier.types'
+import type { Supplier, SupplierType, SupplierCategory } from '@/types/supplier.types'
+import { useSuppliersList, useSupplierActions } from '@/hooks/supplier'
+import { useAuth } from '@/hooks/auth'
 import { useNavigate } from 'react-router-dom'
 import { SupplierFilters } from '@/components/supplier/SupplierFilters'
 import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters'
-// import { TopSuppliersPanel } from '@/components/supplier/TopSuppliersPanel'
+import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
+import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
+
 //
 // MAIN COMPONENT
 //
@@ -23,16 +24,15 @@ import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters
 export const SupplierTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-const shopId = 'CURRENT_SHOP_ID' // replace with real source
-const [page, setPage] = useState(1)
-const [limit, setLimit] = useState(10)
+  const { currentShopId } = useAuth()
 
   //
   // STATE
   //
-const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
 
-
+  const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(10)
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
 
   // Filter State
   const [filters, setFilters] = useState<SupplierFilterValues>({
@@ -43,122 +43,145 @@ const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set()
     isPreferred: undefined,
     isVerified: undefined,
   })
-const apiFilters = useMemo(
-  () => ({
-    search: filters.search || undefined,
 
-    supplierType: filters.supplierType
-      ? (filters.supplierType as SupplierType)
-      : undefined,
+  // Modal State
+  const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
+  const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
 
-    supplierCategory: filters.supplierCategory
-      ? (filters.supplierCategory as SupplierCategory)
-      : undefined,
+  //
+  // VALIDATION
+  //
 
-    isActive:
-      filters.isActive === 'active'
-        ? true
-        : filters.isActive === 'inactive'
-          ? false
-          : undefined,
+  if (!currentShopId) {
+    return (
+      <div className="p-6 text-center text-status-error">
+        {t('suppliers.errors.noShopSelected')}
+      </div>
+    )
+  }
 
-    isPreferred:
-      filters.isPreferred === 'preferred'
-        ? true
-        : filters.isPreferred === 'not_preferred'
-          ? false
-          : undefined,
+  //
+  // CONVERT FILTERS FOR API
+  //
 
-    isVerified:
-      filters.isVerified === 'verified'
-        ? true
-        : filters.isVerified === 'not_verified'
-          ? false
-          : undefined,
-  }),
-  [filters]
-)
+  const apiFilters = useMemo(
+    () => ({
+      search: filters.search || undefined,
+      supplierType: filters.supplierType
+        ? (filters.supplierType as SupplierType)
+        : undefined,
+      supplierCategory: filters.supplierCategory
+        ? (filters.supplierCategory as SupplierCategory)
+        : undefined,
+      isActive:
+        filters.isActive === 'active'
+          ? true
+          : filters.isActive === 'inactive'
+            ? false
+            : undefined,
+      isPreferred:
+        filters.isPreferred === 'preferred'
+          ? true
+          : filters.isPreferred === 'not_preferred'
+            ? false
+            : undefined,
+      isVerified:
+        filters.isVerified === 'verified'
+          ? true
+          : filters.isVerified === 'not_verified'
+            ? false
+            : undefined,
+    }),
+    [filters]
+  )
 
-const {
-  suppliers,
-  pagination,
-  isLoading,
-} = useSuppliersList(shopId, {
-  page,
-  limit,
-  ...apiFilters,
-})
+  //
+  // API HOOKS
+  //
 
-const {
-  deleteSupplier,
-  blacklistSupplier,
-  removeBlacklist,
-  markAsPreferred,
-  removePreferred,
-} = useSupplierActions(shopId)
+  const {
+    suppliers,
+    pagination,
+    isLoading,
+    refetch,
+  } = useSuppliersList(currentShopId, {
+    page,
+    limit,
+    ...apiFilters,
+  })
+
+  const {
+    deleteSupplier,
+    blacklistSupplier,
+    markAsPreferred,
+    removePreferred,
+  } = useSupplierActions(currentShopId)
 
   //
   // FILTER HANDLERS
   //
-const handleFiltersChange = (newFilters: SupplierFilterValues) => {
-  setFilters(newFilters)
-  setPage(1)
-}
 
+  const handleFiltersChange = (newFilters: SupplierFilterValues) => {
+    setFilters(newFilters)
+    setPage(1) // Reset to first page when filters change
+  }
 
-const handleClearAllFilters = () => {
-  setFilters({
-    search: '',
-    supplierType: undefined,
-    supplierCategory: undefined,
-    isActive: undefined,
-    isPreferred: undefined,
-    isVerified: undefined,
-  })
-  setPage(1)
-}
-
+  const handleClearAllFilters = () => {
+    setFilters({
+      search: '',
+      supplierType: undefined,
+      supplierCategory: undefined,
+      isActive: undefined,
+      isPreferred: undefined,
+      isVerified: undefined,
+    })
+    setPage(1)
+  }
 
   //
-  // HANDLERS
+  // SINGLE SUPPLIER HANDLERS
   //
 
   const handleViewDetails = (supplier: Supplier) => {
-    console.log('View Details:', supplier)
-    // TODO: Open supplier details modal/drawer
+    navigate(`/suppliers/${supplier._id}`)
   }
 
   const handleEdit = (supplier: Supplier) => {
-    console.log('Edit Supplier:', supplier)
     navigate(`/suppliers/edit/${supplier._id}`)
   }
 
   const handleUpdateRating = (supplier: Supplier) => {
-    console.log('Update Rating:', supplier)
-    // TODO: Open rating modal
+    setSelectedSupplier(supplier)
+    setManagementAction('update-rating')
+    setIsManagementModalOpen(true)
   }
 
-const handleBlacklist = async (supplier: Supplier) => {
-  if (supplier.isBlacklisted) {
-    await removeBlacklist(supplier._id, supplier.businessName)
-  } else {
-    await blacklistSupplier(supplier._id, 'Blacklisted by admin', supplier.businessName)
+  const handleBlacklist = async (supplier: Supplier) => {
+    setSelectedSupplier(supplier)
+    setManagementAction('blacklist')
+    setIsManagementModalOpen(true)
   }
-}
 
-const handleMarkPreferred = async (supplier: Supplier) => {
-  if (supplier.isPreferred) {
-    await removePreferred(supplier._id, supplier.businessName)
-  } else {
-    await markAsPreferred(supplier._id, supplier.businessName)
+  const handleMarkPreferred = async (supplier: Supplier) => {
+    if (supplier.isPreferred) {
+      await removePreferred(supplier._id, supplier.businessName)
+    } else {
+      await markAsPreferred(supplier._id, supplier.businessName)
+    }
+    refetch()
   }
-}
 
-const handleDelete = async (supplier: Supplier) => {
-  await deleteSupplier(supplier._id, supplier.businessName)
-}
+  const handleDelete = async (supplier: Supplier) => {
+    setSelectedSupplier(supplier)
+    setManagementAction('delete')
+    setIsManagementModalOpen(true)
+  }
 
-  // Bulk Actions Handlers
+  //
+  // BULK ACTION HANDLERS
+  //
+
   const handleBulkViewDetails = () => {
     if (selectedSuppliers.length === 1) {
       handleViewDetails(selectedSuppliers[0])
@@ -172,71 +195,92 @@ const handleDelete = async (supplier: Supplier) => {
   }
 
   const handleBulkUpdateRating = () => {
-    console.log('Bulk Update Rating:', selectedSuppliers)
-    // TODO: Open bulk rating modal
+    alert('Please select one supplier at a time for rating updates')
   }
 
-  const handleBulkBlacklist = () => {
-    console.log('Bulk Blacklist:', selectedSuppliers)
-    // TODO: Handle bulk blacklist
+  const handleBulkBlacklist = async () => {
+    const reason = prompt('Enter blacklist reason:')
+    if (!reason) return
+
+    for (const supplier of selectedSuppliers) {
+      if (!supplier.isBlacklisted) {
+        await blacklistSupplier(supplier._id, reason, supplier.businessName)
+      }
+    }
+
+    setSelectedRows(new Set())
+    refetch()
   }
 
-  const handleBulkMarkPreferred = () => {
-    console.log('Bulk Mark Preferred:', selectedSuppliers)
-    // TODO: Handle bulk preferred
+  const handleBulkMarkPreferred = async () => {
+    for (const supplier of selectedSuppliers) {
+      if (!supplier.isPreferred) {
+        await markAsPreferred(supplier._id, supplier.businessName)
+      }
+    }
+
+    setSelectedRows(new Set())
+    refetch()
   }
 
-  const handleBulkDelete = () => {
-    console.log('Bulk Delete:', selectedSuppliers)
-    // TODO: Show confirmation and bulk delete
+  const handleBulkDelete = async () => {
+    if (!confirm(`Delete ${selectedSuppliers.length} suppliers?`)) return
+
+    for (const supplier of selectedSuppliers) {
+      await deleteSupplier(supplier._id, supplier.businessName)
+    }
+
+    setSelectedRows(new Set())
+    refetch()
   }
 
   const handleClearSelection = () => {
     setSelectedRows(new Set())
   }
-  //   const handleViewAll = () => {
-  //   navigate('/suppliers')
-  // }
 
-  // const handleSupplierClick = (supplier: Supplier) => {
-  //   navigate(`/suppliers/${supplier._id}`)
-  //   // OR open modal/drawer
-  // }
+  //
+  // MODAL SUCCESS HANDLER
+  //
+
+  const handleManagementSuccess = async () => {
+    await refetch()
+    setIsManagementModalOpen(false)
+    setManagementAction(null)
+    setSelectedSupplier(null)
+  }
 
   //
   // ROW ACTIONS
   //
 
-const rowActions = useMemo(
-  () =>
-    getSupplierRowActions(
+  const rowActions = useMemo(
+    () =>
+      getSupplierRowActions(
+        handleViewDetails,
+        handleEdit,
+        handleUpdateRating,
+        handleBlacklist,
+        handleMarkPreferred,
+        handleDelete
+      ),
+    [
       handleViewDetails,
       handleEdit,
       handleUpdateRating,
       handleBlacklist,
       handleMarkPreferred,
-      handleDelete
-    ),
-  [
-    handleViewDetails,
-    handleEdit,
-    handleUpdateRating,
-    handleBlacklist,
-    handleMarkPreferred,
-    handleDelete,
-  ]
-)
-
+      handleDelete,
+    ]
+  )
 
   //
   // SELECTED SUPPLIERS
   //
 
-const selectedSuppliers = useMemo(
-  () => suppliers.filter(s => selectedRows.has(s._id)),
-  [suppliers, selectedRows]
-)
-
+  const selectedSuppliers = useMemo(
+    () => suppliers.filter(s => selectedRows.has(s._id)),
+    [suppliers, selectedRows]
+  )
 
   //
   // RENDER
@@ -244,12 +288,6 @@ const selectedSuppliers = useMemo(
 
   return (
     <div className="w-full space-y-4">
-      {/* <TopSuppliersPanel
-          limit={5}
-          showViewAll={true}
-          onViewAll={handleViewAll}
-          onSupplierClick={handleSupplierClick}
-        /> */}
       {/* Filters Component */}
       <SupplierFilters
         filters={filters}
@@ -273,65 +311,64 @@ const selectedSuppliers = useMemo(
       )}
 
       {/* DataTable */}
-      <DataTable
-        data={suppliers}
-          loading={{ isLoading }}
-        columns={supplierTableColumns}
-        // Sorting Configuration
-        sorting={{
-          enabled: true,
-        }}
-        // Pagination Configuration
-pagination={{
-  enabled: true,
-  pageSize: limit,
-  showPageSizeSelector: true,
-  showPageInfo: true,
-}}
+<DataTable
+  data={suppliers}
+  columns={supplierTableColumns}
+  loading={{ isLoading }}
+  sorting={{
+    enabled: true,
+  }}
+  pagination={{
+    enabled: true,
+    pageSize: limit,
+    pageSizeOptions: [10, 20, 50],
+    showPageSizeSelector: true,
+    showPageInfo: true,
+    showFirstLastButtons: true,
+    // ⭐ ONLY keep these if your DataTable supports them
+    // Otherwise remove and handle pagination externally
+  }}
+  selection={{
+    enabled: true,
+    selectedRows,
+    onSelectionChange: setSelectedRows,
+    getRowId: row => row._id,
+    selectAllEnabled: true,
+  }}
+  rowActions={{
+    enabled: true,
+    actions: rowActions,
+    position: 'end',
+  }}
+  emptyState={{
+    message: t('suppliers.table.noSuppliers'),
+  }}
+  style={{
+    variant: 'default',
+    size: 'md',
+    stickyHeader: true,
+    hoverEffect: true,
+    zebraStripes: false,
+    showBorder: true,
+    rounded: true,
+    shadow: true,
+    fullWidth: true,
+  }}
+  onRowClick={supplier => {
+    navigate(`/suppliers/${supplier._id}`)
+  }}
+  getRowId={row => row._id}
+  testId="supplier-table"
+  ariaLabel={t('suppliers.table.ariaLabel')}
+/>
 
-
-
-        // Selection Configuration
-        selection={{
-          enabled: true,
-          selectedRows,
-          onSelectionChange: setSelectedRows,
-          getRowId: row => row._id,
-          selectAllEnabled: true,
-        }}
-        // Row Actions Configuration
-        rowActions={{
-          enabled: true,
-          actions: rowActions,
-          position: 'end',
-        }}
-        // Empty State Configuration
-        emptyState={{
-          message: t('suppliers.table.noSuppliers'),
-        }}
-        // Style Configuration
-        style={{
-          variant: 'default',
-          size: 'md',
-          stickyHeader: true,
-          hoverEffect: true,
-          zebraStripes: false,
-          showBorder: true,
-          rounded: true,
-          shadow: true,
-          fullWidth: true,
-        }}
-        // Row Click Handler
-        onRowClick={supplier => {
-          console.log('Row clicked:', supplier)
-          // Optional: Open details on row click
-          // handleViewDetails(supplier)
-        }}
-        // Get Row ID
-        getRowId={row => row._id}
-        // Test ID
-        testId="supplier-table"
-        ariaLabel={t('suppliers.table.ariaLabel')}
+      {/* Management Modal */}
+      <SupplierManagementModal
+        open={isManagementModalOpen}
+        onOpenChange={setIsManagementModalOpen}
+        supplier={selectedSupplier}
+        action={managementAction}
+        onSuccess={handleManagementSuccess}
       />
     </div>
   )

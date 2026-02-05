@@ -3,7 +3,6 @@
 // Supplier Table TypeScript Types (Re-export from dummy data)
 //
 
-// Re-export types from the types file you already have
 export type {
   Supplier,
   ContactPerson,
@@ -34,14 +33,3 @@ export type {
   SupplierTableColumn,
 } from '@/types/supplier.types'
 
-// Import dummy data
-export {
-  dummySupplier,
-  dummySuppliers,
-  dummySupplierStats,
-  dummyTopSuppliers,
-  supplierTypeOptions,
-  supplierCategoryOptions,
-  paymentTermsOptions,
-  emptySupplier,
-} from '@/pages/suppliers/data'

@@ -65,7 +65,7 @@ export interface PreferredSupplierSectionProps {
   onMarkPreferred: () => Promise<void>
   onRemovePreferred: () => Promise<void>
   onCancel: () => void
-    isMarkingPreferred?: boolean      // ⭐ ADD THIS
+    isMarkingPreferred?: boolean      
   isRemovingPreferred?: boolean 
 }
 

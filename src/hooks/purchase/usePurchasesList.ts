@@ -12,9 +12,9 @@ export const usePurchasesList = (
   shopId: string,
   filters?: Partial<IPurchaseFilters>
 ) => {
-  // ============================================
+  
   // 📊 FETCH PURCHASES (with auto-caching)
-  // ============================================
+  
   const {
     data,
     isLoading,
@@ -28,9 +28,9 @@ export const usePurchasesList = (
     ...filters,
   })
 
-  // ============================================
+  
   // 📤 RETURN API
-  // ============================================
+  
   return {
     // Data
     purchases: data?.data?.purchases || [],
