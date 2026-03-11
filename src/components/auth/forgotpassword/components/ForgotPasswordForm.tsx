@@ -21,7 +21,6 @@ const ForgotPasswordForm: React.FC = () => {
 
   const { handleError } = useErrorHandler()
   const { t } = useTranslation()
-  // Form State
   const [formData, setFormData] = useState<ForgotPasswordFormState>({
     email: '',
   })
@@ -35,7 +34,6 @@ const ForgotPasswordForm: React.FC = () => {
     return result.isValid
   }, [formData])
 
-  // Handle Input Change
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value
@@ -45,7 +43,6 @@ const ForgotPasswordForm: React.FC = () => {
         email: value,
       }))
 
-      // Clear error for this field
       if (errors.email) {
         setErrors(prev => {
           const newErrors = { ...prev }
@@ -57,7 +54,6 @@ const ForgotPasswordForm: React.FC = () => {
     [errors]
   )
 
-  // Handle Submit
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
@@ -89,14 +85,12 @@ const ForgotPasswordForm: React.FC = () => {
     [formData, validateForm, forgotPassword, showSuccess, showError, navigate]
   )
 
-  // Handle Back to Login
   const handleBackToLogin = useCallback(() => {
     navigate(ROUTES.login)
   }, [navigate])
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Email Field */}
       <div>
         <label
           htmlFor="email"
@@ -131,7 +125,6 @@ const ForgotPasswordForm: React.FC = () => {
         )}
       </div>
 
-      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
@@ -147,7 +140,6 @@ const ForgotPasswordForm: React.FC = () => {
         )}
       </button>
 
-      {/* Back to Login Link */}
       <div className="text-center">
         <button
           type="button"

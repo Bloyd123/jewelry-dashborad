@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerPage/MobileCustomerDetailHeader.tsx
-// Mobile Customer Detail Header Component
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -18,8 +17,7 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
-
-// COMPONENT PROPS
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
 interface MobileCustomerDetailHeaderProps {
   customer: Customer
@@ -28,8 +26,6 @@ interface MobileCustomerDetailHeaderProps {
   onBackClick?: () => void
   onSettingsClick?: () => void
 }
-
-// MOBILE CUSTOMER DETAIL HEADER COMPONENT
 
 export const MobileCustomerDetailHeader: React.FC<
   MobileCustomerDetailHeaderProps
@@ -40,60 +36,31 @@ export const MobileCustomerDetailHeader: React.FC<
   onBackClick,
   onSettingsClick,
 }) => {
+  const { can } = usePermissionCheck()
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 
-  // Handle tab change
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)
     if (onTabChange) {
       onTabChange(tab)
     }
   }
-
-  // Tab items
   const tabItems = [
-    {
-      value: 'personal',
-      label: t('customerDetail.tabs.personal'),
-      icon: <User className="h-4 w-4" />,
-    },
-    {
-      value: 'financial',
-      label: t('customerDetail.tabs.financial'),
-      icon: <Wallet className="h-4 w-4" />,
-    },
-    {
-      value: 'orders',
-      label: t('customerDetail.tabs.orders'),
-      icon: <TrendingUp className="h-4 w-4" />,
-    },
-    {
-      value: 'loyalty',
-      label: t('customerDetail.tabs.loyalty'),
-      icon: <Award className="h-4 w-4" />,
-    },
-    {
-      value: 'documents',
-      label: t('customerDetail.tabs.documents'),
-      icon: <FileText className="h-4 w-4" />,
-    },
-    {
-      value: 'activity',
-      label: t('customerDetail.tabs.activity'),
-      icon: <Activity className="h-4 w-4" />,
-    },
-  ]
+  { value: 'personal', label: t('customerDetail.tabs.personal'), icon: <User className="h-4 w-4" /> },
+  ...(can('canViewCustomerFinancials') ? [{ value: 'financial', label: t('customerDetail.tabs.financial'), icon: <Wallet className="h-4 w-4" /> }] : []),
+  ...(can('canViewCustomerHistory') ? [{ value: 'orders', label: t('customerDetail.tabs.orders'), icon: <TrendingUp className="h-4 w-4" /> }] : []),
+  { value: 'loyalty', label: t('customerDetail.tabs.loyalty'), icon: <Award className="h-4 w-4" /> },
+  { value: 'documents', label: t('customerDetail.tabs.documents'), icon: <FileText className="h-4 w-4" /> },
+  ...(can('canViewCustomerHistory') ? [{ value: 'activity', label: t('customerDetail.tabs.activity'), icon: <Activity className="h-4 w-4" /> }] : []),
+]
 
-  // Get customer full name
   const fullName = `${customer.firstName} ${customer.lastName || ''}`.trim()
 
   return (
     <div className="space-y-0">
-      {/* Header Section */}
       <div className="border-b border-border-secondary bg-bg-secondary">
         <div className="space-y-3 px-4 py-3">
-          {/* Back Button and Settings */}
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -104,7 +71,7 @@ export const MobileCustomerDetailHeader: React.FC<
               <ChevronLeft className="h-4 w-4" />
               {t('customer.common.backToList')}
             </Button>
-
+{can('canUpdateCustomer') && (
             <Button
               variant="outline"
               size="sm"
@@ -113,19 +80,18 @@ export const MobileCustomerDetailHeader: React.FC<
             >
               <Settings className="h-4 w-4" />
             </Button>
+            )}
           </div>
 
-          {/* Customer Details */}
+
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              {/* Customer Avatar */}
               <Avatar
                 name={fullName}
                 size="lg"
                 status={customer.isActive ? 'online' : 'offline'}
               />
 
-              {/* Customer Info */}
               <div className="min-w-0 flex-1 space-y-2">
                 <div className="space-y-1">
                   <h1 className="truncate text-lg font-bold text-text-primary">
@@ -142,7 +108,6 @@ export const MobileCustomerDetailHeader: React.FC<
                   </div>
                 </div>
 
-                {/* Badges - Mobile Compact */}
                 <div className="flex flex-wrap items-center gap-1.5">
                   <Badge
                     variant={customer.isActive ? 'active' : 'inactive'}
@@ -170,7 +135,6 @@ export const MobileCustomerDetailHeader: React.FC<
               </div>
             </div>
 
-            {/* Quick Stats - Mobile Card */}
             <div className="grid grid-cols-3 gap-2">
               <div className="rounded-lg bg-bg-primary p-2 text-center">
                 <p className="text-xs text-text-tertiary">
@@ -202,7 +166,6 @@ export const MobileCustomerDetailHeader: React.FC<
           </div>
         </div>
 
-        {/* Tab Navigation - Mobile Scrollable */}
         <div className="overflow-x-auto px-4">
           <Tabs
             tabs={tabItems}

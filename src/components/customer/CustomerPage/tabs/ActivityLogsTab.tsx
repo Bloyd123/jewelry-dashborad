@@ -12,7 +12,6 @@ import {
   Clock,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
 // MOCK ACTIVITY LOGS
@@ -72,20 +71,14 @@ const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
 // COMPONENT PROPS
 
 interface ActivityLogsTabProps {
-  customerId?: string
+customer: Customer
 }
 
 // ACTIVITY LOGS TAB COMPONENT
 
-export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
-  customerId,
-}) => {
+export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({ customer }) => {
   const { t } = useTranslation()
 
-  // Get customer data from mock
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   const getActivityIcon = (type: ActivityLog['type']) => {
     switch (type) {

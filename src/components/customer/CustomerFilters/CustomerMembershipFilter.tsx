@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerFilters/CustomerMembershipFilter.tsx
-// Customer Membership Tier Filter - Uses Reusable TypeFilter
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +16,6 @@ interface CustomerMembershipFilterProps {
   disabled?: boolean
 }
 
-// CUSTOMER MEMBERSHIP FILTER COMPONENT
 
 export const CustomerMembershipFilter = React.forwardRef<
   HTMLButtonElement,
@@ -29,7 +27,6 @@ export const CustomerMembershipFilter = React.forwardRef<
   ) => {
     const { t } = useTranslation()
 
-    // Membership Tier Options
     const membershipTierOptions: FilterOption[] = [
       {
         value: 'platinum',

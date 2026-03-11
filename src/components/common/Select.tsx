@@ -1,4 +1,4 @@
-// Mini-Step 7.3: Select Component (Theme-Aware)
+
 // FILE: src/components/common/Select.tsx
 
 import { SelectHTMLAttributes, forwardRef } from 'react'
@@ -36,14 +36,12 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref
   ) => {
-    // Get theme state from Redux
     const accentColor = useAppSelector(state => state.ui.accentColor)
     const appearance = useAppSelector(state => state.ui.appearance)
 
     const selectId =
       props.id || `select-${Math.random().toString(36).substr(2, 9)}`
 
-    // Appearance-based spacing
     const spacingClass =
       appearance === 'compact'
         ? 'py-1'
@@ -59,7 +57,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
     return (
       <div className={`${fullWidth ? 'w-full' : ''}`}>
-        {/* Label */}
         {label && (
           <label
             htmlFor={selectId}
@@ -70,7 +67,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </label>
         )}
 
-        {/* Select Container */}
         <div className="relative">
           <select
             ref={ref}
@@ -99,7 +95,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             ))}
           </select>
 
-          {/* Dropdown Arrow Icon */}
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
             <svg
               className={`h-5 w-5 ${error ? 'text-red-400' : 'text-gray-400 dark:text-gray-500'}`}
@@ -116,7 +111,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </div>
         </div>
 
-        {/* Error Message */}
         {error && (
           <p
             className={`mt-1 text-red-600 dark:text-red-400 ${appearance === 'compact' ? 'text-xs' : 'text-sm'}`}
@@ -125,7 +119,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </p>
         )}
 
-        {/* Helper Text */}
         {helperText && !error && (
           <p
             className={`mt-1 text-gray-500 dark:text-gray-400 ${appearance === 'compact' ? 'text-xs' : 'text-sm'}`}

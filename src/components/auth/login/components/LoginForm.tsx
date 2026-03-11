@@ -1,5 +1,4 @@
 // FILE: components/auth/login/components/LoginForm.tsx
-// ✅ FIXED: Proper Redux integration and 2FA handling
 
 import React, { useState, useCallback } from 'react'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
@@ -13,7 +12,6 @@ import { validateLoginForm } from '@/validators/loginValidation'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useTranslation } from 'react-i18next'
 
-// ✅ FIXED: Import correct selectors
 import { selectRequires2FA, selectIsLoading } from '@/store/slices/authSlice'
 
 const LoginForm: React.FC = () => {
@@ -23,11 +21,9 @@ const LoginForm: React.FC = () => {
   const { t } = useTranslation()
   const { handleError } = useErrorHandler()
 
-  // ✅ FIXED: Get 2FA state from Redux using selector
   const requires2FA = useAppSelector(selectRequires2FA)
   const isAuthLoading = useAppSelector(selectIsLoading)
 
-  // Form State
   const [formData, setFormData] = useState<LoginFormState>({
     email: '',
     password: '',
@@ -44,7 +40,6 @@ const LoginForm: React.FC = () => {
     return result.isValid
   }, [formData])
 
-  // Handle Input Change
   const handleInputChange = useCallback(
     (field: keyof LoginFormState) =>
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +50,6 @@ const LoginForm: React.FC = () => {
           [field]: value,
         }))
 
-        // Clear error for this field
         if (errors[field]) {
           setErrors(prev => {
             const newErrors = { ...prev }
@@ -67,7 +61,6 @@ const LoginForm: React.FC = () => {
     [errors]
   )
 
-  // ✅ FIXED: Handle Submit with proper 2FA flow
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
@@ -78,7 +71,7 @@ const LoginForm: React.FC = () => {
       }
 
       setLoading(true)
-      setErrors({}) // Clear previous errors
+      setErrors({}) 
 
       try {
         const loginData: LoginRequest = {
@@ -88,27 +81,23 @@ const LoginForm: React.FC = () => {
         }
 
         if (import.meta.env.DEV) {
-          console.log('📝 [LoginForm] Submitting login for:', loginData.email)
+          console.log('[LoginForm] Submitting login for:', loginData.email)
         }
 
         const result = await login(loginData)
 
         if (import.meta.env.DEV) {
-          console.log('📝 [LoginForm] Login result:', result)
-          console.log('📝 [LoginForm] requires2FA:', requires2FA)
+          console.log('[LoginForm] Login result:', result)
+          console.log('[LoginForm] requires2FA:', requires2FA)
         }
 
-        // ✅ FIXED: Proper 2FA check from Redux state
         if (requires2FA) {
-          // 2FA is required - LoginPage component will handle showing 2FA step
           if (import.meta.env.DEV) {
             console.log(
               '🔐 [LoginForm] 2FA required - waiting for verification'
             )
           }
-          // Don't show success message or navigate - let 2FA step handle it
         } else {
-          // ✅ FIXED: Login successful without 2FA
           if (import.meta.env.DEV) {
             console.log(
               '✅ [LoginForm] Login successful - navigating to dashboard'
@@ -120,28 +109,22 @@ const LoginForm: React.FC = () => {
             t('auth.login.welcomeBack') || 'Welcome back!'
           )
 
-          // Navigate to dashboard or intended route
           navigate(ROUTES.dashboard, { replace: true })
         }
       } catch (error: any) {
         console.error(' [LoginForm] Login error:', error)
 
-        // ✅ FIXED: Proper error handling
         handleError(error, validationErrors => {
           if (typeof validationErrors === 'string') {
-            // Single error message
             showError(validationErrors)
           } else if (validationErrors && typeof validationErrors === 'object') {
-            // Validation errors object
             setErrors(validationErrors as Record<string, string>)
 
-            // Show first error as notification
             const firstError = Object.values(validationErrors)[0]
             if (firstError) {
               showError(String(firstError))
             }
           } else {
-            // Generic error
             showError(
               t('auth.login.error') || 'Login failed. Please try again.'
             )
@@ -164,22 +147,18 @@ const LoginForm: React.FC = () => {
     ]
   )
 
-  // Handle Forgot Password
   const handleForgotPassword = useCallback(() => {
     navigate(ROUTES.forgotPassword)
   }, [navigate])
 
-  // Handle Sign Up
   const handleSignUp = useCallback(() => {
     navigate(ROUTES.signup)
   }, [navigate])
 
-  // ✅ FIXED: Combined loading state
   const isLoading = loading || isAuthLoading
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Email Field */}
       <div>
         <label
           htmlFor="email"
@@ -214,7 +193,6 @@ const LoginForm: React.FC = () => {
         )}
       </div>
 
-      {/* Password Field */}
       <div>
         <label
           htmlFor="password"
@@ -264,7 +242,6 @@ const LoginForm: React.FC = () => {
         )}
       </div>
 
-      {/* Remember Me & Forgot Password */}
       <div className="flex items-center justify-between">
         <label className="flex cursor-pointer items-center">
           <input
@@ -289,7 +266,6 @@ const LoginForm: React.FC = () => {
         </button>
       </div>
 
-      {/* Login Button */}
       <button
         type="submit"
         disabled={isLoading}
@@ -305,7 +281,6 @@ const LoginForm: React.FC = () => {
         )}
       </button>
 
-      {/* Sign Up Link */}
       <div className="text-center text-sm text-gray-600 dark:text-gray-400">
         {t('auth.login.noAccount') || "Don't have an account?"}{' '}
         <button

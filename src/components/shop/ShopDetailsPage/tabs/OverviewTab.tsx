@@ -26,7 +26,7 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
-import { dummyShops } from '@/pages/shops/data'
+import { useShopById } from '@/hooks/shop'
 import type { Shop, ShopUser, Organization } from '@/types'
 
 // COPY BUTTON COMPONENT
@@ -72,9 +72,10 @@ const isOrganization = (
 
 // MAIN COMPONENT
 
-const OverviewTab = () => {
+const OverviewTab = ({ shopId }: { shopId: string }) => {
   const { t } = useTranslation()
-  const shopData = dummyShops[0]
+  const { shop: shopData, isLoading } = useShopById(shopId)
+ if (isLoading || !shopData) return null
 
   // Extract manager and organization with type safety
   const manager = isShopUser(shopData.managerId) ? shopData.managerId : null

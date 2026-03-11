@@ -1,5 +1,4 @@
 // FILE: ssrc/components/customer/CustomerPage/tabs/DocumentsTab.tsx
-// Documents Tab
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +15,6 @@ import { Label } from '@/components/ui/label'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// MOCK DOCUMENTS DATA
 
 interface Document {
   id: string
@@ -54,18 +52,15 @@ const MOCK_DOCUMENTS: Document[] = [
   },
 ]
 
-// COMPONENT PROPS
 
 interface DocumentsTabProps {
   customerId?: string
 }
 
-// DOCUMENTS TAB COMPONENT
 
 export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
   const { t } = useTranslation()
 
-  // Get customer data from mock
   const customer: Customer = customerId
     ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
     : MOCK_CUSTOMERS[0]
@@ -80,7 +75,6 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
-      {/* Upload Section */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -98,14 +92,12 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
         </div>
       </div>
 
-      {/* KYC Documents Summary */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerDocuments.kycDocuments')}
         </h3>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {/* Aadhar Number */}
           {customer.aadharNumber && (
             <div className="flex flex-col gap-1.5 rounded-lg border border-border-secondary bg-bg-primary p-4">
               <Label className="text-xs text-text-secondary">
@@ -122,7 +114,6 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
             </div>
           )}
 
-          {/* PAN Number */}
           {customer.panNumber && (
             <div className="flex flex-col gap-1.5 rounded-lg border border-border-secondary bg-bg-primary p-4">
               <Label className="text-xs text-text-secondary">
@@ -139,7 +130,6 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
             </div>
           )}
 
-          {/* GST Number */}
           {customer.gstNumber && (
             <div className="flex flex-col gap-1.5 rounded-lg border border-border-secondary bg-bg-primary p-4 md:col-span-2">
               <Label className="text-xs text-text-secondary">
@@ -158,7 +148,6 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
         </div>
       </div>
 
-      {/* Uploaded Documents */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerDocuments.uploadedDocuments')}

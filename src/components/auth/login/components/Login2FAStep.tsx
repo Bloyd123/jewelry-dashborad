@@ -1,6 +1,4 @@
 // FILE: components/auth/login/components/Login2FAStep.tsx
-// Two-Factor Authentication Step for Login
-// ✅ FIXED: Proper Redux integration with complete2FALogin thunk
 
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +12,6 @@ import { BackupCodeInput } from '@/components/user/UserProfile/UserprofileModal/
 import { Alert, AlertDescription } from '@/components/common/Alert'
 import { Loader } from '@/components/ui/loader/Loader'
 
-// ✅ FIXED: Import correct selectors and actions
 import {
   setRequires2FA,
   selectIsLoading,
@@ -26,10 +23,8 @@ export const Login2FAStep: React.FC = () => {
   const dispatch = useAppDispatch()
   const { handleError } = useErrorHandler()
 
-  // ✅ FIXED: Use useAuth hook for 2FA verification (now uses thunk)
   const { verify2FALogin, verifyBackupCode } = useAuth()
 
-  // ✅ FIXED: Get state from authSlice using selectors
   const loading = useAppSelector(selectIsLoading)
   const tempToken = useAppSelector(selectTempToken)
 
@@ -41,28 +36,24 @@ export const Login2FAStep: React.FC = () => {
   const hasCalledRef = useRef(false)
   const isMountedRef = useRef(true)
 
-  // ✅ FIXED: Cleanup on unmount
   useEffect(() => {
     return () => {
       isMountedRef.current = false
     }
   }, [])
 
-  // ✅ FIXED: Reset hasCalledRef when code changes
   useEffect(() => {
     if (code.length < 6) {
       hasCalledRef.current = false
     }
   }, [code])
 
-  // ✅ FIXED: Reset hasCalledRef when backup code changes
   useEffect(() => {
     if (backupCode.length < 14) {
       hasCalledRef.current = false
     }
   }, [backupCode])
 
-  // HANDLERS
 
   const handleVerifyAuthenticator = async () => {
     if (code.length !== 6 || !tempToken || hasCalledRef.current || isVerifying)
@@ -73,17 +64,14 @@ export const Login2FAStep: React.FC = () => {
     setError(null)
 
     try {
-      // ✅ FIXED: This now calls the complete2FALogin thunk
       const result = await verify2FALogin(tempToken, code)
 
       if (!isMountedRef.current) return
 
       if (result.success) {
-        // ✅ Success - Redux state updated, navigation happens automatically
         if (import.meta.env.DEV) {
           console.log('✅ [Login2FAStep] 2FA verification successful')
         }
-        // Auth state is now updated - App.tsx will handle redirect
       } else {
         hasCalledRef.current = false
         setError(t('auth.2fa.invalidCode') || 'Invalid verification code')
@@ -93,7 +81,6 @@ export const Login2FAStep: React.FC = () => {
 
       hasCalledRef.current = false
 
-      // ✅ FIXED: Proper error handling
       if (err?.message) {
         setError(err.message)
       } else {
@@ -122,23 +109,19 @@ export const Login2FAStep: React.FC = () => {
     setError(null)
 
     try {
-      // ✅ FIXED: This now calls the complete2FALogin thunk
       const result = await verifyBackupCode(tempToken, backupCode)
 
       if (!isMountedRef.current) return
 
       if (result.success) {
-        // ✅ Success - Redux state updated
         if (import.meta.env.DEV) {
           console.log('✅ [Login2FAStep] Backup code verification successful')
         }
 
-        // ✅ FIXED: Show remaining backup codes warning if applicable
         if (result.data?.remainingBackupCodes !== undefined) {
           const remaining = result.data.remainingBackupCodes
           if (remaining <= 2) {
             console.warn(`⚠️ Only ${remaining} backup codes remaining`)
-            // Optional: Show toast notification to user
           }
         }
       } else {
@@ -147,7 +130,6 @@ export const Login2FAStep: React.FC = () => {
     } catch (err: any) {
       if (!isMountedRef.current) return
 
-      // ✅ FIXED: Proper error handling
       if (err?.message) {
         setError(err.message)
       } else {
@@ -187,14 +169,11 @@ export const Login2FAStep: React.FC = () => {
     setIsVerifying(false)
   }
 
-  // ✅ FIXED: Combined loading state
   const isLoading = loading || isVerifying
 
-  // RENDER
 
   return (
     <div className="w-full max-w-md">
-      {/* Header */}
       <div className="mb-8 text-center">
         <div className="bg-accent/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
           <Shield className="h-8 w-8 text-accent" />
@@ -211,11 +190,9 @@ export const Login2FAStep: React.FC = () => {
         </p>
       </div>
 
-      {/* Form */}
       <div className="space-y-6 rounded-2xl bg-bg-secondary p-8 shadow-sm">
         {mode === 'authenticator' ? (
           <>
-            {/* Authenticator Code Input */}
             <div className="space-y-4">
               <TwoFactorCodeInput
                 value={code}
@@ -227,7 +204,6 @@ export const Login2FAStep: React.FC = () => {
               />
             </div>
 
-            {/* Verify Button */}
             <Button
               onClick={handleVerifyAuthenticator}
               disabled={isLoading || code.length !== 6}
@@ -239,7 +215,6 @@ export const Login2FAStep: React.FC = () => {
           </>
         ) : (
           <>
-            {/* Backup Code Input */}
             <div className="space-y-4">
               <BackupCodeInput
                 value={backupCode}
@@ -251,7 +226,6 @@ export const Login2FAStep: React.FC = () => {
               />
             </div>
 
-            {/* Verify Button */}
             <Button
               onClick={handleVerifyBackup}
               disabled={isLoading || backupCode.length !== 14}
@@ -263,14 +237,12 @@ export const Login2FAStep: React.FC = () => {
           </>
         )}
 
-        {/* Error Alert */}
         {error && (
           <Alert variant="error">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
-        {/* Switch Mode */}
         <div className="space-y-2 border-t border-border-primary pt-4">
           <Button
             variant="ghost"
@@ -285,7 +257,6 @@ export const Login2FAStep: React.FC = () => {
           </Button>
         </div>
 
-        {/* Back to Login */}
         <div className="border-t border-border-primary pt-4">
           <Button
             variant="ghost"
@@ -298,7 +269,6 @@ export const Login2FAStep: React.FC = () => {
           </Button>
         </div>
 
-        {/* Helper Info */}
         <Alert variant="info">
           <AlertDescription>
             <p className="text-xs">
@@ -310,7 +280,6 @@ export const Login2FAStep: React.FC = () => {
         </Alert>
       </div>
 
-      {/* Footer Help */}
       <div className="mt-6 text-center">
         <p className="text-xs text-text-tertiary">
           {t('auth.2fa.havingTrouble')}{' '}

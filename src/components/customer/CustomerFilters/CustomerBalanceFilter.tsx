@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerFilters/CustomerBalanceFilter.tsx
-// Customer Balance Filter - Uses Reusable TypeFilter
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +6,6 @@ import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
 import { DollarSign, CheckCircle } from 'lucide-react'
 
-// TYPES
 
 interface CustomerBalanceFilterProps {
   value?: string
@@ -17,7 +15,6 @@ interface CustomerBalanceFilterProps {
   disabled?: boolean
 }
 
-// CUSTOMER BALANCE FILTER COMPONENT
 
 export const CustomerBalanceFilter = React.forwardRef<
   HTMLButtonElement,

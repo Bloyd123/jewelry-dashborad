@@ -1,41 +1,32 @@
 // FILE: src/api/endpoints.ts
-// API Endpoints Configuration
 
 const API_BASE = '/api'
 const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
-// AUTHENTICATION ENDPOINTS
 
 const AUTH_BASE = `${BASE_URL}/auth`
 
 export const AUTH_ENDPOINTS = {
-  // Registration
   REGISTER: `${AUTH_BASE}/register`,
   REGISTER_SUPER_ADMIN: `${AUTH_BASE}/register/super-admin`,
 
-  // Login/Logout
   LOGIN: `${AUTH_BASE}/login`,
   LOGOUT: `${AUTH_BASE}/logout`,
   LOGOUT_ALL: `${AUTH_BASE}/logout-all`,
 
-  // User Profile
   ME: `${AUTH_BASE}/me`,
   UPDATE_PROFILE: `${AUTH_BASE}/profile`,
 
-  // Password Management
   CHANGE_PASSWORD: `${AUTH_BASE}/change-password`,
   FORGOT_PASSWORD: `${AUTH_BASE}/forgot-password`,
   RESET_PASSWORD: `${AUTH_BASE}/reset-password`,
 
-  // Email Verification
   VERIFY_EMAIL: `${AUTH_BASE}/verify-email`,
   RESEND_VERIFICATION: `${AUTH_BASE}/resend-verification`,
 
-  // Token Management
   REFRESH_TOKEN: `${AUTH_BASE}/refresh-token`,
 
-  // Session Management
   SESSIONS: `${AUTH_BASE}/sessions`,
   REVOKE_SESSION: `${AUTH_BASE}/sessions/:tokenId`,
   ENABLE_2FA: `${AUTH_BASE}/2fa/enable`,
@@ -45,7 +36,6 @@ export const AUTH_ENDPOINTS = {
   LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
 
-// Customer endpoints
 export const CUSTOMER_ENDPOINTS = {
   // List & Search
   GET_ALL: `${BASE_URL}/shops/:shopId/customers`,
@@ -68,45 +58,61 @@ export const CUSTOMER_ENDPOINTS = {
   // Analytics
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
 } as const
+
+
+export const SHOP_ENDPOINTS = {
+  // Core CRUD
+  GET_ALL:          `${BASE_URL}/shops`,
+  GET_BY_ID:        `${BASE_URL}/shops/:shopId`,
+  CREATE:           `${BASE_URL}/shops`,
+  UPDATE:           `${BASE_URL}/shops/:shopId`,
+  DELETE:           `${BASE_URL}/shops/:shopId`,
+
+  // Status
+  TOGGLE_STATUS:    `${BASE_URL}/shops/:shopId/status`,
+
+  // Settings & Rates
+  UPDATE_SETTINGS:  `${BASE_URL}/shops/:shopId/settings`,
+  UPDATE_METAL_RATES: `${BASE_URL}/shops/:shopId/metal-rates`,
+
+  // Statistics
+  GET_STATISTICS:   `${BASE_URL}/shops/:shopId/statistics`,
+
+  // Bulk Operations
+  BULK_ACTIVATE:    `${BASE_URL}/shops/bulk/activate`,
+  BULK_DEACTIVATE:  `${BASE_URL}/shops/bulk/deactivate`,
+  BULK_DELETE:      `${BASE_URL}/shops/bulk`,
+}
 export const PURCHASE_ENDPOINTS = {
 
-  // CRUD Operations
   GET_ALL: `${BASE_URL}/shops/:shopId/purchases`,
   GET_BY_ID: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
   CREATE: `${BASE_URL}/shops/:shopId/purchases`,
   UPDATE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
   DELETE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
 
-  // Status Management
   UPDATE_STATUS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/status`,
   RECEIVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/receive`,
   CANCEL: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/cancel`,
 
-  // Approval
   APPROVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/approve`,
   REJECT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/reject`,
 
-  // Payment Management
   ADD_PAYMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
   GET_PAYMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
 
-  // Supplier-Specific
   GET_BY_SUPPLIER: `${BASE_URL}/shops/:shopId/purchases/supplier/:supplierId`,
 
-  // Analytics & Reports
   GET_ANALYTICS: `${BASE_URL}/shops/:shopId/purchases/analytics`,
   GET_PENDING: `${BASE_URL}/shops/:shopId/purchases/pending`,
   GET_UNPAID: `${BASE_URL}/shops/:shopId/purchases/unpaid`,
 
-  // Bulk Operations
   BULK_DELETE: `${BASE_URL}/shops/:shopId/purchases/bulk-delete`,
   BULK_APPROVE: `${BASE_URL}/shops/:shopId/purchases/bulk-approve`,
 
-  // Documents
   UPLOAD_DOCUMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
   GET_DOCUMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
 
-  // Search & Filters
   SEARCH: `${BASE_URL}/shops/:shopId/purchases/search`,
   BY_DATE_RANGE: `${BASE_URL}/shops/:shopId/purchases/by-date-range`,
 } as const
@@ -114,7 +120,6 @@ export const PURCHASE_ENDPOINTS = {
 
 
 export const SUPPLIER_ENDPOINTS = {
-  // List & CRUD
   GET_ALL: `${BASE_URL}/suppliers`,
   GET_BY_ID: `${BASE_URL}/suppliers/:id`,
   CREATE: `${BASE_URL}/suppliers`,
@@ -122,7 +127,6 @@ export const SUPPLIER_ENDPOINTS = {
   DELETE: `${BASE_URL}/suppliers/:id`,
   SEARCH: `${BASE_URL}/suppliers/search`,
 
-  // Management Actions
   RESTORE: `${BASE_URL}/suppliers/:id/restore`,
   UPDATE_RATING: `${BASE_URL}/suppliers/:id/rating`,
   BLACKLIST: `${BASE_URL}/suppliers/:id/blacklist`,
@@ -131,11 +135,9 @@ export const SUPPLIER_ENDPOINTS = {
   REMOVE_PREFERRED: `${BASE_URL}/suppliers/:id/preferred`,
   UPDATE_BALANCE: `${BASE_URL}/suppliers/:id/balance`,
 
-  // Statistics
   STATS: `${BASE_URL}/suppliers/stats`,
   TOP: `${BASE_URL}/suppliers/top`,
 } as const
-// SHOP ENDPOINTS
 
 const SHOPS_BASE = `${BASE_URL}/shops`
 
@@ -148,7 +150,6 @@ export const SHOPS_ENDPOINTS = {
   TRANSFER_INVENTORY: `${SHOPS_BASE}/:id/transfer-inventory`,
 }
 
-// ORGANIZATION ENDPOINTS
 
 const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`
 
@@ -161,7 +162,6 @@ export const ORGANIZATIONS_ENDPOINTS = {
   SUBSCRIPTION: `${ORGANIZATIONS_BASE}/:id/subscription`,
 }
 
-// USER ENDPOINTS
 
 const USERS_BASE = `${BASE_URL}/users`
 
@@ -176,11 +176,7 @@ export const USERS_ENDPOINTS = {
   SHOP_ACCESS: `${USERS_BASE}/:id/shop-access`,
 }
 
-//
-// PRODUCT ENDPOINTS
-//
 export const PRODUCT_ENDPOINTS = {
-  // List & Search
   GET_ALL: `${BASE_URL}/shops/:shopId/products`,
   GET_BY_ID: `${BASE_URL}/shops/:shopId/products/:id`,
   SEARCH: `${BASE_URL}/shops/:shopId/products/search`,
@@ -188,28 +184,22 @@ export const PRODUCT_ENDPOINTS = {
   ANALYTICS: `${BASE_URL}/shops/:shopId/products/analytics`,
   HISTORY: `${BASE_URL}/shops/:shopId/products/:id/history`,
 
-  // CRUD
   CREATE: `${BASE_URL}/shops/:shopId/products`,
   UPDATE: `${BASE_URL}/shops/:shopId/products/:id`,
   DELETE: `${BASE_URL}/shops/:shopId/products/:id`,
 
-  // Stock Management
   UPDATE_STOCK: `${BASE_URL}/shops/:shopId/products/:id/stock`,
 
-  // Product Status
   RESERVE: `${BASE_URL}/shops/:shopId/products/:id/reserve`,
   CANCEL_RESERVATION: `${BASE_URL}/shops/:shopId/products/:id/cancel-reservation`,
   MARK_AS_SOLD: `${BASE_URL}/shops/:shopId/products/:id/sold`,
 
-  // Pricing
   CALCULATE_PRICE: `${BASE_URL}/shops/:shopId/products/:id/calculate-price`,
 
-  // Bulk Operations
   BULK_DELETE: `${BASE_URL}/shops/:shopId/products/bulk-delete`,
   BULK_UPDATE_STATUS: `${BASE_URL}/shops/:shopId/products/bulk-update-status`,
 }
 
-// INVENTORY ENDPOINTS
 
 const INVENTORY_BASE = `${BASE_URL}/inventory`
 
@@ -223,7 +213,6 @@ export const INVENTORY_ENDPOINTS = {
   HISTORY: `${INVENTORY_BASE}/:id/history`,
 }
 
-// SALES ENDPOINTS
 
 const SALES_BASE = `${BASE_URL}/sales`
 
@@ -239,7 +228,6 @@ export const SALES_ENDPOINTS = {
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
 }
 
-// REPORTS ENDPOINTS
 
 const REPORTS_BASE = `${BASE_URL}/reports`
 
@@ -252,7 +240,6 @@ export const REPORTS_ENDPOINTS = {
   DASHBOARD: `${REPORTS_BASE}/dashboard`,
 }
 
-// CONSOLIDATED EXPORT
 
 export const API_ENDPOINTS = {
   AUTH: AUTH_ENDPOINTS,

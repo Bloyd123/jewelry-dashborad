@@ -8,7 +8,6 @@ export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
 
-  // Tag types for cache invalidation
   tagTypes: [
     // Customer Module
     'Customer',
@@ -22,17 +21,26 @@ export const baseApi = createApi({
     'ProductAnalytics',
     'ProductSearch',
     'ProductHistory',
+
     // Supplier Module
     'Supplier',
     'SupplierList',
     'SupplierSearch',
-        'Purchase',           // Single purchase by ID
-    'PurchaseList',       // List of purchases (with filters)
-    'PurchaseAnalytics',  // Analytics & reports
-    'PurchaseSearch',     // Search results
+
+    // Purchase Module
+    'Purchase',
+    'PurchaseList',
+    'PurchaseAnalytics',
+    'PurchaseSearch',
+
+    // Shop Module
+    'Shop',
+    'ShopList',
+    'ShopStatistics',
+    'ShopMetalRates',
   ],
 
-  endpoints: () => ({}), // Endpoints will be injected
+  endpoints: () => ({}),
 })
 
 export default baseApi

@@ -1,5 +1,4 @@
 // FILE: src/components/common/Alert/Alert.tsx
-// Flexible Alert Component - TypeScript Issues Fixed
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,38 +13,30 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-// TYPES & INTERFACES
 
 export type AlertVariant = 'default' | 'success' | 'warning' | 'error' | 'info'
 export type AlertSize = 'sm' | 'md' | 'lg'
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
-  // Variant & Size
   variant?: AlertVariant
   size?: AlertSize
 
-  // Content
   title?: string
   description?: string
   children?: React.ReactNode
 
-  // Icon
   icon?: LucideIcon | React.ReactNode
   showIcon?: boolean
 
-  // Dismissible
   dismissible?: boolean
   onDismiss?: () => void
 
-  // Border & Shadow
   bordered?: boolean
   shadow?: boolean
 
-  // Custom styling
   className?: string
 }
 
-// HELPER: GET VARIANT CLASSES
 
 const getVariantClasses = (variant: AlertVariant): string => {
   const variants: Record<AlertVariant, string> = {
@@ -69,7 +60,6 @@ const getSizeClasses = (size: AlertSize): string => {
   return sizes[size]
 }
 
-// HELPER: GET DEFAULT ICON
 
 const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   const icons: Record<AlertVariant, LucideIcon> = {
@@ -82,7 +72,6 @@ const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   return icons[variant]
 }
 
-// ALERT COMPONENT
 
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
@@ -113,24 +102,19 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 
     if (dismissed) return null
 
-    // Get icon size based on alert size
     const iconSize = {
       sm: 'h-4 w-4',
       md: 'h-5 w-5',
       lg: 'h-6 w-6',
     }[size]
 
-    // Get icon component
     const IconComponent = React.useMemo(() => {
       if (!showIcon) return null
       if (icon) {
-        // If icon is a React element
         if (React.isValidElement(icon)) return icon
-        // If icon is a Lucide icon component
         const IconComp = icon as LucideIcon
         return <IconComp className={iconSize} />
       }
-      // Default icon based on variant
       const DefaultIcon = getDefaultIcon(variant)
       return <DefaultIcon className={iconSize} />
     }, [icon, showIcon, variant, iconSize])
@@ -151,19 +135,16 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         {...props}
       >
         <div className="flex w-full items-start gap-3">
-          {/* Icon */}
           {showIcon && IconComponent && (
             <div className={cn('flex-shrink-0', iconSize)}>{IconComponent}</div>
           )}
 
-          {/* Content */}
           <div className="flex-1 space-y-1">
             {title && <AlertTitle>{title}</AlertTitle>}
             {description && <AlertDescription>{description}</AlertDescription>}
             {children}
           </div>
 
-          {/* Dismiss Button */}
           {dismissible && (
             <Button
               variant="ghost"
@@ -183,7 +164,6 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = 'Alert'
 
-// ALERT TITLE COMPONENT
 
 export interface AlertTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -210,7 +190,6 @@ export const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
 
 AlertTitle.displayName = 'AlertTitle'
 
-// ALERT DESCRIPTION COMPONENT
 
 export interface AlertDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -235,7 +214,6 @@ export const AlertDescription = React.forwardRef<
 
 AlertDescription.displayName = 'AlertDescription'
 
-// ALERT ACTION COMPONENT (Optional)
 
 export interface AlertActionProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

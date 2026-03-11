@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Loader2 } from 'lucide-react'
 import { ShopDetailHeader } from '@/components/shop/ShopDetailsPage/ShopDetailHeader'
 import {
   OverviewTab,
@@ -7,47 +9,44 @@ import {
   StatisticsTab,
 } from '@/components/shop/ShopDetailsPage/tabs'
 import { ShopSettings } from '@/components/shop/ShopSettings'
-import { dummyShops } from '@/pages/shops/data'
-import { dummyShopStatistics } from '@/pages/shops/dummyStatistics'
-import type { ShopSettingsFormData } from '@/components/shop/ShopSettings'
+import { useShopById, useShopStats } from '@/hooks/shop'
 
 // SHOP DETAILS PAGE COMPONENT
 
 export const ShopDetailsPage: React.FC = () => {
+  const navigate = useNavigate()
+  const { shopId } = useParams()
+
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
 
-  // Get shop data - Currently using dummy data
-  // TODO: Replace with API call - const { shopId } = useParams(); const { data: shop } = useGetShopByIdQuery(shopId)
-  const shop = dummyShops[0]
+  // Real API
+  const { shop, isLoading } = useShopById(shopId ?? '')
+  const { statistics, isLoading: isLoadingStats } = useShopStats(shopId ?? '')
 
-  // Handle back navigation
-  const handleBackClick = () => {
-    // TODO: Add navigation logic
-    console.log('Navigate back to shops list')
-    // window.history.back() or navigate('/shops')
+  // Loading state
+  if (isLoading || !shop) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-accent" />
+      </div>
+    )
   }
 
-  const handleSaveSettings = async (settings: ShopSettingsFormData) => {
-    console.log('Saving settings:', settings)
-    // API call example
-    // await updateShopSettings(shop._id, settings)
-    setIsSettingsOpen(false)
-  }
+  // Handlers
+  const handleBackClick = () => navigate('/shops')
 
-  // Handle tab change
   const handleTabChange = (tab: string) => {
     setActiveTab(tab)
-    console.log('Active tab changed to:', tab)
   }
 
-  // Render tab content based on active tab
+  // Render tab content
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
         return (
           <div className="p-6">
-            <OverviewTab />
+            <OverviewTab shopId={shop._id} />
           </div>
         )
 
@@ -56,8 +55,8 @@ export const ShopDetailsPage: React.FC = () => {
           <div className="p-6">
             <StatisticsTab
               shopId={shop._id}
-              statistics={dummyShopStatistics}
-              loading={false}
+              statistics={statistics as any}
+              loading={isLoadingStats}
             />
           </div>
         )
@@ -76,7 +75,7 @@ export const ShopDetailsPage: React.FC = () => {
       case 'logs':
         return (
           <div className="p-6">
-            <ActivityLogTab />
+            <ActivityLogTab shopId={shop._id} />
           </div>
         )
 
@@ -96,7 +95,7 @@ export const ShopDetailsPage: React.FC = () => {
         onSettingsClick={() => setIsSettingsOpen(true)}
       />
 
-      {/* Tab Content - BAHAR render ho raha hai */}
+      {/* Tab Content */}
       {renderTabContent()}
 
       {/* Settings Modal */}
@@ -104,7 +103,6 @@ export const ShopDetailsPage: React.FC = () => {
         shop={shop}
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
-        onSave={handleSaveSettings}
       />
     </div>
   )

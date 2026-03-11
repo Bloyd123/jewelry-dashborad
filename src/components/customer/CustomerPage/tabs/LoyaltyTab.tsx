@@ -1,15 +1,12 @@
 // FILE: src/components/features/Customers/tabs/LoyaltyTab.tsx
-// Loyalty Program Tab
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Award, Gift, TrendingUp, Star } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-// MOCK LOYALTY HISTORY
 
 interface LoyaltyTransaction {
   id: string
@@ -50,21 +47,13 @@ const MOCK_LOYALTY_HISTORY: LoyaltyTransaction[] = [
   },
 ]
 
-// COMPONENT PROPS
 
 interface LoyaltyTabProps {
-  customerId?: string
+  customer: Customer
 }
 
-// LOYALTY TAB COMPONENT
-
-export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
+export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customer }) => {
   const { t } = useTranslation()
-
-  // Get customer data from mock
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   const totalEarned = MOCK_LOYALTY_HISTORY.filter(
     t => t.type === 'earned'
@@ -79,7 +68,6 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
-      {/* Loyalty Overview Cards */}
       <StatCardGrid columns={3}>
         <StatCard
           title={t('customerLoyalty.currentPoints')}
@@ -111,7 +99,6 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
         />
       </StatCardGrid>
 
-      {/* Membership Tier */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -132,8 +119,6 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
           </Badge>
         </div>
       </div>
-
-      {/* Points Value */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerLoyalty.pointsValue')}
@@ -161,7 +146,6 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customerId }) => {
         </p>
       </div>
 
-      {/* Loyalty History */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerLoyalty.recentActivity')}

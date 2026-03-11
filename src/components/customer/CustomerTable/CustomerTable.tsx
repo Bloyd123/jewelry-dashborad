@@ -1,31 +1,26 @@
 // FILE: src/components/customer/CustomerTable/CustomerTable.tsx
-// Main Customer Table Component
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { customerTableColumns } from './CustomerTableColumns'
 import { getCustomerRowActions, BulkActionsBar } from './CustomerTableActions'
-// import { MOCK_CUSTOMERS, type Customer } from './CustomerTable.types'
 import type { Customer } from '@/types/customer.types'
-// ADD THIS IMPORT
 import { CustomerFilters } from '@/components/customer/CustomerFilters'
 import type { CustomerFilterValues } from '@/components/customer/CustomerFilters'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/auth'
 import { useCustomersList } from '@/hooks/customer/useCustomersList'
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
-// MAIN COMPONENT
 
 export const CustomerTable: React.FC = () => {
   const { t } = useTranslation()
-
-  // STATE
-
+  
+  
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
-  // ADD FILTER STATE
   const [filters, setFilters] = useState<CustomerFilterValues>({
     search: '',
     customerType: undefined,
@@ -36,8 +31,8 @@ export const CustomerTable: React.FC = () => {
     dateRange: undefined,
   })
   const navigate = useNavigate()
-
-  // HANDLERS
+  const { can } = usePermissionCheck()
+  
   const { currentShopId } = useAuth()
   const { customers, pagination, isLoading, error } = useCustomersList(
     currentShopId!,
@@ -82,30 +77,25 @@ export const CustomerTable: React.FC = () => {
 
   const handleViewDetails = (customer: Customer) => {
     console.log('View Details:', customer)
-    // TODO: Open customer details modal/drawer
   }
 
   const handleEdit = (customer: Customer) => {
     console.log('Edit Customer:', customer)
-    navigate(`/customers/edit/${customer._id}`) // Fixed!
+    navigate(`/customers/edit/${customer._id}`) 
   }
 
   const handleAddPoints = (customer: Customer) => {
     console.log('Add Loyalty Points:', customer)
-    // TODO: Open add points modal
   }
 
   const handleBlacklist = (customer: Customer) => {
     console.log('Blacklist/Remove Blacklist:', customer)
-    // TODO: Handle blacklist action
   }
 
   const handleDelete = (customer: Customer) => {
     console.log('Delete Customer:', customer)
-    // TODO: Show confirmation and delete
   }
 
-  // Bulk Actions Handlers
   const handleBulkViewDetails = () => {
     const selected = customers.filter(c => selectedRows.has(c._id))
 
@@ -114,34 +104,25 @@ export const CustomerTable: React.FC = () => {
     }
   }
 
-  // const handleBulkEdit = () => {
-  //   const selected = MOCK_CUSTOMERS.filter((c) => selectedRows.has(c._id))
-  //   if (selected.length === 1) {
-  //     handleEdit(selected[0])
-  //   }
-  // }
   const handleBulkEdit = () => {
     if (selectedCustomers.length === 1) {
-      navigate(`/customers/edit/${selectedCustomers[0]._id}`) // Fixed!
+      navigate(`/customers/edit/${selectedCustomers[0]._id}`) 
     }
   }
 
   const handleBulkAddPoints = () => {
     const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Add Points:', selected)
-    // TODO: Open bulk add points modal
   }
 
   const handleBulkBlacklist = () => {
     const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Blacklist:', selected)
-    // TODO: Handle bulk blacklist
   }
 
   const handleBulkDelete = () => {
     const selected = customers.filter(c => selectedRows.has(c._id))
     console.log('Bulk Delete:', selected)
-    // TODO: Show confirmation and bulk delete
   }
 
   const handleClearSelection = () => {
@@ -149,7 +130,6 @@ export const CustomerTable: React.FC = () => {
   }
   const handleFiltersChange = (newFilters: CustomerFilterValues) => {
     setFilters(newFilters)
-    // TODO: Call API with filters or filter MOCK_CUSTOMERS locally
     console.log('Filters changed:', newFilters)
   }
   const handleClearAllFilters = () => {
@@ -164,33 +144,24 @@ export const CustomerTable: React.FC = () => {
     })
   }
 
-  // ROW ACTIONS
 
   const rowActions = useMemo(
     () =>
-      getCustomerRowActions(
-        handleViewDetails,
-        handleEdit,
-        handleAddPoints,
-        handleBlacklist,
-        handleDelete
-      ),
-    [
+          getCustomerRowActions(
       handleViewDetails,
-      handleEdit,
-      handleAddPoints,
-      handleBlacklist,
-      handleDelete,
-    ]
-  )
+      can('canUpdateCustomer') ? handleEdit : () => {},
+      can('canAddLoyaltyPoints') ? handleAddPoints : () => {},
+      can('canBlacklistCustomer') ? handleBlacklist : () => {},
+      can('canDeleteCustomers') ? handleDelete : () => {}
+    ),
+  [handleViewDetails, handleEdit, handleAddPoints, handleBlacklist, handleDelete, can]
+)
 
-  // SELECTED CUSTOMERS
 
   const selectedCustomers = useMemo(() => {
     return customers.filter(customer => selectedRows.has(customer._id))
   }, [customers, selectedRows])
 
-  // RENDER
 
   return (
     <div className="w-full space-y-4">
@@ -199,8 +170,7 @@ export const CustomerTable: React.FC = () => {
         onFiltersChange={handleFiltersChange}
         onClearAll={handleClearAllFilters}
       />
-      {/* Bulk Actions Bar - Shows when rows are selected */}
-      {selectedRows.size > 0 && (
+      {selectedRows.size > 0 && can('canManageCustomers') && (
         <BulkActionsBar
           selectedCount={selectedRows.size}
           selectedCustomers={selectedCustomers}
@@ -213,15 +183,12 @@ export const CustomerTable: React.FC = () => {
         />
       )}
 
-      {/* DataTable */}
       <DataTable
         data={customers}
         columns={customerTableColumns}
-        // Sorting Configuration
         sorting={{
           enabled: true,
         }}
-        // Pagination Configuration
         pagination={{
           enabled: true,
           pageSize: 10,
@@ -230,7 +197,6 @@ export const CustomerTable: React.FC = () => {
           showPageInfo: true,
           showFirstLastButtons: true,
         }}
-        // Selection Configuration
         selection={{
           enabled: true,
           selectedRows,
@@ -238,17 +204,14 @@ export const CustomerTable: React.FC = () => {
           getRowId: row => row._id,
           selectAllEnabled: true,
         }}
-        // Row Actions Configuration
         rowActions={{
           enabled: true,
           actions: rowActions,
           position: 'end',
         }}
-        // Empty State Configuration
         emptyState={{
           message: isLoading ? t('table.loading') : t('table.noCustomers'),
         }}
-        // Style Configuration
         style={{
           variant: 'default',
           size: 'md',
@@ -260,15 +223,10 @@ export const CustomerTable: React.FC = () => {
           shadow: true,
           fullWidth: true,
         }}
-        // Row Click Handler
         onRowClick={customer => {
           console.log('Row clicked:', customer)
-          // Optional: Open details on row click
-          // handleViewDetails(customer)
         }}
-        // Get Row ID
         getRowId={row => row._id}
-        // Test ID
         testId="customer-table"
         ariaLabel={t('table.ariaLabel')}
       />

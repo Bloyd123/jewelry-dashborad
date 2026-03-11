@@ -7,6 +7,7 @@ import {
   DocumentsTab,
   ActivityLogsTab,
 } from '@/components/customer/CustomerPage/tabs'
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '@/hooks/auth'
@@ -17,8 +18,7 @@ export default function CustomerDetailPage() {
   const { customerId } = useParams()
   const { currentShopId } = useAuth()
   const { customer, isLoading } = useCustomerById(currentShopId!, customerId!)
-  console.log('CUSTOMERSHOPID', currentShopId)
-  console.log('CUSTOMERID', customerId)
+    const { can } = usePermissionCheck()
 
   if (isLoading || !customer) {
     return <div>Loading...</div> // later: skeleton
@@ -33,12 +33,12 @@ export default function CustomerDetailPage() {
         onSettingsClick={() => console.log('Settings clicked')}
       />
 
-      {activeTab === 'personal' && <PersonalInfoTab customer={customer} />}
-      {activeTab === 'financial' && <FinancialTab customer={customer} />}
-      {activeTab === 'orders' && <OrdersTab />}
-      {activeTab === 'loyalty' && <LoyaltyTab />}
-      {activeTab === 'documents' && <DocumentsTab />}
-      {activeTab === 'activity' && <ActivityLogsTab />}
+{activeTab === 'personal' && <PersonalInfoTab customer={customer} />}
+{activeTab === 'financial' && can('canViewCustomerFinancials') && <FinancialTab customer={customer} />}
+{activeTab === 'orders' && can('canViewCustomerHistory') && <OrdersTab  customer={customer}/>}
+{activeTab === 'loyalty' && <LoyaltyTab />}
+{activeTab === 'documents' && <DocumentsTab />}
+{activeTab === 'activity' && can('canViewCustomerHistory') && <ActivityLogsTab />}
     </div>
   )
 }

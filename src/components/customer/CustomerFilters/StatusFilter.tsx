@@ -1,5 +1,4 @@
 // FILE: src/features/customer/components/CustomerFilters/StatusFilter.tsx
-// Active/Inactive Status Filter
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'

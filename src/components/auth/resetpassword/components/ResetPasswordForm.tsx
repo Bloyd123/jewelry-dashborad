@@ -21,7 +21,6 @@ const ResetPasswordForm: React.FC = () => {
   const { handleError } = useErrorHandler()
   const { t } = useTranslation()
 
-  // Form State
 
   const queryToken = searchParams.get('token')
   useEffect(() => {
@@ -46,24 +45,20 @@ const ResetPasswordForm: React.FC = () => {
     'weak' | 'medium' | 'strong'
   >('weak')
 
-  // Update token if URL parameter changes
   useEffect(() => {
     if (queryToken) {
       setFormData(prev => ({ ...prev, queryToken }))
     }
   }, [queryToken])
 
-  // Password strength calculator
   const calculatePasswordStrength = useCallback((password: string) => {
     if (password.length === 0) return 'weak'
 
     let strength = 0
 
-    // Length check
     if (password.length >= 8) strength++
     if (password.length >= 12) strength++
 
-    // Character variety checks
     if (/[a-z]/.test(password)) strength++
     if (/[A-Z]/.test(password)) strength++
     if (/\d/.test(password)) strength++
@@ -80,7 +75,6 @@ const ResetPasswordForm: React.FC = () => {
     return result.isValid
   }, [formData])
 
-  // Handle Input Change
   const handleInputChange = useCallback(
     (field: keyof ResetPasswordFormState) =>
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,12 +85,10 @@ const ResetPasswordForm: React.FC = () => {
           [field]: value,
         }))
 
-        // Update password strength for new password
         if (field === 'newPassword') {
           setPasswordStrength(calculatePasswordStrength(value))
         }
 
-        // Clear error for this field
         if (errors[field]) {
           setErrors(prev => {
             const newErrors = { ...prev }
@@ -108,7 +100,6 @@ const ResetPasswordForm: React.FC = () => {
     [errors, calculatePasswordStrength]
   )
 
-  // Handle Submit
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
@@ -142,7 +133,7 @@ const ResetPasswordForm: React.FC = () => {
           navigate(ROUTES.login)
         }, 2000)
       } catch (error: any) {
-        handleError(error, setErrors) //  Single line!
+        handleError(error, setErrors) 
       } finally {
         setLoading(false)
       }
@@ -150,7 +141,6 @@ const ResetPasswordForm: React.FC = () => {
     [formData, validateForm, resetPassword, showSuccess, showError, navigate]
   )
 
-  // Get password strength color and label
   const getStrengthColor = () => {
     switch (passwordStrength) {
       case 'weak':
@@ -192,7 +182,6 @@ const ResetPasswordForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* New Password Field */}
       <div>
         <label
           htmlFor="newPassword"
@@ -233,7 +222,6 @@ const ResetPasswordForm: React.FC = () => {
           </button>
         </div>
 
-        {/* Password Strength Indicator */}
         {formData.newPassword && (
           <div className="mt-2">
             <div className="mb-1 flex items-center justify-between">
@@ -257,7 +245,6 @@ const ResetPasswordForm: React.FC = () => {
         )}
       </div>
 
-      {/* Confirm Password Field */}
       <div>
         <label
           htmlFor="confirmPassword"
@@ -305,7 +292,6 @@ const ResetPasswordForm: React.FC = () => {
         )}
       </div>
 
-      {/* Reset Password Button */}
       <button
         type="submit"
         disabled={loading}

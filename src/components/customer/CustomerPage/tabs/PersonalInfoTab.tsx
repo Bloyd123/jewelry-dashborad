@@ -1,6 +1,4 @@
 // FILE: src/components/customer/CustomerPage/tabs/PersonalInfoTab.tsx
-// Personal Information Tab with Accordions
-
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -23,8 +21,6 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import type { Customer } from '@/types/customer.types'
-
-// COPY BUTTON COMPONENT
 
 const CopyButton = ({ text }: { text: string }) => {
   const [copied, setCopied] = useState(false)
@@ -51,25 +47,20 @@ const CopyButton = ({ text }: { text: string }) => {
   )
 }
 
-// COMPONENT PROPS
-
 interface PersonalInfoTabProps {
   customer: Customer
 }
 
-// PERSONAL INFO TAB COMPONENT
 
 export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
   customer,
 }) => {
   const { t } = useTranslation()
 
-  // BASIC INFORMATION SECTION
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* First Name */}
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs text-text-secondary">
             {t('customerProfile.firstName')}
@@ -79,7 +70,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </p>
         </div>
 
-        {/* Last Name */}
         {customer.lastName && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -91,7 +81,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Gender */}
         {customer.gender && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -103,7 +92,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Date of Birth */}
         {customer.dateOfBirth && (
           <div className="flex flex-col gap-1.5">
             <Label className="flex items-center gap-2 text-xs text-text-secondary">
@@ -116,7 +104,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Anniversary Date */}
         {customer.anniversaryDate && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -128,7 +115,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Customer Type */}
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs text-text-secondary">
             {t('customerProfile.customerType')}
@@ -138,7 +124,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </Badge>
         </div>
 
-        {/* Customer Category */}
         {customer.customerCategory && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -150,7 +135,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Source */}
         {customer.source && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -165,12 +149,10 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // CONTACT INFORMATION SECTION
 
   const ContactInfoSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Primary Phone */}
         <div className="flex flex-col gap-1.5">
           <Label className="flex items-center gap-2 text-xs text-text-secondary">
             <Phone className="h-3 w-3" />
@@ -184,7 +166,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         </div>
 
-        {/* Alternate Phone */}
         {customer.alternatePhone && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -199,7 +180,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* WhatsApp */}
         {customer.whatsappNumber && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -214,7 +194,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Email */}
         {customer.email && (
           <div className="flex flex-col gap-1.5">
             <Label className="flex items-center gap-2 text-xs text-text-secondary">
@@ -233,12 +212,9 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // ADDRESS SECTION
-
   const AddressSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Street */}
         {customer.address?.street && (
           <div className="flex flex-col gap-1.5 md:col-span-2">
             <Label className="text-xs text-text-secondary">
@@ -249,8 +225,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
             </p>
           </div>
         )}
-
-        {/* City */}
         {customer.address?.city && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -262,7 +236,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* State */}
         {customer.address?.state && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -274,7 +247,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Pincode */}
         {customer.address?.pincode && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -294,12 +266,9 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // KYC DOCUMENTS SECTION
-
   const KYCDocumentsSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Aadhar Number */}
         {customer.aadharNumber && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -314,7 +283,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* PAN Number */}
         {customer.panNumber && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -329,7 +297,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* GST Number */}
         {customer.gstNumber && (
           <div className="flex flex-col gap-1.5 md:col-span-2">
             <Label className="text-xs text-text-secondary">
@@ -347,12 +314,10 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // PREFERENCES SECTION
 
   const PreferencesSection = () => (
     <div className="space-y-4 p-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Preferred Metal */}
         {customer.preferences?.preferredMetal && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -364,7 +329,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {/* Communication Preference */}
         {customer.preferences?.communicationPreference && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
@@ -378,8 +342,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
       </div>
     </div>
   )
-
-  // NOTES SECTION
 
   const NotesSection = () => (
     <div className="space-y-4 p-4">
@@ -409,8 +371,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
     </div>
   )
 
-  // RENDER MAIN ACCORDION
-
   return (
     <div className="mx-auto w-full max-w-4xl space-y-4 p-4">
       <Accordion
@@ -419,7 +379,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
         variant="separated"
         size="md"
       >
-        {/* Basic Information */}
         <AccordionItem value="basic">
           <AccordionTrigger icon={<User className="h-5 w-5" />}>
             {t('customerProfile.basicInformation')}
@@ -429,7 +388,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        {/* Contact Information */}
         <AccordionItem value="contact">
           <AccordionTrigger icon={<Phone className="h-5 w-5" />}>
             {t('customerProfile.contactInformation')}
@@ -439,7 +397,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        {/* Address */}
         <AccordionItem value="address">
           <AccordionTrigger icon={<MapPin className="h-5 w-5" />}>
             {t('customerProfile.address')}
@@ -449,7 +406,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        {/* KYC Documents */}
         <AccordionItem value="kyc">
           <AccordionTrigger icon={<FileText className="h-5 w-5" />}>
             {t('customerProfile.kycDocuments')}
@@ -459,7 +415,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        {/* Preferences */}
         <AccordionItem value="preferences">
           <AccordionTrigger icon={<User className="h-5 w-5" />}>
             {t('customerProfile.preferences')}
@@ -469,7 +424,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </AccordionContent>
         </AccordionItem>
 
-        {/* Notes & Tags */}
         {(customer.notes || (customer.tags && customer.tags.length > 0)) && (
           <AccordionItem value="notes">
             <AccordionTrigger icon={<FileText className="h-5 w-5" />}>

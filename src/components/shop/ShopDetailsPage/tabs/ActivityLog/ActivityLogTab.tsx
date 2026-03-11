@@ -16,8 +16,11 @@ import { AlertCircle } from 'lucide-react'
 //
 // MAIN COMPONENT
 //
+interface ActivityLogTabProps {
+  shopId?: string
+}
 
-const ActivityLogTab: React.FC = () => {
+const ActivityLogTab: React.FC<ActivityLogTabProps> = ({ shopId }) => {
   const { t } = useTranslation()
 
   // STATE

@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/sections/NotesTagsSection.tsx
-// Notes & Tags Section
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -68,7 +67,6 @@ export const NotesTagsSection = ({
           {t('customer.tags')}
         </label>
 
-        {/* Tag Input */}
         <div className="mb-3 flex gap-2">
           <Input
             value={tagInput}
@@ -90,7 +88,6 @@ export const NotesTagsSection = ({
           </Button>
         </div>
 
-        {/* Tag List */}
         {data.tags && data.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {data.tags.map((tag, index) => (

@@ -20,7 +20,7 @@ import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Shop } from '@/types/shop.types'
-import { dummyShops } from '@/pages/shops/data'
+import { useShopById } from '@/hooks/shop'
 
 //
 // COMPONENT PROPS
@@ -49,11 +49,9 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
+const { shop, isLoading } = useShopById(shopId ?? '')
 
-  // Get shop data from dummy data
-  const shop: Shop = shopId
-    ? dummyShops.find(s => s._id === shopId) || dummyShops[0]
-    : dummyShops[0]
+if (isLoading || !shop) return null
 
   // Handle tab change
   const handleTabChange = (tab: string) => {

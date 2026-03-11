@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/CustomerForm.desktop.tsx
-// Desktop Layout for CustomerForm
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -23,9 +22,9 @@ import { useNotification } from '@/hooks/useNotification'
 
 export default function CustomerFormDesktop({
   initialData = {},
-  shopId, // ← ADD THIS PROP
-  customerId, // ← ADD THIS PROP (for edit mode)
-  onSuccess, // ← CHANGE: onSubmit → onSuccess
+  shopId, 
+  customerId, 
+  onSuccess, 
   onCancel,
   mode = 'create',
 }: CustomerFormProps) {
@@ -45,7 +44,6 @@ export default function CustomerFormDesktop({
   ): Partial<CreateCustomerInput> => {
     const cleaned = { ...data }
 
-    // Convert empty strings to undefined for optional fields
     if (cleaned.referredBy === '') cleaned.referredBy = undefined
     if (cleaned.email === '') cleaned.email = undefined
     if (cleaned.alternatePhone === '') cleaned.alternatePhone = undefined
@@ -57,14 +55,12 @@ export default function CustomerFormDesktop({
     if (cleaned.gstNumber === '') cleaned.gstNumber = undefined
     if (cleaned.notes === '') cleaned.notes = undefined
 
-    // Clean address
     if (cleaned.address) {
       if (cleaned.address.street === '') cleaned.address.street = undefined
       if (cleaned.address.city === '') cleaned.address.city = undefined
       if (cleaned.address.state === '') cleaned.address.state = undefined
       if (cleaned.address.pincode === '') cleaned.address.pincode = undefined
 
-      // Remove address if all fields are empty
       if (
         !cleaned.address.street &&
         !cleaned.address.city &&
@@ -81,7 +77,6 @@ export default function CustomerFormDesktop({
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -98,7 +93,6 @@ export default function CustomerFormDesktop({
       createCustomerSchema.shape[
         name as keyof typeof createCustomerSchema.shape
       ]?.parse(formData[name as keyof CreateCustomerInput])
-      // Clear error if valid
       if (errors[name]) {
         setErrors(prev => {
           const newErrors = { ...prev }
@@ -107,14 +101,12 @@ export default function CustomerFormDesktop({
         })
       }
     } catch (error: any) {
-      // Set error if invalid
       if (error.errors?.[0]?.message) {
         setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
       }
     }
   }
   const handleSubmit = async () => {
-    // 1. Validate entire form with Zod
     try {
       createCustomerSchema.parse(formData)
     } catch (error: any) {
@@ -126,7 +118,6 @@ export default function CustomerFormDesktop({
       })
       setErrors(validationErrors)
 
-      // ✅ NEW: Show error notification with first error
       const firstError = Object.values(validationErrors)[0]
       if (firstError) {
         showError(String(firstError), t('customer.errors.validationFailed'))
@@ -140,19 +131,14 @@ export default function CustomerFormDesktop({
       return
     }
 
-    // ✅ NEW: Show confirmation dialog
     setShowConfirmDialog(true)
   }
 
-  // ✅ NEW: Actual submit after confirmation
   const handleConfirmedSubmit = async () => {
-    // Clean the data before sending
     const validatedData = cleanFormData(formData) as CreateCustomerInput
 
-    // ✅ MODIFIED: Remove duplicate error notification
     const setFormErrors = (apiErrors: Record<string, string>) => {
       setErrors(apiErrors)
-      // DON'T show notification here - it's handled in catch block
     }
 
     try {
@@ -174,7 +160,6 @@ export default function CustomerFormDesktop({
         setShowConfirmDialog(false)
         onSuccess?.()
       } else {
-        // ✅ Only show error if result has error message
         if (result.error) {
           showError(result.error, t('customer.errors.errorTitle'))
         }
@@ -182,7 +167,6 @@ export default function CustomerFormDesktop({
     } catch (error: any) {
       console.error(' [CustomerForm] Save error:', error)
 
-      // ✅ Show error only once
       showError(
         error?.message || t('customer.errors.unexpectedError'),
         t('customer.errors.errorTitle')
@@ -192,7 +176,6 @@ export default function CustomerFormDesktop({
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
-      {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-text-primary">
           {mode === 'create'
@@ -206,11 +189,8 @@ export default function CustomerFormDesktop({
         </p>
       </div>
 
-      {/* Form Grid - 2 Columns */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Left Column */}
         <div className="space-y-6">
-          {/* Basic Info */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -246,7 +226,6 @@ export default function CustomerFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Address */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -265,9 +244,7 @@ export default function CustomerFormDesktop({
           </Card>
         </div>
 
-        {/* Right Column */}
         <div className="space-y-6">
-          {/* Customer Type */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -285,7 +262,6 @@ export default function CustomerFormDesktop({
             </CardContent>
           </Card>
 
-          {/* KYC Details */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -321,7 +297,6 @@ export default function CustomerFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Notes & Tags */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -341,7 +316,6 @@ export default function CustomerFormDesktop({
         </div>
       </div>
 
-      {/* Form Actions - Sticky Bottom */}
       <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
         <div className="flex justify-end gap-3">
           <Button
@@ -373,7 +347,6 @@ export default function CustomerFormDesktop({
               </>
             )}
           </Button>
-          {/* ✅ NEW: Confirmation Dialog */}
           <ConfirmDialog
             open={showConfirmDialog}
             onOpenChange={setShowConfirmDialog}

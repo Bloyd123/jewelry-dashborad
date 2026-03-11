@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { shopTableColumns } from './ShopTableColumns'
 import { getShopRowActions, BulkActionsBar } from './ShopTableActions'
-import { dummyShops } from '@/pages/shops/data'
+import { useShopsList, useShopActions } from '@/hooks/shop'
+import { useAuthState } from '@/hooks/auth'
 import type { Shop } from '@/types/shop.types'
 
 //
@@ -20,97 +21,110 @@ export const ShopTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // For demo purposes - in real app, get from Redux/Context
-  const userRole = 'shop_admin' // 'super_admin' | 'org_admin' | 'shop_admin' | 'manager' | 'staff'
+  // STATE — order matters, page pehle
+  const [page, setPage] = useState(1)
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
 
-  // STATE
+  // AUTH
+  const { userRole } = useAuthState()
 
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
-    new Set()
-  )
+  // API HOOKS
+  const { shops, isLoading } = useShopsList({ page, limit: 10 })
+  const {
+    toggleShopStatus,
+    deleteShop,
+    bulkActivate,
+    bulkDeactivate,
+    bulkDelete,
+  } = useShopActions()
 
-  // HANDLERS
+  // SELECTED SHOPS — shops dependency sahi
+  const selectedShops = useMemo(() => {
+    return shops.filter(shop => selectedRows.has(shop._id))
+  }, [selectedRows, shops])
+
+  // --------------------------------------------------------
+  // ROW HANDLERS
+  // --------------------------------------------------------
 
   const handleViewDetails = (shop: Shop) => {
-    console.log('View Details:', shop)
     navigate(`/shops/${shop._id}`)
   }
 
   const handleEdit = (shop: Shop) => {
-    console.log('Edit Shop:', shop)
     navigate(`/shops/edit/${shop._id}`)
   }
 
   const handleSettings = (shop: Shop) => {
-    console.log('Shop Settings:', shop)
     navigate(`/shops/${shop._id}/settings`)
   }
 
   const handleUpdateRates = (shop: Shop) => {
-    console.log('Update Metal Rates:', shop)
     // TODO: Open metal rates modal
+    console.log('Update Metal Rates:', shop)
   }
 
   const handleStatistics = (shop: Shop) => {
-    console.log('View Statistics:', shop)
     navigate(`/shops/${shop._id}/statistics`)
   }
 
-  const handleToggleStatus = (shop: Shop) => {
-    console.log('Toggle Status:', shop)
-    // TODO: API call to toggle status
+  const handleToggleStatus = async (shop: Shop) => {
+    await toggleShopStatus(shop._id, !shop.isActive)
   }
 
-  const handleDelete = (shop: Shop) => {
-    console.log('Delete Shop:', shop)
-    // TODO: Show confirmation and delete
+  const handleDelete = async (shop: Shop) => {
+    await deleteShop(shop._id)
   }
 
-  // Bulk Actions Handlers
+  // --------------------------------------------------------
+  // BULK ACTION HANDLERS
+  // --------------------------------------------------------
+
   const handleBulkViewDetails = () => {
     const selected = selectedShops[0]
-    if (selected) {
-      handleViewDetails(selected)
-    }
+    if (selected) handleViewDetails(selected)
   }
 
   const handleBulkEdit = () => {
     const selected = selectedShops[0]
-    if (selected) {
-      handleEdit(selected)
-    }
+    if (selected) handleEdit(selected)
   }
 
   const handleBulkSettings = () => {
+    // TODO: bulk settings
     console.log('Bulk Settings:', selectedShops)
-    // TODO: Handle bulk settings update
   }
 
   const handleBulkUpdateRates = () => {
+    // TODO: bulk metal rates modal
     console.log('Bulk Update Rates:', selectedShops)
-    // TODO: Open bulk metal rates modal
   }
 
-  const handleBulkActivate = () => {
-    console.log('Bulk Activate:', selectedShops)
-    // TODO: API call to activate selected shops
+  const handleBulkActivate = async () => {
+    const ids = selectedShops.map(s => s._id)
+    await bulkActivate(ids)
+    setSelectedRows(new Set())
   }
 
-  const handleBulkDeactivate = () => {
-    console.log('Bulk Deactivate:', selectedShops)
-    // TODO: API call to deactivate selected shops
+  const handleBulkDeactivate = async () => {
+    const ids = selectedShops.map(s => s._id)
+    await bulkDeactivate(ids)
+    setSelectedRows(new Set())
   }
 
-  const handleBulkDelete = () => {
-    console.log('Bulk Delete:', selectedShops)
-    // TODO: Show confirmation and bulk delete
+  const handleBulkDelete = async () => {
+    const ids = selectedShops.map(s => s._id)
+    await bulkDelete(ids)
+    setSelectedRows(new Set())
   }
 
   const handleClearSelection = () => {
     setSelectedRows(new Set())
   }
 
+  // --------------------------------------------------------
   // ROW ACTIONS
+  // --------------------------------------------------------
 
   const rowActions = useMemo(
     () =>
@@ -122,22 +136,18 @@ export const ShopTable: React.FC = () => {
         handleStatistics,
         handleToggleStatus,
         handleDelete,
-        userRole
+        userRole ?? 'staff'
       ),
     [userRole]
   )
 
-  // SELECTED SHOPS
-
-  const selectedShops = useMemo(() => {
-    return dummyShops.filter(shop => selectedRows.has(shop._id))
-  }, [selectedRows])
-
+  // --------------------------------------------------------
   // RENDER
+  // --------------------------------------------------------
 
   return (
     <div className="w-full space-y-4">
-      {/* Bulk Actions Bar - Shows when rows are selected */}
+      {/* Bulk Actions Bar */}
       {selectedRows.size > 0 && (
         <BulkActionsBar
           selectedCount={selectedRows.size}
@@ -150,19 +160,17 @@ export const ShopTable: React.FC = () => {
           onDeactivate={handleBulkDeactivate}
           onDelete={handleBulkDelete}
           onClearSelection={handleClearSelection}
-          userRole={userRole}
+          userRole={userRole ?? 'staff'}
         />
       )}
 
       {/* DataTable */}
       <DataTable
-        data={dummyShops}
+        data={shops}
         columns={shopTableColumns}
-        // Sorting Configuration
         sorting={{
           enabled: true,
         }}
-        // Pagination Configuration
         pagination={{
           enabled: true,
           pageSize: 10,
@@ -171,7 +179,6 @@ export const ShopTable: React.FC = () => {
           showPageInfo: true,
           showFirstLastButtons: true,
         }}
-        // Selection Configuration
         selection={{
           enabled: true,
           selectedRows,
@@ -179,22 +186,18 @@ export const ShopTable: React.FC = () => {
           getRowId: row => row._id,
           selectAllEnabled: true,
         }}
-        // Row Actions Configuration
         rowActions={{
           enabled: true,
           actions: rowActions,
           position: 'end',
         }}
-        // Loading Configuration
         loading={{
-          isLoading: false, // Set to true when fetching data
+          isLoading,
           loadingRows: 10,
         }}
-        // Empty State Configuration
         emptyState={{
           message: t('table.noShops'),
         }}
-        // Style Configuration
         style={{
           variant: 'default',
           size: 'md',
@@ -206,15 +209,10 @@ export const ShopTable: React.FC = () => {
           shadow: true,
           fullWidth: true,
         }}
-        // Row Click Handler
         onRowClick={shop => {
           console.log('Row clicked:', shop)
-          // Optional: Open details on row click
-          // handleViewDetails(shop)
         }}
-        // Get Row ID
         getRowId={row => row._id}
-        // Test ID
         testId="shop-table"
         ariaLabel={t('table.ariaLabel')}
       />

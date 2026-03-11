@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerPage/DesktopCustomerDetailHeader.tsx
-// Desktop Customer Detail Header Component
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,7 +20,7 @@ import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import type { Customer } from '@/types/customer.types'
-// COMPONENT PROPS
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
 interface DesktopCustomerDetailHeaderProps {
   customer: Customer
@@ -30,8 +29,6 @@ interface DesktopCustomerDetailHeaderProps {
   onBackClick?: () => void
   onSettingsClick?: () => void
 }
-
-// DESKTOP CUSTOMER DETAIL HEADER COMPONENT
 
 export const DesktopCustomerDetailHeader: React.FC<
   DesktopCustomerDetailHeaderProps
@@ -44,8 +41,7 @@ export const DesktopCustomerDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-
-  // Handle tab change
+const { can } = usePermissionCheck()
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)
     if (onTabChange) {
@@ -53,7 +49,6 @@ export const DesktopCustomerDetailHeader: React.FC<
     }
   }
 
-  // Breadcrumb items
   const breadcrumbItems = [
     {
       label: t('customer.title'),
@@ -64,49 +59,21 @@ export const DesktopCustomerDetailHeader: React.FC<
     },
   ]
 
-  // Tab items
   const tabItems = [
-    {
-      value: 'personal',
-      label: t('customerDetail.tabs.personal'),
-      icon: <User className="h-4 w-4" />,
-    },
-    {
-      value: 'financial',
-      label: t('customerDetail.tabs.financial'),
-      icon: <Wallet className="h-4 w-4" />,
-    },
-    {
-      value: 'orders',
-      label: t('customerDetail.tabs.orders'),
-      icon: <TrendingUp className="h-4 w-4" />,
-    },
-    {
-      value: 'loyalty',
-      label: t('customerDetail.tabs.loyalty'),
-      icon: <Award className="h-4 w-4" />,
-    },
-    {
-      value: 'documents',
-      label: t('customerDetail.tabs.documents'),
-      icon: <FileText className="h-4 w-4" />,
-    },
-    {
-      value: 'activity',
-      label: t('customerDetail.tabs.activity'),
-      icon: <Activity className="h-4 w-4" />,
-    },
-  ]
+  { value: 'personal', label: t('customerDetail.tabs.personal'), icon: <User className="h-4 w-4" /> },
+  ...(can('canViewCustomerFinancials') ? [{ value: 'financial', label: t('customerDetail.tabs.financial'), icon: <Wallet className="h-4 w-4" /> }] : []),
+  ...(can('canViewCustomerHistory') ? [{ value: 'orders', label: t('customerDetail.tabs.orders'), icon: <TrendingUp className="h-4 w-4" /> }] : []),
+  { value: 'loyalty', label: t('customerDetail.tabs.loyalty'), icon: <Award className="h-4 w-4" /> },
+  { value: 'documents', label: t('customerDetail.tabs.documents'), icon: <FileText className="h-4 w-4" /> },
+  ...(can('canViewCustomerHistory') ? [{ value: 'activity', label: t('customerDetail.tabs.activity'), icon: <Activity className="h-4 w-4" /> }] : []),
+]
 
-  // Get customer full name
   const fullName = `${customer.firstName} ${customer.lastName || ''}`.trim()
 
   return (
     <div className="space-y-4">
-      {/* Header Section */}
       <div className="border-b border-border-secondary bg-bg-secondary">
         <div className="space-y-4 px-6 py-4">
-          {/* Back Button and Breadcrumb */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Button
@@ -123,7 +90,7 @@ export const DesktopCustomerDetailHeader: React.FC<
 
               <Breadcrumb items={breadcrumbItems} showHome={true} />
             </div>
-
+{can('canUpdateCustomer') && (
             <Button
               variant="outline"
               size="sm"
@@ -133,21 +100,19 @@ export const DesktopCustomerDetailHeader: React.FC<
               <Settings className="h-4 w-4" />
               {t('customer.common.settings')}
             </Button>
+            )}
           </div>
 
           <Separator />
 
-          {/* Customer Details */}
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-start gap-4">
-              {/* Customer Avatar */}
               <Avatar
                 name={fullName}
                 size="xl"
                 status={customer.isActive ? 'online' : 'offline'}
               />
 
-              {/* Customer Info */}
               <div className="space-y-3">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
@@ -157,7 +122,6 @@ export const DesktopCustomerDetailHeader: React.FC<
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {/* Active Status */}
                     <Badge
                       variant={customer.isActive ? 'active' : 'inactive'}
                       size="sm"
@@ -167,14 +131,12 @@ export const DesktopCustomerDetailHeader: React.FC<
                         : t('customer.common.inactive')}
                     </Badge>
 
-                    {/* Customer Type */}
                     {customer.customerType && (
                       <Badge variant="default" size="sm">
                         {t(`customer.customerType.${customer.customerType}`)}
                       </Badge>
                     )}
 
-                    {/* Category */}
                     {customer.customerCategory && (
                       <Badge variant="outline" size="sm">
                         {t(
@@ -184,7 +146,6 @@ export const DesktopCustomerDetailHeader: React.FC<
                     )}
                   </div>
 
-                  {/* Contact Info */}
                   <div className="flex flex-wrap items-center gap-4 text-sm text-text-secondary">
                     <div className="flex items-center gap-1">
                       <span className="text-text-tertiary">
@@ -215,7 +176,6 @@ export const DesktopCustomerDetailHeader: React.FC<
               </div>
             </div>
 
-            {/* Quick Stats Cards */}
             <div className="flex gap-3">
               <div className="rounded-lg border border-border-primary bg-bg-primary p-3 text-center">
                 <p className="text-xs text-text-tertiary">
@@ -247,7 +207,6 @@ export const DesktopCustomerDetailHeader: React.FC<
           </div>
         </div>
 
-        {/* Tab Navigation */}
         <div className="px-6">
           <Tabs
             tabs={tabItems}

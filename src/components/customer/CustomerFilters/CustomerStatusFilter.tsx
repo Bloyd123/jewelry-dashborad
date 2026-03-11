@@ -1,12 +1,10 @@
 // FILE: src/components/customer/CustomerFilters/CustomerStatusFilter.tsx
-// Customer Status Filter - Uses Reusable StatusFilter
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StatusFilter } from '@/components/ui/filters/StatusFilter'
 import type { StatusOption } from '@/components/ui/filters/StatusFilter'
 
-// TYPES
 
 interface CustomerStatusFilterProps {
   value?: string
@@ -15,7 +13,6 @@ interface CustomerStatusFilterProps {
   className?: string
 }
 
-// CUSTOMER STATUS FILTER COMPONENT
 
 export const CustomerStatusFilter = React.forwardRef<
   HTMLButtonElement,

@@ -1,5 +1,4 @@
 // FILE: src/components/customers/analytics/CustomerAnalytics.tsx
-// Customer Analytics Dashboard Component
 
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -42,7 +41,6 @@ import {
   mockOutstandingPayments,
 } from './customerAnalytics.mock'
 
-// TYPES & INTERFACES
 
 export interface CustomerStatistics {
   totalCustomers: number
@@ -51,7 +49,6 @@ export interface CustomerStatistics {
   totalOutstanding: number
   totalLoyaltyPoints: number
   avgLifetimeValue: number
-  // Growth & Retention data
   growthData?: Array<{
     month: string
     customers: number
@@ -61,7 +58,6 @@ export interface CustomerStatistics {
     month: string
     rate: number
   }>
-  // Top customers data
   topCustomers?: Array<{
     _id: string
     customerCode: string
@@ -73,7 +69,6 @@ export interface CustomerStatistics {
     membershipTier: string
     lastOrderDate?: string
   }>
-  // Segmentation data
   segmentationData?: {
     byTier?: Array<{
       name: string
@@ -88,20 +83,17 @@ export interface CustomerStatistics {
       value: number
     }>
   }
-  // Geography data
   geographyData?: Array<{
     city: string
     customers: number
     revenue: number
   }>
-  // Purchase pattern data
   purchasePatternData?: Array<{
     month: string
     orders: number
     revenue: number
     averageOrderValue: number
   }>
-  // Recent events
   recentEvents?: Array<{
     _id: string
     customerCode: string
@@ -110,7 +102,6 @@ export interface CustomerStatistics {
     date: string
     daysUntil: number
   }>
-  // At-risk customers
   atRiskCustomers?: Array<{
     _id: string
     customerCode: string
@@ -121,7 +112,6 @@ export interface CustomerStatistics {
     totalPurchases: number
     riskLevel: 'high' | 'medium' | 'low'
   }>
-  // Outstanding payments
   outstandingPayments?: Array<{
     _id: string
     customerCode: string
@@ -142,8 +132,6 @@ export interface CustomerAnalyticsProps {
   className?: string
 }
 
-// HELPER FUNCTIONS
-
 const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -156,16 +144,6 @@ const formatNumber = (value: number): string => {
   return new Intl.NumberFormat('en-IN').format(value)
 }
 
-// const calculateTrend = (current: number, previous: number = 0) => {
-//   if (previous === 0) return { value: 0, direction: 'neutral' as const }
-//   const change = ((current - previous) / previous) * 100
-//   return {
-//     value: Math.abs(Math.round(change)),
-//     direction: change > 0 ? ('up' as const) : change < 0 ? ('down' as const) : ('neutral' as const),
-//   }
-// }
-
-// CUSTOMERANALYTICS COMPONENT
 
 export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
   shopId,
@@ -197,7 +175,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
     )
   }
 
-  // No Data State
   if (!statistics) {
     return (
       <div className={cn('space-y-6', className)}>
@@ -216,7 +193,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
     )
   }
 
-  // Calculate derived metrics
   const activePercentage =
     statistics.totalCustomers > 0
       ? Math.round(
@@ -231,7 +207,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
 
   return (
     <div className={cn('space-y-6', className)}>
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold text-text-primary">
@@ -251,9 +226,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         )}
       </div>
 
-      {/* Stats Grid */}
       <StatCardGrid columns={4} gap="md">
-        {/* Total Customers */}
         <StatCard
           title={t('customer.analytics.totalCustomers')}
           value={formatNumber(statistics.totalCustomers)}
@@ -269,7 +242,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.totalCustomersDesc')}
         />
 
-        {/* Active Customers */}
         <StatCard
           title={t('customer.analytics.activeCustomers')}
           value={formatNumber(statistics.activeCustomers)}
@@ -286,7 +258,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.activeCustomersDesc')}
         />
 
-        {/* VIP Customers */}
         <StatCard
           title={t('customer.analytics.vipCustomers')}
           value={formatNumber(statistics.vipCustomers)}
@@ -303,7 +274,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.vipCustomersDesc')}
         />
 
-        {/* Average Lifetime Value */}
         <StatCard
           title={t('customer.analytics.avgLifetimeValue')}
           value={formatCurrency(statistics.avgLifetimeValue)}
@@ -319,7 +289,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.avgLifetimeValueDesc')}
         />
 
-        {/* Total Outstanding */}
         <StatCard
           title={t('customer.analytics.totalOutstanding')}
           value={formatCurrency(statistics.totalOutstanding)}
@@ -335,7 +304,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.totalOutstandingDesc')}
         />
 
-        {/* Total Loyalty Points */}
         <StatCard
           title={t('customer.analytics.totalLoyaltyPoints')}
           value={formatNumber(statistics.totalLoyaltyPoints)}
@@ -351,7 +319,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.totalLoyaltyPointsDesc')}
         />
 
-        {/* Customer Growth Rate */}
         <StatCard
           title={t('customer.analytics.growthRate')}
           value="+12%"
@@ -362,7 +329,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.growthRateDesc')}
         />
 
-        {/* Retention Rate */}
         <StatCard
           title={t('customer.analytics.retentionRate')}
           value="87%"
@@ -380,9 +346,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         />
       </StatCardGrid>
 
-      {/* Growth & Retention Charts Section */}
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Customer Growth Chart */}
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
@@ -418,7 +382,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           />
         </div>
 
-        {/* Retention Rate Chart */}
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-text-primary">
@@ -449,10 +412,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
       </div>
 
-      {/* Separator */}
       <Separator spacing="lg" className="mt-8" />
 
-      {/* Geographic Distribution Section */}
       <div className="mt-8">
         <div className="mb-6 flex items-center gap-3">
           <div className="bg-status-success/10 flex h-10 w-10 items-center justify-center rounded-lg">
@@ -489,10 +450,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
       </div>
 
-      {/* Separator */}
       <Separator spacing="lg" className="mt-8" />
 
-      {/* Customer Segmentation Section */}
       <div className="mt-8">
         <div className="mb-6 flex items-center gap-3">
           <div className="bg-status-info/10 flex h-10 w-10 items-center justify-center rounded-lg">
@@ -509,7 +468,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* By Membership Tier */}
           <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('customer.analytics.byMembershipTier')}
@@ -536,7 +494,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             />
           </div>
 
-          {/* By Customer Type */}
           <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('customer.analytics.byCustomerType')}
@@ -563,7 +520,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             />
           </div>
 
-          {/* By Product Category */}
           <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
             <h4 className="mb-4 text-base font-semibold text-text-primary">
               {t('customer.analytics.byProductCategory')}
@@ -593,10 +549,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
       </div>
 
-      {/* Separator */}
       <Separator spacing="lg" className="mt-8" />
 
-      {/* Top Customers Section */}
       <div className="mt-8">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -743,10 +697,8 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           }}
         />
       </div>
-      {/* Separator */}
       <Separator spacing="lg" className="mt-8" />
 
-      {/* Purchase Pattern Section */}
       <div className="mt-8">
         <div className="mb-6 flex items-center gap-3">
           <div className="bg-status-warning/10 flex h-10 w-10 items-center justify-center rounded-lg">
@@ -925,7 +877,6 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             </div>
           </div>
 
-          {/* Outstanding Payments */}
           <div className="overflow-hidden rounded-lg border border-border-primary bg-bg-secondary">
             <div className="bg-bg-tertiary/30 border-b border-border-primary p-4">
               <div className="flex items-center gap-2">

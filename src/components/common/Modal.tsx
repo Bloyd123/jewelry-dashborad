@@ -1,4 +1,3 @@
-// Mini-Step 7.5: Modal Component (Theme-Aware)
 // FILE: src/components/common/Modal.tsx
 
 import React, { ReactNode, useEffect, useRef } from 'react'
@@ -30,10 +29,8 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const modalRef = useRef<HTMLDivElement>(null)
 
-  // Get theme state from Redux
   const appearance = useAppSelector(state => state.ui.appearance)
 
-  // Size styles
   const sizeStyles = {
     sm: 'max-w-sm',
     md: 'max-w-md',
@@ -42,7 +39,6 @@ const Modal: React.FC<ModalProps> = ({
     full: 'max-w-full mx-4',
   }
 
-  // Padding based on appearance
   const paddingClass =
     appearance === 'compact'
       ? 'px-4 py-2'
@@ -56,7 +52,6 @@ const Modal: React.FC<ModalProps> = ({
         ? 'text-xl'
         : 'text-lg'
 
-  // Handle Escape key
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return
 
@@ -70,7 +65,6 @@ const Modal: React.FC<ModalProps> = ({
     return () => document.removeEventListener('keydown', handleEscape)
   }, [isOpen, closeOnEscape, onClose])
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -83,7 +77,6 @@ const Modal: React.FC<ModalProps> = ({
     }
   }, [isOpen])
 
-  // Handle overlay click
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (closeOnOverlayClick && e.target === e.currentTarget) {
       onClose()
@@ -104,7 +97,6 @@ const Modal: React.FC<ModalProps> = ({
         ref={modalRef}
         className={`relative w-full ${sizeStyles[size]} transform rounded-lg bg-white shadow-xl transition-all duration-300 dark:bg-gray-800 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'} `}
       >
-        {/* Header */}
         {(title || showCloseButton) && (
           <div
             className={`flex items-center justify-between ${paddingClass} border-b border-gray-200 dark:border-gray-700`}
@@ -141,14 +133,12 @@ const Modal: React.FC<ModalProps> = ({
           </div>
         )}
 
-        {/* Body */}
         <div
           className={`${paddingClass} max-h-[70vh] overflow-y-auto text-gray-900 dark:text-gray-100`}
         >
           {children}
         </div>
 
-        {/* Footer */}
         {footer && (
           <div
             className={`flex items-center justify-end gap-3 ${paddingClass} border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900`}

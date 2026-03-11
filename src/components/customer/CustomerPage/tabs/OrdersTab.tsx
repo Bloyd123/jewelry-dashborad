@@ -1,17 +1,12 @@
 // FILE: src/components/customer/CustomerPage/tabs/OrdersTab.tsx
-// Orders History Tab
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ShoppingBag, Calendar, Package } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import { DataTable } from '@/components/ui/data-display/DataTable/DataTable'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
-
-// MOCK ORDER DATA
 
 interface Order {
   id: string
@@ -57,23 +52,14 @@ const MOCK_ORDERS: Order[] = [
   },
 ]
 
-// COMPONENT PROPS
-
 interface OrdersTabProps {
-  customerId?: string
+  customer: Customer
 }
 
-// ORDERS TAB COMPONENT
-
-export const OrdersTab: React.FC<OrdersTabProps> = ({ customerId }) => {
+export const OrdersTab: React.FC<OrdersTabProps> = ({ customer }) => {
   const { t } = useTranslation()
 
-  // Get customer data from mock
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
-  // Define columns for DataTable
   const columns: DataTableColumn<Order>[] = [
     {
       id: 'orderNumber',
@@ -130,11 +116,10 @@ export const OrdersTab: React.FC<OrdersTabProps> = ({ customerId }) => {
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-6 p-4">
-      {/* Order Statistics */}
       <StatCardGrid columns={3}>
         <StatCard
           title={t('customerOrders.totalOrders')}
-          value={MOCK_ORDERS.length}
+          value={customer.statistics?.totalOrders }
           icon={ShoppingBag}
           variant="info"
           size="md"
@@ -154,14 +139,13 @@ export const OrdersTab: React.FC<OrdersTabProps> = ({ customerId }) => {
 
         <StatCard
           title={t('customerOrders.totalItems')}
-          value={MOCK_ORDERS.reduce((sum, order) => sum + order.items, 0)}
+          value={customer.statistics?.totalOrders || 0}
           icon={Package}
           variant="success"
           size="md"
         />
       </StatCardGrid>
 
-      {/* Orders Table */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerOrders.orderHistory')}

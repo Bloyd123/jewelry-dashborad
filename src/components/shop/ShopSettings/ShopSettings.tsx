@@ -21,6 +21,9 @@ import { FeaturesSection } from './sections/FeaturesSection'
 import type { Shop } from '@/types/shop.types'
 import type { ShopSettingsFormData } from './shopSettings.types'
 
+// Hook
+import { useShopSettings } from '@/hooks/shop'
+
 //
 // PROPS
 //
@@ -29,11 +32,9 @@ interface ShopSettingsProps {
   shop: Shop
   isOpen: boolean
   onClose: () => void
-  onSave: (settings: ShopSettingsFormData) => Promise<void>
 }
 
 //
-
 // COMPONENT
 //
 
@@ -41,9 +42,11 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
   shop,
   isOpen,
   onClose,
-  onSave,
 }) => {
   const { t } = useTranslation()
+
+  // REAL API
+  const { updateSettings, isUpdatingSettings } = useShopSettings(shop._id)
 
   // STATE
 
@@ -132,8 +135,6 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState<string>('')
 
   // HANDLERS
 
@@ -150,7 +151,6 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
       },
     }))
 
-    // Clear error for this field
     if (errors[`${section}.${field}`]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -179,17 +179,12 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
   }
 
   const handleSave = async () => {
-    setIsSubmitting(true)
-    setSubmitError('')
-
-    try {
-      await onSave(formData)
-      onClose()
-    } catch (error: any) {
-      setSubmitError(error.message || t('shops.settings.errors.saveFailed'))
-    } finally {
-      setIsSubmitting(false)
+    const setFormErrors = (validationErrors: Record<string, string>) => {
+      setErrors(validationErrors)
     }
+
+    const result = await updateSettings(formData as any, setFormErrors)
+    if (result.success) onClose()
   }
 
   const handleDiscard = () => {
@@ -228,7 +223,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
             variant="ghost"
             size="icon"
             onClick={onClose}
-            disabled={isSubmitting}
+            disabled={isUpdatingSettings}
           >
             <X className="h-5 w-5" />
           </Button>
@@ -237,10 +232,15 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
       {/* Content */}
       <div className="space-y-6 px-6 py-6">
-        {/* Submit Error */}
-        {submitError && <FormError error={submitError} type="error" />}
+        {/* Field Errors */}
+        {Object.keys(errors).length > 0 && (
+          <FormError
+            error={t('shops.settings.errors.saveFailed')}
+            type="error"
+          />
+        )}
 
-        {/* SECTION 2: General Settings */}
+        {/* SECTION 1: General Settings */}
         <GeneralSettingsSection
           data={formData.generalSettings}
           onChange={(field, value) =>
@@ -254,7 +254,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
         <Separator />
 
-        {/* SECTION 3: GST Configuration */}
+        {/* SECTION 2: GST Configuration */}
         <GSTConfigSection
           shop={shop}
           data={formData.gstSettings}
@@ -267,7 +267,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
         <Separator />
 
-        {/* SECTION 4: Business Hours */}
+        {/* SECTION 3: Business Hours */}
         <BusinessHoursSection
           data={formData.businessHours}
           onChange={(field, value) =>
@@ -278,7 +278,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
         <Separator />
 
-        {/* SECTION 5: Features */}
+        {/* SECTION 4: Features */}
         <FeaturesSection
           data={formData.features}
           onChange={(field, value) => handleChange('features', field, value)}
@@ -291,7 +291,11 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 
       {/* Footer Actions */}
       <div className="sticky bottom-0 flex items-center justify-between border-t border-border-primary bg-bg-secondary px-6 py-4">
-        <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
+        <Button
+          variant="outline"
+          onClick={onClose}
+          disabled={isUpdatingSettings}
+        >
           {t('common.cancel')}
         </Button>
 
@@ -299,13 +303,13 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
           <Button
             variant="outline"
             onClick={handleDiscard}
-            disabled={isSubmitting}
+            disabled={isUpdatingSettings}
           >
             {t('shops.settings.discardAll')}
           </Button>
 
-          <Button onClick={handleSave} disabled={isSubmitting}>
-            {isSubmitting ? (
+          <Button onClick={handleSave} disabled={isUpdatingSettings}>
+            {isUpdatingSettings ? (
               <>
                 <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-bg-primary border-t-transparent" />
                 {t('common.saving')}

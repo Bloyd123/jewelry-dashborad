@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/sections/AddressSection.tsx
-// Address Section
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput'

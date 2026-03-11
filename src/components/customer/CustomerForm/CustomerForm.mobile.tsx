@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/CustomerForm.mobile.tsx
-// Mobile Layout for CustomerForm (Tabbed Interface)
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,9 +30,9 @@ const STEPS = [
 
 export default function CustomerFormMobile({
   initialData = {},
-  shopId, // ← ADD
-  customerId, // ← ADD
-  onSuccess, // ← CHANGE
+  shopId, 
+  customerId, 
+  onSuccess, 
   onCancel,
   mode = 'create',
 }: CustomerFormProps) {
@@ -43,8 +42,8 @@ export default function CustomerFormMobile({
     useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const { showSuccess, showError } = useNotification() // ✅ ADD
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false) // ✅ ADD
+  const { showSuccess, showError } = useNotification() 
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false) 
 
   const { createCustomer, updateCustomer, isCreating, isUpdating } =
     useCustomerActions(shopId)
@@ -54,7 +53,6 @@ export default function CustomerFormMobile({
   ): Partial<CreateCustomerInput> => {
     const cleaned = { ...data }
 
-    // Convert empty strings to undefined for optional fields
     if (cleaned.referredBy === '') cleaned.referredBy = undefined
     if (cleaned.email === '') cleaned.email = undefined
     if (cleaned.alternatePhone === '') cleaned.alternatePhone = undefined
@@ -66,14 +64,12 @@ export default function CustomerFormMobile({
     if (cleaned.gstNumber === '') cleaned.gstNumber = undefined
     if (cleaned.notes === '') cleaned.notes = undefined
 
-    // Clean address
     if (cleaned.address) {
       if (cleaned.address.street === '') cleaned.address.street = undefined
       if (cleaned.address.city === '') cleaned.address.city = undefined
       if (cleaned.address.state === '') cleaned.address.state = undefined
       if (cleaned.address.pincode === '') cleaned.address.pincode = undefined
 
-      // Remove address if all fields are empty
       if (
         !cleaned.address.street &&
         !cleaned.address.city &&
@@ -105,7 +101,6 @@ export default function CustomerFormMobile({
       createCustomerSchema.shape[
         name as keyof typeof createCustomerSchema.shape
       ]?.parse(formData[name as keyof CreateCustomerInput])
-      // Clear error if valid
       if (errors[name]) {
         setErrors(prev => {
           const newErrors = { ...prev }
@@ -114,7 +109,6 @@ export default function CustomerFormMobile({
         })
       }
     } catch (error: any) {
-      // Set error if invalid
       if (error.errors?.[0]?.message) {
         setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
       }
@@ -163,7 +157,6 @@ export default function CustomerFormMobile({
 
     const setFormErrors = (apiErrors: Record<string, string>) => {
       setErrors(apiErrors)
-      // DON'T show notification here
     }
 
     try {

@@ -12,7 +12,6 @@ const LoginDesktop: React.FC = () => {
   const requires2FA = useAppSelector(state => state.auth.requires2FA)
   return (
     <div className="flex min-h-screen">
-      {/* Left Side - Image Section */}
 
       <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
@@ -20,25 +19,19 @@ const LoginDesktop: React.FC = () => {
           alt="Jewelry crafting"
           className="h-full w-full object-cover"
         />
-        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/20 to-transparent"></div>
       </div>
 
-      {/* Right Side - Login Form Section */}
       <div className="flex w-full items-center justify-center bg-stone-50 px-8 py-12 transition-colors duration-200 dark:bg-gray-900 lg:w-1/2">
         {requires2FA ? (
-          // 🆕 Show 2FA verification step
           <Login2FAStep />
         ) : (
           <div className="w-full max-w-md">
-            {/* Logo & Brand Section */}
             <div className="mb-8 flex items-center justify-center">
               <div className="flex flex-col items-center">
-                {/* Brand Name */}
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   KaratLog
                 </h1>
-                {/* Welcome Header */}
                 <div className="mb-10 text-center">
                   <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
                     Welcome Back
@@ -50,12 +43,10 @@ const LoginDesktop: React.FC = () => {
               </div>
             </div>
 
-            {/* Login Form */}
             <div className="rounded-2xl p-8 transition-colors duration-200 dark:bg-gray-800">
               <LoginForm />
             </div>
 
-            {/* Footer */}
             <div className="mt-8 text-center">
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 © {new Date().getFullYear()} {APP_CONFIG.NAME}. All rights

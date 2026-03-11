@@ -1,5 +1,4 @@
 // FILE: src/api/axios.ts
-// Axios instance with interceptors configured
 
 import axios, { AxiosInstance } from 'axios'
 
@@ -7,7 +6,6 @@ import { setupAuthInterceptor } from './interceptors/authInterceptor'
 import { setupErrorInterceptor } from './interceptors/errorInterceptor'
 import { APP_CONFIG } from '@/config/app.config'
 
-// CREATE AXIOS INSTANCE
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: APP_CONFIG.API.BASE_URL,
@@ -16,25 +14,10 @@ const axiosInstance: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  withCredentials: true, // For cookies/sessions if needed
+  withCredentials: true, 
 })
-
-// SETUP INTERCEPTORS
-
-// Setup authentication interceptor (attaches token to requests)
 setupAuthInterceptor(axiosInstance)
-//Wo sirf errors classify karta hai.
 setupErrorInterceptor(axiosInstance)
-
-// RETRY LOGIC (Optional)
-
-/**
- * Retry failed requests with exponential backoff
- * @param fn - Function that returns a promise
- * @param maxRetries - Maximum number of retry attempts
- * @param delay - Initial delay in milliseconds
- * @param backoff - Backoff multiplier
- */
 export const retryRequest = async <T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
@@ -49,7 +32,6 @@ export const retryRequest = async <T>(
     } catch (error) {
       lastError = error as Error
 
-      // Don't retry on client errors (4xx) except 408, 429
       if (axios.isAxiosError(error)) {
         const status = error.response?.status
         if (
@@ -63,22 +45,18 @@ export const retryRequest = async <T>(
         }
       }
 
-      // Last attempt - throw error
       if (attempt === maxRetries) {
         throw lastError
       }
 
-      // Calculate delay with exponential backoff
       const waitTime = delay * Math.pow(backoff, attempt - 1)
 
-      // Log retry attempt in development
       if (import.meta.env.DEV) {
         console.log(
           ` Retrying request (attempt ${attempt}/${maxRetries}) after ${waitTime}ms...`
         )
       }
 
-      // Wait before retrying
       await new Promise(resolve => setTimeout(resolve, waitTime))
     }
   }

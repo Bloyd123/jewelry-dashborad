@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerTable/CustomerTableColumns.tsx
-// Customer Table Column Definitions
 
 import { Copy, Award } from 'lucide-react'
 import { Avatar } from '@/components/ui/data-display/Avatar'
@@ -7,11 +6,6 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Customer } from '@/types/customer.types'
 
-// HELPER FUNCTIONS
-
-/**
- * Format currency in INR
- */
 const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -20,9 +14,6 @@ const formatCurrency = (amount: number): string => {
   }).format(amount)
 }
 
-/**
- * Format date
- */
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-IN', {
@@ -32,17 +23,10 @@ const formatDate = (dateString: string): string => {
   }).format(date)
 }
 
-/**
- * Copy to clipboard
- */
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
-
-// COLUMN DEFINITIONS
-
 export const customerTableColumns: DataTableColumn<Customer>[] = [
-  // 1. Customer Code with Avatar Initial
   {
     id: 'customerCode',
     header: 'customer.table.customerCode',
@@ -59,7 +43,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     ),
   },
 
-  // 2. Full Name with Avatar
   {
     id: 'fullName',
     header: 'customer.table.fullName',
@@ -81,7 +64,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     ),
   },
 
-  // 3. Phone with Copy Button
   {
     id: 'phone',
     header: 'customer.table.phone',
@@ -105,7 +87,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     ),
   },
 
-  // 4. Customer Type Badge
   {
     id: 'customerType',
     header: 'customer.table.customerType',
@@ -130,7 +111,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     },
   },
 
-  // 5. Membership Tier Badge
   {
     id: 'membershipTier',
     header: 'customer.table.membershipTier',
@@ -163,7 +143,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     },
   },
 
-  // 6. Total Purchases (Formatted Currency)
   {
     id: 'totalPurchases',
     header: 'customer.table.totalPurchases',
@@ -180,7 +159,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     ),
   },
 
-  // 7. Total Due (Formatted Currency with Color)
   {
     id: 'totalDue',
     header: 'customer.table.totalDue',
@@ -205,7 +183,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     },
   },
 
-  // 8. Loyalty Points with Icon
   {
     id: 'loyaltyPoints',
     header: 'customer.table.loyaltyPoints',
@@ -220,8 +197,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
       </div>
     ),
   },
-
-  // 9. Active Status Badge with Dot
   {
     id: 'isActive',
     header: 'customer.table.status',
@@ -235,7 +210,6 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
     ),
   },
 
-  // 10. Created Date
   {
     id: 'createdAt',
     header: 'customer.table.createdAt',

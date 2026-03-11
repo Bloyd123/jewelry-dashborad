@@ -6,7 +6,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ShopFormProps } from './shopForm.types'
-import type { Shop } from '@/types'
+import type {  ShopFormData } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2 } from 'lucide-react'
@@ -16,6 +16,7 @@ import { AddressSection } from './sections/AddressSection'
 import { BusinessRegistrationSection } from './sections/BusinessRegistrationSection'
 import { BankingSection } from './sections/BankingSection'
 import { UPISection } from './sections/UPISection'
+import { useShopActions } from '@/hooks/shop'
 
 export default function ShopFormDesktop({
   initialData = {},
@@ -26,15 +27,17 @@ export default function ShopFormDesktop({
   mode = 'create',
 }: ShopFormProps) {
   const { t } = useTranslation()
-  const [formData, setFormData] = useState<Partial<Shop>>(initialData)
+  const [formData, setFormData] = useState<Partial<ShopFormData>>(initialData as Partial<ShopFormData>)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+
+  // REAL API
+  const { createShop, updateShop, isCreating, isUpdating } = useShopActions()
+  const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -49,7 +52,7 @@ export default function ShopFormDesktop({
   }
 
   const handleSubmit = async () => {
-    // Basic validation
+    // Validation
     const newErrors: Record<string, string> = {}
 
     if (!formData.name?.trim()) {
@@ -76,14 +79,18 @@ export default function ShopFormDesktop({
       return
     }
 
-    setIsLoading(true)
+    // Server-side field errors callback
+    const setFormErrors = (validationErrors: Record<string, string>) => {
+      setErrors(validationErrors)
+    }
 
-    // Mock delay for submission
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, organizationId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+    if (mode === 'create') {
+      const result = await createShop(formData as ShopFormData, setFormErrors)
+      if (result.success) onSuccess?.()
+    } else {
+      const result = await updateShop(shopId!, formData, setFormErrors)
+      if (result.success) onSuccess?.()
+    }
   }
 
   return (

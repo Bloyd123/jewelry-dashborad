@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/sections/CustomerTypeSection.tsx
-// Customer Type Section
 
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'

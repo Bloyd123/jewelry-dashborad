@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerForm/CustomerForm.tsx
-// Main CustomerForm Component (Route Handler)
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import CustomerFormDesktop from './CustomerForm.desktop'

@@ -6,12 +6,14 @@ import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ShopFilters, ShopFilterValues } from '@/components/shop/ShopFilters'
 import { ShopTable } from '@/components/shop/ShopTable'
+import { useNavigate } from 'react-router-dom'
 
 export const ShopListPage = () => {
   // State for filters
   const [filters, setFilters] = React.useState<ShopFilterValues>({
     search: '',
   })
+  const navigate = useNavigate()
 
   // Handler for filter changes
   const handleFiltersChange = (newFilters: ShopFilterValues) => {
@@ -30,7 +32,7 @@ export const ShopListPage = () => {
   // Handler for adding new shop
   const handleAddShop = () => {
     // TODO: Navigate to create shop page or open modal
-    console.log('Add new shop clicked')
+ navigate('/shops/add')
   }
 
   return (

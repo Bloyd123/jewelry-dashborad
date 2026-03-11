@@ -1,5 +1,4 @@
 // FILE: src/api/interceptors/errorInterceptor.ts
-// Axios error interceptor with i18n error keys
 
 import { AxiosError, AxiosInstance } from 'axios'
 import {
@@ -15,12 +14,7 @@ import {
   getErrorKeyByStatus,
 } from '@/utils/errors'
 
-/**
- * Axios response interceptor
- * Converts Axios errors to custom error classes with i18n keys
- */
 export const errorInterceptor = (error: AxiosError<any>) => {
-  // NETWORK ERROR (No response from server)
 
   if (!error.response) {
     throw new NetworkError(ERROR_KEYS.API.NETWORK, error.code)
@@ -28,16 +22,14 @@ export const errorInterceptor = (error: AxiosError<any>) => {
 
   const { status, data } = error.response
 
-  // Extract message key
   const messageKey =
     data?.messageKey ||
-    data?.message || // fallback if backend still sends message
+    data?.message 
     getErrorKeyByStatus(status)
 
   const errors = data?.errors
   const validationErrors = data?.validationErrors
 
-  // CREATE SPECIFIC ERROR CLASS BASED ON STATUS
 
   switch (status) {
     case 400:
@@ -67,10 +59,6 @@ export const errorInterceptor = (error: AxiosError<any>) => {
       throw new ApiError(messageKey, status, errors)
   }
 }
-
-/**
- * Attach interceptor to Axios instance
- */
 export const setupErrorInterceptor = (axiosInstance: AxiosInstance) => {
   axiosInstance.interceptors.response.use(
     response => response,

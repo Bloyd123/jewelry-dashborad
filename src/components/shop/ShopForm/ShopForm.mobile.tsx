@@ -6,7 +6,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ShopFormProps } from './shopForm.types'
-import type { Shop } from '@/types'
+import type { ShopFormData } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Save, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -16,6 +16,7 @@ import { AddressSection } from './sections/AddressSection'
 import { BusinessRegistrationSection } from './sections/BusinessRegistrationSection'
 import { BankingSection } from './sections/BankingSection'
 import { UPISection } from './sections/UPISection'
+import { useShopActions } from '@/hooks/shop'
 
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
@@ -36,10 +37,15 @@ export default function ShopFormMobile({
 }: ShopFormProps) {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState<Partial<Shop>>(initialData)
+  const [formData, setFormData] = useState<Partial<ShopFormData>>(
+    initialData as Partial<ShopFormData>
+  )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+
+  // REAL API
+  const { createShop, updateShop, isCreating, isUpdating } = useShopActions()
+  const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -70,7 +76,7 @@ export default function ShopFormMobile({
   }
 
   const handleSubmit = async () => {
-    // Basic validation
+    // Validation
     const newErrors: Record<string, string> = {}
 
     if (!formData.name?.trim()) {
@@ -97,13 +103,8 @@ export default function ShopFormMobile({
       // Navigate to first step with errors
       const firstErrorStep = STEPS.findIndex(step => {
         return Object.keys(newErrors).some(key => {
-          if (
-            step.id === 'basic' &&
-            ['name', 'shopType', 'category'].includes(key)
-          )
-            return true
-          if (step.id === 'contact' && ['phone', 'email'].includes(key))
-            return true
+          if (step.id === 'basic' && ['name', 'shopType', 'category'].includes(key)) return true
+          if (step.id === 'contact' && ['phone', 'email'].includes(key)) return true
           if (step.id === 'address' && key.startsWith('address.')) return true
           return false
         })
@@ -114,14 +115,18 @@ export default function ShopFormMobile({
       return
     }
 
-    setIsLoading(true)
+    // Server-side field errors callback
+    const setFormErrors = (validationErrors: Record<string, string>) => {
+      setErrors(validationErrors)
+    }
 
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, organizationId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+    if (mode === 'create') {
+      const result = await createShop(formData as ShopFormData, setFormErrors)
+      if (result.success) onSuccess?.()
+    } else {
+      const result = await updateShop(shopId!, formData, setFormErrors)
+      if (result.success) onSuccess?.()
+    }
   }
 
   const renderCurrentStep = () => {

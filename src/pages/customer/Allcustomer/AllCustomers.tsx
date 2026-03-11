@@ -11,7 +11,8 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from '@/hooks/auth'
 import type { CustomerStatistics } from '@/components/customer/analytics'
 import { useNavigate } from 'react-router-dom'
-
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
+import { useCustomerAnalytics } from '@/hooks/customer'
 // TYPES & INTERFACES
 
 export interface AllCustomersProps {
@@ -40,8 +41,8 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
 
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
-  const [isLoading, setIsLoading] = useState(false)
-
+  const { analytics, isLoading, refetch } = useCustomerAnalytics(currentShopId || '')
+const { can } = usePermissionCheck()
   // HANDLERS
 
   const handleAddCustomer = () => {
@@ -50,30 +51,30 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
     // TODO: Open add customer modal
   }
 
-  const handleRefreshAnalytics = async () => {
-    setIsLoading(true)
-    // TODO: Call API to refresh analytics
-    setTimeout(() => {
-      setIsLoading(false)
-      console.log('Analytics refreshed')
-    }, 1000)
-  }
+const handleRefreshAnalytics = () => {
+  refetch()
+}
 
   // TAB CONFIGURATION
 
-  const tabs = [
-    {
-      value: 'table',
-      label: t('customer.tabs.table'),
-      icon: <Users className="h-4 w-4" />,
-    },
-    {
-      value: 'analytics',
-      label: t('customer.tabs.analytics'),
-      icon: <BarChart3 className="h-4 w-4" />,
-    },
-  ]
-
+  // const tabs = [
+  //   {
+  //     value: 'table',
+  //     label: t('customer.tabs.table'),
+  //     icon: <Users className="h-4 w-4" />,
+  //   },
+  //   {
+  //     value: 'analytics',
+  //     label: t('customer.tabs.analytics'),
+  //     icon: <BarChart3 className="h-4 w-4" />,
+  //   },
+  // ]
+const tabs = [
+  { value: 'table', label: t('customer.tabs.table'), icon: <Users /> },
+  ...(can('canViewCustomerAnalytics') ? [
+    { value: 'analytics', label: t('customer.tabs.analytics'), icon: <BarChart3 /> }
+  ] : [])
+]
   // RENDER
 
   return (
@@ -93,6 +94,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
             </div>
 
             {/* Action Button */}
+            {can('canCreateCustomer') && (
             <Button
               onClick={handleAddCustomer}
               variant="default"
@@ -106,6 +108,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
               </span>
               <span className="sm:hidden">{t('customer.actions.add')}</span>
             </Button>
+            )}
           </div>
         </div>
       </div>
@@ -134,7 +137,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
               {currentShopId ? (
                 <CustomerAnalytics
                   shopId={currentShopId}
-                  statistics={MOCK_STATISTICS}
+                  statistics={analytics}
                   loading={isLoading}
                   onRefresh={handleRefreshAnalytics}
                 />

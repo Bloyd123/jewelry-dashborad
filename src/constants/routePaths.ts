@@ -35,7 +35,7 @@ export const ROUTE_PATHS = {
     LIST: '/shops',
     ADD: '/shops/add',
     EDIT: '/shops/edit/:shopId',
-    DETAIL: '/shops/:id',
+    DETAIL: '/shops/:shopId',
   },
 
   // Product Routes

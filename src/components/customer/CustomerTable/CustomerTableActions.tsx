@@ -22,8 +22,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Customer } from '@/types/customer.types'
+import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
-// ROW ACTIONS (Individual Customer Actions)
 
 export const getCustomerRowActions = (
   onViewDetails: (customer: Customer) => void,
@@ -74,7 +74,6 @@ export const getCustomerRowActions = (
   },
 ]
 
-// BULK ACTIONS BAR (Shows when rows are selected)
 
 interface BulkActionsBarProps {
   selectedCount: number
@@ -98,20 +97,17 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   onClearSelection,
 }) => {
   const { t } = useTranslation()
+  const { can } = usePermissionCheck()
 
-  // Check if any selected customer has outstanding balance
   const hasOutstandingBalance = selectedCustomers.some(c => c.totalDue > 0)
 
-  // Check if any selected customer is inactive
   const hasInactive = selectedCustomers.some(c => !c.isActive)
 
-  // Check if all selected are blacklisted or not
   const allBlacklisted = selectedCustomers.every(c => c.isBlacklisted)
   const someBlacklisted = selectedCustomers.some(c => c.isBlacklisted)
 
   return (
     <div className="bg-accent/10 flex flex-col items-start justify-between gap-3 border-b border-border-primary px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
-      {/* Left Section - Selection Info */}
       <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-4">
         <span className="text-sm font-medium text-text-primary">
           {t('table.selectedCount', { count: selectedCount })}
@@ -126,9 +122,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
         </Button>
       </div>
 
-      {/* Right Section - Action Buttons */}
       <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
-        {/* View Details - Only if single selection */}
         {selectedCount === 1 && (
           <Button
             variant="outline"
@@ -143,8 +137,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        {/* Edit - Only if single selection */}
-        {selectedCount === 1 && (
+        {selectedCount === 1  && can('canUpdateCustomer') && (
           <Button
             variant="outline"
             size="sm"
@@ -158,8 +151,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        {/* Add Loyalty Points - Only for active customers */}
-        {!hasInactive && (
+        {!hasInactive && can('canAddLoyaltyPoints') && (
           <Button
             variant="outline"
             size="sm"
@@ -173,7 +165,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        {/* Blacklist/Remove Blacklist */}
         {!allBlacklisted && (
           <Button
             variant="outline"
@@ -202,7 +193,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        {/* Delete - Disabled if any has outstanding balance */}
+        {can('canDeleteCustomers') && (
         <Button
           variant="destructive"
           size="sm"
@@ -215,8 +206,8 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             {t('customer.actions.delete')}
           </span>
         </Button>
+        )}
 
-        {/* More Actions Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="h-9 w-9">

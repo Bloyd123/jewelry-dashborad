@@ -7,23 +7,17 @@ import { Wallet, TrendingUp, CreditCard, AlertCircle } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
-// import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
-
-// COMPONENT PROPS
 
 interface FinancialTabProps {
   customer: Customer
 }
-
-// FINANCIAL TAB COMPONENT
 
 export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
   const { t } = useTranslation()
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
-      {/* Financial Summary Cards */}
       <StatCardGrid columns={3}>
         <StatCard
           title={t('customerFinancial.totalPurchases')}
@@ -50,14 +44,12 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
         />
       </StatCardGrid>
 
-      {/* Financial Details */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerFinancial.financialDetails')}
         </h3>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {/* Credit Limit */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
               {t('customerFinancial.creditLimit')}
@@ -67,7 +59,6 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
             </p>
           </div>
 
-          {/* Total Purchases */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
               {t('customerFinancial.totalPurchases')}
@@ -77,7 +68,6 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
             </p>
           </div>
 
-          {/* Last Purchase Date */}
           {customer.lastPurchaseDate && (
             <div className="flex flex-col gap-1.5">
               <Label className="text-xs text-text-secondary">
@@ -89,7 +79,6 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
             </div>
           )}
 
-          {/* Customer Type */}
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
               {t('customerFinancial.customerType')}
@@ -103,7 +92,6 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ customer }) => {
         </div>
       </div>
 
-      {/* Payment Terms & Notes */}
       {customer.customerType === 'wholesale' && (
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <div className="flex items-start gap-3">
