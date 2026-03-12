@@ -1,22 +1,29 @@
-// FILE:     src/components/products/ProductTable/ProductTable.tsx
+// FILE: src/components/products/ProductTable/ProductTable.tsx
 // Main Product Table Component
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { productTableColumns } from './ProductTableColumns'
 import { getProductRowActions, BulkActionsBar } from './ProductTableActions'
 import { ProductFilters } from '@/components/products/ProductFilters'
 import type { ProductFilterValues } from '@/components/products/ProductFilters'
-import { dummyProducts } from '@/pages/product/mock.data'
-import { type Product } from '@/types/product.types'
+import { selectCurrentShopId } from '@/store/slices/authSlice'
+import { useProductsList } from '@/hooks/product'
+import { useProductActions } from '@/hooks/product'
+import { useProductBulkActions } from '@/hooks/product'
+import type { Product, MetalType, MetalPurity, ProductStatus, SaleStatus, Gender } from '@/types/product.types'
 
 // MAIN COMPONENT
 
 export const ProductTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+
+  // SHOP ID FROM AUTH
+  const shopId = useSelector(selectCurrentShopId)!
 
   // STATE
 
@@ -38,84 +45,41 @@ export const ProductTable: React.FC = () => {
     maxPrice: undefined,
   })
 
-  // FILTERED DATA
+  // FETCH PRODUCTS FROM API
 
-  const filteredProducts = useMemo(() => {
-    let result = [...dummyProducts]
+  const { products, isLoading, pagination } = useProductsList(shopId, {
+    search: filters.search || undefined,
+    category: filters.category,
+    metalType: filters.metalType as MetalType | undefined,
+    purity: filters.purity as MetalPurity | undefined,
+    status: filters.status as ProductStatus | undefined,
+    saleStatus: filters.saleStatus as SaleStatus | undefined,
+    gender: filters.gender as Gender | undefined,
+    minPrice: filters.minPrice,
+    maxPrice: filters.maxPrice,
+  })
 
-    // Apply search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
-      result = result.filter(
-        p =>
-          p.name.toLowerCase().includes(searchLower) ||
-          p.productCode.toLowerCase().includes(searchLower) ||
-          p.barcode?.toLowerCase().includes(searchLower) ||
-          p.tags?.some(tag => tag.toLowerCase().includes(searchLower))
-      )
-    }
+  // PRODUCT ACTIONS (delete, stock update, etc.)
 
-    // Apply category filter
-    if (filters.category) {
-      result = result.filter(p => {
-        const categoryId =
-          typeof p.categoryId === 'string' ? p.categoryId : p.categoryId?._id
-        return categoryId === filters.category
-      })
-    }
+  const {
+    deleteProduct,
+    updateStock,
+    calculatePrice,
+    isDeleting,
+  } = useProductActions(shopId)
 
-    // Apply metal type filter
-    if (filters.metalType) {
-      result = result.filter(p => p.metal.type === filters.metalType)
-    }
+  // BULK ACTIONS
 
-    // Apply purity filter
-    if (filters.purity) {
-      result = result.filter(p => p.metal.purity === filters.purity)
-    }
-
-    // Apply status filter
-    if (filters.status) {
-      result = result.filter(p => p.status === filters.status)
-    }
-
-    // Apply sale status filter
-    if (filters.saleStatus) {
-      result = result.filter(p => p.saleStatus === filters.saleStatus)
-    }
-
-    // Apply gender filter
-    if (filters.gender) {
-      result = result.filter(p => p.gender === filters.gender)
-    }
-
-    // Apply product type filter
-    if (filters.productType) {
-      result = result.filter(p => p.productType === filters.productType)
-    }
-
-    // Apply price range filter
-    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
-      result = result.filter(p => {
-        const price = p.pricing.sellingPrice
-        if (filters.minPrice && price < filters.minPrice) return false
-        if (filters.maxPrice && price > filters.maxPrice) return false
-        return true
-      })
-    }
-
-    return result
-  }, [dummyProducts, filters])
+  const { bulkDeleteProducts, bulkUpdateStatus, isBulkDeleting } =
+    useProductBulkActions(shopId)
 
   // HANDLERS
 
   const handleViewDetails = (product: Product) => {
-    console.log('View Details:', product)
     navigate(`/products/${product._id}`)
   }
 
   const handleEdit = (product: Product) => {
-    console.log('Edit Product:', product)
     navigate(`/products/edit/${product._id}`)
   }
 
@@ -129,9 +93,8 @@ export const ProductTable: React.FC = () => {
     // TODO: Open stock update modal
   }
 
-  const handleCalculatePrice = (product: Product) => {
-    console.log('Calculate Price:', product)
-    // TODO: Open price calculation modal
+  const handleCalculatePrice = async (product: Product) => {
+    await calculatePrice(product._id, { useCurrentRate: true })
   }
 
   const handlePrintLabel = (product: Product) => {
@@ -139,48 +102,60 @@ export const ProductTable: React.FC = () => {
     // TODO: Open print label dialog
   }
 
-  const handleDelete = (product: Product) => {
-    console.log('Delete Product:', product)
-    // TODO: Show confirmation and delete
+  const handleDelete = async (product: Product) => {
+    if (confirm(t('product.confirmDelete'))) {
+      await deleteProduct(product._id)
+    }
   }
 
-  // Bulk Actions Handlers
+  // BULK ACTION HANDLERS
+
   const handleBulkViewDetails = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
+    const selected = products.filter(p => selectedRows.has(p._id))
     if (selected.length === 1) {
       handleViewDetails(selected[0])
     }
   }
 
   const handleBulkEdit = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
+    const selected = products.filter(p => selectedRows.has(p._id))
     if (selected.length === 1) {
       handleEdit(selected[0])
     }
   }
 
-  const handleBulkUpdateStatus = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
-    console.log('Bulk Update Status:', selected)
-    // TODO: Open bulk status update modal
+  const handleBulkUpdateStatus = async () => {
+    const productIds = products
+      .filter(p => selectedRows.has(p._id))
+      .map(p => p._id)
+    console.log('Bulk Update Status:', productIds)
+    // TODO: Open bulk status update modal, then call:
+    // await bulkUpdateStatus({ productIds, status: selectedStatus })
   }
 
   const handleBulkPrint = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
+    const selected = products.filter(p => selectedRows.has(p._id))
     console.log('Bulk Print Labels:', selected)
     // TODO: Print labels for selected products
   }
 
   const handleBulkExport = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
+    const selected = products.filter(p => selectedRows.has(p._id))
     console.log('Bulk Export:', selected)
     // TODO: Export selected products
   }
 
-  const handleBulkDelete = () => {
-    const selected = filteredProducts.filter(p => selectedRows.has(p._id))
-    console.log('Bulk Delete:', selected)
-    // TODO: Show confirmation and bulk delete
+  const handleBulkDelete = async () => {
+    const productIds = products
+      .filter(p => selectedRows.has(p._id))
+      .map(p => p._id)
+
+    if (confirm(t('product.confirmBulkDelete', { count: productIds.length }))) {
+      const result = await bulkDeleteProducts({ productIds })
+      if (result.success) {
+        setSelectedRows(new Set())
+      }
+    }
   }
 
   const handleClearSelection = () => {
@@ -220,14 +195,14 @@ export const ProductTable: React.FC = () => {
         handlePrintLabel,
         handleDelete
       ),
-    []
+    [shopId]
   )
 
   // SELECTED PRODUCTS
 
   const selectedProducts = useMemo(() => {
-    return filteredProducts.filter(product => selectedRows.has(product._id))
-  }, [filteredProducts, selectedRows])
+    return products.filter(product => selectedRows.has(product._id))
+  }, [products, selectedRows])
 
   // RENDER
 
@@ -257,8 +232,9 @@ export const ProductTable: React.FC = () => {
 
       {/* DataTable */}
       <DataTable
-        data={filteredProducts}
+        data={products}
         columns={productTableColumns}
+        // loading={isLoading}
         // Sorting Configuration
         sorting={{
           enabled: true,
@@ -266,7 +242,7 @@ export const ProductTable: React.FC = () => {
         // Pagination Configuration
         pagination={{
           enabled: true,
-          pageSize: 20,
+          pageSize: pagination?.pageSize ?? 20,
           pageSizeOptions: [10, 20, 50, 100],
           showPageSizeSelector: true,
           showPageInfo: true,
@@ -305,8 +281,6 @@ export const ProductTable: React.FC = () => {
         // Row Click Handler
         onRowClick={product => {
           console.log('Row clicked:', product)
-          // Optional: Open details on row click
-          // handleViewDetails(product)
         }}
         // Get Row ID
         getRowId={row => row._id}

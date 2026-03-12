@@ -1,23 +1,31 @@
 // FILE: src/pages/product/AddProduct.tsx
-// Add/Edit Product Page (No API Integration - Test Only)
 
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectCurrentShopId } from '@/store/slices/authSlice'
+import { useProductById } from '@/hooks/product'
 import { ProductForm } from '@/components/products/ProductForms'
-import { dummyProducts } from './mock.data'
 import type { ProductFormData } from '@/components/products/ProductForms/ProductForm.types'
 
 export const AddProduct = () => {
   const navigate = useNavigate()
-  const { productId } = useParams() // Get productId from URL if editing
+  const { productId } = useParams()
   const [searchParams] = useSearchParams()
   const mode = searchParams.get('mode') || (productId ? 'edit' : 'create')
 
-  // Find product data if editing
-  const existingProduct = productId
-    ? dummyProducts.find(
-        p => p._id === productId || p.productCode === productId
-      )
-    : null
+  const shopId = useSelector(selectCurrentShopId)!
+
+  const { product: existingProduct, isLoading: isLoadingProduct } =
+    useProductById(shopId, productId ?? '')
+
+  // Loading guard for edit mode
+  if (mode === 'edit' && isLoadingProduct) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
+      </div>
+    )
+  }
 
   // Transform backend product data to form data
   const initialData: Partial<ProductFormData> | undefined = existingProduct
@@ -62,18 +70,10 @@ export const AddProduct = () => {
     : undefined
 
   const handleSuccess = () => {
-    // Show success message (you can add toast here later)
-    console.log(' Product saved successfully!')
-    console.log('Mode:', mode)
-    console.log('ProductId:', productId)
-    console.log('Form Data:', initialData)
-
-    // Navigate back to product list
     navigate('/products')
   }
 
   const handleCancel = () => {
-    // Navigate back without saving
     navigate('/products')
   }
 
@@ -81,7 +81,7 @@ export const AddProduct = () => {
     <ProductForm
       mode={mode as 'create' | 'edit'}
       initialData={initialData}
-      shopId="shop_123456789" // Mock shop ID
+      shopId={shopId}
       productId={productId}
       onSuccess={handleSuccess}
       onCancel={handleCancel}

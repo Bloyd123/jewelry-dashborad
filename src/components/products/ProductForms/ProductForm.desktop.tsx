@@ -1,7 +1,7 @@
 // FILE: src/components/products/ProductForm/ProductForm.desktop.tsx
 // Desktop Layout for ProductForm (2-Column Grid)
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -11,6 +11,7 @@ import { MetalWeightSection } from './sections/MetalWeightForm'
 import { StonesSection } from './sections/StonesForm'
 import { PricingSection } from './sections/PricingForm'
 import { StockDetailsSection } from './sections/StockDetailsForm'
+import { useProductActions } from '@/hooks/product'
 import type { ProductFormProps, ProductFormData } from './ProductForm.types'
 
 export default function ProductFormDesktop({
@@ -28,12 +29,15 @@ export default function ProductFormDesktop({
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+
+  const { createProduct, updateProduct, isCreating, isUpdating } =
+    useProductActions(shopId)
+
+  const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -68,14 +72,14 @@ export default function ProductFormDesktop({
       return
     }
 
-    setIsLoading(true)
+    const result =
+      mode === 'create'
+        ? await createProduct(formData as ProductFormData, setErrors)
+        : await updateProduct(productId!, formData, setErrors)
 
-    // Mock API call
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, productId, formData })
-      setIsLoading(false)
+    if (result.success) {
       onSuccess?.()
-    }, 1500)
+    }
   }
 
   return (

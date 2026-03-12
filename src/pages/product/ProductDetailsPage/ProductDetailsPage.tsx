@@ -3,7 +3,8 @@
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { ProductDetailHeader } from '@/components/products/ProductDetailsPage/ProductDetailHeader'
 import {
   OverviewTab,
@@ -11,35 +12,32 @@ import {
   ImagesTab,
   HistoryTab,
 } from '@/components/products/ProductDetailsPage/tabs'
-import { dummyProducts } from '../mock.data'
-import type { Product } from '@/types/product.types'
+import { selectCurrentShopId } from '@/store/slices/authSlice'
+import { useProductById } from '@/hooks/product'
+import { useProductActions } from '@/hooks/product'
 
 // PRODUCT DETAILS PAGE COMPONENT
 
 export const ProductDetailsPage: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { productId } = useParams<{ productId: string }>()
+
+  const shopId = useSelector(selectCurrentShopId)!
+  const { product, isLoading } = useProductById(shopId, productId!)
+  const { calculatePrice } = useProductActions(shopId)
+
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
-
-  // Get product data - Currently using dummy data
-  // TODO: Replace with API call
-  // const { productId } = useParams()
-  // const { data: product, isLoading } = useGetProductByIdQuery(productId)
-  const product: Product = dummyProducts[0]
-  const isLoading = false
 
   // NAVIGATION HANDLERS
 
   const handleBackClick = () => {
-    // TODO: Add navigation logic
-    console.log('Navigate back to products list')
-    // navigate('/products')
+    navigate('/products')
   }
 
   const handleSettingsClick = () => {
     setIsSettingsOpen(true)
-    console.log('Open product settings/edit modal')
     // TODO: Implement product settings/edit modal
   }
 
@@ -47,123 +45,52 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab)
-    console.log('Active tab changed to:', tab)
   }
 
   // PRICING TAB HANDLERS
 
   const handleRecalculatePrice = async () => {
-    console.log('Recalculating price for product:', product._id)
-
-    // TODO: API call to recalculate price
-    // try {
-    //   const response = await fetch(
-    //     `/api/v1/shops/${product.shopId}/products/${product._id}/calculate-price`,
-    //     {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify({ useCurrentRate: true }),
-    //     }
-    //   )
-    //   const data = await response.json()
-    //   console.log('Price recalculated:', data)
-    //   // Refresh product data
-    // } catch (error) {
-    //   console.error('Error recalculating price:', error)
-    // }
+    if (!product) return
+    await calculatePrice(product._id, { useCurrentRate: true })
   }
 
   // IMAGES TAB HANDLERS
 
   const handleUploadImage = async (files: FileList) => {
-    console.log('Uploading images:', files)
-
-    // TODO: API call to upload images
-    // const formData = new FormData()
-    // Array.from(files).forEach((file) => {
-    //   formData.append('images', file)
-    // })
-
-    // try {
-    //   const response = await fetch(
-    //     `/api/v1/shops/${product.shopId}/products/${product._id}/images`,
-    //     {
-    //       method: 'POST',
-    //       body: formData,
-    //     }
-    //   )
-    //   const data = await response.json()
-    //   console.log('Images uploaded:', data)
-    //   // Refresh product data
-    // } catch (error) {
-    //   console.error('Error uploading images:', error)
-    // }
+    // TODO: image upload endpoint not in productApi yet
+    console.log('TODO: image upload endpoint not in productApi yet', files)
   }
 
   const handleDeleteImage = async (imageUrl: string) => {
-    console.log('Deleting image:', imageUrl)
-
-    // TODO: API call to delete image
-    // try {
-    //   const response = await fetch(
-    //     `/api/v1/shops/${product.shopId}/products/${product._id}/images`,
-    //     {
-    //       method: 'DELETE',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify({ imageUrl }),
-    //     }
-    //   )
-    //   const data = await response.json()
-    //   console.log('Image deleted:', data)
-    //   // Refresh product data
-    // } catch (error) {
-    //   console.error('Error deleting image:', error)
-    // }
+    // TODO: image delete endpoint not in productApi yet
+    console.log('TODO: image delete endpoint not in productApi yet', imageUrl)
   }
 
   const handleSetPrimaryImage = async (imageUrl: string) => {
-    console.log('Setting primary image:', imageUrl)
-
-    // TODO: API call to set primary image
-    // try {
-    //   const response = await fetch(
-    //     `/api/v1/shops/${product.shopId}/products/${product._id}/images/primary`,
-    //     {
-    //       method: 'PATCH',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify({ imageUrl }),
-    //     }
-    //   )
-    //   const data = await response.json()
-    //   console.log('Primary image set:', data)
-    //   // Refresh product data
-    // } catch (error) {
-    //   console.error('Error setting primary image:', error)
-    // }
+    // TODO: set primary image endpoint not in productApi yet
+    console.log('TODO: set primary image endpoint not in productApi yet', imageUrl)
   }
 
   // HISTORY TAB HANDLERS
 
   const handleLoadMoreHistory = async () => {
-    console.log('Loading more history for product:', product._id)
+    // Handled inside HistoryTab via useGetProductHistoryQuery directly
+  }
 
-    // TODO: API call to load more history
-    // try {
-    //   const response = await fetch(
-    //     `/api/v1/shops/${product.shopId}/products/${product._id}/history?limit=50&offset=${currentOffset}`,
-    //   )
-    //   const data = await response.json()
-    //   console.log('More history loaded:', data)
-    //   // Append to existing history
-    // } catch (error) {
-    //   console.error('Error loading history:', error)
-    // }
+  // GUARD - product not found
+
+  if (!isLoading && !product) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-text-secondary">{t('product.notFound')}</p>
+      </div>
+    )
   }
 
   // RENDER TAB CONTENT
 
   const renderTabContent = () => {
-    if (isLoading) {
+    if (isLoading || !product) {
       return (
         <div className="flex items-center justify-center py-12">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
@@ -216,7 +143,7 @@ export const ProductDetailsPage: React.FC = () => {
     <div className="min-h-screen bg-bg-primary">
       {/* Header with Tabs */}
       <ProductDetailHeader
-        productId={product._id}
+        productId={productId}
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onBackClick={handleBackClick}

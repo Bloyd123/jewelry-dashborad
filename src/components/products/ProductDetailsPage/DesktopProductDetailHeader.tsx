@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import {
   Settings,
   Package,
@@ -17,8 +18,8 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
-import type { Product } from '@/types/product.types'
-import { dummyProducts } from '@/pages/product/mock.data'
+import { selectCurrentShopId } from '@/store/slices/authSlice'
+import { useProductById } from '@/hooks/product'
 
 // COMPONENT PROPS
 
@@ -44,10 +45,8 @@ export const DesktopProductDetailHeader: React.FC<
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 
-  // Get product data from dummy data
-  const product: Product = productId
-    ? dummyProducts.find(p => p._id === productId) || dummyProducts[0]
-    : dummyProducts[0]
+  const shopId = useSelector(selectCurrentShopId)!
+  const { product, isLoading } = useProductById(shopId, productId ?? '')
 
   // Handle tab change
   const handleTabChange = (tab: string) => {
@@ -56,17 +55,6 @@ export const DesktopProductDetailHeader: React.FC<
       onTabChange(tab)
     }
   }
-
-  // Breadcrumb items
-  const breadcrumbItems = [
-    {
-      label: t('product.title'),
-      onClick: onBackClick,
-    },
-    {
-      label: product.name,
-    },
-  ]
 
   // Tab items
   const tabItems = [
@@ -92,6 +80,15 @@ export const DesktopProductDetailHeader: React.FC<
     },
   ]
 
+  // Loading / not found guard
+  if (isLoading || !product) {
+    return (
+      <div className="border-b border-border-secondary bg-bg-secondary px-6 py-4">
+        <div className="h-16 animate-pulse rounded-lg bg-bg-tertiary" />
+      </div>
+    )
+  }
+
   // Get category name
   const categoryName =
     typeof product.categoryId === 'object'
@@ -100,6 +97,17 @@ export const DesktopProductDetailHeader: React.FC<
 
   // Get metal display
   const metalDisplay = `${product.metal.purity} ${product.metal.type.charAt(0).toUpperCase() + product.metal.type.slice(1)}`
+
+  // Breadcrumb items
+  const breadcrumbItems = [
+    {
+      label: t('product.title'),
+      onClick: onBackClick,
+    },
+    {
+      label: product.name,
+    },
+  ]
 
   // Get status badge variant
   const getStatusVariant = (
@@ -196,12 +204,10 @@ export const DesktopProductDetailHeader: React.FC<
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  {/* Status Badge */}
                   <Badge variant={getStatusVariant(product.status)} size="sm">
                     {t(`product.status.${product.status}`)}
                   </Badge>
 
-                  {/* Sale Status Badge */}
                   <Badge
                     variant={getSaleStatusVariant(product.saleStatus)}
                     size="sm"
@@ -209,7 +215,6 @@ export const DesktopProductDetailHeader: React.FC<
                     {t(`product.saleStatus.${product.saleStatus}`)}
                   </Badge>
 
-                  {/* Active Status */}
                   <Badge
                     variant={product.isActive ? 'success' : 'error'}
                     size="sm"
@@ -219,21 +224,18 @@ export const DesktopProductDetailHeader: React.FC<
                       : t('product.common.inactive')}
                   </Badge>
 
-                  {/* Featured */}
                   {product.isFeatured && (
                     <Badge variant="info" size="sm">
                       {t('product.common.featured')}
                     </Badge>
                   )}
 
-                  {/* New Arrival */}
                   {product.isNewArrival && (
                     <Badge variant="success" size="sm">
                       {t('product.common.newArrival')}
                     </Badge>
                   )}
 
-                  {/* Bestseller */}
                   {product.isBestseller && (
                     <Badge variant="warning" size="sm">
                       {t('product.common.bestseller')}

@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 import {
   Settings,
   Package,
@@ -14,11 +15,9 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
-import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
-import { Separator } from '@/components/ui/layout/Separator/Separator'
-import type { Product } from '@/types/product.types'
-import { dummyProducts } from '@/pages/product/mock.data'
+import { selectCurrentShopId } from '@/store/slices/authSlice'
+import { useProductById } from '@/hooks/product'
 
 // COMPONENT PROPS
 
@@ -44,10 +43,8 @@ export const MobileProductDetailHeader: React.FC<
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 
-  // Get product data from dummy data
-  const product: Product = productId
-    ? dummyProducts.find(p => p._id === productId) || dummyProducts[0]
-    : dummyProducts[0]
+  const shopId = useSelector(selectCurrentShopId)!
+  const { product, isLoading } = useProductById(shopId, productId ?? '')
 
   // Handle tab change
   const handleTabChange = (tab: string) => {
@@ -56,17 +53,6 @@ export const MobileProductDetailHeader: React.FC<
       onTabChange(tab)
     }
   }
-
-  // Breadcrumb items
-  const breadcrumbItems = [
-    {
-      label: t('product.title'),
-      onClick: onBackClick,
-    },
-    {
-      label: product.name,
-    },
-  ]
 
   // Tab items
   const tabItems = [
@@ -91,6 +77,15 @@ export const MobileProductDetailHeader: React.FC<
       icon: <History className="h-4 w-4" />,
     },
   ]
+
+  // Loading / not found guard
+  if (isLoading || !product) {
+    return (
+      <div className="border-b border-border-secondary bg-bg-secondary px-4 py-3">
+        <div className="h-12 animate-pulse rounded-lg bg-bg-tertiary" />
+      </div>
+    )
+  }
 
   // Get category name
   const categoryName =
