@@ -121,21 +121,19 @@ const rootReducer = combineReducers({
   //  REDUX SLICES (Client State)
 
   // Auth: Minimal authentication state ONLY
-  auth: persistReducer(authPersistConfig, authReducer),
-
+  // auth: persistReducer(authPersistConfig, authReducer),
+  auth: authReducer,
   // User: Profile & preferences (NOT persisted - fetched from API)
   user: userReducer,
 
   //  CHANGED: Permissions now PERSISTED to localStorage
-  permissions: persistReducer(permissionsPersistConfig, permissionsReducer),
-
+  // permissions: persistReducer(permissionsPersistConfig, permissionsReducer),
+  permissions: permissionsReducer,
   // UI: User interface preferences
-  ui: persistReducer(uiPersistConfig, uiReducer),
-
+  // ui: persistReducer(uiPersistConfig, uiReducer),
+  ui: uiReducer,
   // Notifications: Toast messages (NOT persisted - runtime only)
   notification: notificationReducer,
-
-  //  RTK QUERY APIS (Server State)
 
   // Base API: Main API slice
   [baseApi.reducerPath]: baseApi.reducer,
@@ -146,17 +144,12 @@ const rootReducer = combineReducers({
   // [shopApi.reducerPath]: shopApi.reducer,
 })
 
-//
-// STORE CONFIGURATION
-//
-
 export const store = configureStore({
   reducer: rootReducer,
 
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
-        // redux-persist actions
         ignoredActions: [
           FLUSH,
           REHYDRATE,
@@ -165,13 +158,11 @@ export const store = configureStore({
           PURGE,
           REGISTER,
 
-          // RTK Query actions (IMPORTANT)
           'api/executeQuery/pending',
           'api/executeQuery/fulfilled',
           'api/executeQuery/rejected',
         ],
 
-        // Ignore RTK Query fetch metadata
         ignoredActionPaths: [
           'meta.arg',
           'payload.timestamp',
@@ -179,42 +170,22 @@ export const store = configureStore({
           'meta.baseQueryMeta.response',
         ],
 
-        // Ignore known non-serializable state paths
         ignoredPaths: ['notification.notifications'],
       },
-    })
-      // Add RTK Query middleware
-      .concat(baseApi.middleware),
+    }).concat(baseApi.middleware),
   // Add more API middlewares here:
   // .concat(customerApi.middleware)
   // .concat(productApi.middleware)
   // .concat(shopApi.middleware)
 
-  devTools: import.meta.env.DEV, // Enable Redux DevTools in development
+  devTools: import.meta.env.DEV,
 })
-
-//
-// PERSISTOR
-//
 
 export const persistor = persistStore(store)
 
-//
-// RTK QUERY LISTENERS
-//
-
-// Enable refetchOnFocus / refetchOnReconnect for RTK Query
 setupListeners(store.dispatch)
-
-//
-// TYPES
-//
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-
-//
-// EXPORTS
-//
 
 export default store

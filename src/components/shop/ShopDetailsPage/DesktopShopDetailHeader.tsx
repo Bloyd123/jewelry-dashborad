@@ -52,8 +52,8 @@ export const DesktopShopDetailHeader: React.FC<
   const [currentTab, setCurrentTab] = useState(activeTab)
 
   // Get shop data from dummy data
-const { shop, isLoading } = useShopById(shopId ?? '')
-if (isLoading || !shop) return null
+  const { shop, isLoading } = useShopById(shopId ?? '')
+  if (isLoading || !shop) return null
   // Handle tab change
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)

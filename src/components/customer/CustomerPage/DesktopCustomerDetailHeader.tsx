@@ -41,7 +41,7 @@ export const DesktopCustomerDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-const { can } = usePermissionCheck()
+  const { can } = usePermissionCheck()
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)
     if (onTabChange) {
@@ -60,13 +60,49 @@ const { can } = usePermissionCheck()
   ]
 
   const tabItems = [
-  { value: 'personal', label: t('customerDetail.tabs.personal'), icon: <User className="h-4 w-4" /> },
-  ...(can('canViewCustomerFinancials') ? [{ value: 'financial', label: t('customerDetail.tabs.financial'), icon: <Wallet className="h-4 w-4" /> }] : []),
-  ...(can('canViewCustomerHistory') ? [{ value: 'orders', label: t('customerDetail.tabs.orders'), icon: <TrendingUp className="h-4 w-4" /> }] : []),
-  { value: 'loyalty', label: t('customerDetail.tabs.loyalty'), icon: <Award className="h-4 w-4" /> },
-  { value: 'documents', label: t('customerDetail.tabs.documents'), icon: <FileText className="h-4 w-4" /> },
-  ...(can('canViewCustomerHistory') ? [{ value: 'activity', label: t('customerDetail.tabs.activity'), icon: <Activity className="h-4 w-4" /> }] : []),
-]
+    {
+      value: 'personal',
+      label: t('customerDetail.tabs.personal'),
+      icon: <User className="h-4 w-4" />,
+    },
+    ...(can('canViewCustomerFinancials')
+      ? [
+          {
+            value: 'financial',
+            label: t('customerDetail.tabs.financial'),
+            icon: <Wallet className="h-4 w-4" />,
+          },
+        ]
+      : []),
+    ...(can('canViewCustomerHistory')
+      ? [
+          {
+            value: 'orders',
+            label: t('customerDetail.tabs.orders'),
+            icon: <TrendingUp className="h-4 w-4" />,
+          },
+        ]
+      : []),
+    {
+      value: 'loyalty',
+      label: t('customerDetail.tabs.loyalty'),
+      icon: <Award className="h-4 w-4" />,
+    },
+    {
+      value: 'documents',
+      label: t('customerDetail.tabs.documents'),
+      icon: <FileText className="h-4 w-4" />,
+    },
+    ...(can('canViewCustomerHistory')
+      ? [
+          {
+            value: 'activity',
+            label: t('customerDetail.tabs.activity'),
+            icon: <Activity className="h-4 w-4" />,
+          },
+        ]
+      : []),
+  ]
 
   const fullName = `${customer.firstName} ${customer.lastName || ''}`.trim()
 
@@ -90,16 +126,16 @@ const { can } = usePermissionCheck()
 
               <Breadcrumb items={breadcrumbItems} showHome={true} />
             </div>
-{can('canUpdateCustomer') && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onSettingsClick}
-              className="gap-2"
-            >
-              <Settings className="h-4 w-4" />
-              {t('customer.common.settings')}
-            </Button>
+            {can('canUpdateCustomer') && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onSettingsClick}
+                className="gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                {t('customer.common.settings')}
+              </Button>
             )}
           </div>
 

@@ -41,8 +41,10 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
 
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
-  const { analytics, isLoading, refetch } = useCustomerAnalytics(currentShopId || '')
-const { can } = usePermissionCheck()
+  const { analytics, isLoading, refetch } = useCustomerAnalytics(
+    currentShopId || ''
+  )
+  const { can } = usePermissionCheck()
   // HANDLERS
 
   const handleAddCustomer = () => {
@@ -51,9 +53,9 @@ const { can } = usePermissionCheck()
     // TODO: Open add customer modal
   }
 
-const handleRefreshAnalytics = () => {
-  refetch()
-}
+  const handleRefreshAnalytics = () => {
+    refetch()
+  }
 
   // TAB CONFIGURATION
 
@@ -69,12 +71,18 @@ const handleRefreshAnalytics = () => {
   //     icon: <BarChart3 className="h-4 w-4" />,
   //   },
   // ]
-const tabs = [
-  { value: 'table', label: t('customer.tabs.table'), icon: <Users /> },
-  ...(can('canViewCustomerAnalytics') ? [
-    { value: 'analytics', label: t('customer.tabs.analytics'), icon: <BarChart3 /> }
-  ] : [])
-]
+  const tabs = [
+    { value: 'table', label: t('customer.tabs.table'), icon: <Users /> },
+    ...(can('canViewCustomerAnalytics')
+      ? [
+          {
+            value: 'analytics',
+            label: t('customer.tabs.analytics'),
+            icon: <BarChart3 />,
+          },
+        ]
+      : []),
+  ]
   // RENDER
 
   return (
@@ -95,19 +103,19 @@ const tabs = [
 
             {/* Action Button */}
             {can('canCreateCustomer') && (
-            <Button
-              onClick={handleAddCustomer}
-              variant="default"
-              size="default"
-              className="whitespace-nowrap"
-              aria-label={t('customer.actions.addNew')}
-            >
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">
-                {t('customer.actions.addNew')}
-              </span>
-              <span className="sm:hidden">{t('customer.actions.add')}</span>
-            </Button>
+              <Button
+                onClick={handleAddCustomer}
+                variant="default"
+                size="default"
+                className="whitespace-nowrap"
+                aria-label={t('customer.actions.addNew')}
+              >
+                <Plus className="h-4 w-4" />
+                <span className="hidden sm:inline">
+                  {t('customer.actions.addNew')}
+                </span>
+                <span className="sm:hidden">{t('customer.actions.add')}</span>
+              </Button>
             )}
           </div>
         </div>

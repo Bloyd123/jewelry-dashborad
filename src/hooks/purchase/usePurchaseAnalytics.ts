@@ -35,7 +35,8 @@ export const usePurchaseAnalytics = (
 
     // Payment completion rate
     const paidCount =
-      analytics.paymentStatusBreakdown.find(item => item._id === 'paid')?.count || 0
+      analytics.paymentStatusBreakdown.find(item => item._id === 'paid')
+        ?.count || 0
     const paymentCompletionRate =
       analytics.totalPurchases > 0
         ? (paidCount / analytics.totalPurchases) * 100
@@ -50,8 +51,10 @@ export const usePurchaseAnalytics = (
     // Monthly average
     const monthlyAverage =
       analytics.monthlyTrend.length > 0
-        ? analytics.monthlyTrend.reduce((sum, month) => sum + month.totalValue, 0) /
-          analytics.monthlyTrend.length
+        ? analytics.monthlyTrend.reduce(
+            (sum, month) => sum + month.totalValue,
+            0
+          ) / analytics.monthlyTrend.length
         : 0
 
     // Growth rate (comparing latest month to previous)
@@ -207,24 +210,20 @@ export const usePurchaseComparison = (
   previousEnd: string
 ) => {
   // Current period
-  const {
-    data: currentAnalytics,
-    isLoading: isLoadingCurrent,
-  } = useGetPurchaseAnalyticsQuery({
-    shopId,
-    startDate: currentStart,
-    endDate: currentEnd,
-  })
+  const { data: currentAnalytics, isLoading: isLoadingCurrent } =
+    useGetPurchaseAnalyticsQuery({
+      shopId,
+      startDate: currentStart,
+      endDate: currentEnd,
+    })
 
   // Previous period
-  const {
-    data: previousAnalytics,
-    isLoading: isLoadingPrevious,
-  } = useGetPurchaseAnalyticsQuery({
-    shopId,
-    startDate: previousStart,
-    endDate: previousEnd,
-  })
+  const { data: previousAnalytics, isLoading: isLoadingPrevious } =
+    useGetPurchaseAnalyticsQuery({
+      shopId,
+      startDate: previousStart,
+      endDate: previousEnd,
+    })
 
   const comparison = useMemo(() => {
     if (!currentAnalytics || !previousAnalytics) return null

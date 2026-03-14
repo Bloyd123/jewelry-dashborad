@@ -42,7 +42,7 @@ import {
 // TYPES & INTERFACES
 //
 
-export interface StatisticsData  {
+export interface StatisticsData {
   totalSales: {
     amount: number
     growth: string
@@ -117,7 +117,7 @@ export interface StatisticsData  {
 
 export interface StatisticsTabProps {
   shopId: string
-  statistics?: StatisticsData 
+  statistics?: StatisticsData
   loading?: boolean
   onRefresh?: () => void
   className?: string

@@ -49,9 +49,9 @@ export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-const { shop, isLoading } = useShopById(shopId ?? '')
+  const { shop, isLoading } = useShopById(shopId ?? '')
 
-if (isLoading || !shop) return null
+  if (isLoading || !shop) return null
 
   // Handle tab change
   const handleTabChange = (tab: string) => {

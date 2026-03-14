@@ -13,11 +13,9 @@ import { useAuth } from '@/hooks/auth'
 import { useCustomersList } from '@/hooks/customer/useCustomersList'
 import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
-
 export const CustomerTable: React.FC = () => {
   const { t } = useTranslation()
-  
-  
+
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
@@ -32,7 +30,7 @@ export const CustomerTable: React.FC = () => {
   })
   const navigate = useNavigate()
   const { can } = usePermissionCheck()
-  
+
   const { currentShopId } = useAuth()
   const { customers, pagination, isLoading, error } = useCustomersList(
     currentShopId!,
@@ -81,7 +79,7 @@ export const CustomerTable: React.FC = () => {
 
   const handleEdit = (customer: Customer) => {
     console.log('Edit Customer:', customer)
-    navigate(`/customers/edit/${customer._id}`) 
+    navigate(`/customers/edit/${customer._id}`)
   }
 
   const handleAddPoints = (customer: Customer) => {
@@ -106,7 +104,7 @@ export const CustomerTable: React.FC = () => {
 
   const handleBulkEdit = () => {
     if (selectedCustomers.length === 1) {
-      navigate(`/customers/edit/${selectedCustomers[0]._id}`) 
+      navigate(`/customers/edit/${selectedCustomers[0]._id}`)
     }
   }
 
@@ -144,24 +142,28 @@ export const CustomerTable: React.FC = () => {
     })
   }
 
-
   const rowActions = useMemo(
     () =>
-          getCustomerRowActions(
+      getCustomerRowActions(
+        handleViewDetails,
+        can('canUpdateCustomer') ? handleEdit : () => {},
+        can('canAddLoyaltyPoints') ? handleAddPoints : () => {},
+        can('canBlacklistCustomer') ? handleBlacklist : () => {},
+        can('canDeleteCustomers') ? handleDelete : () => {}
+      ),
+    [
       handleViewDetails,
-      can('canUpdateCustomer') ? handleEdit : () => {},
-      can('canAddLoyaltyPoints') ? handleAddPoints : () => {},
-      can('canBlacklistCustomer') ? handleBlacklist : () => {},
-      can('canDeleteCustomers') ? handleDelete : () => {}
-    ),
-  [handleViewDetails, handleEdit, handleAddPoints, handleBlacklist, handleDelete, can]
-)
-
+      handleEdit,
+      handleAddPoints,
+      handleBlacklist,
+      handleDelete,
+      can,
+    ]
+  )
 
   const selectedCustomers = useMemo(() => {
     return customers.filter(customer => selectedRows.has(customer._id))
   }, [customers, selectedRows])
-
 
   return (
     <div className="w-full space-y-4">

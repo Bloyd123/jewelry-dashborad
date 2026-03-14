@@ -71,7 +71,7 @@ const LoginForm: React.FC = () => {
       }
 
       setLoading(true)
-      setErrors({}) 
+      setErrors({})
 
       try {
         const loginData: LoginRequest = {

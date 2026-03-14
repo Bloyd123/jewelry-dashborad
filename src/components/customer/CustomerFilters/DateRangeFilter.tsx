@@ -14,7 +14,6 @@ interface CustomerDateRangeFilterProps {
   disabled?: boolean
 }
 
-
 export const CustomerDateRangeFilter = React.forwardRef<
   HTMLButtonElement,
   CustomerDateRangeFilterProps

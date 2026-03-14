@@ -54,7 +54,6 @@ export const Login2FAStep: React.FC = () => {
     }
   }, [backupCode])
 
-
   const handleVerifyAuthenticator = async () => {
     if (code.length !== 6 || !tempToken || hasCalledRef.current || isVerifying)
       return
@@ -170,7 +169,6 @@ export const Login2FAStep: React.FC = () => {
   }
 
   const isLoading = loading || isVerifying
-
 
   return (
     <div className="w-full max-w-md">

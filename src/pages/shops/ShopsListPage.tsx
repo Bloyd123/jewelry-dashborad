@@ -32,7 +32,7 @@ export const ShopListPage = () => {
   // Handler for adding new shop
   const handleAddShop = () => {
     // TODO: Navigate to create shop page or open modal
- navigate('/shops/add')
+    navigate('/shops/add')
   }
 
   return (

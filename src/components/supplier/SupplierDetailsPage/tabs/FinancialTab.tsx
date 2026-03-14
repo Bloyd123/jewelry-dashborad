@@ -25,7 +25,6 @@ interface SupplierFinancialTabProps {
   supplier: Supplier
 }
 
-
 interface PaymentHistory {
   _id: string
   date: string
@@ -137,8 +136,9 @@ const dummyPaymentHistory: PaymentHistory[] = [
 // MAIN COMPONENT
 //
 
-const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier }) => {
-
+const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
+  supplier,
+}) => {
   const { t } = useTranslation()
 
   const [paymentHistory] = useState<PaymentHistory[]>(dummyPaymentHistory)
@@ -171,12 +171,12 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
   }
 
   // Calculate credit utilization percentage
-const creditUtilization =
-  supplier.creditLimit > 0
-    ? Math.round(
-        (Math.abs(supplier.currentBalance) / supplier.creditLimit) * 100
-      )
-    : 0
+  const creditUtilization =
+    supplier.creditLimit > 0
+      ? Math.round(
+          (Math.abs(supplier.currentBalance) / supplier.creditLimit) * 100
+        )
+      : 0
 
   // Payment history table columns
   const paymentColumns: DataTableColumn<PaymentHistory>[] = [
@@ -362,8 +362,7 @@ const creditUtilization =
               </span>
               <span className="font-medium text-status-success">
                 {formatCurrency(
-                  supplier.creditLimit -
-                    Math.abs(supplier.currentBalance)
+                  supplier.creditLimit - Math.abs(supplier.currentBalance)
                 )}
               </span>
             </div>

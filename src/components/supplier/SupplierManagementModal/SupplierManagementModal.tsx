@@ -37,24 +37,23 @@ export const SupplierManagementModal = ({
   const { t } = useTranslation()
   if (!supplier?.shopId) return null
   const {
-  deleteSupplier,
-  blacklistSupplier,
-  removeBlacklist,
-  markAsPreferred, 
-  restoreSupplier,
-  removePreferred,
-  updateBalance,
-  updateRating,
+    deleteSupplier,
+    blacklistSupplier,
+    removeBlacklist,
+    markAsPreferred,
+    restoreSupplier,
+    removePreferred,
+    updateBalance,
+    updateRating,
     isDeleting,
-  isBlacklisting,
-  isRemovingBlacklist,
-  isMarkingPreferred,
-  isRestoring,
-  isRemovingPreferred,
-  isUpdatingBalance,
-  isUpdatingRating,
-} = useSupplierActions(supplier.shopId)
-
+    isBlacklisting,
+    isRemovingBlacklist,
+    isMarkingPreferred,
+    isRestoring,
+    isRemovingPreferred,
+    isUpdatingBalance,
+    isUpdatingRating,
+  } = useSupplierActions(supplier.shopId)
 
   const isMobile = useMediaQuery('(max-width: 768px)')
 
@@ -72,67 +71,62 @@ export const SupplierManagementModal = ({
 
   // ACTION HANDLERS (Mock - No API Integration)
 
-// ✅ GOOD - Error handling
-const handleUpdateBalance = async (data: any) => {
-  try {
-    const result = await updateBalance(
-      supplier._id, 
-      data, 
-      supplier.businessName
-    )
-    
-    if (result.success) {
-      handleActionSuccess()
+  // ✅ GOOD - Error handling
+  const handleUpdateBalance = async (data: any) => {
+    try {
+      const result = await updateBalance(
+        supplier._id,
+        data,
+        supplier.businessName
+      )
+
+      if (result.success) {
+        handleActionSuccess()
+      }
+      // Error notification already shown by hook
+    } catch (error) {
+      // Hook already handles error notification
+      console.error('Balance update failed:', error)
     }
-    // Error notification already shown by hook
-  } catch (error) {
-    // Hook already handles error notification
-    console.error('Balance update failed:', error)
   }
-}
 
-
-const handleUpdateRating = async (data: any) => {
-  await updateRating(supplier._id, data)
-  handleActionSuccess()
-}
-
-const handleMarkPreferred = async () => {
-  await markAsPreferred(supplier._id, supplier.businessName)
-  handleActionSuccess()
-}
-
-const handleRemovePreferred = async () => {
-  await removePreferred(supplier._id, supplier.businessName)
-  handleActionSuccess()
-}
-
-
-const handleBlacklist = async (reason: string) => {
-  await blacklistSupplier(supplier._id, reason, supplier.businessName)
-  handleActionSuccess()
-}
-
-const handleRemoveBlacklist = async () => {
-  await removeBlacklist(supplier._id, supplier.businessName)
-  handleActionSuccess()
-}
-
-
-const handleDelete = async () => {
-  const result = await deleteSupplier(supplier._id, supplier.businessName)
-
-  if (result?.success) {
+  const handleUpdateRating = async (data: any) => {
+    await updateRating(supplier._id, data)
     handleActionSuccess()
   }
-}
 
+  const handleMarkPreferred = async () => {
+    await markAsPreferred(supplier._id, supplier.businessName)
+    handleActionSuccess()
+  }
 
-const handleRestore = async () => {
-  await restoreSupplier(supplier._id)
-  handleActionSuccess()
-}
+  const handleRemovePreferred = async () => {
+    await removePreferred(supplier._id, supplier.businessName)
+    handleActionSuccess()
+  }
 
+  const handleBlacklist = async (reason: string) => {
+    await blacklistSupplier(supplier._id, reason, supplier.businessName)
+    handleActionSuccess()
+  }
+
+  const handleRemoveBlacklist = async () => {
+    await removeBlacklist(supplier._id, supplier.businessName)
+    handleActionSuccess()
+  }
+
+  const handleDelete = async () => {
+    const result = await deleteSupplier(supplier._id, supplier.businessName)
+
+    if (result?.success) {
+      handleActionSuccess()
+    }
+  }
+
+  const handleRestore = async () => {
+    await restoreSupplier(supplier._id)
+    handleActionSuccess()
+  }
 
   // GET MODAL CONFIG
 
@@ -175,7 +169,7 @@ const handleRestore = async () => {
             supplier={supplier}
             onSubmit={handleUpdateBalance}
             onCancel={handleClose}
-             isLoading={isUpdatingBalance}
+            isLoading={isUpdatingBalance}
           />
         )
 
@@ -185,7 +179,7 @@ const handleRestore = async () => {
             supplier={supplier}
             onSubmit={handleUpdateRating}
             onCancel={handleClose}
-              isLoading={isUpdatingRating}
+            isLoading={isUpdatingRating}
           />
         )
 
@@ -196,7 +190,6 @@ const handleRestore = async () => {
             onMarkPreferred={handleMarkPreferred}
             onRemovePreferred={handleRemovePreferred}
             onCancel={handleClose}
-
           />
         )
 
@@ -217,8 +210,8 @@ const handleRestore = async () => {
             onDelete={handleDelete}
             onRestore={handleRestore}
             onCancel={handleClose}
-              isDeleting={isDeleting}       // ⭐ ADD THIS
-  isRestoring={isRestoring}   
+            isDeleting={isDeleting} // ⭐ ADD THIS
+            isRestoring={isRestoring}
           />
         )
 

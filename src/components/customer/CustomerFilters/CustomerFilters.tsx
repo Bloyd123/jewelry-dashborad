@@ -38,7 +38,6 @@ interface CustomerFiltersProps {
   onClearAll: () => void
 }
 
-
 export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
   filters,
   onFiltersChange,
@@ -109,7 +108,6 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
     if (filters.dateRange?.from) count++
     return count
   }, [filters])
-
 
   if (isDesktop) {
     return (
@@ -206,7 +204,6 @@ export const CustomerFilters: React.FC<CustomerFiltersProps> = ({
       </>
     )
   }
-
 
   return (
     <>

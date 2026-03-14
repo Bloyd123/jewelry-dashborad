@@ -50,10 +50,10 @@ export default function AddShopPage() {
   const isEditMode = Boolean(shopId)
 
   // Real auth
-const { userRole, auth } = useAuthState()
-const organizationId = useAppSelector(
-  state => state.user.profile?.organizationId ?? ''
-)
+  const { userRole, auth } = useAuthState()
+  const organizationId = useAppSelector(
+    state => state.user.profile?.organizationId ?? ''
+  )
   // Real API — fetch shop if edit mode
   const { shop, isLoading } = useShopById(shopId ?? '')
 
@@ -78,7 +78,7 @@ const organizationId = useAppSelector(
   }
 
   // No organization selected
-  if (!organizationId  && !isEditMode) {
+  if (!organizationId && !isEditMode) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p className="text-text-secondary">
@@ -97,7 +97,7 @@ const organizationId = useAppSelector(
   return (
     <ShopForm
       shopId={shopId}
-      organizationId={organizationId  ?? ''}
+      organizationId={organizationId ?? ''}
       initialData={initialData}
       onSuccess={() => navigate('/shops')}
       onCancel={() => navigate('/shops')}

@@ -1,7 +1,7 @@
 // FILE: src/pages/customer/AddCustomer/index.tsx
 // Add/Edit Customer Page - Production Ready
 
-import { useMemo ,useEffect} from 'react'
+import { useMemo, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Loader2 } from 'lucide-react'
@@ -88,7 +88,7 @@ export default function AddCustomerPage() {
   const { customerId } = useParams()
   const { t } = useTranslation()
   const isEditMode = Boolean(customerId)
-   const { can } = usePermissionCheck()
+  const { can } = usePermissionCheck()
 
   // Get current shop from Redux
   const shopId = currentShopId || ''
@@ -98,14 +98,14 @@ export default function AddCustomerPage() {
     shopId,
     customerId || ''
   )
-useEffect(() => {
-  if (isEditMode && !can('canUpdateCustomer')) {
-    navigate('/customers')
-  }
-  if (!isEditMode && !can('canCreateCustomer')) {
-    navigate('/customers')
-  }
-}, [isEditMode, can, navigate])
+  useEffect(() => {
+    if (isEditMode && !can('canUpdateCustomer')) {
+      navigate('/customers')
+    }
+    if (!isEditMode && !can('canCreateCustomer')) {
+      navigate('/customers')
+    }
+  }, [isEditMode, can, navigate])
   // Convert customer to form data
   const initialData = useMemo(() => {
     if (!customer) return undefined

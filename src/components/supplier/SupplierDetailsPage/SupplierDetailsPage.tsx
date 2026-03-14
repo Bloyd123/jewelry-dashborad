@@ -56,7 +56,6 @@ import { SupplierManagementModal } from '@/components/supplier/SupplierManagemen
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 import { useAuth } from '@/hooks/auth'
 
-
 // COPY BUTTON COMPONENT
 
 const CopyButton: React.FC<{ text: string }> = ({ text }) => {
@@ -104,66 +103,52 @@ const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   )
 }
 
-// MAIN 
+// MAIN
 
 const SupplierDetailPage: React.FC = () => {
   const { supplierId } = useParams<{ supplierId: string }>()
-const navigate = useNavigate()
+  const navigate = useNavigate()
   const { currentShopId } = useAuth()
-  
 
+  if (!currentShopId) {
+    return <div className="p-6 text-status-error">No shop selected</div>
+  }
 
-if (!currentShopId) {
-  return (
-    <div className="p-6 text-status-error">
-      No shop selected
-    </div>
+  const shopId = currentShopId
+
+  const { supplier, isLoading, error, refetch } = useSupplierById(
+    shopId,
+    supplierId!
   )
-}
-
-const shopId = currentShopId
-
-const {
-  supplier,
-  isLoading,
-  error,
-  refetch,
-} = useSupplierById(shopId, supplierId!)
-
 
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('overview')
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
   const [managementAction, setManagementAction] =
     useState<ManagementAction | null>(null)
-const handleManagementSuccess = async () => {
-  await refetch()
-  setIsManagementModalOpen(false)
-  setManagementAction(null)
-}
+  const handleManagementSuccess = async () => {
+    await refetch()
+    setIsManagementModalOpen(false)
+    setManagementAction(null)
+  }
 
   if (isLoading) {
-  return <div className="p-6">Loading supplier...</div>
-}
+    return <div className="p-6">Loading supplier...</div>
+  }
 
-if (error || !supplier) {
-  return (
-    <div className="p-6 text-status-error">
-      Failed to load supplier
-    </div>
-  )
-}
+  if (error || !supplier) {
+    return <div className="p-6 text-status-error">Failed to load supplier</div>
+  }
 
-  const supplierData = supplier 
+  const supplierData = supplier
 
-
-const breadcrumbItems = [
-  { 
-    label: t('suppliers.title'), 
-    onClick: () => navigate('/suppliers')  
-  },
-  { label: supplierData.businessName },
-]
+  const breadcrumbItems = [
+    {
+      label: t('suppliers.title'),
+      onClick: () => navigate('/suppliers'),
+    },
+    { label: supplierData.businessName },
+  ]
 
   // Tab items
   const tabItems = [
@@ -190,11 +175,9 @@ const breadcrumbItems = [
   ]
 
   // Handle back navigation
-const handleBackClick = () => {
-  navigate('/suppliers')
-}
-
-
+  const handleBackClick = () => {
+    navigate('/suppliers')
+  }
 
   // RENDER
 
@@ -230,8 +213,11 @@ const handleBackClick = () => {
                   <Download className="h-4 w-4" />
                   {t('common.export')}
                 </Button>
-                <Button variant="outline" size="sm" className="gap-2"
-                 onClick={() => navigate(`/suppliers/edit/${supplierId}`)} 
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-2"
+                  onClick={() => navigate(`/suppliers/edit/${supplierId}`)}
                 >
                   <Edit className="h-4 w-4" />
                   {t('common.edit')}
@@ -243,10 +229,10 @@ const handleBackClick = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
- <DropdownMenuItem onClick={refetch}>
-  <RefreshCw className="mr-2 h-4 w-4" />
-  {t('suppliers.refreshData')}
-</DropdownMenuItem>
+                    <DropdownMenuItem onClick={refetch}>
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      {t('suppliers.refreshData')}
+                    </DropdownMenuItem>
 
                     <DropdownMenuItem
                       onClick={() => {
@@ -376,11 +362,13 @@ const handleBackClick = () => {
           TAB CONTENT SECTION
            */}
       <div className="p-6">
-{activeTab === 'overview' && (
-  <SupplierOverviewTab supplier={supplierData} />
-)}
+        {activeTab === 'overview' && (
+          <SupplierOverviewTab supplier={supplierData} />
+        )}
 
-        {activeTab === 'financial' && <SupplierFinancialTab supplier={supplierData}  />}
+        {activeTab === 'financial' && (
+          <SupplierFinancialTab supplier={supplierData} />
+        )}
         {activeTab === 'documents' && <SupplierDocumentsTab />}
         {/* {activeTab === 'activity' && <SupplierActivityTab />}  */}
       </div>

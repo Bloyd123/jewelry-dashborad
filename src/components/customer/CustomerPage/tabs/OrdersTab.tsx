@@ -59,7 +59,6 @@ interface OrdersTabProps {
 export const OrdersTab: React.FC<OrdersTabProps> = ({ customer }) => {
   const { t } = useTranslation()
 
-
   const columns: DataTableColumn<Order>[] = [
     {
       id: 'orderNumber',
@@ -119,7 +118,7 @@ export const OrdersTab: React.FC<OrdersTabProps> = ({ customer }) => {
       <StatCardGrid columns={3}>
         <StatCard
           title={t('customerOrders.totalOrders')}
-          value={customer.statistics?.totalOrders }
+          value={customer.statistics?.totalOrders}
           icon={ShoppingBag}
           variant="info"
           size="md"

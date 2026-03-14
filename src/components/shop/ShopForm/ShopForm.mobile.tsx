@@ -103,8 +103,13 @@ export default function ShopFormMobile({
       // Navigate to first step with errors
       const firstErrorStep = STEPS.findIndex(step => {
         return Object.keys(newErrors).some(key => {
-          if (step.id === 'basic' && ['name', 'shopType', 'category'].includes(key)) return true
-          if (step.id === 'contact' && ['phone', 'email'].includes(key)) return true
+          if (
+            step.id === 'basic' &&
+            ['name', 'shopType', 'category'].includes(key)
+          )
+            return true
+          if (step.id === 'contact' && ['phone', 'email'].includes(key))
+            return true
           if (step.id === 'address' && key.startsWith('address.')) return true
           return false
         })

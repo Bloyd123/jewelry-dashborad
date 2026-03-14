@@ -47,13 +47,49 @@ export const MobileCustomerDetailHeader: React.FC<
     }
   }
   const tabItems = [
-  { value: 'personal', label: t('customerDetail.tabs.personal'), icon: <User className="h-4 w-4" /> },
-  ...(can('canViewCustomerFinancials') ? [{ value: 'financial', label: t('customerDetail.tabs.financial'), icon: <Wallet className="h-4 w-4" /> }] : []),
-  ...(can('canViewCustomerHistory') ? [{ value: 'orders', label: t('customerDetail.tabs.orders'), icon: <TrendingUp className="h-4 w-4" /> }] : []),
-  { value: 'loyalty', label: t('customerDetail.tabs.loyalty'), icon: <Award className="h-4 w-4" /> },
-  { value: 'documents', label: t('customerDetail.tabs.documents'), icon: <FileText className="h-4 w-4" /> },
-  ...(can('canViewCustomerHistory') ? [{ value: 'activity', label: t('customerDetail.tabs.activity'), icon: <Activity className="h-4 w-4" /> }] : []),
-]
+    {
+      value: 'personal',
+      label: t('customerDetail.tabs.personal'),
+      icon: <User className="h-4 w-4" />,
+    },
+    ...(can('canViewCustomerFinancials')
+      ? [
+          {
+            value: 'financial',
+            label: t('customerDetail.tabs.financial'),
+            icon: <Wallet className="h-4 w-4" />,
+          },
+        ]
+      : []),
+    ...(can('canViewCustomerHistory')
+      ? [
+          {
+            value: 'orders',
+            label: t('customerDetail.tabs.orders'),
+            icon: <TrendingUp className="h-4 w-4" />,
+          },
+        ]
+      : []),
+    {
+      value: 'loyalty',
+      label: t('customerDetail.tabs.loyalty'),
+      icon: <Award className="h-4 w-4" />,
+    },
+    {
+      value: 'documents',
+      label: t('customerDetail.tabs.documents'),
+      icon: <FileText className="h-4 w-4" />,
+    },
+    ...(can('canViewCustomerHistory')
+      ? [
+          {
+            value: 'activity',
+            label: t('customerDetail.tabs.activity'),
+            icon: <Activity className="h-4 w-4" />,
+          },
+        ]
+      : []),
+  ]
 
   const fullName = `${customer.firstName} ${customer.lastName || ''}`.trim()
 
@@ -71,18 +107,17 @@ export const MobileCustomerDetailHeader: React.FC<
               <ChevronLeft className="h-4 w-4" />
               {t('customer.common.backToList')}
             </Button>
-{can('canUpdateCustomer') && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onSettingsClick}
-              className="gap-2"
-            >
-              <Settings className="h-4 w-4" />
-            </Button>
+            {can('canUpdateCustomer') && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onSettingsClick}
+                className="gap-2"
+              >
+                <Settings className="h-4 w-4" />
+              </Button>
             )}
           </div>
-
 
           <div className="space-y-3">
             <div className="flex items-start gap-3">

@@ -14,7 +14,14 @@ import { selectCurrentShopId } from '@/store/slices/authSlice'
 import { useProductsList } from '@/hooks/product'
 import { useProductActions } from '@/hooks/product'
 import { useProductBulkActions } from '@/hooks/product'
-import type { Product, MetalType, MetalPurity, ProductStatus, SaleStatus, Gender } from '@/types/product.types'
+import type {
+  Product,
+  MetalType,
+  MetalPurity,
+  ProductStatus,
+  SaleStatus,
+  Gender,
+} from '@/types/product.types'
 
 // MAIN COMPONENT
 
@@ -61,12 +68,8 @@ export const ProductTable: React.FC = () => {
 
   // PRODUCT ACTIONS (delete, stock update, etc.)
 
-  const {
-    deleteProduct,
-    updateStock,
-    calculatePrice,
-    isDeleting,
-  } = useProductActions(shopId)
+  const { deleteProduct, updateStock, calculatePrice, isDeleting } =
+    useProductActions(shopId)
 
   // BULK ACTIONS
 

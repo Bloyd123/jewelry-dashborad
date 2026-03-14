@@ -16,7 +16,6 @@ interface CustomerMembershipFilterProps {
   disabled?: boolean
 }
 
-
 export const CustomerMembershipFilter = React.forwardRef<
   HTMLButtonElement,
   CustomerMembershipFilterProps

@@ -14,11 +14,10 @@ export const DeleteSupplierSection = ({
   onDelete,
   onRestore,
   onCancel,
-   isDeleting = false,   
-  isRestoring = false,  
+  isDeleting = false,
+  isRestoring = false,
 }: DeleteSupplierSectionProps) => {
   const { t } = useTranslation()
-
 
   const isDeleted = !!supplier.deletedAt
 

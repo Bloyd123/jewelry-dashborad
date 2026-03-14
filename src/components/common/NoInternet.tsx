@@ -1,14 +1,14 @@
 // FILE: components/common/NoInternet.tsx
 
 import { WifiOff, RotateCw } from 'lucide-react'
-import { useTranslation } from 'react-i18next' 
+import { useTranslation } from 'react-i18next'
 
 interface NoInternetProps {
   checkInternetConnection: () => void
 }
 
 export const NoInternet = ({ checkInternetConnection }: NoInternetProps) => {
-  const { t } = useTranslation() 
+  const { t } = useTranslation()
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-bg-primary">
       <div className="flex max-w-md flex-col items-center space-y-4 px-4">

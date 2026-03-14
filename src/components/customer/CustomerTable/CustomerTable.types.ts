@@ -18,7 +18,6 @@ export interface Customer {
   createdAt: string
 }
 
-
 export const MOCK_CUSTOMERS: Customer[] = [
   {
     _id: '1',

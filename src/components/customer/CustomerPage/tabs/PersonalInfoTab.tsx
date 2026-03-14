@@ -51,12 +51,10 @@ interface PersonalInfoTabProps {
   customer: Customer
 }
 
-
 export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
   customer,
 }) => {
   const { t } = useTranslation()
-
 
   const BasicInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -148,7 +146,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
       </div>
     </div>
   )
-
 
   const ContactInfoSection = () => (
     <div className="space-y-4 p-4">
@@ -313,7 +310,6 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
       </div>
     </div>
   )
-
 
   const PreferencesSection = () => (
     <div className="space-y-4 p-4">

@@ -71,14 +71,15 @@ const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
 // COMPONENT PROPS
 
 interface ActivityLogsTabProps {
-customer: Customer
+  customer: Customer
 }
 
 // ACTIVITY LOGS TAB COMPONENT
 
-export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({ customer }) => {
+export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
+  customer,
+}) => {
   const { t } = useTranslation()
-
 
   const getActivityIcon = (type: ActivityLog['type']) => {
     switch (type) {

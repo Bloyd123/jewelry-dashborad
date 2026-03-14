@@ -13,7 +13,6 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 
-
 export type AlertVariant = 'default' | 'success' | 'warning' | 'error' | 'info'
 export type AlertSize = 'sm' | 'md' | 'lg'
 
@@ -37,7 +36,6 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string
 }
 
-
 const getVariantClasses = (variant: AlertVariant): string => {
   const variants: Record<AlertVariant, string> = {
     default: 'bg-bg-secondary border-border-primary text-text-primary',
@@ -60,7 +58,6 @@ const getSizeClasses = (size: AlertSize): string => {
   return sizes[size]
 }
 
-
 const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   const icons: Record<AlertVariant, LucideIcon> = {
     default: Info,
@@ -71,7 +68,6 @@ const getDefaultIcon = (variant: AlertVariant): LucideIcon => {
   }
   return icons[variant]
 }
-
 
 export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
@@ -164,7 +160,6 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 
 Alert.displayName = 'Alert'
 
-
 export interface AlertTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {
   children: React.ReactNode
@@ -190,7 +185,6 @@ export const AlertTitle = React.forwardRef<HTMLHeadingElement, AlertTitleProps>(
 
 AlertTitle.displayName = 'AlertTitle'
 
-
 export interface AlertDescriptionProps
   extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -213,7 +207,6 @@ export const AlertDescription = React.forwardRef<
 })
 
 AlertDescription.displayName = 'AlertDescription'
-
 
 export interface AlertActionProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

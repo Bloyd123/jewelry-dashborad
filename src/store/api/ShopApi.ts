@@ -33,8 +33,6 @@ import type {
 
 export const shopApi = baseApi.injectEndpoints({
   endpoints: build => ({
-
-
     // GET ALL SHOPS (with filters & pagination)
     // GET /api/v1/shops
 
@@ -52,7 +50,6 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // GET SHOP BY ID
     // GET /api/v1/shops/:shopId
 
@@ -61,11 +58,8 @@ export const shopApi = baseApi.injectEndpoints({
         url: replacePathParams(SHOP_ENDPOINTS.GET_BY_ID, { shopId }),
       }),
       transformResponse: (response: ShopDetailResponse) => response.data,
-      providesTags: (result, error, shopId) => [
-        { type: 'Shop', id: shopId },
-      ],
+      providesTags: (result, error, shopId) => [{ type: 'Shop', id: shopId }],
     }),
-
 
     // CREATE SHOP
     // POST /api/v1/shops
@@ -80,11 +74,13 @@ export const shopApi = baseApi.injectEndpoints({
       invalidatesTags: [{ type: 'ShopList', id: 'LIST' }],
     }),
 
-
     // UPDATE SHOP
     // PUT /api/v1/shops/:shopId
 
-    updateShop: build.mutation<Shop, { shopId: string; data: Partial<ShopFormData> }>({
+    updateShop: build.mutation<
+      Shop,
+      { shopId: string; data: Partial<ShopFormData> }
+    >({
       query: ({ shopId, data }) => ({
         url: replacePathParams(SHOP_ENDPOINTS.UPDATE, { shopId }),
         method: 'PUT',
@@ -96,7 +92,6 @@ export const shopApi = baseApi.injectEndpoints({
         { type: 'ShopList', id: 'LIST' },
       ],
     }),
-
 
     // DELETE SHOP (soft delete)
     // DELETE /api/v1/shops/:shopId
@@ -112,11 +107,13 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // TOGGLE SHOP STATUS (activate / deactivate)
     // PATCH /api/v1/shops/:shopId/status
 
-    toggleShopStatus: build.mutation<Shop, { shopId: string; isActive: boolean }>({
+    toggleShopStatus: build.mutation<
+      Shop,
+      { shopId: string; isActive: boolean }
+    >({
       query: ({ shopId, isActive }) => ({
         url: replacePathParams(SHOP_ENDPOINTS.TOGGLE_STATUS, { shopId }),
         method: 'PATCH',
@@ -129,11 +126,13 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // UPDATE SHOP SETTINGS
     // PUT /api/v1/shops/:shopId/settings
 
-    updateShopSettings: build.mutation<Shop, { shopId: string } & ShopSettingsUpdatePayload>({
+    updateShopSettings: build.mutation<
+      Shop,
+      { shopId: string } & ShopSettingsUpdatePayload
+    >({
       query: ({ shopId, settings }) => ({
         url: replacePathParams(SHOP_ENDPOINTS.UPDATE_SETTINGS, { shopId }),
         method: 'PUT',
@@ -145,11 +144,13 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // UPDATE METAL RATES
     // PUT /api/v1/shops/:shopId/metal-rates
 
-    updateMetalRates: build.mutation<Shop, { shopId: string } & MetalRatesUpdatePayload>({
+    updateMetalRates: build.mutation<
+      Shop,
+      { shopId: string } & MetalRatesUpdatePayload
+    >({
       query: ({ shopId, ...rates }) => ({
         url: replacePathParams(SHOP_ENDPOINTS.UPDATE_METAL_RATES, { shopId }),
         method: 'PUT',
@@ -161,7 +162,6 @@ export const shopApi = baseApi.injectEndpoints({
         { type: 'ShopMetalRates', id: shopId },
       ],
     }),
-
 
     // GET SHOP STATISTICS
     // GET /api/v1/shops/:shopId/statistics
@@ -175,7 +175,6 @@ export const shopApi = baseApi.injectEndpoints({
         { type: 'ShopStatistics', id: shopId },
       ],
     }),
-
 
     // BULK ACTIVATE SHOPS
     // PATCH /api/v1/shops/bulk/activate
@@ -192,7 +191,6 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // BULK DEACTIVATE SHOPS
     // PATCH /api/v1/shops/bulk/deactivate
 
@@ -208,7 +206,6 @@ export const shopApi = baseApi.injectEndpoints({
       ],
     }),
 
-
     // BULK DELETE SHOPS
     // DELETE /api/v1/shops/bulk
 
@@ -223,7 +220,6 @@ export const shopApi = baseApi.injectEndpoints({
         ...shopIds.map(id => ({ type: 'Shop' as const, id })),
       ],
     }),
-
   }),
 })
 

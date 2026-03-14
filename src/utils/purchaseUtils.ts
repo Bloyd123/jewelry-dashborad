@@ -48,7 +48,10 @@ export const calculatePurchaseFinancials = (
     const netWeight = item.grossWeight - item.stoneWeight
     const metalValue = netWeight * item.ratePerGram
     const itemSubtotal =
-      (metalValue + item.stoneCharges + item.makingCharges + item.otherCharges) *
+      (metalValue +
+        item.stoneCharges +
+        item.makingCharges +
+        item.otherCharges) *
       item.quantity
 
     subtotal += itemSubtotal
@@ -107,10 +110,7 @@ export const formatCurrency = (
 /**
  * Format weight with unit
  */
-export const formatWeight = (
-  weight: number,
-  unit: string = 'gram'
-): string => {
+export const formatWeight = (weight: number, unit: string = 'gram'): string => {
   return `${weight.toFixed(3)} ${unit}`
 }
 
@@ -297,7 +297,11 @@ export const validatePurchaseItem = (
     errors.push('Stone weight cannot be negative')
   }
 
-  if (item.stoneWeight && item.grossWeight && item.stoneWeight > item.grossWeight) {
+  if (
+    item.stoneWeight &&
+    item.grossWeight &&
+    item.stoneWeight > item.grossWeight
+  ) {
     errors.push('Stone weight cannot exceed gross weight')
   }
 
@@ -498,7 +502,7 @@ export const preparePurchaseForCSV = (purchase: IPurchase) => {
     'Purchase Type': purchase.purchaseType,
     Status: getStatusLabel(purchase.status),
     'Total Items': purchase.items.length,
-    'Subtotal': purchase.financials.subtotal,
+    Subtotal: purchase.financials.subtotal,
     'Total GST': purchase.financials.totalGst,
     'Grand Total': purchase.financials.grandTotal,
     'Paid Amount': purchase.payment.paidAmount,

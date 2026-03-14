@@ -21,7 +21,6 @@ const ResetPasswordForm: React.FC = () => {
   const { handleError } = useErrorHandler()
   const { t } = useTranslation()
 
-
   const queryToken = searchParams.get('token')
   useEffect(() => {
     if (queryToken) {
@@ -133,7 +132,7 @@ const ResetPasswordForm: React.FC = () => {
           navigate(ROUTES.login)
         }, 2000)
       } catch (error: any) {
-        handleError(error, setErrors) 
+        handleError(error, setErrors)
       } finally {
         setLoading(false)
       }

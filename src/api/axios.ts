@@ -6,7 +6,6 @@ import { setupAuthInterceptor } from './interceptors/authInterceptor'
 import { setupErrorInterceptor } from './interceptors/errorInterceptor'
 import { APP_CONFIG } from '@/config/app.config'
 
-
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: APP_CONFIG.API.BASE_URL,
   timeout: APP_CONFIG.API.TIMEOUT,
@@ -14,7 +13,7 @@ const axiosInstance: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
-  withCredentials: true, 
+  withCredentials: true,
 })
 setupAuthInterceptor(axiosInstance)
 setupErrorInterceptor(axiosInstance)

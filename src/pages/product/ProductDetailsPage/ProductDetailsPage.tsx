@@ -68,7 +68,10 @@ export const ProductDetailsPage: React.FC = () => {
 
   const handleSetPrimaryImage = async (imageUrl: string) => {
     // TODO: set primary image endpoint not in productApi yet
-    console.log('TODO: set primary image endpoint not in productApi yet', imageUrl)
+    console.log(
+      'TODO: set primary image endpoint not in productApi yet',
+      imageUrl
+    )
   }
 
   // HISTORY TAB HANDLERS

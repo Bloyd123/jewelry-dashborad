@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import type { Customer } from '@/types/customer.types'
 
-
 interface LoyaltyTransaction {
   id: string
   date: string
@@ -46,7 +45,6 @@ const MOCK_LOYALTY_HISTORY: LoyaltyTransaction[] = [
     description: 'Purchase of Gold Chain',
   },
 ]
-
 
 interface LoyaltyTabProps {
   customer: Customer

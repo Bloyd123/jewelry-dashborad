@@ -32,4 +32,3 @@ export type {
   SupplierFormState,
   SupplierTableColumn,
 } from '@/types/supplier.types'
-

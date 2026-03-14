@@ -41,7 +41,6 @@ import {
   mockOutstandingPayments,
 } from './customerAnalytics.mock'
 
-
 export interface CustomerStatistics {
   totalCustomers: number
   activeCustomers: number
@@ -143,7 +142,6 @@ const formatCurrency = (value: number): string => {
 const formatNumber = (value: number): string => {
   return new Intl.NumberFormat('en-IN').format(value)
 }
-
 
 export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
   shopId,

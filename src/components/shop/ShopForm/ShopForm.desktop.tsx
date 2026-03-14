@@ -6,7 +6,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ShopFormProps } from './shopForm.types'
-import type {  ShopFormData } from '@/types'
+import type { ShopFormData } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2 } from 'lucide-react'
@@ -27,7 +27,9 @@ export default function ShopFormDesktop({
   mode = 'create',
 }: ShopFormProps) {
   const { t } = useTranslation()
-  const [formData, setFormData] = useState<Partial<ShopFormData>>(initialData as Partial<ShopFormData>)
+  const [formData, setFormData] = useState<Partial<ShopFormData>>(
+    initialData as Partial<ShopFormData>
+  )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
 

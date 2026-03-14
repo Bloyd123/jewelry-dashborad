@@ -16,8 +16,8 @@ export const BlacklistSupplierSection = ({
   onBlacklist,
   onRemoveBlacklist,
   onCancel,
-    isBlacklisting = false,        
-  isRemovingBlacklist = false, 
+  isBlacklisting = false,
+  isRemovingBlacklist = false,
 }: BlacklistSupplierSectionProps) => {
   const { t } = useTranslation()
   const [reason, setReason] = useState('')
@@ -95,7 +95,7 @@ export const BlacklistSupplierSection = ({
             disabled={isRemovingBlacklist}
             className="w-full"
           >
-            {isRemovingBlacklist  ? (
+            {isRemovingBlacklist ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 {t('common.processing')}
@@ -108,7 +108,11 @@ export const BlacklistSupplierSection = ({
             )}
           </Button>
 
-          <Button variant="outline" onClick={onCancel} disabled={isRemovingBlacklist}>
+          <Button
+            variant="outline"
+            onClick={onCancel}
+            disabled={isRemovingBlacklist}
+          >
             {t('common.cancel')}
           </Button>
         </div>
@@ -179,10 +183,10 @@ export const BlacklistSupplierSection = ({
         <Button
           variant="destructive"
           onClick={handleBlacklist}
-           disabled={isBlacklisting || !reason.trim()}
+          disabled={isBlacklisting || !reason.trim()}
           className="w-full"
         >
-          {isBlacklisting  ? (
+          {isBlacklisting ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               {t('common.processing')}

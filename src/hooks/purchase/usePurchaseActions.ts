@@ -34,25 +34,25 @@ export const usePurchaseActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
- 
   // 🔧 MUTATIONS
- 
+
   const [createMutation, createState] = useCreatePurchaseMutation()
   const [updateMutation, updateState] = useUpdatePurchaseMutation()
   const [deleteMutation, deleteState] = useDeletePurchaseMutation()
-  const [updateStatusMutation, updateStatusState] = useUpdatePurchaseStatusMutation()
+  const [updateStatusMutation, updateStatusState] =
+    useUpdatePurchaseStatusMutation()
   const [receiveMutation, receiveState] = useReceivePurchaseMutation()
   const [cancelMutation, cancelState] = useCancelPurchaseMutation()
   const [approveMutation, approveState] = useApprovePurchaseMutation()
   const [rejectMutation, rejectState] = useRejectPurchaseMutation()
   const [addPaymentMutation, addPaymentState] = useAddPaymentMutation()
   const [bulkDeleteMutation, bulkDeleteState] = useBulkDeletePurchasesMutation()
-  const [bulkApproveMutation, bulkApproveState] = useBulkApprovePurchasesMutation()
+  const [bulkApproveMutation, bulkApproveState] =
+    useBulkApprovePurchasesMutation()
   const [uploadDocMutation, uploadDocState] = useUploadDocumentMutation()
 
- 
   // ➕ CREATE PURCHASE
- 
+
   const createPurchase = useCallback(
     async (
       data: Omit<ICreatePurchaseForm, 'shopId'>,
@@ -61,10 +61,7 @@ export const usePurchaseActions = (shopId: string) => {
       try {
         const result = await createMutation({ shopId, ...data }).unwrap()
 
-        showSuccess(
-          'Purchase created successfully!',
-          'Purchase Created'
-        )
+        showSuccess('Purchase created successfully!', 'Purchase Created')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -78,9 +75,8 @@ export const usePurchaseActions = (shopId: string) => {
     [createMutation, shopId, handleError, showSuccess]
   )
 
- 
   // ✏️ UPDATE PURCHASE
- 
+
   const updatePurchase = useCallback(
     async (
       purchaseId: string,
@@ -94,10 +90,7 @@ export const usePurchaseActions = (shopId: string) => {
           ...data,
         }).unwrap()
 
-        showSuccess(
-          'Purchase updated successfully!',
-          'Purchase Updated'
-        )
+        showSuccess('Purchase updated successfully!', 'Purchase Updated')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -111,9 +104,8 @@ export const usePurchaseActions = (shopId: string) => {
     [updateMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 🗑️ DELETE PURCHASE
- 
+
   const deletePurchase = useCallback(
     async (purchaseId: string, purchaseNumber?: string) => {
       try {
@@ -136,9 +128,8 @@ export const usePurchaseActions = (shopId: string) => {
     [deleteMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 🔄 UPDATE STATUS
- 
+
   const updatePurchaseStatus = useCallback(
     async (purchaseId: string, status: PurchaseStatus) => {
       try {
@@ -148,10 +139,7 @@ export const usePurchaseActions = (shopId: string) => {
           status,
         }).unwrap()
 
-        showSuccess(
-          `Purchase status updated to ${status}`,
-          'Status Updated'
-        )
+        showSuccess(`Purchase status updated to ${status}`, 'Status Updated')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -165,9 +153,8 @@ export const usePurchaseActions = (shopId: string) => {
     [updateStatusMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 📦 RECEIVE PURCHASE
- 
+
   const receivePurchase = useCallback(
     async (
       purchaseId: string,
@@ -197,9 +184,8 @@ export const usePurchaseActions = (shopId: string) => {
     [receiveMutation, shopId, handleError, showSuccess]
   )
 
- 
   // ❌ CANCEL PURCHASE
- 
+
   const cancelPurchase = useCallback(
     async (purchaseId: string, reason: string) => {
       try {
@@ -209,10 +195,7 @@ export const usePurchaseActions = (shopId: string) => {
           reason,
         }).unwrap()
 
-        showSuccess(
-          'Purchase cancelled successfully!',
-          'Purchase Cancelled'
-        )
+        showSuccess('Purchase cancelled successfully!', 'Purchase Cancelled')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -226,9 +209,8 @@ export const usePurchaseActions = (shopId: string) => {
     [cancelMutation, shopId, handleError, showSuccess]
   )
 
- 
   // ✅ APPROVE PURCHASE
- 
+
   const approvePurchase = useCallback(
     async (purchaseId: string, notes?: string) => {
       try {
@@ -238,10 +220,7 @@ export const usePurchaseActions = (shopId: string) => {
           notes,
         }).unwrap()
 
-        showSuccess(
-          'Purchase approved successfully!',
-          'Purchase Approved'
-        )
+        showSuccess('Purchase approved successfully!', 'Purchase Approved')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -255,9 +234,8 @@ export const usePurchaseActions = (shopId: string) => {
     [approveMutation, shopId, handleError, showSuccess]
   )
 
- 
   // ❌ REJECT PURCHASE
- 
+
   const rejectPurchase = useCallback(
     async (purchaseId: string, reason: string) => {
       try {
@@ -267,10 +245,7 @@ export const usePurchaseActions = (shopId: string) => {
           reason,
         }).unwrap()
 
-        showSuccess(
-          'Purchase rejected!',
-          'Purchase Rejected'
-        )
+        showSuccess('Purchase rejected!', 'Purchase Rejected')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -284,9 +259,8 @@ export const usePurchaseActions = (shopId: string) => {
     [rejectMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 💰 ADD PAYMENT
- 
+
   const addPayment = useCallback(
     async (
       purchaseId: string,
@@ -317,9 +291,8 @@ export const usePurchaseActions = (shopId: string) => {
     [addPaymentMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 🗑️ BULK DELETE
- 
+
   const bulkDeletePurchases = useCallback(
     async (purchaseIds: string[]) => {
       try {
@@ -345,9 +318,8 @@ export const usePurchaseActions = (shopId: string) => {
     [bulkDeleteMutation, shopId, handleError, showSuccess]
   )
 
- 
   // ✅ BULK APPROVE
- 
+
   const bulkApprovePurchases = useCallback(
     async (purchaseIds: string[]) => {
       try {
@@ -373,9 +345,8 @@ export const usePurchaseActions = (shopId: string) => {
     [bulkApproveMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 📄 UPLOAD DOCUMENT
- 
+
   const uploadDocument = useCallback(
     async (
       purchaseId: string,
@@ -392,10 +363,7 @@ export const usePurchaseActions = (shopId: string) => {
           ...documentData,
         }).unwrap()
 
-        showSuccess(
-          'Document uploaded successfully!',
-          'Document Uploaded'
-        )
+        showSuccess('Document uploaded successfully!', 'Document Uploaded')
 
         return { success: true, data: result }
       } catch (error: any) {
@@ -409,9 +377,8 @@ export const usePurchaseActions = (shopId: string) => {
     [uploadDocMutation, shopId, handleError, showSuccess]
   )
 
- 
   // 📤 RETURN API
- 
+
   return {
     // Actions
     createPurchase,

@@ -6,9 +6,7 @@ import { z } from 'zod'
  * 🎯 SUPPLIER VALIDATION SCHEMAS
  */
 
-
 // SUB-SCHEMAS
-
 
 // Contact Person Schema
 const contactPersonSchema = z.object({
@@ -196,7 +194,6 @@ const documentSchema = z.object({
     .or(z.literal('')),
 })
 
-
 // CREATE SUPPLIER SCHEMA
 
 export const createSupplierSchema = z.object({
@@ -351,11 +348,9 @@ export const createSupplierSchema = z.object({
   tags: z.array(z.string().trim()).optional(),
 })
 
-
 // UPDATE SUPPLIER SCHEMA (all optional)
 
 export const updateSupplierSchema = createSupplierSchema.partial()
-
 
 // RATING SCHEMA
 
@@ -376,7 +371,6 @@ export const updateRatingSchema = z.object({
     .max(5, 'Price rating must not exceed 5'),
 })
 
-
 // BLACKLIST SCHEMA
 
 export const blacklistSupplierSchema = z.object({
@@ -387,7 +381,6 @@ export const blacklistSupplierSchema = z.object({
     .min(10, 'Reason must be at least 10 characters')
     .max(500, 'Reason must not exceed 500 characters'),
 })
-
 
 // BALANCE UPDATE SCHEMA
 
@@ -403,7 +396,6 @@ export const updateBalanceSchema = z.object({
     .optional()
     .or(z.literal('')),
 })
-
 
 // TYPE EXPORTS
 

@@ -14,7 +14,6 @@ interface CustomerDetailHeaderProps {
   onSettingsClick?: () => void
 }
 
-
 export const CustomerDetailHeader: React.FC<
   CustomerDetailHeaderProps
 > = props => {

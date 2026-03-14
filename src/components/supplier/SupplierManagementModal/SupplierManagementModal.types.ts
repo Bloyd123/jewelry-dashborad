@@ -36,7 +36,7 @@ export interface UpdateBalanceSectionProps {
   supplier: Supplier
   onSubmit: (data: UpdateBalanceFormData) => Promise<void>
   onCancel: () => void
-    isLoading?: boolean  
+  isLoading?: boolean
 }
 
 //
@@ -53,7 +53,7 @@ export interface UpdateRatingSectionProps {
   supplier: Supplier
   onSubmit: (data: UpdateRatingFormData) => Promise<void>
   onCancel: () => void
-  isLoading?: boolean 
+  isLoading?: boolean
 }
 
 //
@@ -65,8 +65,8 @@ export interface PreferredSupplierSectionProps {
   onMarkPreferred: () => Promise<void>
   onRemovePreferred: () => Promise<void>
   onCancel: () => void
-    isMarkingPreferred?: boolean      
-  isRemovingPreferred?: boolean 
+  isMarkingPreferred?: boolean
+  isRemovingPreferred?: boolean
 }
 
 //
@@ -82,8 +82,8 @@ export interface BlacklistSupplierSectionProps {
   onBlacklist: (reason: string) => Promise<void>
   onRemoveBlacklist: () => Promise<void>
   onCancel: () => void
-    isBlacklisting?: boolean        
-  isRemovingBlacklist?: boolean 
+  isBlacklisting?: boolean
+  isRemovingBlacklist?: boolean
 }
 
 //
@@ -95,6 +95,6 @@ export interface DeleteSupplierSectionProps {
   onDelete: () => Promise<void>
   onRestore: () => Promise<void>
   onCancel: () => void
-    isDeleting?: boolean   // ⭐ ADD THIS
-  isRestoring?: boolean  
+  isDeleting?: boolean // ⭐ ADD THIS
+  isRestoring?: boolean
 }

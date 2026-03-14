@@ -1,9 +1,4 @@
-//
 // FILE: store/slices/authSlice.ts
-// MINIMAL Auth Slice - Authentication & Authorization ONLY
-//  FIXED: Don't overwrite persisted permissions on reload
-//
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import * as authService from '@/api/services/authService'
 import * as tokenService from '@/services/auth/tokenService'
@@ -50,7 +45,6 @@ interface AuthState {
   email: string | null
   role: UserRole | null
 
-  //  FIXED: Store ONLY string IDs, not objects
   currentShopId: string | null
   shopIds: string[]
 
@@ -89,14 +83,9 @@ const initialState: AuthState = {
   lastActivity: null,
 }
 
-//  Helper to extract shop ID from shopAccess
 const extractShopId = (shopId: any): string => {
   return typeof shopId === 'string' ? shopId : shopId._id
 }
-
-//
-// ASYNC THUNKS
-//
 
 export const login = createAsyncThunk<
   LoginResponse['data'],
@@ -105,20 +94,14 @@ export const login = createAsyncThunk<
 >('auth/login', async (credentials, { dispatch, rejectWithValue }) => {
   try {
     if (import.meta.env.DEV) {
-      console.log('🔐 [authSlice] Login attempt:', credentials.email)
+      console.log('[authSlice] Login attempt:', credentials.email)
     }
 
     const response = await authService.login(credentials)
 
     if (!response.data.requires2FA) {
-      //  Populate userSlice (profile only)
-      dispatch(
-        setUserFromLogin({
-          user: response.data.user,
-        })
-      )
+      dispatch(setUserFromLogin({ user: response.data.user }))
 
-      //  Populate permissionsSlice (single source for shop accesses)
       dispatch(
         setPermissionsFromLogin({
           shopAccesses: response.data.shopAccesses || [],
@@ -141,8 +124,6 @@ export const login = createAsyncThunk<
   }
 })
 
-// Add this after the login thunk in authSlice.ts
-
 export const complete2FALogin = createAsyncThunk<
   LoginResponse['data'],
   { tempToken: string; code: string; isBackupCode?: boolean },
@@ -155,21 +136,15 @@ export const complete2FALogin = createAsyncThunk<
   ) => {
     try {
       if (import.meta.env.DEV) {
-        console.log('🔐 [authSlice] Completing 2FA login')
+        console.log('[authSlice] Completing 2FA login')
       }
 
       const response = isBackupCode
         ? await authService.verifyBackupCode(tempToken, code)
         : await authService.verify2FALogin(tempToken, code)
 
-      // ✅ Populate userSlice (profile only)
-      dispatch(
-        setUserFromLogin({
-          user: response.data.user,
-        })
-      )
+      dispatch(setUserFromLogin({ user: response.data.user }))
 
-      // ✅ Populate permissionsSlice (single source for shop accesses)
       dispatch(
         setPermissionsFromLogin({
           shopAccesses: response.data.shopAccesses || [],
@@ -180,7 +155,7 @@ export const complete2FALogin = createAsyncThunk<
 
       if (import.meta.env.DEV) {
         console.log(
-          '✅ [authSlice] 2FA verification successful - populated slices'
+          '[authSlice] 2FA verification successful - populated slices'
         )
       }
 
@@ -247,13 +222,13 @@ export const initializeAuth = createAsyncThunk<
 
     if (!accessToken || !refreshToken) {
       if (import.meta.env.DEV) {
-        console.log('⚠️ [authSlice] No tokens found, initialization skipped')
+        console.log('[authSlice] No tokens found, initialization skipped')
       }
       return null
     }
 
     if (import.meta.env.DEV) {
-      console.log('🔄 [authSlice] Initializing auth with existing tokens')
+      console.log('[authSlice] Initializing auth with existing tokens')
     }
 
     const response = await authService.getCurrentUser()
@@ -286,14 +261,8 @@ export const initializeAuth = createAsyncThunk<
       })
     }
 
-    //  ALWAYS set user profile (fresh from API)
-    dispatch(
-      setUserFromLogin({
-        user: userData,
-      })
-    )
+    dispatch(setUserFromLogin({ user: userData }))
 
-    //  CRITICAL FIX: Check if we have persisted permissions BEFORE overwriting
     const state = getState()
     const hasPersistedPermissions = state.permissions.shopAccesses.length > 0
 
@@ -308,7 +277,6 @@ export const initializeAuth = createAsyncThunk<
     }
 
     if (!hasPersistedPermissions) {
-      // No persisted permissions - generate for org-level users only
       if (['super_admin', 'org_admin'].includes(userData.role)) {
         dispatch(
           setPermissionsFromLogin({
@@ -322,25 +290,21 @@ export const initializeAuth = createAsyncThunk<
           console.log(' [authSlice] Generated org-level permissions')
         }
       } else {
-        // Shop-level user with no permissions
         if (import.meta.env.DEV) {
           console.warn(
-            '⚠️ [authSlice] Shop user has no persisted permissions - needs re-login'
+            '[authSlice] Shop user has no persisted permissions - needs re-login'
           )
         }
       }
     } else {
-      //  We have persisted permissions - DON'T overwrite them!
       if (import.meta.env.DEV) {
         console.log(' [authSlice] Using persisted permissions:', {
           shopCount: state.permissions.shopAccesses.length,
           currentShopId: state.permissions.currentShopId,
         })
       }
-      // No action needed - persisted permissions are already in Redux from persistence!
     }
 
-    // Get shopIds from PERSISTED permissions state (not from empty shopAccesses)
     const finalState = getState()
     const shopIds = finalState.permissions.shopAccesses.map(a => a.shopId)
 
@@ -398,10 +362,6 @@ export const refreshAccessToken = createAsyncThunk<
   }
 })
 
-//
-// SLICE
-//
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -454,7 +414,6 @@ const authSlice = createSlice({
   },
 
   extraReducers: builder => {
-    // LOGIN
     builder
       .addCase(login.pending, state => {
         state.isLoading = true
@@ -471,9 +430,7 @@ const authSlice = createSlice({
             state.isAuthenticated = false
 
             if (import.meta.env.DEV) {
-              console.log(
-                '🔐 [authSlice] 2FA required, waiting for verification'
-              )
+              console.log('[authSlice] 2FA required, waiting for verification')
             }
             return
           }
@@ -499,12 +456,10 @@ const authSlice = createSlice({
           state.tokenId = action.payload.tokenId ?? null
           state.lastActivity = Date.now()
 
-          //  FIXED: Extract and store ONLY shop IDs (strings)
           state.shopIds = (action.payload.shopAccesses || []).map(a =>
             extractShopId(a.shopId)
           )
 
-          //  FIXED: Set currentShopId as STRING only
           if (state.shopIds.length > 0) {
             const storedShopId = ShopContextManager.load()
             const shopExists =
@@ -544,9 +499,6 @@ const authSlice = createSlice({
         console.error(' [authSlice] Login rejected:', action.payload)
       })
 
-    // In extraReducers, after LOGIN cases, add this:
-
-    // COMPLETE 2FA LOGIN
     builder
       .addCase(complete2FALogin.pending, state => {
         state.isLoading = true
@@ -569,7 +521,6 @@ const authSlice = createSlice({
             return
           }
 
-          // ✅ Complete authentication after 2FA
           state.isAuthenticated = true
           state.userId = action.payload.user._id
           state.email = action.payload.user.email
@@ -579,16 +530,13 @@ const authSlice = createSlice({
           state.tokenId = action.payload.tokenId ?? null
           state.lastActivity = Date.now()
 
-          // ✅ Clear 2FA state
           state.requires2FA = false
           state.tempToken = null
 
-          // ✅ Extract and store shop IDs
           state.shopIds = (action.payload.shopAccesses || []).map(a =>
             extractShopId(a.shopId)
           )
 
-          // ✅ Set current shop
           if (state.shopIds.length > 0) {
             const storedShopId = ShopContextManager.load()
             const shopExists =
@@ -609,7 +557,7 @@ const authSlice = createSlice({
           tokenService.saveRefreshToken(action.payload.refreshToken)
 
           if (import.meta.env.DEV) {
-            console.log('✅ [authSlice] 2FA login completed successfully:', {
+            console.log('[authSlice] 2FA login completed successfully:', {
               userId: state.userId,
               role: state.role,
               shopCount: state.shopIds.length,
@@ -621,12 +569,10 @@ const authSlice = createSlice({
       .addCase(complete2FALogin.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
-        // Don't clear 2FA state on rejection - allow retry
 
-        console.error(' [authSlice] 2FA login rejected:', action.payload)
+        console.error('[authSlice] 2FA login rejected:', action.payload)
       })
 
-    // LOGOUT
     builder
       .addCase(logout.pending, state => {
         state.isLoading = true
@@ -648,7 +594,6 @@ const authSlice = createSlice({
         }
       })
 
-    // INITIALIZE
     builder
       .addCase(initializeAuth.pending, state => {
         state.isInitializing = true
@@ -696,7 +641,6 @@ const authSlice = createSlice({
         }
       })
 
-    // REFRESH TOKEN
     builder
       .addCase(refreshAccessToken.pending, state => {
         state.isRefreshing = true

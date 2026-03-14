@@ -15,11 +15,10 @@ export const PreferredSupplierSection = ({
   onMarkPreferred,
   onRemovePreferred,
   onCancel,
-    isMarkingPreferred = false,   
-  isRemovingPreferred = false,  
+  isMarkingPreferred = false,
+  isRemovingPreferred = false,
 }: PreferredSupplierSectionProps) => {
   const { t } = useTranslation()
-
 
   const isPreferred = supplier.isPreferred
 
@@ -158,10 +157,10 @@ export const PreferredSupplierSection = ({
             <Button
               variant="destructive"
               onClick={handleRemovePreferred}
-                   disabled={isRemovingPreferred} 
+              disabled={isRemovingPreferred}
               className="w-full"
             >
-              {isRemovingPreferred  ? (
+              {isRemovingPreferred ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('common.processing')}
@@ -174,7 +173,11 @@ export const PreferredSupplierSection = ({
               )}
             </Button>
 
-            <Button variant="outline" onClick={onCancel}  disabled={isRemovingPreferred}>
+            <Button
+              variant="outline"
+              onClick={onCancel}
+              disabled={isRemovingPreferred}
+            >
               {t('common.cancel')}
             </Button>
           </>
@@ -182,10 +185,10 @@ export const PreferredSupplierSection = ({
           <>
             <Button
               onClick={handleMarkPreferred}
-            disabled={isMarkingPreferred}  
+              disabled={isMarkingPreferred}
               className="w-full"
             >
-              {isMarkingPreferred  ? (
+              {isMarkingPreferred ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   {t('common.processing')}
@@ -198,7 +201,11 @@ export const PreferredSupplierSection = ({
               )}
             </Button>
 
-            <Button variant="outline" onClick={onCancel} disabled={isMarkingPreferred}>
+            <Button
+              variant="outline"
+              onClick={onCancel}
+              disabled={isMarkingPreferred}
+            >
               {t('common.cancel')}
             </Button>
           </>

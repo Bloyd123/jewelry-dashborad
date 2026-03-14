@@ -97,7 +97,9 @@ const RatingStars = ({ rating }: { rating: number }) => {
 // MAIN COMPONENT
 //
 
-const SupplierOverviewTab: React.FC<SupplierOverviewTabProps> = ({ supplier }) => {
+const SupplierOverviewTab: React.FC<SupplierOverviewTabProps> = ({
+  supplier,
+}) => {
   const { t } = useTranslation()
   const supplierData: Supplier = supplier
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)

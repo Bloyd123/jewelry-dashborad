@@ -23,7 +23,9 @@ export const ShopTable: React.FC = () => {
 
   // STATE — order matters, page pehle
   const [page, setPage] = useState(1)
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
+    new Set()
+  )
 
   // AUTH
   const { userRole } = useAuthState()

@@ -24,7 +24,6 @@ import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Customer } from '@/types/customer.types'
 import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 
-
 export const getCustomerRowActions = (
   onViewDetails: (customer: Customer) => void,
   onEdit: (customer: Customer) => void,
@@ -73,7 +72,6 @@ export const getCustomerRowActions = (
     disabled: row => row.totalDue > 0,
   },
 ]
-
 
 interface BulkActionsBarProps {
   selectedCount: number
@@ -137,7 +135,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        {selectedCount === 1  && can('canUpdateCustomer') && (
+        {selectedCount === 1 && can('canUpdateCustomer') && (
           <Button
             variant="outline"
             size="sm"
@@ -194,18 +192,18 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
         )}
 
         {can('canDeleteCustomers') && (
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={onDelete}
-          disabled={hasOutstandingBalance}
-          className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
-        >
-          <Trash2 className="h-4 w-4" />
-          <span className="hidden sm:inline">
-            {t('customer.actions.delete')}
-          </span>
-        </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={onDelete}
+            disabled={hasOutstandingBalance}
+            className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
+          >
+            <Trash2 className="h-4 w-4" />
+            <span className="hidden sm:inline">
+              {t('customer.actions.delete')}
+            </span>
+          </Button>
         )}
 
         <DropdownMenu>

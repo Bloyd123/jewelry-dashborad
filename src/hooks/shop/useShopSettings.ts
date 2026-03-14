@@ -18,8 +18,10 @@ export const useShopSettings = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  const [updateSettingsMutation,   updateSettingsState]   = useUpdateShopSettingsMutation()
-  const [updateMetalRatesMutation, updateMetalRatesState] = useUpdateMetalRatesMutation()
+  const [updateSettingsMutation, updateSettingsState] =
+    useUpdateShopSettingsMutation()
+  const [updateMetalRatesMutation, updateMetalRatesState] =
+    useUpdateMetalRatesMutation()
 
   // UPDATE SETTINGS
   const updateSettings = useCallback(
@@ -28,7 +30,10 @@ export const useShopSettings = (shopId: string) => {
       setErrors?: (errors: Record<string, string>) => void
     ) => {
       try {
-        const result = await updateSettingsMutation({ shopId, settings }).unwrap()
+        const result = await updateSettingsMutation({
+          shopId,
+          settings,
+        }).unwrap()
         showSuccess('Settings saved successfully!', 'Settings Saved')
         return { success: true, data: result }
       } catch (error: any) {
@@ -43,7 +48,10 @@ export const useShopSettings = (shopId: string) => {
   const updateMetalRates = useCallback(
     async (rates: MetalRatesUpdatePayload) => {
       try {
-        const result = await updateMetalRatesMutation({ shopId, ...rates }).unwrap()
+        const result = await updateMetalRatesMutation({
+          shopId,
+          ...rates,
+        }).unwrap()
         showSuccess('Metal rates updated successfully!', 'Rates Updated')
         return { success: true, data: result }
       } catch (error: any) {
@@ -57,7 +65,7 @@ export const useShopSettings = (shopId: string) => {
   return {
     updateSettings,
     updateMetalRates,
-    isUpdatingSettings:   updateSettingsState.isLoading,
+    isUpdatingSettings: updateSettingsState.isLoading,
     isUpdatingMetalRates: updateMetalRatesState.isLoading,
   }
 }

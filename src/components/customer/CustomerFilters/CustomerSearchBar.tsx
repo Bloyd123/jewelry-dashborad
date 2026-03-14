@@ -15,7 +15,6 @@ export interface CustomerSearchBarProps {
   autoFocus?: boolean
 }
 
-
 export const CustomerSearchBar = React.forwardRef<
   HTMLInputElement,
   CustomerSearchBarProps

@@ -15,7 +15,6 @@ import { Label } from '@/components/ui/label'
 import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
 
-
 interface Document {
   id: string
   type: string
@@ -52,11 +51,9 @@ const MOCK_DOCUMENTS: Document[] = [
   },
 ]
 
-
 interface DocumentsTabProps {
   customerId?: string
 }
-
 
 export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
   const { t } = useTranslation()

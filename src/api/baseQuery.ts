@@ -18,7 +18,6 @@ import { API_ENDPOINTS } from '@/api/endpoints'
 
 const mutex = new Mutex()
 
-
 const baseQuery = fetchBaseQuery({
   baseUrl: APP_CONFIG.API.BASE_URL,
   prepareHeaders: headers => {
@@ -29,7 +28,6 @@ const baseQuery = fetchBaseQuery({
     return headers
   },
 })
-
 
 export const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,

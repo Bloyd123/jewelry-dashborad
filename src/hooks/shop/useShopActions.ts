@@ -20,13 +20,16 @@ export const useShopActions = () => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  const [createMutation,        createState]          = useCreateShopMutation()
-  const [updateMutation,        updateState]          = useUpdateShopMutation()
-  const [deleteMutation,        deleteState]          = useDeleteShopMutation()
-  const [toggleStatusMutation,  toggleStatusState]    = useToggleShopStatusMutation()
-  const [bulkActivateMutation,  bulkActivateState]    = useBulkActivateShopsMutation()
-  const [bulkDeactivateMutation,bulkDeactivateState]  = useBulkDeactivateShopsMutation()
-  const [bulkDeleteMutation,    bulkDeleteState]      = useBulkDeleteShopsMutation()
+  const [createMutation, createState] = useCreateShopMutation()
+  const [updateMutation, updateState] = useUpdateShopMutation()
+  const [deleteMutation, deleteState] = useDeleteShopMutation()
+  const [toggleStatusMutation, toggleStatusState] =
+    useToggleShopStatusMutation()
+  const [bulkActivateMutation, bulkActivateState] =
+    useBulkActivateShopsMutation()
+  const [bulkDeactivateMutation, bulkDeactivateState] =
+    useBulkDeactivateShopsMutation()
+  const [bulkDeleteMutation, bulkDeleteState] = useBulkDeleteShopsMutation()
 
   // CREATE
   const createShop = useCallback(
@@ -154,12 +157,12 @@ export const useShopActions = () => {
     bulkDelete,
 
     // Loading states
-    isCreating:          createState.isLoading,
-    isUpdating:          updateState.isLoading,
-    isDeleting:          deleteState.isLoading,
-    isTogglingStatus:    toggleStatusState.isLoading,
-    isBulkActivating:    bulkActivateState.isLoading,
-    isBulkDeactivating:  bulkDeactivateState.isLoading,
-    isBulkDeleting:      bulkDeleteState.isLoading,
+    isCreating: createState.isLoading,
+    isUpdating: updateState.isLoading,
+    isDeleting: deleteState.isLoading,
+    isTogglingStatus: toggleStatusState.isLoading,
+    isBulkActivating: bulkActivateState.isLoading,
+    isBulkDeactivating: bulkDeactivateState.isLoading,
+    isBulkDeleting: bulkDeleteState.isLoading,
   }
 }

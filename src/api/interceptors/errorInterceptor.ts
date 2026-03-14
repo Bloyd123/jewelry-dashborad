@@ -15,21 +15,17 @@ import {
 } from '@/utils/errors'
 
 export const errorInterceptor = (error: AxiosError<any>) => {
-
   if (!error.response) {
     throw new NetworkError(ERROR_KEYS.API.NETWORK, error.code)
   }
 
   const { status, data } = error.response
 
-  const messageKey =
-    data?.messageKey ||
-    data?.message 
-    getErrorKeyByStatus(status)
+  const messageKey = data?.messageKey || data?.message
+  getErrorKeyByStatus(status)
 
   const errors = data?.errors
   const validationErrors = data?.validationErrors
-
 
   switch (status) {
     case 400:

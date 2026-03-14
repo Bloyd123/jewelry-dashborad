@@ -3,7 +3,6 @@
 
 import { z } from 'zod'
 
-
 // PURCHASE ITEM SCHEMA
 
 export const purchaseItemSchema = z.object({
@@ -70,7 +69,6 @@ export const purchaseItemSchema = z.object({
     .or(z.literal('')),
 })
 
-
 // PAYMENT SCHEMA
 
 export const paymentSchema = z.object({
@@ -102,7 +100,6 @@ export const paymentSchema = z.object({
     .or(z.literal('')),
 })
 
-
 // DELIVERY SCHEMA
 
 export const deliverySchema = z.object({
@@ -125,7 +122,6 @@ export const deliverySchema = z.object({
     .or(z.literal('')),
 })
 
-
 // CREATE PURCHASE SCHEMA
 
 export const createPurchaseSchema = z.object({
@@ -141,7 +137,14 @@ export const createPurchaseSchema = z.object({
     )
     .optional(),
   purchaseType: z
-    .enum(['new_stock', 'old_gold', 'exchange', 'consignment', 'repair_return', 'sample'])
+    .enum([
+      'new_stock',
+      'old_gold',
+      'exchange',
+      'consignment',
+      'repair_return',
+      'sample',
+    ])
     .optional()
     .default('new_stock'),
   items: z
@@ -159,11 +162,9 @@ export const createPurchaseSchema = z.object({
   tags: z.array(z.string()).optional(),
 })
 
-
 // UPDATE PURCHASE SCHEMA (all optional)
 
 export const updatePurchaseSchema = createPurchaseSchema.partial()
-
 
 // RECEIVE PURCHASE SCHEMA
 
@@ -186,7 +187,6 @@ export const receivePurchaseSchema = z.object({
     .optional()
     .or(z.literal('')),
 })
-
 
 // ADD PAYMENT SCHEMA
 
@@ -249,7 +249,6 @@ export const addPaymentSchema = z.object({
     .or(z.literal('')),
 })
 
-
 // CANCEL/REJECT REASON SCHEMA
 
 export const reasonSchema = z.object({
@@ -259,7 +258,6 @@ export const reasonSchema = z.object({
     .min(5, 'Reason must be at least 5 characters')
     .max(500, 'Reason must not exceed 500 characters'),
 })
-
 
 // APPROVAL NOTES SCHEMA
 
@@ -272,11 +270,16 @@ export const approvalNotesSchema = z.object({
     .or(z.literal('')),
 })
 
-
 // UPLOAD DOCUMENT SCHEMA
 
 export const uploadDocumentSchema = z.object({
-  documentType: z.enum(['invoice', 'receipt', 'delivery_note', 'certificate', 'other']),
+  documentType: z.enum([
+    'invoice',
+    'receipt',
+    'delivery_note',
+    'certificate',
+    'other',
+  ]),
   documentUrl: z.string().trim().url('Invalid document URL'),
   documentNumber: z
     .string()
@@ -285,7 +288,6 @@ export const uploadDocumentSchema = z.object({
     .optional()
     .or(z.literal('')),
 })
-
 
 // TYPE EXPORTS
 

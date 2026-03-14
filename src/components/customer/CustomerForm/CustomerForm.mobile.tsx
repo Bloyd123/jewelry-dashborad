@@ -30,9 +30,9 @@ const STEPS = [
 
 export default function CustomerFormMobile({
   initialData = {},
-  shopId, 
-  customerId, 
-  onSuccess, 
+  shopId,
+  customerId,
+  onSuccess,
   onCancel,
   mode = 'create',
 }: CustomerFormProps) {
@@ -42,8 +42,8 @@ export default function CustomerFormMobile({
     useState<Partial<CreateCustomerInput>>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const { showSuccess, showError } = useNotification() 
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false) 
+  const { showSuccess, showError } = useNotification()
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
 
   const { createCustomer, updateCustomer, isCreating, isUpdating } =
     useCustomerActions(shopId)

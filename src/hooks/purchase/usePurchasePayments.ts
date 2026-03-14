@@ -15,10 +15,7 @@ export const usePurchasePayments = (shopId: string, purchaseId: string) => {
     isLoading,
     error,
     refetch,
-  } = useGetPaymentsQuery(
-    { shopId, purchaseId },
-    { skip: !purchaseId }
-  )
+  } = useGetPaymentsQuery({ shopId, purchaseId }, { skip: !purchaseId })
 
   // Calculate payment statistics
   const paymentStats = useMemo(() => {
@@ -36,10 +33,13 @@ export const usePurchasePayments = (shopId: string, purchaseId: string) => {
     const lastPayment = payments[payments.length - 1]
 
     // Count payment modes
-    const modeCount = payments.reduce((acc, p) => {
-      acc[p.paymentMode] = (acc[p.paymentMode] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
+    const modeCount = payments.reduce(
+      (acc, p) => {
+        acc[p.paymentMode] = (acc[p.paymentMode] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>
+    )
 
     const paymentModes = Object.entries(modeCount).map(([mode, count]) => ({
       mode,
@@ -133,18 +133,21 @@ export const usePaymentSummary = (shopId: string, purchaseId: string) => {
     if (!payments || payments.length === 0) return null
 
     // Group by payment mode
-    const byMode = payments.reduce((acc, payment) => {
-      if (!acc[payment.paymentMode]) {
-        acc[payment.paymentMode] = {
-          mode: payment.paymentMode,
-          count: 0,
-          total: 0,
+    const byMode = payments.reduce(
+      (acc, payment) => {
+        if (!acc[payment.paymentMode]) {
+          acc[payment.paymentMode] = {
+            mode: payment.paymentMode,
+            count: 0,
+            total: 0,
+          }
         }
-      }
-      acc[payment.paymentMode].count += 1
-      acc[payment.paymentMode].total += payment.amount
-      return acc
-    }, {} as Record<string, { mode: string; count: number; total: number }>)
+        acc[payment.paymentMode].count += 1
+        acc[payment.paymentMode].total += payment.amount
+        return acc
+      },
+      {} as Record<string, { mode: string; count: number; total: number }>
+    )
 
     return {
       totalPayments: paymentStats.totalPayments,
@@ -204,25 +207,32 @@ export const usePaymentModeAnalytics = (shopId: string, purchaseId: string) => {
 
     const totalAmount = payments.reduce((sum, p) => sum + p.amount, 0)
 
-    const modeAnalytics = payments.reduce((acc, payment) => {
-      if (!acc[payment.paymentMode]) {
-        acc[payment.paymentMode] = {
-          mode: payment.paymentMode,
-          count: 0,
-          totalAmount: 0,
-          percentage: 0,
+    const modeAnalytics = payments.reduce(
+      (acc, payment) => {
+        if (!acc[payment.paymentMode]) {
+          acc[payment.paymentMode] = {
+            mode: payment.paymentMode,
+            count: 0,
+            totalAmount: 0,
+            percentage: 0,
+          }
         }
-      }
 
-      acc[payment.paymentMode].count += 1
-      acc[payment.paymentMode].totalAmount += payment.amount
+        acc[payment.paymentMode].count += 1
+        acc[payment.paymentMode].totalAmount += payment.amount
 
-      return acc
-    }, {} as Record<string, { mode: string; count: number; totalAmount: number; percentage: number }>)
+        return acc
+      },
+      {} as Record<
+        string,
+        { mode: string; count: number; totalAmount: number; percentage: number }
+      >
+    )
 
     // Calculate percentages
     Object.values(modeAnalytics).forEach(item => {
-      item.percentage = totalAmount > 0 ? (item.totalAmount / totalAmount) * 100 : 0
+      item.percentage =
+        totalAmount > 0 ? (item.totalAmount / totalAmount) * 100 : 0
     })
 
     // Sort by amount

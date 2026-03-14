@@ -12,7 +12,6 @@ const LoginDesktop: React.FC = () => {
   const requires2FA = useAppSelector(state => state.auth.requires2FA)
   return (
     <div className="flex min-h-screen">
-
       <div className="sticky top-0 hidden h-screen overflow-hidden lg:flex lg:w-1/2">
         <img
           src={loginImage}

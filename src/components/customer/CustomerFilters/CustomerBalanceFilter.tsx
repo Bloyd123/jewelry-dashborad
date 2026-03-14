@@ -6,7 +6,6 @@ import { TypeFilter } from '@/components/ui/filters/TypeFilter'
 import type { FilterOption } from '@/components/ui/filters/TypeFilter'
 import { DollarSign, CheckCircle } from 'lucide-react'
 
-
 interface CustomerBalanceFilterProps {
   value?: string
   onChange: (value: string | undefined) => void
@@ -14,7 +13,6 @@ interface CustomerBalanceFilterProps {
   className?: string
   disabled?: boolean
 }
-
 
 export const CustomerBalanceFilter = React.forwardRef<
   HTMLButtonElement,

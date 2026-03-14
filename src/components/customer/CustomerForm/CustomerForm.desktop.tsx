@@ -22,9 +22,9 @@ import { useNotification } from '@/hooks/useNotification'
 
 export default function CustomerFormDesktop({
   initialData = {},
-  shopId, 
-  customerId, 
-  onSuccess, 
+  shopId,
+  customerId,
+  onSuccess,
   onCancel,
   mode = 'create',
 }: CustomerFormProps) {

@@ -18,7 +18,7 @@ export default function CustomerDetailPage() {
   const { customerId } = useParams()
   const { currentShopId } = useAuth()
   const { customer, isLoading } = useCustomerById(currentShopId!, customerId!)
-    const { can } = usePermissionCheck()
+  const { can } = usePermissionCheck()
 
   if (isLoading || !customer) {
     return <div>Loading...</div> // later: skeleton
@@ -33,12 +33,18 @@ export default function CustomerDetailPage() {
         onSettingsClick={() => console.log('Settings clicked')}
       />
 
-{activeTab === 'personal' && <PersonalInfoTab customer={customer} />}
-{activeTab === 'financial' && can('canViewCustomerFinancials') && <FinancialTab customer={customer} />}
-{activeTab === 'orders' && can('canViewCustomerHistory') && <OrdersTab  customer={customer}/>}
-{activeTab === 'loyalty' && <LoyaltyTab />}
-{activeTab === 'documents' && <DocumentsTab />}
-{activeTab === 'activity' && can('canViewCustomerHistory') && <ActivityLogsTab />}
+      {activeTab === 'personal' && <PersonalInfoTab customer={customer} />}
+      {activeTab === 'financial' && can('canViewCustomerFinancials') && (
+        <FinancialTab customer={customer} />
+      )}
+      {activeTab === 'orders' && can('canViewCustomerHistory') && (
+        <OrdersTab customer={customer} />
+      )}
+      {activeTab === 'loyalty' && <LoyaltyTab />}
+      {activeTab === 'documents' && <DocumentsTab />}
+      {activeTab === 'activity' && can('canViewCustomerHistory') && (
+        <ActivityLogsTab />
+      )}
     </div>
   )
 }

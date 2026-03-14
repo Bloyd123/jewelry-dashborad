@@ -8,7 +8,11 @@ import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { supplierTableColumns } from './SupplierTableColumns'
 import { getSupplierRowActions, BulkActionsBar } from './SupplierTableActions'
-import type { Supplier, SupplierType, SupplierCategory } from '@/types/supplier.types'
+import type {
+  Supplier,
+  SupplierType,
+  SupplierCategory,
+} from '@/types/supplier.types'
 import { useSuppliersList, useSupplierActions } from '@/hooks/supplier'
 import { useAuth } from '@/hooks/auth'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +36,9 @@ export const SupplierTable: React.FC = () => {
 
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
+    new Set()
+  )
 
   // Filter State
   const [filters, setFilters] = useState<SupplierFilterValues>({
@@ -46,8 +52,11 @@ export const SupplierTable: React.FC = () => {
 
   // Modal State
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
-  const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
-  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null)
+  const [managementAction, setManagementAction] =
+    useState<ManagementAction | null>(null)
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(
+    null
+  )
 
   //
   // VALIDATION
@@ -100,16 +109,14 @@ export const SupplierTable: React.FC = () => {
   // API HOOKS
   //
 
-  const {
-    suppliers,
-    pagination,
-    isLoading,
-    refetch,
-  } = useSuppliersList(currentShopId, {
-    page,
-    limit,
-    ...apiFilters,
-  })
+  const { suppliers, pagination, isLoading, refetch } = useSuppliersList(
+    currentShopId,
+    {
+      page,
+      limit,
+      ...apiFilters,
+    }
+  )
 
   const {
     deleteSupplier,
@@ -311,56 +318,56 @@ export const SupplierTable: React.FC = () => {
       )}
 
       {/* DataTable */}
-<DataTable
-  data={suppliers}
-  columns={supplierTableColumns}
-  loading={{ isLoading }}
-  sorting={{
-    enabled: true,
-  }}
-  pagination={{
-    enabled: true,
-    pageSize: limit,
-    pageSizeOptions: [10, 20, 50],
-    showPageSizeSelector: true,
-    showPageInfo: true,
-    showFirstLastButtons: true,
-    // ⭐ ONLY keep these if your DataTable supports them
-    // Otherwise remove and handle pagination externally
-  }}
-  selection={{
-    enabled: true,
-    selectedRows,
-    onSelectionChange: setSelectedRows,
-    getRowId: row => row._id,
-    selectAllEnabled: true,
-  }}
-  rowActions={{
-    enabled: true,
-    actions: rowActions,
-    position: 'end',
-  }}
-  emptyState={{
-    message: t('suppliers.table.noSuppliers'),
-  }}
-  style={{
-    variant: 'default',
-    size: 'md',
-    stickyHeader: true,
-    hoverEffect: true,
-    zebraStripes: false,
-    showBorder: true,
-    rounded: true,
-    shadow: true,
-    fullWidth: true,
-  }}
-  onRowClick={supplier => {
-    navigate(`/suppliers/${supplier._id}`)
-  }}
-  getRowId={row => row._id}
-  testId="supplier-table"
-  ariaLabel={t('suppliers.table.ariaLabel')}
-/>
+      <DataTable
+        data={suppliers}
+        columns={supplierTableColumns}
+        loading={{ isLoading }}
+        sorting={{
+          enabled: true,
+        }}
+        pagination={{
+          enabled: true,
+          pageSize: limit,
+          pageSizeOptions: [10, 20, 50],
+          showPageSizeSelector: true,
+          showPageInfo: true,
+          showFirstLastButtons: true,
+          // ⭐ ONLY keep these if your DataTable supports them
+          // Otherwise remove and handle pagination externally
+        }}
+        selection={{
+          enabled: true,
+          selectedRows,
+          onSelectionChange: setSelectedRows,
+          getRowId: row => row._id,
+          selectAllEnabled: true,
+        }}
+        rowActions={{
+          enabled: true,
+          actions: rowActions,
+          position: 'end',
+        }}
+        emptyState={{
+          message: t('suppliers.table.noSuppliers'),
+        }}
+        style={{
+          variant: 'default',
+          size: 'md',
+          stickyHeader: true,
+          hoverEffect: true,
+          zebraStripes: false,
+          showBorder: true,
+          rounded: true,
+          shadow: true,
+          fullWidth: true,
+        }}
+        onRowClick={supplier => {
+          navigate(`/suppliers/${supplier._id}`)
+        }}
+        getRowId={row => row._id}
+        testId="supplier-table"
+        ariaLabel={t('suppliers.table.ariaLabel')}
+      />
 
       {/* Management Modal */}
       <SupplierManagementModal

@@ -4,7 +4,6 @@ const API_BASE = '/api'
 const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
-
 const AUTH_BASE = `${BASE_URL}/auth`
 
 export const AUTH_ENDPOINTS = {
@@ -59,32 +58,30 @@ export const CUSTOMER_ENDPOINTS = {
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
 } as const
 
-
 export const SHOP_ENDPOINTS = {
   // Core CRUD
-  GET_ALL:          `${BASE_URL}/shops`,
-  GET_BY_ID:        `${BASE_URL}/shops/:shopId`,
-  CREATE:           `${BASE_URL}/shops`,
-  UPDATE:           `${BASE_URL}/shops/:shopId`,
-  DELETE:           `${BASE_URL}/shops/:shopId`,
+  GET_ALL: `${BASE_URL}/shops`,
+  GET_BY_ID: `${BASE_URL}/shops/:shopId`,
+  CREATE: `${BASE_URL}/shops`,
+  UPDATE: `${BASE_URL}/shops/:shopId`,
+  DELETE: `${BASE_URL}/shops/:shopId`,
 
   // Status
-  TOGGLE_STATUS:    `${BASE_URL}/shops/:shopId/status`,
+  TOGGLE_STATUS: `${BASE_URL}/shops/:shopId/status`,
 
   // Settings & Rates
-  UPDATE_SETTINGS:  `${BASE_URL}/shops/:shopId/settings`,
+  UPDATE_SETTINGS: `${BASE_URL}/shops/:shopId/settings`,
   UPDATE_METAL_RATES: `${BASE_URL}/shops/:shopId/metal-rates`,
 
   // Statistics
-  GET_STATISTICS:   `${BASE_URL}/shops/:shopId/statistics`,
+  GET_STATISTICS: `${BASE_URL}/shops/:shopId/statistics`,
 
   // Bulk Operations
-  BULK_ACTIVATE:    `${BASE_URL}/shops/bulk/activate`,
-  BULK_DEACTIVATE:  `${BASE_URL}/shops/bulk/deactivate`,
-  BULK_DELETE:      `${BASE_URL}/shops/bulk`,
+  BULK_ACTIVATE: `${BASE_URL}/shops/bulk/activate`,
+  BULK_DEACTIVATE: `${BASE_URL}/shops/bulk/deactivate`,
+  BULK_DELETE: `${BASE_URL}/shops/bulk`,
 }
 export const PURCHASE_ENDPOINTS = {
-
   GET_ALL: `${BASE_URL}/shops/:shopId/purchases`,
   GET_BY_ID: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
   CREATE: `${BASE_URL}/shops/:shopId/purchases`,
@@ -117,8 +114,6 @@ export const PURCHASE_ENDPOINTS = {
   BY_DATE_RANGE: `${BASE_URL}/shops/:shopId/purchases/by-date-range`,
 } as const
 
-
-
 export const SUPPLIER_ENDPOINTS = {
   GET_ALL: `${BASE_URL}/suppliers`,
   GET_BY_ID: `${BASE_URL}/suppliers/:id`,
@@ -150,7 +145,6 @@ export const SHOPS_ENDPOINTS = {
   TRANSFER_INVENTORY: `${SHOPS_BASE}/:id/transfer-inventory`,
 }
 
-
 const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`
 
 export const ORGANIZATIONS_ENDPOINTS = {
@@ -161,7 +155,6 @@ export const ORGANIZATIONS_ENDPOINTS = {
   STATISTICS: `${ORGANIZATIONS_BASE}/:id/statistics`,
   SUBSCRIPTION: `${ORGANIZATIONS_BASE}/:id/subscription`,
 }
-
 
 const USERS_BASE = `${BASE_URL}/users`
 
@@ -200,7 +193,6 @@ export const PRODUCT_ENDPOINTS = {
   BULK_UPDATE_STATUS: `${BASE_URL}/shops/:shopId/products/bulk-update-status`,
 }
 
-
 const INVENTORY_BASE = `${BASE_URL}/inventory`
 
 export const INVENTORY_ENDPOINTS = {
@@ -212,7 +204,6 @@ export const INVENTORY_ENDPOINTS = {
   ADJUSTMENT: `${INVENTORY_BASE}/adjustment`,
   HISTORY: `${INVENTORY_BASE}/:id/history`,
 }
-
 
 const SALES_BASE = `${BASE_URL}/sales`
 
@@ -228,7 +219,6 @@ export const SALES_ENDPOINTS = {
   RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
 }
 
-
 const REPORTS_BASE = `${BASE_URL}/reports`
 
 export const REPORTS_ENDPOINTS = {
@@ -239,7 +229,6 @@ export const REPORTS_ENDPOINTS = {
   PRODUCT_PERFORMANCE: `${REPORTS_BASE}/product-performance`,
   DASHBOARD: `${REPORTS_BASE}/dashboard`,
 }
-
 
 export const API_ENDPOINTS = {
   AUTH: AUTH_ENDPOINTS,
@@ -252,7 +241,7 @@ export const API_ENDPOINTS = {
   CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
   SUPPLIER: SUPPLIER_ENDPOINTS,
-  PURCHASE:PURCHASE_ENDPOINTS,
+  PURCHASE: PURCHASE_ENDPOINTS,
 }
 
 export default API_ENDPOINTS

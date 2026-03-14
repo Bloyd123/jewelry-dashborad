@@ -58,8 +58,8 @@ export const forgotPassword = async (
 ): Promise<ApiResponse<ForgotPasswordResponse['data']>> => {
   const response = await retryRequest(
     () => api.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, { email }),
-    2, 
-    1000 
+    2,
+    1000
   )
   return response.data
 }
@@ -103,7 +103,7 @@ export const logout = async (
         accessToken,
       }),
     2,
-    1000 
+    1000
   )
   return response.data
 }

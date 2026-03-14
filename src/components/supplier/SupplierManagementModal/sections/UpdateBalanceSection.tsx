@@ -32,7 +32,7 @@ export const UpdateBalanceSection = ({
   supplier,
   onSubmit,
   onCancel,
-   isLoading = false, 
+  isLoading = false,
 }: UpdateBalanceSectionProps) => {
   const { t } = useTranslation()
 

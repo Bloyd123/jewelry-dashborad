@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { StatusFilter } from '@/components/ui/filters/StatusFilter'
 import type { StatusOption } from '@/components/ui/filters/StatusFilter'
 
-
 interface CustomerVIPFilterProps {
   value?: string
   onChange: (value: string | undefined) => void

@@ -15,10 +15,7 @@ export const usePurchaseDocuments = (shopId: string, purchaseId: string) => {
     isLoading,
     error,
     refetch,
-  } = useGetDocumentsQuery(
-    { shopId, purchaseId },
-    { skip: !purchaseId }
-  )
+  } = useGetDocumentsQuery({ shopId, purchaseId }, { skip: !purchaseId })
 
   // Document statistics
   const documentStats = useMemo(() => {
@@ -32,10 +29,13 @@ export const usePurchaseDocuments = (shopId: string, purchaseId: string) => {
       }
     }
 
-    const byType = documents.reduce((acc, doc) => {
-      acc[doc.documentType] = (acc[doc.documentType] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
+    const byType = documents.reduce(
+      (acc, doc) => {
+        acc[doc.documentType] = (acc[doc.documentType] || 0) + 1
+        return acc
+      },
+      {} as Record<string, number>
+    )
 
     return {
       total: documents.length,
@@ -64,7 +64,10 @@ export const useDocumentsByType = (
   purchaseId: string,
   documentType: string
 ) => {
-  const { documents, isLoading, error } = usePurchaseDocuments(shopId, purchaseId)
+  const { documents, isLoading, error } = usePurchaseDocuments(
+    shopId,
+    purchaseId
+  )
 
   const filteredDocuments = useMemo(() => {
     if (!documents) return []
@@ -215,7 +218,8 @@ export const useMissingDocuments = (shopId: string, purchaseId: string) => {
     ]
 
     return required.filter(
-      doc => !documentStats.byType[doc.type] || documentStats.byType[doc.type] === 0
+      doc =>
+        !documentStats.byType[doc.type] || documentStats.byType[doc.type] === 0
     )
   }, [documentStats])
 
