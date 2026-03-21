@@ -108,10 +108,10 @@ export const BackupCodesDisplay: React.FC<BackupCodesDisplayProps> = ({
           </style>
         </head>
         <body>
-          <h1>🔐 Two-Factor Authentication Backup Codes</h1>
+          <h1>Two-Factor Authentication Backup Codes</h1>
           
           <div class="warning">
-            <strong>⚠️ Important:</strong><br>
+            <strong>Important:</strong><br>
             Save these codes in a safe place! You'll need them to access your account if you lose your phone.
             Each code can only be used once.
           </div>

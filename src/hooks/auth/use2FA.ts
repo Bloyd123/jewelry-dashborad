@@ -6,8 +6,7 @@
 import { useCallback } from 'react'
 import { useAppDispatch } from '@/store/hooks'
 import { complete2FALogin } from '@/store/slices/authSlice'
-
-import { fetchUserProfile } from '@/store/slices/userSlice'
+import { updateUserFields } from '@/store/slices/userSlice'
 
 import * as authService from '@/api/services/authService'
 
@@ -27,39 +26,33 @@ export const use2FA = () => {
     }
   }, [])
 
-  const verify2FA = useCallback(
-    async (token: string) => {
-      try {
-        const response = await authService.verify2FA(token)
+// ✅ AFTER - verify2FA
+// ✅ AFTER - verify2FA
+const verify2FA = useCallback(
+  async (token: string) => {
+    try {
+      const response = await authService.verify2FA(token)
+      dispatch(updateUserFields({ twoFactorEnabled: true })) // ✅ check nahi chahiye
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  },
+  [dispatch]
+)
 
-        if (response.data.success) {
-          await dispatch(fetchUserProfile())
-        }
-
-        return { success: true, data: response.data }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    [dispatch]
-  )
-
-  const disable2FA = useCallback(
-    async (password: string, token: string) => {
-      try {
-        const response = await authService.disable2FA(password, token)
-
-        if (response.data.success) {
-          await dispatch(fetchUserProfile())
-        }
-
-        return { success: true, data: response.data }
-      } catch (error: any) {
-        throw error
-      }
-    },
-    [dispatch]
-  )
+const disable2FA = useCallback(
+  async (password: string, token: string) => {
+    try {
+      const response = await authService.disable2FA(password, token)
+      dispatch(updateUserFields({ twoFactorEnabled: false })) // ✅ data: null se crash nahi hoga
+      return { success: true, data: response.data }
+    } catch (error: any) {
+      throw error
+    }
+  },
+  [dispatch]
+)
 
   const verify2FALogin = useCallback(
     async (tempToken: string, token: string) => {

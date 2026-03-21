@@ -19,7 +19,7 @@ export default function VerifyEmail() {
 
   const [status, setStatus] = useState<VerificationStatus>('verifying')
   const [message, setMessage] = useState('')
-
+const { verifyEmail } = useAuth()
   useEffect(() => {
     const token = searchParams.get('token')
 
@@ -32,9 +32,9 @@ export default function VerifyEmail() {
     verifyEmailToken(token)
   }, [searchParams])
 
-  const verifyEmailToken = async (token: string) => {
+const verifyEmailToken = async (token: string) => {
     try {
-      //   await verifyEmail(token)
+      await verifyEmail(token)  // ✅ Ab actual API call hogi
       setStatus('success')
       setMessage(t('auth.verifyEmail.successMessage'))
     } catch (error: any) {

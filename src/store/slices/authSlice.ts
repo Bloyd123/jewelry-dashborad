@@ -195,7 +195,7 @@ export const logout = createAsyncThunk<
     dispatch(clearPermissions())
     ShopContextManager.clear()
 
-    console.error('⚠️ [authSlice] Logout error (local cleanup done):', error)
+    console.error(' [authSlice] Logout error (local cleanup done):', error)
     return rejectWithValue(error?.message || 'Logout failed')
   }
 })
@@ -267,7 +267,7 @@ export const initializeAuth = createAsyncThunk<
     const hasPersistedPermissions = state.permissions.shopAccesses.length > 0
 
     if (import.meta.env.DEV) {
-      console.log('🔍 [authSlice] Permission check:', {
+      console.log('[authSlice] Permission check:', {
         hasPersistedPermissions,
         persistedShopCount: state.permissions.shopAccesses.length,
         lastSyncedAt: state.permissions.lastSyncedAt

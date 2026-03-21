@@ -1,9 +1,4 @@
-//
 // FILE: store/index.ts
-// Redux Store Configuration - Proper Separation between Redux & RTK Query
-//  UPDATED: Permissions now persisted to localStorage
-//
-
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import {
   persistStore,
@@ -17,70 +12,12 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import { setupListeners } from '@reduxjs/toolkit/query'
-
-//
-// REDUX SLICES (Global State Management)
-//
 import authReducer from './slices/authSlice'
 import userReducer from './slices/userSlice'
 import permissionsReducer from './slices/permissionsSlice'
 import uiReducer from './slices/uiSlice'
 import notificationReducer from './slices/notificationSlice'
-
-//
-// RTK QUERY APIs (Server State Management)
-//
 import { baseApi } from './api/baseApi'
-// import { customerApi } from './api/customerApi'
-// import { productApi } from './api/productApi'
-// import { shopApi } from './api/shopApi'
-// Add more API slices as needed
-
-//
-// PERSIST CONFIGURATIONS - Selective & Minimal
-//
-
-/**
- * Auth Persist Config
- * ONLY essential auth identifiers - NO tokens, NO sensitive data
- */
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  version: 1,
-  whitelist: [
-    'isAuthenticated',
-    'userId',
-    'email',
-    'role',
-    'currentShopId',
-    'shopIds',
-  ],
-  blacklist: [
-    // Security: Never persist tokens
-    'accessToken',
-    'refreshToken',
-    'tokenId',
-
-    // Transient states: Don't persist
-    'isLoading',
-    'isInitializing',
-    'isRefreshing',
-    'error',
-
-    // 2FA flow: Session-only
-    'requires2FA',
-    'tempToken',
-
-    // Activity tracking: Session-only
-    'lastActivity',
-  ],
-}
-
-/**
- *  NEW: Permissions Persist Config
- * Cache permissions to avoid re-fetching on reload
- */
 const permissionsPersistConfig = {
   key: 'permissions',
   storage,
@@ -95,10 +32,6 @@ const permissionsPersistConfig = {
   blacklist: ['isLoading', 'error'],
 }
 
-/**
- * UI Persist Config
- * User preferences only
- */
 const uiPersistConfig = {
   key: 'ui-preferences',
   storage,
@@ -113,35 +46,13 @@ const uiPersistConfig = {
   ],
 }
 
-//
-// ROOT REDUCER
-//
-
 const rootReducer = combineReducers({
-  //  REDUX SLICES (Client State)
-
-  // Auth: Minimal authentication state ONLY
-  // auth: persistReducer(authPersistConfig, authReducer),
-  auth: authReducer,
-  // User: Profile & preferences (NOT persisted - fetched from API)
-  user: userReducer,
-
-  //  CHANGED: Permissions now PERSISTED to localStorage
-  // permissions: persistReducer(permissionsPersistConfig, permissionsReducer),
-  permissions: permissionsReducer,
-  // UI: User interface preferences
-  // ui: persistReducer(uiPersistConfig, uiReducer),
-  ui: uiReducer,
-  // Notifications: Toast messages (NOT persisted - runtime only)
+  auth: authReducer,                                                          
+  user: userReducer,                                                          
+  permissions: persistReducer(permissionsPersistConfig, permissionsReducer),  
+  ui: persistReducer(uiPersistConfig, uiReducer),
   notification: notificationReducer,
-
-  // Base API: Main API slice
   [baseApi.reducerPath]: baseApi.reducer,
-
-  // Add more API slices here as needed:
-  // [customerApi.reducerPath]: customerApi.reducer,
-  // [productApi.reducerPath]: productApi.reducer,
-  // [shopApi.reducerPath]: shopApi.reducer,
 })
 
 export const store = configureStore({
@@ -157,26 +68,19 @@ export const store = configureStore({
           PERSIST,
           PURGE,
           REGISTER,
-
           'api/executeQuery/pending',
           'api/executeQuery/fulfilled',
           'api/executeQuery/rejected',
         ],
-
         ignoredActionPaths: [
           'meta.arg',
           'payload.timestamp',
           'meta.baseQueryMeta.request',
           'meta.baseQueryMeta.response',
         ],
-
         ignoredPaths: ['notification.notifications'],
       },
     }).concat(baseApi.middleware),
-  // Add more API middlewares here:
-  // .concat(customerApi.middleware)
-  // .concat(productApi.middleware)
-  // .concat(shopApi.middleware)
 
   devTools: import.meta.env.DEV,
 })

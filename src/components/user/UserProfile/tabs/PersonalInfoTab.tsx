@@ -24,7 +24,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
+// import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
 import {
   Select,
   SelectContent,
@@ -38,13 +38,11 @@ import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
 import type { UpdateProfileRequest } from '@/types'
 
-//  NEW: Import from userSlice
 import { selectUserProfile } from '@/store/slices/userSlice'
 
 export const PersonalInfoTab = () => {
   const { t } = useTranslation()
 
-  //  FIXED: Get user from userSlice instead of authSlice
   const user = useAppSelector(selectUserProfile)
 
   const [isEditing, setIsEditing] = useState(false)
@@ -56,8 +54,8 @@ export const PersonalInfoTab = () => {
     phone: user?.phone || '',
     designation: user?.designation || '',
     department: user?.department || 'other',
-    employeeId: user?.employeeId || '',
-    joiningDate: user?.joiningDate || null,
+ employeeId: user?.employeeId || user?._id || '',  
+    joiningDate: user?.joiningDate || user?.createdAt || null,  
     profileImage: user?.profileImage || '',
   })
 
@@ -83,8 +81,8 @@ export const PersonalInfoTab = () => {
         phone: user.phone || '',
         designation: user.designation || '',
         department: user.department || 'other',
-        employeeId: user.employeeId || '',
-        joiningDate: user.joiningDate || null,
+     employeeId: user.employeeId || user._id || '',  
+            joiningDate: user.joiningDate || user.createdAt || null,  
         profileImage: user.profileImage || '',
       })
     }
@@ -140,7 +138,7 @@ export const PersonalInfoTab = () => {
   return (
     <div className="space-y-6">
       {/* Profile Picture Card */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>{t('userProfile.personalInfo.profilePicture')}</CardTitle>
           <CardDescription>
@@ -162,7 +160,7 @@ export const PersonalInfoTab = () => {
             </Button>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       {/* Basic Information Card */}
       <Card>

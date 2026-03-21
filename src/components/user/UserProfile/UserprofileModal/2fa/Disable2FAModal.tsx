@@ -49,35 +49,18 @@ export const Disable2FAModal: React.FC<Disable2FAModalProps> = ({
 
   // HANDLERS
 
-  const handleDisable = async () => {
+const handleDisable = async () => {
     setError(null)
-
-    // Validation
-    if (!password) {
-      setError('Password is required')
-      return
-    }
-    if (code.length !== 6) {
-      setError('Please enter a 6-digit code')
-      return
-    }
-
     try {
-      //  NEW: Use disable2FA from useAuth hook
       const result = await disable2FA(password, code)
-
+      console.log('disable2FA result:', result) // 👈 ADD THIS
+      
       if (result.success) {
         onOpenChange(false)
         onSuccess?.()
-
-        // Reset state
-        setTimeout(() => {
-          setPassword('')
-          setCode('')
-          setError(null)
-        }, 300)
       }
     } catch (err: any) {
+      console.log('disable2FA error:', err) // 👈 ADD THIS
       handleError(err, errors => {
         setError(Object.values(errors)[0] as string)
       })

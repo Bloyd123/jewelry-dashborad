@@ -1,32 +1,16 @@
-//
 // FILE: store/slices/userSlice.ts
-// User Profile & Preferences - SEPARATE from Auth
-// NOT PERSISTED - Fetched from API on demand
-//  REFACTORED: Removed shopAccesses duplication
-//
-
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import * as authService from '@/api/services/authService'
 import type { User, UpdateProfileRequest } from '@/types'
 import type { RootState } from '../index'
 
-//
-// STATE INTERFACE - NO MORE SHOP ACCESSES
-//
-
 interface UserState {
   profile: User | null
-  //  REMOVED: shopAccesses (moved to permissionsSlice)
-  //  REMOVED: activeShops (derived from permissionsSlice)
   isLoading: boolean
   isUpdating: boolean
   error: string | null
   lastSyncedAt: number | null
 }
-
-//
-// INITIAL STATE
-//
 
 const initialState: UserState = {
   profile: null,
@@ -35,10 +19,6 @@ const initialState: UserState = {
   error: null,
   lastSyncedAt: null,
 }
-
-//
-// HELPER: Convert any object to User type safely
-//
 
 const convertToUser = (userData: any): User => {
   return {
@@ -79,15 +59,6 @@ const convertToUser = (userData: any): User => {
     updatedAt: userData.updatedAt || new Date().toISOString(),
   }
 }
-
-//
-// ASYNC THUNKS
-//
-
-/**
- * Fetch current user profile from API
- * Used for explicit refresh/reload scenarios
- */
 export const fetchUserProfile = createAsyncThunk<
   User,
   void,
@@ -96,7 +67,6 @@ export const fetchUserProfile = createAsyncThunk<
   try {
     const response = await authService.getCurrentUser()
 
-    //  Handle both response structures
     let userData: User
 
     if (response.data.user) {
@@ -106,7 +76,7 @@ export const fetchUserProfile = createAsyncThunk<
     }
 
     if (import.meta.env.DEV) {
-      console.log('🔍 [userSlice] fetchUserProfile response:', {
+      console.log('[userSlice] fetchUserProfile response:', {
         userId: userData._id,
         role: userData.role,
       })
@@ -114,14 +84,11 @@ export const fetchUserProfile = createAsyncThunk<
 
     return userData
   } catch (error: any) {
-    console.error(' [userSlice] fetchUserProfile failed:', error)
+    console.error('[userSlice] fetchUserProfile failed:', error)
     return rejectWithValue(error?.message || 'Failed to fetch user profile')
   }
 })
 
-/**
- * Update user profile
- */
 export const updateUserProfile = createAsyncThunk<
   User,
   UpdateProfileRequest,
@@ -132,34 +99,27 @@ export const updateUserProfile = createAsyncThunk<
     const userData = response.data.user || response.data
 
     if (import.meta.env.DEV) {
-      console.log(' [userSlice] Profile updated:', userData._id)
+      console.log('[userSlice] Profile updated:', userData._id)
     }
 
     return convertToUser(userData)
   } catch (error: any) {
-    console.error(' [userSlice] updateUserProfile failed:', error)
+    console.error('[userSlice] updateUserProfile failed:', error)
     return rejectWithValue(error?.message || 'Failed to update profile')
   }
 })
 
-//
-// SLICE
-//
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    /**
-     *  REFACTORED: Set user profile ONLY (no shopAccesses)
-     * Called by authSlice after successful login OR auth initialization
-     */
     setUserFromLogin: (state, action: PayloadAction<{ user: User | any }>) => {
       const userData = action.payload.user
 
       if (!userData) {
         console.error(
-          ' [userSlice] setUserFromLogin: user data is null/undefined'
+          '[userSlice] setUserFromLogin: user data is null/undefined'
         )
         state.error = 'Invalid user data: user object is missing'
         state.isLoading = false
@@ -168,7 +128,7 @@ const userSlice = createSlice({
 
       if (!userData._id) {
         console.error(
-          ' [userSlice] setUserFromLogin: user._id is missing',
+          '[userSlice] setUserFromLogin: user._id is missing',
           userData
         )
         state.error = 'Invalid user data: user ID is missing'
@@ -188,10 +148,6 @@ const userSlice = createSlice({
         })
       }
     },
-
-    /**
-     * Update specific user fields (for partial updates)
-     */
     updateUserFields: (state, action: PayloadAction<Partial<User>>) => {
       if (state.profile) {
         state.profile = {
@@ -210,9 +166,7 @@ const userSlice = createSlice({
       }
     },
 
-    /**
-     * Clear user profile (on logout)
-     */
+
     clearUserProfile: state => {
       state.profile = null
       state.error = null
@@ -224,24 +178,16 @@ const userSlice = createSlice({
         console.log(' [userSlice] User profile cleared')
       }
     },
-
-    /**
-     * Clear error
-     */
     clearError: state => {
       state.error = null
     },
 
-    /**
-     * Set loading state manually (if needed)
-     */
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
   },
 
   extraReducers: builder => {
-    // FETCH USER PROFILE
     builder
       .addCase(fetchUserProfile.pending, state => {
         state.isLoading = true
@@ -265,7 +211,6 @@ const userSlice = createSlice({
         console.error(' [userSlice] fetchUserProfile rejected:', action.payload)
       })
 
-    // UPDATE USER PROFILE
     builder
       .addCase(updateUserProfile.pending, state => {
         state.isUpdating = true
@@ -301,7 +246,6 @@ const userSlice = createSlice({
   },
 })
 
-// ACTIONS
 export const {
   setUserFromLogin,
   updateUserFields,
@@ -317,7 +261,6 @@ export const selectUserUpdating = (state: RootState) => state.user.isUpdating
 export const selectUserError = (state: RootState) => state.user.error
 export const selectLastSyncedAt = (state: RootState) => state.user.lastSyncedAt
 
-// Derived selectors
 export const selectUserFullName = (state: RootState) =>
   state.user.profile?.fullName || ''
 

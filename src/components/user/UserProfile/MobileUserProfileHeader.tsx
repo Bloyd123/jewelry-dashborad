@@ -1,6 +1,4 @@
 // FILE: src/pages/UserProfile/MobileUserProfileHeader.tsx
-// Mobile User Profile Header Component
-
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -17,9 +15,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Avatar } from '@/components/ui/data-display/Avatar/Avatar'
-import { dummyUser } from '@/pages/user/data'
-
-// COMPONENT PROPS
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
 
 interface MobileUserProfileHeaderProps {
   activeTab?: string
@@ -28,15 +25,13 @@ interface MobileUserProfileHeaderProps {
   onSettingsClick?: () => void
 }
 
-// MOBILE USER PROFILE HEADER COMPONENT
 
 export const MobileUserProfileHeader: React.FC<
   MobileUserProfileHeaderProps
 > = ({ activeTab = 'personal', onTabChange, onBackClick, onSettingsClick }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-
-  // Handle tab change
+const user = useAppSelector(selectUserProfile)
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)
     if (onTabChange) {
@@ -44,7 +39,6 @@ export const MobileUserProfileHeader: React.FC<
     }
   }
 
-  // Tab items
   const tabItems = [
     {
       value: 'personal',
@@ -80,10 +74,8 @@ export const MobileUserProfileHeader: React.FC<
 
   return (
     <div className="space-y-0">
-      {/* Header Section */}
       <div className="border-b border-border-secondary bg-bg-secondary">
         <div className="space-y-3 px-4 py-3">
-          {/* Back Button and Settings */}
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -105,64 +97,59 @@ export const MobileUserProfileHeader: React.FC<
             </Button>
           </div>
 
-          {/* User Details */}
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              {/* User Avatar */}
               <Avatar
-                src={dummyUser.profileImage || undefined}
-                name={dummyUser.fullName}
+                    src={user?.profileImage || undefined}
+                name={user?.fullName || ''}
                 size="lg"
-                status={dummyUser.isActive ? 'online' : 'offline'}
+                status={user?.isActive ? 'online' : 'offline'}
               />
 
-              {/* User Info */}
               <div className="min-w-0 flex-1 space-y-2">
                 <div className="space-y-1">
                   <h1 className="truncate text-lg font-bold text-text-primary">
-                    {dummyUser.fullName}
+                    {user?.fullName}
                   </h1>
                   <div className="flex items-center gap-2 text-sm text-text-tertiary">
-                    <span className="truncate">{dummyUser.email}</span>
-                    {dummyUser.phone && (
+                    <span className="truncate">{user?.email}</span>
+                  {user?.phone && (
                       <>
                         <span>•</span>
-                        <span>{dummyUser.phone}</span>
+                        <span>{user.phone}</span>
                       </>
                     )}
                   </div>
                 </div>
 
-                {/* Badges - Mobile Compact */}
                 <div className="flex flex-wrap items-center gap-1.5">
                   <Badge
-                    variant={dummyUser.isActive ? 'active' : 'inactive'}
+                    variant={user?.isActive ? 'active' : 'inactive'}
                     size="sm"
                   >
-                    {dummyUser.isActive
+                    {user?.isActive
                       ? t('common.active')
                       : t('common.inactive')}
                   </Badge>
 
                   <Badge variant="default" size="sm">
-                    {t(`roles.${dummyUser.role}`)}
+                   {t(`roles.${user?.role}`)}
                   </Badge>
 
                   <Badge variant="outline" size="sm">
-                    {t(`departments.${dummyUser.department}`)}
+                    {t(`departments.${user?.department}`)}
                   </Badge>
                 </div>
               </div>
             </div>
 
-            {/* Quick Stats - Mobile Card */}
             <div className="grid grid-cols-3 gap-2">
               <div className="rounded-lg bg-bg-primary p-2 text-center">
                 <p className="text-xs text-text-tertiary">
                   {t('userProfile.target')}
                 </p>
                 <p className="text-sm font-semibold text-text-primary">
-                  ₹{(dummyUser.salesTarget / 1000).toFixed(0)}K
+                  ₹{((user?.salesTarget || 0) / 1000).toFixed(0)}K
                 </p>
               </div>
 
@@ -171,7 +158,7 @@ export const MobileUserProfileHeader: React.FC<
                   {t('userProfile.commission')}
                 </p>
                 <p className="text-sm font-semibold text-accent">
-                  {dummyUser.commissionRate}%
+              {user?.commissionRate || 0}%
                 </p>
               </div>
 
@@ -180,14 +167,13 @@ export const MobileUserProfileHeader: React.FC<
                   {t('userProfile.role')}
                 </p>
                 <p className="truncate text-xs font-semibold text-text-primary">
-                  {dummyUser.designation || t(`roles.${dummyUser.role}`)}
+                  {user?.designation || t(`roles.${user?.role}`)}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Tab Navigation - Mobile Scrollable */}
         <div className="overflow-x-auto px-4">
           <Tabs
             tabs={tabItems}

@@ -206,7 +206,23 @@ export const checkUsernameAvailability = async (
     return false
   }
 }
-
+// ✅ AFTER
+export const getActivityLogs = async (params?: { 
+  action?: string, 
+  dateRange?: string 
+}) => {
+  const queryParams = new URLSearchParams()
+  if (params?.action && params.action !== 'all') {
+    queryParams.append('action', params.action)
+  }
+  if (params?.dateRange) {
+    queryParams.append('dateRange', params.dateRange)
+  }
+  const response = await api.get(
+    `${API_ENDPOINTS.AUTH.ACTIVITY_LOGS}?${queryParams.toString()}`
+  )
+  return response.data
+}
 export default {
   registerSuperAdmin,
   register,

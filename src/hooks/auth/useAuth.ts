@@ -33,6 +33,7 @@ export const useAuth = () => {
   const twoFAActions = use2FA()
   const shopActions = useShopActions()
   const sessionActions = useSession()
+  
   const activityActions = useActivityAction()
   const tokenUtils = useToken()
 
@@ -93,6 +94,8 @@ export const useAuth = () => {
 
     //  Session Actions
     getSessions: sessionActions.getSessions,
+    resendVerificationEmail: sessionActions.resendVerificationEmail,
+    verifyEmail: sessionActions.verifyEmail, 
     revokeSession: sessionActions.revokeSession,
 
     //  Activity

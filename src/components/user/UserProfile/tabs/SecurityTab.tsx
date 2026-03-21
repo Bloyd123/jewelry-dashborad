@@ -37,8 +37,8 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import {
   Enable2FAModal,
   Disable2FAModal,
-  BackupCodesDisplay,
 } from '@/components/user/UserProfile/UserprofileModal/2fa'
+
 
 //  Import from correct slices
 import { selectUserProfile } from '@/store/slices/userSlice'
@@ -62,14 +62,16 @@ export const SecurityTab = () => {
   //  Get user data from userSlice
   const user = useAppSelector(selectUserProfile)
   const twoFactorEnabled = user?.twoFactorEnabled || false
-  const backupCodes = user?.backupCodes || []
-  const usedCodes = user?.backupCodesUsed || []
+  // const backupCodes = user?.backupCodes || []
+  // const usedCodes = user?.backupCodesUsed || []
 
   // Modal states
   const [showEnableModal, setShowEnableModal] = useState(false)
   const [showDisableModal, setShowDisableModal] = useState(false)
-  const [showBackupCodes, setShowBackupCodes] = useState(false)
-
+  // const [showBackupCodes, setShowBackupCodes] = useState(false)
+// ✅ AFTER - State aur handler add karo
+const [isResendingVerification, setIsResendingVerification] = useState(false)
+const { resendVerificationEmail } = useAuth() // ← useAuth se lo
   // Password form state
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
@@ -122,7 +124,21 @@ export const SecurityTab = () => {
   const handleDisable2FA = () => {
     setShowDisableModal(true)
   }
-
+// ✅ AFTER - Handler add karo
+const handleResendVerification = useCallback(async () => {
+    setIsResendingVerification(true)
+    try {
+        await resendVerificationEmail()
+        showSuccess(
+            t('userProfile.security.verificationSent'),
+            t('userProfile.security.verificationSentDesc')
+        )
+    } catch (error: any) {
+        handleError(error)
+    } finally {
+        setIsResendingVerification(false)
+    }
+}, [resendVerificationEmail, showSuccess, handleError, t])
   //  FIXED: Password Change Handler
   const handleChangePassword = useCallback(async () => {
     // Validate form
@@ -308,9 +324,15 @@ export const SecurityTab = () => {
             {user?.isEmailVerified ? (
               <Badge variant="success">{t('common.verified')}</Badge>
             ) : (
-              <Button variant="outline" size="sm">
-                {t('userProfile.security.verifyNow')}
-              </Button>
+// ✅ AFTER - Button mein onClick add karo
+<Button 
+    variant="outline" 
+    size="sm"
+    onClick={handleResendVerification}
+    disabled={isResendingVerification}
+>
+    {isResendingVerification ? t('common.sending') : t('userProfile.security.verifyNow')}
+</Button>
             )}
           </div>
 
@@ -557,7 +579,7 @@ export const SecurityTab = () => {
           </div>
 
           {/* Actions when enabled */}
-          {twoFactorEnabled && (
+          {/* {twoFactorEnabled && (
             <div className="space-y-2 border-t border-border-primary pt-4">
               <Button
                 variant="outline"
@@ -575,7 +597,7 @@ export const SecurityTab = () => {
                 />
               )}
             </div>
-          )}
+          )} */}
 
           {/* Action when disabled */}
           {!twoFactorEnabled && (

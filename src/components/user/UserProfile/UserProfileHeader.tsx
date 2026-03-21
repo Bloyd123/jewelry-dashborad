@@ -6,8 +6,6 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileUserProfileHeader } from './MobileUserProfileHeader'
 import { DesktopUserProfileHeader } from './DesktopUserProfileHeader'
 
-// COMPONENT PROPS
-
 interface UserProfileHeaderProps {
   activeTab?: string
   onTabChange?: (tab: string) => void
@@ -15,7 +13,6 @@ interface UserProfileHeaderProps {
   onSettingsClick?: () => void
 }
 
-// RESPONSIVE USER PROFILE HEADER COMPONENT
 
 export const UserProfileHeader: React.FC<UserProfileHeaderProps> = props => {
   const isMobile = useMediaQuery('(max-width: 1024px)')

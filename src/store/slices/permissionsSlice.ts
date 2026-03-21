@@ -1,8 +1,4 @@
-//
 // FILE: store/slices/permissionsSlice.ts
-// Permissions & Shop Access Management - SINGLE SOURCE OF TRUTH
-//  NOW PERSISTED - Cached with timestamp for staleness validation
-//
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type {
@@ -13,64 +9,34 @@ import type {
 } from '@/types'
 import type { RootState } from '../index'
 
-//
-// SIMPLIFIED SHOP ACCESS INTERFACE
-//
-
 interface SimplifiedShopAccess {
-  shopId: string // Just ID string
-  shopName: string // For display
+  shopId: string 
+  shopName: string 
   role: UserRole
   permissions: ShopPermissions
   isActive: boolean
 }
 
-//
-// STATE INTERFACE
-//
-
 interface PermissionsState {
-  //  SINGLE SOURCE: Shop accesses (simplified structure)
   shopAccesses: SimplifiedShopAccess[]
-
-  // Current shop context
   currentShopId: string | null
   currentShopPermissions: ShopPermissions | null
-
-  // Organization-level permissions (for super_admin, org_admin)
   orgPermissions: ShopPermissions | null
-
-  //  NEW: Timestamp for staleness check
   lastSyncedAt: number | null
-
-  // Loading State
   isLoading: boolean
-
-  // Error State
   error: string | null
 }
-
-//
-// INITIAL STATE
-//
-
 const initialState: PermissionsState = {
   shopAccesses: [],
   currentShopId: null,
   currentShopPermissions: null,
   orgPermissions: null,
-  lastSyncedAt: null, //  NEW
+  lastSyncedAt: null, 
   isLoading: false,
   error: null,
 }
-
-//
-// HELPER FUNCTIONS
-//
-
 const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
   return [
-    // CUSTOMER MANAGEMENT (13)
     'canCreateCustomer',
     'canSearchCustomer',
     'canViewCustomers',
@@ -85,7 +51,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canManageCustomers',
     'canViewCustomerHistory',
 
-    // PRODUCT MANAGEMENT (22)
     'canCreateProduct',
     'canViewProducts',
     'canSearchProducts',
@@ -109,7 +74,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canImportProducts',
     'canExportProducts',
 
-    // SHOP MANAGEMENT (11)
     'canCreateShop',
     'canViewShops',
     'canViewSingleShop',
@@ -122,7 +86,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canManageMetalRates',
     'canTransferInventory',
 
-    // SUPPLIER MANAGEMENT (15)
     'canCreateSupplier',
     'canViewSuppliers',
     'canGetSingleSupplier',
@@ -139,7 +102,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canViewTopSuppliers',
     'canManageSuppliers',
 
-    // METAL RATE MANAGEMENT (11)
     'canCreateUpdateRate',
     'canGetCurrentRate',
     'canGetRateHistory',
@@ -152,7 +114,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canDeactivateRate',
     'canDeleteRate',
 
-    // PURCHASE MANAGEMENT (21)
     'canCreatePurchase',
     'canViewPurchases',
     'canGetSinglePurchase',
@@ -175,7 +136,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canGetPurchaseDocuments',
     'canManagePurchases',
 
-    // SALE MANAGEMENT (36)
     'canCreateSale',
     'canViewSales',
     'canGetSingleSale',
@@ -213,7 +173,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canCancelInvoices',
     'canAccessPOS',
 
-    // PAYMENT MANAGEMENT (39)
     'canCreatePayment',
     'canGetPaymentsList',
     'canGetSinglePayment',
@@ -253,7 +212,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canReceivePayments',
     'canMakePayments',
 
-    // ORDER MANAGEMENT (46)
     'canCreateOrder',
     'canViewOrders',
     'canGetSingleOrder',
@@ -301,28 +259,23 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canManageRepairs',
     'canManageCustomOrders',
 
-    // PARTIES & BILLING (4)
     'canManageParties',
     'canViewPartyLedger',
     'canManageBilling',
     'canViewBilling',
 
-    // FINANCIAL (3)
     'canViewFinancials',
     'canViewProfitLoss',
     'canApproveTransactions',
 
-    // EXPENSES (1)
     'canManageExpenses',
 
-    // SCHEMES (5)
     'canManageSchemes',
     'canViewSchemes',
     'canCreateSchemes',
     'canEditSchemes',
     'canDeleteSchemes',
 
-    // REPORTS & ANALYTICS (6)
     'canManageReports',
     'canViewReports',
     'canGenerateReports',
@@ -330,7 +283,6 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canViewAnalytics',
     'canViewDashboard',
 
-    // USERS (6)
     'canManageUsers',
     'canViewUsers',
     'canCreateUsers',
@@ -338,14 +290,11 @@ const getAllPermissionKeys = (): (keyof ShopPermissions)[] => {
     'canDeleteUsers',
     'canAssignRoles',
 
-    // SETTINGS (1)
     'canManageTaxSettings',
 
-    // ADVANCED FEATURES (2)
     'canManageHallmarking',
     'canManageOldGold',
 
-    // SYSTEM (6)
     'canManageSettings',
     'canExportData',
     'canDeleteRecords',
@@ -367,30 +316,20 @@ const createOrgAdminPermissions = (): ShopPermissions => {
   return createFullPermissions()
 }
 
-//  Extract shop ID from shopAccess (handles both string and object)
 const extractShopId = (shopId: any): string => {
   return typeof shopId === 'string' ? shopId : shopId._id
 }
 
-//  Extract shop name from shopAccess
 const extractShopName = (shopId: any): string => {
   return typeof shopId === 'string'
     ? ''
     : shopId.name || shopId.displayName || ''
 }
 
-//
-// SLICE
-//
-
 const permissionsSlice = createSlice({
   name: 'permissions',
   initialState,
   reducers: {
-    /**
-     *  CRITICAL: Set permissions from login response
-     * This is the SINGLE SOURCE OF TRUTH for shop accesses
-     */
     setPermissionsFromLogin: (
       state,
       action: PayloadAction<{
@@ -399,7 +338,6 @@ const permissionsSlice = createSlice({
         userRole?: UserRole
       }>
     ) => {
-      //  Transform to simplified structure (SINGLE SOURCE)
       state.shopAccesses = action.payload.shopAccesses.map(access => ({
         shopId: extractShopId(access.shopId),
         shopName: extractShopName(access.shopId),
@@ -408,7 +346,6 @@ const permissionsSlice = createSlice({
         isActive: access.isActive,
       }))
 
-      // Set current shop context
       if (state.shopAccesses.length > 0) {
         state.currentShopId = state.shopAccesses[0].shopId
         state.currentShopPermissions = state.shopAccesses[0].permissions
@@ -417,7 +354,6 @@ const permissionsSlice = createSlice({
         state.currentShopPermissions = null
       }
 
-      // Handle org-level permissions
       if (action.payload.effectivePermissions !== null) {
         state.orgPermissions = action.payload.effectivePermissions
       } else if (state.shopAccesses.length === 0) {
@@ -429,7 +365,6 @@ const permissionsSlice = createSlice({
         }
       }
 
-      //  NEW: Update timestamp
       state.lastSyncedAt = Date.now()
 
       state.error = null
@@ -445,10 +380,6 @@ const permissionsSlice = createSlice({
         })
       }
     },
-
-    /**
-     * Set current shop permissions based on selected shop
-     */
     setCurrentShopPermissions: (state, action: PayloadAction<string>) => {
       const shopId = action.payload
       const shopAccess = state.shopAccesses.find(
@@ -466,20 +397,17 @@ const permissionsSlice = createSlice({
         }
       } else {
         console.warn(
-          `⚠️ [permissionsSlice] No shop access found for: ${shopId}`
+          `[permissionsSlice] No shop access found for: ${shopId}`
         )
       }
     },
 
-    /**
-     * Clear all permissions (on logout)
-     */
     clearPermissions: state => {
       state.shopAccesses = []
       state.currentShopId = null
       state.currentShopPermissions = null
       state.orgPermissions = null
-      state.lastSyncedAt = null //  NEW
+      state.lastSyncedAt = null 
       state.error = null
       state.isLoading = false
 
@@ -487,17 +415,12 @@ const permissionsSlice = createSlice({
         console.log(' [permissionsSlice] Permissions cleared')
       }
     },
-
-    /**
-     * Clear error
-     */
     clearError: state => {
       state.error = null
     },
   },
 })
 
-// ACTIONS
 export const {
   setPermissionsFromLogin,
   setCurrentShopPermissions,
@@ -505,7 +428,6 @@ export const {
   clearError,
 } = permissionsSlice.actions
 
-// SELECTORS
 export const selectShopAccesses = (state: RootState) =>
   state.permissions.shopAccesses
 
@@ -527,16 +449,14 @@ export const selectPermissionsLoading = (state: RootState) =>
 export const selectPermissionsError = (state: RootState) =>
   state.permissions.error
 
-//  NEW: Get last synced timestamp
 export const selectPermissionsLastSyncedAt = (state: RootState) =>
   state.permissions.lastSyncedAt
 
-//  NEW: Check if permissions are stale (older than 24 hours)
 export const selectArePermissionsStale = (state: RootState): boolean => {
   const lastSynced = state.permissions.lastSyncedAt
   if (!lastSynced) return true
 
-  const STALE_THRESHOLD = 24 * 60 * 60 * 1000 // 24 hours
+  const STALE_THRESHOLD = 24 * 60 * 60 * 1000 
   const age = Date.now() - lastSynced
 
   return age > STALE_THRESHOLD
@@ -583,7 +503,6 @@ export const selectIsOrgLevel = (state: RootState): boolean => {
   return state.permissions.orgPermissions !== null
 }
 
-// Derived selector for active shops count
 export const selectActiveShopsCount = (state: RootState): number => {
   return state.permissions.shopAccesses.filter(s => s.isActive).length
 }

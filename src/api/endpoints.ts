@@ -8,6 +8,7 @@ const AUTH_BASE = `${BASE_URL}/auth`
 
 export const AUTH_ENDPOINTS = {
   REGISTER: `${AUTH_BASE}/register`,
+ACTIVITY_LOGS: `${AUTH_BASE}/activity-logs`,
   REGISTER_SUPER_ADMIN: `${AUTH_BASE}/register/super-admin`,
 
   LOGIN: `${AUTH_BASE}/login`,

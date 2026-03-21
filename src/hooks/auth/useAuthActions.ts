@@ -32,9 +32,9 @@ export const useAuthActions = () => {
   const login = useCallback(
     async (credentials: LoginRequest) => {
       try {
-        console.log('🔐 [useAuth] Login started:', credentials.email)
+        console.log('[useAuth] Login started:', credentials.email)
         const result = await dispatch(loginAction(credentials)).unwrap()
-        console.log('✅ [useAuth] Login successful')
+        console.log(' [useAuth] Login successful')
 
         return { success: true, data: result }
       } catch (error: any) {

@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Globe, Clock, DollarSign, Calendar, Palette, Bell } from 'lucide-react'
+import type { UserPreferences } from '@/types'
 import {
   Card,
   CardContent,
@@ -21,16 +22,50 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { dummyUser } from '@/pages/user/data'
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
+import { useAuth } from '@/hooks/auth'
+import { useNotification } from '@/hooks/useNotification'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
 
 export const PreferencesTab = () => {
   const { t } = useTranslation()
-  const [preferences, setPreferences] = useState(dummyUser.preferences)
+  const user = useAppSelector(selectUserProfile)
+  const { updateProfile } = useAuth()
+  const { showSuccess } = useNotification()
+  const { handleError } = useErrorHandler()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSave = () => {
-    console.log('Saving preferences:', preferences)
+// ✅ AFTER
+const defaultPreferences: UserPreferences = {
+    language: 'en',
+    timezone: 'Asia/Kolkata',
+    currency: 'INR',
+    dateFormat: 'DD/MM/YYYY',
+    theme: 'light',
+    notificationsEnabled: true,
+}
+
+const [preferences, setPreferences] = useState<UserPreferences>(
+    user?.preferences || defaultPreferences
+)
+  const handleSave = async () => {
+    setIsLoading(true)
+    try {
+      await updateProfile({ preferences })
+      showSuccess(
+        t('userProfile.preferences.saved'),
+        t('userProfile.preferences.savedDesc')
+      )
+    } catch (error: any) {
+      handleError(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
-
+const handleCancel = () => {
+    setPreferences(user?.preferences || defaultPreferences)
+}
   return (
     <div className="space-y-6">
       {/* Language & Region Card */}
@@ -237,10 +272,28 @@ export const PreferencesTab = () => {
       </Card>
 
       {/* Save Button */}
-      <div className="flex justify-end gap-3">
-        <Button variant="outline">{t('common.cancel')}</Button>
-        <Button onClick={handleSave}>{t('common.saveChanges')}</Button>
-      </div>
+<div className="flex justify-end gap-3">
+    <Button 
+        variant="outline" 
+        onClick={handleCancel}
+        disabled={isLoading}
+    >
+        {t('common.cancel')}
+    </Button>
+    <Button 
+        onClick={handleSave}
+        disabled={isLoading}
+    >
+        {isLoading ? (
+            <div className="flex items-center gap-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {t('common.saving')}
+            </div>
+        ) : (
+            t('common.saveChanges')
+        )}
+    </Button>
+</div>
     </div>
   )
 }

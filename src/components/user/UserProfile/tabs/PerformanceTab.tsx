@@ -12,18 +12,19 @@ import {
 } from '@/components/ui/card'
 import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { StatCardGrid } from '@/components/ui/data-display/StatCard/StatCardGrid'
-import { dummyUser } from '@/pages/user/data'
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
 
 export const PerformanceTab = () => {
   const { t } = useTranslation()
-
+  const user = useAppSelector(selectUserProfile)
   return (
     <div className="space-y-6">
       {/* Stats Overview */}
       <StatCardGrid columns={2}>
         <StatCard
           title={t('userProfile.performance.salesTarget')}
-          value={`₹${(dummyUser.salesTarget / 1000).toFixed(0)}K`}
+          value={`₹${((user?.salesTarget || 0) / 1000).toFixed(0)}K`}
           icon={Target}
           variant="info"
           trend={{
@@ -35,7 +36,7 @@ export const PerformanceTab = () => {
         />
         <StatCard
           title={t('userProfile.performance.commissionRate')}
-          value={`${dummyUser.commissionRate}%`}
+          value={`${user?.commissionRate || 0}%`}
           icon={DollarSign}
           variant="success"
         />
