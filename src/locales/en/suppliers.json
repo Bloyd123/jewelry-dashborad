@@ -1,5 +1,9 @@
 {
   "suppliers": {
+    "errors": {
+  "validationFailed": "Validation Failed",
+  "pleaseFillRequired": "Please fill all required fields"
+},
     "confirmCreate": "Create Supplier",
     "confirmCreateDescription": "Are you sure you want to create this supplier?",
     "confirmUpdate": "Update Supplier",

@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierManagementModal/sections/PreferredSupplierSection.tsx
-// Preferred Supplier Section
-//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -51,7 +48,6 @@ export const PreferredSupplierSection = ({
 
   return (
     <div className="space-y-6">
-      {/* Current Status */}
       <div
         className={cn(
           'rounded-lg border-2 p-4 text-center',
@@ -84,7 +80,6 @@ export const PreferredSupplierSection = ({
         )}
       </div>
 
-      {/* Benefits Section */}
       {!isPreferred && (
         <div className="space-y-4">
           <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
@@ -105,8 +100,6 @@ export const PreferredSupplierSection = ({
           </div>
         </div>
       )}
-
-      {/* Supplier Info */}
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
@@ -149,8 +142,6 @@ export const PreferredSupplierSection = ({
           </div>
         </div>
       </div>
-
-      {/* Actions */}
       <div className="flex flex-col gap-3">
         {isPreferred ? (
           <>

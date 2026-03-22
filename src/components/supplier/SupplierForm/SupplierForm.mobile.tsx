@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/SupplierForm.mobile.tsx
-// Mobile Layout for SupplierForm (Tabbed Interface)
-//
+
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +15,9 @@ import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
 import { PaymentTermsSection } from './sections/PaymentTermsStep'
 import { BankDetailsSection } from './sections/BankDetailsSection'
 import { NotesTagsSection } from './sections/NotesTagsSection'
-
+import { SupplierType, SupplierCategory, PaymentTerms } from '@/types/supplier.types'
+import { createSupplierSchema, MESSAGES } from '@/validators/supplierValidation'
+import { useNotification } from '@/hooks/useNotification'
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
   { id: 'contact', label: 'Contact' },
@@ -37,11 +37,18 @@ export default function SupplierFormMobile({
 }: SupplierFormProps) {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] =
-    useState<Partial<SupplierFormData>>(initialData)
+const [formData, setFormData] = useState<Partial<SupplierFormData>>({
+  supplierType: SupplierType.WHOLESALER,
+  supplierCategory: SupplierCategory.MIXED,
+  paymentTerms: PaymentTerms.NET30,
+  creditPeriod: 30,
+  creditLimit: 0,
+  ...initialData,
+})
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [showConfirm, setShowConfirm] = useState(false)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const { showError } = useNotification()
   const { createSupplier, updateSupplier, isCreating, isUpdating } =
     useSupplierActions(shopId!)
   const isLoading = isCreating || isUpdating
@@ -69,23 +76,25 @@ export default function SupplierFormMobile({
     }
   }
 
-  const handleBlur = (name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }))
-
-    const requiredFields: Record<string, string> = {
-      businessName: 'Business name is required',
-      'contactPerson.firstName': 'First name is required',
-      'contactPerson.phone': 'Phone is required',
+const handleBlur = (name: string) => {
+  setTouched(prev => ({ ...prev, [name]: true }))
+  try {
+    createSupplierSchema.shape[
+      name as keyof typeof createSupplierSchema.shape
+    ]?.parse(formData[name as keyof SupplierFormData])
+    if (errors[name]) {
+      setErrors(prev => {
+        const n = { ...prev }
+        delete n[name]
+        return n
+      })
     }
-
-    const value = name.includes('.')
-      ? name.split('.').reduce<any>((obj, key) => obj?.[key], formData)
-      : formData[name as keyof typeof formData]
-
-    if (requiredFields[name] && (!value || String(value).trim() === '')) {
-      setErrors(prev => ({ ...prev, [name]: requiredFields[name] }))
+  } catch (error: any) {
+    if (error.errors?.[0]?.message) {
+      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
     }
   }
+}
 
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
@@ -99,51 +108,66 @@ export default function SupplierFormMobile({
     }
   }
 
-  const handleSaveClick = () => {
-    const requiredFields: Record<string, { value: any; message: string }> = {
-      businessName: {
-        value: formData.businessName,
-        message: 'Business name is required',
-      },
-      'contactPerson.firstName': {
-        value: formData.contactPerson?.firstName,
-        message: 'First name is required',
-      },
-      'contactPerson.phone': {
-        value: formData.contactPerson?.phone,
-        message: 'Phone is required',
-      },
-    }
-
-    const newErrors: Record<string, string> = {}
-
-    Object.entries(requiredFields).forEach(([field, { value, message }]) => {
-      if (!value || String(value).trim() === '') {
-        newErrors[field] = message
+const handleSubmit = async () => {
+  const manualErrors: Record<string, string> = {}
+  if (!formData.businessName?.trim()) {
+    manualErrors['businessName'] = MESSAGES.businessName.required
+  }
+  if (!formData.contactPerson?.firstName?.trim()) {
+    manualErrors['contactPerson.firstName'] = MESSAGES.contactPerson.firstNameRequired
+  }
+  if (!formData.contactPerson?.phone?.trim()) {
+    manualErrors['contactPerson.phone'] = MESSAGES.contactPerson.phoneRequired
+  }
+  if (Object.keys(manualErrors).length > 0) {
+    setErrors(manualErrors)
+    const errorMessages = Object.entries(manualErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(errorMessages, t('suppliers.errors.validationFailed'))
+    return
+  }
+  try {
+    createSupplierSchema.parse(formData)
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.length > 0) {
+        const fieldPath = err.path.join('.')
+        if (
+          !err.message.includes('expected object') &&
+          !err.message.includes('received undefined') &&
+          !err.message.includes('Invalid input')
+        ) {
+          validationErrors[fieldPath] = err.message
+        }
       }
     })
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(prev => ({ ...prev, ...newErrors }))
-      return
-    }
-
-    setShowConfirm(true)
+    setErrors(validationErrors)
+    const errorMessages = Object.entries(validationErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(errorMessages, t('suppliers.errors.validationFailed'))
+    return
   }
+  setShowConfirm(true)
+}
 
-  const handleSubmit = async () => {
-    const payload = formData as SupplierFormData
-
-    const result =
-      mode === 'edit' && supplierId
-        ? await updateSupplier(supplierId, payload, setErrors)
-        : await createSupplier(payload, setErrors)
-
+const handleConfirmedSubmit = async () => {
+  try {
+    const result = mode === 'edit' && supplierId
+      ? await updateSupplier(supplierId, formData as SupplierFormData, setErrors)
+      : await createSupplier(formData as SupplierFormData, setErrors)
     if (result.success) {
       setShowConfirm(false)
       onSuccess?.()
+    } else {
+      if (result.error) showError(result.error, 'Error')
     }
+  } catch (error: any) {
+    showError(error?.message || 'Unexpected error occurred', 'Error')
   }
+}
 
   const renderCurrentStep = () => {
     const sectionProps = {
@@ -174,7 +198,6 @@ export default function SupplierFormMobile({
 
   return (
     <div className="min-h-screen bg-bg-primary pb-24">
-      {/* Header */}
       <div className="sticky top-0 z-10 border-b border-border-primary bg-bg-secondary p-4">
         <h1 className="text-xl font-bold text-text-primary">
           {mode === 'create'
@@ -182,7 +205,6 @@ export default function SupplierFormMobile({
             : t('suppliers.editSupplier')}
         </h1>
 
-        {/* Step Indicator */}
         <div className="mt-3 flex items-center justify-between">
           <span className="text-sm text-text-secondary">
             {t('suppliers.common.step')} {currentStep + 1}{' '}
@@ -193,7 +215,6 @@ export default function SupplierFormMobile({
           </span>
         </div>
 
-        {/* Progress Bar */}
         <div className="mt-2 h-1 overflow-hidden rounded-full bg-bg-tertiary">
           <div
             className="h-full bg-accent transition-all duration-300"
@@ -202,14 +223,12 @@ export default function SupplierFormMobile({
         </div>
       </div>
 
-      {/* Form Content */}
       <div className="p-4">
         <Card className="border-border-primary bg-bg-secondary">
           <CardContent className="p-4">{renderCurrentStep()}</CardContent>
         </Card>
       </div>
 
-      {/* Fixed Bottom Actions */}
       <div className="fixed bottom-0 left-0 right-0 border-t border-border-primary bg-bg-secondary p-4">
         <div className="flex gap-2">
           {currentStep > 0 && (
@@ -251,7 +270,7 @@ export default function SupplierFormMobile({
           ) : (
             <Button
               type="button"
-              onClick={handleSaveClick}
+              onClick={handleSubmit}
               disabled={isLoading}
               className="flex-1"
             >
@@ -289,7 +308,7 @@ export default function SupplierFormMobile({
             mode === 'create' ? t('common.create') : t('common.update')
           }
           cancelLabel={t('common.cancel')}
-          onConfirm={handleSubmit}
+         onConfirm={handleConfirmedSubmit}
           loading={isLoading}
         />
       </div>

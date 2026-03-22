@@ -1,21 +1,17 @@
 // FILE: src/pages/supplier/AddSupplier.tsx
-// Add/Edit Supplier Page (No API Integration - Test Only)
-
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { SupplierForm } from '@/components/supplier/SupplierForm'
-// import { dummySuppliers } from '@/pages/suppliers/data'
 import { useSupplierById } from '@/hooks/supplier'
 import { useAuth } from '@/hooks/auth'
 import type { SupplierFormData } from '@/components/supplier/SupplierForm/SupplierForm.types'
 import { Loader2 } from 'lucide-react'
 export const AddSupplier = () => {
   const navigate = useNavigate()
-  const { supplierId } = useParams() // Get supplierId from URL if editing
+  const { supplierId } = useParams() 
   const [searchParams] = useSearchParams()
   const mode = searchParams.get('mode') || (supplierId ? 'edit' : 'create')
   const { currentShopId } = useAuth()
   const SHOP_ID = currentShopId || ''
-  // Find supplier data if editing
   const { supplier: existingSupplier, isLoading: isLoadingSupplier } =
     useSupplierById(SHOP_ID, supplierId!)
   const initialData: Partial<SupplierFormData> | undefined = existingSupplier
@@ -48,21 +44,16 @@ export const AddSupplier = () => {
     : undefined
 
   const handleSuccess = () => {
-    // Show success message (you can add toast here later)
     console.log(' Supplier saved successfully!')
     console.log('Mode:', mode)
     console.log('SupplierId:', supplierId)
-
-    // Navigate back to supplier list
     navigate('/suppliers')
   }
 
   const handleCancel = () => {
-    // Navigate back without saving
     navigate('/suppliers')
   }
 
-  // Edit mode mein wait karo jab tak data aa jaaye
   if (mode === 'edit' && isLoadingSupplier) {
     return (
       <div className="flex min-h-screen items-center justify-center">

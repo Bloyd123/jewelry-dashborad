@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/SupplierForm.tsx
-// Main SupplierForm Component (Route Handler)
-//
+
 
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import SupplierFormDesktop from './SupplierForm.desktop'

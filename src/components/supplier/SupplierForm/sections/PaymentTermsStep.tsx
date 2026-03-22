@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/PaymentTermsSection.tsx
-// Payment Terms Section
-//
+
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
@@ -21,7 +19,6 @@ export const PaymentTermsSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Payment Terms */}
       <FormSelect
         name="paymentTerms"
         label={t('suppliers.paymentTermsForm')}
@@ -34,8 +31,6 @@ export const PaymentTermsSection = ({
         disabled={disabled}
         options={paymentTermsOptions}
       />
-
-      {/* Credit Period */}
       <FormInput
         name="creditPeriod"
         label={t('suppliers.creditPeriod')}
@@ -47,8 +42,6 @@ export const PaymentTermsSection = ({
         placeholder="30"
         disabled={disabled}
       />
-
-      {/* Credit Limit */}
       <FormInput
         name="creditLimit"
         label={t('suppliers.creditLimit')}
@@ -60,8 +53,6 @@ export const PaymentTermsSection = ({
         placeholder="500000"
         disabled={disabled}
       />
-
-      {/* Products Supplied */}
       <div className="space-y-2">
         <FormTextarea
           name="productsSupplied"
@@ -71,13 +62,13 @@ export const PaymentTermsSection = ({
               ? data.productsSupplied.join(', ')
               : ''
           }
-          onChange={(name, val) => {
-            const products = val
-              .split(',')
-              .map(p => p.trim())
-              .filter(Boolean)
-            onChange(name, products)
-          }}
+onChange={(name, val) => {
+  const products = val
+    .split(/[,\n]/)  // comma ya Enter dono se split
+    .map(p => p.trim())
+    .filter(Boolean)
+  onChange(name, products)
+}}
           onBlur={onBlur}
           error={errors.productsSupplied}
           placeholder={t('suppliers.productsSuppliedPlaceholder')}
@@ -88,8 +79,6 @@ export const PaymentTermsSection = ({
           {t('suppliers.productsSuppliedHint')}
         </p>
       </div>
-
-      {/* Specialization */}
       <div className="space-y-2">
         <FormTextarea
           name="specialization"
@@ -99,13 +88,13 @@ export const PaymentTermsSection = ({
               ? data.specialization.join(', ')
               : ''
           }
-          onChange={(name, val) => {
-            const specs = val
-              .split(',')
-              .map(s => s.trim())
-              .filter(Boolean)
-            onChange(name, specs)
-          }}
+onChange={(name, val) => {
+  const products = val
+    .split(/[,\n]/)  // comma ya Enter dono se split
+    .map(p => p.trim())
+    .filter(Boolean)
+  onChange(name, products)
+}}
           onBlur={onBlur}
           error={errors.specialization}
           placeholder={t('suppliers.specializationPlaceholder')}

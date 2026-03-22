@@ -71,7 +71,7 @@ const AddSupplier = lazy(() =>
   }))
 )
 const SupplierDetailPage = lazy(() => 
-  import('@/components/supplier/SupplierDetailsPage/SupplierDetailsPage')
+  import('@/pages/suppliers/SupplierDetailsPage')
 )
 
 // Purchase Pages

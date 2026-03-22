@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierManagementModal/SupplierManagementModal.tsx
-// Main Supplier Management Modal
-//
 
 import { useTranslation } from 'react-i18next'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
@@ -35,7 +32,7 @@ export const SupplierManagementModal = ({
   onSuccess,
 }: SupplierManagementModalProps) => {
   const { t } = useTranslation()
-  if (!supplier?.shopId) return null
+    const shopId = supplier?.shopId || ''
   const {
     deleteSupplier,
     blacklistSupplier,
@@ -53,11 +50,11 @@ export const SupplierManagementModal = ({
     isRemovingPreferred,
     isUpdatingBalance,
     isUpdatingRating,
-  } = useSupplierActions(supplier.shopId)
+  } = useSupplierActions(shopId) 
 
   const isMobile = useMediaQuery('(max-width: 768px)')
 
-  if (!supplier || !action) return null
+    if (!supplier || !action || !shopId) return null
 
   const handleClose = () => {
     onOpenChange(false)
@@ -69,9 +66,6 @@ export const SupplierManagementModal = ({
     handleClose()
   }
 
-  // ACTION HANDLERS (Mock - No API Integration)
-
-  // ✅ GOOD - Error handling
   const handleUpdateBalance = async (data: any) => {
     try {
       const result = await updateBalance(
@@ -83,9 +77,7 @@ export const SupplierManagementModal = ({
       if (result.success) {
         handleActionSuccess()
       }
-      // Error notification already shown by hook
     } catch (error) {
-      // Hook already handles error notification
       console.error('Balance update failed:', error)
     }
   }
@@ -128,8 +120,6 @@ export const SupplierManagementModal = ({
     handleActionSuccess()
   }
 
-  // GET MODAL CONFIG
-
   const getModalConfig = (action: ManagementAction) => {
     const configs = {
       'update-balance': {
@@ -158,8 +148,6 @@ export const SupplierManagementModal = ({
   }
 
   const config = getModalConfig(action)
-
-  // RENDER SECTION CONTENT
 
   const renderSection = () => {
     switch (action) {
@@ -210,7 +198,7 @@ export const SupplierManagementModal = ({
             onDelete={handleDelete}
             onRestore={handleRestore}
             onCancel={handleClose}
-            isDeleting={isDeleting} // ⭐ ADD THIS
+            isDeleting={isDeleting} 
             isRestoring={isRestoring}
           />
         )
@@ -219,8 +207,6 @@ export const SupplierManagementModal = ({
         return null
     }
   }
-
-  // RENDER MOBILE SHEET
 
   if (isMobile) {
     return (
@@ -236,8 +222,6 @@ export const SupplierManagementModal = ({
       </Sheet>
     )
   }
-
-  // RENDER DESKTOP MODAL
 
   return (
     <Modal

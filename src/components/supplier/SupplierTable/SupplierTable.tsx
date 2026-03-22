@@ -1,7 +1,4 @@
-//
 // FILE: src/components/features/SupplierTable/SupplierTable.tsx
-// Main Supplier Table Component - COMPLETE FIXED VERSION
-//
 
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,26 +18,14 @@ import type { SupplierFilterValues } from '@/components/supplier/SupplierFilters
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 
-//
-// MAIN COMPONENT
-//
-
 export const SupplierTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { currentShopId } = useAuth()
-
-  //
-  // STATE
-  //
-
   const [page, setPage] = useState(1)
   const [limit, setLimit] = useState(10)
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
-    new Set()
-  )
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>( new Set())
 
-  // Filter State
   const [filters, setFilters] = useState<SupplierFilterValues>({
     search: '',
     supplierType: undefined,
@@ -49,18 +34,12 @@ export const SupplierTable: React.FC = () => {
     isPreferred: undefined,
     isVerified: undefined,
   })
-
-  // Modal State
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
   const [managementAction, setManagementAction] =
     useState<ManagementAction | null>(null)
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(
     null
   )
-
-  //
-  // VALIDATION
-  //
 
   if (!currentShopId) {
     return (
@@ -69,10 +48,6 @@ export const SupplierTable: React.FC = () => {
       </div>
     )
   }
-
-  //
-  // CONVERT FILTERS FOR API
-  //
 
   const apiFilters = useMemo(
     () => ({
@@ -105,10 +80,6 @@ export const SupplierTable: React.FC = () => {
     [filters]
   )
 
-  //
-  // API HOOKS
-  //
-
   const { suppliers, pagination, isLoading, refetch } = useSuppliersList(
     currentShopId,
     {
@@ -125,13 +96,10 @@ export const SupplierTable: React.FC = () => {
     removePreferred,
   } = useSupplierActions(currentShopId)
 
-  //
-  // FILTER HANDLERS
-  //
 
   const handleFiltersChange = (newFilters: SupplierFilterValues) => {
     setFilters(newFilters)
-    setPage(1) // Reset to first page when filters change
+    setPage(1) 
   }
 
   const handleClearAllFilters = () => {
@@ -146,10 +114,6 @@ export const SupplierTable: React.FC = () => {
     setPage(1)
   }
 
-  //
-  // SINGLE SUPPLIER HANDLERS
-  //
-
   const handleViewDetails = (supplier: Supplier) => {
     navigate(`/suppliers/${supplier._id}`)
   }
@@ -159,6 +123,7 @@ export const SupplierTable: React.FC = () => {
   }
 
   const handleUpdateRating = (supplier: Supplier) => {
+      console.log('supplier:', supplier)  
     setSelectedSupplier(supplier)
     setManagementAction('update-rating')
     setIsManagementModalOpen(true)
@@ -185,9 +150,6 @@ export const SupplierTable: React.FC = () => {
     setIsManagementModalOpen(true)
   }
 
-  //
-  // BULK ACTION HANDLERS
-  //
 
   const handleBulkViewDetails = () => {
     if (selectedSuppliers.length === 1) {
@@ -245,10 +207,6 @@ export const SupplierTable: React.FC = () => {
     setSelectedRows(new Set())
   }
 
-  //
-  // MODAL SUCCESS HANDLER
-  //
-
   const handleManagementSuccess = async () => {
     await refetch()
     setIsManagementModalOpen(false)
@@ -256,9 +214,6 @@ export const SupplierTable: React.FC = () => {
     setSelectedSupplier(null)
   }
 
-  //
-  // ROW ACTIONS
-  //
 
   const rowActions = useMemo(
     () =>
@@ -280,30 +235,19 @@ export const SupplierTable: React.FC = () => {
     ]
   )
 
-  //
-  // SELECTED SUPPLIERS
-  //
-
   const selectedSuppliers = useMemo(
     () => suppliers.filter(s => selectedRows.has(s._id)),
     [suppliers, selectedRows]
   )
 
-  //
-  // RENDER
-  //
-
   return (
     <div className="w-full space-y-4">
-      {/* Filters Component */}
       <SupplierFilters
         filters={filters}
         onFiltersChange={handleFiltersChange}
         onClearAll={handleClearAllFilters}
       />
-
-      {/* Bulk Actions Bar - Shows when rows are selected */}
-      {selectedRows.size > 0 && (
+      {/* {selectedRows.size > 0 && (
         <BulkActionsBar
           selectedCount={selectedRows.size}
           selectedSuppliers={selectedSuppliers}
@@ -315,9 +259,7 @@ export const SupplierTable: React.FC = () => {
           onDelete={handleBulkDelete}
           onClearSelection={handleClearSelection}
         />
-      )}
-
-      {/* DataTable */}
+      )} */}
       <DataTable
         data={suppliers}
         columns={supplierTableColumns}
@@ -332,8 +274,6 @@ export const SupplierTable: React.FC = () => {
           showPageSizeSelector: true,
           showPageInfo: true,
           showFirstLastButtons: true,
-          // ⭐ ONLY keep these if your DataTable supports them
-          // Otherwise remove and handle pagination externally
         }}
         selection={{
           enabled: true,
@@ -361,15 +301,11 @@ export const SupplierTable: React.FC = () => {
           shadow: true,
           fullWidth: true,
         }}
-        onRowClick={supplier => {
-          navigate(`/suppliers/${supplier._id}`)
-        }}
+onRowClick={undefined}
         getRowId={row => row._id}
         testId="supplier-table"
         ariaLabel={t('suppliers.table.ariaLabel')}
       />
-
-      {/* Management Modal */}
       <SupplierManagementModal
         open={isManagementModalOpen}
         onOpenChange={setIsManagementModalOpen}

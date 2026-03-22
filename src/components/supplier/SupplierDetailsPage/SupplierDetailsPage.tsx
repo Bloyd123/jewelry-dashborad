@@ -83,8 +83,6 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
   )
 }
 
-// RATING STARS COMPONENT
-
 const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
   return (
     <div className="flex items-center gap-0.5">
@@ -102,8 +100,6 @@ const RatingStars: React.FC<{ rating: number }> = ({ rating }) => {
     </div>
   )
 }
-
-// MAIN
 
 const SupplierDetailPage: React.FC = () => {
   const { supplierId } = useParams<{ supplierId: string }>()
@@ -150,7 +146,6 @@ const SupplierDetailPage: React.FC = () => {
     { label: supplierData.businessName },
   ]
 
-  // Tab items
   const tabItems = [
     {
       value: 'overview',
@@ -174,22 +169,16 @@ const SupplierDetailPage: React.FC = () => {
     },
   ]
 
-  // Handle back navigation
   const handleBackClick = () => {
     navigate('/suppliers')
   }
 
-  // RENDER
 
   return (
     <div className="min-h-screen bg-bg-primary">
-      {/* 
-          HEADER SECTION
-           */}
       <div className="space-y-0">
         <div className="border-b border-border-secondary bg-bg-secondary">
           <div className="space-y-4 px-6 py-4">
-            {/* Back Button and Breadcrumb */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <Button
@@ -206,8 +195,6 @@ const SupplierDetailPage: React.FC = () => {
 
                 <Breadcrumb items={breadcrumbItems} showHome={true} />
               </div>
-
-              {/* Action Buttons */}
               <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm" className="gap-2">
                   <Download className="h-4 w-4" />
@@ -260,16 +247,11 @@ const SupplierDetailPage: React.FC = () => {
             </div>
 
             <Separator />
-
-            {/* Supplier Info Header */}
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4">
-                {/* Icon */}
                 <div className="bg-accent/10 flex h-16 w-16 items-center justify-center rounded-lg">
                   <Store className="h-8 w-8 text-accent" />
                 </div>
-
-                {/* Info */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <h1 className="text-2xl font-bold text-text-primary">
@@ -279,8 +261,6 @@ const SupplierDetailPage: React.FC = () => {
                       <Verified className="h-5 w-5 text-status-success" />
                     )}
                   </div>
-
-                  {/* Supplier Code & Contact */}
                   <div className="flex flex-wrap items-center gap-4 text-sm">
                     <div className="flex items-center gap-2">
                       <span className="text-text-tertiary">
@@ -297,13 +277,14 @@ const SupplierDetailPage: React.FC = () => {
                       <span>{supplierData.contactPerson.phone}</span>
                     </div>
                     <Separator orientation="vertical" className="h-4" />
-                    <div className="flex items-center gap-2 text-text-secondary">
-                      <Mail className="h-3 w-3" />
-                      <span>{supplierData.contactPerson.email}</span>
-                    </div>
+          {supplierData.contactPerson.email && (
+  <div className="flex items-center gap-2 text-text-secondary">
+    <Mail className="h-3 w-3" />
+    <span>{supplierData.contactPerson.email}</span>
+  </div>
+)}
                   </div>
 
-                  {/* Status Badges */}
                   <div className="flex flex-wrap items-center gap-2">
                     {supplierData.isActive ? (
                       <Badge variant="success" size="sm" className="gap-1">
@@ -334,8 +315,6 @@ const SupplierDetailPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-              {/* Rating Display */}
               <div className="text-right">
                 <div className="text-xs text-text-tertiary">
                   {t('suppliers.overallRating')}
@@ -344,8 +323,6 @@ const SupplierDetailPage: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* Tab Navigation */}
           <div className="px-6">
             <Tabs
               tabs={tabItems}
@@ -358,9 +335,6 @@ const SupplierDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 
-          TAB CONTENT SECTION
-           */}
       <div className="p-6">
         {activeTab === 'overview' && (
           <SupplierOverviewTab supplier={supplierData} />
@@ -369,7 +343,7 @@ const SupplierDetailPage: React.FC = () => {
         {activeTab === 'financial' && (
           <SupplierFinancialTab supplier={supplierData} />
         )}
-        {activeTab === 'documents' && <SupplierDocumentsTab />}
+        {activeTab === 'documents' && <SupplierDocumentsTab supplier={supplierData} />}
         {/* {activeTab === 'activity' && <SupplierActivityTab />}  */}
       </div>
       <SupplierManagementModal

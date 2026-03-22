@@ -1,7 +1,5 @@
-//
 // FILE: src/components/features/SupplierTable/SupplierTableActions.tsx
-// Supplier Table Row Actions & Bulk Actions
-//
+
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -26,10 +24,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import type { RowAction } from '@/components/ui/data-display/DataTable'
 import type { Supplier } from './SupplierTable.types'
-
-//
-// ROW ACTIONS (Individual Supplier Actions)
-//
 
 export const getSupplierRowActions = (
   onViewDetails: (supplier: Supplier) => void,
@@ -95,10 +89,6 @@ export const getSupplierRowActions = (
   },
 ]
 
-//
-// BULK ACTIONS BAR (Shows when rows are selected)
-//
-
 interface BulkActionsBarProps {
   selectedCount: number
   selectedSuppliers: Supplier[]
@@ -123,8 +113,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   onClearSelection,
 }) => {
   const { t } = useTranslation()
-
-  // Check conditions
   const hasOutstandingBalance = selectedSuppliers.some(s => s.totalDue > 0)
   const hasInactive = selectedSuppliers.some(s => !s.isActive)
   const allBlacklisted = selectedSuppliers.every(s => s.isBlacklisted)
@@ -134,7 +122,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
 
   return (
     <div className="bg-accent/10 flex flex-col items-start justify-between gap-3 rounded-lg border-b border-border-primary px-4 py-3 sm:flex-row sm:items-center sm:gap-4">
-      {/* Left Section - Selection Info */}
       <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-4">
         <span className="text-sm font-medium text-text-primary">
           {t('suppliers.table.selectedCount', { count: selectedCount })}
@@ -148,10 +135,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           {t('common.clearSelection')}
         </Button>
       </div>
-
-      {/* Right Section - Action Buttons */}
       <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
-        {/* View Details - Only if single selection */}
         {selectedCount === 1 && (
           <Button
             variant="outline"
@@ -165,8 +149,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Edit - Only if single selection */}
         {selectedCount === 1 && (
           <Button
             variant="outline"
@@ -180,8 +162,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Update Rating - Only for active, non-blacklisted */}
         {!hasInactive && !someBlacklisted && (
           <Button
             variant="outline"
@@ -195,8 +175,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Mark Preferred - Only if not blacklisted */}
         {!allPreferred && !someBlacklisted && (
           <Button
             variant="outline"
@@ -210,8 +188,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Remove Preferred */}
         {somePreferred && !allBlacklisted && (
           <Button
             variant="outline"
@@ -225,8 +201,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Blacklist */}
         {!allBlacklisted && (
           <Button
             variant="outline"
@@ -240,8 +214,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Remove Blacklist */}
         {someBlacklisted && (
           <Button
             variant="outline"
@@ -255,8 +227,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             </span>
           </Button>
         )}
-
-        {/* Delete - Disabled if any has outstanding balance */}
         <Button
           variant="destructive"
           size="sm"
@@ -269,8 +239,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
             {t('suppliers.actions.delete')}
           </span>
         </Button>
-
-        {/* More Actions Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" className="h-9 w-9">

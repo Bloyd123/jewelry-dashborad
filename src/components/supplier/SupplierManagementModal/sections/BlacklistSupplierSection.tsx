@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierManagementModal/sections/BlacklistSupplierSection.tsx
-// Blacklist Supplier Section
-//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -42,11 +39,9 @@ export const BlacklistSupplierSection = ({
     if (error) setError('')
   }
 
-  // If already blacklisted - show removal UI
   if (isBlacklisted) {
     return (
       <div className="space-y-6">
-        {/* Blacklist Status */}
         <div className="bg-status-error/10 rounded-lg border-2 border-status-error p-4 text-center">
           <div className="flex items-center justify-center gap-2">
             <Ban className="h-6 w-6 text-status-error" />
@@ -63,7 +58,6 @@ export const BlacklistSupplierSection = ({
           )}
         </div>
 
-        {/* Blacklist Reason */}
         {supplier.blacklistReason && (
           <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
             <p className="mb-2 font-medium text-text-primary">
@@ -74,8 +68,6 @@ export const BlacklistSupplierSection = ({
             </p>
           </div>
         )}
-
-        {/* Impact Info */}
         <div className="bg-status-warning/10 rounded-lg border border-status-warning p-4">
           <p className="mb-2 font-medium text-text-primary">
             {t('suppliers.blacklist.currentImpact')}:
@@ -86,8 +78,6 @@ export const BlacklistSupplierSection = ({
             <li>• {t('suppliers.blacklist.impact3')}</li>
           </ul>
         </div>
-
-        {/* Actions */}
         <div className="flex flex-col gap-3">
           <Button
             variant="default"
@@ -119,11 +109,8 @@ export const BlacklistSupplierSection = ({
       </div>
     )
   }
-
-  // If not blacklisted - show blacklist UI
   return (
     <div className="space-y-6">
-      {/* Warning */}
       <div className="bg-status-error/10 rounded-lg border-2 border-status-error p-4">
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-status-error" />
@@ -137,8 +124,6 @@ export const BlacklistSupplierSection = ({
           </div>
         </div>
       </div>
-
-      {/* Current Status */}
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm text-text-tertiary">
@@ -150,7 +135,6 @@ export const BlacklistSupplierSection = ({
         </div>
       </div>
 
-      {/* Reason Input */}
       <FormTextarea
         name="reason"
         label={t('suppliers.blacklist.reasonLabel')}
@@ -164,8 +148,6 @@ export const BlacklistSupplierSection = ({
         showCharCount
         required
       />
-
-      {/* Consequences */}
       <div className="bg-status-warning/10 rounded-lg border border-status-warning p-4">
         <p className="mb-2 font-medium text-text-primary">
           {t('suppliers.blacklist.consequences')}:
@@ -178,7 +160,6 @@ export const BlacklistSupplierSection = ({
         </ul>
       </div>
 
-      {/* Actions */}
       <div className="flex flex-col gap-3">
         <Button
           variant="destructive"

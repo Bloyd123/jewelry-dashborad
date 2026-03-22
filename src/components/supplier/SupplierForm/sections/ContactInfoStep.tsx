@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/ContactInfoSection.tsx
-// Contact Information Section
-//
+
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
@@ -26,14 +24,12 @@ export const ContactInfoSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Contact Person Heading */}
       <div className="border-b border-border-secondary pb-2">
         <h4 className="text-sm font-semibold text-text-primary">
           {t('suppliers.contactPersonDetails')}
         </h4>
       </div>
 
-      {/* First Name */}
       <FormInput
         name="contactPerson.firstName"
         label={t('suppliers.firstName')}
@@ -46,8 +42,6 @@ export const ContactInfoSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Last Name */}
       <FormInput
         name="contactPerson.lastName"
         label={t('suppliers.lastName')}
@@ -59,8 +53,6 @@ export const ContactInfoSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Designation */}
       <FormInput
         name="contactPerson.designation"
         label={t('suppliers.designation')}
@@ -73,7 +65,6 @@ export const ContactInfoSection = ({
         maxLength={100}
       />
 
-      {/* Phone */}
       <FormPhoneInput
         name="contactPerson.phone"
         label={t('suppliers.phone')}
@@ -85,8 +76,6 @@ export const ContactInfoSection = ({
         required
         disabled={disabled}
       />
-
-      {/* Alternate Phone */}
       <FormPhoneInput
         name="contactPerson.alternatePhone"
         label={t('suppliers.alternatePhone')}
@@ -97,8 +86,6 @@ export const ContactInfoSection = ({
         placeholder="9876543210"
         disabled={disabled}
       />
-
-      {/* WhatsApp Number */}
       <FormPhoneInput
         name="contactPerson.whatsappNumber"
         label={t('suppliers.whatsappNumber')}
@@ -110,7 +97,6 @@ export const ContactInfoSection = ({
         disabled={disabled}
       />
 
-      {/* Email */}
       <FormInput
         name="contactPerson.email"
         label={t('suppliers.email')}
@@ -122,15 +108,11 @@ export const ContactInfoSection = ({
         placeholder={t('suppliers.emailPlaceholder')}
         disabled={disabled}
       />
-
-      {/* Business Contact Heading */}
       <div className="mt-6 border-b border-border-secondary pb-2">
         <h4 className="text-sm font-semibold text-text-primary">
           {t('suppliers.businessContactDetails')}
         </h4>
       </div>
-
-      {/* Business Email */}
       <FormInput
         name="businessEmail"
         label={t('suppliers.businessEmail')}
@@ -142,8 +124,6 @@ export const ContactInfoSection = ({
         placeholder={t('suppliers.businessEmailPlaceholder')}
         disabled={disabled}
       />
-
-      {/* Business Phone */}
       <FormPhoneInput
         name="businessPhone"
         label={t('suppliers.businessPhone')}
@@ -154,8 +134,6 @@ export const ContactInfoSection = ({
         placeholder="02212345678"
         disabled={disabled}
       />
-
-      {/* Website */}
       <FormInput
         name="website"
         label={t('suppliers.website')}

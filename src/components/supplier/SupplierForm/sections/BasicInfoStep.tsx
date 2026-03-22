@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/BasicInfoSection.tsx
-// Basic Information Section
-//
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
@@ -23,7 +20,6 @@ export const BasicInfoSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Business Name */}
       <FormInput
         name="businessName"
         label={t('suppliers.businessName')}
@@ -37,7 +33,6 @@ export const BasicInfoSection = ({
         maxLength={200}
       />
 
-      {/* Display Name */}
       <FormInput
         name="displayName"
         label={t('suppliers.displayName')}
@@ -49,9 +44,7 @@ export const BasicInfoSection = ({
         disabled={disabled}
         maxLength={200}
       />
-
-      {/* Supplier Code */}
-      <FormInput
+      {/* <FormInput
         name="supplierCode"
         label={t('suppliers.supplierCode')}
         value={data.supplierCode || ''}
@@ -61,9 +54,7 @@ export const BasicInfoSection = ({
         placeholder={t('suppliers.supplierCodePlaceholder')}
         disabled={disabled}
         maxLength={50}
-      />
-
-      {/* Supplier Type */}
+      /> */}
       <FormSelect
         name="supplierType"
         label={t('suppliers.supplierType')}
@@ -76,8 +67,6 @@ export const BasicInfoSection = ({
         disabled={disabled}
         options={supplierTypeOptions}
       />
-
-      {/* Supplier Category */}
       <FormSelect
         name="supplierCategory"
         label={t('suppliers.supplierCategory')}

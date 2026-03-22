@@ -32,7 +32,7 @@ const StarRating = ({
         <Label className="text-text-primary">{label}</Label>
         {currentValue !== undefined && (
           <span className="text-xs text-text-tertiary">
-            Current: {currentValue.toFixed(1)}
+            Current: {currentValue != null ? currentValue.toFixed(1) : 'N/A'}
           </span>
         )}
       </div>
@@ -67,7 +67,7 @@ const StarRating = ({
         })}
 
         <span className="ml-2 text-lg font-semibold text-text-primary">
-          {value.toFixed(1)}
+          {value != null ? value.toFixed(1) : '0.0'}
         </span>
       </div>
     </div>

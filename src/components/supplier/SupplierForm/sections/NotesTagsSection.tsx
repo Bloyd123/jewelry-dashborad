@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/NotesTagsSection.tsx
-// Notes & Tags Section
-//
+
 
 import { useTranslation } from 'react-i18next'
 import { FormTextarea } from '@/components/forms/FormTextarea/FormTextarea'
@@ -49,7 +47,6 @@ export const NotesTagsSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Notes */}
       <FormTextarea
         name="notes"
         label={t('suppliers.notes')}
@@ -64,7 +61,6 @@ export const NotesTagsSection = ({
         showCharCount
       />
 
-      {/* Internal Notes */}
       <FormTextarea
         name="internalNotes"
         label={t('suppliers.internalNotes')}
@@ -79,11 +75,9 @@ export const NotesTagsSection = ({
         showCharCount
       />
 
-      {/* Tags */}
       <div className="space-y-2">
         <Label className="text-text-primary">{t('suppliers.tags')}</Label>
 
-        {/* Tag Input */}
         <div className="flex gap-2">
           <Input
             value={tagInput}
@@ -105,7 +99,6 @@ export const NotesTagsSection = ({
           </Button>
         </div>
 
-        {/* Tag List */}
         {data.tags && data.tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {data.tags.map((tag, index) => (

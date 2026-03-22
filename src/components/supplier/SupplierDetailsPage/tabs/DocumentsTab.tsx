@@ -15,12 +15,8 @@ import type {
   DataTableColumn,
   RowAction,
 } from '@/components/ui/data-display/DataTable/DataTable.types'
-import { dummySupplier } from '@/pages/suppliers/data'
-import type { Document, Certification } from '@/types/supplier.types'
+import type { Document, Certification, Supplier } from '@/types/supplier.types'
 
-//
-// EXTEND TYPES FOR UI
-//
 
 interface DocumentWithStatus extends Document {
   uploadedBy?: string
@@ -29,56 +25,31 @@ interface DocumentWithStatus extends Document {
 interface CertificationWithStatus extends Certification {
   status: 'Valid' | 'Expiring Soon' | 'Expired'
 }
-
-//
-// TRANSFORM DUMMY DATA
-//
-
-const transformDocuments = (): DocumentWithStatus[] => {
-  return (dummySupplier.documents || []).map(doc => ({
-    ...doc,
-    uploadedBy: 'Admin User',
-  }))
+const getCertificationStatus = (expiryDate?: string): 'Valid' | 'Expiring Soon' | 'Expired' => {
+  if (!expiryDate) return 'Valid'
+  const today = new Date()
+  const expiry = new Date(expiryDate)
+  const diffTime = expiry.getTime() - today.getTime()
+  const daysUntilExpiry = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  if (daysUntilExpiry < 0) return 'Expired'
+  if (daysUntilExpiry <= 90) return 'Expiring Soon'
+  return 'Valid'
 }
 
-const transformCertifications = (): CertificationWithStatus[] => {
-  return (dummySupplier.certifications || []).map(cert => {
-    const getDaysUntilExpiry = (expiryDate: string): number => {
-      const today = new Date()
-      const expiry = new Date(expiryDate)
-      const diffTime = expiry.getTime() - today.getTime()
-      return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    }
-
-    const getCertificationStatus = (
-      expiryDate?: string
-    ): CertificationWithStatus['status'] => {
-      if (!expiryDate) return 'Valid'
-      const daysUntilExpiry = getDaysUntilExpiry(expiryDate)
-      if (daysUntilExpiry < 0) return 'Expired'
-      if (daysUntilExpiry <= 90) return 'Expiring Soon'
-      return 'Valid'
-    }
-
-    return {
+interface SupplierDocumentsTabProps {
+  supplier: Supplier
+}
+const SupplierDocumentsTab: React.FC<SupplierDocumentsTabProps> = ({ supplier }) => {
+  const { t } = useTranslation()
+  const [documents] = useState<DocumentWithStatus[]>(
+    (supplier.documents || []).map(doc => ({ ...doc, uploadedBy: 'Admin User' }))
+  )
+  const [certifications] = useState<CertificationWithStatus[]>(
+    (supplier.certifications || []).map(cert => ({
       ...cert,
       status: getCertificationStatus(cert.expiryDate),
-    }
-  })
-}
-
-//
-// MAIN COMPONENT
-//
-
-const SupplierDocumentsTab: React.FC = () => {
-  const { t } = useTranslation()
-  const [documents] = useState<DocumentWithStatus[]>(transformDocuments())
-  const [certifications] = useState<CertificationWithStatus[]>(
-    transformCertifications()
+    }))
   )
-
-  // Format date
   const formatDate = (dateString?: string): string => {
     if (!dateString) return '-'
     return new Date(dateString).toLocaleDateString('en-IN', {
@@ -87,8 +58,6 @@ const SupplierDocumentsTab: React.FC = () => {
       year: 'numeric',
     })
   }
-
-  // Calculate days until expiry
   const getDaysUntilExpiry = (expiryDate?: string): number => {
     if (!expiryDate) return 0
     const today = new Date()
@@ -96,8 +65,6 @@ const SupplierDocumentsTab: React.FC = () => {
     const diffTime = expiry.getTime() - today.getTime()
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   }
-
-  // Get document type display name
   const getDocumentTypeName = (type: string): string => {
     const typeMap: Record<string, string> = {
       gst_certificate: 'GST Certificate',
@@ -108,8 +75,6 @@ const SupplierDocumentsTab: React.FC = () => {
     }
     return typeMap[type] || type
   }
-
-  // Get certification type display name
   const getCertificationTypeName = (type: string): string => {
     const typeMap: Record<string, string> = {
       bis: 'BIS',
@@ -120,8 +85,6 @@ const SupplierDocumentsTab: React.FC = () => {
     }
     return typeMap[type] || type
   }
-
-  // Document actions
   const documentActions: RowAction<DocumentWithStatus>[] = [
     {
       label: 'suppliers.documents.actions.view',
@@ -146,8 +109,6 @@ const SupplierDocumentsTab: React.FC = () => {
       variant: 'destructive',
     },
   ]
-
-  // Certification actions
   const certificationActions: RowAction<CertificationWithStatus>[] = [
     {
       label: 'suppliers.documents.actions.view',
@@ -164,8 +125,6 @@ const SupplierDocumentsTab: React.FC = () => {
       },
     },
   ]
-
-  // Document columns
   const documentColumns: DataTableColumn<DocumentWithStatus>[] = [
     {
       id: 'type',
@@ -200,8 +159,6 @@ const SupplierDocumentsTab: React.FC = () => {
       sortable: true,
     },
   ]
-
-  // Certification columns
   const certificationColumns: DataTableColumn<CertificationWithStatus>[] = [
     {
       id: 'type',
@@ -295,8 +252,6 @@ const SupplierDocumentsTab: React.FC = () => {
       sortable: true,
     },
   ]
-
-  // Count certifications by status
   const validCount = certifications.filter(c => c.status === 'Valid').length
   const expiringCount = certifications.filter(
     c => c.status === 'Expiring Soon'
@@ -305,7 +260,6 @@ const SupplierDocumentsTab: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Business Documents Section */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex flex-col gap-4 border-b border-border-primary px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
@@ -355,8 +309,6 @@ const SupplierDocumentsTab: React.FC = () => {
           }}
         />
       </div>
-
-      {/* Certifications Section */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex flex-col gap-4 border-b border-border-primary px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
@@ -397,8 +349,6 @@ const SupplierDocumentsTab: React.FC = () => {
             </span>
           </Button>
         </div>
-
-        {/* Expiring/Expired Certifications Alert */}
         {(expiringCount > 0 || expiredCount > 0) && (
           <div className="bg-status-warning/5 border-b border-border-primary px-6 py-4">
             <div className="flex items-start gap-3">
@@ -452,8 +402,6 @@ const SupplierDocumentsTab: React.FC = () => {
           }}
         />
       </div>
-
-      {/* API Note */}
       <div className="rounded-lg border border-border-secondary bg-bg-tertiary px-4 py-3">
         <p className="text-xs text-text-tertiary">
           <span className="font-medium">API:</span> Supplier documents &

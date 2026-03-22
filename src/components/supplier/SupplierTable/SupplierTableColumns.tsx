@@ -1,7 +1,5 @@
-//
 // FILE: src/components/features/SupplierTable/SupplierTableColumns.tsx
-// Supplier Table Column Definitions
-//
+
 
 import { Copy, Award, Store, TrendingUp } from 'lucide-react'
 import { Avatar } from '@/components/ui/data-display/Avatar'
@@ -9,13 +7,7 @@ import { Badge } from '@/components/ui/data-display/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { Supplier } from './SupplierTable.types'
 
-//
-// HELPER FUNCTIONS
-//
 
-/**
- * Format currency in INR
- */
 const formatCurrency = (amount: number): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -24,9 +16,6 @@ const formatCurrency = (amount: number): string => {
   }).format(amount)
 }
 
-/**
- * Format date
- */
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-IN', {
@@ -36,19 +25,10 @@ const formatDate = (dateString: string): string => {
   }).format(date)
 }
 
-/**
- * Copy to clipboard
- */
 const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text)
 }
-
-//
-// COLUMN DEFINITIONS
-//
-
 export const supplierTableColumns: DataTableColumn<Supplier>[] = [
-  // 1. Supplier Code with Avatar
   {
     id: 'supplierCode',
     header: 'suppliers.table.supplierCode',
@@ -65,7 +45,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
     ),
   },
 
-  // 2. Business Name with Contact
   {
     id: 'businessName',
     header: 'suppliers.table.businessName',
@@ -91,7 +70,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
     ),
   },
 
-  // 3. Phone with Copy Button
   {
     id: 'phone',
     header: 'suppliers.table.phone',
@@ -115,7 +93,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
     ),
   },
 
-  // 4. Supplier Type Badge
   {
     id: 'supplierType',
     header: 'suppliers.table.supplierType',
@@ -149,8 +126,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       )
     },
   },
-
-  // 5. Supplier Category Badge
   {
     id: 'supplierCategory',
     header: 'suppliers.table.category',
@@ -177,8 +152,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       )
     },
   },
-
-  // 6. Total Purchases (Formatted Currency)
   {
     id: 'totalPurchases',
     header: 'suppliers.table.totalPurchases',
@@ -197,8 +170,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       </div>
     ),
   },
-
-  // 7. Total Due (Formatted Currency with Color)
   {
     id: 'totalDue',
     header: 'suppliers.table.totalDue',
@@ -222,8 +193,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       )
     },
   },
-
-  // 8. Rating with Stars
   {
     id: 'rating',
     header: 'suppliers.table.rating',
@@ -250,8 +219,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       )
     },
   },
-
-  // 9. Status Badges (Preferred, Active, Blacklisted)
   {
     id: 'status',
     header: 'suppliers.table.status',
@@ -278,8 +245,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       </div>
     ),
   },
-
-  // 10. Payment Terms
   {
     id: 'paymentTerms',
     header: 'suppliers.table.paymentTerms',
@@ -304,8 +269,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       )
     },
   },
-
-  // 11. City/Location
   {
     id: 'location',
     header: 'suppliers.table.location',
@@ -328,8 +291,6 @@ export const supplierTableColumns: DataTableColumn<Supplier>[] = [
       </div>
     ),
   },
-
-  // 12. Created Date
   {
     id: 'createdAt',
     header: 'suppliers.table.createdAt',

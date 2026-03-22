@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/BankDetailsSection.tsx
-// Bank Details Section (Optional)
-//
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
@@ -37,8 +34,6 @@ export const BankDetailsSection = ({
           {t('suppliers.bankDetailsOptional')}
         </p>
       </div>
-
-      {/* Bank Name */}
       <FormInput
         name="bankDetails.bankName"
         label={t('suppliers.bankName')}
@@ -50,8 +45,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Account Number */}
       <FormInput
         name="bankDetails.accountNumber"
         label={t('suppliers.accountNumber')}
@@ -63,8 +56,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         maxLength={18}
       />
-
-      {/* IFSC Code */}
       <FormInput
         name="bankDetails.ifscCode"
         label={t('suppliers.ifscCode')}
@@ -76,8 +67,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         maxLength={11}
       />
-
-      {/* Account Holder Name */}
       <FormInput
         name="bankDetails.accountHolderName"
         label={t('suppliers.accountHolderName')}
@@ -89,8 +78,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Branch Name */}
       <FormInput
         name="bankDetails.branchName"
         label={t('suppliers.branchName')}
@@ -102,8 +89,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Account Type */}
       <FormSelect
         name="bankDetails.accountType"
         label={t('suppliers.accountType')}
@@ -115,8 +100,6 @@ export const BankDetailsSection = ({
         disabled={disabled}
         options={accountTypeOptions}
       />
-
-      {/* UPI ID */}
       <div className="mt-6 border-t border-border-secondary pt-6">
         <FormInput
           name="upiId"

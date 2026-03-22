@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierForm/SupplierForm.desktop.tsx
-// Desktop Layout for SupplierForm
-//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +6,7 @@ import type { SupplierFormProps, SupplierFormData } from './SupplierForm.types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2 } from 'lucide-react'
+import { SupplierType, SupplierCategory, PaymentTerms } from '@/types/supplier.types'
 import { BasicInfoSection } from './sections/BasicInfoStep'
 import { ContactInfoSection } from './sections/ContactInfoStep'
 import { AddressSection } from './sections/AddressStep'
@@ -17,6 +15,10 @@ import { BankDetailsSection } from './sections/BankDetailsSection'
 import { useSupplierActions } from '@/hooks/supplier'
 import { NotesTagsSection } from './sections/NotesTagsSection'
 import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { createSupplierSchema } from '@/validators/supplierValidation'
+import { MESSAGES }from '@/validators/supplierValidation'
+
+import { useNotification } from '@/hooks/useNotification'
 export default function SupplierFormDesktop({
   initialData = {},
   shopId,
@@ -25,9 +27,17 @@ export default function SupplierFormDesktop({
   onCancel,
   mode = 'create',
 }: SupplierFormProps) {
+  // Add karo
   const { t } = useTranslation()
-  const [formData, setFormData] =
-    useState<Partial<SupplierFormData>>(initialData)
+  const { showError } = useNotification()
+const [formData, setFormData] = useState<Partial<SupplierFormData>>({
+  supplierType: SupplierType.WHOLESALER,
+  supplierCategory: SupplierCategory.MIXED,
+  paymentTerms: PaymentTerms.NET30,
+  creditPeriod: 30,
+  creditLimit: 0,
+  ...initialData,
+})
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const { createSupplier, updateSupplier, isCreating, isUpdating } =
@@ -35,7 +45,6 @@ export default function SupplierFormDesktop({
   const isLoading = isCreating || isUpdating
   const [showConfirm, setShowConfirm] = useState(false)
   const handleChange = (name: string, value: any) => {
-    // Nested keys handle karna (e.g. contactPerson.firstName)
     if (name.includes('.')) {
       const [parent, child] = name.split('.')
       setFormData(prev => ({
@@ -59,78 +68,94 @@ export default function SupplierFormDesktop({
     }
   }
 
-  const handleBlur = (name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }))
-
-    // Required fields validation on blur
-    const requiredFields: Record<string, string> = {
-      businessName: 'Business name is required',
-      'contactPerson.firstName': 'First name is required',
-      'contactPerson.phone': 'Phone is required',
+const handleBlur = (name: string) => {
+  setTouched(prev => ({ ...prev, [name]: true }))
+  try {
+    createSupplierSchema.shape[
+      name as keyof typeof createSupplierSchema.shape
+    ]?.parse(formData[name as keyof SupplierFormData])
+    if (errors[name]) {
+      setErrors(prev => {
+        const n = { ...prev }
+        delete n[name]
+        return n
+      })
     }
-
-    // Nested value nikalenge (e.g. contactPerson.firstName)
-    const value = name.includes('.')
-      ? name.split('.').reduce<any>((obj, key) => obj?.[key], formData)
-      : formData[name as keyof typeof formData]
-
-    if (requiredFields[name] && (!value || String(value).trim() === '')) {
-      setErrors(prev => ({ ...prev, [name]: requiredFields[name] }))
+  } catch (error: any) {
+    if (error.errors?.[0]?.message) {
+      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
     }
   }
+}
+const handleSubmit = async () => {
+  const manualErrors: Record<string, string> = {}
 
-  // Save button click pe sirf dialog khulega
-  // Save button click pe pehle validation, tab dialog
-  const handleSaveClick = () => {
-    const requiredFields: Record<string, { value: any; message: string }> = {
-      businessName: {
-        value: formData.businessName,
-        message: 'Business name is required',
-      },
-      'contactPerson.firstName': {
-        value: formData.contactPerson?.firstName,
-        message: 'First name is required',
-      },
-      'contactPerson.phone': {
-        value: formData.contactPerson?.phone,
-        message: 'Phone is required',
-      },
-    }
+  if (!formData.businessName?.trim()) {
+    manualErrors['businessName'] = MESSAGES.businessName.required
+  }
+  if (!formData.contactPerson?.firstName?.trim()) {
+    manualErrors['contactPerson.firstName'] = MESSAGES.contactPerson.firstNameRequired
+  }
+  if (!formData.contactPerson?.phone?.trim()) {
+    manualErrors['contactPerson.phone'] = MESSAGES.contactPerson.phoneRequired
+  }
 
-    const newErrors: Record<string, string> = {}
+  if (Object.keys(manualErrors).length > 0) {
+    setErrors(manualErrors)
+    const errorMessages = Object.entries(manualErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(errorMessages, t('suppliers.errors.validationFailed'))
+    return
+  }
 
-    Object.entries(requiredFields).forEach(([field, { value, message }]) => {
-      if (!value || String(value).trim() === '') {
-        newErrors[field] = message
+  // Zod baaki validate karega
+  try {
+    createSupplierSchema.parse(formData)
+  } catch (error: any) {
+      console.log('Zod errors:', error.issues) 
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.length > 0) {
+        const fieldPath = err.path.join('.')
+        if (
+          !err.message.includes('expected object') &&
+          !err.message.includes('received undefined') &&
+          !err.message.includes('Invalid input')
+        ) {
+          validationErrors[fieldPath] = err.message
+        }
       }
     })
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(prev => ({ ...prev, ...newErrors }))
-      return // Dialog nahi khulega
-    }
-
-    setShowConfirm(true)
+    setErrors(validationErrors)
+    const errorMessages = Object.entries(validationErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(errorMessages, t('suppliers.errors.validationFailed'))
+    return
   }
 
-  // Dialog confirm pe actual API call
-  const handleSubmit = async () => {
-    const payload = formData as SupplierFormData
+  setShowConfirm(true)
+}
 
-    const result =
-      mode === 'edit' && supplierId
-        ? await updateSupplier(supplierId, payload, setErrors)
-        : await createSupplier(payload, setErrors)
-
+const handleConfirmedSubmit = async () => {
+  try {
+    const result = mode === 'edit' && supplierId
+      ? await updateSupplier(supplierId, formData as SupplierFormData, setErrors)
+      : await createSupplier(formData as SupplierFormData, setErrors)
     if (result.success) {
       setShowConfirm(false)
       onSuccess?.()
+    } else {
+      if (result.error) showError(result.error, 'Error')
     }
+  } catch (error: any) {
+    showError(error?.message || 'Unexpected error occurred', 'Error')
   }
+}
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
-      {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-text-primary">
           {mode === 'create'
@@ -144,11 +169,8 @@ export default function SupplierFormDesktop({
         </p>
       </div>
 
-      {/* Form Grid - 2 Columns */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Left Column */}
         <div className="space-y-6">
-          {/* Basic Info */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -166,7 +188,6 @@ export default function SupplierFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Contact Info */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -184,7 +205,6 @@ export default function SupplierFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Address & Registration */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -203,9 +223,7 @@ export default function SupplierFormDesktop({
           </Card>
         </div>
 
-        {/* Right Column */}
         <div className="space-y-6">
-          {/* Payment Terms */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -222,8 +240,6 @@ export default function SupplierFormDesktop({
               />
             </CardContent>
           </Card>
-
-          {/* Bank Details */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -241,7 +257,6 @@ export default function SupplierFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Notes & Tags */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -260,8 +275,6 @@ export default function SupplierFormDesktop({
           </Card>
         </div>
       </div>
-
-      {/* Form Actions - Sticky Bottom */}
       <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
         <div className="flex justify-end gap-3">
           <Button
@@ -277,7 +290,7 @@ export default function SupplierFormDesktop({
 
           <Button
             type="button"
-            onClick={handleSaveClick}
+            onClick={handleSubmit} 
             disabled={isLoading}
             className="min-w-[120px]"
           >
@@ -296,7 +309,6 @@ export default function SupplierFormDesktop({
             )}
           </Button>
         </div>
-        {/* Confirm Dialog */}
         <ConfirmDialog
           open={showConfirm}
           onOpenChange={setShowConfirm}
@@ -315,7 +327,7 @@ export default function SupplierFormDesktop({
             mode === 'create' ? t('common.create') : t('common.update')
           }
           cancelLabel={t('common.cancel')}
-          onConfirm={handleSubmit}
+          onConfirm={handleConfirmedSubmit}
           loading={isLoading}
         />
       </div>

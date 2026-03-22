@@ -1,8 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierForm/SupplierForm.types.ts
-// TypeScript Types for SupplierForm
-//
-
 import type {
   SupplierType,
   SupplierCategory,
@@ -11,12 +7,10 @@ import type {
 } from '@/types/supplier.types'
 
 export interface SupplierFormData {
-  // Basic Information
   businessName: string
   displayName?: string
   supplierCode?: string
 
-  // Contact Person
   contactPerson: {
     firstName: string
     lastName?: string
@@ -27,12 +21,10 @@ export interface SupplierFormData {
     whatsappNumber?: string
   }
 
-  // Business Contact
   businessEmail?: string
   businessPhone?: string
   website?: string
 
-  // Address
   address?: {
     street?: string
     landmark?: string
@@ -43,26 +35,21 @@ export interface SupplierFormData {
     pincode?: string
   }
 
-  // Registration
   gstNumber?: string
   panNumber?: string
   tanNumber?: string
   registrationNumber?: string
 
-  // Type & Category
   supplierType: SupplierType
   supplierCategory: SupplierCategory
 
-  // Products
   productsSupplied?: string[]
   specialization?: string[]
 
-  // Payment Terms
   paymentTerms: PaymentTerms
   creditPeriod: number
   creditLimit: number
 
-  // Bank Details (Optional)
   bankDetails?: {
     bankName?: string
     accountNumber?: string
@@ -74,7 +61,6 @@ export interface SupplierFormData {
 
   upiId?: string
 
-  // Notes & Tags
   notes?: string
   internalNotes?: string
   tags?: string[]

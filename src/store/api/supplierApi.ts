@@ -16,22 +16,13 @@ import type {
   BlacklistSupplierDto,
   UpdateBalanceDto,
 } from '@/types/supplier.types'
-
-/**
- * RTK Query API for Supplier Module
- * Handles all supplier-related API calls with automatic caching
- */
 export const supplierApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    //  GET ALL SUPPLIERS (with filters & pagination)
-
     getSuppliers: build.query<SupplierListResponse, SupplierFilters>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.GET_ALL, { shopId }),
-        params, // page, limit, search, filters
+        params, 
       }),
-
-      //  Cache tags for auto-refetch
       providesTags: (result, error, { shopId }) => [
         { type: 'SupplierList', id: shopId },
         ...(result?.data || []).map(supplier => ({
@@ -41,21 +32,14 @@ export const supplierApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //  GET SINGLE SUPPLIER BY ID
-
     getSupplierById: build.query<Supplier, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.GET_BY_ID, { shopId, id }),
       }),
-
-      //  Transform response (extract data)
       transformResponse: (response: SingleSupplierResponse) => response.data,
 
       providesTags: (result, error, { id }) => [{ type: 'Supplier', id }],
     }),
-
-    // 🔍 SEARCH SUPPLIERS
-
     searchSuppliers: build.query<
       Supplier[],
       {
@@ -73,9 +57,6 @@ export const supplierApi = baseApi.injectEndpoints({
 
       providesTags: ['SupplierSearch'],
     }),
-
-    // ➕ CREATE SUPPLIER
-
     createSupplier: build.mutation<
       Supplier,
       CreateSupplierDto & { shopId: string }
@@ -87,16 +68,11 @@ export const supplierApi = baseApi.injectEndpoints({
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
-      //  Invalidate cache to auto-refetch lists
       invalidatesTags: (result, error, { shopId }) => [
         { type: 'SupplierList', id: shopId },
         'SupplierSearch',
       ],
     }),
-
-    // ✏️ UPDATE SUPPLIER
-
     updateSupplier: build.mutation<
       Supplier,
       UpdateSupplierDto & { shopId: string; id: string }
@@ -108,17 +84,12 @@ export const supplierApi = baseApi.injectEndpoints({
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
-      //  Invalidate both single item and list
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
         'SupplierSearch',
       ],
     }),
-
-    // 🗑 DELETE SUPPLIER (soft delete)
-
     deleteSupplier: build.mutation<void, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.DELETE, { shopId, id }),
@@ -131,25 +102,19 @@ export const supplierApi = baseApi.injectEndpoints({
         'SupplierSearch',
       ],
     }),
-
-    // 🔄 RESTORE SUPPLIER
-
     restoreSupplier: build.mutation<Supplier, { shopId: string; id: string }>({
       query: ({ shopId, id }) => ({
         url: replacePathParams(SUPPLIER_ENDPOINTS.RESTORE, { shopId, id }),
         method: 'POST',
+          body: { shopId },
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  UPDATE SUPPLIER RATING
-
     updateSupplierRating: build.mutation<
       Supplier,
       UpdateRatingDto & { shopId: string; id: string }
@@ -164,15 +129,11 @@ export const supplierApi = baseApi.injectEndpoints({
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  BLACKLIST SUPPLIER
-
     blacklistSupplier: build.mutation<
       Supplier,
       BlacklistSupplierDto & { shopId: string; id: string }
@@ -184,15 +145,11 @@ export const supplierApi = baseApi.injectEndpoints({
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  REMOVE FROM BLACKLIST
-
     removeSupplierBlacklist: build.mutation<
       Supplier,
       { shopId: string; id: string }
@@ -203,8 +160,8 @@ export const supplierApi = baseApi.injectEndpoints({
           id,
         }),
         method: 'POST',
+        body: { shopId },
       }),
-
       transformResponse: (response: SingleSupplierResponse) => response.data,
 
       invalidatesTags: (result, error, { id, shopId }) => [
@@ -212,9 +169,6 @@ export const supplierApi = baseApi.injectEndpoints({
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  MARK AS PREFERRED
-
     markSupplierAsPreferred: build.mutation<
       Supplier,
       { shopId: string; id: string }
@@ -225,6 +179,7 @@ export const supplierApi = baseApi.injectEndpoints({
           id,
         }),
         method: 'POST',
+        body: { shopId },
       }),
 
       transformResponse: (response: SingleSupplierResponse) => response.data,
@@ -234,9 +189,6 @@ export const supplierApi = baseApi.injectEndpoints({
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  REMOVE FROM PREFERRED
-
     removeSupplierPreferred: build.mutation<
       Supplier,
       { shopId: string; id: string }
@@ -247,18 +199,14 @@ export const supplierApi = baseApi.injectEndpoints({
           id,
         }),
         method: 'DELETE',
+         body: { shopId },
       }),
-
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  UPDATE SUPPLIER BALANCE
-
     updateSupplierBalance: build.mutation<
       Supplier,
       UpdateBalanceDto & { shopId: string; id: string }
@@ -271,17 +219,12 @@ export const supplierApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { amount, type, note },
       }),
-
       transformResponse: (response: SingleSupplierResponse) => response.data,
-
       invalidatesTags: (result, error, { id, shopId }) => [
         { type: 'Supplier', id },
         { type: 'SupplierList', id: shopId },
       ],
     }),
-
-    //  GET SUPPLIER STATISTICS
-
     getSupplierStats: build.query<
       SupplierStatsResponse['data'],
       { shopId: string }
@@ -296,9 +239,6 @@ export const supplierApi = baseApi.injectEndpoints({
         { type: 'SupplierList', id: `${shopId}-stats` },
       ],
     }),
-
-    //  GET TOP SUPPLIERS
-
     getTopSuppliers: build.query<
       Supplier[],
       { shopId: string; limit?: number }
@@ -307,28 +247,20 @@ export const supplierApi = baseApi.injectEndpoints({
         url: replacePathParams(SUPPLIER_ENDPOINTS.TOP, { shopId }),
         params: { limit },
       }),
-
       transformResponse: (response: TopSuppliersResponse) => response.data,
-
       providesTags: (result, error, { shopId }) => [
         { type: 'SupplierList', id: `${shopId}-top` },
       ],
     }),
   }),
 })
-
-//  EXPORT HOOKS (Auto-generated by RTK Query)
-
 export const {
-  // Queries
   useGetSuppliersQuery,
   useGetSupplierByIdQuery,
   useSearchSuppliersQuery,
   useLazySearchSuppliersQuery,
   useGetSupplierStatsQuery,
   useGetTopSuppliersQuery,
-
-  // Mutations
   useCreateSupplierMutation,
   useUpdateSupplierMutation,
   useDeleteSupplierMutation,

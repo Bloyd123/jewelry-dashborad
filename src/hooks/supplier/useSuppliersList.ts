@@ -2,11 +2,6 @@
 
 import { useGetSuppliersQuery } from '@/store/api/supplierApi'
 import type { SupplierFilters } from '@/types/supplier.types'
-
-/**
- *  SUPPLIERS LIST HOOK
- * Handles fetching and pagination of suppliers list
- */
 export const useSuppliersList = (
   shopId: string,
   filters?: Partial<SupplierFilters>

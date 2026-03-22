@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierManagementModal/sections/DeleteSupplierSection.tsx
-// Delete/Restore Supplier Section
-//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -29,11 +26,9 @@ export const DeleteSupplierSection = ({
     await onRestore()
   }
 
-  // If already deleted - show restore UI
   if (isDeleted) {
     return (
       <div className="space-y-6">
-        {/* Delete Status */}
         <div className="bg-status-warning/10 rounded-lg border-2 border-status-warning p-4 text-center">
           <div className="flex items-center justify-center gap-2">
             <Trash2 className="h-6 w-6 text-status-warning" />
@@ -50,7 +45,6 @@ export const DeleteSupplierSection = ({
           )}
         </div>
 
-        {/* Restore Info */}
         <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
           <p className="mb-3 font-medium text-text-primary">
             {t('suppliers.delete.restoreInfo')}:
@@ -62,7 +56,6 @@ export const DeleteSupplierSection = ({
           </ul>
         </div>
 
-        {/* Actions */}
         <div className="flex flex-col gap-3">
           <Button
             variant="default"
@@ -91,10 +84,8 @@ export const DeleteSupplierSection = ({
     )
   }
 
-  // If not deleted - show delete UI
   return (
     <div className="space-y-6">
-      {/* Warning */}
       <div className="bg-status-warning/10 rounded-lg border-2 border-status-warning p-4">
         <div className="flex items-start gap-3">
           <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0 text-status-warning" />
@@ -109,7 +100,6 @@ export const DeleteSupplierSection = ({
         </div>
       </div>
 
-      {/* Important Info Before Delete */}
       <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
         <p className="mb-3 font-medium text-text-primary">
           {t('suppliers.delete.beforeDeleting')}:
@@ -150,7 +140,6 @@ export const DeleteSupplierSection = ({
         </div>
       </div>
 
-      {/* What Happens */}
       <div className="bg-status-info/10 rounded-lg border border-status-info p-4">
         <p className="mb-2 font-medium text-text-primary">
           {t('suppliers.delete.whatHappens')}:
@@ -163,14 +152,11 @@ export const DeleteSupplierSection = ({
         </ul>
       </div>
 
-      {/* Confirmation Question */}
       <div className="bg-status-error/5 rounded-lg border-2 border-status-error p-4 text-center">
         <p className="font-semibold text-text-primary">
           {t('suppliers.delete.confirmQuestion')}
         </p>
       </div>
-
-      {/* Actions */}
       <div className="flex flex-col gap-3">
         <Button
           variant="destructive"

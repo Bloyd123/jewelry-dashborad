@@ -1,7 +1,4 @@
-//
 // FILE: src/components/supplier/SupplierManagementModal/sections/UpdateBalanceSection.tsx
-// Update Supplier Balance Section
-//
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -43,18 +40,16 @@ export const UpdateBalanceSection = ({
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
-
-  // Calculate new balance preview
   const calculateNewBalance = () => {
     const currentBalance = supplier.currentBalance
     const amount = formData.amount
 
     if (formData.type === 'payment') {
-      return currentBalance - amount // Payment reduces due (negative becomes less negative)
+      return currentBalance - amount 
     } else if (formData.type === 'purchase') {
-      return currentBalance + amount // Purchase increases due (more negative)
+      return currentBalance + amount 
     } else {
-      return currentBalance + amount // Adjustment can be + or -
+      return currentBalance + amount 
     }
   }
 
@@ -130,9 +125,7 @@ export const UpdateBalanceSection = ({
         </div>
       </div>
 
-      {/* Form */}
       <div className="space-y-4">
-        {/* Transaction Type */}
         <FormSelect
           name="type"
           label={t('suppliers.balance.transactionType')}
@@ -144,7 +137,6 @@ export const UpdateBalanceSection = ({
           disabled={isLoading}
         />
 
-        {/* Amount */}
         <FormInput
           name="amount"
           label={t('suppliers.balance.amount')}
@@ -157,7 +149,6 @@ export const UpdateBalanceSection = ({
           disabled={isLoading}
         />
 
-        {/* Note */}
         <FormTextarea
           name="note"
           label={t('suppliers.balance.note')}
@@ -170,7 +161,6 @@ export const UpdateBalanceSection = ({
           maxLength={200}
         />
 
-        {/* New Balance Preview */}
         <div className="border-accent/20 bg-accent/5 rounded-lg border-2 p-4">
           <div className="flex items-center justify-between">
             <div>

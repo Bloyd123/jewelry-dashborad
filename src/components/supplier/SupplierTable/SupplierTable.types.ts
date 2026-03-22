@@ -1,7 +1,5 @@
-//
 // FILE: src/components/features/SupplierTable/SupplierTable.types.ts
-// Supplier Table TypeScript Types (Re-export from dummy data)
-//
+
 
 export type {
   Supplier,

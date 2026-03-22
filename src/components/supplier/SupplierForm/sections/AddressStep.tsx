@@ -1,7 +1,5 @@
-//
 // FILE: src/components/supplier/SupplierForm/sections/AddressSection.tsx
-// Address Section
-//
+
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
@@ -25,7 +23,6 @@ export const AddressSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Street */}
       <FormInput
         name="address.street"
         label={t('suppliers.street')}
@@ -38,7 +35,6 @@ export const AddressSection = ({
         maxLength={200}
       />
 
-      {/* Landmark */}
       <FormInput
         name="address.landmark"
         label={t('suppliers.landmark')}
@@ -51,7 +47,6 @@ export const AddressSection = ({
         maxLength={100}
       />
 
-      {/* Area */}
       <FormInput
         name="address.area"
         label={t('suppliers.area')}
@@ -63,8 +58,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* City */}
       <FormInput
         name="address.city"
         label={t('suppliers.city')}
@@ -76,8 +69,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* State */}
       <FormInput
         name="address.state"
         label={t('suppliers.state')}
@@ -90,7 +81,6 @@ export const AddressSection = ({
         maxLength={100}
       />
 
-      {/* Country */}
       <FormInput
         name="address.country"
         label={t('suppliers.country')}
@@ -102,8 +92,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={100}
       />
-
-      {/* Pincode */}
       <FormInput
         name="address.pincode"
         label={t('suppliers.pincode')}
@@ -115,15 +103,11 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={6}
       />
-
-      {/* Registration Details Heading */}
       <div className="mt-6 border-b border-border-secondary pb-2">
         <h4 className="text-sm font-semibold text-text-primary">
           {t('suppliers.registrationDetails')}
         </h4>
       </div>
-
-      {/* GST Number */}
       <FormInput
         name="gstNumber"
         label={t('suppliers.gstNumber')}
@@ -135,8 +119,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={15}
       />
-
-      {/* PAN Number */}
       <FormInput
         name="panNumber"
         label={t('suppliers.panNumber')}
@@ -148,8 +130,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={10}
       />
-
-      {/* TAN Number */}
       <FormInput
         name="tanNumber"
         label={t('suppliers.tanNumber')}
@@ -161,8 +141,6 @@ export const AddressSection = ({
         disabled={disabled}
         maxLength={10}
       />
-
-      {/* Registration Number */}
       <FormInput
         name="registrationNumber"
         label={t('suppliers.registrationNumber')}
