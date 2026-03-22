@@ -4,7 +4,8 @@
     "confirmCreateDescription": "Are you sure you want to create this customer?",
     "confirmUpdate": "Update Customer?",
     "confirmUpdateDescription": "Are you sure you want to save these changes?",
-
+"confirmRemoveBlacklist": "Are you sure you want to remove blacklist from this customer?",
+"confirmDelete": "Are you sure you want to delete {{name}}?",
     "addNew": "Add Customer",
     "searchPlaceholder": "Search by name, phone, or code...",
     "empty": "No customers found",

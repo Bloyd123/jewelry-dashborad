@@ -1,6 +1,4 @@
 // FILE: src/store/api/customerApi.ts
-// Customer RTK Query API Slice
-
 import { baseApi } from './baseApi'
 import { CUSTOMER_ENDPOINTS } from '@/api/endpoints'
 import { replacePathParams } from '@/utils/api'
@@ -26,22 +24,13 @@ import type {
   GetAnalyticsInput,
 } from '@/types/customer.types'
 
-/**
- * Customer API Slice
- * Handles all customer-related API calls with caching
- */
 export const customerApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    //
-    // 📋 GET ALL CUSTOMERS (with filters & pagination)
-    //
     getCustomers: build.query<CustomerListResponse, GetCustomersInput>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.GET_ALL, { shopId }),
-        params, // page, limit, search, filters
+        params, 
       }),
-
-      // 🔥 Cache tags for auto-refetch
       providesTags: (result, error, { shopId }) => [
         { type: 'CustomerList', id: shopId },
         ...(result?.data?.customers || []).map(customer => ({
@@ -51,9 +40,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    // 👤 GET SINGLE CUSTOMER BY ID
-    //
     getCustomerById: build.query<Customer, GetCustomerByIdInput>({
       query: ({ shopId, customerId }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.GET_BY_ID, {
@@ -62,7 +48,6 @@ export const customerApi = baseApi.injectEndpoints({
         }),
       }),
 
-      // 🔥 Transform response (extract data)
       transformResponse: (response: CustomerResponse) => response.data.customer,
 
       providesTags: (result, error, { customerId }) => [
@@ -70,9 +55,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    // 🔍 SEARCH CUSTOMER
-    //
     searchCustomer: build.query<Customer | null, SearchCustomerInput>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.SEARCH, { shopId }),
@@ -85,9 +67,6 @@ export const customerApi = baseApi.injectEndpoints({
       providesTags: ['CustomerSearch'],
     }),
 
-    //
-    //  CREATE CUSTOMER
-    //
     createCustomer: build.mutation<Customer, CreateCustomerInput>({
       query: ({ shopId, ...data }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.CREATE, { shopId }),
@@ -98,15 +77,11 @@ export const customerApi = baseApi.injectEndpoints({
       transformResponse: (response: CustomerMutationResponse) =>
         response.data.customer,
 
-      // 🔥 Invalidate cache to auto-refetch lists
       invalidatesTags: (result, error, { shopId }) => [
         { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    //
-    // ✏️ UPDATE CUSTOMER
-    //
     updateCustomer: build.mutation<Customer, UpdateCustomerInput>({
       query: ({ shopId, customerId, ...data }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.UPDATE, {
@@ -120,16 +95,12 @@ export const customerApi = baseApi.injectEndpoints({
       transformResponse: (response: CustomerMutationResponse) =>
         response.data.customer,
 
-      // 🔥 Invalidate both single item and list
       invalidatesTags: (result, error, { customerId, shopId }) => [
         { type: 'Customer', id: customerId },
         { type: 'CustomerList', id: shopId },
       ],
     }),
 
-    //
-    // 🗑 DELETE CUSTOMER
-    //
     deleteCustomer: build.mutation<void, DeleteCustomerInput>({
       query: ({ shopId, customerId }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.DELETE, {
@@ -145,9 +116,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    // 🚫 BLACKLIST CUSTOMER
-    //
     blacklistCustomer: build.mutation<Customer, BlacklistCustomerInput>({
       query: ({ shopId, customerId, reason }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.BLACKLIST, {
@@ -167,9 +135,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    // REMOVE BLACKLIST
-    //
     removeBlacklist: build.mutation<Customer, RemoveBlacklistInput>({
       query: ({ shopId, customerId }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.UNBLACKLIST, {
@@ -188,9 +153,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    //  ADD LOYALTY POINTS
-    //
     addLoyaltyPoints: build.mutation<Customer, AddLoyaltyPointsInput>({
       query: ({ shopId, customerId, points, reason }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.ADD_LOYALTY, {
@@ -210,9 +172,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    // 🎁 REDEEM LOYALTY POINTS
-    //
     redeemLoyaltyPoints: build.mutation<Customer, RedeemLoyaltyPointsInput>({
       query: ({ shopId, customerId, points }) => ({
         url: replacePathParams(CUSTOMER_ENDPOINTS.REDEEM_LOYALTY, {
@@ -232,9 +191,6 @@ export const customerApi = baseApi.injectEndpoints({
       ],
     }),
 
-    //
-    //  GET CUSTOMER ANALYTICS
-    //
     getCustomerAnalytics: build.query<
       CustomerAnalyticsResponse['data']['summary'],
       GetAnalyticsInput
@@ -253,14 +209,11 @@ export const customerApi = baseApi.injectEndpoints({
   }),
 })
 
-//
-// 🎣 EXPORT HOOKS (Auto-generated by RTK Query)
-//
 export const {
   useGetCustomersQuery,
   useGetCustomerByIdQuery,
   useSearchCustomerQuery,
-  useLazySearchCustomerQuery, // Manual trigger
+  useLazySearchCustomerQuery, 
   useCreateCustomerMutation,
   useUpdateCustomerMutation,
   useDeleteCustomerMutation,

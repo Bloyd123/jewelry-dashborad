@@ -23,7 +23,7 @@ export interface ConfirmDialogProps {
   // Content
   title: string
   description?: string
-
+ children?: React.ReactNode 
   // Variant
   variant?: ConfirmDialogVariant
 
@@ -81,6 +81,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   open,
   onOpenChange,
   title,
+    children,  
   description,
   variant = 'default',
   confirmLabel = 'ui.dialog.confirm',
@@ -141,6 +142,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             )}
           </div>
         </div>
+            {children && <div className="mt-3">{children}</div>}
 
         {/* Actions */}
         <div className="mt-4 flex flex-col-reverse justify-end gap-2 sm:mt-6 sm:flex-row sm:gap-3">

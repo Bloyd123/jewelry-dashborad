@@ -40,11 +40,11 @@ export default function CustomerDetailPage() {
       {activeTab === 'orders' && can('canViewCustomerHistory') && (
         <OrdersTab customer={customer} />
       )}
-      {activeTab === 'loyalty' && <LoyaltyTab />}
-      {activeTab === 'documents' && <DocumentsTab />}
-      {activeTab === 'activity' && can('canViewCustomerHistory') && (
-        <ActivityLogsTab />
-      )}
+{activeTab === 'loyalty' && <LoyaltyTab customer={customer} />}
+{activeTab === 'documents' && <DocumentsTab customer={customer} />}
+{activeTab === 'activity' && can('canViewCustomerHistory') && (
+  <ActivityLogsTab customer={customer} />
+)}
     </div>
   )
 }

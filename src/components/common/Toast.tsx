@@ -94,7 +94,7 @@ const Toast: React.FC<ToastProps> = ({
         {title && (
           <h4 className="mb-1 text-sm font-semibold text-gray-900">{title}</h4>
         )}
-        <p className="text-sm text-gray-900">{message}</p>
+        <p className="text-sm text-gray-900 whitespace-pre-line">{message}</p>
       </div>
 
       {/* Close Button */}

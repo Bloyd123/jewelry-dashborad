@@ -131,22 +131,20 @@ export default function CustomerFormMobile({
       createCustomerSchema.parse(formData)
     } catch (error: any) {
       const validationErrors: Record<string, string> = {}
-      error.errors?.forEach((err: any) => {
-        if (err.path?.[0]) {
-          validationErrors[err.path[0]] = err.message
-        }
-      })
+error.issues?.forEach((err: any) => {
+  if (err.path?.[0]) {
+    validationErrors[err.path[0]] = err.message
+  }
+})
       setErrors(validationErrors)
+const errorMessages = Object.entries(validationErrors)
+  .map(([field, message]) => `• ${message}`)
+  .join('\n')
 
-      const firstError = Object.values(validationErrors)[0]
-      if (firstError) {
-        showError(String(firstError), t('customer.errors.validationFailed'))
-      } else {
-        showError(
-          t('customer.errors.pleaseFillRequired'),
-          t('customer.errors.validationFailed')
-        )
-      }
+showError(
+  errorMessages || t('customer.errors.pleaseFillRequired'),
+  t('customer.errors.validationFailed')
+)
       return
     }
 

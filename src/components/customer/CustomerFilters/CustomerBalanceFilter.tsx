@@ -26,12 +26,12 @@ export const CustomerBalanceFilter = React.forwardRef<
 
     const balanceOptions: FilterOption[] = [
       {
-        value: 'has_balance',
+         value: 'due',
         label: t('filters.hasBalance'),
         icon: <DollarSign className="h-4 w-4 text-status-warning" />,
       },
       {
-        value: 'no_balance',
+         value: 'clear',
         label: t('filters.noBalance'),
         icon: <CheckCircle className="h-4 w-4 text-status-success" />,
       },

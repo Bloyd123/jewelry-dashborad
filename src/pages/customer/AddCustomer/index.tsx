@@ -34,7 +34,7 @@ const convertCustomerToFormData = (
     dateOfBirth: customer.dateOfBirth
       ? customer.dateOfBirth.split('T')[0] // "2026-02-01T05:11:48.283Z" → "2026-02-01"
       : '',
-    gender: customer.gender,
+      gender: customer.gender || undefined,
     anniversaryDate: customer.anniversaryDate
       ? customer.anniversaryDate.split('T')[0]
       : '',
@@ -62,12 +62,10 @@ const convertCustomerToFormData = (
     creditLimit: customer.creditLimit,
 
     // Preferences - ✅ FIX: Handle nested object properly
-    preferences: customer.preferences
-      ? {
-          preferredMetal: customer.preferences.preferredMetal,
-          communicationPreference: customer.preferences.communicationPreference,
-        }
-      : undefined,
+preferences: customer.preferences ? {
+  preferredMetal: customer.preferences.preferredMetal || undefined,
+  communicationPreference: customer.preferences.communicationPreference || undefined,
+} : undefined,
 
     // Source & Referral
     source: customer.source,

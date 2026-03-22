@@ -29,6 +29,7 @@ export const getCustomerRowActions = (
   onEdit: (customer: Customer) => void,
   onAddPoints: (customer: Customer) => void,
   onBlacklist: (customer: Customer) => void,
+  onRemoveBlacklist: (customer: Customer) => void, 
   onDelete: (customer: Customer) => void
 ): RowAction<Customer>[] => [
   {
@@ -37,19 +38,20 @@ export const getCustomerRowActions = (
     onClick: onViewDetails,
     variant: 'default',
   },
-  {
-    label: 'customer.actions.edit',
-    icon: <Edit className="h-4 w-4" />,
-    onClick: onEdit,
-    variant: 'default',
-  },
-  {
-    label: 'customer.actions.addPoints',
-    icon: <Award className="h-4 w-4" />,
-    onClick: onAddPoints,
-    variant: 'default',
-    hidden: row => !row.isActive,
-  },
+{
+  label: 'customer.actions.edit',
+  icon: <Edit className="h-4 w-4" />,
+  onClick: onEdit,
+  variant: 'default',
+  hidden: row => row.isBlacklisted,  // ← add karo
+},
+{
+  label: 'customer.actions.addPoints',
+  icon: <Award className="h-4 w-4" />,
+  onClick: onAddPoints,
+  variant: 'default',
+  hidden: row => !row.isActive || row.isBlacklisted,  // ← update karo
+},
   {
     label: 'customer.actions.blacklist',
     icon: <Ban className="h-4 w-4" />,
@@ -60,7 +62,7 @@ export const getCustomerRowActions = (
   {
     label: 'customer.actions.removeBlacklist',
     icon: <ShieldOff className="h-4 w-4" />,
-    onClick: onBlacklist,
+    onClick: onRemoveBlacklist,
     variant: 'default',
     hidden: row => !row.isBlacklisted,
   },
@@ -78,6 +80,7 @@ interface BulkActionsBarProps {
   selectedCustomers: Customer[]
   onViewDetails: () => void
   onEdit: () => void
+   onRemoveBlacklist: () => void  
   onAddPoints: () => void
   onBlacklist: () => void
   onDelete: () => void
@@ -91,6 +94,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   onEdit,
   onAddPoints,
   onBlacklist,
+    onRemoveBlacklist, 
   onDelete,
   onClearSelection,
 }) => {
@@ -181,7 +185,7 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           <Button
             variant="outline"
             size="sm"
-            onClick={onBlacklist}
+            onClick={onRemoveBlacklist}
             className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
           >
             <ShieldOff className="h-4 w-4" />

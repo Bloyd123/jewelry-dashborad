@@ -12,8 +12,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
-import { MOCK_CUSTOMERS } from '@/pages/customer/AddCustomer/mockdata'
 import type { Customer } from '@/types/customer.types'
+interface DocumentsTabProps {
+  customer: Customer  // ← customerId ki jagah customer pass karo
+}
 
 interface Document {
   id: string
@@ -55,12 +57,9 @@ interface DocumentsTabProps {
   customerId?: string
 }
 
-export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customerId }) => {
+export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
   const { t } = useTranslation()
 
-  const customer: Customer = customerId
-    ? MOCK_CUSTOMERS.find(c => c._id === customerId) || MOCK_CUSTOMERS[0]
-    : MOCK_CUSTOMERS[0]
 
   const handleDownload = (doc: Document) => {
     console.log('Download:', doc.name)

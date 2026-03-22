@@ -102,8 +102,8 @@ const preferencesSchema = z
  */
 export const createCustomerSchema = z.object({
   // Basic Information (Required)
-  firstName: z
-    .string()
+firstName: z
+  .string({ error: MESSAGES.firstName.required })
     .trim()
     .min(1, MESSAGES.firstName.required)
     .min(2, MESSAGES.firstName.minLength)
@@ -117,9 +117,8 @@ export const createCustomerSchema = z.object({
     .regex(/^[a-zA-Z\s]*$/, MESSAGES.lastName.pattern)
     .optional()
     .or(z.literal('')),
-
-  phone: z
-    .string()
+phone: z
+  .string({ error: MESSAGES.phone.required })
     .trim()
     .min(1, MESSAGES.phone.required)
     .regex(/^[6-9][0-9]{9}$/, MESSAGES.phone.invalid),
