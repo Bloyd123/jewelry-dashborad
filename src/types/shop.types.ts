@@ -373,7 +373,53 @@ export interface ShopFormData {
   bankDetails?: BankDetail[]
   upiDetails?: UpiDetail[]
 }
+export interface ActivityLogUser {
+  _id: string
+  firstName: string
+  lastName: string
+  email: string
+  role: string
+  profileImage?: string
+}
 
+export interface ActivityLog {
+  _id: string
+  userId: ActivityLogUser
+  shopId: string
+  organizationId?: string
+  action: string
+  module: string
+  description: string
+  level: 'info' | 'warn' | 'error' | 'success' | 'debug'
+  status: 'success' | 'failed' | 'pending' | 'cancelled'
+  ipAddress?: string
+  userAgent?: string
+  metadata?: Record<string, any>
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ActivityLogQueryParams {
+  id: string
+  page?: number
+  limit?: number
+  search?: string
+  action?: string
+  module?: string
+  status?: string
+  level?: string
+  userId?: string
+  startDate?: string
+  endDate?: string
+  sort?: string
+}
+
+export interface ActivityLogListResponse {
+  success: boolean
+  results: number
+  data: ActivityLog[]
+  pagination: ShopPaginationMeta
+}
 // SHOP FILTERS (for List Page)
 
 export interface ShopFilters {

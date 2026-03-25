@@ -59,7 +59,7 @@ export const ShopListPage = () => {
       />
 
       {/* Table Section */}
-      <ShopTable />
+     <ShopTable filters={filters} />
     </div>
   )
 }

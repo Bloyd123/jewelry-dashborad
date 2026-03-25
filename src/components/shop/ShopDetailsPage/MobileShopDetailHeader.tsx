@@ -20,19 +20,17 @@ import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Shop } from '@/types/shop.types'
-import { useShopById } from '@/hooks/shop'
 
 //
 // COMPONENT PROPS
 //
 
 interface MobileShopDetailHeaderProps {
-  shopId?: string
+  shop: Shop
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
   onSettingsClick?: () => void
-  // children?: React.ReactNode
 }
 
 //
@@ -40,18 +38,14 @@ interface MobileShopDetailHeaderProps {
 //
 
 export const MobileShopDetailHeader: React.FC<MobileShopDetailHeaderProps> = ({
-  shopId,
+  shop,
   activeTab = 'overview',
   onTabChange,
   onBackClick,
   onSettingsClick,
-  // children,
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-  const { shop, isLoading } = useShopById(shopId ?? '')
-
-  if (isLoading || !shop) return null
 
   // Handle tab change
   const handleTabChange = (tab: string) => {

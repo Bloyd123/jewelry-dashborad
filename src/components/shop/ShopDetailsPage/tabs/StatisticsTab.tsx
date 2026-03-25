@@ -220,12 +220,10 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           variant="default"
           size="md"
           trend={{
-            value: parseFloat(
-              statistics.totalSales.growth.replace('+', '').replace('%', '')
-            ),
-            direction: statistics.totalSales.growth.startsWith('+')
-              ? 'up'
-              : 'down',
+  value: parseFloat(
+    (statistics.totalSales.growth || '0').replace('+', '').replace('%', '')
+  ),
+  direction: (statistics.totalSales.growth || '').startsWith('+') ? 'up' : 'down',
             label: t('shops.statistics.vsLastMonth'),
             showIcon: true,
           }}

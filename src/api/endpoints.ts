@@ -60,60 +60,52 @@ export const CUSTOMER_ENDPOINTS = {
 } as const
 
 export const SHOP_ENDPOINTS = {
-  // Core CRUD
-  GET_ALL: `${BASE_URL}/shops`,
-  GET_BY_ID: `${BASE_URL}/shops/:shopId`,
-  CREATE: `${BASE_URL}/shops`,
-  UPDATE: `${BASE_URL}/shops/:shopId`,
-  DELETE: `${BASE_URL}/shops/:shopId`,
-
-  // Status
-  TOGGLE_STATUS: `${BASE_URL}/shops/:shopId/status`,
-
-  // Settings & Rates
-  UPDATE_SETTINGS: `${BASE_URL}/shops/:shopId/settings`,
-  UPDATE_METAL_RATES: `${BASE_URL}/shops/:shopId/metal-rates`,
-
-  // Statistics
-  GET_STATISTICS: `${BASE_URL}/shops/:shopId/statistics`,
-
-  // Bulk Operations
-  BULK_ACTIVATE: `${BASE_URL}/shops/bulk/activate`,
-  BULK_DEACTIVATE: `${BASE_URL}/shops/bulk/deactivate`,
-  BULK_DELETE: `${BASE_URL}/shops/bulk`,
+  GET_ALL:         `${BASE_URL}/shops`,
+  GET_BY_ID:       `${BASE_URL}/shops/:id`,
+  CREATE:          `${BASE_URL}/shops`,
+  UPDATE:          `${BASE_URL}/shops/:id`,
+  DELETE:          `${BASE_URL}/shops/:id`,
+  UPDATE_SETTINGS: `${BASE_URL}/shops/:id/settings`,
+  STATISTICS:      `${BASE_URL}/shops/:id/statistics`,
+  ACTIVITY_LOGS: `${BASE_URL}/shops/:id/activity-logs`,
 }
+ 
 export const PURCHASE_ENDPOINTS = {
-  GET_ALL: `${BASE_URL}/shops/:shopId/purchases`,
-  GET_BY_ID: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
-  CREATE: `${BASE_URL}/shops/:shopId/purchases`,
-  UPDATE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
-  DELETE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
-
-  UPDATE_STATUS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/status`,
-  RECEIVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/receive`,
-  CANCEL: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/cancel`,
-
-  APPROVE: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/approve`,
-  REJECT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/reject`,
-
-  ADD_PAYMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
-  GET_PAYMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
-
-  GET_BY_SUPPLIER: `${BASE_URL}/shops/:shopId/purchases/supplier/:supplierId`,
-
-  GET_ANALYTICS: `${BASE_URL}/shops/:shopId/purchases/analytics`,
-  GET_PENDING: `${BASE_URL}/shops/:shopId/purchases/pending`,
-  GET_UNPAID: `${BASE_URL}/shops/:shopId/purchases/unpaid`,
-
-  BULK_DELETE: `${BASE_URL}/shops/:shopId/purchases/bulk-delete`,
-  BULK_APPROVE: `${BASE_URL}/shops/:shopId/purchases/bulk-approve`,
-
-  UPLOAD_DOCUMENT: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
-  GET_DOCUMENTS: `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
-
-  SEARCH: `${BASE_URL}/shops/:shopId/purchases/search`,
-  BY_DATE_RANGE: `${BASE_URL}/shops/:shopId/purchases/by-date-range`,
-} as const
+  // List & Search
+  GET_ALL:        `${BASE_URL}/shops/:shopId/purchases`,
+  GET_BY_ID:      `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+  SEARCH:         `${BASE_URL}/shops/:shopId/purchases/search`,
+  BY_DATE_RANGE:  `${BASE_URL}/shops/:shopId/purchases/by-date-range`,
+  BY_SUPPLIER:    `${BASE_URL}/shops/:shopId/purchases/supplier/:supplierId`,
+  PENDING:        `${BASE_URL}/shops/:shopId/purchases/pending`,
+  UNPAID:         `${BASE_URL}/shops/:shopId/purchases/unpaid`,
+  ANALYTICS:      `${BASE_URL}/shops/:shopId/purchases/analytics`,
+ 
+  // CRUD
+  CREATE:         `${BASE_URL}/shops/:shopId/purchases`,
+  UPDATE:         `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+  DELETE:         `${BASE_URL}/shops/:shopId/purchases/:purchaseId`,
+ 
+  // Status Actions
+  UPDATE_STATUS:  `${BASE_URL}/shops/:shopId/purchases/:purchaseId/status`,
+  RECEIVE:        `${BASE_URL}/shops/:shopId/purchases/:purchaseId/receive`,
+  CANCEL:         `${BASE_URL}/shops/:shopId/purchases/:purchaseId/cancel`,
+  RETURN:         `${BASE_URL}/shops/:shopId/purchases/:purchaseId/return`,
+ 
+  // Approval
+  APPROVE:        `${BASE_URL}/shops/:shopId/purchases/:purchaseId/approve`,
+  REJECT:         `${BASE_URL}/shops/:shopId/purchases/:purchaseId/reject`,
+  BULK_APPROVE:   `${BASE_URL}/shops/:shopId/purchases/bulk-approve`,
+  BULK_DELETE:    `${BASE_URL}/shops/:shopId/purchases/bulk-delete`,
+ 
+  // Payments
+  ADD_PAYMENT:    `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
+  GET_PAYMENTS:   `${BASE_URL}/shops/:shopId/purchases/:purchaseId/payments`,
+ 
+  // Documents
+  UPLOAD_DOC:     `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
+  GET_DOCS:       `${BASE_URL}/shops/:shopId/purchases/:purchaseId/documents`,
+}
 
 export const SUPPLIER_ENDPOINTS = {
   GET_ALL: `${BASE_URL}/suppliers`,
@@ -171,27 +163,27 @@ export const USERS_ENDPOINTS = {
 }
 
 export const PRODUCT_ENDPOINTS = {
-  GET_ALL: `${BASE_URL}/shops/:shopId/products`,
-  GET_BY_ID: `${BASE_URL}/shops/:shopId/products/:id`,
-  SEARCH: `${BASE_URL}/shops/:shopId/products/search`,
-  LOW_STOCK: `${BASE_URL}/shops/:shopId/products/low-stock`,
-  ANALYTICS: `${BASE_URL}/shops/:shopId/products/analytics`,
-  HISTORY: `${BASE_URL}/shops/:shopId/products/:id/history`,
+  GET_ALL: `${BASE_URL}/shops/:shopId/product`,
+  GET_BY_ID: `${BASE_URL}/shops/:shopId/product/:id`,
+  SEARCH: `${BASE_URL}/shops/:shopId/product/search`,
+  LOW_STOCK: `${BASE_URL}/shops/:shopId/product/low-stock`,
+  ANALYTICS: `${BASE_URL}/shops/:shopId/product/analytics`,
+  HISTORY: `${BASE_URL}/shops/:shopId/product/:id/history`,
 
-  CREATE: `${BASE_URL}/shops/:shopId/products`,
-  UPDATE: `${BASE_URL}/shops/:shopId/products/:id`,
-  DELETE: `${BASE_URL}/shops/:shopId/products/:id`,
+  CREATE: `${BASE_URL}/shops/:shopId/product`,
+  UPDATE: `${BASE_URL}/shops/:shopId/product/:id`,
+  DELETE: `${BASE_URL}/shops/:shopId/product/:id`,
 
-  UPDATE_STOCK: `${BASE_URL}/shops/:shopId/products/:id/stock`,
+  UPDATE_STOCK: `${BASE_URL}/shops/:shopId/product/:id/stock`,
 
-  RESERVE: `${BASE_URL}/shops/:shopId/products/:id/reserve`,
-  CANCEL_RESERVATION: `${BASE_URL}/shops/:shopId/products/:id/cancel-reservation`,
-  MARK_AS_SOLD: `${BASE_URL}/shops/:shopId/products/:id/sold`,
+  RESERVE: `${BASE_URL}/shops/:shopId/product/:id/reserve`,
+  CANCEL_RESERVATION: `${BASE_URL}/shops/:shopId/product/:id/cancel-reservation`,
+  MARK_AS_SOLD: `${BASE_URL}/shops/:shopId/product/:id/sold`,
 
-  CALCULATE_PRICE: `${BASE_URL}/shops/:shopId/products/:id/calculate-price`,
+  CALCULATE_PRICE: `${BASE_URL}/shops/:shopId/product/:id/calculate-price`,
 
-  BULK_DELETE: `${BASE_URL}/shops/:shopId/products/bulk-delete`,
-  BULK_UPDATE_STATUS: `${BASE_URL}/shops/:shopId/products/bulk-update-status`,
+  BULK_DELETE: `${BASE_URL}/shops/:shopId/product/bulk-delete`,
+  BULK_UPDATE_STATUS: `${BASE_URL}/shops/:shopId/product/bulk-update-status`,
 }
 
 const INVENTORY_BASE = `${BASE_URL}/inventory`

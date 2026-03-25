@@ -12,8 +12,8 @@ import { ProductFilters } from '@/components/products/ProductFilters'
 import type { ProductFilterValues } from '@/components/products/ProductFilters'
 import { selectCurrentShopId } from '@/store/slices/authSlice'
 import { useProductsList } from '@/hooks/product'
-import { useProductActions } from '@/hooks/product'
-import { useProductBulkActions } from '@/hooks/product'
+import { useProductActions,useProductPricing } from '@/hooks/product'
+// import { useProductBulk,Actions } from '@/hooks/product'
 import type {
   Product,
   MetalType,
@@ -68,13 +68,24 @@ export const ProductTable: React.FC = () => {
 
   // PRODUCT ACTIONS (delete, stock update, etc.)
 
-  const { deleteProduct, updateStock, calculatePrice, isDeleting } =
-    useProductActions(shopId)
+  // const { deleteProduct, updateStock, calculatePrice, isDeleting } =
+  //   useProductActions(shopId)
 
   // BULK ACTIONS
 
-  const { bulkDeleteProducts, bulkUpdateStatus, isBulkDeleting } =
-    useProductBulkActions(shopId)
+  // const { bulkDeleteProducts, bulkUpdateStatus, isBulkDeleting } =
+  //   useProductBulkActions(shopId)
+  const {
+  deleteProduct,
+  bulkDeleteProducts,
+  bulkUpdateStatus,
+  isDeleting,
+  isBulkDeleting,
+  isBulkUpdating,
+} = useProductActions(shopId)
+
+// calculatePrice alag hook se aata hai
+const { calculatePrice } = useProductPricing(shopId)
 
   // HANDLERS
 
@@ -154,7 +165,7 @@ export const ProductTable: React.FC = () => {
       .map(p => p._id)
 
     if (confirm(t('product.confirmBulkDelete', { count: productIds.length }))) {
-      const result = await bulkDeleteProducts({ productIds })
+      const result = await bulkDeleteProducts( productIds )
       if (result.success) {
         setSelectedRows(new Set())
       }
@@ -187,19 +198,18 @@ export const ProductTable: React.FC = () => {
 
   // ROW ACTIONS
 
-  const rowActions = useMemo(
-    () =>
-      getProductRowActions(
-        handleViewDetails,
-        handleEdit,
-        handleDuplicate,
-        handleUpdateStock,
-        handleCalculatePrice,
-        handlePrintLabel,
-        handleDelete
-      ),
-    [shopId]
-  )
+const rowActions = useMemo(
+  () => getProductRowActions(
+    handleViewDetails,
+    handleEdit,
+    handleDuplicate,
+    handleUpdateStock,
+    handleCalculatePrice,
+    handlePrintLabel,
+    handleDelete
+  ),
+  [handleViewDetails, handleEdit, handleDuplicate, handleUpdateStock, handleCalculatePrice, handlePrintLabel, handleDelete]
+)
 
   // SELECTED PRODUCTS
 

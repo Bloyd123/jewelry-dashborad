@@ -11,13 +11,17 @@ import { shopTableColumns } from './ShopTableColumns'
 import { getShopRowActions, BulkActionsBar } from './ShopTableActions'
 import { useShopsList, useShopActions } from '@/hooks/shop'
 import { useAuthState } from '@/hooks/auth'
-import type { Shop } from '@/types/shop.types'
-
+import type { Shop, ShopType, ShopCategory } from '@/types/shop.types'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog'
+import type { ShopFilterValues } from '@/components/shop/ShopFilters'
 //
 // MAIN COMPONENT
 //
+interface ShopTableProps {
+  filters?: ShopFilterValues
+}
 
-export const ShopTable: React.FC = () => {
+export const ShopTable: React.FC<ShopTableProps> = ({ filters }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -26,19 +30,36 @@ export const ShopTable: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
-
+const [confirmDialog, setConfirmDialog] = useState<{
+    open: boolean
+    title: string
+    description: string
+    variant: 'danger' | 'warning' | 'info' | 'success' | 'default'
+    onConfirm: () => Promise<void>
+  }>({
+    open: false,
+    title: '',
+    description: '',
+    variant: 'danger',
+    onConfirm: async () => {},
+  })
   // AUTH
   const { userRole } = useAuthState()
 
   // API HOOKS
-  const { shops, isLoading } = useShopsList({ page, limit: 10 })
-  const {
-    toggleShopStatus,
-    deleteShop,
-    bulkActivate,
-    bulkDeactivate,
-    bulkDelete,
-  } = useShopActions()
+const { shops, isLoading } = useShopsList({
+  page,
+  limit: 10,
+  search: filters?.search,
+  isActive: filters?.isActive === 'true' ? true : filters?.isActive === 'false' ? false : undefined,
+  isVerified: filters?.isVerified === 'true' ? true : filters?.isVerified === 'false' ? false : undefined,
+  shopType: filters?.shopType as ShopType | undefined,
+  category: filters?.category as ShopCategory | undefined,
+  city: filters?.city,
+  state: filters?.state,
+  sort: filters?.sort,
+})
+  const { deleteShop } = useShopActions()
 
   // SELECTED SHOPS — shops dependency sahi
   const selectedShops = useMemo(() => {
@@ -69,14 +90,22 @@ export const ShopTable: React.FC = () => {
   const handleStatistics = (shop: Shop) => {
     navigate(`/shops/${shop._id}/statistics`)
   }
-
-  const handleToggleStatus = async (shop: Shop) => {
-    await toggleShopStatus(shop._id, !shop.isActive)
-  }
-
-  const handleDelete = async (shop: Shop) => {
-    await deleteShop(shop._id)
-  }
+const handleToggleStatus = async (shop: Shop) => {
+  // TODO: Backend API nahi hai abhi
+  console.log('Toggle status:', shop._id, !shop.isActive)
+}
+const handleDelete = (shop: Shop) => {
+  setConfirmDialog({
+    open: true,
+    title: t('shops.confirmDelete'),
+    description: t('shops.confirmDeleteDescription', { name: shop.name }),
+ variant: 'danger',
+    onConfirm: async () => {
+      await deleteShop(shop._id)
+      setConfirmDialog(prev => ({ ...prev, open: false }))
+    },
+  })
+}
 
   // --------------------------------------------------------
   // BULK ACTION HANDLERS
@@ -102,23 +131,22 @@ export const ShopTable: React.FC = () => {
     console.log('Bulk Update Rates:', selectedShops)
   }
 
-  const handleBulkActivate = async () => {
-    const ids = selectedShops.map(s => s._id)
-    await bulkActivate(ids)
-    setSelectedRows(new Set())
-  }
+const handleBulkActivate = async () => {
+  // TODO: Backend API nahi hai abhi
+  console.log('Bulk activate:', selectedShops.map(s => s._id))
+  setSelectedRows(new Set())
+}
 
-  const handleBulkDeactivate = async () => {
-    const ids = selectedShops.map(s => s._id)
-    await bulkDeactivate(ids)
-    setSelectedRows(new Set())
-  }
-
-  const handleBulkDelete = async () => {
-    const ids = selectedShops.map(s => s._id)
-    await bulkDelete(ids)
-    setSelectedRows(new Set())
-  }
+const handleBulkDeactivate = async () => {
+  // TODO: Backend API nahi hai abhi
+  console.log('Bulk deactivate:', selectedShops.map(s => s._id))
+  setSelectedRows(new Set())
+}
+const handleBulkDelete = async () => {
+  // TODO: Backend API nahi hai abhi
+  console.log('Bulk delete:', selectedShops.map(s => s._id))
+  setSelectedRows(new Set())
+}
 
   const handleClearSelection = () => {
     setSelectedRows(new Set())
@@ -173,14 +201,14 @@ export const ShopTable: React.FC = () => {
         sorting={{
           enabled: true,
         }}
-        pagination={{
-          enabled: true,
-          pageSize: 10,
-          pageSizeOptions: [10, 20, 50, 100],
-          showPageSizeSelector: true,
-          showPageInfo: true,
-          showFirstLastButtons: true,
-        }}
+pagination={{
+  enabled: true,
+  pageSize: 10,
+  pageSizeOptions: [10, 20, 50, 100],
+  showPageSizeSelector: true,
+  showPageInfo: true,
+  showFirstLastButtons: true,
+}}
         selection={{
           enabled: true,
           selectedRows,
@@ -217,6 +245,17 @@ export const ShopTable: React.FC = () => {
         getRowId={row => row._id}
         testId="shop-table"
         ariaLabel={t('table.ariaLabel')}
+      />
+            <ConfirmDialog
+        open={confirmDialog.open}
+        onOpenChange={open => setConfirmDialog(prev => ({ ...prev, open }))}
+        title={confirmDialog.title}
+        description={confirmDialog.description}
+        variant={confirmDialog.variant}
+        confirmLabel={t('common.confirm')}
+        cancelLabel={t('common.cancel')}
+        onConfirm={confirmDialog.onConfirm}
+        onCancel={() => setConfirmDialog(prev => ({ ...prev, open: false }))}
       />
     </div>
   )

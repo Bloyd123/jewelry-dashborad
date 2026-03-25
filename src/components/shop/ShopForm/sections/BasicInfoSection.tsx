@@ -97,16 +97,16 @@ export const BasicInfoSection = ({
 
       {/* Established Year */}
       <FormInput
-        name="establishedYear"
-        label={t('shops.form.establishedYear')}
-        type="number"
-        value={data.establishedYear || ''}
-        onChange={onChange}
-        onBlur={onBlur}
-        error={errors.establishedYear}
-        placeholder="1990"
-        disabled={disabled}
-      />
+  name="establishedYear"
+  label={t('shops.form.establishedYear')}
+  type="number"
+  value={data.establishedYear || ''}
+  onChange={(name, value) => onChange(name, value ? Number(value) : undefined)}
+  onBlur={onBlur}
+  error={errors.establishedYear}
+  placeholder="1990"
+  disabled={disabled}
+/>
     </div>
   )
 }

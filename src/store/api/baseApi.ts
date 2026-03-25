@@ -30,14 +30,15 @@ export const baseApi = createApi({
     // Purchase Module
     'Purchase',
     'PurchaseList',
-    'PurchaseAnalytics',
     'PurchaseSearch',
+    'PurchaseAnalytics',
+    'PurchasePayments',
+    'PurchaseDocs',
 
-    // Shop Module
     'Shop',
     'ShopList',
     'ShopStatistics',
-    'ShopMetalRates',
+    'ShopActivityLogs',
   ],
 
   endpoints: () => ({}),

@@ -44,7 +44,7 @@ export const PaymentDetailsSection = ({
         label={t('purchase.paidAmount')}
         type="number"
         value={data.paidAmount || 0}
-        onChange={onChange}
+         onChange={(name, value) => onChange(name, Number(value) || 0)}
         onBlur={onBlur}
         error={errors.paidAmount}
         disabled={disabled}

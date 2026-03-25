@@ -14,8 +14,7 @@ import {
 } from '@/components/products/ProductDetailsPage/tabs'
 import { selectCurrentShopId } from '@/store/slices/authSlice'
 import { useProductById } from '@/hooks/product'
-import { useProductActions } from '@/hooks/product'
-
+import { useProductPricing } from '@/hooks/product'
 // PRODUCT DETAILS PAGE COMPONENT
 
 export const ProductDetailsPage: React.FC = () => {
@@ -25,8 +24,7 @@ export const ProductDetailsPage: React.FC = () => {
 
   const shopId = useSelector(selectCurrentShopId)!
   const { product, isLoading } = useProductById(shopId, productId!)
-  const { calculatePrice } = useProductActions(shopId)
-
+const { calculatePrice } = useProductPricing(shopId)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('overview')
 
@@ -146,7 +144,7 @@ export const ProductDetailsPage: React.FC = () => {
     <div className="min-h-screen bg-bg-primary">
       {/* Header with Tabs */}
       <ProductDetailHeader
-        productId={productId}
+        productId={productId!}
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onBackClick={handleBackClick}

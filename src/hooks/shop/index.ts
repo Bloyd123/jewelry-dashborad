@@ -1,6 +1,4 @@
-//
 // FILE: src/features/shops/hooks/index.ts
-//
 
 export { useShopsList } from './useShopsList'
 export { useShopById } from './useShopById'

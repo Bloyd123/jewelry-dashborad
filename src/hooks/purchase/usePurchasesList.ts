@@ -1,250 +1,87 @@
-// FILE: src/features/purchase/hooks/usePurchaseList.ts
-// Purchase Module - List & Query Hook
+// FILE: src/hooks/purchase/usePurchaseList.ts
 
+import { useCallback } from 'react'
 import {
   useGetPurchasesQuery,
-  useGetPurchaseByIdQuery,
-  useSearchPurchasesQuery,
-  useLazySearchPurchasesQuery,
-  useGetPurchasesBySupplierQuery,
-  useGetPurchasesByDateRangeQuery,
-  useGetPendingPurchasesQuery,
-  useGetUnpaidPurchasesQuery,
+  useDeletePurchaseMutation,
+  useBulkDeletePurchasesMutation,
+  useBulkApprovePurchasesMutation,
 } from '@/store/api/purchaseApi'
-import type { IPurchaseFilters } from '@/types/purchase.types'
-import { useCallback } from 'react'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
+import { useNotification } from '@/hooks/useNotification'
+import type { IPurchaseFilters } from '@/types/purchase.types'
 
-/**
- * 🎯 PURCHASE LIST HOOK
- * Fetch all purchases with filters & pagination
- */
 export const usePurchaseList = (
   shopId: string,
   filters?: Partial<IPurchaseFilters>
 ) => {
-  const {
-    data: purchasesData,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetPurchasesQuery({
+  const { handleError } = useErrorHandler()
+  const { showSuccess } = useNotification()
+
+  const { data, isLoading, isFetching, error, refetch } = useGetPurchasesQuery({
     shopId,
-    page: filters?.page || 1,
-    limit: filters?.limit || 20,
-    sort: filters?.sort || '-purchaseDate',
+    page:  filters?.page  ?? 1,
+    limit: filters?.limit ?? 20,
     ...filters,
   })
 
-  return {
-    // Data
-    purchases: purchasesData?.data?.purchases || [],
-    pagination: purchasesData?.meta?.pagination,
+  const [deleteMutation,      deleteState]      = useDeletePurchaseMutation()
+  const [bulkDeleteMutation,  bulkDeleteState]  = useBulkDeletePurchasesMutation()
+  const [bulkApproveMutation, bulkApproveState] = useBulkApprovePurchasesMutation()
 
-    // States
-    isLoading: isLoading || isFetching,
-    error,
-
-    // Actions
-    refetch,
-  }
-}
-
-/**
- * 🎯 SINGLE PURCHASE HOOK
- * Get details of a specific purchase
- */
-export const usePurchaseById = (shopId: string, purchaseId: string) => {
-  const {
-    data: purchase,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetPurchaseByIdQuery(
-    { shopId, purchaseId },
-    { skip: !purchaseId } // Don't fetch if no ID
-  )
-
-  return {
-    purchase,
-    isLoading: isLoading || isFetching,
-    error,
-    refetch,
-  }
-}
-
-/**
- * 🎯 PURCHASE SEARCH HOOK
- * Search purchases with lazy loading
- */
-export const usePurchaseSearch = (shopId: string) => {
-  const { handleError } = useErrorHandler()
-  const [trigger, { data, isLoading, error }] = useLazySearchPurchasesQuery()
-
-  const searchPurchases = useCallback(
-    async (searchTerm: string, limit?: number) => {
+  const deletePurchase = useCallback(
+    async (purchaseId: string) => {
       try {
-        const result = await trigger({
-          shopId,
-          q: searchTerm,
-          limit,
-        }).unwrap()
-
-        return { success: true, data: result }
+        await deleteMutation({ shopId, purchaseId }).unwrap()
+        showSuccess('Purchase deleted successfully', 'Deleted')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Search failed',
-        }
+        return { success: false }
       }
     },
-    [trigger, shopId, handleError]
+    [deleteMutation, shopId, handleError, showSuccess]
   )
 
-  return {
-    searchPurchases,
-    searchResults: data || [],
-    isSearching: isLoading,
-    searchError: error,
-  }
-}
-
-/**
- * 🎯 SUPPLIER PURCHASES HOOK
- * Get all purchases from a specific supplier
- */
-export const useSupplierPurchases = (
-  shopId: string,
-  supplierId: string,
-  filters?: Partial<IPurchaseFilters>
-) => {
-  const {
-    data: purchasesData,
-    isLoading,
-    isFetching,
-    error,
-    refetch,
-  } = useGetPurchasesBySupplierQuery(
-    {
-      shopId,
-      supplierId,
-      page: filters?.page || 1,
-      limit: filters?.limit || 20,
-      ...filters,
+  const bulkDelete = useCallback(
+    async (purchaseIds: string[]) => {
+      try {
+        const result = await bulkDeleteMutation({ shopId, purchaseIds }).unwrap()
+        showSuccess(`${result.deletedCount} purchases deleted`, 'Bulk Delete')
+        return { success: true }
+      } catch (error: any) {
+        handleError(error)
+        return { success: false }
+      }
     },
-    { skip: !supplierId }
+    [bulkDeleteMutation, shopId, handleError, showSuccess]
   )
 
-  return {
-    purchases: purchasesData?.data?.purchases || [],
-    pagination: purchasesData?.meta?.pagination,
-    isLoading: isLoading || isFetching,
-    error,
-    refetch,
-  }
-}
-
-/**
- * 🎯 DATE RANGE PURCHASES HOOK
- * Get purchases within a specific date range
- */
-export const usePurchasesByDateRange = (
-  shopId: string,
-  startDate: string,
-  endDate: string,
-  filters?: { page?: number; limit?: number }
-) => {
-  const {
-    data: purchasesData,
-    isLoading,
-    error,
-    refetch,
-  } = useGetPurchasesByDateRangeQuery(
-    {
-      shopId,
-      startDate,
-      endDate,
-      page: filters?.page || 1,
-      limit: filters?.limit || 20,
+  const bulkApprove = useCallback(
+    async (purchaseIds: string[]) => {
+      try {
+        const result = await bulkApproveMutation({ shopId, purchaseIds }).unwrap()
+        showSuccess(`${result.approvedCount} purchases approved`, 'Bulk Approve')
+        return { success: true }
+      } catch (error: any) {
+        handleError(error)
+        return { success: false }
+      }
     },
-    { skip: !startDate || !endDate }
+    [bulkApproveMutation, shopId, handleError, showSuccess]
   )
 
   return {
-    purchases: purchasesData?.data?.purchases || [],
-    pagination: purchasesData?.meta?.pagination,
-    isLoading,
+    purchases:  data?.data ?? [],
+pagination: data?.meta?.pagination,
+    isLoading:   isLoading || isFetching,
+    isDeleting:  deleteState.isLoading,
+    isBulkDeleting: bulkDeleteState.isLoading,
+    isBulkApproving: bulkApproveState.isLoading,
     error,
     refetch,
+    deletePurchase,
+    bulkDelete,
+    bulkApprove,
   }
 }
-
-/**
- * 🎯 PENDING PURCHASES HOOK
- * Get all pending/incomplete purchases
- */
-export const usePendingPurchases = (shopId: string) => {
-  const {
-    data: purchases,
-    isLoading,
-    error,
-    refetch,
-  } = useGetPendingPurchasesQuery({ shopId })
-
-  return {
-    pendingPurchases: purchases || [],
-    isLoading,
-    error,
-    refetch,
-  }
-}
-
-/**
- * 🎯 UNPAID PURCHASES HOOK
- * Get all unpaid/partially paid purchases
- */
-export const useUnpaidPurchases = (shopId: string) => {
-  const {
-    data: purchases,
-    isLoading,
-    error,
-    refetch,
-  } = useGetUnpaidPurchasesQuery({ shopId })
-
-  return {
-    unpaidPurchases: purchases || [],
-    isLoading,
-    error,
-    refetch,
-  }
-}
-
-/**
- * 🎯 EAGER SEARCH HOOK (auto-executes)
- * For autocomplete/instant search
- */
-export const usePurchaseSearchEager = (
-  shopId: string,
-  searchQuery: string,
-  limit: number = 10
-) => {
-  const {
-    data: results,
-    isLoading,
-    error,
-  } = useSearchPurchasesQuery(
-    { shopId, q: searchQuery, limit },
-    { skip: !searchQuery || searchQuery.length < 2 } // Skip if query too short
-  )
-
-  return {
-    searchResults: results || [],
-    isSearching: isLoading,
-    searchError: error,
-  }
-}
-
-export default usePurchaseList

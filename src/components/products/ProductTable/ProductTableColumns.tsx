@@ -138,7 +138,8 @@ export const productTableColumns: DataTableColumn<Product>[] = [
           {row.weight.grossWeight.toFixed(2)}g
         </span>
         <span className="text-xs text-text-tertiary">
-          Net: {row.weight.netWeight.toFixed(2)}g
+          
+          Net: {(row.weight.netWeight ?? 0).toFixed(2)}g
         </span>
       </div>
     ),
@@ -162,13 +163,13 @@ export const productTableColumns: DataTableColumn<Product>[] = [
             {formatCurrency(row.pricing.mrp)}
           </span>
         )}
-        {row.pricing.discount?.type !== 'none' &&
-          row.pricing.discount.value > 0 && (
-            <Badge variant="success" size="sm" className="mt-1">
-              {row.pricing.discount.type === 'percentage'
-                ? `${row.pricing.discount.value}% OFF`
-                : `₹${row.pricing.discount.value} OFF`}
-            </Badge>
+{row.pricing.discount?.type !== 'none' &&
+  (row.pricing.discount?.value ?? 0) > 0 && (
+    <Badge variant="success" size="sm" className="mt-1">
+      {row.pricing.discount?.type === 'percentage'
+        ? `${row.pricing.discount?.value}% OFF`
+        : `₹${row.pricing.discount?.value} OFF`}
+    </Badge>
           )}
       </div>
     ),
@@ -219,10 +220,10 @@ export const productTableColumns: DataTableColumn<Product>[] = [
         repair: 'error',
         exchange: 'accent',
       }
-
+  const type = row.productType ?? 'ready_made'
       return (
-        <Badge variant={typeVariants[row.productType] || 'default'} size="sm">
-          {row.productType.replace('_', ' ').toUpperCase()}
+        <Badge variant={typeVariants[type] || 'default'} size="sm">
+          {type.replace('_', ' ').toUpperCase()}
         </Badge>
       )
     },
@@ -298,12 +299,14 @@ export const productTableColumns: DataTableColumn<Product>[] = [
         kids: '👶',
       }
 
+      const gender = row.gender ?? 'unisex'
       return (
         <div className="flex items-center justify-center gap-1">
-          <span>{genderIcons[row.gender]}</span>
-          <span className="text-sm capitalize text-text-secondary">
-            {row.gender}
-          </span>
+          
+<span>{genderIcons[gender]}</span>
+<span className="text-sm capitalize text-text-secondary">
+  {gender}
+</span>
         </div>
       )
     },

@@ -72,10 +72,9 @@ const isOrganization = (
 
 // MAIN COMPONENT
 
-const OverviewTab = ({ shopId }: { shopId: string }) => {
+const OverviewTab = ({ shop: shopData }: { shop: Shop }) => {
   const { t } = useTranslation()
-  const { shop: shopData, isLoading } = useShopById(shopId)
-  if (isLoading || !shopData) return null
+  if (!shopData) return null
 
   // Extract manager and organization with type safety
   const manager = isShopUser(shopData.managerId) ? shopData.managerId : null

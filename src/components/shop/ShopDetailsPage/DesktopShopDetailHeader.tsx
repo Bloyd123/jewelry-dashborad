@@ -20,28 +20,24 @@ import { Breadcrumb } from '@/components/ui/navigation/Breadcrumb/Breadcrumb'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import { Separator } from '@/components/ui/layout/Separator/Separator'
 import type { Shop } from '@/types/shop.types'
-import { useShopById } from '@/hooks/shop'
 //
 // COMPONENT PROPS
 //
 
 interface DesktopShopDetailHeaderProps {
-  shopId?: string
+  shop: Shop
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
   onSettingsClick?: () => void
-  // children?: React.ReactNode
 }
 
 //
 // DESKTOP SHOP DETAIL HEADER COMPONENT
 //
 
-export const DesktopShopDetailHeader: React.FC<
-  DesktopShopDetailHeaderProps
-> = ({
-  shopId,
+export const DesktopShopDetailHeader: React.FC<DesktopShopDetailHeaderProps> = ({
+  shop,
   activeTab = 'overview',
   onTabChange,
   onBackClick,
@@ -51,9 +47,6 @@ export const DesktopShopDetailHeader: React.FC<
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
 
-  // Get shop data from dummy data
-  const { shop, isLoading } = useShopById(shopId ?? '')
-  if (isLoading || !shop) return null
   // Handle tab change
   const handleTabChange = (tab: string) => {
     setCurrentTab(tab)

@@ -1,5 +1,4 @@
 // FILE: src/store/api/purchaseApi.ts
-// Purchase Module RTK Query API Slice
 
 import { baseApi } from './baseApi'
 import { PURCHASE_ENDPOINTS } from '@/api/endpoints'
@@ -8,457 +7,453 @@ import type {
   IPurchase,
   IPurchaseListResponse,
   IPurchaseResponse,
+  IPurchaseAnalytics,
+  IPurchaseFilters,
   ICreatePurchaseForm,
   IUpdatePurchaseForm,
   IReceivePurchaseForm,
   IAddPaymentForm,
-  IPurchaseFilters,
-  IPurchaseAnalytics,
   IPaymentRecord,
   IDocument,
-  PurchaseStatus,
 } from '@/types/purchase.types'
 
-/**
- * Purchase API Slice
- * All purchase-related API endpoints with automatic caching and invalidation
- */
+// ─────────────────────────────────────────────
+// EXTRA INPUT TYPES (RTK Query ke liye)
+// ─────────────────────────────────────────────
+
+interface ShopInput {
+  shopId: string
+}
+
+interface PurchaseInput extends ShopInput {
+  purchaseId: string
+}
+
+interface GetAllPurchasesInput extends ShopInput, IPurchaseFilters {}
+
+interface SearchInput extends ShopInput {
+  q: string
+  limit?: number
+}
+
+interface DateRangeInput extends ShopInput {
+  startDate: string
+  endDate: string
+  page?: number
+  limit?: number
+}
+
+interface BySupplierInput extends ShopInput {
+  supplierId: string
+  page?: number
+  limit?: number
+  status?: string
+  paymentStatus?: string
+}
+
+interface UpdateStatusInput extends PurchaseInput {
+  status: string
+}
+
+interface ReceiveInput extends PurchaseInput {
+  data: IReceivePurchaseForm
+}
+
+interface CancelInput extends PurchaseInput {
+  reason: string
+}
+
+interface ReturnInput extends PurchaseInput {
+  reason: string
+}
+
+interface ApproveInput extends PurchaseInput {
+  notes?: string
+}
+
+interface RejectInput extends PurchaseInput {
+  reason: string
+}
+
+interface BulkIdsInput extends ShopInput {
+  purchaseIds: string[]
+}
+
+interface AddPaymentInput extends PurchaseInput {
+  data: IAddPaymentForm
+}
+
+interface UploadDocInput extends PurchaseInput {
+  documentType: string
+  documentUrl: string
+  documentNumber?: string
+}
+
+// ─────────────────────────────────────────────
+// RTK QUERY API SLICE
+// ─────────────────────────────────────────────
+
 export const purchaseApi = baseApi.injectEndpoints({
   endpoints: build => ({
-    // 📋 GET ALL PURCHASES (with filters & pagination)
 
-    getPurchases: build.query<
-      IPurchaseListResponse,
-      { shopId: string } & IPurchaseFilters
-    >({
+    // ══════════════════════════════════════════
+    // GET ALL PURCHASES
+    // ══════════════════════════════════════════
+    getPurchases: build.query<IPurchaseListResponse, GetAllPurchasesInput>({
       query: ({ shopId, ...params }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.GET_ALL, { shopId }),
         params,
       }),
-      providesTags: (result, error, { shopId }) => [
+      providesTags: (result, _error, { shopId }) => [
         { type: 'PurchaseList', id: shopId },
-        ...(result?.data?.purchases || []).map(purchase => ({
+        ...(result?.data?.purchases ?? []).map(p => ({
           type: 'Purchase' as const,
-          id: purchase._id,
+          id: p._id,
         })),
       ],
     }),
 
-    // 👤 GET SINGLE PURCHASE BY ID
-
-    getPurchaseById: build.query<
-      IPurchase,
-      { shopId: string; purchaseId: string }
-    >({
+    // ══════════════════════════════════════════
+    // GET PURCHASE BY ID
+    // ══════════════════════════════════════════
+    getPurchaseById: build.query<IPurchase, PurchaseInput>({
       query: ({ shopId, purchaseId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_BY_ID, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.GET_BY_ID, { shopId, purchaseId }),
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      providesTags: (result, error, { purchaseId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      providesTags: (_result, _error, { purchaseId }) => [
         { type: 'Purchase', id: purchaseId },
       ],
     }),
 
-    // 🔍 SEARCH PURCHASES
-
-    searchPurchases: build.query<
-      IPurchase[],
-      { shopId: string; q: string; limit?: number }
-    >({
-      query: ({ shopId, ...params }) => ({
+    // ══════════════════════════════════════════
+    // SEARCH PURCHASES
+    // ══════════════════════════════════════════
+    searchPurchases: build.query<IPurchase[], SearchInput>({
+      query: ({ shopId, q, limit }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.SEARCH, { shopId }),
-        params,
+        params: { q, limit },
       }),
-      transformResponse: (response: { success: boolean; data: IPurchase[] }) =>
-        response.data,
+      transformResponse: (res: any) => res.data,
       providesTags: ['PurchaseSearch'],
     }),
 
-    // ➕ CREATE PURCHASE
+    // ══════════════════════════════════════════
+    // GET BY DATE RANGE
+    // ══════════════════════════════════════════
+    getPurchasesByDateRange: build.query<IPurchaseListResponse, DateRangeInput>({
+      query: ({ shopId, ...params }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.BY_DATE_RANGE, { shopId }),
+        params,
+      }),
+      providesTags: (result, _error, { shopId }) => [
+        { type: 'PurchaseList', id: `${shopId}-daterange` },
+      ],
+    }),
 
-    createPurchase: build.mutation<
-      IPurchase,
-      { shopId: string } & ICreatePurchaseForm
-    >({
+    // ══════════════════════════════════════════
+    // GET BY SUPPLIER
+    // ══════════════════════════════════════════
+    getPurchasesBySupplier: build.query<IPurchaseListResponse, BySupplierInput>({
+      query: ({ shopId, supplierId, ...params }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.BY_SUPPLIER, { shopId, supplierId }),
+        params,
+      }),
+      providesTags: (_result, _error, { supplierId }) => [
+        { type: 'PurchaseList', id: `supplier-${supplierId}` },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // GET PENDING PURCHASES
+    // ══════════════════════════════════════════
+    getPendingPurchases: build.query<IPurchaseListResponse, ShopInput & { page?: number; limit?: number }>({
+      query: ({ shopId, ...params }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.PENDING, { shopId }),
+        params,
+      }),
+      providesTags: (_result, _error, { shopId }) => [
+        { type: 'PurchaseList', id: `${shopId}-pending` },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // GET UNPAID PURCHASES
+    // ══════════════════════════════════════════
+    getUnpaidPurchases: build.query<IPurchaseListResponse, ShopInput & { page?: number; limit?: number }>({
+      query: ({ shopId, ...params }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.UNPAID, { shopId }),
+        params,
+      }),
+      providesTags: (_result, _error, { shopId }) => [
+        { type: 'PurchaseList', id: `${shopId}-unpaid` },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // GET ANALYTICS
+    // ══════════════════════════════════════════
+    getPurchaseAnalytics: build.query<IPurchaseAnalytics, ShopInput & { startDate?: string; endDate?: string }>({
+      query: ({ shopId, ...params }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.ANALYTICS, { shopId }),
+        params,
+      }),
+      transformResponse: (res: any) => res.data,
+      providesTags: (_result, _error, { shopId }) => [
+        { type: 'PurchaseAnalytics', id: shopId },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // CREATE PURCHASE
+    // ══════════════════════════════════════════
+    createPurchase: build.mutation<IPurchase, ShopInput & ICreatePurchaseForm>({
       query: ({ shopId, ...data }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.CREATE, { shopId }),
         method: 'POST',
         body: data,
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { shopId }) => [
         { type: 'PurchaseList', id: shopId },
-        'PurchaseAnalytics',
+        { type: 'PurchaseAnalytics', id: shopId },
       ],
     }),
 
-    // ✏️ UPDATE PURCHASE
-
-    updatePurchase: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string } & IUpdatePurchaseForm
-    >({
+    // ══════════════════════════════════════════
+    // UPDATE PURCHASE
+    // ══════════════════════════════════════════
+    updatePurchase: build.mutation<IPurchase, PurchaseInput & IUpdatePurchaseForm>({
       query: ({ shopId, purchaseId, ...data }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.UPDATE, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.UPDATE, { shopId, purchaseId }),
         method: 'PUT',
         body: data,
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // 🗑️ DELETE PURCHASE
-
-    deletePurchase: build.mutation<
-      void,
-      { shopId: string; purchaseId: string }
-    >({
+    // ══════════════════════════════════════════
+    // DELETE PURCHASE
+    // ══════════════════════════════════════════
+    deletePurchase: build.mutation<void, PurchaseInput>({
       query: ({ shopId, purchaseId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.DELETE, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.DELETE, { shopId, purchaseId }),
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // 🔄 UPDATE PURCHASE STATUS
-
-    updatePurchaseStatus: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string; status: PurchaseStatus }
-    >({
+    // ══════════════════════════════════════════
+    // UPDATE STATUS
+    // ══════════════════════════════════════════
+    updatePurchaseStatus: build.mutation<IPurchase, UpdateStatusInput>({
       query: ({ shopId, purchaseId, status }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.UPDATE_STATUS, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.UPDATE_STATUS, { shopId, purchaseId }),
         method: 'PATCH',
         body: { status },
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // 📦 RECEIVE PURCHASE
-
-    receivePurchase: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string } & IReceivePurchaseForm
-    >({
-      query: ({ shopId, purchaseId, ...data }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.RECEIVE, {
-          shopId,
-          purchaseId,
-        }),
+    // ══════════════════════════════════════════
+    // RECEIVE PURCHASE
+    // ══════════════════════════════════════════
+    receivePurchase: build.mutation<IPurchase, ReceiveInput>({
+      query: ({ shopId, purchaseId, data }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.RECEIVE, { shopId, purchaseId }),
         method: 'PATCH',
         body: data,
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
-        'ProductList', // Inventory updated
+        { type: 'PurchaseAnalytics', id: shopId },
       ],
     }),
 
-    // ❌ CANCEL PURCHASE
-
-    cancelPurchase: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string; reason: string }
-    >({
+    // ══════════════════════════════════════════
+    // CANCEL PURCHASE
+    // ══════════════════════════════════════════
+    cancelPurchase: build.mutation<IPurchase, CancelInput>({
       query: ({ shopId, purchaseId, reason }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.CANCEL, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.CANCEL, { shopId, purchaseId }),
         method: 'PATCH',
         body: { reason },
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // ✅ APPROVE PURCHASE
+    // ══════════════════════════════════════════
+    // RETURN PURCHASE
+    // ══════════════════════════════════════════
+    returnPurchase: build.mutation<IPurchase, ReturnInput>({
+      query: ({ shopId, purchaseId, reason }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.RETURN, { shopId, purchaseId }),
+        method: 'PATCH',
+        body: { reason },
+      }),
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
+        { type: 'Purchase', id: purchaseId },
+        { type: 'PurchaseList', id: shopId },
+      ],
+    }),
 
-    approvePurchase: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string; notes?: string }
-    >({
+    // ══════════════════════════════════════════
+    // APPROVE PURCHASE
+    // ══════════════════════════════════════════
+    approvePurchase: build.mutation<IPurchase, ApproveInput>({
       query: ({ shopId, purchaseId, notes }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.APPROVE, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.APPROVE, { shopId, purchaseId }),
         method: 'POST',
         body: { notes },
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // ❌ REJECT PURCHASE
-
-    rejectPurchase: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string; reason: string }
-    >({
+    // ══════════════════════════════════════════
+    // REJECT PURCHASE
+    // ══════════════════════════════════════════
+    rejectPurchase: build.mutation<IPurchase, RejectInput>({
       query: ({ shopId, purchaseId, reason }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.REJECT, {
-          shopId,
-          purchaseId,
-        }),
+        url: replacePathParams(PURCHASE_ENDPOINTS.REJECT, { shopId, purchaseId }),
         method: 'POST',
         body: { reason },
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // 💰 ADD PAYMENT
-
-    addPayment: build.mutation<
-      IPurchase,
-      { shopId: string; purchaseId: string } & IAddPaymentForm
-    >({
-      query: ({ shopId, purchaseId, ...data }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.ADD_PAYMENT, {
-          shopId,
-          purchaseId,
-        }),
-        method: 'POST',
-        body: data,
-      }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId, shopId }) => [
-        { type: 'Purchase', id: purchaseId },
-        { type: 'PurchaseList', id: shopId },
-      ],
-    }),
-
-    // 💵 GET PAYMENTS
-
-    getPayments: build.query<
-      IPaymentRecord[],
-      { shopId: string; purchaseId: string }
-    >({
-      query: ({ shopId, purchaseId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_PAYMENTS, {
-          shopId,
-          purchaseId,
-        }),
-      }),
-      transformResponse: (response: {
-        success: boolean
-        data: IPaymentRecord[]
-      }) => response.data,
-      providesTags: (result, error, { purchaseId }) => [
-        { type: 'Purchase', id: purchaseId },
-      ],
-    }),
-
-    // 🏢 GET PURCHASES BY SUPPLIER
-
-    getPurchasesBySupplier: build.query<
-      IPurchaseListResponse,
-      { shopId: string; supplierId: string } & Partial<IPurchaseFilters>
-    >({
-      query: ({ shopId, supplierId, ...params }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_BY_SUPPLIER, {
-          shopId,
-          supplierId,
-        }),
-        params,
-      }),
-      providesTags: (result, error, { shopId }) => [
-        { type: 'PurchaseList', id: shopId },
-      ],
-    }),
-
-    // 📊 GET PURCHASE ANALYTICS
-
-    getPurchaseAnalytics: build.query<
-      IPurchaseAnalytics,
-      { shopId: string; startDate?: string; endDate?: string }
-    >({
-      query: ({ shopId, ...params }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_ANALYTICS, { shopId }),
-        params,
-      }),
-      transformResponse: (response: {
-        success: boolean
-        data: IPurchaseAnalytics
-      }) => response.data,
-      providesTags: ['PurchaseAnalytics'],
-    }),
-
-    // ⏳ GET PENDING PURCHASES
-
-    getPendingPurchases: build.query<IPurchase[], { shopId: string }>({
-      query: ({ shopId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_PENDING, { shopId }),
-      }),
-      transformResponse: (response: { success: boolean; data: IPurchase[] }) =>
-        response.data,
-      providesTags: (result, error, { shopId }) => [
-        { type: 'PurchaseList', id: shopId },
-      ],
-    }),
-
-    // 💳 GET UNPAID PURCHASES
-
-    getUnpaidPurchases: build.query<IPurchase[], { shopId: string }>({
-      query: ({ shopId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_UNPAID, { shopId }),
-      }),
-      transformResponse: (response: { success: boolean; data: IPurchase[] }) =>
-        response.data,
-      providesTags: (result, error, { shopId }) => [
-        { type: 'PurchaseList', id: shopId },
-      ],
-    }),
-
-    // 🗑️ BULK DELETE PURCHASES
-
-    bulkDeletePurchases: build.mutation<
-      { deletedCount: number },
-      { shopId: string; purchaseIds: string[] }
-    >({
-      query: ({ shopId, purchaseIds }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.BULK_DELETE, { shopId }),
-        method: 'POST',
-        body: { purchaseIds },
-      }),
-      invalidatesTags: (result, error, { shopId }) => [
-        { type: 'PurchaseList', id: shopId },
-      ],
-    }),
-
-    // ✅ BULK APPROVE PURCHASES
-
-    bulkApprovePurchases: build.mutation<
-      { approvedCount: number },
-      { shopId: string; purchaseIds: string[] }
-    >({
+    // ══════════════════════════════════════════
+    // BULK APPROVE
+    // ══════════════════════════════════════════
+    bulkApprovePurchases: build.mutation<{ approvedCount: number }, BulkIdsInput>({
       query: ({ shopId, purchaseIds }) => ({
         url: replacePathParams(PURCHASE_ENDPOINTS.BULK_APPROVE, { shopId }),
         method: 'POST',
         body: { purchaseIds },
       }),
-      invalidatesTags: (result, error, { shopId }) => [
+      transformResponse: (res: any) => res.data,
+      invalidatesTags: (_result, _error, { shopId }) => [
         { type: 'PurchaseList', id: shopId },
       ],
     }),
 
-    // 📄 UPLOAD DOCUMENT
+    // ══════════════════════════════════════════
+    // BULK DELETE
+    // ══════════════════════════════════════════
+    bulkDeletePurchases: build.mutation<{ deletedCount: number }, BulkIdsInput>({
+      query: ({ shopId, purchaseIds }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.BULK_DELETE, { shopId }),
+        method: 'POST',
+        body: { purchaseIds },
+      }),
+      transformResponse: (res: any) => res.data,
+      invalidatesTags: (_result, _error, { shopId }) => [
+        { type: 'PurchaseList', id: shopId },
+      ],
+    }),
 
-    uploadDocument: build.mutation<
-      IPurchase,
-      {
-        shopId: string
-        purchaseId: string
-        documentType: string
-        documentUrl: string
-        documentNumber?: string
-      }
-    >({
-      query: ({ shopId, purchaseId, ...data }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.UPLOAD_DOCUMENT, {
-          shopId,
-          purchaseId,
-        }),
+    // ══════════════════════════════════════════
+    // ADD PAYMENT
+    // ══════════════════════════════════════════
+    addPayment: build.mutation<any, AddPaymentInput>({
+      query: ({ shopId, purchaseId, data }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.ADD_PAYMENT, { shopId, purchaseId }),
         method: 'POST',
         body: data,
       }),
-      transformResponse: (response: IPurchaseResponse) => response.data,
-      invalidatesTags: (result, error, { purchaseId }) => [
+      transformResponse: (res: any) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId, shopId }) => [
         { type: 'Purchase', id: purchaseId },
-      ],
-    }),
-
-    // 📄 GET DOCUMENTS
-
-    getDocuments: build.query<
-      IDocument[],
-      { shopId: string; purchaseId: string }
-    >({
-      query: ({ shopId, purchaseId }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.GET_DOCUMENTS, {
-          shopId,
-          purchaseId,
-        }),
-      }),
-      transformResponse: (response: { success: boolean; data: IDocument[] }) =>
-        response.data,
-      providesTags: (result, error, { purchaseId }) => [
-        { type: 'Purchase', id: purchaseId },
-      ],
-    }),
-
-    // 📅 GET PURCHASES BY DATE RANGE
-
-    getPurchasesByDateRange: build.query<
-      IPurchaseListResponse,
-      {
-        shopId: string
-        startDate: string
-        endDate: string
-        page?: number
-        limit?: number
-      }
-    >({
-      query: ({ shopId, ...params }) => ({
-        url: replacePathParams(PURCHASE_ENDPOINTS.BY_DATE_RANGE, { shopId }),
-        params,
-      }),
-      providesTags: (result, error, { shopId }) => [
+        { type: 'PurchasePayments', id: purchaseId },
         { type: 'PurchaseList', id: shopId },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // GET PAYMENTS
+    // ══════════════════════════════════════════
+    getPurchasePayments: build.query<IPaymentRecord[], PurchaseInput>({
+      query: ({ shopId, purchaseId }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.GET_PAYMENTS, { shopId, purchaseId }),
+      }),
+      transformResponse: (res: any) => res.data,
+      providesTags: (_result, _error, { purchaseId }) => [
+        { type: 'PurchasePayments', id: purchaseId },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // UPLOAD DOCUMENT
+    // ══════════════════════════════════════════
+    uploadDocument: build.mutation<IPurchase, UploadDocInput>({
+      query: ({ shopId, purchaseId, ...data }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.UPLOAD_DOC, { shopId, purchaseId }),
+        method: 'POST',
+        body: data,
+      }),
+      transformResponse: (res: IPurchaseResponse) => res.data,
+      invalidatesTags: (_result, _error, { purchaseId }) => [
+        { type: 'Purchase', id: purchaseId },
+        { type: 'PurchaseDocs', id: purchaseId },
+      ],
+    }),
+
+    // ══════════════════════════════════════════
+    // GET DOCUMENTS
+    // ══════════════════════════════════════════
+    getPurchaseDocuments: build.query<IDocument[], PurchaseInput>({
+      query: ({ shopId, purchaseId }) => ({
+        url: replacePathParams(PURCHASE_ENDPOINTS.GET_DOCS, { shopId, purchaseId }),
+      }),
+      transformResponse: (res: any) => res.data,
+      providesTags: (_result, _error, { purchaseId }) => [
+        { type: 'PurchaseDocs', id: purchaseId },
       ],
     }),
   }),
 })
 
-// 🎣 EXPORT HOOKS (Auto-generated by RTK Query)
-
+// ─────────────────────────────────────────────
+// EXPORT ALL HOOKS
+// ─────────────────────────────────────────────
 export const {
   // Queries
   useGetPurchasesQuery,
   useGetPurchaseByIdQuery,
   useSearchPurchasesQuery,
   useLazySearchPurchasesQuery,
-  useGetPaymentsQuery,
+  useGetPurchasesByDateRangeQuery,
   useGetPurchasesBySupplierQuery,
-  useGetPurchaseAnalyticsQuery,
   useGetPendingPurchasesQuery,
   useGetUnpaidPurchasesQuery,
-  useGetDocumentsQuery,
-  useGetPurchasesByDateRangeQuery,
+  useGetPurchaseAnalyticsQuery,
+  useGetPurchasePaymentsQuery,
+  useGetPurchaseDocumentsQuery,
 
   // Mutations
   useCreatePurchaseMutation,
@@ -467,12 +462,11 @@ export const {
   useUpdatePurchaseStatusMutation,
   useReceivePurchaseMutation,
   useCancelPurchaseMutation,
+  useReturnPurchaseMutation,
   useApprovePurchaseMutation,
   useRejectPurchaseMutation,
-  useAddPaymentMutation,
-  useBulkDeletePurchasesMutation,
   useBulkApprovePurchasesMutation,
+  useBulkDeletePurchasesMutation,
+  useAddPaymentMutation,
   useUploadDocumentMutation,
 } = purchaseApi
-
-export default purchaseApi

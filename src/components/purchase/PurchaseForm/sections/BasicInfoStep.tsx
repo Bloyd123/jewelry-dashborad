@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'
 import { FormDatePicker } from '@/components/forms/FormDatePicker/FormDatePicker'
 import type { FormSectionProps } from '../PurchaseForm.types'
-import { dummySuppliers } from '@/pages/purchase/mock.data'
+import { useSuppliersList } from '@/hooks/supplier'
+import { useAuth } from '@/hooks/auth'
 
 export const BasicInfoSection = ({
   data,
@@ -15,11 +16,16 @@ export const BasicInfoSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
+  const { currentShopId } = useAuth()
+const { suppliers, isLoading: isSuppliersLoading } = useSuppliersList(
+  currentShopId || ''
+)
 
-  const supplierOptions = dummySuppliers.map(s => ({
-    value: s.supplierCode || '',
-    label: s.supplierName,
-  }))
+
+const supplierOptions = suppliers.map(s => ({
+  value: s._id,           
+  label: s.businessName,  
+}))
 
   const purchaseTypeOptions = [
     { value: 'new_stock', label: t('purchase.types.newStock') },
@@ -39,10 +45,15 @@ export const BasicInfoSection = ({
         onChange={onChange}
         onBlur={onBlur}
         error={errors.supplierId}
-        placeholder={t('purchase.selectSupplier')}
+          placeholder={
+    isSuppliersLoading
+      ? t('common.loading', 'Loading suppliers...')
+      : t('purchase.selectSupplier')
+  }
+
         options={supplierOptions}
         required
-        disabled={disabled}
+        disabled={disabled || isSuppliersLoading} 
       />
 
       <FormDatePicker

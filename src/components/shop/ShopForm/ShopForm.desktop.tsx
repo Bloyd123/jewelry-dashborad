@@ -16,7 +16,10 @@ import { AddressSection } from './sections/AddressSection'
 import { BusinessRegistrationSection } from './sections/BusinessRegistrationSection'
 import { BankingSection } from './sections/BankingSection'
 import { UPISection } from './sections/UPISection'
-import { useShopActions } from '@/hooks/shop'
+import { useShopActions ,useShopsList} from '@/hooks/shop'
+import { useNotification } from '@/hooks/useNotification'
+import { createShopSchema } from '@/validators/shopValidation'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
 
 export default function ShopFormDesktop({
   initialData = {},
@@ -32,9 +35,12 @@ export default function ShopFormDesktop({
   )
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+const { showSuccess, showError } = useNotification()
 
-  // REAL API
-  const { createShop, updateShop, isCreating, isUpdating } = useShopActions()
+  // desktop (create mode ke liye useShopsList se createShop lo)
+const { createShop, isCreating } = useShopsList()
+const { updateShop, isUpdating } = useShopActions(shopId ?? '')
   const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
@@ -53,48 +59,60 @@ export default function ShopFormDesktop({
     setTouched(prev => ({ ...prev, [name]: true }))
   }
 
-  const handleSubmit = async () => {
-    // Validation
-    const newErrors: Record<string, string> = {}
+const handleSubmit = async () => {
+  try {
+    createShopSchema.parse(formData)
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[err.path[0]] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    const errorMessages = Object.entries(validationErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(
+      errorMessages || t('shops.validation.pleaseFillRequired'),
+      t('shops.validation.validationFailed')
+    )
+    return
+  }
+  setShowConfirmDialog(true)
+}
 
-    if (!formData.name?.trim()) {
-      newErrors.name = t('shops.validation.nameRequired')
-    }
-    if (!formData.phone?.trim()) {
-      newErrors.phone = t('shops.validation.phoneRequired')
-    }
-    if (!formData.address?.street?.trim()) {
-      newErrors['address.street'] = t('shops.validation.streetRequired')
-    }
-    if (!formData.address?.city?.trim()) {
-      newErrors['address.city'] = t('shops.validation.cityRequired')
-    }
-    if (!formData.address?.state?.trim()) {
-      newErrors['address.state'] = t('shops.validation.stateRequired')
-    }
-    if (!formData.address?.pincode?.trim()) {
-      newErrors['address.pincode'] = t('shops.validation.pincodeRequired')
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    // Server-side field errors callback
-    const setFormErrors = (validationErrors: Record<string, string>) => {
-      setErrors(validationErrors)
-    }
-
+const handleConfirmedSubmit = async () => {
+  const setFormErrors = (validationErrors: Record<string, string>) => {
+    setErrors(validationErrors)
+  }
+  try {
     if (mode === 'create') {
       const result = await createShop(formData as ShopFormData, setFormErrors)
-      if (result.success) onSuccess?.()
+      if (result.success) {
+        showSuccess(t('shops.success.created'), t('shops.success.createdTitle'))
+        setShowConfirmDialog(false)
+        onSuccess?.()
+      } else if (result.error) {
+        showError(result.error, t('shops.errors.errorTitle'))
+      }
     } else {
-      const result = await updateShop(shopId!, formData, setFormErrors)
-      if (result.success) onSuccess?.()
+const result = await updateShop(formData, setFormErrors)
+      if (result.success) {
+        showSuccess(t('shops.success.updated'), t('shops.success.updatedTitle'))
+        setShowConfirmDialog(false)
+        onSuccess?.()
+      } else if (result.error) {
+        showError(result.error, t('shops.errors.errorTitle'))
+      }
     }
+  } catch (error: any) {
+    showError(
+      error?.message || t('shops.errors.unexpectedError'),
+      t('shops.errors.errorTitle')
+    )
   }
-
+}
   return (
     <div className="container mx-auto max-w-7xl p-6">
       {/* Header */}
@@ -232,15 +250,15 @@ export default function ShopFormDesktop({
       <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
         <div className="flex justify-end gap-3">
           <Button
-            type="button"
-            variant="outline"
-            onClick={onCancel}
-            disabled={isLoading}
+  type="button"
+  variant="outline"
+  onClick={onCancel}
+  disabled={isLoading}
             className="min-w-[120px] border-border-primary text-text-primary hover:bg-bg-tertiary"
-          >
-            <X className="mr-2 h-4 w-4" />
-            {t('shops.common.cancel')}
-          </Button>
+>
+  <X className="mr-2 h-4 w-4" />
+  {t('shops.common.cancel')}
+</Button>
 
           <Button
             type="button"
@@ -262,6 +280,18 @@ export default function ShopFormDesktop({
               </>
             )}
           </Button>
+          <ConfirmDialog
+  open={showConfirmDialog}
+  onOpenChange={setShowConfirmDialog}
+  title={mode === 'create' ? t('shops.confirmCreate') : t('shops.confirmUpdate')}
+  description={mode === 'create' ? t('shops.confirmCreateDescription') : t('shops.confirmUpdateDescription')}
+  variant={mode === 'create' ? 'success' : 'info'}
+  confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+  cancelLabel={t('common.cancel')}
+  onConfirm={handleConfirmedSubmit}
+  onCancel={() => setShowConfirmDialog(false)}
+  loading={isLoading}
+/>
         </div>
       </div>
     </div>

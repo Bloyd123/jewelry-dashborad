@@ -82,6 +82,7 @@ const PurchaseTable = lazy(() =>
 )
 const AddPurchasePage = lazy(() => import('@/pages/purchase/AddPurchase'))
 
+const PurchaseDetailPage = lazy(() =>  import('@/pages/purchase/PurchaseDetail'))
 // Sales Pages
 const SalesTable = lazy(() =>
   import('@/components/sales/SalesTable').then(m => ({
@@ -370,6 +371,13 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canUpdatePurchase',
     title: 'Edit Purchase',
   },
+  {
+  path: ROUTE_PATHS.PURCHASES.DETAIL,
+  element: PurchaseDetailPage,
+  requiresAuth: true,
+  permission: 'canViewPurchases',
+  title: 'Purchase Details',
+},
 
   // 
   // SALES
@@ -487,7 +495,7 @@ export const ROUTES = {
   // Purchases
   purchases: ROUTE_PATHS.PURCHASES.LIST,
   addPurchase: ROUTE_PATHS.PURCHASES.ADD,
-
+purchaseDetail: ROUTE_PATHS.PURCHASES.DETAIL,
   // Sales
   sales: ROUTE_PATHS.SALES.LIST,
   addSale: ROUTE_PATHS.SALES.ADD,

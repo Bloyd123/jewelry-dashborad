@@ -7,20 +7,20 @@ import React from 'react'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { MobileShopDetailHeader } from './MobileShopDetailHeader'
 import { DesktopShopDetailHeader } from './DesktopShopDetailHeader'
-
+import type { Shop } from '@/types/shop.types'
 //
 // COMPONENT PROPS
 //
 
+
+
 interface ShopDetailHeaderProps {
-  shopId?: string
+  shop: Shop
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
   onSettingsClick?: () => void
-  children?: React.ReactNode
 }
-
 //
 // RESPONSIVE SHOP DETAIL HEADER COMPONENT
 //

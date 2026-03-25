@@ -1,5 +1,4 @@
-// FILE: src/features/purchase/hooks/usePurchaseActions.ts
-// Purchase Module - CRUD Actions Hook
+// FILE: src/hooks/purchase/usePurchaseActions.ts
 
 import { useCallback } from 'react'
 import {
@@ -9,11 +8,10 @@ import {
   useUpdatePurchaseStatusMutation,
   useReceivePurchaseMutation,
   useCancelPurchaseMutation,
+  useReturnPurchaseMutation,
   useApprovePurchaseMutation,
   useRejectPurchaseMutation,
   useAddPaymentMutation,
-  useBulkDeletePurchasesMutation,
-  useBulkApprovePurchasesMutation,
   useUploadDocumentMutation,
 } from '@/store/api/purchaseApi'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
@@ -23,405 +21,234 @@ import type {
   IUpdatePurchaseForm,
   IReceivePurchaseForm,
   IAddPaymentForm,
-  PurchaseStatus,
 } from '@/types/purchase.types'
 
-/**
- * 🎯 PURCHASE ACTIONS HOOK
- * All mutations and actions for purchases
- */
-export const usePurchaseActions = (shopId: string) => {
+export const usePurchaseActions = (shopId: string, purchaseId?: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  // 🔧 MUTATIONS
-
-  const [createMutation, createState] = useCreatePurchaseMutation()
-  const [updateMutation, updateState] = useUpdatePurchaseMutation()
-  const [deleteMutation, deleteState] = useDeletePurchaseMutation()
-  const [updateStatusMutation, updateStatusState] =
-    useUpdatePurchaseStatusMutation()
-  const [receiveMutation, receiveState] = useReceivePurchaseMutation()
-  const [cancelMutation, cancelState] = useCancelPurchaseMutation()
-  const [approveMutation, approveState] = useApprovePurchaseMutation()
-  const [rejectMutation, rejectState] = useRejectPurchaseMutation()
+  const [createMutation,     createState]     = useCreatePurchaseMutation()
+  const [updateMutation,     updateState]     = useUpdatePurchaseMutation()
+  const [deleteMutation,     deleteState]     = useDeletePurchaseMutation()
+  const [statusMutation,     statusState]     = useUpdatePurchaseStatusMutation()
+  const [receiveMutation,    receiveState]    = useReceivePurchaseMutation()
+  const [cancelMutation,     cancelState]     = useCancelPurchaseMutation()
+  const [returnMutation,     returnState]     = useReturnPurchaseMutation()
+  const [approveMutation,    approveState]    = useApprovePurchaseMutation()
+  const [rejectMutation,     rejectState]     = useRejectPurchaseMutation()
   const [addPaymentMutation, addPaymentState] = useAddPaymentMutation()
-  const [bulkDeleteMutation, bulkDeleteState] = useBulkDeletePurchasesMutation()
-  const [bulkApproveMutation, bulkApproveState] =
-    useBulkApprovePurchasesMutation()
-  const [uploadDocMutation, uploadDocState] = useUploadDocumentMutation()
+  const [uploadDocMutation,  uploadDocState]  = useUploadDocumentMutation()
 
-  // ➕ CREATE PURCHASE
-
+  // ── Create ──
   const createPurchase = useCallback(
     async (
-      data: Omit<ICreatePurchaseForm, 'shopId'>,
-      setErrors?: (errors: Record<string, string>) => void
+      data: ICreatePurchaseForm,
+      setErrors?: (e: Record<string, string>) => void
     ) => {
       try {
         const result = await createMutation({ shopId, ...data }).unwrap()
-
-        showSuccess('Purchase created successfully!', 'Purchase Created')
-
+        showSuccess('Purchase created successfully', 'Created')
         return { success: true, data: result }
       } catch (error: any) {
         handleError(error, setErrors)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to create purchase',
-        }
+        return { success: false }
       }
     },
     [createMutation, shopId, handleError, showSuccess]
   )
 
-  // ✏️ UPDATE PURCHASE
-
+  // ── Update ──
   const updatePurchase = useCallback(
     async (
-      purchaseId: string,
-      data: Omit<IUpdatePurchaseForm, 'shopId' | 'purchaseId'>,
-      setErrors?: (errors: Record<string, string>) => void
+      data: IUpdatePurchaseForm,
+      setErrors?: (e: Record<string, string>) => void
     ) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await updateMutation({
-          shopId,
-          purchaseId,
-          ...data,
-        }).unwrap()
-
-        showSuccess('Purchase updated successfully!', 'Purchase Updated')
-
-        return { success: true, data: result }
+        await updateMutation({ shopId, purchaseId, ...data }).unwrap()
+        showSuccess('Purchase updated successfully', 'Updated')
+        return { success: true }
       } catch (error: any) {
         handleError(error, setErrors)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to update purchase',
-        }
+        return { success: false }
       }
     },
-    [updateMutation, shopId, handleError, showSuccess]
+    [updateMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // 🗑️ DELETE PURCHASE
-
+  // ── Delete ──
   const deletePurchase = useCallback(
-    async (purchaseId: string, purchaseNumber?: string) => {
+    async (id?: string) => {
+      const pid = id ?? purchaseId
+      if (!pid) return { success: false }
       try {
-        await deleteMutation({ shopId, purchaseId }).unwrap()
-
-        showSuccess(
-          `Purchase ${purchaseNumber || ''} deleted successfully!`,
-          'Purchase Deleted'
-        )
-
+        await deleteMutation({ shopId, purchaseId: pid }).unwrap()
+        showSuccess('Purchase deleted successfully', 'Deleted')
         return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to delete purchase',
-        }
+        return { success: false }
       }
     },
-    [deleteMutation, shopId, handleError, showSuccess]
+    [deleteMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // 🔄 UPDATE STATUS
-
-  const updatePurchaseStatus = useCallback(
-    async (purchaseId: string, status: PurchaseStatus) => {
+  // ── Update Status ──
+  const updateStatus = useCallback(
+    async (status: string) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await updateStatusMutation({
-          shopId,
-          purchaseId,
-          status,
-        }).unwrap()
-
-        showSuccess(`Purchase status updated to ${status}`, 'Status Updated')
-
-        return { success: true, data: result }
+        await statusMutation({ shopId, purchaseId, status }).unwrap()
+        showSuccess(`Status updated to ${status}`, 'Status Updated')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to update status',
-        }
+        return { success: false }
       }
     },
-    [updateStatusMutation, shopId, handleError, showSuccess]
+    [statusMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // 📦 RECEIVE PURCHASE
-
+  // ── Receive ──
   const receivePurchase = useCallback(
-    async (
-      purchaseId: string,
-      data: Omit<IReceivePurchaseForm, 'shopId' | 'purchaseId'>
-    ) => {
+    async (data: IReceivePurchaseForm) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await receiveMutation({
-          shopId,
-          purchaseId,
-          ...data,
-        }).unwrap()
-
-        showSuccess(
-          'Purchase received and inventory updated successfully!',
-          'Purchase Received'
-        )
-
-        return { success: true, data: result }
+        await receiveMutation({ shopId, purchaseId, data }).unwrap()
+        showSuccess('Purchase received. Inventory updated!', 'Received')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to receive purchase',
-        }
+        return { success: false }
       }
     },
-    [receiveMutation, shopId, handleError, showSuccess]
+    [receiveMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // ❌ CANCEL PURCHASE
-
+  // ── Cancel ──
   const cancelPurchase = useCallback(
-    async (purchaseId: string, reason: string) => {
+    async (reason: string) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await cancelMutation({
-          shopId,
-          purchaseId,
-          reason,
-        }).unwrap()
-
-        showSuccess('Purchase cancelled successfully!', 'Purchase Cancelled')
-
-        return { success: true, data: result }
+        await cancelMutation({ shopId, purchaseId, reason }).unwrap()
+        showSuccess('Purchase cancelled successfully', 'Cancelled')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to cancel purchase',
-        }
+        return { success: false }
       }
     },
-    [cancelMutation, shopId, handleError, showSuccess]
+    [cancelMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // ✅ APPROVE PURCHASE
+  // ── Return ──
+  const returnPurchase = useCallback(
+    async (reason: string) => {
+      if (!purchaseId) return { success: false }
+      try {
+        await returnMutation({ shopId, purchaseId, reason }).unwrap()
+        showSuccess('Purchase returned successfully', 'Returned')
+        return { success: true }
+      } catch (error: any) {
+        handleError(error)
+        return { success: false }
+      }
+    },
+    [returnMutation, shopId, purchaseId, handleError, showSuccess]
+  )
 
+  // ── Approve ──
   const approvePurchase = useCallback(
-    async (purchaseId: string, notes?: string) => {
+    async (notes?: string) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await approveMutation({
-          shopId,
-          purchaseId,
-          notes,
-        }).unwrap()
-
-        showSuccess('Purchase approved successfully!', 'Purchase Approved')
-
-        return { success: true, data: result }
+        await approveMutation({ shopId, purchaseId, notes }).unwrap()
+        showSuccess('Purchase approved successfully', 'Approved')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to approve purchase',
-        }
+        return { success: false }
       }
     },
-    [approveMutation, shopId, handleError, showSuccess]
+    [approveMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // ❌ REJECT PURCHASE
-
+  // ── Reject ──
   const rejectPurchase = useCallback(
-    async (purchaseId: string, reason: string) => {
+    async (reason: string) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await rejectMutation({
-          shopId,
-          purchaseId,
-          reason,
-        }).unwrap()
-
-        showSuccess('Purchase rejected!', 'Purchase Rejected')
-
-        return { success: true, data: result }
+        await rejectMutation({ shopId, purchaseId, reason }).unwrap()
+        showSuccess('Purchase rejected', 'Rejected')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to reject purchase',
-        }
+        return { success: false }
       }
     },
-    [rejectMutation, shopId, handleError, showSuccess]
+    [rejectMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // 💰 ADD PAYMENT
-
+  // ── Add Payment ──
   const addPayment = useCallback(
     async (
-      purchaseId: string,
-      data: Omit<IAddPaymentForm, 'shopId' | 'purchaseId'>,
-      setErrors?: (errors: Record<string, string>) => void
+      data: IAddPaymentForm,
+      setErrors?: (e: Record<string, string>) => void
     ) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await addPaymentMutation({
-          shopId,
-          purchaseId,
-          ...data,
-        }).unwrap()
-
-        showSuccess(
-          `Payment of ₹${data.amount} added successfully!`,
-          'Payment Added'
-        )
-
-        return { success: true, data: result }
+        await addPaymentMutation({ shopId, purchaseId, data }).unwrap()
+        showSuccess('Payment added successfully', 'Payment Added')
+        return { success: true }
       } catch (error: any) {
         handleError(error, setErrors)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to add payment',
-        }
+        return { success: false }
       }
     },
-    [addPaymentMutation, shopId, handleError, showSuccess]
+    [addPaymentMutation, shopId, purchaseId, handleError, showSuccess]
   )
 
-  // 🗑️ BULK DELETE
-
-  const bulkDeletePurchases = useCallback(
-    async (purchaseIds: string[]) => {
-      try {
-        const result = await bulkDeleteMutation({
-          shopId,
-          purchaseIds,
-        }).unwrap()
-
-        showSuccess(
-          `${result.deletedCount} purchases deleted successfully!`,
-          'Bulk Delete Complete'
-        )
-
-        return { success: true, data: result }
-      } catch (error: any) {
-        handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to delete purchases',
-        }
-      }
-    },
-    [bulkDeleteMutation, shopId, handleError, showSuccess]
-  )
-
-  // ✅ BULK APPROVE
-
-  const bulkApprovePurchases = useCallback(
-    async (purchaseIds: string[]) => {
-      try {
-        const result = await bulkApproveMutation({
-          shopId,
-          purchaseIds,
-        }).unwrap()
-
-        showSuccess(
-          `${result.approvedCount} purchases approved successfully!`,
-          'Bulk Approve Complete'
-        )
-
-        return { success: true, data: result }
-      } catch (error: any) {
-        handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to approve purchases',
-        }
-      }
-    },
-    [bulkApproveMutation, shopId, handleError, showSuccess]
-  )
-
-  // 📄 UPLOAD DOCUMENT
-
+  // ── Upload Document ──
   const uploadDocument = useCallback(
-    async (
-      purchaseId: string,
-      documentData: {
-        documentType: string
-        documentUrl: string
-        documentNumber?: string
-      }
-    ) => {
+    async (documentType: string, documentUrl: string, documentNumber?: string) => {
+      if (!purchaseId) return { success: false }
       try {
-        const result = await uploadDocMutation({
-          shopId,
-          purchaseId,
-          ...documentData,
-        }).unwrap()
-
-        showSuccess('Document uploaded successfully!', 'Document Uploaded')
-
-        return { success: true, data: result }
+        await uploadDocMutation({ shopId, purchaseId, documentType, documentUrl, documentNumber }).unwrap()
+        showSuccess('Document uploaded successfully', 'Uploaded')
+        return { success: true }
       } catch (error: any) {
         handleError(error)
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to upload document',
-        }
+        return { success: false }
       }
     },
-    [uploadDocMutation, shopId, handleError, showSuccess]
+    [uploadDocMutation, shopId, purchaseId, handleError, showSuccess]
   )
-
-  // 📤 RETURN API
 
   return {
     // Actions
     createPurchase,
     updatePurchase,
     deletePurchase,
-    updatePurchaseStatus,
+    updateStatus,
     receivePurchase,
     cancelPurchase,
+    returnPurchase,
     approvePurchase,
     rejectPurchase,
     addPayment,
-    bulkDeletePurchases,
-    bulkApprovePurchases,
     uploadDocument,
 
     // Loading states
-    isCreating: createState.isLoading,
-    isUpdating: updateState.isLoading,
-    isDeleting: deleteState.isLoading,
-    isUpdatingStatus: updateStatusState.isLoading,
-    isReceiving: receiveState.isLoading,
-    isCancelling: cancelState.isLoading,
-    isApproving: approveState.isLoading,
-    isRejecting: rejectState.isLoading,
-    isAddingPayment: addPaymentState.isLoading,
-    isBulkDeleting: bulkDeleteState.isLoading,
-    isBulkApproving: bulkApproveState.isLoading,
-    isUploadingDocument: uploadDocState.isLoading,
-
-    // States (for advanced usage)
-    createState,
-    updateState,
-    deleteState,
-    updateStatusState,
-    receiveState,
-    cancelState,
-    approveState,
-    rejectState,
-    addPaymentState,
-    bulkDeleteState,
-    bulkApproveState,
-    uploadDocState,
+    isCreating:       createState.isLoading,
+    isUpdating:       updateState.isLoading,
+    isDeleting:       deleteState.isLoading,
+    isUpdatingStatus: statusState.isLoading,
+    isReceiving:      receiveState.isLoading,
+    isCancelling:     cancelState.isLoading,
+    isReturning:      returnState.isLoading,
+    isApproving:      approveState.isLoading,
+    isRejecting:      rejectState.isLoading,
+    isAddingPayment:  addPaymentState.isLoading,
+    isUploadingDoc:   uploadDocState.isLoading,
   }
 }
-
-export default usePurchaseActions

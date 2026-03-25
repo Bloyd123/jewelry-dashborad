@@ -143,6 +143,11 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
         url: ROUTES.addPurchase,
         icon: ShoppingBag,
       },
+          {
+      title: t('sidebar.purchaseDetail'),
+      url: ROUTES.purchaseDetail,  
+      icon: Info,
+    },
       // { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
       // { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
     ],

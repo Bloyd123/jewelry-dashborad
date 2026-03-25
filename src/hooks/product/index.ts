@@ -1,13 +1,15 @@
 // FILE: src/features/product/hooks/index.ts
+// Barrel export — saare hooks ek jagah se import karo
 
-/**
- * 📦 PRODUCT HOOKS BARREL EXPORT
- *
- * Centralized export for all product-related hooks
- * Each hook has a single, focused responsibility
- */
-
-export { useProductsList } from './useProductsList'
-export { useProductActions } from './useProductActions'
-export { useProductBulkActions } from './useProductBulkActions'
-export { useProductById } from './useProductById'
+export { useProductsList }      from './useProductsList'
+export { useProductById }       from './useProductById'
+export { useProductSearch }     from './useProductSearch'
+export { useProductActions }    from './useProductActions'
+export { useProductStock }      from '../product/useProductStock'
+export { useProductReservation } from '../product/useProductReservation'
+export { useProductPricing }    from '../product/useProductPricing'
+export {
+  useProductAnalytics,
+  useLowStock,
+  useProductHistory,
+}                               from './useProductAnalytics'

@@ -1,6 +1,5 @@
 //
 // FILE: src/components/shop/ShopDetailsPages/tabs/ActivityLog/ActivityLogColumns.tsx
-// Activity Log Table Column Definitions - FIXED
 //
 
 import React from 'react'
@@ -9,44 +8,34 @@ import { Avatar } from '@/components/ui/data-display/Avatar'
 import { Badge } from '@/components/ui/data-display/Badge'
 import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
-import type { ActivityLog } from '@/pages/shops/Activitylogdata'
+import type { ActivityLog } from '@/types/shop.types'
 
-//
+// ============================================
 // HELPER FUNCTIONS
-//
+// ============================================
 
-/**
- * Format timestamp to readable date/time
- */
 const formatTimestamp = (timestamp: string): string => {
   const date = new Date(timestamp)
   const now = new Date()
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
 
-  // Less than 1 minute
-  if (diffInSeconds < 60) {
-    return 'Just now'
-  }
+  if (diffInSeconds < 60) return 'Just now'
 
-  // Less than 1 hour
   if (diffInSeconds < 3600) {
     const minutes = Math.floor(diffInSeconds / 60)
     return `${minutes} min${minutes > 1 ? 's' : ''} ago`
   }
 
-  // Less than 24 hours
   if (diffInSeconds < 86400) {
     const hours = Math.floor(diffInSeconds / 3600)
     return `${hours} hour${hours > 1 ? 's' : ''} ago`
   }
 
-  // Less than 7 days
   if (diffInSeconds < 604800) {
     const days = Math.floor(diffInSeconds / 86400)
     return `${days} day${days > 1 ? 's' : ''} ago`
   }
 
-  // Format as date
   return new Intl.DateTimeFormat('en-IN', {
     day: '2-digit',
     month: 'short',
@@ -56,16 +45,10 @@ const formatTimestamp = (timestamp: string): string => {
   }).format(date)
 }
 
-/**
- * Get role badge variant
- */
 const getRoleVariant = (
   role: string
 ): 'vip' | 'info' | 'accent' | 'success' | 'default' => {
-  const roleMap: Record<
-    string,
-    'vip' | 'info' | 'accent' | 'success' | 'default'
-  > = {
+  const roleMap: Record<string, 'vip' | 'info' | 'accent' | 'success' | 'default'> = {
     super_admin: 'vip',
     org_admin: 'info',
     shop_admin: 'accent',
@@ -77,40 +60,40 @@ const getRoleVariant = (
   return roleMap[role] || 'default'
 }
 
-/**
- * Get action badge variant
- */
 const getActionVariant = (
   action: string
 ): 'success' | 'info' | 'error' | 'default' => {
   const actionMap: Record<string, 'success' | 'info' | 'error' | 'default'> = {
-    CREATE: 'success',
-    UPDATE: 'info',
-    DELETE: 'error',
-    LOGIN: 'default',
-    LOGOUT: 'default',
+    create: 'success',
+    update: 'info',
+    update_settings: 'info',
+    delete: 'error',
+    login: 'default',
+    logout: 'default',
+    view: 'default',
+    export: 'default',
   }
   return actionMap[action] || 'default'
 }
 
-//
+// ============================================
 // COLUMN DEFINITIONS
-//
+// ============================================
 
 export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
   // 1. Date/Time
   {
     id: 'timestamp',
     header: 'shops.activityLog.columns.dateTime',
-    accessorKey: 'timestamp',
+    accessorKey: 'createdAt',
     sortable: true,
     width: '180px',
     cell: ({ row }) => {
-      const date = new Date(row.timestamp)
+      const date = new Date(row.createdAt)
       return (
         <div className="flex flex-col">
           <span className="text-sm font-medium text-text-primary">
-            {formatTimestamp(row.timestamp)}
+            {formatTimestamp(row.createdAt)}
           </span>
           <span className="text-xs text-text-tertiary">
             {date.toLocaleTimeString('en-IN', {
@@ -123,26 +106,34 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
     },
   },
 
-  // 2. User with Avatar and Role (FIXED - removed seed prop)
+  // 2. User with Avatar and Role
   {
     id: 'user',
     header: 'shops.activityLog.columns.user',
-    accessorFn: row => row.user.name,
+    accessorFn: row => {
+      const user = row.userId
+      return user ? `${user.firstName} ${user.lastName}` : 'System'
+    },
     sortable: true,
     width: '200px',
-    cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <Avatar name={row.user.name} size="sm" />
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-text-primary">
-            {row.user.name}
-          </span>
-          <Badge variant={getRoleVariant(row.user.role)} size="sm">
-            {row.user.role.replace('_', ' ').toUpperCase()}
-          </Badge>
+    cell: ({ row }) => {
+      const user = row.userId
+      const name = user ? `${user.firstName} ${user.lastName}` : 'System'
+      const role = user?.role || 'system'
+      return (
+        <div className="flex items-center gap-3">
+          <Avatar name={name} size="sm" />
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-text-primary">
+              {name}
+            </span>
+            <Badge variant={getRoleVariant(role)} size="sm">
+              {role.replace('_', ' ').toUpperCase()}
+            </Badge>
+          </div>
         </div>
-      </div>
-    ),
+      )
+    },
   },
 
   // 3. Action Badge
@@ -154,7 +145,7 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
     width: '120px',
     cell: ({ row }) => (
       <Badge variant={getActionVariant(row.action)} size="md">
-        {row.action}
+        {row.action.toUpperCase()}
       </Badge>
     ),
   },
@@ -206,7 +197,6 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
         pending: 'warning',
         failed: 'error',
       }
-
       return (
         <Badge variant={statusVariants[row.status]} dot size="sm">
           {row.status.charAt(0).toUpperCase() + row.status.slice(1)}
@@ -228,8 +218,6 @@ export const activityLogColumns: DataTableColumn<ActivityLog>[] = [
         size="sm"
         onClick={e => {
           e.stopPropagation()
-          console.log('View Details:', row)
-          // Show metadata in alert or open modal
           alert(JSON.stringify(row.metadata, null, 2))
         }}
         className="h-8 w-8 p-0"

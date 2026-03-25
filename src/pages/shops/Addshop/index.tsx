@@ -56,7 +56,11 @@ export default function AddShopPage() {
   )
   // Real API — fetch shop if edit mode
   const { shop, isLoading } = useShopById(shopId ?? '')
-
+  // Convert shop to form data for edit mode
+  const initialData = useMemo(() => {
+    if (!shop) return undefined
+    return convertShopToFormData(shop)
+  }, [shop])
   // Loading state
   if (isEditMode && isLoading) {
     return (
@@ -88,11 +92,7 @@ export default function AddShopPage() {
     )
   }
 
-  // Convert shop to form data for edit mode
-  const initialData = useMemo(() => {
-    if (!shop) return undefined
-    return convertShopToFormData(shop)
-  }, [shop])
+
 
   return (
     <ShopForm

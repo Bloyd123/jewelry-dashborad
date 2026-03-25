@@ -46,7 +46,7 @@ export const ShopDetailsPage: React.FC = () => {
       case 'overview':
         return (
           <div className="p-6">
-            <OverviewTab shopId={shop._id} />
+                 <OverviewTab shop={shop} />
           </div>
         )
 
@@ -61,16 +61,17 @@ export const ShopDetailsPage: React.FC = () => {
           </div>
         )
 
-      case 'bankDetails':
-        return (
-          <div className="p-6">
-            <BankDetailsTab
-              bankDetails={shop.bankDetails}
-              upiDetails={shop.upiDetails}
-              isAdminView={true}
-            />
-          </div>
-        )
+case 'bankDetails':
+  return (
+    <div className="p-6">
+      <BankDetailsTab
+        shopId={shop._id}
+        bankDetails={shop.bankDetails}
+        upiDetails={shop.upiDetails}
+        isAdminView={true}
+      />
+    </div>
+  )
 
       case 'logs':
         return (
@@ -88,7 +89,7 @@ export const ShopDetailsPage: React.FC = () => {
     <div className="min-h-screen bg-bg-primary">
       {/* Header with Tabs */}
       <ShopDetailHeader
-        shopId={shop._id}
+         shop={shop}
         activeTab={activeTab}
         onTabChange={handleTabChange}
         onBackClick={handleBackClick}

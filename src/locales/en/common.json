@@ -61,6 +61,7 @@
     }
   },
   "sidebar": {
+    "purchaseDetail":"Purchase Details",
     "registeruser": "User Register",
     "dashboard": "Dashboard",
     "metalRates": "Metal Rates",

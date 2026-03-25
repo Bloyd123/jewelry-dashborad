@@ -43,18 +43,24 @@ export const AddItemsSection = ({
     { value: 'mixed', label: t('purchase.metals.mixed') },
   ]
 
-  const calculateItemTotal = (item: Partial<IPurchaseItem>) => {
-    const base = (item.netWeight || 0) * (item.ratePerGram || 0)
-    const total =
-      base +
-      (item.makingCharges || 0) +
-      (item.stoneCharges || 0) +
-      (item.otherCharges || 0)
-    return total
-  }
-
+const calculateItemTotal = (item: Partial<IPurchaseItem>): number => {
+  const base = (Number(item.netWeight) || 0) * (Number(item.ratePerGram) || 0)
+  const total =
+    base +
+    (Number(item.makingCharges) || 0) +
+    (Number(item.stoneCharges)  || 0) +
+    (Number(item.otherCharges)  || 0)
+  return total  // ✅ always returns number
+}
+  const numberFields = [
+  'grossWeight', 'stoneWeight', 'netWeight',
+  'ratePerGram', 'makingCharges', 'stoneCharges',
+  'otherCharges', 'quantity'
+]
   const handleItemChange = (field: string, value: any) => {
-    const updated = { ...currentItem, [field]: value }
+  const parsed = numberFields.includes(field) ? Number(value) || 0 : value
+  const updated = { ...currentItem, [field]: parsed }
+
 
     if (field === 'grossWeight' || field === 'stoneWeight') {
       updated.netWeight =
@@ -231,7 +237,7 @@ export const AddItemsSection = ({
             {t('purchase.itemTotal')}:
           </span>
           <span className="text-lg font-bold text-accent">
-            ₹{currentItem.itemTotal?.toFixed(2) || '0.00'}
+₹{Number(currentItem.itemTotal || 0).toFixed(2)}
           </span>
         </div>
 

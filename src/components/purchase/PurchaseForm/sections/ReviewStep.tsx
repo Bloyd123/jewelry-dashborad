@@ -54,12 +54,12 @@ export const ReviewSection = ({ data }: FormSectionProps) => {
 
           <div className="flex justify-between text-text-secondary">
             <span>{t('purchase.paid')}</span>
-            <span>₹{(data.paidAmount || 0).toFixed(2)}</span>
+            <span>₹{Number(data.paidAmount || 0).toFixed(2)}</span>
           </div>
 
           <div className="flex justify-between font-medium text-status-warning">
             <span>{t('purchase.due')}</span>
-            <span>₹{(grandTotal - (data.paidAmount || 0)).toFixed(2)}</span>
+            <span>₹{(grandTotal - Number(data.paidAmount || 0)).toFixed(2)}</span>
           </div>
         </div>
       </div>

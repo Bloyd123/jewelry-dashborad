@@ -1,5 +1,4 @@
 // FILE: src/components/purchase/PurchaseForm/PurchaseForm.desktop.tsx
-// Desktop Layout for PurchaseForm
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,8 +10,11 @@ import { AddItemsSection } from './sections/AddItemsStep'
 import { PaymentDetailsSection } from './sections/PaymentDetailsStep'
 import { AdditionalInfoSection } from './sections/AdditionalInfoStep'
 import { ReviewSection } from './sections/ReviewStep'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useNotification } from '@/hooks/useNotification'
+import { usePurchaseActions } from '@/hooks/purchase/usePurchaseActions'
+import { createPurchaseSchema } from '@/validators/purchaseValidation'
 import type { PurchaseFormProps, PurchaseFormData } from './PurchaseForm.types'
-// import { validatePurchaseForm } from '@/validators/purchaseValidation'
 
 export default function PurchaseFormDesktop({
   initialData = {},
@@ -23,28 +25,35 @@ export default function PurchaseFormDesktop({
   mode = 'create',
 }: PurchaseFormProps) {
   const { t } = useTranslation()
+  const { showSuccess, showError } = useNotification()
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+
   const [formData, setFormData] = useState<Partial<PurchaseFormData>>({
     purchaseDate: new Date().toISOString(),
     purchaseType: 'new_stock',
-    items: [],
-    paymentMode: 'cash',
-    paidAmount: 0,
+    items:        [],
+    paymentMode:  'cash',
+    paidAmount:   0,
     ...initialData,
   })
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [errors,  setErrors]  = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
 
+  // ── Real API hooks ──
+  const {
+    createPurchase,
+    updatePurchase,
+    isCreating,
+    isUpdating,
+  } = usePurchaseActions(shopId, purchaseId)
+
+  const isLoading = isCreating || isUpdating
+
+  // ── Handlers ──
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
-
     if (errors[name]) {
-      setErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
+      setErrors(prev => { const e = { ...prev }; delete e[name]; return e })
     }
   }
 
@@ -52,21 +61,101 @@ export default function PurchaseFormDesktop({
     setTouched(prev => ({ ...prev, [name]: true }))
   }
 
-  const handleSubmit = async () => {
-    setIsLoading(true)
+  const handleSubmit = () => {
+    // Client-side validation
+    try {
+      createPurchaseSchema.parse({
+        supplierId:   formData.supplierId,
+        purchaseType: formData.purchaseType,
+        purchaseDate: formData.purchaseDate,
+        items:        formData.items,
+        payment: {
+          paymentMode:  formData.paymentMode,
+          paidAmount:   formData.paidAmount,
+          paymentTerms: formData.paymentTerms,
+          dueDate:      formData.dueDate,
+        },
+      })
+    } catch (error: any) {
+      const validationErrors: Record<string, string> = {}
+      error.issues?.forEach((err: any) => {
+        if (err.path?.[0]) validationErrors[err.path[0]] = err.message
+      })
+      setErrors(validationErrors)
+      showError(
+        Object.values(validationErrors).map(m => `• ${m}`).join('\n') ||
+          t('purchase.errors.pleaseFillRequired', 'Please fill required fields'),
+        t('purchase.errors.validationFailed', 'Validation Failed')
+      )
+      return
+    }
+    setShowConfirmDialog(true)
+  }
 
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, purchaseId, formData })
-      setIsLoading(false)
+  const handleConfirmedSubmit = async () => {
+    const setFormErrors = (apiErrors: Record<string, string>) => setErrors(apiErrors)
+
+// ── Financials calculate karo ──
+const items      = formData.items || []
+const subtotal   = items.reduce((s, i) => s + Number(i.itemTotal || 0), 0)
+const totalGst   = Number((subtotal * 0.03).toFixed(2))
+const rawTotal   = subtotal + totalGst
+const grandTotal = Math.round(rawTotal)
+
+const payload = {
+  supplierId:   formData.supplierId!,
+  purchaseDate: formData.purchaseDate,
+  purchaseType: formData.purchaseType,
+  items,
+  // ✅ financials add karo
+  financials: {
+    subtotal,
+    cgst:       Number((totalGst / 2).toFixed(2)),
+    sgst:       Number((totalGst / 2).toFixed(2)),
+    igst:       0,
+    totalGst,
+    roundOff:   Number((grandTotal - rawTotal).toFixed(2)),
+    grandTotal,
+    totalPaid:  Number(formData.paidAmount ?? 0),
+    totalDue:   grandTotal - Number(formData.paidAmount ?? 0),
+  },
+  payment: {
+    paymentMode:  formData.paymentMode,
+    paidAmount:   Number(formData.paidAmount ?? 0),
+    paymentTerms: formData.paymentTerms,
+    dueDate:      formData.dueDate,
+  },
+  delivery: {
+    expectedDate:    formData.expectedDate,
+    deliveryAddress: formData.deliveryAddress,
+  },
+  notes:         formData.notes,
+  internalNotes: formData.internalNotes,
+  tags:          formData.tags,
+}
+    const result = mode === 'edit' && purchaseId
+      ? await updatePurchase(payload, setFormErrors)
+      : await createPurchase(payload as any, setFormErrors)
+
+    if (result.success) {
+      showSuccess(
+        mode === 'create'
+          ? t('purchase.success.created', 'Purchase created successfully')
+          : t('purchase.success.updated', 'Purchase updated successfully'),
+        mode === 'create'
+          ? t('purchase.success.createdTitle', 'Created')
+          : t('purchase.success.updatedTitle', 'Updated')
+      )
+      setShowConfirmDialog(false)
       onSuccess?.()
-    }, 1000)
+    }
   }
 
   const sectionProps = {
-    data: formData,
+    data:     formData,
     errors,
     onChange: handleChange,
-    onBlur: handleBlur,
+    onBlur:   handleBlur,
     disabled: isLoading,
   }
 
@@ -75,22 +164,17 @@ export default function PurchaseFormDesktop({
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-text-primary">
-          {mode === 'create'
-            ? t('purchase.addPurchase')
-            : t('purchase.editPurchase')}
+          {mode === 'create' ? t('purchase.addPurchase') : t('purchase.editPurchase')}
         </h1>
         <p className="mt-1 text-text-secondary">
-          {mode === 'create'
-            ? t('purchase.addPurchaseDescription')
-            : t('purchase.editPurchaseDescription')}
+          {mode === 'create' ? t('purchase.addPurchaseDescription') : t('purchase.editPurchaseDescription')}
         </p>
       </div>
 
-      {/* Form Grid - 2 Columns */}
+      {/* 2-Column Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        {/* Left Column */}
+        {/* Left */}
         <div className="space-y-6">
-          {/* Basic Info */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -102,7 +186,6 @@ export default function PurchaseFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Add Items */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -115,9 +198,8 @@ export default function PurchaseFormDesktop({
           </Card>
         </div>
 
-        {/* Right Column */}
+        {/* Right */}
         <div className="space-y-6">
-          {/* Payment Details */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -129,7 +211,6 @@ export default function PurchaseFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Additional Info */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -141,7 +222,6 @@ export default function PurchaseFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Review */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">
@@ -155,7 +235,7 @@ export default function PurchaseFormDesktop({
         </div>
       </div>
 
-      {/* Form Actions - Sticky Bottom */}
+      {/* Sticky Bottom Actions */}
       <div className="sticky bottom-0 mt-6 border-t border-border-primary bg-bg-primary py-4">
         <div className="flex justify-end gap-3">
           <Button
@@ -189,6 +269,20 @@ export default function PurchaseFormDesktop({
           </Button>
         </div>
       </div>
+
+      {/* Confirm Dialog */}
+      <ConfirmDialog
+        open={showConfirmDialog}
+        onOpenChange={setShowConfirmDialog}
+        title={mode === 'create' ? t('purchase.confirmCreate', 'Create Purchase?') : t('purchase.confirmUpdate', 'Update Purchase?')}
+        description={mode === 'create' ? t('purchase.confirmCreateDescription', 'Are you sure you want to create this purchase?') : t('purchase.confirmUpdateDescription', 'Are you sure you want to update this purchase?')}
+        variant={mode === 'create' ? 'success' : 'info'}
+        confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+        cancelLabel={t('common.cancel')}
+        onConfirm={handleConfirmedSubmit}
+        onCancel={() => setShowConfirmDialog(false)}
+        loading={isLoading}
+      />
     </div>
   )
 }
