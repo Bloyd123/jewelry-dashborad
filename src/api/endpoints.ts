@@ -1,5 +1,4 @@
 // FILE: src/api/endpoints.ts
-
 const API_BASE = '/api'
 const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
@@ -35,7 +34,61 @@ ACTIVITY_LOGS: `${AUTH_BASE}/activity-logs`,
   LOGIN_2FA: `${AUTH_BASE}/login/2fa`,
   LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
-
+export const SALE_ENDPOINTS = {
+  GET_ALL:          `${BASE_URL}/shops/:shopId/sales`,
+  GET_BY_ID:        `${BASE_URL}/shops/:shopId/sales/:saleId`,
+  CREATE:           `${BASE_URL}/shops/:shopId/sales`,
+  UPDATE:           `${BASE_URL}/shops/:shopId/sales/:saleId`,
+  DELETE:           `${BASE_URL}/shops/:shopId/sales/:saleId`,
+ 
+  UPDATE_STATUS:    `${BASE_URL}/shops/:shopId/sales/:saleId/status`,
+  CONFIRM:          `${BASE_URL}/shops/:shopId/sales/:saleId/confirm`,
+  DELIVER:          `${BASE_URL}/shops/:shopId/sales/:saleId/deliver`,
+  COMPLETE:         `${BASE_URL}/shops/:shopId/sales/:saleId/complete`,
+  CANCEL:           `${BASE_URL}/shops/:shopId/sales/:saleId/cancel`,
+ 
+  ADD_PAYMENT:      `${BASE_URL}/shops/:shopId/sales/:saleId/payments`,
+  GET_PAYMENTS:     `${BASE_URL}/shops/:shopId/sales/:saleId/payments`,
+  GENERATE_RECEIPT: `${BASE_URL}/shops/:shopId/sales/:saleId/receipt`,
+  SEND_REMINDER:    `${BASE_URL}/shops/:shopId/sales/:saleId/send-reminder`,
+  RETURN:           `${BASE_URL}/shops/:shopId/sales/:saleId/return`,
+  RETURN_DETAILS:   `${BASE_URL}/shops/:shopId/sales/:saleId/return-details`,
+ 
+  ADD_OLD_GOLD:     `${BASE_URL}/shops/:shopId/sales/:saleId/old-gold`,
+  REMOVE_OLD_GOLD:  `${BASE_URL}/shops/:shopId/sales/:saleId/old-gold`,
+ 
+  GENERATE_INVOICE: `${BASE_URL}/shops/:shopId/sales/:saleId/invoice`,
+  SEND_INVOICE:     `${BASE_URL}/shops/:shopId/sales/:saleId/invoice/send`,
+  PRINT_INVOICE:    `${BASE_URL}/shops/:shopId/sales/:saleId/invoice/print`,
+ 
+  APPLY_DISCOUNT:   `${BASE_URL}/shops/:shopId/sales/:saleId/apply-discount`,
+  REMOVE_DISCOUNT:  `${BASE_URL}/shops/:shopId/sales/:saleId/remove-discount`,
+ 
+  UPLOAD_DOCUMENT:  `${BASE_URL}/shops/:shopId/sales/:saleId/documents`,
+  GET_DOCUMENTS:    `${BASE_URL}/shops/:shopId/sales/:saleId/documents`,
+ 
+  APPROVE:          `${BASE_URL}/shops/:shopId/sales/:saleId/approve`,
+  REJECT:           `${BASE_URL}/shops/:shopId/sales/:saleId/reject`,
+ 
+  ANALYTICS:        `${BASE_URL}/shops/:shopId/sales/analytics`,
+  DASHBOARD:        `${BASE_URL}/shops/:shopId/sales/dashboard`,
+  TODAY:            `${BASE_URL}/shops/:shopId/sales/today`,
+  PENDING:          `${BASE_URL}/shops/:shopId/sales/pending`,
+  UNPAID:           `${BASE_URL}/shops/:shopId/sales/unpaid`,
+  OVERDUE:          `${BASE_URL}/shops/:shopId/sales/overdue`,
+ 
+  SEARCH:           `${BASE_URL}/shops/:shopId/sales/search`,
+  BY_DATE_RANGE:    `${BASE_URL}/shops/:shopId/sales/by-date-range`,
+  BY_AMOUNT_RANGE:  `${BASE_URL}/shops/:shopId/sales/by-amount-range`,
+  CUSTOMER_SALES:         `${BASE_URL}/shops/:shopId/sales/customer/:customerId`,
+  CUSTOMER_SALES_SUMMARY: `${BASE_URL}/shops/:shopId/sales/customer/:customerId/summary`,
+  SALESPERSON_SALES:      `${BASE_URL}/shops/:shopId/sales/sales-person/:userId`,
+  SALESPERSON_PERFORMANCE:`${BASE_URL}/shops/:shopId/sales/sales-person/:userId/performance`,
+ 
+  BULK_DELETE:      `${BASE_URL}/shops/:shopId/sales/bulk-delete`,
+  BULK_PRINT:       `${BASE_URL}/shops/:shopId/sales/bulk-print`,
+  BULK_REMINDERS:   `${BASE_URL}/shops/:shopId/sales/bulk-send-reminders`,
+}
 export const CUSTOMER_ENDPOINTS = {
   // List & Search
   GET_ALL: `${BASE_URL}/shops/:shopId/customers`,
@@ -69,7 +122,21 @@ export const SHOP_ENDPOINTS = {
   STATISTICS:      `${BASE_URL}/shops/:id/statistics`,
   ACTIVITY_LOGS: `${BASE_URL}/shops/:id/activity-logs`,
 }
- 
+ export const METAL_RATE_ENDPOINTS = {
+  CREATE_OR_UPDATE:       `${BASE_URL}/shops/:shopId/metal-rates`,
+  GET_CURRENT:            `${BASE_URL}/shops/:shopId/metal-rates/current`,
+  GET_HISTORY:            `${BASE_URL}/shops/:shopId/metal-rates/history`,
+  GET_LATEST:             `${BASE_URL}/shops/:shopId/metal-rates/latest`,
+  GET_TRENDS:             `${BASE_URL}/shops/:shopId/metal-rates/trends`,
+  COMPARE:                `${BASE_URL}/shops/:shopId/metal-rates/compare`,
+  GET_BY_DATE:            `${BASE_URL}/shops/:shopId/metal-rates/date/:date`,
+  GET_FOR_PURITY:         `${BASE_URL}/shops/:shopId/metal-rates/current/purity/:metalType/:purity`,
+  GET_AVERAGE:            `${BASE_URL}/shops/:shopId/metal-rates/average`,
+  SYNC_TO_ALL_SHOPS:      `${BASE_URL}/organizations/:organizationId/metal-rates/sync`,
+  GET_ORGANIZATION_RATE:  `${BASE_URL}/organizations/:organizationId/metal-rates/current`,
+  DEACTIVATE:             `${BASE_URL}/metal-rates/:rateId/deactivate`,
+  DELETE:                 `${BASE_URL}/metal-rates/:rateId`,
+}
 export const PURCHASE_ENDPOINTS = {
   // List & Search
   GET_ALL:        `${BASE_URL}/shops/:shopId/purchases`,
@@ -126,18 +193,6 @@ export const SUPPLIER_ENDPOINTS = {
   STATS: `${BASE_URL}/suppliers/stats`,
   TOP: `${BASE_URL}/suppliers/top`,
 } as const
-
-const SHOPS_BASE = `${BASE_URL}/shops`
-
-export const SHOPS_ENDPOINTS = {
-  BASE: SHOPS_BASE,
-  BY_ID: `${SHOPS_BASE}/:id`,
-  SETTINGS: `${SHOPS_BASE}/:id/settings`,
-  METAL_RATES: `${SHOPS_BASE}/:id/metal-rates`,
-  STATISTICS: `${SHOPS_BASE}/:id/statistics`,
-  TRANSFER_INVENTORY: `${SHOPS_BASE}/:id/transfer-inventory`,
-}
-
 const ORGANIZATIONS_BASE = `${BASE_URL}/organizations`
 
 export const ORGANIZATIONS_ENDPOINTS = {
@@ -198,19 +253,7 @@ export const INVENTORY_ENDPOINTS = {
   HISTORY: `${INVENTORY_BASE}/:id/history`,
 }
 
-const SALES_BASE = `${BASE_URL}/sales`
 
-export const SALES_ENDPOINTS = {
-  BASE: SALES_BASE,
-  BY_ID: `${SALES_BASE}/:id`,
-  INVOICES: `${SALES_BASE}/invoices`,
-  INVOICE_BY_ID: `${SALES_BASE}/invoices/:id`,
-  ESTIMATES: `${SALES_BASE}/estimates`,
-  ESTIMATE_BY_ID: `${SALES_BASE}/estimates/:id`,
-  CONVERT_ESTIMATE: `${SALES_BASE}/estimates/:id/convert`,
-  RETURNS: `${SALES_BASE}/returns`,
-  RETURN_BY_ID: `${SALES_BASE}/returns/:id`,
-}
 
 const REPORTS_BASE = `${BASE_URL}/reports`
 
@@ -225,16 +268,17 @@ export const REPORTS_ENDPOINTS = {
 
 export const API_ENDPOINTS = {
   AUTH: AUTH_ENDPOINTS,
-  SHOPS: SHOPS_ENDPOINTS,
+  SHOPS: SHOP_ENDPOINTS,
   ORGANIZATIONS: ORGANIZATIONS_ENDPOINTS,
   USERS: USERS_ENDPOINTS,
   PRODUCTS: PRODUCT_ENDPOINTS,
   INVENTORY: INVENTORY_ENDPOINTS,
-  SALES: SALES_ENDPOINTS,
   CUSTOMERS: CUSTOMER_ENDPOINTS,
   REPORTS: REPORTS_ENDPOINTS,
   SUPPLIER: SUPPLIER_ENDPOINTS,
   PURCHASE: PURCHASE_ENDPOINTS,
+  SALE:SALE_ENDPOINTS,
+  METAL:METAL_RATE_ENDPOINTS
 }
 
 export default API_ENDPOINTS
