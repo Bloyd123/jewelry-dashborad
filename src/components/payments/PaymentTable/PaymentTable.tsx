@@ -24,7 +24,7 @@ export const PaymentTable: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
     new Set()
   )
-  const [filters, setFilters] = useState<PaymentFilterState>({})
+  const [filters, setFilters] = useState<PaymentFilterState>({} as PaymentFilterState)
 
   // FILTER HANDLER
 
@@ -145,7 +145,8 @@ export const PaymentTable: React.FC = () => {
         handleCancel,
         handleReconcile,
         handleProcessRefund,
-        handleDelete
+        handleDelete,
+         'admin' 
       ),
     []
   )
@@ -161,8 +162,11 @@ export const PaymentTable: React.FC = () => {
   return (
     <div className="w-full space-y-4">
       {/* Filters */}
-      <PaymentFilters filters={filters} onFilterChange={handleFilterChange} />
-
+<PaymentFilters
+  filters={filters}
+  onFiltersChange={handleFilterChange}
+  onClearAll={() => setFilters({} as PaymentFilterState)}  // ✅ add
+/>
       {/* Bulk Actions Bar */}
       {selectedRows.size > 0 && (
         <BulkActionsBar
@@ -172,6 +176,9 @@ export const PaymentTable: React.FC = () => {
           onViewReceipts={handleBulkViewReceipts}
           onSendReceipts={handleBulkSendReceipts}
           onBulkReconcile={handleBulkReconcile}
+            onEdit={() => {}}           // ✅ add
+  onMarkCompleted={() => {}}  // ✅ add
+  userRole="admin"            // ✅ add
           onBulkExport={handleBulkExport}
           onBulkPrint={handleBulkPrint}
           onCancel={handleBulkCancel}

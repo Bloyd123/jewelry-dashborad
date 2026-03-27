@@ -59,7 +59,7 @@ export default function AddUserPage() {
     (shopAccesses.length > 0 ? shopAccesses[0].shopId : undefined)
   // TODO: Replace with real API call to fetch user by ID
   // Example: const { data: user, isLoading } = useGetUserQuery(userId)
-  const mockUser = useMemo(() => {
+const mockUser = useMemo((): any => {
     if (!isEditMode || !userId) return undefined
     // 🔜 Replace this with actual API call
     // return user

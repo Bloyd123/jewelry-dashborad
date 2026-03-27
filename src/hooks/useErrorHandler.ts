@@ -48,8 +48,8 @@ export const useErrorHandler = () => {
         }
 
         // RTK Query validation errors
-        if (setErrors && error?.data?.validationErrors) {
-          setErrors(error.data.validationErrors)
+  if (setErrors && (error as any)?.data?.validationErrors) {
+  setErrors((error as any).data.validationErrors)
         }
         return
       }

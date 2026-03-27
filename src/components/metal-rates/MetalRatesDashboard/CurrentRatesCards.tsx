@@ -21,13 +21,14 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui/card'
-import { mockCurrentRate } from '@/pages/metal-rates/metal-rate.mock'
+import { useCurrentRate } from '@/hooks/metalRates/useMetalRate'
+
 import { CURRENCY_SYMBOLS } from '@/types/metalrate.types'
 import type { MetalRate, TrendDirection } from '@/types/metalrate.types'
 
 // TYPES & INTERFACES
-
 export interface CurrentRatesCardsProps {
+  shopId: string   
   loading?: boolean
   onCardClick?: (metalType: string, purity: string) => void
   className?: string
@@ -61,32 +62,16 @@ const getTrendIcon = (direction: 'up' | 'down' | 'neutral') => {
 // MAIN COMPONENT
 
 export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
-  loading = false,
+  shopId,           // ✅ add this
   onCardClick,
   className,
 }) => {
   const { t } = useTranslation()
+const { currentRate, isLoading } = useCurrentRate(shopId)
 
-  // Using mock data
-  const rateData: MetalRate = mockCurrentRate
-
-  // Calculate trend data
-  const goldTrendDirection = getTrendDirection(
-    rateData.changes.goldChangePercentage
-  )
-  const silverTrendDirection = getTrendDirection(
-    rateData.changes.silverChangePercentage
-  )
-
-  // Format last updated time
-  const lastUpdated = new Date(rateData.updatedAt).toLocaleString('en-IN', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  })
 
   // LOADING STATE
-
-  if (loading) {
+if (isLoading || !currentRate) {
     return (
       <div className={className}>
         <Card>
@@ -112,7 +97,20 @@ export const CurrentRatesCards: React.FC<CurrentRatesCardsProps> = ({
       </div>
     )
   }
+  const rateData = currentRate
+  // Calculate trend data
+  const goldTrendDirection = getTrendDirection(
+    rateData.changes.goldChangePercentage
+  )
+  const silverTrendDirection = getTrendDirection(
+    rateData.changes.silverChangePercentage
+  )
 
+  // Format last updated time
+  const lastUpdated = new Date(rateData.updatedAt).toLocaleString('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
   // MAIN RENDER
   return (
     <div className={className}>

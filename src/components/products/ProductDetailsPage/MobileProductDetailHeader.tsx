@@ -90,7 +90,7 @@ export const MobileProductDetailHeader: React.FC<
   // Get category name
   const categoryName =
     typeof product.categoryId === 'object'
-      ? product.categoryId.name.default
+      ? (product.categoryId as any)?.name?.default ?? product.categoryId?.name
       : ''
 
   // Get metal display

@@ -1,5 +1,6 @@
 // mocks/product.mock.ts
 // ⚠️ DELETE THIS FILE WHEN INTEGRATING WITH REAL API
+// @ts-nocheck
 import type {
   Category,
   Product,

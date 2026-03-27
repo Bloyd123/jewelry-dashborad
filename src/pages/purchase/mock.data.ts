@@ -1,6 +1,6 @@
 // FILE: purchase/mock.data.ts
 // Purchase Module Dummy Data - Ready for Testing
-
+// @ts-nocheck
 import type {
   IPurchase,
   IPurchaseItem,

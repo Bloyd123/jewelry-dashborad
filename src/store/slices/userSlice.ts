@@ -99,7 +99,7 @@ export const updateUserProfile = createAsyncThunk<
     const userData = response.data.user || response.data
 
     if (import.meta.env.DEV) {
-      console.log('[userSlice] Profile updated:', userData._id)
+     console.log('[userSlice] Profile updated:', (userData as any)?._id ?? (userData as any)?.user?._id)
     }
 
     return convertToUser(userData)

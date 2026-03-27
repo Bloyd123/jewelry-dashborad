@@ -1,11 +1,11 @@
 // FILE: src/components/metal-rates/MetalRatesDashboard/RateHistoryTable/RateHistoryTable.tsx
 // Rate History Table Component - With Responsive Drawer Filters
 
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { rateHistoryColumns } from './RateHistoryColumns'
-import { mockRateHistory } from '@/pages/metal-rates/metal-rate.mock'
+import { useRateHistory } from '@/hooks/metalRates/useMetalRate'
 import { RateHistoryFilters } from './RateHistoryFilters'
 import type { RateHistoryFilterValues } from './RateHistoryFilters'
 import type { SortingState } from '@/components/ui/data-display/DataTable/DataTable.types'
@@ -13,87 +13,64 @@ import { Button } from '@/components/ui/button'
 import { Download } from 'lucide-react'
 import { SearchBar } from '@/components/ui/SearchBar'
 
+// DATE RANGE HELPER
+
+const getDateRange = (dateRange: string) => {
+  const today = new Date()
+  const from = new Date()
+  const days: Record<string, number> = {
+    last7days: 7,
+    last30days: 30,
+    last90days: 90,
+    lastYear: 365,
+  }
+  from.setDate(today.getDate() - (days[dateRange] || 7))
+  return {
+    startDate: from.toISOString().split('T')[0],
+    endDate: today.toISOString().split('T')[0],
+  }
+}
+
 // MAIN COMPONENT
 
-export const RateHistoryTable: React.FC = () => {
+export const RateHistoryTable: React.FC<{ shopId: string }> = ({ shopId }) => {
   const { t } = useTranslation()
 
   // STATE
-
   const [search, setSearch] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
   const [filters, setFilters] = useState<RateHistoryFilterValues>({
     metalType: undefined,
     dateRange: 'last7days',
   })
-
-  // Initial sorting state
   const [sortingState, setSortingState] = useState<SortingState[]>([
     { columnId: 'rateDate', direction: 'desc' },
   ])
 
-  // FILTERED DATA
+  // DATE RANGE
+  const { startDate, endDate } = getDateRange(filters.dateRange || 'last7days')
 
-  const filteredData = useMemo(() => {
-    let data = [...mockRateHistory]
-
-    // Search filter
-    if (search) {
-      const searchLower = search.toLowerCase()
-      data = data.filter(
-        rate =>
-          rate.rateDate.toLowerCase().includes(searchLower) ||
-          rate.notes?.toLowerCase().includes(searchLower)
-      )
-    }
-
-    // Metal type filter
-    if (filters.metalType && filters.metalType !== 'all') {
-      data = data.filter(rate =>
-        rate.metalTypes.includes(filters.metalType as any)
-      )
-    }
-
-    // Date range filter
-    if (filters.dateRange) {
-      const today = new Date()
-      let daysToSubtract = 7
-
-      switch (filters.dateRange) {
-        case 'last7days':
-          daysToSubtract = 7
-          break
-        case 'last30days':
-          daysToSubtract = 30
-          break
-        case 'last90days':
-          daysToSubtract = 90
-          break
-        case 'lastYear':
-          daysToSubtract = 365
-          break
-      }
-
-      const fromDate = new Date()
-      fromDate.setDate(today.getDate() - daysToSubtract)
-
-      data = data.filter(rate => new Date(rate.rateDate) >= fromDate)
-    }
-
-    return data
-  }, [search, filters])
+  // API CALL
+  const { rates, pagination, isLoading } = useRateHistory(shopId, {
+    page: currentPage,
+    startDate,
+    endDate,
+  })
 
   // HANDLERS
-
   const handleSearchChange = (value: string) => {
     setSearch(value)
+    setCurrentPage(1)
   }
 
   const handleFiltersChange = (newFilters: RateHistoryFilterValues) => {
     setFilters(newFilters)
+    setCurrentPage(1)
   }
 
   const handleClearAll = () => {
     setSearch('')
+    setCurrentPage(1)
     setFilters({
       metalType: undefined,
       dateRange: 'last7days',
@@ -101,12 +78,11 @@ export const RateHistoryTable: React.FC = () => {
   }
 
   const handleExport = () => {
-    console.log('Export CSV:', filteredData)
+    console.log('Export CSV:', rates)
     // TODO: Generate and download CSV
   }
 
   // RENDER
-
   return (
     <div className="w-full space-y-4">
       {/* Header with Title and Actions */}
@@ -118,14 +94,14 @@ export const RateHistoryTable: React.FC = () => {
           variant="outline"
           size="sm"
           onClick={handleExport}
-          disabled={filteredData.length === 0}
+          disabled={!rates.length}
         >
           <Download className="mr-2 h-4 w-4" />
           {t('metalRates.common.exportCSV')}
         </Button>
       </div>
 
-      {/* Search Bar - Always Visible */}
+      {/* Search Bar */}
       <div className="w-full">
         <SearchBar
           value={search}
@@ -135,7 +111,7 @@ export const RateHistoryTable: React.FC = () => {
         />
       </div>
 
-      {/* Filters - Responsive (Desktop inline, Mobile drawer) */}
+      {/* Filters */}
       <RateHistoryFilters
         filters={filters}
         onFiltersChange={handleFiltersChange}
@@ -145,23 +121,20 @@ export const RateHistoryTable: React.FC = () => {
       {/* Stats Summary */}
       <div className="text-sm text-text-secondary">
         {t('metalRates.common.showing')}{' '}
-        {filteredData.length > 0
-          ? '1-' + Math.min(10, filteredData.length)
-          : '0'}{' '}
-        {t('metalRates.common.of')} {filteredData.length}
+        {rates.length > 0 ? `1-${Math.min(10, rates.length)}` : '0'}{' '}
+        {t('metalRates.common.of')} {pagination?.totalItems ?? rates.length}
       </div>
 
       {/* DataTable */}
       <DataTable
-        data={filteredData}
+        data={rates}
         columns={rateHistoryColumns}
-        // Sorting Configuration
+       loading={{ isLoading }} 
         sorting={{
           enabled: true,
           sortingState: sortingState,
           onSortingChange: setSortingState,
         }}
-        // Pagination Configuration
         pagination={{
           enabled: true,
           pageSize: 10,
@@ -170,19 +143,15 @@ export const RateHistoryTable: React.FC = () => {
           showPageInfo: true,
           showFirstLastButtons: true,
         }}
-        // NO Selection
         selection={{
           enabled: false,
         }}
-        // NO Row Actions
         rowActions={{
           enabled: false,
         }}
-        // Empty State Configuration
         emptyState={{
           message: t('rateHistory.noRates'),
         }}
-        // Style Configuration
         style={{
           variant: 'default',
           size: 'md',
@@ -194,9 +163,7 @@ export const RateHistoryTable: React.FC = () => {
           shadow: true,
           fullWidth: true,
         }}
-        // Get Row ID
         getRowId={row => row._id}
-        // Test ID
         testId="rate-history-table"
         ariaLabel={t('rateHistory.ariaLabel')}
       />

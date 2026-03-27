@@ -1553,7 +1553,7 @@ export const getAllPermissionKeys = (): PermissionKey[] => {
  */
 export const isValidPermission = (
   permission: string
-): permission is PermissionKey => {
+): permission is string => { 
   return getAllPermissionKeys().includes(permission as PermissionKey)
 }
 

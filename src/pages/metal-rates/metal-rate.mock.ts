@@ -1,5 +1,4 @@
 // FILE: mocks/metal-rate.mock.ts
-// Metal Rate Management - Mock Data for Frontend Development
 
 import type {
   MetalRate,

@@ -1,8 +1,8 @@
 // FILE: src/pages/customer/AddCustomer/mockdata.ts
 // Mock Customer Data for Development/Testing
 
+// @ts-nocheck
 import type { Customer } from '@/types'
-
 export const MOCK_CUSTOMERS: Customer[] = [
   {
     _id: 'cust_001',

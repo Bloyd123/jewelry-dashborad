@@ -10,6 +10,8 @@ import {
   TypeFilter,
   FilterOption,
 } from '@/components/ui/filters/TypeFilter/TypeFilter'
+
+import { useTrendChartData } from '@/hooks/metalRates/useMetalRate'
 import {
   Card,
   CardContent,
@@ -17,10 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  mockTrendChartData,
-  mockMetalRateApi,
-} from '@/pages/metal-rates/metal-rate.mock'
 import type { TrendChartResponse, MetalType } from '@/types/metalrate.types'
 
 // INTERFACES
@@ -60,34 +58,11 @@ export const TrendChart = React.forwardRef<HTMLDivElement, TrendChartProps>(
       defaultPeriod.toString()
     )
     const [selectedMetal, setSelectedMetal] = React.useState<string>(metalType)
-    const [loading, setLoading] = React.useState(false)
-    const [trendData, setTrendData] = React.useState<TrendChartResponse | null>(
-      null
-    )
+    const { trendData, isLoading: loading } = useTrendChartData(shopId, {
+  metalType: selectedMetal as MetalType,
+  days: parseInt(selectedPeriod),
+})
 
-    // FETCH DATA
-
-    const fetchTrendData = React.useCallback(async () => {
-      setLoading(true)
-      try {
-        const response = await mockMetalRateApi.getTrendChartData(
-          shopId,
-          selectedMetal as MetalType,
-          parseInt(selectedPeriod)
-        )
-        if (response.success) {
-          setTrendData(response.data)
-        }
-      } catch (error) {
-        console.error('Failed to fetch trend data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }, [shopId, selectedMetal, selectedPeriod])
-
-    React.useEffect(() => {
-      fetchTrendData()
-    }, [fetchTrendData])
 
     // CHART DATA FORMATTING
 

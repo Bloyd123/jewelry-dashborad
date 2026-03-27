@@ -157,7 +157,8 @@ export const PurchaseTable: React.FC = () => {
   // ─────────────────────────────────────────────
 
   const selectedPurchases = useMemo(() => {
-    return purchases.filter(p => selectedRows.has(p._id))
+  const list = ((purchases as any)?.purchases ?? purchases ?? []) as IPurchase[]
+return list.filter((p: IPurchase) => selectedRows.has(p._id))
   }, [purchases, selectedRows])
 
   const handleBulkViewDetails = () => {
@@ -169,7 +170,7 @@ export const PurchaseTable: React.FC = () => {
   }
 
   const handleBulkApprove = () => {
-    const ids = selectedPurchases.map(p => p._id)
+   const ids = selectedPurchases.map((p: IPurchase) => p._id)
     openConfirm(
       t('purchase.confirmBulkApprove', 'Bulk Approve?'),
       t('purchase.confirmBulkApproveDesc', `Approve ${ids.length} purchases?`),
@@ -182,7 +183,7 @@ export const PurchaseTable: React.FC = () => {
   }
 
   const handleBulkDelete = () => {
-    const ids = selectedPurchases.map(p => p._id)
+    const ids = selectedPurchases.map((p: IPurchase) => p._id)
     openConfirm(
       t('purchase.confirmBulkDelete', 'Bulk Delete?'),
       t('purchase.confirmBulkDeleteDesc', `Delete ${ids.length} draft purchases?`),
@@ -272,7 +273,7 @@ export const PurchaseTable: React.FC = () => {
 
       {/* DataTable */}
       <DataTable
-        data={purchases}
+   data={((purchases as any)?.purchases ?? purchases ?? []) as IPurchase[]}
         columns={purchaseTableColumns}
 
         // ✅ FIX 2: loading takes LoadingConfig object { isLoading }

@@ -15,7 +15,8 @@ export const useCustomerSearch = (shopId: string) => {
 
   // Search function with shopId pre-filled
   const searchCustomer = useCallback(
-    async (params: Omit<SearchCustomerInput, 'shopId'>) => {
+   
+async (params: Omit<SearchCustomerInput, 'shopId'>): Promise<any> => {
       try {
         const result = await triggerSearch({ shopId, ...params }).unwrap()
         return { success: true, customer: result }

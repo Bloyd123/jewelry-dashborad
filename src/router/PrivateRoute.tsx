@@ -176,7 +176,7 @@ interface ShopContextRouteProps {
 
 export const ShopContextRoute: React.FC<ShopContextRouteProps> = ({
   children,
-  redirectTo = ROUTE_PATHS.SELECT_SHOP,
+  redirectTo = ROUTE_PATHS.AUTH.LOGIN,
 }) => {
   const location = useLocation()
 

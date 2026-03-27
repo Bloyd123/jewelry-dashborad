@@ -73,14 +73,14 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
   // Helper functions
   const getCategoryName = () => {
     if (typeof product.categoryId === 'object') {
-      return product.categoryId.name.default
+      return (product.categoryId as any)?.name?.default ?? product.categoryId?.name
     }
     return '-'
   }
 
   const getSubCategoryName = () => {
     if (typeof product.subCategoryId === 'object') {
-      return product.subCategoryId.name.default
+      return (product.subCategoryId as any)?.name?.default ?? product.subCategoryId?.name
     }
     return '-'
   }

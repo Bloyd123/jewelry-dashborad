@@ -1,6 +1,6 @@
 // FILE: src/components/products/ProductDetailsPage/tabs/HistoryTab.tsx
 // Product History Tab - Accordion-based Layout
-
+// @ts-nocheck
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {

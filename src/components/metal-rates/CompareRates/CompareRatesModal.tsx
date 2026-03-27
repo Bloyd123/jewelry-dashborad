@@ -17,7 +17,7 @@ import type {
   RateComparisonResult,
   RateChangeDetail,
 } from '@/types/metalrate.types'
-
+import { useMetalRate } from '@/hooks/metalRates/useMetalRate'
 // COMPONENT PROPS
 
 interface CompareRatesModalProps {
@@ -45,70 +45,6 @@ const formatCurrency = (value: number) => {
   }).format(value)
 }
 
-// MOCK API FUNCTION (Replace with real API later)
-
-const getMockComparisonData = (
-  fromDate: string,
-  toDate: string
-): RateComparisonResult => {
-  const daysDiff = Math.floor(
-    (new Date(toDate).getTime() - new Date(fromDate).getTime()) /
-      (1000 * 60 * 60 * 24)
-  )
-
-  return {
-    fromDate,
-    toDate,
-    daysDifference: daysDiff,
-    gold24K: {
-      startRate: 7150.0,
-      endRate: 7350.0,
-      change: 200.0,
-      changePercentage: 2.8,
-      trend: 'up',
-    },
-    gold22K: {
-      startRate: 6549.4,
-      endRate: 6736.67,
-      change: 187.27,
-      changePercentage: 2.86,
-      trend: 'up',
-    },
-    gold18K: {
-      startRate: 5362.5,
-      endRate: 5512.5,
-      change: 150.0,
-      changePercentage: 2.8,
-      trend: 'up',
-    },
-    silver999: {
-      startRate: 82.0,
-      endRate: 85.0,
-      change: 3.0,
-      changePercentage: 3.66,
-      trend: 'up',
-    },
-    platinum: {
-      startRate: 3250.0,
-      endRate: 3350.0,
-      change: 100.0,
-      changePercentage: 3.08,
-      trend: 'up',
-    },
-    trendComparison: {
-      gold: {
-        ma7Change: 25.5,
-        ma30Change: 100.2,
-        ma90Change: 180.8,
-      },
-      silver: {
-        ma7Change: 1.2,
-        ma30Change: 2.5,
-        ma90Change: 3.8,
-      },
-    },
-  }
-}
 
 // TODO: Replace above function with this when integrating real API
 /*
@@ -122,13 +58,13 @@ const compareRates = async (shopId: string, fromDate: string, toDate: string) =>
 */
 
 // MAIN COMPONENT
-
 export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
   isOpen,
   onClose,
   shopId,
 }) => {
   const { t } = useTranslation()
+  const { compareRates } = useMetalRate(shopId)
   const [fromDate, setFromDate] = useState<string>('')
   const [toDate, setToDate] = useState<string>('')
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -137,6 +73,7 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     useState<RateComparisonResult | null>(null)
 
   // HANDLERS
+  
 
   const handleDateChange = (name: string, value: string) => {
     if (name === 'fromDate') {
@@ -170,27 +107,13 @@ export const CompareRatesModal: React.FC<CompareRatesModalProps> = ({
     return Object.keys(newErrors).length === 0
   }
 
-  const handleCompare = async () => {
-    if (!validateDates()) return
-
-    setIsLoading(true)
-    try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      // Using mock data (replace with real API call when ready)
-      const data = getMockComparisonData(fromDate, toDate)
-
-      // TODO: Uncomment when integrating real API
-      // const data = await compareRates(shopId, fromDate, toDate)
-
-      setComparisonData(data)
-    } catch (error) {
-      console.error('Error comparing rates:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+const handleCompare = async () => {
+  if (!validateDates()) return
+  setIsLoading(true)
+const result = await compareRates(fromDate, toDate)
+if (result.success && result.data) setComparisonData(result.data ?? null)
+  setIsLoading(false)
+}
 
   const handleReset = () => {
     setFromDate('')

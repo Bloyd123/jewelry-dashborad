@@ -75,7 +75,7 @@ export default function ProductFormDesktop({
     const result =
       mode === 'create'
         ? await createProduct(formData as ProductFormData, setErrors)
-        : await updateProduct(productId!, formData, setErrors)
+        : await updateProduct(productId!, formData as any, setErrors)
 
     if (result.success) {
       onSuccess?.()

@@ -9,7 +9,7 @@ import {
 } from '@/store/api/purchaseApi'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
-import type { IPurchaseFilters } from '@/types/purchase.types'
+import type { IPurchaseFilters,IPurchase } from '@/types/purchase.types'
 
 export const usePurchaseList = (
   shopId: string,
@@ -72,8 +72,8 @@ export const usePurchaseList = (
   )
 
   return {
-    purchases:  data?.data ?? [],
-pagination: data?.meta?.pagination,
+purchases: ((data?.data as any)?.purchases ?? data?.data ?? []) as IPurchase[],
+pagination: (data as any)?.meta?.pagination,
     isLoading:   isLoading || isFetching,
     isDeleting:  deleteState.isLoading,
     isBulkDeleting: bulkDeleteState.isLoading,

@@ -20,9 +20,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { StatCardGrid } from '@/components/ui/data-display/StatCard/StatCardGrid'
 
-// Import mock data
-import { mockCurrentRate } from '@/pages/metal-rates/metal-rate.mock'
 import type { MetalRate } from '@/types/metalrate.types'
+
+import { useCurrentRate } from '@/hooks/metalRates/useMetalRate'
 
 // TYPES & INTERFACES
 
@@ -71,7 +71,8 @@ export const QuickInsights: React.FC<QuickInsightsProps> = ({
   const { t } = useTranslation()
 
   // Using mock data (replace with API call later)
-  const currentRate: MetalRate = mockCurrentRate
+  const { currentRate, isLoading } = useCurrentRate(shopId)
+if (isLoading || !currentRate) return <div>Loading...</div>
 
   // Calculate 7-day summary from mock data
   const gold24KAvg = 6425

@@ -46,7 +46,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
   const { t } = useTranslation()
 
   // REAL API
-  const { updateSettings, isUpdatingSettings } = useShopSettings(shop._id)
+  const { updateSettings, isUpdating: isUpdatingSettings } = useShopSettings(shop._id)
 
   // STATE
 

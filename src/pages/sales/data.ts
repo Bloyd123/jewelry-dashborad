@@ -1317,7 +1317,7 @@ export const mockApiResponses = {
   deleteSale: {
     success: true,
     message: 'Sale cancelled successfully',
-    data: null,
+   data: null as any,
   },
 
   addPayment: {

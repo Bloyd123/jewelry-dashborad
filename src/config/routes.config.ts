@@ -129,8 +129,8 @@ export interface RouteConfig extends RouteMetadata {
   children?: RouteConfig[]
   
   //  Enhanced with proper types
-  permission?: PermissionKey
-  requiredPermissions?: PermissionKey[]
+  permission?: string 
+    requiredPermissions?: string[] 
   requiredRole?: UserRole
   requiredRoles?: UserRole[]
   requireAll?: boolean

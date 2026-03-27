@@ -29,7 +29,7 @@ export const QuickActions = () => {
     {
       label: 'Generate Report',
       icon: <FileText size={18} />,
-      onClick: () => navigate(ROUTES.salesReports),
+      onClick: () => navigate(ROUTES.sales),
       color: 'bg-status-warning hover:bg-status-warning/90',
     },
   ]

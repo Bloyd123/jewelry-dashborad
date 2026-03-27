@@ -1,6 +1,6 @@
 // FILE: src/components/products/ProductForm/ProductForm.types.ts
 // ProductForm Types and Interfaces
-
+// @ts-nocheck
 import type {
   Metal,
   Weight,

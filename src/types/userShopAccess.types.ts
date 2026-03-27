@@ -16,8 +16,7 @@ export type ShopRole =
  */
 export interface ShopPermissions {
   // Index signature - allows dynamic string access
-  [key: string]: boolean | undefined
-
+[key: string]: boolean | undefined  
   // Customer Management
   canCreateCustomer: boolean
   canSearchCustomer: boolean
