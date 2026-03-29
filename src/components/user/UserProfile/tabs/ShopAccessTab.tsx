@@ -177,10 +177,10 @@ console.log('primaryShopAccess:', shopAccesses.find(a => a.shopId === user?.prim
                     <p className="font-medium text-text-primary">
                         {access.shopName || access.shopId}
                     </p>
-                    <p className="text-sm text-text-secondary">
+<span className="text-sm text-text-secondary">
                         {t('userProfile.shopAccess.role')}:{' '}
                         <Badge variant="default">{access.role}</Badge>
-                    </p>
+                    </span>
                 </div>
                 <Badge variant={access.isActive ? 'success' : 'inactive'}>
                     {access.isActive ? t('common.active') : t('common.inactive')}

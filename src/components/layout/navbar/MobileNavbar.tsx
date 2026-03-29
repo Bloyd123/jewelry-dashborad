@@ -1,15 +1,21 @@
 // FILE: layout/navbar/MobileNavbar.tsx
 // Mobile Navbar with Theme Picker
 
-import { Menu, Bell, Palette } from 'lucide-react'
+import { Menu, Bell, Palette, Languages, User } from 'lucide-react'
 import { useSidebar } from '@/hooks/useSidebar'
 import { useState } from 'react'
 import { ThemePickerModal } from './ThemePickerModal'
+import { LanguageDropdown } from './LanguageDropdown'
+import { useNavigate } from 'react-router-dom'
+import { dummyUser } from '@/pages/user/data'
+
 import logo from '@/assets/images/logo.png'
 import { APP_CONFIG } from '@/config/app.config'
 export const MobileNavbar = () => {
   const { toggleSidebar } = useSidebar()
   const [showThemePicker, setShowThemePicker] = useState(false)
+    const [showLanguageMenu, setShowLanguageMenu] = useState(false)
+  const navigate = useNavigate()
 
   return (
     <>
@@ -31,6 +37,7 @@ export const MobileNavbar = () => {
         </div>
 
         {/* Right - Actions */}
+{/* Right - Actions */}
         <div className="flex items-center gap-2">
           {/* Theme Picker */}
           <button
@@ -40,10 +47,31 @@ export const MobileNavbar = () => {
             <Palette size={20} />
           </button>
 
+          {/* Language Switcher */}
+          <div className="relative">
+            <button
+              onClick={() => setShowLanguageMenu(!showLanguageMenu)}
+              className="rounded-lg p-2 text-text-secondary transition-colors hover:bg-bg-secondary"
+            >
+              <Languages size={20} />
+            </button>
+            {showLanguageMenu && (
+              <LanguageDropdown onClose={() => setShowLanguageMenu(false)} />
+            )}
+          </div>
+
           {/* Notifications */}
           <button className="relative rounded-lg p-2 text-text-secondary transition-colors hover:bg-bg-secondary">
             <Bell size={20} />
             <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-status-error"></span>
+          </button>
+
+          {/* User Profile */}
+          <button
+            onClick={() => navigate('/userprofile')}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white"
+          >
+            <User size={16} />
           </button>
         </div>
       </header>

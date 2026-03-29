@@ -88,7 +88,7 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   return (
     <div className={`min-h-screen bg-bg-primary ${className || ''}`}>
       {/* Page Header */}
-      <div className="sticky top-0 z-30 border-b border-border-primary bg-bg-secondary shadow-sm">
+      <div className="sticky top-0 z-10 border-b border-border-primary bg-bg-secondary shadow-sm">
         <div className="container mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Title */}
