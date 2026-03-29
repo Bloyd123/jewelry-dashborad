@@ -118,19 +118,21 @@ export const PaymentFilters: React.FC<PaymentFiltersProps> = ({
     onFiltersChange({ ...filters, isReconciled: value })
   }
 
-  const handleApplyAdvanced = () => {
-    setShowAdvancedDrawer(false)
+const handleApplyAdvanced = () => {
+  setShowAdvancedDrawer(false)
+  onFiltersChange({ ...filters }) 
+}
+const handleClearAdvanced = () => {
+  const clearedFilters: PaymentFilterState = {
+    ...filters,
+    partyType:    undefined,
+    dateRange:    undefined,
+    amountRange:  undefined,
+    isReconciled: undefined,
   }
-
-  const handleClearAdvanced = () => {
-    onFiltersChange({
-      ...filters,
-      partyType: undefined,
-      dateRange: undefined,
-      amountRange: undefined,
-      isReconciled: undefined,
-    })
-  }
+  onFiltersChange(clearedFilters)
+  setShowAdvancedDrawer(false)
+}
 
   // DESKTOP VIEW
 

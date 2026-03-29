@@ -7,6 +7,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2, Printer, Mail } from 'lucide-react'
 import type { PaymentFormProps, PaymentFormData } from './PaymentForm.types'
+import { usePaymentActions } from '@/hooks/payment/usePaymentActions'
+import { useNotification } from '@/hooks/useNotification'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { createPaymentSchema } from '@/validators/paymentValidation'
+import { buildPaymentDetails } from './PaymentForm.utils'
 
 // Import all sections
 import { TransactionTypeSection } from './sections/TransactionTypeSection'
@@ -32,11 +37,15 @@ export default function PaymentFormDesktop({
     paymentDate: new Date().toISOString(),
     paymentTime: new Date().toTimeString().slice(0, 5),
     referenceType: 'none',
+      shopId,
     ...initialData,
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+  const { createPayment, updatePayment, isCreating, isUpdating } = usePaymentActions(shopId)
+const { showSuccess, showError } = useNotification()
+const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -54,32 +63,82 @@ export default function PaymentFormDesktop({
     setTouched(prev => ({ ...prev, [name]: true }))
   }
 
-  const handleSubmit = async (action: 'pending' | 'complete') => {
-    // Mock validation
-    const newErrors: Record<string, string> = {}
+const handleSubmit = async (action: 'pending' | 'complete') => {
+  try {
+    createPaymentSchema.parse({
+      ...formData,
+      amount: parseFloat(String(formData.amount)),
+    })
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[String(err.path[0])] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    const errorMessages = Object.values(validationErrors)
+      .map(msg => `• ${msg}`)
+      .join('\n')
+    showError(
+      errorMessages || t('validation.pleaseFillRequired'),
+      t('validation.failed')
+    )
+    return
+  }
+  setShowConfirmDialog(true)
+}
 
-    if (!formData.paymentType) newErrors.paymentType = t('validation.required')
-    if (!formData.amount) newErrors.amount = t('validation.required')
-    if (!formData.partyId) newErrors.partyId = t('validation.required')
-    if (!formData.paymentMode) newErrors.paymentMode = t('validation.required')
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsLoading(true)
-
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, paymentId, formData, action })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+const handleConfirmedSubmit = async () => {
+  const payload = {
+    paymentType:     formData.paymentType!,
+    transactionType: formData.transactionType!,
+    amount:          parseFloat(String(formData.amount)),
+    paymentMode:     formData.paymentMode!,
+    party: {
+      partyType: formData.partyType!,
+      partyId:   formData.partyId!,
+      partyName: formData.partyName!,
+      phone:     formData.partyPhone,
+      email:     formData.partyEmail,
+    },
+    reference: {
+      referenceType:   formData.referenceType ?? 'none',
+      referenceId:     formData.referenceId,
+      referenceNumber: formData.referenceNumber,
+    },
+    paymentDetails: buildPaymentDetails(formData),
+    notes: formData.notes,
+    tags:  formData.tags,
   }
 
+  const setFormErrors = (apiErrors: Record<string, string>) => setErrors(apiErrors)
+
+  try {
+    const result = mode === 'edit' && paymentId
+      ? await updatePayment(paymentId, payload, setFormErrors)
+      : await createPayment(payload as any, setFormErrors)
+
+    if (result.success) {
+      showSuccess(
+        mode === 'create' ? t('payment.success.created') : t('payment.success.updated'),
+        mode === 'create' ? t('payment.success.createdTitle') : t('payment.success.updatedTitle')
+      )
+      setShowConfirmDialog(false)
+      onSuccess?.()
+    } else {
+      if (result.error) showError(result.error, t('payment.errors.errorTitle'))
+    }
+  } catch (error: any) {
+    showError(
+      error?.message || t('payment.errors.unexpectedError'),
+      t('payment.errors.errorTitle')
+    )
+  }
+}
+
   return (
-    <div className="min-h-screen bg-bg-primary">
+    <div className="min-h-screen bg-bg-primary overflow-hidden">
       {/* Header */}
       <div className="border-b border-border-primary bg-bg-secondary px-6 py-4">
         <h1 className="text-2xl font-bold text-text-primary">
@@ -102,6 +161,7 @@ export default function PaymentFormDesktop({
       <div className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-3">
         {/* LEFT COLUMN (65%) - Main Form */}
         <div className="space-y-6 lg:col-span-2">
+          
           {/* Transaction Type Toggle */}
           <TransactionTypeSection
             data={formData}
@@ -226,7 +286,8 @@ export default function PaymentFormDesktop({
         </div>
 
         {/* RIGHT COLUMN (35%) - Summary & Actions */}
-        <div className="space-y-6">
+        {/* RIGHT COLUMN */}
+<div className="space-y-6 lg:sticky lg:top-6 lg:max-h-screen lg:overflow-y-auto">
           {/* Payment Summary */}
           <Card className="sticky top-6 border-border-primary bg-bg-secondary">
             <CardHeader>
@@ -398,6 +459,19 @@ export default function PaymentFormDesktop({
               )}
             </CardContent>
           </Card>
+
+<ConfirmDialog
+  open={showConfirmDialog}
+  onOpenChange={setShowConfirmDialog}
+  title={mode === 'create' ? t('payment.confirmCreate') : t('payment.confirmUpdate')}
+  description={mode === 'create' ? t('payment.confirmCreateDescription') : t('payment.confirmUpdateDescription')}
+  variant={mode === 'create' ? 'success' : 'info'}
+  confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+  cancelLabel={t('common.cancel')}
+  onConfirm={handleConfirmedSubmit}
+  onCancel={() => setShowConfirmDialog(false)}
+  loading={isLoading}
+/>
         </div>
       </div>
     </div>

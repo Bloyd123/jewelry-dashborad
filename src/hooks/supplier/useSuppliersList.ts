@@ -6,12 +6,16 @@ export const useSuppliersList = (
   shopId: string,
   filters?: Partial<SupplierFilters>
 ) => {
-  const { data, isLoading, isFetching, error, refetch } = useGetSuppliersQuery({
+const { data, isLoading, isFetching, error, refetch } = useGetSuppliersQuery(
+  {
     shopId,
     page: filters?.page || 1,
     limit: filters?.limit || 20,
     ...filters,
-  })
+    search: filters?.search || undefined, // ← empty string nahi bhejta
+  },
+  { skip: !shopId }
+)
 
   return {
     suppliers: data?.data || [],

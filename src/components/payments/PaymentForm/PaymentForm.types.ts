@@ -21,6 +21,7 @@ export interface FormSectionProps {
 }
 
 export interface PaymentFormData {
+  shopId?: string
   // Transaction Type
   transactionType: 'receipt' | 'payment'
 

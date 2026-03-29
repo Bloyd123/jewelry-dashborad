@@ -9,47 +9,12 @@ import {
   Phone,
   Mail,
   MapPin,
-  IndianRupee,
 } from 'lucide-react'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/hooks/auth'
 import type { FormSectionProps } from '../PaymentForm.types'
-
-// Dummy party data for autocomplete
-const dummyParties = [
-  {
-    id: 'cust_001',
-    type: 'customer',
-    name: 'Rajesh Kumar',
-    phone: '9876543210',
-    email: 'rajesh@example.com',
-    address: 'Mumbai, Maharashtra',
-    balance: 12500,
-    balanceType: 'due',
-    lastPaymentDate: '2024-12-26',
-  },
-  {
-    id: 'cust_002',
-    type: 'customer',
-    name: 'Priya Sharma',
-    phone: '9988776655',
-    email: 'priya@example.com',
-    address: 'Delhi',
-    balance: 0,
-    balanceType: 'clear',
-    lastPaymentDate: '2024-12-20',
-  },
-  {
-    id: 'supp_001',
-    type: 'supplier',
-    name: 'Gold Suppliers Ltd',
-    phone: '9000011111',
-    email: 'contact@goldsuppliers.com',
-    address: 'Mumbai',
-    balance: 50000,
-    balanceType: 'payable',
-    lastPaymentDate: '2024-12-15',
-  },
-]
+import { useCustomersList } from '@/hooks/customer/useCustomersList'
+import { useSuppliersList } from '@/hooks/supplier/useSuppliersList'
 
 export const PartyDetailsSection = ({
   data,
@@ -58,24 +23,55 @@ export const PartyDetailsSection = ({
   onBlur,
   disabled = false,
 }: FormSectionProps) => {
-  const { t } = useTranslation()
+    const { t } = useTranslation()
+  const { currentShopId } = useAuth()
+  const shopId = currentShopId || ''
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedParty, setSelectedParty] = useState<any>(null)
 
-  // Filter parties based on transaction type
-  const availableParties = dummyParties.filter(party => {
-    if (data.partyType === 'customer') return party.type === 'customer'
-    if (data.partyType === 'supplier') return party.type === 'supplier'
-    return true
-  })
-
-  // Filter by search query
-  const filteredParties = availableParties.filter(
-    party =>
-      party.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      party.phone.includes(searchQuery)
+  const { customers, isLoading: isLoadingCustomers } = useCustomersList(
+    shopId,
+    { search: searchQuery, limit: 20 },
   )
+
+const { suppliers, isLoading: isLoadingSuppliers } = useSuppliersList(
+  shopId,
+  { search: searchQuery || undefined, limit: 20 },
+)
+
+
+const isSearching = isLoadingCustomers || isLoadingSuppliers
+
+const filteredParties = (
+  data.partyType === 'customer'
+    ? customers.map(c => ({
+        id:              c._id,
+        type:            'customer',
+        name:            `${c.firstName} ${c.lastName}`,
+        phone:           c.phone,
+        email:           c.email ?? '',
+        address:         c.address?.city ?? '',
+        balance:         c.creditLimit ?? 0,
+        balanceType:     'due',
+        lastPaymentDate: c.updatedAt,
+      }))
+      
+    : data.partyType === 'supplier'
+? suppliers.map(s => ({
+  id:              s._id,
+  type:            'supplier',
+  name:            s.displayName || s.businessName,
+  phone:           s.contactPerson.phone || s.businessPhone || '',
+  email:           s.contactPerson.email || s.businessEmail || '',
+  address:         s.address?.city ?? '',
+  balance:         s.totalDue ?? 0,
+  balanceType:     s.totalDue > 0 ? 'payable' : 'clear',
+  lastPaymentDate: s.updatedAt,
+}))
+      : []
+)
+
 
   const handlePartyTypeChange = (type: 'customer' | 'supplier' | 'other') => {
     onChange('partyType', type)
@@ -188,10 +184,10 @@ export const PartyDetailsSection = ({
           <input
             type="text"
             value={searchQuery}
-            onChange={e => {
-              setSearchQuery(e.target.value)
-              setShowSuggestions(true)
-            }}
+onChange={e => {
+  setSearchQuery(e.target.value)
+  setShowSuggestions(e.target.value.length >= 2)
+}}
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => {
               // Delay to allow click on suggestion
@@ -207,11 +203,18 @@ export const PartyDetailsSection = ({
           />
 
           {/* Suggestions Dropdown */}
-          {showSuggestions &&
-            searchQuery.length >= 2 &&
-            filteredParties.length > 0 && (
-              <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
-                {filteredParties.map(party => (
+{showSuggestions && searchQuery.length >= 2 && (
+  <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
+    {isSearching ? (
+      <div className="p-3 text-center text-sm text-text-secondary">
+        {t('common.searching')}...
+      </div>
+    ) : filteredParties.length === 0 ? (
+      <div className="p-3 text-center text-sm text-text-secondary">
+        {t('payment.noPartiesFound')}
+      </div>
+    ) : (
+      filteredParties.map(party => (
                   <button
                     key={party.id}
                     type="button"
@@ -223,11 +226,10 @@ export const PartyDetailsSection = ({
                         <p className="font-semibold text-text-primary">
                           {party.name}
                         </p>
-                        <p className="text-sm text-text-secondary">
-                          📱 {party.phone} |{' '}
-                          {party.type === 'customer' ? 'C' : 'S'}-
-                          {party.id.split('_')[1]}
-                        </p>
+<p className="text-sm text-text-secondary">
+  📱 {party.phone} |{' '}
+  {party.type === 'customer' ? t('payment.customer') : t('payment.supplier')}
+</p>
                       </div>
                       <div className="text-right">
                         <p
@@ -246,9 +248,10 @@ export const PartyDetailsSection = ({
                       </div>
                     </div>
                   </button>
-                ))}
-              </div>
-            )}
+      ))
+    )}
+  </div>
+)}
         </div>
 
         {errors.partyId && (

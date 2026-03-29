@@ -7,7 +7,11 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Save, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { PaymentFormProps, PaymentFormData } from './PaymentForm.types'
-
+import { usePaymentActions } from '@/hooks/payment/usePaymentActions'
+import { useNotification } from '@/hooks/useNotification'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { createPaymentSchema } from '@/validators/paymentValidation'
+import { buildPaymentDetails } from './PaymentForm.utils'
 // Import all sections
 import { TransactionTypeSection } from './sections/TransactionTypeSection'
 import { BasicInfoSection } from './sections/BasicInfoSection'
@@ -42,11 +46,15 @@ export default function PaymentFormMobile({
     paymentDate: new Date().toISOString(),
     paymentTime: new Date().toTimeString().slice(0, 5),
     referenceType: 'none',
+      shopId,
     ...initialData,
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+ const { createPayment, updatePayment, isCreating, isUpdating } = usePaymentActions(shopId)
+const { showSuccess, showError } = useNotification()
+const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -59,10 +67,24 @@ export default function PaymentFormMobile({
       })
     }
   }
-
-  const handleBlur = (name: string) => {
-    setTouched(prev => ({ ...prev, [name]: true }))
+const handleBlur = (name: string) => {
+  setTouched(prev => ({ ...prev, [name]: true }))
+  try {
+    const fieldSchema = (createPaymentSchema as any).shape?.[name]
+    if (fieldSchema) {
+      fieldSchema.parse(formData[name as keyof typeof formData])
+      setErrors(prev => {
+        const next = { ...prev }
+        delete next[name]
+        return next
+      })
+    }
+  } catch (error: any) {
+    if (error.errors?.[0]?.message) {
+      setErrors(prev => ({ ...prev, [name]: error.errors[0].message }))
+    }
   }
+}
 
   const handleNext = () => {
     // Skip mode-details step if no payment mode selected
@@ -81,30 +103,79 @@ export default function PaymentFormMobile({
       setCurrentStep(currentStep - 1)
     }
   }
-
-  const handleSubmit = async () => {
-    // Mock validation
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.paymentType) newErrors.paymentType = t('validation.required')
-    if (!formData.amount) newErrors.amount = t('validation.required')
-    if (!formData.partyId) newErrors.partyId = t('validation.required')
-    if (!formData.paymentMode) newErrors.paymentMode = t('validation.required')
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    setIsLoading(true)
-
-    // Mock delay
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, paymentId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1000)
+const handleSubmit = async (action: 'pending' | 'complete') => {
+  try {
+    createPaymentSchema.parse({
+      ...formData,
+      amount: parseFloat(String(formData.amount)),
+    })
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[String(err.path[0])] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    const errorMessages = Object.values(validationErrors)
+      .map(msg => `• ${msg}`)
+      .join('\n')
+    showError(
+      errorMessages || t('validation.pleaseFillRequired'),
+      t('validation.failed')
+    )
+    return
   }
+  setShowConfirmDialog(true)
+}
+
+const handleConfirmedSubmit = async () => {
+  const payload = {
+    paymentType:     formData.paymentType!,
+    transactionType: formData.transactionType!,
+    amount:          parseFloat(String(formData.amount)),
+    paymentMode:     formData.paymentMode!,
+    party: {
+      partyType: formData.partyType!,
+      partyId:   formData.partyId!,
+      partyName: formData.partyName!,
+      phone:     formData.partyPhone,
+      email:     formData.partyEmail,
+    },
+    reference: {
+      referenceType:   formData.referenceType ?? 'none',
+      referenceId:     formData.referenceId,
+      referenceNumber: formData.referenceNumber,
+    },
+    paymentDetails: buildPaymentDetails(formData),
+    notes: formData.notes,
+    tags:  formData.tags,
+  }
+
+  const setFormErrors = (apiErrors: Record<string, string>) => setErrors(apiErrors)
+
+  try {
+    const result = mode === 'edit' && paymentId
+      ? await updatePayment(paymentId, payload, setFormErrors)
+      : await createPayment(payload as any, setFormErrors)
+
+    if (result.success) {
+      showSuccess(
+        mode === 'create' ? t('payment.success.created') : t('payment.success.updated'),
+        mode === 'create' ? t('payment.success.createdTitle') : t('payment.success.updatedTitle')
+      )
+      setShowConfirmDialog(false)
+      onSuccess?.()
+    } else {
+      if (result.error) showError(result.error, t('payment.errors.errorTitle'))
+    }
+  } catch (error: any) {
+    showError(
+      error?.message || t('payment.errors.unexpectedError'),
+      t('payment.errors.errorTitle')
+    )
+  }
+}
 
   const renderCurrentStep = () => {
     const sectionProps = {
@@ -277,7 +348,7 @@ export default function PaymentFormMobile({
           ) : (
             <Button
               type="button"
-              onClick={handleSubmit}
+              onClick={() => handleSubmit('complete')}
               disabled={isLoading}
               className="flex-1"
             >
@@ -295,6 +366,19 @@ export default function PaymentFormMobile({
             </Button>
           )}
         </div>
+
+<ConfirmDialog
+  open={showConfirmDialog}
+  onOpenChange={setShowConfirmDialog}
+  title={mode === 'create' ? t('payment.confirmCreate') : t('payment.confirmUpdate')}
+  description={mode === 'create' ? t('payment.confirmCreateDescription') : t('payment.confirmUpdateDescription')}
+  variant={mode === 'create' ? 'success' : 'info'}
+  confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+  cancelLabel={t('common.cancel')}
+  onConfirm={handleConfirmedSubmit}
+  onCancel={() => setShowConfirmDialog(false)}
+  loading={isLoading}
+/>
       </div>
     </div>
   )

@@ -203,7 +203,76 @@ export const ORGANIZATIONS_ENDPOINTS = {
   STATISTICS: `${ORGANIZATIONS_BASE}/:id/statistics`,
   SUBSCRIPTION: `${ORGANIZATIONS_BASE}/:id/subscription`,
 }
-
+export const PAYMENT_ENDPOINTS = {
+  // ── CRUD ──────────────────────────────────────────────────
+  GET_ALL:          `${BASE_URL}/shops/:shopId/payments`,
+  GET_BY_ID:        `${BASE_URL}/shops/:shopId/payments/:paymentId`,
+  CREATE:           `${BASE_URL}/shops/:shopId/payments`,
+  UPDATE:           `${BASE_URL}/shops/:shopId/payments/:paymentId`,
+  DELETE:           `${BASE_URL}/shops/:shopId/payments/:paymentId`,
+ 
+  // ── STATUS ────────────────────────────────────────────────
+  UPDATE_STATUS:    `${BASE_URL}/shops/:shopId/payments/:paymentId/status`,
+  MARK_COMPLETED:   `${BASE_URL}/shops/:shopId/payments/:paymentId/complete`,
+  CANCEL:           `${BASE_URL}/shops/:shopId/payments/:paymentId/cancel`,
+ 
+  // ── CHEQUES ───────────────────────────────────────────────
+  CHEQUES_PENDING:  `${BASE_URL}/shops/:shopId/payments/cheques/pending`,
+  CHEQUE_CLEAR:     `${BASE_URL}/shops/:shopId/payments/:paymentId/cheque/clear`,
+  CHEQUE_BOUNCE:    `${BASE_URL}/shops/:shopId/payments/:paymentId/cheque/bounce`,
+  CHEQUES_BOUNCED:  `${BASE_URL}/shops/:shopId/payments/cheques/bounced`,
+  CHEQUES_CLEARED:  `${BASE_URL}/shops/:shopId/payments/cheques/cleared`,
+ 
+  // ── RECONCILIATION ────────────────────────────────────────
+  RECONCILIATION_PENDING: `${BASE_URL}/shops/:shopId/payments/reconciliation/pending`,
+  RECONCILE:              `${BASE_URL}/shops/:shopId/payments/:paymentId/reconcile`,
+  RECONCILIATION_SUMMARY: `${BASE_URL}/shops/:shopId/payments/reconciliation/summary`,
+ 
+  // ── RECEIPTS ──────────────────────────────────────────────
+  RECEIPT:            `${BASE_URL}/shops/:shopId/payments/:paymentId/receipt`,
+  RECEIPT_SEND:       `${BASE_URL}/shops/:shopId/payments/:paymentId/receipt/send`,
+  RECEIPT_REGENERATE: `${BASE_URL}/shops/:shopId/payments/:paymentId/receipt/regenerate`,
+ 
+  // ── PARTY ─────────────────────────────────────────────────
+  PARTY_PAYMENTS:        `${BASE_URL}/shops/:shopId/payments/party/:partyId`,
+  PARTY_PAYMENT_SUMMARY: `${BASE_URL}/shops/:shopId/payments/party/:partyId/summary`,
+  CUSTOMER_PAYMENTS:     `${BASE_URL}/shops/:shopId/payments/customers/:customerId`,
+  SUPPLIER_PAYMENTS:     `${BASE_URL}/shops/:shopId/payments/suppliers/:supplierId`,
+ 
+  // ── MODE ANALYTICS ────────────────────────────────────────
+  BY_MODE:            `${BASE_URL}/shops/:shopId/payments/by-mode`,
+  CASH_COLLECTION:    `${BASE_URL}/shops/:shopId/payments/cash-collection`,
+  DIGITAL_COLLECTION: `${BASE_URL}/shops/:shopId/payments/digital-collection`,
+ 
+  // ── REPORTS & ANALYTICS ───────────────────────────────────
+  ANALYTICS:         `${BASE_URL}/shops/:shopId/payments/analytics`,
+  DASHBOARD:         `${BASE_URL}/shops/:shopId/payments/dashboard`,
+  TODAY:             `${BASE_URL}/shops/:shopId/payments/today`,
+  PENDING_PAYMENTS:  `${BASE_URL}/shops/:shopId/payments/pending`,
+  FAILED_PAYMENTS:   `${BASE_URL}/shops/:shopId/payments/failed`,
+ 
+  // ── REFERENCES ────────────────────────────────────────────
+  SALE_PAYMENTS:     `${BASE_URL}/shops/:shopId/payments/reference/sale/:saleId`,
+  PURCHASE_PAYMENTS: `${BASE_URL}/shops/:shopId/payments/reference/purchase/:purchaseId`,
+ 
+  // ── SEARCH & FILTERS ──────────────────────────────────────
+  SEARCH:          `${BASE_URL}/shops/:shopId/payments/search`,
+  BY_DATE_RANGE:   `${BASE_URL}/shops/:shopId/payments/by-date-range`,
+  BY_AMOUNT_RANGE: `${BASE_URL}/shops/:shopId/payments/by-amount-range`,
+ 
+  // ── BULK ──────────────────────────────────────────────────
+  BULK_RECONCILE:      `${BASE_URL}/shops/:shopId/payments/bulk-reconcile`,
+  BULK_EXPORT:         `${BASE_URL}/shops/:shopId/payments/bulk-export`,
+  BULK_PRINT_RECEIPTS: `${BASE_URL}/shops/:shopId/payments/bulk-print-receipts`,
+ 
+  // ── APPROVAL ──────────────────────────────────────────────
+  APPROVE: `${BASE_URL}/shops/:shopId/payments/:paymentId/approve`,
+  REJECT:  `${BASE_URL}/shops/:shopId/payments/:paymentId/reject`,
+ 
+  // ── REFUNDS ───────────────────────────────────────────────
+  REFUND:  `${BASE_URL}/shops/:shopId/payments/:paymentId/refund`,
+  REFUNDS: `${BASE_URL}/shops/:shopId/payments/refunds`,
+}
 const USERS_BASE = `${BASE_URL}/users`
 
 export const USERS_ENDPOINTS = {

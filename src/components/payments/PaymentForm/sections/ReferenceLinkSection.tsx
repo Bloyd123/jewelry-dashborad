@@ -1,47 +1,16 @@
 // FILE: src/components/payment/PaymentForm/sections/ReferenceLinkSection.tsx
 // Reference Link Section (Link to Sale/Purchase Invoice)
-
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import { useSalePayments } from '@/hooks/payment/usePaymentsList'
+import { usePurchasePayments } from '@/hooks/payment/usePaymentsList'
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'
 import { Search, ExternalLink, Info } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import type { FormSectionProps } from '../PaymentForm.types'
+import { useAuth } from '@/hooks/auth'
 
-// Dummy invoices for reference linking
-const dummyInvoices = [
-  {
-    id: 'sale_001',
-    type: 'sale',
-    number: 'S-24-000156',
-    date: '2024-12-25',
-    total: 25000,
-    paid: 0,
-    due: 25000,
-    items: 'Gold Necklace - 22K, 45g',
-  },
-  {
-    id: 'sale_002',
-    type: 'sale',
-    number: 'S-24-000142',
-    date: '2024-12-20',
-    total: 15000,
-    paid: 0,
-    due: 15000,
-    items: 'Gold Earrings - 18K, 12g',
-  },
-  {
-    id: 'purchase_001',
-    type: 'purchase',
-    number: 'P-24-000045',
-    date: '2024-12-18',
-    total: 100000,
-    paid: 50000,
-    due: 50000,
-    items: 'Raw Gold Purchase - 500g',
-  },
-]
 
 export const ReferenceLinkSection = ({
   data,
@@ -50,11 +19,28 @@ export const ReferenceLinkSection = ({
   onBlur,
   disabled = false,
 }: FormSectionProps) => {
+
+
+
+
+  
   const { t } = useTranslation()
+  const { currentShopId } = useAuth()
+  const shopId = currentShopId || ''
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedInvoice, setSelectedInvoice] = useState<any>(null)
+  
+  const { payments: salePayments, isLoading: isLoadingSales } = useSalePayments(
+    shopId,
+    data.partyId ?? ''
+  )
 
+  const { payments: purchasePayments, isLoading: isLoadingPurchases } = usePurchasePayments(
+    shopId,
+    data.partyId ?? ''
+  )
+  const isSearching = isLoadingSales || isLoadingPurchases
   const referenceTypeOptions = [
     { value: 'none', label: t('payment.noReference') },
     { value: 'sale', label: t('payment.saleInvoice') },
@@ -63,18 +49,34 @@ export const ReferenceLinkSection = ({
     { value: 'order', label: t('payment.order') },
   ]
 
-  // Filter invoices based on reference type
-  const availableInvoices = dummyInvoices.filter(invoice => {
-    if (data.referenceType === 'sale') return invoice.type === 'sale'
-    if (data.referenceType === 'purchase') return invoice.type === 'purchase'
-    return false
-  })
 
-  const filteredInvoices = availableInvoices.filter(
+const availableInvoices = useMemo(() => {
+  const raw = data.referenceType === 'sale'
+    ? salePayments
+    : data.referenceType === 'purchase'
+      ? purchasePayments
+      : []
+
+  return raw.map(p => ({
+    id:    p._id,
+    type:  data.referenceType,
+    number: p.reference?.referenceNumber || p.paymentNumber,
+    date:   p.paymentDate,
+    total:  p.amount,
+    paid:   p.status === 'completed' ? p.amount : 0,
+    due:    p.status === 'completed' ? 0 : p.amount,
+    items:  p.notes || '',
+  }))
+}, [salePayments, purchasePayments, data.referenceType])
+
+const filteredInvoices = useMemo(() => {
+  if (!searchQuery) return availableInvoices
+  return availableInvoices.filter(
     invoice =>
       invoice.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
       invoice.items.toLowerCase().includes(searchQuery.toLowerCase())
   )
+}, [availableInvoices, searchQuery])
 
   const handleReferenceTypeChange = (name: string, value: string) => {
     onChange(name, value)
@@ -140,9 +142,18 @@ export const ReferenceLinkSection = ({
             />
 
             {/* Invoice Suggestions */}
-            {showSuggestions && filteredInvoices.length > 0 && (
-              <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
-                {filteredInvoices.map(invoice => (
+{showSuggestions && (
+  <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
+    {isSearching ? (
+      <div className="p-3 text-center text-sm text-text-secondary">
+        {t('common.loading')}...
+      </div>
+    ) : filteredInvoices.length === 0 ? (
+      <div className="p-3 text-center text-sm text-text-secondary">
+        {t('payment.noInvoicesFound')}
+      </div>
+    ) : (
+      filteredInvoices.map(invoice => (
                   <button
                     key={invoice.id}
                     type="button"
@@ -170,9 +181,10 @@ export const ReferenceLinkSection = ({
                       </div>
                     </div>
                   </button>
-                ))}
-              </div>
-            )}
+))
+    )}
+  </div>
+)}
           </div>
 
           {/* No Invoices Found */}

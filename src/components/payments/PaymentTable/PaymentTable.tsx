@@ -7,126 +7,187 @@ import { useNavigate } from 'react-router-dom'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { paymentTableColumns } from './PaymentTableColumns'
 import { getPaymentRowActions, BulkActionsBar } from './PaymentTableActions'
-import { MOCK_PAYMENTS, type Payment } from './PaymentTable.types'
+import type { Payment } from './PaymentTable.types'
+import { usePaymentsList } from '@/hooks/payment/usePaymentsList'
+import { usePaymentActions } from '@/hooks/payment/usePaymentActions'
+import { useAuth } from '@/hooks/auth'
 import {
   PaymentFilters,
   PaymentFilterState,
 } from '@/components/payments/PaymentFilters'
-
+import type {
+  PaymentType,
+  TransactionType,
+  PaymentMode,
+  PaymentStatus,
+  PartyType,
+} from '@/types/payment.types'
 // MAIN COMPONENT
 
 export const PaymentTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { currentShopId, userRole } = useAuth()
+  const shopId = currentShopId || ''
 
-  // STATE
-
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
-    new Set()
-  )
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
   const [filters, setFilters] = useState<PaymentFilterState>({} as PaymentFilterState)
 
+  const {
+    payments,
+    pagination,
+    isLoading,
+    updateFilter,
+    updateFilters,
+    resetFilters,
+    goToPage,
+  } = usePaymentsList(shopId, {
+    search:          filters.search,
+    paymentType:     filters.paymentType as any,
+    transactionType: filters.transactionType as any,
+    paymentMode:     filters.paymentMode as any,
+    status:          filters.status as any,
+    partyType:       filters.partyType as any,
+    startDate:       filters.dateRange?.from?.toISOString(),
+    endDate:         filters.dateRange?.to?.toISOString(),
+    minAmount:       filters.amountRange?.min,
+    maxAmount:       filters.amountRange?.max,
+    ...(filters.isReconciled !== undefined && {
+      // pass as query param — backend handles it
+    }),
+  })
+
+  const {
+    markAsCompleted,
+    cancelPayment,
+    reconcilePayment,
+    deletePayment,
+    bulkReconcile,
+    bulkExport,
+    bulkPrintReceipts,
+    isMarkingCompleted,
+    isCancelling,
+    isReconciling,
+    isDeleting,
+  } = usePaymentActions(shopId)
   // FILTER HANDLER
+const handleFilterChange = (newFilters: PaymentFilterState) => {
+  setFilters(newFilters)
+  updateFilters({
+    search:          newFilters.search || undefined,
+    paymentType:     newFilters.paymentType as PaymentType | undefined,
+    transactionType: newFilters.transactionType as TransactionType | undefined,
+    paymentMode:     newFilters.paymentMode as PaymentMode | undefined,
+    status:          newFilters.status as PaymentStatus | undefined,
+    partyType:       newFilters.partyType as PartyType | undefined,
+    startDate:       newFilters.dateRange?.from?.toISOString(),
+    endDate:         newFilters.dateRange?.to?.toISOString(),
+    minAmount:       newFilters.amountRange?.min,
+    maxAmount:       newFilters.amountRange?.max,
+  })
+}
+const handleViewDetails = (payment: Payment) => {
+  navigate(`/payments/${payment._id}`)
+}
 
-  const handleFilterChange = (newFilters: PaymentFilterState) => {
-    setFilters(newFilters)
-    console.log('Filters changed:', newFilters)
-    // TODO: Call API with filters or filter MOCK_PAYMENTS locally
+const handleEdit = (payment: Payment) => {
+  navigate(`/payments/edit/${payment._id}`)
+}
+
+const handleViewReceipt = (payment: Payment) => {
+  if (payment.receipt.receiptUrl) {
+    window.open(payment.receipt.receiptUrl, '_blank')
   }
+}
 
-  // ROW ACTION HANDLERS
+const handleSendReceipt = (payment: Payment) => {
+  // TODO: open send receipt modal — wire when modal is ready
+}
 
-  const handleViewDetails = (payment: Payment) => {
-    console.log('View Payment Details:', payment)
-    // TODO: Navigate to payment details or open modal
-    navigate(`/payments/${payment._id}`)
+const handleMarkCompleted = async (payment: Payment) => {
+  await markAsCompleted(payment._id)
+}
+
+const handleCancel = async (payment: Payment) => {
+  const reason = window.prompt(t('payment.cancelReasonPrompt'))
+  if (!reason) return
+  await cancelPayment(payment._id, reason)
+}
+
+const handleReconcile = async (payment: Payment) => {
+  const ref = window.prompt(t('payment.reconcileRefPrompt'))
+  if (!ref) return
+  await reconcilePayment(payment._id, { reconciledWith: ref })
+}
+
+const handleProcessRefund = (payment: Payment) => {
+  navigate(`/payments/${payment._id}/refund`)
+}
+
+const handleDelete = async (payment: Payment) => {
+  const confirmed = window.confirm(t('payment.deleteConfirm'))
+  if (!confirmed) return
+  await deletePayment(payment._id)
+}
+
+
+
+const handleBulkViewDetails = () => {
+  if (selectedPayments.length === 1) {
+    handleViewDetails(selectedPayments[0])
   }
+}
 
-  const handleEdit = (payment: Payment) => {
-    console.log('Edit Payment:', payment)
-    navigate(`/payments/edit/${payment._id}`)
+const handleBulkViewReceipts = () => {
+  selectedPayments.forEach(p => {
+    if (p.receipt.receiptUrl) window.open(p.receipt.receiptUrl, '_blank')
+  })
+}
+
+const handleBulkSendReceipts = () => {
+  // TODO: open bulk send receipt modal
+}
+
+const handleBulkReconcile = async () => {
+  const ref = window.prompt(t('payment.reconcileRefPrompt'))
+  if (!ref) return
+  await bulkReconcile({
+    paymentIds:     selectedPayments.map(p => p._id),
+    reconciledWith: ref,
+  })
+  setSelectedRows(new Set())
+}
+
+const handleBulkExport = async () => {
+  await bulkExport({
+    paymentIds: selectedPayments.map(p => p._id),
+    format:     'excel',
+  })
+}
+
+const handleBulkPrint = async () => {
+  await bulkPrintReceipts(selectedPayments.map(p => p._id))
+}
+
+const handleBulkCancel = async () => {
+  const reason = window.prompt(t('payment.cancelReasonPrompt'))
+  if (!reason) return
+  for (const p of selectedPayments) {
+    await cancelPayment(p._id, reason)
   }
+  setSelectedRows(new Set())
+}
 
-  const handleViewReceipt = (payment: Payment) => {
-    console.log('View Receipt:', payment)
-    // TODO: Open receipt in new tab or modal
-    if (payment.receipt.receiptUrl) {
-      window.open(payment.receipt.receiptUrl, '_blank')
-    }
+const handleBulkDelete = async () => {
+  const confirmed = window.confirm(
+    t('payment.bulkDeleteConfirm', { count: selectedPayments.length })
+  )
+  if (!confirmed) return
+  for (const p of selectedPayments) {
+    if (p.status === 'pending') await deletePayment(p._id)
   }
-
-  const handleSendReceipt = (payment: Payment) => {
-    console.log('Send Receipt:', payment)
-    // TODO: Open send receipt modal
-  }
-
-  const handleMarkCompleted = (payment: Payment) => {
-    console.log('Mark as Completed:', payment)
-    // TODO: API call to mark payment as completed
-  }
-
-  const handleCancel = (payment: Payment) => {
-    console.log('Cancel Payment:', payment)
-    // TODO: Show confirmation and cancel payment
-  }
-
-  const handleReconcile = (payment: Payment) => {
-    console.log('Reconcile Payment:', payment)
-    // TODO: Open reconciliation modal
-  }
-
-  const handleProcessRefund = (payment: Payment) => {
-    console.log('Process Refund:', payment)
-    // TODO: Open refund modal
-  }
-
-  const handleDelete = (payment: Payment) => {
-    console.log('Delete Payment:', payment)
-    // TODO: Show confirmation and delete
-  }
-
-  // BULK ACTION HANDLERS
-
-  const handleBulkViewDetails = () => {
-    if (selectedPayments.length === 1) {
-      handleViewDetails(selectedPayments[0])
-    }
-  }
-
-  const handleBulkViewReceipts = () => {
-    console.log('Bulk View Receipts:', selectedPayments)
-    // TODO: Open multiple receipts or download as PDF
-  }
-
-  const handleBulkSendReceipts = () => {
-    console.log('Bulk Send Receipts:', selectedPayments)
-    // TODO: Open bulk send receipt modal
-  }
-
-  const handleBulkReconcile = () => {
-    console.log('Bulk Reconcile:', selectedPayments)
-    // TODO: Open bulk reconciliation modal
-  }
-
-  const handleBulkExport = () => {
-    console.log('Bulk Export:', selectedPayments)
-    // TODO: Export selected payments to Excel/CSV
-  }
-
-  const handleBulkPrint = () => {
-    console.log('Bulk Print:', selectedPayments)
-    // TODO: Print selected receipts
-  }
-
-  const handleBulkCancel = () => {
-    console.log('Bulk Cancel:', selectedPayments)
-    // TODO: Show confirmation and bulk cancel
-  }
-
-  const handleBulkDelete = () => {
-    console.log('Bulk Delete:', selectedPayments)
-    // TODO: Show confirmation and bulk delete
-  }
+  setSelectedRows(new Set())
+}
 
   const handleClearSelection = () => {
     setSelectedRows(new Set())
@@ -146,16 +207,16 @@ export const PaymentTable: React.FC = () => {
         handleReconcile,
         handleProcessRefund,
         handleDelete,
-         'admin' 
+        userRole ?? 'staff'  
       ),
-    []
+  [userRole, handleMarkCompleted, handleCancel, handleReconcile, handleDelete]
   )
 
   // SELECTED PAYMENTS
 
-  const selectedPayments = useMemo(() => {
-    return MOCK_PAYMENTS.filter(payment => selectedRows.has(payment._id))
-  }, [selectedRows])
+const selectedPayments = useMemo(() => {
+  return payments.filter(payment => selectedRows.has(payment._id))
+}, [selectedRows, payments])
 
   // RENDER
 
@@ -165,7 +226,22 @@ export const PaymentTable: React.FC = () => {
 <PaymentFilters
   filters={filters}
   onFiltersChange={handleFilterChange}
-  onClearAll={() => setFilters({} as PaymentFilterState)}  // ✅ add
+onClearAll={() => {
+  setFilters({} as PaymentFilterState)
+  resetFilters()
+  updateFilters({
+    search:          undefined,
+    paymentType:     undefined,
+    transactionType: undefined,
+    paymentMode:     undefined,
+    status:          undefined,
+    partyType:       undefined,
+    startDate:       undefined,
+    endDate:         undefined,
+    minAmount:       undefined,
+    maxAmount:       undefined,
+  })
+}}
 />
       {/* Bulk Actions Bar */}
       {selectedRows.size > 0 && (
@@ -176,9 +252,16 @@ export const PaymentTable: React.FC = () => {
           onViewReceipts={handleBulkViewReceipts}
           onSendReceipts={handleBulkSendReceipts}
           onBulkReconcile={handleBulkReconcile}
-            onEdit={() => {}}           // ✅ add
-  onMarkCompleted={() => {}}  // ✅ add
-  userRole="admin"            // ✅ add
+          onEdit={() => {
+  if (selectedPayments.length === 1) handleEdit(selectedPayments[0])
+}}
+onMarkCompleted={async () => {
+  for (const p of selectedPayments) {
+    if (p.status === 'pending') await markAsCompleted(p._id)
+  }
+  setSelectedRows(new Set())
+}}
+ userRole={userRole ?? 'staff'}
           onBulkExport={handleBulkExport}
           onBulkPrint={handleBulkPrint}
           onCancel={handleBulkCancel}
@@ -189,7 +272,8 @@ export const PaymentTable: React.FC = () => {
 
       {/* DataTable */}
       <DataTable
-        data={MOCK_PAYMENTS}
+   data={payments}
+  loading={{isLoading}}
         columns={paymentTableColumns}
         // Sorting Configuration
         sorting={{
@@ -235,11 +319,9 @@ export const PaymentTable: React.FC = () => {
           fullWidth: true,
         }}
         // Row Click Handler
-        onRowClick={payment => {
-          console.log('Row clicked:', payment)
-          // Optional: Open details on row click
-          // handleViewDetails(payment)
-        }}
+onRowClick={payment => {
+  // handleViewDetails(payment)  // uncomment when needed
+}}
         // Get Row ID
         getRowId={row => row._id}
         // Test ID

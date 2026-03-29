@@ -127,7 +127,7 @@ export interface ChequeDetails {
   bankName: string
   branchName?: string
   accountNumber?: string
-  chequeStatus: ChequeStatus
+  chequeStatus?: ChequeStatus
   clearanceDate?: string
   bounceReason?: string
 }
