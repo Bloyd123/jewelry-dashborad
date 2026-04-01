@@ -1,21 +1,37 @@
-// FILE: componens/dashboard/components/StockAlerts.tsx
-// Low Stock Alerts
+// FILE: components/dashboard/components/StockAlerts.tsx
 
 import { AlertTriangle } from 'lucide-react'
+import type { Product } from '@/types/product.types'
+import { useNavigate } from 'react-router-dom'
+import { ROUTE_PATHS } from '@/constants/routePaths'
 
-interface StockAlert {
-  product: string
-  current: number
-  minimum: number
+// ─────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────
+// interface LowStockProduct {
+//   _id:         string
+//   name:        string
+//   productCode: string
+//   stock: {
+//     quantity:     number
+//     reorderLevel: number
+//     status:       string
+//   }
+// }
+
+type LowStockProduct = Pick<Product, '_id' | 'name' | 'productCode' | 'stock' | 'pricing' | 'primaryImage' | 'categoryId' | 'subCategoryId'>
+
+interface StockAlertsProps {
+  products:  LowStockProduct[]
+  isLoading: boolean
 }
 
-const alerts: StockAlert[] = [
-  { product: 'Gold Chains 18K', current: 5, minimum: 10 },
-  { product: 'Silver Rings', current: 8, minimum: 15 },
-  { product: 'Diamond Studs', current: 3, minimum: 8 },
-]
+// ─────────────────────────────────────────────
+// COMPONENT
+// ─────────────────────────────────────────────
+export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
+  const navigate = useNavigate()
 
-export const StockAlerts = () => {
   return (
     <div className="card border-l-4 border-status-warning">
       <div className="mb-4 flex items-center gap-2">
@@ -23,31 +39,49 @@ export const StockAlerts = () => {
         <h3 className="text-lg font-semibold text-text-primary">
           Low Stock Alerts
         </h3>
+        {!isLoading && products.length > 0 && (
+          <span className="ml-auto rounded-full bg-status-warning/10 px-2 py-0.5 text-xs font-medium text-status-warning">
+            {products.length}
+          </span>
+        )}
       </div>
 
       <div className="space-y-3">
-        {alerts.map(alert => (
-          <div
-            key={alert.product}
-            className="bg-status-warning/5 rounded-lg p-3"
-          >
-            <p className="mb-1 text-sm font-medium text-text-primary">
-              {alert.product}
-            </p>
-            <div className="flex items-center justify-between text-xs">
-              <span className="text-text-tertiary">
-                Current: {alert.current}
-              </span>
-              <span className="font-medium text-status-warning">
-                Min: {alert.minimum}
-              </span>
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-14 animate-pulse rounded-lg bg-bg-secondary" />
+          ))
+        ) : products.length === 0 ? (
+          <p className="py-4 text-center text-sm text-text-tertiary">
+            All products are well stocked 🎉
+          </p>
+        ) : (
+          products.slice(0, 5).map(product => (
+            <div
+              key={product._id}
+              className="bg-status-warning/5 rounded-lg p-3"
+            >
+              <p className="mb-1 text-sm font-medium text-text-primary">
+                {product.name}
+              </p>
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-text-tertiary">
+                  Current: {product.stock.quantity}
+                </span>
+                <span className="font-medium text-status-warning">
+                  Min: {product.stock.reorderLevel ?? 0}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
-      <button className="bg-status-warning/10 hover:bg-status-warning/20 mt-4 w-full rounded-lg px-4 py-2 text-sm font-medium text-status-warning transition-colors">
-        Restock Items
+      <button
+        className="bg-status-warning/10 hover:bg-status-warning/20 mt-4 w-full rounded-lg px-4 py-2 text-sm font-medium text-status-warning transition-colors"
+        onClick={() => navigate(ROUTE_PATHS.PRODUCTS.LIST)}
+      >
+        View All Low Stock
       </button>
     </div>
   )

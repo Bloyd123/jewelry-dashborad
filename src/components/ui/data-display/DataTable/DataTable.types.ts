@@ -97,6 +97,7 @@ export interface RowAction<T = any> {
   disabled?: boolean | ((row: T) => boolean)
   hidden?: boolean | ((row: T) => boolean)
   className?: string
+   isLoading?: boolean
 }
 
 export interface RowActionsConfig<T = any> {

@@ -1,5 +1,4 @@
 // FILE: src/components/customer/CustomerPage/tabs/ActivityLogsTab.tsx
-// Activity Logs Tab
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,117 +12,59 @@ import {
 } from 'lucide-react'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import type { Customer } from '@/types/customer.types'
-
-// MOCK ACTIVITY LOGS
-
-interface ActivityLog {
-  id: string
-  type: 'profile_update' | 'purchase' | 'document_upload' | 'status_change'
-  action: string
-  description: string
-  timestamp: string
-  performedBy: string
-}
-
-const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
-  {
-    id: '1',
-    type: 'purchase',
-    action: 'Purchase Made',
-    description: 'Purchased Gold Necklace worth ₹45,000',
-    timestamp: '2024-12-15T10:30:00',
-    performedBy: 'System',
-  },
-  {
-    id: '2',
-    type: 'profile_update',
-    action: 'Profile Updated',
-    description: 'Updated contact information',
-    timestamp: '2024-11-20T14:15:00',
-    performedBy: 'Admin User',
-  },
-  {
-    id: '3',
-    type: 'document_upload',
-    action: 'Document Uploaded',
-    description: 'Uploaded Aadhar Card for verification',
-    timestamp: '2024-10-10T09:45:00',
-    performedBy: 'Customer',
-  },
-  {
-    id: '4',
-    type: 'purchase',
-    action: 'Purchase Made',
-    description: 'Purchased Diamond Ring worth ₹32,000',
-    timestamp: '2024-09-05T16:20:00',
-    performedBy: 'System',
-  },
-  {
-    id: '5',
-    type: 'status_change',
-    action: 'Status Changed',
-    description: 'Customer status changed to Active',
-    timestamp: '2024-08-15T11:00:00',
-    performedBy: 'Admin User',
-  },
-]
-
-// COMPONENT PROPS
+import { useCustomerActivity } from '@/hooks/customer'
+import { useAuth } from '@/hooks/auth'
 
 interface ActivityLogsTabProps {
   customer: Customer
 }
 
-// ACTIVITY LOGS TAB COMPONENT
-
-export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
-  customer,
-}) => {
+export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({ customer }) => {
   const { t } = useTranslation()
+  const { currentShopId } = useAuth()
 
-  const getActivityIcon = (type: ActivityLog['type']) => {
-    switch (type) {
-      case 'purchase':
-        return <ShoppingBag className="h-5 w-5 text-status-success" />
-      case 'profile_update':
-        return <Edit className="h-5 w-5 text-status-info" />
-      case 'document_upload':
-        return <FileText className="h-5 w-5 text-accent" />
-      case 'status_change':
-        return <Activity className="h-5 w-5 text-status-warning" />
-      default:
-        return <Clock className="h-5 w-5 text-text-tertiary" />
+  const { logs, isLoading } = useCustomerActivity(
+    currentShopId!,
+    customer._id
+  )
+
+  const getActivityIcon = (action: string) => {
+    if (action.includes('purchase') || action.includes('sale')) {
+      return <ShoppingBag className="h-5 w-5 text-status-success" />
+    }
+    if (action.includes('update') || action.includes('edit')) {
+      return <Edit className="h-5 w-5 text-status-info" />
+    }
+    if (action.includes('document')) {
+      return <FileText className="h-5 w-5 text-accent" />
+    }
+    if (action.includes('loyalty')) {
+      return <Activity className="h-5 w-5 text-status-warning" />
+    }
+    return <Clock className="h-5 w-5 text-text-tertiary" />
+  }
+
+  const getActivityBadgeVariant = (module: string) => {
+    switch (module) {
+      case 'sale':     return 'success'
+      case 'customer': return 'info'
+      case 'product':  return 'accent'
+      case 'purchase': return 'warning'
+      default:         return 'default'
     }
   }
 
-  const getActivityBadgeVariant = (type: ActivityLog['type']) => {
-    switch (type) {
-      case 'purchase':
-        return 'success'
-      case 'profile_update':
-        return 'info'
-      case 'document_upload':
-        return 'accent'
-      case 'status_change':
-        return 'warning'
-      default:
-        return 'default'
-    }
-  }
-
-  const formatTimestamp = (timestamp: string) => {
-    const date = new Date(timestamp)
-    return {
-      date: date.toLocaleDateString(),
-      time: date.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    }
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <p className="text-sm text-text-tertiary">Loading...</p>
+      </div>
+    )
   }
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
+
       {/* Activity Summary */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <div className="flex items-center gap-3">
@@ -135,72 +76,80 @@ export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
               {t('customerActivity.activityLog')}
             </h3>
             <p className="text-sm text-text-secondary">
-              {t('customerActivity.totalActivities')}:{' '}
-              {MOCK_ACTIVITY_LOGS.length}
+              {t('customerActivity.totalActivities')}: {logs.length}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Activity Timeline */}
+      {/* Activity Timeline - REAL DATA */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerActivity.recentActivity')}
         </h3>
 
-        <div className="space-y-4">
-          {MOCK_ACTIVITY_LOGS.map((log, index) => {
-            const { date, time } = formatTimestamp(log.timestamp)
+        {logs.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <Activity className="mb-3 h-10 w-10 text-text-tertiary" />
+            <p className="text-sm text-text-tertiary">
+              {t('customerActivity.noActivity')}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {logs.map((log: any, index: number) => {
+              const date = new Date(log.createdAt)
+              return (
+                <div
+                  key={log._id}
+                  className="relative flex gap-4 rounded-lg border border-border-secondary bg-bg-primary p-4"
+                >
+                  {/* Timeline Line */}
+                  {index !== logs.length - 1 && (
+                    <div className="absolute left-[30px] top-[60px] h-[calc(100%+16px)] w-px bg-border-secondary" />
+                  )}
 
-            return (
-              <div
-                key={log.id}
-                className="relative flex gap-4 rounded-lg border border-border-secondary bg-bg-primary p-4"
-              >
-                {/* Timeline Line */}
-                {index !== MOCK_ACTIVITY_LOGS.length - 1 && (
-                  <div className="absolute left-[30px] top-[60px] h-[calc(100%+16px)] w-px bg-border-secondary" />
-                )}
+                  {/* Icon */}
+                  <div className="relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-bg-secondary">
+                    {getActivityIcon(log.action)}
+                  </div>
 
-                {/* Icon */}
-                <div className="relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-bg-secondary">
-                  {getActivityIcon(log.type)}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h4 className="text-sm font-semibold text-text-primary">
-                          {log.action}
-                        </h4>
-                        <Badge
-                          variant={getActivityBadgeVariant(log.type) as any}
-                          size="sm"
-                        >
-                          {t(`customerActivity.type_${log.type}`)}
-                        </Badge>
-                      </div>
-                      <p className="mt-1 text-sm text-text-secondary">
-                        {log.description}
-                      </p>
-                      <div className="mt-2 flex items-center gap-2 text-xs text-text-tertiary">
-                        <Clock className="h-3 w-3" />
-                        <span>
-                          {date} at {time}
-                        </span>
-                        <span>•</span>
-                        <User className="h-3 w-3" />
-                        <span>{log.performedBy}</span>
+                  {/* Content */}
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-sm font-semibold text-text-primary">
+                            {log.action}
+                          </h4>
+                          <Badge
+                            variant={getActivityBadgeVariant(log.module) as any}
+                            size="sm"
+                          >
+                            {log.module}
+                          </Badge>
+                        </div>
+                        <p className="mt-1 text-sm text-text-secondary">
+                          {log.description}
+                        </p>
+                        <div className="mt-2 flex items-center gap-2 text-xs text-text-tertiary">
+                          <Clock className="h-3 w-3" />
+                          <span>
+                            {date.toLocaleDateString()} at{' '}
+                            {date.toLocaleTimeString([], {
+                              hour:   '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       {/* Account Information */}
@@ -249,7 +198,7 @@ export const ActivityLogsTab: React.FC<ActivityLogsTabProps> = ({
               {t('customerActivity.totalActivities')}
             </p>
             <p className="mt-1 text-sm font-semibold text-text-primary">
-              {MOCK_ACTIVITY_LOGS.length}
+              {logs.length}
             </p>
           </div>
         </div>

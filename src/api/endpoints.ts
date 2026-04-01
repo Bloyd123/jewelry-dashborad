@@ -40,7 +40,7 @@ export const SALE_ENDPOINTS = {
   CREATE:           `${BASE_URL}/shops/:shopId/sales`,
   UPDATE:           `${BASE_URL}/shops/:shopId/sales/:saleId`,
   DELETE:           `${BASE_URL}/shops/:shopId/sales/:saleId`,
- 
+ TOP_PRODUCTS: `${BASE_URL}/shops/:shopId/sales/top-products`,
   UPDATE_STATUS:    `${BASE_URL}/shops/:shopId/sales/:saleId/status`,
   CONFIRM:          `${BASE_URL}/shops/:shopId/sales/:saleId/confirm`,
   DELIVER:          `${BASE_URL}/shops/:shopId/sales/:saleId/deliver`,
@@ -88,6 +88,9 @@ export const SALE_ENDPOINTS = {
   BULK_DELETE:      `${BASE_URL}/shops/:shopId/sales/bulk-delete`,
   BULK_PRINT:       `${BASE_URL}/shops/:shopId/sales/bulk-print`,
   BULK_REMINDERS:   `${BASE_URL}/shops/:shopId/sales/bulk-send-reminders`,
+  ANALYTICS_BY_CATEGORY:       `${BASE_URL}/shops/:shopId/sales/analytics/by-category`,
+ANALYTICS_MONTHLY_COMPARISON: `${BASE_URL}/shops/:shopId/sales/analytics/monthly-comparison`,
+ANALYTICS_REVENUE_EXPENSES:   `${BASE_URL}/shops/:shopId/sales/analytics/revenue-expenses`,
 }
 export const CUSTOMER_ENDPOINTS = {
   // List & Search
@@ -110,6 +113,10 @@ export const CUSTOMER_ENDPOINTS = {
 
   // Analytics
   ANALYTICS: `${BASE_URL}/shops/:shopId/customers/analytics`,
+    ADVANCED_ANALYTICS:   `${BASE_URL}/shops/:shopId/customers/advanced-analytics`,  // NEW
+  ACTIVITY:             `${BASE_URL}/shops/:shopId/customers/:customerId/activity`, // NEW
+  DOCUMENTS:           `${BASE_URL}/shops/:shopId/customers/:customerId/documents`, // NEW
+  LOYALTY_SUMMARY:     `${BASE_URL}/shops/:shopId/customers/:customerId/loyalty-summary`, 
 } as const
 
 export const SHOP_ENDPOINTS = {
@@ -189,6 +196,11 @@ export const SUPPLIER_ENDPOINTS = {
   MARK_PREFERRED: `${BASE_URL}/suppliers/:id/preferred`,
   REMOVE_PREFERRED: `${BASE_URL}/suppliers/:id/preferred`,
   UPDATE_BALANCE: `${BASE_URL}/suppliers/:id/balance`,
+  ADD_DOCUMENT: `${BASE_URL}/suppliers/:id/documents`,
+DELETE_DOCUMENT: `${BASE_URL}/suppliers/:id/documents/:documentId`,
+ADD_CERTIFICATION: `${BASE_URL}/suppliers/:id/certifications`,
+DELETE_CERTIFICATION: `${BASE_URL}/suppliers/:id/certifications/:certificationId`,
+ACTIVITY: `${BASE_URL}/suppliers/:id/activity`,
 
   STATS: `${BASE_URL}/suppliers/stats`,
   TOP: `${BASE_URL}/suppliers/top`,

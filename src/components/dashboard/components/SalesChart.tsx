@@ -1,21 +1,41 @@
-// FILE: componens/dashboard/components/SalesChart.tsx
-// Sales Chart Component
+// FILE: components/dashboard/components/SalesChart.tsx
 
 import { BarChart3 } from 'lucide-react'
 
-export const SalesChart = () => {
-  // Dummy data - replace with real data
-  const data = [
-    { day: 'Mon', sales: 45 },
-    { day: 'Tue', sales: 62 },
-    { day: 'Wed', sales: 38 },
-    { day: 'Thu', sales: 78 },
-    { day: 'Fri', sales: 95 },
-    { day: 'Sat', sales: 120 },
-    { day: 'Sun', sales: 85 },
-  ]
+// ─────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────
+interface SalesAnalytics {
+  totalAmount?:       number
+  totalSales?:        number
+  averageOrderValue?: number
+}
 
-  const maxSales = Math.max(...data.map(d => d.sales))
+interface SalesChartProps {
+  salesAnalytics: SalesAnalytics | null
+  isLoading:      boolean
+  startDate:      string
+  endDate:        string
+}
+
+// ─────────────────────────────────────────────
+// FORMAT HELPER
+// ─────────────────────────────────────────────
+const formatCurrency = (amount: number) =>
+  `₹${amount.toLocaleString('en-IN')}`
+
+// ─────────────────────────────────────────────
+// COMPONENT
+// ─────────────────────────────────────────────
+export const SalesChart = ({
+  salesAnalytics,
+  isLoading,
+  startDate,
+  endDate,
+}: SalesChartProps) => {
+  const totalRevenue      = salesAnalytics?.totalAmount       || 0
+  const totalOrders       = salesAnalytics?.totalSales        || 0
+  const averageOrderValue = salesAnalytics?.averageOrderValue || 0
 
   return (
     <div className="card">
@@ -27,7 +47,7 @@ export const SalesChart = () => {
             Sales Overview
           </h3>
           <p className="mt-1 text-sm text-text-tertiary">
-            Weekly sales performance
+            {startDate} — {endDate}
           </p>
         </div>
 
@@ -36,34 +56,57 @@ export const SalesChart = () => {
         </button>
       </div>
 
-      {/* Chart */}
-      <div className="space-y-2">
-        {data.map(item => (
-          <div key={item.day} className="flex items-center gap-3">
-            <span className="w-12 text-sm text-text-secondary">{item.day}</span>
-            <div className="h-8 flex-1 overflow-hidden rounded-full bg-bg-secondary">
-              <div
-                className="flex h-full items-center justify-end rounded-full bg-accent px-3"
-                style={{ width: `${(item.sales / maxSales) * 100}%` }}
-              >
-                <span className="text-xs font-medium text-white">
-                  ₹{item.sales}k
-                </span>
-              </div>
-            </div>
+      {/* Stats Grid */}
+      {isLoading ? (
+        <div className="space-y-3">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="h-10 animate-pulse rounded bg-bg-secondary" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="rounded-lg bg-bg-secondary p-4">
+            <p className="text-xs text-text-tertiary">Total Revenue</p>
+            <p className="mt-1 text-lg font-bold text-text-primary">
+              {formatCurrency(totalRevenue)}
+            </p>
           </div>
-        ))}
-      </div>
+          <div className="rounded-lg bg-bg-secondary p-4">
+            <p className="text-xs text-text-tertiary">Total Orders</p>
+            <p className="mt-1 text-lg font-bold text-text-primary">
+              {totalOrders.toLocaleString('en-IN')}
+            </p>
+          </div>
+          <div className="rounded-lg bg-bg-secondary p-4">
+            <p className="text-xs text-text-tertiary">Avg Order Value</p>
+            <p className="mt-1 text-lg font-bold text-text-primary">
+              {formatCurrency(Math.round(averageOrderValue))}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Summary */}
       <div className="mt-6 flex items-center justify-between border-t border-border-primary pt-4">
         <div>
-          <p className="text-sm text-text-tertiary">Total This Week</p>
-          <p className="text-xl font-bold text-text-primary">₹5,23,000</p>
+          <p className="text-sm text-text-tertiary">Total Revenue</p>
+          {isLoading ? (
+            <div className="h-7 w-28 animate-pulse rounded bg-bg-secondary" />
+          ) : (
+            <p className="text-xl font-bold text-text-primary">
+              {formatCurrency(totalRevenue)}
+            </p>
+          )}
         </div>
         <div className="text-right">
-          <p className="text-sm text-text-tertiary">Average/Day</p>
-          <p className="text-xl font-bold text-text-primary">₹74,714</p>
+          <p className="text-sm text-text-tertiary">Avg Order Value</p>
+          {isLoading ? (
+            <div className="h-7 w-24 animate-pulse rounded bg-bg-secondary" />
+          ) : (
+            <p className="text-xl font-bold text-text-primary">
+              {formatCurrency(Math.round(averageOrderValue))}
+            </p>
+          )}
         </div>
       </div>
     </div>

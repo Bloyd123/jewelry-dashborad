@@ -8,6 +8,11 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Save, X, Loader2 } from 'lucide-react'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useNotification } from '@/hooks/useNotification'
+import { useSaleActions } from '@/hooks/sales/useSaleActions'
+import { createSaleSchema } from '@/validators/saleValidator'
+import type { CreateSaleInput } from '@/validators/saleValidator'
 import type { SaleFormProps } from './SaleForm.types'
 import { defaultSaleFormData } from './SaleForm.types'
 import { CustomerSection } from './sections/CustomerSection'
@@ -16,7 +21,13 @@ import { OldGoldSection } from './sections/OldGoldSection'
 import { PaymentSection } from './sections/PaymentSection'
 import { DeliverySection } from './sections/DeliverySection'
 import { NotesSection } from './sections/NotesSection'
+import type { CreateSaleRequest } from '@/types/sale.types'
+export type SaleFormData = CreateSaleRequest & {
+  saleDate?: string  // only frontend field
+}
 
+export type SaleFormItem    = CreateSaleRequest['items'][number]
+export type OldGoldFormItem = NonNullable<CreateSaleRequest['oldGoldExchange']>['items'][number]
 export default function SaleFormDesktop({
   initialData = {},
   shopId,
@@ -32,7 +43,10 @@ export default function SaleFormDesktop({
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [isLoading, setIsLoading] = useState(false)
+const [showConfirmDialog, setShowConfirmDialog] = useState(false)
+const { showSuccess, showError } = useNotification()
+const { createSale, updateSale, isCreating, isUpdating } = useSaleActions(shopId)
+const isLoading = isCreating || isUpdating
 
   const handleChange = (name: string, value: any) => {
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -51,31 +65,61 @@ export default function SaleFormDesktop({
     setTouched(prev => ({ ...prev, [name]: true }))
   }
 
-  const handleSubmit = async () => {
-    // Validation logic
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.customerId) {
-      newErrors.customerId = t('validation.customerRequired')
-    }
-
-    if (!formData.items || formData.items.length === 0) {
-      newErrors.items = t('validation.itemsRequired')
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors)
-      return
-    }
-
-    // Mock submit
-    setIsLoading(true)
-    setTimeout(() => {
-      console.log('Mock Submit:', { mode, shopId, saleId, formData })
-      setIsLoading(false)
-      onSuccess?.()
-    }, 1500)
+const handleSubmit = async () => {
+  try {
+    createSaleSchema.parse(formData)
+  } catch (error: any) {
+    const validationErrors: Record<string, string> = {}
+    error.issues?.forEach((err: any) => {
+      if (err.path?.[0]) {
+        validationErrors[err.path[0]] = err.message
+      }
+    })
+    setErrors(validationErrors)
+    const errorMessages = Object.entries(validationErrors)
+      .map(([_, message]) => `• ${message}`)
+      .join('\n')
+    showError(
+      errorMessages || t('sales.errors.pleaseFillRequired'),
+      t('sales.errors.validationFailed')
+    )
+    return
   }
+  setShowConfirmDialog(true)
+}
+
+const handleConfirmedSubmit = async () => {
+  const setFormErrors = (apiErrors: Record<string, string>) => {
+    setErrors(apiErrors)
+  }
+
+  try {
+    const { saleDate, ...payload } = formData
+const result =
+  mode === 'edit' && saleId
+    ? await updateSale(saleId, payload, setFormErrors)  // ← no 'as any'
+    : await createSale(payload, setFormErrors)    
+
+    if (result.success) {
+      showSuccess(
+        mode === 'create' ? t('sales.success.created') : t('sales.success.updated'),
+        mode === 'create' ? t('sales.success.createdTitle') : t('sales.success.updatedTitle')
+      )
+      setShowConfirmDialog(false)
+      onSuccess?.()
+    } else {
+  const errorMsg = (result as any).error
+  if (errorMsg) {
+    showError(errorMsg, t('sales.errors.errorTitle'))
+  }
+}
+  } catch (error: any) {
+    showError(
+      error?.message || t('sales.errors.unexpectedError'),
+      t('sales.errors.errorTitle')
+    )
+  }
+}
 
   return (
     <div className="container mx-auto max-w-7xl p-6">
@@ -244,6 +288,22 @@ export default function SaleFormDesktop({
           </Button>
         </div>
       </div>
+      <ConfirmDialog
+  open={showConfirmDialog}
+  onOpenChange={setShowConfirmDialog}
+  title={mode === 'create' ? t('sales.confirmCreate') : t('sales.confirmUpdate')}
+  description={
+    mode === 'create'
+      ? t('sales.confirmCreateDescription')
+      : t('sales.confirmUpdateDescription')
+  }
+  variant={mode === 'create' ? 'success' : 'info'}
+  confirmLabel={mode === 'create' ? t('common.create') : t('common.update')}
+  cancelLabel={t('common.cancel')}
+  onConfirm={handleConfirmedSubmit}
+  onCancel={() => setShowConfirmDialog(false)}
+  loading={isLoading}
+/>
     </div>
   )
 }

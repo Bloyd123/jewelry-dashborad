@@ -47,17 +47,31 @@ export const OldGoldSection = ({
     })
   }
 
-  const handleItemChange = (index: number, field: string, value: any) => {
-    const updatedItems = [...items]
-    updatedItems[index] = {
-      ...updatedItems[index],
-      [field]: value,
-    }
-    onChange('oldGoldExchange', {
-      ...data.oldGoldExchange,
-      items: updatedItems,
-    })
+const handleItemChange = (index: number, field: string, value: any) => {
+  const updatedItems = [...items]
+  const updatedItem = {
+    ...updatedItems[index],
+    [field]: value,
   }
+
+  // Auto-calculate netWeight and totalValue
+  const grossWeight = field === 'grossWeight' ? value : updatedItem.grossWeight
+  const stoneWeight = field === 'stoneWeight' ? value : updatedItem.stoneWeight
+  const ratePerGram = field === 'ratePerGram' ? value : updatedItem.ratePerGram
+  const netWeight   = grossWeight - stoneWeight
+  const totalValue  = netWeight * ratePerGram
+
+  updatedItems[index] = {
+    ...updatedItem,
+    netWeight,
+    totalValue,
+  }
+
+  onChange('oldGoldExchange', {
+    ...data.oldGoldExchange,
+    items: updatedItems,
+  })
+}
 
   const calculateItemValue = (item: any) => {
     const netWeight = item.grossWeight - item.stoneWeight

@@ -1,4 +1,5 @@
-// FILE: src/components/features/Customers/tabs/LoyaltyTab.tsx
+// FILE: src/components/customer/CustomerPage/tabs/LoyaltyTab.tsx
+
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Award, Gift, TrendingUp, Star } from 'lucide-react'
@@ -6,45 +7,8 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import type { Customer } from '@/types/customer.types'
-
-interface LoyaltyTransaction {
-  id: string
-  date: string
-  points: number
-  type: 'earned' | 'redeemed'
-  description: string
-}
-
-const MOCK_LOYALTY_HISTORY: LoyaltyTransaction[] = [
-  {
-    id: '1',
-    date: '2024-12-15',
-    points: 450,
-    type: 'earned',
-    description: 'Purchase of Gold Necklace',
-  },
-  {
-    id: '2',
-    date: '2024-11-20',
-    points: -200,
-    type: 'redeemed',
-    description: 'Discount on Purchase',
-  },
-  {
-    id: '3',
-    date: '2024-10-10',
-    points: 280,
-    type: 'earned',
-    description: 'Purchase of Diamond Ring',
-  },
-  {
-    id: '4',
-    date: '2024-09-05',
-    points: 550,
-    type: 'earned',
-    description: 'Purchase of Gold Chain',
-  },
-]
+import { useCustomerLoyaltySummary } from '@/hooks/customer'
+import { useAuth } from '@/hooks/auth'
 
 interface LoyaltyTabProps {
   customer: Customer
@@ -52,17 +16,18 @@ interface LoyaltyTabProps {
 
 export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customer }) => {
   const { t } = useTranslation()
+  const { currentShopId } = useAuth()
 
-  const totalEarned = MOCK_LOYALTY_HISTORY.filter(
-    t => t.type === 'earned'
-  ).reduce((sum, t) => sum + t.points, 0)
+  const { totalEarned, totalRedeemed, recentActivity, isLoading } =
+    useCustomerLoyaltySummary(currentShopId!, customer._id)
 
-  const totalRedeemed = Math.abs(
-    MOCK_LOYALTY_HISTORY.filter(t => t.type === 'redeemed').reduce(
-      (sum, t) => sum + t.points,
-      0
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <p className="text-sm text-text-tertiary">Loading...</p>
+      </div>
     )
-  )
+  }
 
   return (
     <div className="mx-auto w-full max-w-4xl space-y-6 p-4">
@@ -97,6 +62,7 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customer }) => {
         />
       </StatCardGrid>
 
+      {/* Membership Tier */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -117,6 +83,8 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customer }) => {
           </Badge>
         </div>
       </div>
+
+      {/* Points Value */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerLoyalty.pointsValue')}
@@ -144,58 +112,71 @@ export const LoyaltyTab: React.FC<LoyaltyTabProps> = ({ customer }) => {
         </p>
       </div>
 
+      {/* Recent Activity - REAL DATA */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerLoyalty.recentActivity')}
         </h3>
 
-        <div className="space-y-3">
-          {MOCK_LOYALTY_HISTORY.map(transaction => (
-            <div
-              key={transaction.id}
-              className="flex items-center justify-between rounded-lg border border-border-secondary bg-bg-primary p-4"
-            >
-              <div className="flex items-center gap-3">
+        {recentActivity.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <Gift className="mb-3 h-10 w-10 text-text-tertiary" />
+            <p className="text-sm text-text-tertiary">
+              {t('customerLoyalty.noActivity')}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {recentActivity.map((log: any) => {
+              const isEarned = log.action === 'add_loyalty_points'
+              return (
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full ${
-                    transaction.type === 'earned'
-                      ? 'bg-status-success/10'
-                      : 'bg-status-warning/10'
-                  }`}
+                  key={log._id}
+                  className="flex items-center justify-between rounded-lg border border-border-secondary bg-bg-primary p-4"
                 >
-                  {transaction.type === 'earned' ? (
-                    <TrendingUp className="h-5 w-5 text-status-success" />
-                  ) : (
-                    <Gift className="h-5 w-5 text-status-warning" />
-                  )}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`flex h-10 w-10 items-center justify-center rounded-full ${
+                        isEarned
+                          ? 'bg-status-success/10'
+                          : 'bg-status-warning/10'
+                      }`}
+                    >
+                      {isEarned ? (
+                        <TrendingUp className="h-5 w-5 text-status-success" />
+                      ) : (
+                        <Gift className="h-5 w-5 text-status-warning" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-text-primary">
+                        {log.description}
+                      </p>
+                      <p className="text-xs text-text-tertiary">
+                        {new Date(log.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p
+                      className={`text-lg font-bold ${
+                        isEarned
+                          ? 'text-status-success'
+                          : 'text-status-warning'
+                      }`}
+                    >
+                      {isEarned ? '+' : '-'}
+                      {log.metadata?.points || 0}
+                    </p>
+                    <p className="text-xs text-text-tertiary">
+                      {t(`customerLoyalty.${isEarned ? 'earned' : 'redeemed'}`)}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-text-primary">
-                    {transaction.description}
-                  </p>
-                  <p className="text-xs text-text-tertiary">
-                    {new Date(transaction.date).toLocaleDateString()}
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p
-                  className={`text-lg font-bold ${
-                    transaction.type === 'earned'
-                      ? 'text-status-success'
-                      : 'text-status-warning'
-                  }`}
-                >
-                  {transaction.points > 0 ? '+' : ''}
-                  {transaction.points}
-                </p>
-                <p className="text-xs text-text-tertiary">
-                  {t(`customerLoyalty.${transaction.type}`)}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+              )
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

@@ -1,64 +1,83 @@
-// FILE: src/pages/Sales/SalesDetailsPage.tsx
-// Sales Details Page Component
-
 import React, { useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Loader2, AlertCircle } from 'lucide-react'
 import { SalesDetailHeader } from '@/components/sales/SalesDetailPage/SalesDetailHeader'
-import OverviewTab from '@/components/sales/SalesDetailPage/tabs/OverviewTab' //   HistoryTab, //   DocumentsTab, //   PaymentsTab,
+import OverviewTab from '@/components/sales/SalesDetailPage/tabs/OverviewTab'
 import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
 import PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
 import HistoryTab from '@/components/sales/SalesDetailPage/tabs/HistoryTab'
 import DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
-
-import { dummySales } from '../data'
-
-// SALES DETAILS PAGE COMPONENT
+import { useGetSaleByIdQuery } from '@/store/api/salesApi'
+import { useGetSalePaymentsQuery } from '@/store/api/salesApi'
+import { usePrintInvoiceMutation, useSendInvoiceMutation } from '@/store/api/salesApi'
+import { useNotification } from '@/hooks/useNotification'
 
 export const SalesDetailsPage: React.FC = () => {
+  const { shopId, saleId } = useParams<{ shopId: string; saleId: string }>()
+  const navigate = useNavigate()
+  const { showSuccess, showError } = useNotification()
   const [activeTab, setActiveTab] = useState('overview')
 
-  // Get sale data - Currently using dummy data
-  // TODO: Replace with API call - const { saleId } = useParams(); const { data: sale } = useGetSaleByIdQuery(saleId)
-  const sale = dummySales[0]
+  // ── Real API ──────────────────────────────
+  const {
+    data: sale,
+    isLoading,
+    error,
+  } = useGetSaleByIdQuery(
+    { shopId: shopId ?? '', saleId: saleId ?? '' },
+    { skip: !shopId || !saleId }
+  )
 
-  // Handle back navigation
-  const handleBackClick = () => {
-    // TODO: Add navigation logic
-    console.log('Navigate back to sales list')
-    // window.history.back() or navigate('/sales')
+  const [printInvoice, { isLoading: isPrinting }] = usePrintInvoiceMutation()
+  const [sendInvoice, { isLoading: isSending }] = useSendInvoiceMutation()
+
+  // ── Loading ───────────────────────────────
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-accent" />
+      </div>
+    )
   }
 
-  // Handle edit
-  const handleEditClick = () => {
-    console.log('Edit sale:', sale._id)
-    // TODO: Navigate to edit page or open edit modal
+  // ── Error ─────────────────────────────────
+  if (error || !sale) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-4">
+        <AlertCircle className="h-12 w-12 text-status-error" />
+        <p className="text-text-secondary">Sale not found</p>
+      </div>
+    )
   }
 
-  // Handle delete
+  // ── Handlers ──────────────────────────────
+  const handleBackClick = () => navigate(`/shops/${shopId}/sales`)
+
+  const handleEditClick = () =>
+    navigate(`/shops/${shopId}/sales/${saleId}/edit`)
+
   const handleDeleteClick = () => {
-    console.log('Delete sale:', sale._id)
-    // TODO: Show delete confirmation dialog
+    // TODO: show confirm dialog
+    console.log('Delete sale:', saleId)
   }
 
-  // Handle print
-  const handlePrintClick = () => {
-    console.log('Print invoice:', sale.invoiceNumber)
-    // TODO: Generate and print PDF invoice
-    // await printInvoice(sale._id)
+  const handlePrintClick = async () => {
+    try {
+      await printInvoice({ shopId: shopId!, saleId: saleId! }).unwrap()
+      showSuccess('Invoice printed successfully', 'Print')
+    } catch {
+      showError('Failed to print invoice', 'Error')
+    }
   }
 
-  // Handle send
-  const handleSendClick = () => {
+  const handleSendClick = async () => {
+    // TODO: open send modal for method/recipient selection
     console.log('Send invoice:', sale.invoiceNumber)
-    // TODO: Open send invoice modal (email/sms/whatsapp)
   }
 
-  // Handle tab change
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab)
-    console.log('Active tab changed to:', tab)
-  }
+  const handleTabChange = (tab: string) => setActiveTab(tab)
 
-  // Render tab content based on active tab
+  // ── Tab Content ───────────────────────────
   const renderTabContent = () => {
     switch (activeTab) {
       case 'overview':
@@ -92,7 +111,10 @@ export const SalesDetailsPage: React.FC = () => {
       case 'documents':
         return (
           <div className="p-6">
-            <DocumentsTab documents={sale.documents} saleId={sale._id} />
+            <DocumentsTab
+              documents={sale.documents}
+              saleId={sale._id}
+            />
           </div>
         )
 
@@ -114,7 +136,6 @@ export const SalesDetailsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-bg-primary">
-      {/* Header with Tabs */}
       <SalesDetailHeader
         saleId={sale._id}
         activeTab={activeTab}
@@ -125,8 +146,6 @@ export const SalesDetailsPage: React.FC = () => {
         onPrintClick={handlePrintClick}
         onSendClick={handleSendClick}
       />
-
-      {/* Tab Content - BAHAR render ho raha hai */}
       {renderTabContent()}
     </div>
   )

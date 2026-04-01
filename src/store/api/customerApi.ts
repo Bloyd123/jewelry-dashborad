@@ -190,6 +190,59 @@ export const customerApi = baseApi.injectEndpoints({
         { type: 'CustomerList', id: shopId },
       ],
     }),
+    // Advanced Analytics
+getAdvancedAnalytics: build.query<any, { shopId: string }>({
+  query: ({ shopId }) => ({
+    url: replacePathParams(CUSTOMER_ENDPOINTS.ADVANCED_ANALYTICS, { shopId }),
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (result, error, { shopId }) => [
+    { type: 'CustomerAnalytics', id: `advanced_${shopId}` },
+  ],
+}),
+
+// Customer Activity
+getCustomerActivity: build.query<
+  any[],
+  { shopId: string; customerId: string; module?: string; action?: string; limit?: number }
+>({
+  query: ({ shopId, customerId, ...params }) => ({
+    url: replacePathParams(CUSTOMER_ENDPOINTS.ACTIVITY, { shopId, customerId }),
+    params,
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (result, error, { customerId }) => [
+    { type: 'CustomerActivity', id: customerId },
+  ],
+}),
+
+// Customer Documents
+getCustomerDocuments: build.query<
+  any[],
+  { shopId: string; customerId: string }
+>({
+  query: ({ shopId, customerId }) => ({
+    url: replacePathParams(CUSTOMER_ENDPOINTS.DOCUMENTS, { shopId, customerId }),
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (result, error, { customerId }) => [
+    { type: 'CustomerDocuments', id: customerId },
+  ],
+}),
+
+// Loyalty Summary
+getCustomerLoyaltySummary: build.query<
+  { totalEarned: number; totalRedeemed: number; recentActivity: any[] },
+  { shopId: string; customerId: string }
+>({
+  query: ({ shopId, customerId }) => ({
+    url: replacePathParams(CUSTOMER_ENDPOINTS.LOYALTY_SUMMARY, { shopId, customerId }),
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (result, error, { customerId }) => [
+    { type: 'CustomerLoyalty', id: customerId },
+  ],
+}),
 
     getCustomerAnalytics: build.query<
       CustomerAnalyticsResponse['data']['summary'],
@@ -222,4 +275,8 @@ export const {
   useAddLoyaltyPointsMutation,
   useRedeemLoyaltyPointsMutation,
   useGetCustomerAnalyticsQuery,
+    useGetAdvancedAnalyticsQuery,       // NEW
+  useGetCustomerActivityQuery,        // NEW
+  useGetCustomerDocumentsQuery,       // NEW
+  useGetCustomerLoyaltySummaryQuery,  // NEW
 } = customerApi

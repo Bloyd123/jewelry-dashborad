@@ -1,5 +1,4 @@
-// FILE: componens/Dashboard/components/DashboardStats.tsx
-// Stats Cards Component
+// FILE: components/dashboard/components/DashboardStats.tsx
 
 import {
   TrendingUp,
@@ -10,40 +9,38 @@ import {
   ShoppingBag,
 } from 'lucide-react'
 
-interface StatCardProps {
-  title: string
-  value: string
-  change: number
-  icon: React.ReactNode
-  trend: 'up' | 'down'
+// ─────────────────────────────────────────────
+// TYPES
+// ─────────────────────────────────────────────
+interface Stats {
+  totalRevenue:   number
+  totalOrders:    number
+  totalProducts:  number
+  totalCustomers: number
 }
 
-const StatCard = ({ title, value, change, icon, trend }: StatCardProps) => {
-  const isPositive = trend === 'up'
+interface StatCardProps {
+  title:     string
+  value:     string
+  icon:      React.ReactNode
+  isLoading: boolean
+}
 
+// ─────────────────────────────────────────────
+// STAT CARD
+// ─────────────────────────────────────────────
+const StatCard = ({ title, value, icon, isLoading }: StatCardProps) => {
   return (
     <div className="card transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <p className="mb-1 text-sm text-text-tertiary">{title}</p>
-          <h3 className="mb-2 text-2xl font-bold text-text-primary">{value}</h3>
 
-          {/* Trend */}
-          <div className="flex items-center gap-1">
-            {isPositive ? (
-              <TrendingUp size={16} className="text-status-success" />
-            ) : (
-              <TrendingDown size={16} className="text-status-error" />
-            )}
-            <span
-              className={`text-sm font-medium ${isPositive ? 'text-status-success' : 'text-status-error'}`}
-            >
-              {Math.abs(change)}%
-            </span>
-            <span className="ml-1 text-xs text-text-tertiary">
-              vs last month
-            </span>
-          </div>
+          {isLoading ? (
+            <div className="mb-2 h-8 w-24 animate-pulse rounded bg-bg-secondary" />
+          ) : (
+            <h3 className="mb-2 text-2xl font-bold text-text-primary">{value}</h3>
+          )}
         </div>
 
         {/* Icon */}
@@ -55,42 +52,51 @@ const StatCard = ({ title, value, change, icon, trend }: StatCardProps) => {
   )
 }
 
-export const DashboardStats = () => {
-  const stats = [
+// ─────────────────────────────────────────────
+// FORMAT HELPERS
+// ─────────────────────────────────────────────
+const formatCurrency = (amount: number) =>
+  `₹${amount.toLocaleString('en-IN')}`
+
+const formatNumber = (num: number) =>
+  num.toLocaleString('en-IN')
+
+// ─────────────────────────────────────────────
+// DASHBOARD STATS
+// ─────────────────────────────────────────────
+interface DashboardStatsProps {
+  stats:     Stats
+  isLoading: boolean
+}
+
+export const DashboardStats = ({ stats, isLoading }: DashboardStatsProps) => {
+  const cards = [
     {
       title: 'Total Revenue',
-      value: '₹2,45,680',
-      change: 12.5,
-      icon: <DollarSign size={24} />,
-      trend: 'up' as const,
+      value: formatCurrency(stats.totalRevenue),
+      icon:  <DollarSign size={24} />,
     },
     {
       title: 'Total Orders',
-      value: '1,234',
-      change: 8.2,
-      icon: <ShoppingBag size={24} />,
-      trend: 'up' as const,
+      value: formatNumber(stats.totalOrders),
+      icon:  <ShoppingBag size={24} />,
     },
     {
       title: 'Products',
-      value: '248',
-      change: -3.1,
-      icon: <Package size={24} />,
-      trend: 'down' as const,
+      value: formatNumber(stats.totalProducts),
+      icon:  <Package size={24} />,
     },
     {
       title: 'Customers',
-      value: '892',
-      change: 15.8,
-      icon: <Users size={24} />,
-      trend: 'up' as const,
+      value: formatNumber(stats.totalCustomers),
+      icon:  <Users size={24} />,
     },
   ]
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map(stat => (
-        <StatCard key={stat.title} {...stat} />
+      {cards.map(card => (
+        <StatCard key={card.title} {...card} isLoading={isLoading} />
       ))}
     </div>
   )

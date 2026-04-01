@@ -40,6 +40,80 @@ export const supplierApi = baseApi.injectEndpoints({
 
       providesTags: (result, error, { id }) => [{ type: 'Supplier', id }],
     }),
+    addSupplierDocument: build.mutation<
+  Supplier,
+  { shopId: string; id: string; documentType: string; documentNumber?: string; documentUrl?: string }
+>({
+  query: ({ shopId, id, ...data }) => ({
+    url: replacePathParams(SUPPLIER_ENDPOINTS.ADD_DOCUMENT, { shopId, id }),
+    method: 'POST',
+    body: data,
+  }),
+  transformResponse: (response: SingleSupplierResponse) => response.data,
+  invalidatesTags: (result, error, { id, shopId }) => [
+    { type: 'Supplier', id },
+    { type: 'SupplierList', id: shopId },
+  ],
+}),
+
+deleteSupplierDocument: build.mutation<
+  Supplier,
+  { shopId: string; id: string; documentId: string }
+>({
+  query: ({ shopId, id, documentId }) => ({
+    url: replacePathParams(SUPPLIER_ENDPOINTS.DELETE_DOCUMENT, { shopId, id, documentId }),
+    method: 'DELETE',
+  }),
+  transformResponse: (response: SingleSupplierResponse) => response.data,
+  invalidatesTags: (result, error, { id, shopId }) => [
+    { type: 'Supplier', id },
+    { type: 'SupplierList', id: shopId },
+  ],
+}),
+
+addSupplierCertification: build.mutation<
+  Supplier,
+  { shopId: string; id: string; certificationType: string; certificateNumber?: string; issuedBy?: string; issueDate?: string; expiryDate?: string; documentUrl?: string }
+>({
+  query: ({ shopId, id, ...data }) => ({
+    url: replacePathParams(SUPPLIER_ENDPOINTS.ADD_CERTIFICATION, { shopId, id }),
+    method: 'POST',
+    body: data,
+  }),
+  transformResponse: (response: SingleSupplierResponse) => response.data,
+  invalidatesTags: (result, error, { id, shopId }) => [
+    { type: 'Supplier', id },
+    { type: 'SupplierList', id: shopId },
+  ],
+}),
+
+deleteSupplierCertification: build.mutation<
+  Supplier,
+  { shopId: string; id: string; certificationId: string }
+>({
+  query: ({ shopId, id, certificationId }) => ({
+    url: replacePathParams(SUPPLIER_ENDPOINTS.DELETE_CERTIFICATION, { shopId, id, certificationId }),
+    method: 'DELETE',
+  }),
+  transformResponse: (response: SingleSupplierResponse) => response.data,
+  invalidatesTags: (result, error, { id, shopId }) => [
+    { type: 'Supplier', id },
+    { type: 'SupplierList', id: shopId },
+  ],
+}),
+
+getSupplierActivity: build.query<
+  { logs: any[]; pagination: any },
+  { shopId: string; id: string; page?: number; limit?: number }
+>({
+  query: ({ shopId, id, ...params }) => ({
+    url: replacePathParams(SUPPLIER_ENDPOINTS.ACTIVITY, { shopId, id }),
+    params,
+  }),
+  providesTags: (result, error, { id }) => [
+    { type: 'Supplier', id: `${id}-activity` },
+  ],
+}),
     searchSuppliers: build.query<
       Supplier[],
       {
@@ -271,4 +345,9 @@ export const {
   useMarkSupplierAsPreferredMutation,
   useRemoveSupplierPreferredMutation,
   useUpdateSupplierBalanceMutation,
+  useAddSupplierDocumentMutation,
+useDeleteSupplierDocumentMutation,
+useAddSupplierCertificationMutation,
+useDeleteSupplierCertificationMutation,
+useGetSupplierActivityQuery,
 } = supplierApi

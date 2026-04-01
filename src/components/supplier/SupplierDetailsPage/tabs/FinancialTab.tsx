@@ -13,146 +13,56 @@ import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { DataTable } from '@/components/ui/data-display/DataTable/DataTable'
 import { Button } from '@/components/ui/button'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
-// import { dummySupplier } from '@/pages/suppliers/data'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 import type { Supplier } from '@/types/supplier.types'
+import type { Payment } from '@/types/payment.types'
 
-//
-// PAYMENT HISTORY TYPE
-//
+// ─── HOOKS ──────────────────────────────────────────────────────────────────
+import { useSupplierPayments } from '@/hooks/payment/usePaymentsList'
+import { usePaymentActions } from '@/hooks/payment/usePaymentActions'
+import { useAuth } from '@/hooks/auth'
+
+// ─── PROPS ──────────────────────────────────────────────────────────────────
 interface SupplierFinancialTabProps {
   supplier: Supplier
 }
 
-interface PaymentHistory {
-  _id: string
-  date: string
-  type: 'Payment' | 'Purchase' | 'Refund' | 'Adjustment'
-  amount: number
-  balance: number
-  note: string
-  user: string
-}
-
-//
-// DUMMY PAYMENT HISTORY DATA
-//
-
-const dummyPaymentHistory: PaymentHistory[] = [
-  {
-    _id: 'pay_001',
-    date: '2024-12-15',
-    type: 'Payment',
-    amount: -200000,
-    balance: 250000,
-    note: 'Partial payment received',
-    user: 'Amit Kumar',
-  },
-  {
-    _id: 'pay_002',
-    date: '2024-12-10',
-    type: 'Purchase',
-    amount: 450000,
-    balance: 450000,
-    note: 'Gold bars purchase',
-    user: 'Rajesh Singh',
-  },
-  {
-    _id: 'pay_003',
-    date: '2024-12-05',
-    type: 'Payment',
-    amount: -300000,
-    balance: 0,
-    note: 'Full payment',
-    user: 'Amit Kumar',
-  },
-  {
-    _id: 'pay_004',
-    date: '2024-12-01',
-    type: 'Purchase',
-    amount: 300000,
-    balance: 300000,
-    note: 'Gold coins',
-    user: 'Rajesh Singh',
-  },
-  {
-    _id: 'pay_005',
-    date: '2024-11-25',
-    type: 'Payment',
-    amount: -500000,
-    balance: 0,
-    note: 'Full payment',
-    user: 'Amit Kumar',
-  },
-  {
-    _id: 'pay_006',
-    date: '2024-11-20',
-    type: 'Purchase',
-    amount: 500000,
-    balance: 500000,
-    note: '22K gold purchase',
-    user: 'Rajesh Singh',
-  },
-  {
-    _id: 'pay_007',
-    date: '2024-11-15',
-    type: 'Refund',
-    amount: -50000,
-    balance: 0,
-    note: 'Return credit',
-    user: 'Amit Kumar',
-  },
-  {
-    _id: 'pay_008',
-    date: '2024-11-10',
-    type: 'Purchase',
-    amount: 350000,
-    balance: 50000,
-    note: '24K gold bars',
-    user: 'Rajesh Singh',
-  },
-  {
-    _id: 'pay_009',
-    date: '2024-11-05',
-    type: 'Payment',
-    amount: -300000,
-    balance: -300000,
-    note: 'Advance payment',
-    user: 'Amit Kumar',
-  },
-  {
-    _id: 'pay_010',
-    date: '2024-11-01',
-    type: 'Purchase',
-    amount: 400000,
-    balance: 0,
-    note: 'Gold purchase',
-    user: 'Rajesh Singh',
-  },
-]
-
-//
-// MAIN COMPONENT
-//
-
-const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
-  supplier,
-}) => {
+// ─── MAIN COMPONENT ─────────────────────────────────────────────────────────
+const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier }) => {
   const { t } = useTranslation()
+  const { currentShopId } = useAuth()
+  const shopId = currentShopId!
 
-  const [paymentHistory] = useState<PaymentHistory[]>(dummyPaymentHistory)
+  // ── State ────────────────────────────────────────────────────────────────
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
-  const [managementAction, setManagementAction] =
-    useState<ManagementAction | null>(null)
+  const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+  const [page, setPage] = useState(1)
+  const limit = 10
+
+  // ── Real API ─────────────────────────────────────────────────────────────
+  const { payments, pagination, isLoading } = useSupplierPayments(
+    shopId,
+    supplier._id,
+    { page, limit }
+  )
+
+  const { createPayment, isCreating } = usePaymentActions(shopId)
+
+  // ── Handlers ─────────────────────────────────────────────────────────────
   const handleManagementSuccess = () => {
-    console.log('Action completed:', managementAction)
-    // Refresh supplier data here
     setIsManagementModalOpen(false)
     setManagementAction(null)
   }
 
-  // Format currency
+  const handleAddPayment = async () => {
+    // Payment modal open hoga — abhi direct create nahi karte
+    // Future mein AddPaymentModal banana hoga
+    setManagementAction('update-balance')
+    setIsManagementModalOpen(true)
+  }
+
+  // ── Formatters ───────────────────────────────────────────────────────────
   const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-IN', {
       style: 'currency',
@@ -161,7 +71,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
     }).format(Math.abs(amount))
   }
 
-  // Format date
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -170,20 +79,18 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
     })
   }
 
-  // Calculate credit utilization percentage
+  // ── Credit Utilization ───────────────────────────────────────────────────
   const creditUtilization =
     supplier.creditLimit > 0
-      ? Math.round(
-          (Math.abs(supplier.currentBalance) / supplier.creditLimit) * 100
-        )
+      ? Math.round((Math.abs(supplier.currentBalance) / supplier.creditLimit) * 100)
       : 0
 
-  // Payment history table columns
-  const paymentColumns: DataTableColumn<PaymentHistory>[] = [
+  // ── Table Columns ────────────────────────────────────────────────────────
+  const paymentColumns: DataTableColumn<Payment>[] = [
     {
       id: 'date',
       header: 'suppliers.financial.table.date',
-      accessorKey: 'date',
+      accessorKey: 'paymentDate',
       cell: ({ value }) => (
         <span className="text-text-primary">{formatDate(value)}</span>
       ),
@@ -192,17 +99,68 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
     {
       id: 'type',
       header: 'suppliers.financial.table.type',
-      accessorKey: 'type',
+      accessorKey: 'paymentType',
       cell: ({ value }) => {
-        const typeStyles = {
-          Payment: 'bg-status-success/10 text-status-success',
-          Purchase: 'bg-status-info/10 text-status-info',
-          Refund: 'bg-status-warning/10 text-status-warning',
-          Adjustment: 'bg-accent/10 text-accent',
+        const typeStyles: Record<string, string> = {
+          sale_payment:     'bg-status-success/10 text-status-success',
+          purchase_payment: 'bg-status-info/10 text-status-info',
+          refund:           'bg-status-warning/10 text-status-warning',
+          advance_payment:  'bg-accent/10 text-accent',
+          other:            'bg-bg-tertiary text-text-secondary',
         }
         return (
           <span
-            className={`inline-flex rounded-full px-2 py-1 text-xs font-medium ${typeStyles[value as keyof typeof typeStyles]}`}
+            className={`inline-flex rounded-full px-2 py-1 text-xs font-medium capitalize ${typeStyles[value] || typeStyles.other}`}
+          >
+            {value?.replace('_', ' ')}
+          </span>
+        )
+      },
+      sortable: true,
+    },
+    {
+      id: 'paymentMode',
+      header: 'suppliers.financial.table.mode',
+      accessorKey: 'paymentMode',
+      cell: ({ value }) => (
+        <span className="text-sm capitalize text-text-secondary">
+          {value}
+        </span>
+      ),
+      sortable: true,
+    },
+    {
+      id: 'amount',
+      header: 'suppliers.financial.table.amount',
+      accessorKey: 'amount',
+      cell: ({ value, row }) => {
+        const isReceipt = row.transactionType === 'receipt'
+        return (
+          <span
+            className={`font-semibold ${isReceipt ? 'text-status-success' : 'text-status-error'}`}
+          >
+            {isReceipt ? '+' : '-'}
+            {formatCurrency(value)}
+          </span>
+        )
+      },
+      align: 'right',
+      sortable: true,
+    },
+    {
+      id: 'status',
+      header: 'suppliers.financial.table.status',
+      accessorKey: 'status',
+      cell: ({ value }) => {
+        const statusStyles: Record<string, string> = {
+          completed: 'bg-status-success/10 text-status-success',
+          pending:   'bg-status-warning/10 text-status-warning',
+          failed:    'bg-status-error/10 text-status-error',
+          cancelled: 'bg-bg-tertiary text-text-secondary',
+        }
+        return (
+          <span
+            className={`inline-flex rounded-full px-2 py-1 text-xs font-medium capitalize ${statusStyles[value] || ''}`}
           >
             {value}
           </span>
@@ -211,57 +169,21 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
       sortable: true,
     },
     {
-      id: 'amount',
-      header: 'suppliers.financial.table.amount',
-      accessorKey: 'amount',
-      cell: ({ value }) => (
-        <span
-          className={`font-semibold ${value > 0 ? 'text-status-error' : 'text-status-success'}`}
-        >
-          {value > 0 ? '+' : ''}
-          {formatCurrency(value)}
-        </span>
-      ),
-      align: 'right',
-      sortable: true,
-    },
-    {
-      id: 'balance',
-      header: 'suppliers.financial.table.balance',
-      accessorKey: 'balance',
-      cell: ({ value }) => (
-        <span
-          className={`font-medium ${value > 0 ? 'text-status-error' : value < 0 ? 'text-status-success' : 'text-text-secondary'}`}
-        >
-          {formatCurrency(value)}
-        </span>
-      ),
-      align: 'right',
-      sortable: true,
-    },
-    {
-      id: 'note',
+      id: 'notes',
       header: 'suppliers.financial.table.note',
-      accessorKey: 'note',
+      accessorKey: 'notes',
       cell: ({ value }) => (
-        <span className="text-sm text-text-secondary">{value}</span>
-      ),
-    },
-    {
-      id: 'user',
-      header: 'suppliers.financial.table.user',
-      accessorKey: 'user',
-      cell: ({ value }) => (
-        <span className="text-sm text-text-primary">{value}</span>
+        <span className="text-sm text-text-secondary">{value || '-'}</span>
       ),
     },
   ]
 
+  // ── RENDER ───────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
+
       {/* Financial Summary Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Current Balance */}
         <StatCard
           title={t('suppliers.financial.currentBalance')}
           value={formatCurrency(supplier.currentBalance)}
@@ -274,8 +196,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
               : t('suppliers.financial.advance')
           }
         />
-
-        {/* Total Due */}
         <StatCard
           title={t('suppliers.financial.totalDue')}
           value={formatCurrency(supplier.totalDue)}
@@ -284,8 +204,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
           size="md"
           subtitle={t('suppliers.financial.overdueAmount', { days: 0 })}
         />
-
-        {/* Total Purchases */}
         <StatCard
           title={t('suppliers.financial.totalPurchases')}
           value={formatCurrency(supplier.totalPurchases)}
@@ -294,8 +212,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
           size="md"
           subtitle={t('suppliers.financial.lastMonths', { months: 6 })}
         />
-
-        {/* Total Paid */}
         <StatCard
           title={t('suppliers.financial.totalPaid')}
           value={formatCurrency(supplier.totalPaid)}
@@ -336,7 +252,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
                 {formatCurrency(supplier.advancePayment || 0)}
               </span>
             </div>
-
             <div className="flex items-center justify-between border-b border-border-secondary pb-2">
               <span className="text-sm text-text-secondary">
                 {t('suppliers.financial.creditLimit')}
@@ -345,39 +260,32 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
                 {formatCurrency(supplier.creditLimit)}
               </span>
             </div>
-
             <div className="flex items-center justify-between border-b border-border-secondary pb-2">
               <span className="text-sm text-text-secondary">
                 {t('suppliers.financial.creditUsed')}
               </span>
               <span className="font-medium text-text-primary">
-                {formatCurrency(Math.abs(supplier.currentBalance))} (
-                {creditUtilization}%)
+                {formatCurrency(Math.abs(supplier.currentBalance))} ({creditUtilization}%)
               </span>
             </div>
-
             <div className="flex items-center justify-between">
               <span className="text-sm text-text-secondary">
                 {t('suppliers.financial.availableCredit')}
               </span>
               <span className="font-medium text-status-success">
-                {formatCurrency(
-                  supplier.creditLimit - Math.abs(supplier.currentBalance)
-                )}
+                {formatCurrency(supplier.creditLimit - Math.abs(supplier.currentBalance))}
               </span>
             </div>
           </div>
 
-          {/* Right Column - Progress Bar */}
+          {/* Right Column */}
           <div className="space-y-4">
             <div>
               <div className="mb-2 flex items-center justify-between text-sm">
                 <span className="text-text-secondary">
                   {t('suppliers.financial.creditUtilization')}
                 </span>
-                <span className="font-medium text-text-primary">
-                  {creditUtilization}%
-                </span>
+                <span className="font-medium text-text-primary">{creditUtilization}%</span>
               </div>
               <div className="h-2 overflow-hidden rounded-full bg-bg-tertiary">
                 <div
@@ -392,7 +300,6 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
                 />
               </div>
             </div>
-
             <div className="rounded-lg border border-border-secondary bg-bg-tertiary p-4">
               <div className="flex items-start gap-3">
                 <Calendar className="h-5 w-5 flex-shrink-0 text-accent" />
@@ -411,26 +318,22 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
         </div>
       </div>
 
-      {/* Payment History Table */}
+      {/* Payment History Table — REAL API */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex items-center justify-between border-b border-border-primary px-6 py-4">
           <h3 className="text-lg font-semibold text-text-primary">
             {t('suppliers.financial.paymentHistory')}
           </h3>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {}}
-              className="gap-2"
-            >
+            <Button variant="outline" size="sm" className="gap-2">
               <Download className="h-4 w-4" />
               <span>{t('suppliers.financial.export')}</span>
             </Button>
             <Button
               variant="default"
               size="sm"
-              onClick={() => {}}
+              onClick={handleAddPayment}
+              disabled={isCreating}
               className="gap-2"
             >
               <Plus className="h-4 w-4" />
@@ -440,24 +343,28 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({
         </div>
 
         <DataTable
-          data={paymentHistory}
+          data={payments}
           columns={paymentColumns}
+          isLoading={isLoading}
           pagination={{
             enabled: true,
-            pageSize: 10,
+            pageSize: limit,
             pageSizeOptions: [5, 10, 20, 50],
             showPageInfo: true,
             showFirstLastButtons: true,
+            currentPage: page,
+            totalItems: pagination?.total ?? 0,
+            onPageChange: setPage,
           }}
-          sorting={{
-            enabled: true,
-          }}
-          style={{
-            hoverEffect: true,
-            zebraStripes: false,
+          sorting={{ enabled: true }}
+          style={{ hoverEffect: true, zebraStripes: false }}
+          emptyState={{
+            message: t('suppliers.financial.noPayments'),
           }}
         />
       </div>
+
+      {/* Management Modal */}
       <SupplierManagementModal
         open={isManagementModalOpen}
         onOpenChange={setIsManagementModalOpen}

@@ -1,78 +1,61 @@
-//
 // FILE: src/components/sales/SaleForm/SaleForm.types.ts
-// SaleForm Types and Interfaces
-//
 
 import type {
-  SaleItem,
   OldGoldItem,
   PaymentMode,
   DeliveryType,
   SaleType,
+  MetalType,          
+  MakingChargesType,  
+  DiscountType,
+  WeightUnit,
 } from '@/types/sale.types'
 
-//
-// FORM DATA INTERFACE
-//
+
 
 export interface SaleFormData {
-  // Customer Info
   customerId: string
-
-  // Sale Details
   saleType: SaleType
   saleDate: string
-
-  // Items
   items: SaleFormItem[]
-
-  // Old Gold Exchange
   oldGoldExchange: {
     hasExchange: boolean
     items: OldGoldFormItem[]
   }
-
-  // Payment
   payment: {
     paymentMode: PaymentMode
     paidAmount: number
     dueDate?: string
   }
-
-  // Delivery
   delivery: {
     deliveryType: DeliveryType
     deliveryDate?: string
     deliveryAddress?: string
   }
-
-  // Additional
   notes?: string
   tags?: string[]
 }
-
-//
-// ITEM INTERFACES
-//
 
 export interface SaleFormItem {
   productId?: string
   productName: string
   productCode?: string
   category?: string
-  metalType: string
-  purity: string
+  metalType: MetalType          // ← string → MetalType
+  purity?: string
   grossWeight: number
   stoneWeight: number
+  weightUnit: WeightUnit        // ← 'gram'|'kg'|'tola' → WeightUnit
   ratePerGram: number
   stoneValue: number
   makingCharges: number
-  makingChargesType: 'per_gram' | 'flat' | 'percentage'
+  makingChargesType: MakingChargesType  // ← inline type → MakingChargesType
   otherCharges: number
   gstPercentage: number
   discount: {
-    type: 'percentage' | 'flat' | 'none'
-    value: number
+    type:   DiscountType        // ← inline type → DiscountType
+    value:  number
+    amount: number
   }
   quantity: number
   huid?: string
@@ -80,19 +63,17 @@ export interface SaleFormItem {
   warrantyPeriod?: number
   notes?: string
 }
-
 export interface OldGoldFormItem {
   metalType: string
   purity: string
   grossWeight: number
   stoneWeight: number
+  netWeight: number
   ratePerGram: number
+  totalValue: number
   description?: string
 }
 
-//
-// COMPONENT PROPS
-//
 
 export interface SaleFormProps {
   initialData?: Partial<SaleFormData>
@@ -111,18 +92,12 @@ export interface FormSectionProps {
   disabled?: boolean
 }
 
-//
-// VALIDATION RESULT
-//
 
 export interface ValidationResult {
   isValid: boolean
   errors: Record<string, string>
 }
 
-//
-// DEFAULT VALUES
-//
 
 export const defaultSaleFormData: SaleFormData = {
   customerId: '',
@@ -145,30 +120,34 @@ export const defaultSaleFormData: SaleFormData = {
 }
 
 export const defaultSaleItem: SaleFormItem = {
-  productName: '',
-  metalType: 'gold',
-  purity: '22K',
-  grossWeight: 0,
-  stoneWeight: 0,
-  ratePerGram: 0,
-  stoneValue: 0,
-  makingCharges: 0,
+  productName:       '',
+  metalType:         'gold',
+  purity:            '22K',
+  grossWeight:       0,
+  stoneWeight:       0,
+  weightUnit:        'gram',
+  ratePerGram:       0,
+  stoneValue:        0,
+  makingCharges:     0,
   makingChargesType: 'flat',
-  otherCharges: 0,
-  gstPercentage: 3,
+  otherCharges:      0,
+  gstPercentage:     3,
   discount: {
-    type: 'none',
-    value: 0,
+    type:   'none',
+    value:  0,
+    amount: 0,
   },
-  quantity: 1,
+  quantity:     1,
   isHallmarked: false,
 }
 
 export const defaultOldGoldItem: OldGoldFormItem = {
-  metalType: 'gold',
-  purity: '22K',
+  metalType:   'gold',
+  purity:      '22K',
   grossWeight: 0,
   stoneWeight: 0,
+  netWeight:   0,
   ratePerGram: 0,
+  totalValue:  0,
   description: '',
 }

@@ -66,7 +66,7 @@ export const saleItemSchema = z.object({
     .min(0.001, 'Gross weight must be greater than 0'),
 
   stoneWeight: positiveNumber.default(0),
-  netWeight:   positiveNumber.default(0),
+  // netWeight:   positiveNumber.default(0),
   weightUnit:  z.enum(WEIGHT_UNITS).default('gram'),
   ratePerGram: positiveNumber.default(0),
   stoneValue:  positiveNumber.default(0),
@@ -81,12 +81,13 @@ export const saleItemSchema = z.object({
     .max(100, 'GST cannot exceed 100%')
     .default(3),
 
-  discount: z
-    .object({
-      type:  z.enum(DISCOUNT_TYPES).default('none'),
-      value: positiveNumber.default(0),
-    })
-    .default({ type: 'none', value: 0 }),
+discount: z
+  .object({
+    type:   z.enum(DISCOUNT_TYPES).default('none'),
+    value:  positiveNumber.default(0),
+    amount: positiveNumber.default(0),  // ← ADD
+  })
+  .default({ type: 'none', value: 0, amount: 0 }),  // ← ADD amount here too
 
   quantity: z
     .number({ error: 'Quantity is required' })

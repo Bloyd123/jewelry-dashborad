@@ -22,7 +22,13 @@ import type {
   SaleStatus,
 } from '@/types/sale.types'
 import {SALE_ENDPOINTS} from '@/api/endpoints'
-
+export interface TopProduct {
+  productName:   string
+  productCode:   string
+  metalType:     string
+  totalQuantity: number
+  totalRevenue:  number
+}
 
 export const salesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -533,6 +539,62 @@ export const salesApi = baseApi.injectEndpoints({
       }),
       transformResponse: (res: any) => res.data,
     }),
+     getTopProducts: build.query<
+      TopProduct[],
+      { shopId: string; limit?: number; startDate?: string; endDate?: string }
+    >({
+      query: ({ shopId, ...params }) => ({
+        url: replacePathParams(SALE_ENDPOINTS.TOP_PRODUCTS, { shopId }),
+        params,
+      }),
+      transformResponse: (res: any) => res.data,
+      providesTags: (_result, _error, { shopId }) => [
+        { type: 'SaleAnalytics', id: `top_products_${shopId}` },
+      ],
+    }),
+    // GET /shops/:shopId/sales/analytics/by-category
+getSalesByCategory: build.query<
+  Array<{ name: string; value: number; totalItems: number }>,
+  { shopId: string; startDate?: string; endDate?: string }
+>({
+  query: ({ shopId, ...params }) => ({
+    url: replacePathParams(SALE_ENDPOINTS.ANALYTICS_BY_CATEGORY, { shopId }),
+    params,
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (_result, _error, { shopId }) => [
+    { type: 'SaleAnalytics', id: shopId },
+  ],
+}),
+
+// GET /shops/:shopId/sales/analytics/monthly-comparison
+getMonthlyComparison: build.query<
+  Array<{ month: string; currentYear: number; lastYear: number }>,
+  { shopId: string }
+>({
+  query: ({ shopId }) => ({
+    url: replacePathParams(SALE_ENDPOINTS.ANALYTICS_MONTHLY_COMPARISON, { shopId }),
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (_result, _error, { shopId }) => [
+    { type: 'SaleAnalytics', id: shopId },
+  ],
+}),
+
+// GET /shops/:shopId/sales/analytics/revenue-expenses
+getRevenueVsExpenses: build.query<
+  Array<{ month: string; revenue: number; expenses: number; profit: number }>,
+  { shopId: string; startDate?: string; endDate?: string }
+>({
+  query: ({ shopId, ...params }) => ({
+    url: replacePathParams(SALE_ENDPOINTS.ANALYTICS_REVENUE_EXPENSES, { shopId }),
+    params,
+  }),
+  transformResponse: (res: any) => res.data,
+  providesTags: (_result, _error, { shopId }) => [
+    { type: 'SaleAnalytics', id: shopId },
+  ],
+}),
   }),
 })
 
@@ -582,7 +644,10 @@ export const {
   useGetCustomerSalesSummaryQuery,
   useGetSalesPersonSalesQuery,
   useGetSalesPersonPerformanceQuery,
-
+ useGetTopProductsQuery,
+   useGetSalesByCategoryQuery,
+   useGetMonthlyComparisonQuery,
+  useGetRevenueVsExpensesQuery,
   useBulkDeleteSalesMutation,
   useBulkPrintInvoicesMutation,
   useBulkSendRemindersMutation,

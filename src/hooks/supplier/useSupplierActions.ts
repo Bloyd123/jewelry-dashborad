@@ -12,6 +12,10 @@ import {
   useMarkSupplierAsPreferredMutation,
   useRemoveSupplierPreferredMutation,
   useUpdateSupplierBalanceMutation,
+  useAddSupplierDocumentMutation,
+useDeleteSupplierDocumentMutation,
+useAddSupplierCertificationMutation,
+useDeleteSupplierCertificationMutation,
 } from '@/store/api/supplierApi'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { useNotification } from '@/hooks/useNotification'
@@ -42,7 +46,10 @@ export const useSupplierActions = (shopId: string) => {
     useRemoveSupplierPreferredMutation()
   const [updateBalanceMutation, updateBalanceState] =
     useUpdateSupplierBalanceMutation()
-
+const [addDocumentMutation, addDocumentState] = useAddSupplierDocumentMutation()
+const [deleteDocumentMutation, deleteDocumentState] = useDeleteSupplierDocumentMutation()
+const [addCertificationMutation, addCertificationState] = useAddSupplierCertificationMutation()
+const [deleteCertificationMutation, deleteCertificationState] = useDeleteSupplierCertificationMutation()
 
   const createSupplier = useCallback(
     async (
@@ -302,7 +309,72 @@ export const useSupplierActions = (shopId: string) => {
     },
     [updateBalanceMutation, shopId, handleError, showSuccess]
   )
+const addDocument = useCallback(
+  async (id: string, data: {
+    documentType: string
+    documentNumber?: string
+    documentUrl?: string
+  }) => {
+    try {
+      const result = await addDocumentMutation({ shopId, id, ...data }).unwrap()
+      showSuccess('Document added successfully', 'Document Added')
+      return { success: true, data: result }
+    } catch (error: any) {
+      handleError(error)
+      return { success: false, error: error.data?.message || 'Failed to add document' }
+    }
+  },
+  [addDocumentMutation, shopId, handleError, showSuccess]
+)
 
+const deleteDocument = useCallback(
+  async (id: string, documentId: string) => {
+    try {
+      const result = await deleteDocumentMutation({ shopId, id, documentId }).unwrap()
+      showSuccess('Document deleted successfully', 'Document Deleted')
+      return { success: true, data: result }
+    } catch (error: any) {
+      handleError(error)
+      return { success: false, error: error.data?.message || 'Failed to delete document' }
+    }
+  },
+  [deleteDocumentMutation, shopId, handleError, showSuccess]
+)
+
+const addCertification = useCallback(
+  async (id: string, data: {
+    certificationType: string
+    certificateNumber?: string
+    issuedBy?: string
+    issueDate?: string
+    expiryDate?: string
+    documentUrl?: string
+  }) => {
+    try {
+      const result = await addCertificationMutation({ shopId, id, ...data }).unwrap()
+      showSuccess('Certification added successfully', 'Certification Added')
+      return { success: true, data: result }
+    } catch (error: any) {
+      handleError(error)
+      return { success: false, error: error.data?.message || 'Failed to add certification' }
+    }
+  },
+  [addCertificationMutation, shopId, handleError, showSuccess]
+)
+
+const deleteCertification = useCallback(
+  async (id: string, certificationId: string) => {
+    try {
+      const result = await deleteCertificationMutation({ shopId, id, certificationId }).unwrap()
+      showSuccess('Certification deleted successfully', 'Certification Deleted')
+      return { success: true, data: result }
+    } catch (error: any) {
+      handleError(error)
+      return { success: false, error: error.data?.message || 'Failed to delete certification' }
+    }
+  },
+  [deleteCertificationMutation, shopId, handleError, showSuccess]
+)
   return {
     createSupplier,
     updateSupplier,
@@ -314,6 +386,14 @@ export const useSupplierActions = (shopId: string) => {
     markAsPreferred,
     removePreferred,
     updateBalance,
+    addDocument,
+deleteDocument,
+addCertification,
+deleteCertification,
+isAddingDocument: addDocumentState.isLoading,
+isDeletingDocument: deleteDocumentState.isLoading,
+isAddingCertification: addCertificationState.isLoading,
+isDeletingCertification: deleteCertificationState.isLoading,
     isCreating: createState.isLoading,
     isUpdating: updateState.isLoading,
     isDeleting: deleteState.isLoading,

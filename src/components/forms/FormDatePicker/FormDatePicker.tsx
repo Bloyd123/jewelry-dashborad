@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
+import { useState } from 'react'
 import {
   Popover,
   PopoverContent,
@@ -43,7 +44,8 @@ export const FormDatePicker = ({
   maxDate,
 }: FormDatePickerProps) => {
   const { t } = useTranslation()
-  const dateValue = value ? new Date(value) : undefined
+  const [open, setOpen] = useState(false)
+const dateValue = value ? new Date(value) : undefined
 
   return (
     <div className={`space-y-2 ${className}`}>
@@ -54,7 +56,7 @@ export const FormDatePicker = ({
         </Label>
       )}
 
-      <Popover>
+  <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             id={name}
@@ -70,18 +72,19 @@ export const FormDatePicker = ({
           </Button>
         </PopoverTrigger>
 
-        <PopoverContent
-          className="w-auto border-border-primary bg-bg-secondary p-0"
-          align="start"
-        >
+ <PopoverContent
+  className="w-auto border-border-primary bg-bg-secondary p-0"
+  align="center"
+>
           <Calendar
             mode="single"
             selected={dateValue}
-            onSelect={date => {
-              if (date) {
-                onChange(name, date.toISOString())
-              }
-            }}
+onSelect={date => {
+  if (date) {
+    onChange(name, date.toISOString())
+    setOpen(false)  // ← yeh add karo
+  }
+}}
             disabled={date => {
               if (minDate && date < minDate) return true
               if (maxDate && date > maxDate) return true
