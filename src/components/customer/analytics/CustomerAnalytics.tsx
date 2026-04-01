@@ -29,17 +29,6 @@ import { DonutChart } from '@/components/ui/charts/DonutChart'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { Separator } from '@/components/ui/layout/Separator'
 import { cn } from '@/lib/utils'
-import {
-  mockGrowthData,
-  mockRetentionData,
-  mockTopCustomers,
-  mockSegmentationData,
-  mockGeographyData,
-  mockPurchasePatternData,
-  mockRecentEvents,
-  mockAtRiskCustomers,
-  mockOutstandingPayments,
-} from './customerAnalytics.mock'
 
 export interface CustomerStatistics {
   totalCustomers: number
@@ -48,6 +37,8 @@ export interface CustomerStatistics {
   totalOutstanding: number
   totalLoyaltyPoints: number
   avgLifetimeValue: number
+    growthRate?: number        // NEW
+  retentionRate?: number  
   growthData?: Array<{
     month: string
     customers: number
@@ -317,31 +308,31 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           description={t('customer.analytics.totalLoyaltyPointsDesc')}
         />
 
-        <StatCard
-          title={t('customer.analytics.growthRate')}
-          value="+12%"
-          icon={Activity}
-          variant="success"
-          size="md"
-          subtitle={t('customer.analytics.last30Days')}
-          description={t('customer.analytics.growthRateDesc')}
-        />
+<StatCard
+  title={t('customer.analytics.growthRate')}
+  value={`${statistics.growthRate >= 0 ? '+' : ''}${statistics.growthRate || 0}%`}
+  icon={Activity}
+  variant="success"
+  size="md"
+  subtitle={t('customer.analytics.last30Days')}
+  description={t('customer.analytics.growthRateDesc')}
+/>
 
-        <StatCard
-          title={t('customer.analytics.retentionRate')}
-          value="87%"
-          icon={UserCheck}
-          variant="info"
-          size="md"
-          subtitle={t('customer.analytics.last90Days')}
-          trend={{
-            value: 5,
-            direction: 'up',
-            label: t('customer.analytics.vsLastPeriod'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.retentionRateDesc')}
-        />
+<StatCard
+  title={t('customer.analytics.retentionRate')}
+  value={`${statistics.retentionRate || 0}%`}
+  icon={UserCheck}
+  variant="info"
+  size="md"
+  subtitle={t('customer.analytics.last90Days')}
+  trend={{
+    value:     statistics.retentionRate || 0,
+    direction: (statistics.retentionRate || 0) >= 80 ? 'up' : 'down',
+    label:     t('customer.analytics.vsLastPeriod'),
+    showIcon:  true,
+  }}
+  description={t('customer.analytics.retentionRateDesc')}
+/>
       </StatCardGrid>
 
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -354,8 +345,10 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               {t('customer.analytics.customerGrowthDesc')}
             </p>
           </div>
+          {statistics.growthData && statistics.growthData.length > 0 ? (
           <LineChart
-            data={statistics.growthData || mockGrowthData}
+
+          data={statistics.growthData || []}
             lines={[
               {
                 dataKey: 'customers',
@@ -378,6 +371,11 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             formatYAxis={value => formatNumber(value)}
             formatTooltip={value => formatNumber(value)}
           />
+          ) : (
+  <div className="flex items-center justify-center h-[300px] text-text-tertiary text-sm">
+    No data available
+  </div>
+)}
         </div>
 
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
@@ -389,8 +387,9 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               {t('customer.analytics.retentionTrendDesc')}
             </p>
           </div>
+          {statistics.retentionData && statistics.retentionData.length > 0 ? (
           <LineChart
-            data={statistics.retentionData || mockRetentionData}
+          data={statistics.retentionData || []}
             lines={[
               {
                 dataKey: 'rate',
@@ -407,6 +406,11 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             formatYAxis={value => `${value}%`}
             formatTooltip={value => `${value}%`}
           />
+          ) : (
+  <div className="flex items-center justify-center h-[300px] text-text-tertiary text-sm">
+    No data available
+  </div>
+)}
         </div>
       </div>
 
@@ -428,8 +432,9 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
 
         <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
+          {statistics.geographyData && statistics.geographyData.length > 0 ? (
           <BarChart
-            data={statistics.geographyData || mockGeographyData}
+            data={statistics.geographyData || []}
             bars={[
               {
                 dataKey: 'customers',
@@ -445,6 +450,11 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
             formatYAxis={value => formatNumber(value)}
             formatTooltip={value => `${formatNumber(value)} customers`}
           />
+          ) : (
+  <div className="flex items-center justify-center h-[350px] text-text-tertiary text-sm">
+    No data available
+  </div>
+)}
         </div>
       </div>
 
@@ -471,10 +481,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               {t('customer.analytics.byMembershipTier')}
             </h4>
             <DonutChart
-              data={
-                statistics.segmentationData?.byTier ||
-                mockSegmentationData.byTier
-              }
+data={statistics.segmentationData?.byTier || []}
               dataKey="value"
               nameKey="name"
               height={280}
@@ -497,10 +504,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               {t('customer.analytics.byCustomerType')}
             </h4>
             <DonutChart
-              data={
-                statistics.segmentationData?.byType ||
-                mockSegmentationData.byType
-              }
+data={statistics.segmentationData?.byType || []}
               dataKey="value"
               nameKey="name"
               height={280}
@@ -523,10 +527,7 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               {t('customer.analytics.byProductCategory')}
             </h4>
             <DonutChart
-              data={
-                statistics.segmentationData?.byCategory ||
-                mockSegmentationData.byCategory
-              }
+data={statistics.segmentationData?.byCategory || []}
               dataKey="value"
               nameKey="name"
               height={280}
@@ -567,15 +568,13 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
 
         <DataTable
-          data={statistics.topCustomers || mockTopCustomers}
+        data={statistics.topCustomers || []}
           columns={[
             {
               id: 'rank',
               header: t('customer.analytics.rank'),
               cell: ({ row }) => {
-                const index = (
-                  statistics.topCustomers || mockTopCustomers
-                ).indexOf(row)
+ const index = (statistics.topCustomers || []).indexOf(row)
                 return (
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-accent">
@@ -713,8 +712,9 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
         </div>
 
         <div className="chart-wrapper rounded-lg border border-border-primary bg-bg-secondary p-6">
+          {statistics.purchasePatternData && statistics.purchasePatternData.length > 0 ? (
           <AreaChart
-            data={statistics.purchasePatternData || mockPurchasePatternData}
+            data={statistics.purchasePatternData || []}
             areas={[
               {
                 dataKey: 'orders',
@@ -748,6 +748,11 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               return formatNumber(value)
             }}
           />
+          ) : (
+  <div className="flex items-center justify-center h-[350px] text-text-tertiary text-sm">
+    No data available
+  </div>
+)}
         </div>
       </div>
       {/* Separator */}
@@ -772,7 +777,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.recentEvents || mockRecentEvents).map(event => {
+              {(statistics.recentEvents || []).length === 0 ? (
+  <div className="p-4 text-center text-sm text-text-tertiary">
+    No upcoming events
+  </div>
+) : (
+              (statistics.recentEvents || []).map(event => {
                 const eventIcons = {
                   anniversary: '💍',
                   birthday: '🎂',
@@ -812,7 +822,9 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
                     </div>
                   </div>
                 )
-              })}
+            
+                })
+)}
             </div>
           </div>
 
@@ -832,46 +844,54 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.atRiskCustomers || mockAtRiskCustomers).map(
-                customer => {
-                  const riskColors = {
-                    high: 'bg-status-error/10 text-status-error border-status-error/30',
-                    medium:
-                      'bg-status-warning/10 text-status-warning border-status-warning/30',
-                    low: 'bg-status-info/10 text-status-info border-status-info/30',
-                  }
-                  return (
-                    <div
-                      key={customer._id}
-                      className="hover:bg-bg-tertiary/30 p-3 transition-colors"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm font-medium text-text-primary">
-                            {customer.fullName}
-                          </div>
-                          <div className="text-xs text-text-tertiary">
-                            {customer.customerCode} • {customer.phone}
-                          </div>
-                          <div className="mt-1 text-xs text-text-secondary">
-                            {t('customer.analytics.lastOrder')}:{' '}
-                            {customer.daysSinceLastOrder}{' '}
-                            {t('customer.analytics.daysAgo')}
-                          </div>
-                        </div>
-                        <span
-                          className={cn(
-                            'inline-flex items-center rounded border px-2 py-1 text-xs font-medium capitalize',
-                            riskColors[customer.riskLevel]
-                          )}
-                        >
-                          {customer.riskLevel}
-                        </span>
-                      </div>
-                    </div>
-                  )
-                }
-              )}
+{(statistics.atRiskCustomers || []).length === 0 ? (
+  <div className="p-4 text-center text-sm text-text-tertiary">
+    No at-risk customers
+  </div>
+) : (
+  (statistics.atRiskCustomers || []).map(customer => {
+    const riskColors = {
+      high: 'bg-status-error/10 text-status-error border-status-error/30',
+      medium:
+        'bg-status-warning/10 text-status-warning border-status-warning/30',
+      low: 'bg-status-info/10 text-status-info border-status-info/30',
+    }
+
+    return (
+      <div
+        key={customer._id}
+        className="hover:bg-bg-tertiary/30 p-3 transition-colors"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-medium text-text-primary">
+              {customer.fullName}
+            </div>
+
+            <div className="text-xs text-text-tertiary">
+              {customer.customerCode} • {customer.phone}
+            </div>
+
+            <div className="mt-1 text-xs text-text-secondary">
+              {t('customer.analytics.lastOrder')}:{' '}
+              {customer.daysSinceLastOrder}{' '}
+              {t('customer.analytics.daysAgo')}
+            </div>
+          </div>
+
+          <span
+            className={cn(
+              'inline-flex items-center rounded border px-2 py-1 text-xs font-medium capitalize',
+              riskColors[customer.riskLevel]
+            )}
+          >
+            {customer.riskLevel}
+          </span>
+        </div>
+      </div>
+    )
+  })
+)}
             </div>
           </div>
 
@@ -890,47 +910,56 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.outstandingPayments || mockOutstandingPayments).map(
-                payment => {
-                  return (
-                    <div
-                      key={payment._id}
-                      className="hover:bg-bg-tertiary/30 p-3 transition-colors"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm font-medium text-text-primary">
-                            {payment.fullName}
-                          </div>
-                          <div className="text-xs text-text-tertiary">
-                            {payment.customerCode} • {payment.phone}
-                          </div>
-                          <div className="mt-1 flex items-center gap-2">
-                            <span className="text-xs text-text-secondary">
-                              {t('customer.analytics.due')}:{' '}
-                              {formatCurrency(payment.totalDue)}
-                            </span>
-                            {payment.daysOverdue > 0 && (
-                              <span className="text-xs font-medium text-status-error">
-                                {payment.daysOverdue}{' '}
-                                {t('customer.analytics.daysOverdue')}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-sm font-semibold text-status-error">
-                            {formatCurrency(payment.overdueAmount)}
-                          </div>
-                          <div className="text-xs text-text-tertiary">
-                            {t('customer.analytics.overdue')}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
+{(statistics.outstandingPayments || []).length === 0 ? (
+  <div className="p-4 text-center text-sm text-text-tertiary">
+    No outstanding payments
+  </div>
+) : (
+  (statistics.outstandingPayments || []).map(payment => {
+    return (
+      <div
+        key={payment._id}
+        className="hover:bg-bg-tertiary/30 p-3 transition-colors"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-medium text-text-primary">
+              {payment.fullName}
+            </div>
+
+            <div className="text-xs text-text-tertiary">
+              {payment.customerCode} • {payment.phone}
+            </div>
+
+            <div className="mt-1 flex items-center gap-2">
+              <span className="text-xs text-text-secondary">
+                {t('customer.analytics.due')}:{' '}
+                {formatCurrency(payment.totalDue)}
+              </span>
+
+              {payment.daysOverdue > 0 && (
+                <span className="text-xs font-medium text-status-error">
+                  {payment.daysOverdue}{' '}
+                  {t('customer.analytics.daysOverdue')}
+                </span>
               )}
+            </div>
+          </div>
+
+          <div className="text-right">
+            <div className="text-sm font-semibold text-status-error">
+              {formatCurrency(payment.overdueAmount)}
+            </div>
+
+            <div className="text-xs text-text-tertiary">
+              {t('customer.analytics.overdue')}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  })
+)}
             </div>
           </div>
         </div>

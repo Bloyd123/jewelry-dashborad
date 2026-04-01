@@ -342,20 +342,22 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
           </div>
         </div>
 
-        <DataTable
-          data={payments}
-          columns={paymentColumns}
-          isLoading={isLoading}
-          pagination={{
-            enabled: true,
-            pageSize: limit,
-            pageSizeOptions: [5, 10, 20, 50],
-            showPageInfo: true,
-            showFirstLastButtons: true,
-            currentPage: page,
-            totalItems: pagination?.total ?? 0,
-            onPageChange: setPage,
-          }}
+<DataTable
+  data={payments}
+  columns={paymentColumns}
+  loading={{ isLoading }}
+  pagination={{
+    enabled: true,
+    pageIndex: page - 1,
+    pageSize: limit,
+    totalItems: pagination?.totalItems ?? 0,
+    pageSizeOptions: [5, 10, 20, 50],
+    showPageInfo: true,
+    showFirstLastButtons: true,
+    onPaginationChange: ({ pageIndex }) => {
+      setPage(pageIndex + 1)
+    },
+  }}
           sorting={{ enabled: true }}
           style={{ hoverEffect: true, zebraStripes: false }}
           emptyState={{

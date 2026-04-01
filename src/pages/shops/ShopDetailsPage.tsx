@@ -54,10 +54,10 @@ export const ShopDetailsPage: React.FC = () => {
         return (
           <div className="p-6">
             <StatisticsTab
-              shopId={shop._id}
-              statistics={statistics as any}
-              loading={isLoadingStats}
-            />
+  shopId={shop._id}
+  statistics={statistics ?? undefined}
+  loading={isLoadingStats}
+/>
           </div>
         )
 

@@ -1,0 +1,474 @@
+{
+  "product": {
+    "messages": {
+      "createSuccess": "उत्पाद सफलतापूर्वक बनाया गया",
+      "created": "उत्पाद बनाया गया",
+      "updateSuccess": "उत्पाद सफलतापूर्वक अपडेट किया गया",
+      "updated": "उत्पाद अपडेट किया गया",
+      "deleteSuccess": "उत्पाद सफलतापूर्वक हटाया गया",
+      "deleted": "उत्पाद हटाया गया",
+      "stockUpdateSuccess": "स्टॉक सफलतापूर्वक अपडेट किया गया",
+      "stockUpdated": "स्टॉक अपडेट किया गया",
+      "reserveSuccess": "उत्पाद सफलतापूर्वक आरक्षित किया गया",
+      "reserved": "उत्पाद आरक्षित किया गया",
+      "cancelReservationSuccess": "आरक्षण सफलतापूर्वक रद्द किया गया",
+      "reservationCancelled": "आरक्षण रद्द किया गया",
+      "markAsSoldSuccess": "उत्पाद को बेचा गया मार्क सफलतापूर्वक किया गया",
+      "sold": "उत्पाद बेचा गया",
+      "calculatePriceSuccess": "कीमत सफलतापूर्वक गणना की गई",
+      "priceCalculated": "कीमत गणना की गई",
+      "bulkDeleteSuccess": "{{count}} उत्पाद सफलतापूर्वक हटाए गए",
+      "bulkDeleted": "उत्पाद हटाए गए",
+      "bulkUpdateSuccess": "{{count}} उत्पाद सफलतापूर्वक अपडेट किए गए",
+      "bulkUpdated": "उत्पाद अपडेट किए गए"
+    },
+
+    "errors": {
+      "createFailed": "उत्पाद बनाने में विफल",
+      "updateFailed": "उत्पाद अपडेट करने में विफल",
+      "deleteFailed": "उत्पाद हटाने में विफल",
+      "stockUpdateFailed": "स्टॉक अपडेट करने में विफल",
+      "reserveFailed": "उत्पाद आरक्षित करने में विफल",
+      "cancelReservationFailed": "आरक्षण रद्द करने में विफल",
+      "markAsSoldFailed": "उत्पाद को बेचा गया मार्क करने में विफल",
+      "calculatePriceFailed": "कीमत गणना करने में विफल",
+      "bulkDeleteFailed": "उत्पाद हटाने में विफल",
+      "bulkUpdateFailed": "उत्पाद अपडेट करने में विफल",
+      "loadFailed": "उत्पाद लोड करने में विफल"
+    },
+    "statustext": "स्थिति",
+    "productTypestext": "उत्पाद प्रकार",
+    "makingChargeTypestext": "मेकिंग चार्ज प्रकार",
+    "gendertext": "लिंग",
+    "occasionText": "अवसर",
+    "weight": "वजन",
+    "price": "कीमत",
+    "stock": "स्टॉक",
+    "metaltext": "धातु",
+    "productDetail": {
+      "tabs": {
+        "overview": "अवलोकन",
+        "pricing": "मूल्य निर्धारण",
+        "images": "छवियां",
+        "history": "इतिहास"
+      },
+      "overview": {
+        "title": "उत्पाद अवलोकन",
+        "basicInfo": "मूल जानकारी",
+        "metalDetails": "धातु विवरण",
+        "weightDetails": "वजन विवरण",
+        "stockInfo": "स्टॉक जानकारी",
+        "description": "विवरण",
+        "storageLocation": "स्टोरेज स्थान"
+      },
+      "pricing": {
+        "summary": "सारांश",
+        "title": "मूल्य निर्धारण विवरण",
+        "metalPricing": "धातु मूल्य निर्धारण",
+        "makingCharges": "मेकिंग चार्ज",
+        "stoneValue": "पत्थर मूल्य",
+        "breakdown": "कीमत ब्रेकडाउन",
+        "additional": "अतिरिक्त मूल्य निर्धारण जानकारी"
+      },
+      "images": {
+        "statistics": "आंकड़े",
+        "title": "उत्पाद छवियां",
+        "gallery": "इमेज गैलरी",
+        "uploadImages": "छवियां अपलोड करें",
+        "uploadInfo": "उत्पाद छवियां अपलोड करें। समर्थित फॉर्मेट: JPG, PNG। अधिकतम 10 छवियां।",
+        "preview": "पूर्वावलोकन",
+        "primary": "प्राथमिक",
+        "allImages": "सभी छवियां",
+        "noImages": "कोई छवि उपलब्ध नहीं है",
+        "uploadImagesPrompt": "अपने उत्पाद को प्रदर्शित करने के लिए छवियां अपलोड करें",
+        "uploadFirst": "पहली छवि अपलोड करें",
+        "confirmDelete": "क्या आप वाकई इस छवि को हटाना चाहते हैं?",
+        "imageInfo": "छवि जानकारी",
+        "totalImages": "कुल छवियां",
+        "primaryImage": "प्राथमिक छवि सेट"
+      },
+      "history": {
+        "statistics": "आंकड़े",
+        "title": "लेन-देन इतिहास",
+        "transactionHistory": "लेन-देन इतिहास",
+        "totalTransactions": "कुल लेन-देन",
+        "stockIn": "स्टॉक इन",
+        "stockOut": "स्टॉक आउट",
+        "adjustments": "समायोजन",
+        "balance": "बैलेंस",
+        "value": "मूल्य",
+        "noHistory": "कोई लेन-देन इतिहास नहीं",
+        "noHistoryDescription": "एक बार उत्पाद की गतिविधि होने पर लेन-देन यहां दिखाई देंगे",
+        "lifecycle": "उत्पाद जीवनचक्र",
+        "created": "बनाया गया",
+        "lastUpdated": "अंतिम अपडेट",
+        "soldOn": "बेचा गया"
+      }
+    },
+
+    "wastage": "वेस्टेज",
+    "quantity": "मात्रा",
+    "profitMargin": "प्रॉफिट मार्जिन",
+    "makingChargeRate": "मेकिंग चार्ज दर",
+    "makingChargesAmount": "मेकिंग चार्ज राशि",
+    "totalStoneValue": "कुल पत्थर मूल्य",
+    "gst": "GST",
+    "totalPrice": "कुल कीमत",
+    "finalSellingPrice": "अंतिम विक्रय मूल्य",
+    "profitAmount": "प्रॉफिट राशि",
+    "recalculate": "कीमत पुनः गणना करें",
+    "storageLocation": "स्टोरेज स्थान",
+
+    "occasion": {
+      "wedding": "शादी",
+      "engagement": "सगाई",
+      "party": "पार्टी",
+      "daily_wear": "रोज़ाना पहनने के लिए",
+      "festival": "त्योहार",
+      "gift": "उपहार",
+      "bridal": "दुल्हन",
+      "traditional": "पारंपरिक",
+      "modern": "आधुनिक",
+      "casual": "कैजुअल"
+    },
+    "validation": {
+      "required": "यह फ़ील्ड आवश्यक है"
+    },
+    "forms": {
+      "selectDate": "तारीख चुनें"
+    },
+    "common": {
+      "yes": "हाँ",
+      "no": "नहीं",
+      "loadMore": "और लोड करें",
+      "clearSelection": "चयन साफ करें",
+      "all": "सभी",
+      "apply": "लागू करें",
+      "search": "खोजें",
+      "step": "चरण",
+      "of": "का",
+      "next": "अगला",
+      "previous": "पिछला",
+      "save": "सहेजें",
+      "update": "अपडेट करें",
+      "cancel": "रद्द करें",
+      "saving": "सहेजा जा रहा है...",
+      "featured": "फीचर्ड",
+      "newArrival": "नया आगमन",
+      "bestseller": "बेस्ट सेलर",
+      "backToList": "सूची में वापस",
+      "active": "सक्रिय",
+      "settings": "सेटिंग"
+    },
+    "table": {
+      "productCode": "उत्पाद कोड",
+      "productName": "उत्पाद का नाम",
+      "metalDetails": "धातु विवरण",
+      "weight": "वजन",
+      "price": "कीमत",
+      "stock": "स्टॉक",
+      "type": "प्रकार",
+      "saleStatus": "बिक्री स्थिति",
+      "features": "विशेषताएं",
+      "gender": "लिंग",
+      "status": "स्थिति",
+      "noProducts": "कोई उत्पाद नहीं मिला",
+      "selectedCount": "{{count}} चयनित",
+      "ariaLabel": "उत्पाद तालिका"
+    },
+    "actions": {
+      "viewDetails": "विवरण देखें",
+      "edit": "संपादित करें",
+      "duplicate": "डुप्लिकेट",
+      "updateStock": "स्टॉक अपडेट करें",
+      "calculatePrice": "कीमत गणना करें",
+      "printLabel": "लेबल प्रिंट करें",
+      "delete": "हटाएं",
+      "updateStatus": "स्थिति अपडेट करें",
+      "printLabels": "लेबल प्रिंट करें",
+      "export": "निर्यात",
+      "bulkEdit": "बल्क संपादन",
+      "changeCategory": "श्रेणी बदलें",
+      "recalculatePrices": "कीमतें पुनः गणना करें",
+      "exportPDF": "PDF के रूप में निर्यात करें",
+      "exportExcel": "Excel के रूप में निर्यात करें",
+      "bulkDelete": "बल्क डिलीट"
+    },
+    "title": "उत्पाद",
+    "subtitle": "अपनी ज्वेलरी इन्वेंट्री प्रबंधित करें",
+    "filters": {
+      "filters": "फिल्टर",
+      "moreFilters": "अधिक फिल्टर",
+      "advancedFilters": "उन्नत फिल्टर",
+      "clearAll": "सभी साफ करें",
+      "clearAdvanced": "उन्नत साफ करें",
+      "active": "सक्रिय फिल्टर",
+      "title": "उत्पाद फिल्टर करें",
+      "searchPlaceholder": "नाम, कोड, बारकोड द्वारा उत्पाद खोजें...",
+      "metalType": "धातु का प्रकार",
+      "purity": "शुद्धता",
+      "status": "स्टॉक स्थिति",
+      "saleStatus": "बिक्री स्थिति",
+      "gender": "लिंग",
+      "productType": "उत्पाद प्रकार",
+      "priceRange": "कीमत सीमा",
+      "minPrice": "न्यूनतम कीमत",
+      "maxPrice": "अधिकतम कीमत",
+      "price": "कीमत"
+    },
+    "category": {
+      "rings": "रिंग्स",
+      "engagement": "सगाई",
+      "wedding": "शादी",
+      "fashion": "फैशन",
+      "necklaces": "नेकलेस",
+      "pendant": "पेंडेंट",
+      "chain": "चेन",
+      "earrings": "ईयररिंग्स",
+      "studs": "स्टड्स",
+      "hoops": "हूप्स",
+      "bracelets": "ब्रेसलेट",
+      "bangles": "बांगड़ियां"
+    },
+    "metal": {
+      "gold": "सोना",
+      "silver": "चांदी",
+      "platinum": "प्लैटिनम",
+      "diamond": "हीरा",
+      "gemstone": "रत्न",
+      "mixed": "मिश्रित"
+    },
+    "status": {
+      "in_stock": "स्टॉक में",
+      "low_stock": "कम स्टॉक",
+      "out_of_stock": "स्टॉक समाप्त",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "inStock": "स्टॉक में",
+      "lowStock": "कम स्टॉक",
+      "outOfStock": "स्टॉक समाप्त",
+      "onOrder": "ऑर्डर पर",
+      "discontinued": "बंद कर दिया गया"
+    },
+    "saleStatus": {
+      "available": "उपलब्ध",
+      "reserved": "आरक्षित",
+      "sold": "बेचा गया",
+      "onHold": "होल्ड पर",
+      "returned": "वापस किया गया"
+    },
+    "type": {
+      "readyMade": "रेडी मेड",
+      "customMade": "कस्टम मेड",
+      "onOrder": "ऑर्डर पर",
+      "repair": "मरम्मत",
+      "exchange": "एक्सचेंज"
+    },
+    "addProduct": "नया उत्पाद जोड़ें",
+    "editProduct": "उत्पाद संपादित करें",
+    "addProductDescription": "अपनी इन्वेंट्री में नया उत्पाद जोड़ने के लिए विवरण भरें",
+    "editProductDescription": "उत्पाद की जानकारी अपडेट करें और बदलाव सहेजें",
+
+    "basicInformation": "मूल जानकारी",
+    "metalAndWeight": "धातु एवं वजन विवरण",
+    "stonesAndDiamonds": "पत्थर एवं हीरे",
+    "pricingAndCharges": "मूल्य निर्धारण एवं चार्ज",
+    "stockAndOther": "स्टॉक एवं अन्य विवरण",
+
+    "productCode": "उत्पाद कोड",
+    "productName": "उत्पाद का नाम",
+    "productNamePlaceholder": "उत्पाद का नाम दर्ज करें",
+    "barcode": "बारकोड",
+    "sku": "SKU",
+    "huid": "HUID",
+    "categorytext": "श्रेणी",
+    "subCategory": "उप-श्रेणी",
+    "productType": "उत्पाद प्रकार",
+    "description": "विवरण",
+    "descriptionPlaceholder": "उत्पाद विवरण दर्ज करें...",
+
+    "selectCategory": "श्रेणी चुनें",
+    "selectSubCategory": "उप-श्रेणी चुनें",
+    "selectProductType": "उत्पाद प्रकार चुनें",
+    "selectGender": "लिंग चुनें",
+
+    "productTypes": {
+      "readyMade": "रेडी मेड",
+      "customMade": "कस्टम मेड",
+      "onOrder": "ऑर्डर पर",
+      "repair": "मरम्मत",
+      "exchange": "एक्सचेंज"
+    },
+
+    "gender": {
+      "label": "लिंग",
+      "unisex": "यूनिसेक्स",
+      "male": "पुरुष",
+      "female": "महिला",
+      "kids": "बच्चे"
+    },
+
+    "metalDetails": "धातु विवरण",
+    "metalType": "धातु का प्रकार",
+    "purity": "शुद्धता",
+    "metalColor": "धातु का रंग",
+    "selectMetalType": "धातु का प्रकार चुनें",
+    "selectPurity": "शुद्धता चुनें",
+    "selectColor": "रंग चुनें",
+
+    "metalTypes": {
+      "gold": "सोना",
+      "silver": "चांदी",
+      "platinum": "प्लैटिनम",
+      "diamond": "हीरा",
+      "gemstone": "रत्न",
+      "mixed": "मिश्रित"
+    },
+
+    "metalColors": {
+      "yellow": "पीला",
+      "white": "सफेद",
+      "rose": "गुलाबी",
+      "mixed": "मिश्रित"
+    },
+
+    "weightDetails": "वजन विवरण",
+    "weightUnit": "वजन इकाई",
+    "grossWeight": "ग्रॉस वजन",
+    "stoneWeight": "पत्थर वजन",
+    "netWeight": "नेट वजन",
+    "wastagePercentage": "वेस्टेज %",
+    "wastageWeight": "वेस्टेज वजन",
+
+    "weightUnits": {
+      "gram": "ग्राम (g)",
+      "kg": "किलोग्राम (kg)",
+      "tola": "तोला",
+      "ounce": "औंस (oz)",
+      "carat": "कैरेट (ct)"
+    },
+
+    "makingCharges": "मेकिंग चार्ज",
+    "makingChargeType": "प्रकार",
+    "makingChargeValue": "मूल्य",
+
+    "makingChargeTypes": {
+      "perGram": "प्रति ग्राम",
+      "percentage": "प्रतिशत",
+      "flat": "फ्लैट राशि",
+      "none": "कोई नहीं"
+    },
+
+    "totalStones": "कुल पत्थर",
+    "totalPieces": "कुल पीस",
+    "totalValue": "कुल मूल्य",
+    "addStone": "पत्थर/हीरा जोड़ें",
+    "stoneNumber": "पत्थर #{{number}}",
+    "noStonesAdded": "अभी तक कोई पत्थर नहीं जोड़ा गया। शुरू करने के लिए 'पत्थर जोड़ें' पर क्लिक करें।",
+
+    "stoneType": "पत्थर का प्रकार",
+    "stoneName": "पत्थर का नाम",
+    "stoneNamePlaceholder": "वैकल्पिक कस्टम नाम",
+    "quality": "गुणवत्ता",
+    "color": "रंग",
+    "shape": "आकार",
+    "cut": "कट",
+    "caratWeight": "कैरेट वजन",
+    "pieceCount": "पीस की संख्या",
+    "pricePerPiece": "प्रति पीस कीमत",
+    "totalStonePrice": "कुल पत्थर कीमत",
+
+    "stoneTypes": {
+      "diamond": "हीरा",
+      "ruby": "माणिक",
+      "emerald": "पन्ना",
+      "sapphire": "नीलम",
+      "pearl": "मोती",
+      "topaz": "टोपाज",
+      "amethyst": "एमेथिस्ट",
+      "garnet": "गार्नेट",
+      "other": "अन्य"
+    },
+
+    "stoneShapes": {
+      "round": "गोल",
+      "oval": "अंडाकार",
+      "square": "वर्ग",
+      "pear": "नाशपाती",
+      "heart": "दिल"
+    },
+
+    "stoneCuts": {
+      "excellent": "उत्कृष्ट",
+      "veryGood": "बहुत अच्छा",
+      "good": "अच्छा",
+      "fair": "सामान्य"
+    },
+
+    "metalRateConfiguration": "धातु दर कॉन्फ़िगरेशन",
+    "useCurrentRate": "वर्तमान बाजार दर का उपयोग करें",
+    "useCustomRate": "कस्टम दर का उपयोग करें",
+    "customMetalRate": "कस्टम धातु दर (₹/ग्राम)",
+    "calculatePrice": "कीमत गणना करें",
+
+    "priceBreakdown": "कीमत ब्रेकडाउन",
+    "metalRate": "धातु दर",
+    "metalValue": "धातु मूल्य",
+    "stoneValue": "पत्थर मूल्य",
+    "otherCharges": "अन्य चार्ज",
+    "subtotal": "उप-कुल",
+    "gstPercentage": "GST %",
+    "discount": "छूट",
+    "totalWithGST": "कुल (GST सहित)",
+    "sellingPrice": "विक्रय मूल्य",
+    "costPrice": "लागत मूल्य (वैकल्पिक)",
+    "mrp": "MRP (वैकल्पिक)",
+
+    "discountType": "छूट का प्रकार",
+    "discountValue": "छूट मूल्य",
+
+    "discountTypes": {
+      "none": "कोई छूट नहीं",
+      "percentage": "प्रतिशत (%)",
+      "flat": "फ्लैट राशि (₹)"
+    },
+
+    "stockDetails": "स्टॉक विवरण",
+    "initialStock": "प्रारंभिक स्टॉक मात्रा",
+    "stockUnit": "स्टॉक इकाई",
+    "minStockLevel": "न्यूनतम स्टॉक स्तर",
+    "reorderLevel": "रीऑर्डर स्तर",
+    "maxStockLevel": "अधिकतम स्टॉक स्तर",
+
+    "stockUnits": {
+      "piece": "पीस",
+      "pair": "जोड़ी",
+      "set": "सेट",
+      "gram": "ग्राम",
+      "kg": "किलोग्राम"
+    },
+
+    "productImages": "उत्पाद छवियां",
+    "uploadImage": "छवि अपलोड करें",
+    "primary": "प्राथमिक",
+    "setPrimary": "प्राथमिक सेट करें",
+
+    "isHallmarked": "उत्पाद हॉलमार्क्ड है",
+    "hallmarkNumber": "हॉलमार्क नंबर",
+    "hallmarkingCenter": "हॉलमार्किंग सेंटर",
+    "bisLicenseNumber": "BIS लाइसेंस नंबर",
+
+    "productStatus": "उत्पाद स्थिति",
+    "isActive": "सक्रिय है (इन्वेंट्री में दिखाएं)",
+    "isFeatured": "फीचर्ड है (होमपेज पर दिखाएं)",
+    "isNewArrival": "नया आगमन है",
+    "isBestseller": "बेस्ट सेलर है",
+
+    "notes": "नोट्स",
+    "publicNotes": "सार्वजनिक विवरण/नोट्स",
+    "publicNotesPlaceholder": "ग्राहकों को दिखने वाले नोट्स...",
+    "internalNotes": "आंतरिक नोट्स",
+    "internalNotesPlaceholder": "केवल स्टाफ के लिए नोट्स...",
+    "tags": "टैग्स"
+  }
+}

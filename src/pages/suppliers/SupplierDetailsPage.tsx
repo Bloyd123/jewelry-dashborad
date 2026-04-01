@@ -9,6 +9,8 @@ import SupplierOverviewTab from '@/components/supplier/SupplierDetailsPage/tabs/
 import SupplierFinancialTab from '@/components/supplier/SupplierDetailsPage/tabs/FinancialTab'
 import SupplierDocumentsTab from '@/components/supplier/SupplierDetailsPage/tabs/DocumentsTab'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
+import SupplierActivityTab from '@/components/supplier/SupplierDetailsPage/tabs/ActivityLogTab'
+
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 import { Loader } from '@/components/ui/loader'
 export default function SupplierDetailPage() {
@@ -73,7 +75,7 @@ if (isLoading || !supplier) {
         {activeTab === 'documents' && (
           <SupplierDocumentsTab supplier={supplier} />
         )}
-        {/* {activeTab === 'activity' && (<SupplierActivityTab supplier={supplier} />    )} */}
+        {activeTab === 'activity' && (<SupplierActivityTab supplier={supplier} />    )}
       </div>
 
       <SupplierManagementModal

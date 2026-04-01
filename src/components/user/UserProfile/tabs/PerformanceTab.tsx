@@ -1,5 +1,4 @@
 // FILE: src/pages/UserProfile/tabs/PerformanceTab.tsx
-// Performance & Sales Stats Tab Component
 
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, Target, DollarSign, Award } from 'lucide-react'
@@ -14,29 +13,69 @@ import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { StatCardGrid } from '@/components/ui/data-display/StatCard/StatCardGrid'
 import { useAppSelector } from '@/store/hooks'
 import { selectUserProfile } from '@/store/slices/userSlice'
+import { useGetSalesPersonPerformanceQuery } from '@/store/api/salesApi'
+import { useAuth } from '@/hooks/auth'
 
+// ─────────────────────────────────────────────
+// FORMAT HELPERS
+// ─────────────────────────────────────────────
+const formatCurrency = (amount: number) =>
+  `₹${amount.toLocaleString('en-IN')}`
+
+// ─────────────────────────────────────────────
+// COMPONENT
+// ─────────────────────────────────────────────
 export const PerformanceTab = () => {
-  const { t } = useTranslation()
-  const user = useAppSelector(selectUserProfile)
+  const { t }           = useTranslation()
+  const user            = useAppSelector(selectUserProfile)
+  const { currentShopId } = useAuth()
+
+  // ── Sales Performance Data ────────────────
+  const {
+    data:      performance,
+    isLoading: isPerfLoading,
+  } = useGetSalesPersonPerformanceQuery(
+    {
+      shopId: currentShopId,
+      userId: user?._id || '',
+    },
+    { skip: !currentShopId || !user?._id }
+  )
+
+  // ── Computed Values ───────────────────────
+  const totalValue    = performance?.totalValue    || 0
+  const totalSales    = performance?.totalSales    || 0
+  const averageValue  = performance?.averageValue  || 0
+  const commissionRate = user?.commissionRate      || 0
+  const salesTarget   = user?.salesTarget          || 0
+
+  // Commission = totalValue * commissionRate / 100
+  const commissionsEarned = (totalValue * commissionRate) / 100
+
+  // Target achievement percentage
+  const targetAchievedPct = salesTarget > 0
+    ? Math.min(Math.round((totalValue / salesTarget) * 100), 100)
+    : 0
+
   return (
     <div className="space-y-6">
       {/* Stats Overview */}
       <StatCardGrid columns={2}>
         <StatCard
           title={t('userProfile.performance.salesTarget')}
-          value={`₹${((user?.salesTarget || 0) / 1000).toFixed(0)}K`}
+          value={formatCurrency(salesTarget)}
           icon={Target}
           variant="info"
           trend={{
-            value: 12.5,
-            direction: 'up',
-            label: t('userProfile.performance.vsLastMonth'),
-            showIcon: true,
+            value:     targetAchievedPct,
+            direction: targetAchievedPct >= 100 ? 'up' : 'down',
+            label:     t('userProfile.performance.vsTarget'),
+            showIcon:  true,
           }}
         />
         <StatCard
           title={t('userProfile.performance.commissionRate')}
-          value={`${user?.commissionRate || 0}%`}
+          value={`${commissionRate}%`}
           icon={DollarSign}
           variant="success"
         />
@@ -54,47 +93,74 @@ export const PerformanceTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
-              <p className="text-sm text-text-secondary">
-                {t('userProfile.performance.totalSales')}
-              </p>
-              <p className="text-2xl font-bold text-text-primary">₹4,50,000</p>
-              <p className="text-xs text-status-success">
-                +15% {t('userProfile.performance.vsTarget')}
-              </p>
+          {isPerfLoading ? (
+            // ── Loading Skeleton ─────────────
+            <div className="grid gap-4 md:grid-cols-2">
+              {[1, 2, 3, 4].map(i => (
+                <div
+                  key={i}
+                  className="h-20 animate-pulse rounded-lg border border-border-primary bg-bg-secondary"
+                />
+              ))}
             </div>
+          ) : (
+            // ── Real Data ────────────────────
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Total Sales Revenue */}
+              <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+                <p className="text-sm text-text-secondary">
+                  {t('userProfile.performance.totalSales')}
+                </p>
+                <p className="text-2xl font-bold text-text-primary">
+                  {formatCurrency(totalValue)}
+                </p>
+                {salesTarget > 0 && (
+                  <p className={`text-xs ${targetAchievedPct >= 100 ? 'text-status-success' : 'text-status-warning'}`}>
+                    {targetAchievedPct}% {t('userProfile.performance.vsTarget')}
+                  </p>
+                )}
+              </div>
 
-            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
-              <p className="text-sm text-text-secondary">
-                {t('userProfile.performance.commissionsEarned')}
-              </p>
-              <p className="text-2xl font-bold text-text-primary">₹11,250</p>
-              <p className="text-xs text-text-tertiary">
-                {t('userProfile.performance.thisMonth')}
-              </p>
-            </div>
+              {/* Commissions Earned */}
+              <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+                <p className="text-sm text-text-secondary">
+                  {t('userProfile.performance.commissionsEarned')}
+                </p>
+                <p className="text-2xl font-bold text-text-primary">
+                  {formatCurrency(Math.round(commissionsEarned))}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {commissionRate}% {t('userProfile.performance.ofRevenue')}
+                </p>
+              </div>
 
-            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
-              <p className="text-sm text-text-secondary">
-                {t('userProfile.performance.dealsCompleted')}
-              </p>
-              <p className="text-2xl font-bold text-text-primary">45</p>
-              <p className="text-xs text-status-success">
-                +8 {t('userProfile.performance.vsLastMonth')}
-              </p>
-            </div>
+              {/* Deals Completed */}
+              <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+                <p className="text-sm text-text-secondary">
+                  {t('userProfile.performance.dealsCompleted')}
+                </p>
+                <p className="text-2xl font-bold text-text-primary">
+                  {totalSales.toLocaleString('en-IN')}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {t('userProfile.performance.totalTransactions')}
+                </p>
+              </div>
 
-            <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
-              <p className="text-sm text-text-secondary">
-                {t('userProfile.performance.avgDealSize')}
-              </p>
-              <p className="text-2xl font-bold text-text-primary">₹10,000</p>
-              <p className="text-xs text-text-tertiary">
-                {t('userProfile.performance.perTransaction')}
-              </p>
+              {/* Avg Deal Size */}
+              <div className="rounded-lg border border-border-primary bg-bg-tertiary p-4">
+                <p className="text-sm text-text-secondary">
+                  {t('userProfile.performance.avgDealSize')}
+                </p>
+                <p className="text-2xl font-bold text-text-primary">
+                  {formatCurrency(Math.round(averageValue))}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {t('userProfile.performance.perTransaction')}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </CardContent>
       </Card>
 
@@ -110,33 +176,51 @@ export const PerformanceTab = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-center gap-3 rounded-lg border border-border-primary bg-bg-tertiary p-3">
-            <div className="bg-status-success/20 flex h-10 w-10 items-center justify-center rounded-full">
-              <Award className="h-5 w-5 text-status-success" />
+          {/* Target Achieved Badge */}
+          {targetAchievedPct >= 100 && (
+            <div className="flex items-center gap-3 rounded-lg border border-border-primary bg-bg-tertiary p-3">
+              <div className="bg-status-success/20 flex h-10 w-10 items-center justify-center rounded-full">
+                <Award className="h-5 w-5 text-status-success" />
+              </div>
+              <div>
+                <p className="font-medium text-text-primary">
+                  {t('userProfile.performance.targetAchieved')}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {t('userProfile.performance.targetAchievedDesc')}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-text-primary">
-                {t('userProfile.performance.topPerformer')}
-              </p>
-              <p className="text-xs text-text-tertiary">
-                {t('userProfile.performance.topPerformerDesc')}
-              </p>
-            </div>
-          </div>
+          )}
 
-          <div className="flex items-center gap-3 rounded-lg border border-border-primary bg-bg-tertiary p-3">
-            <div className="bg-status-info/20 flex h-10 w-10 items-center justify-center rounded-full">
-              <Target className="h-5 w-5 text-status-info" />
+          {/* Top Performer Badge — 50+ deals */}
+          {totalSales >= 50 && (
+            <div className="flex items-center gap-3 rounded-lg border border-border-primary bg-bg-tertiary p-3">
+              <div className="bg-status-info/20 flex h-10 w-10 items-center justify-center rounded-full">
+                <Target className="h-5 w-5 text-status-info" />
+              </div>
+              <div>
+                <p className="font-medium text-text-primary">
+                  {t('userProfile.performance.topPerformer')}
+                </p>
+                <p className="text-xs text-text-tertiary">
+                  {t('userProfile.performance.topPerformerDesc')}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-text-primary">
-                {t('userProfile.performance.targetAchieved')}
-              </p>
-              <p className="text-xs text-text-tertiary">
-                {t('userProfile.performance.targetAchievedDesc')}
-              </p>
-            </div>
-          </div>
+          )}
+
+          {/* No achievements yet */}
+          {targetAchievedPct < 100 && totalSales < 50 && !isPerfLoading && (
+            <p className="py-4 text-center text-sm text-text-tertiary">
+              {t('userProfile.performance.noAchievementsYet')}
+            </p>
+          )}
+
+          {/* Loading state */}
+          {isPerfLoading && (
+            <div className="h-16 animate-pulse rounded-lg bg-bg-secondary" />
+          )}
         </CardContent>
       </Card>
     </div>

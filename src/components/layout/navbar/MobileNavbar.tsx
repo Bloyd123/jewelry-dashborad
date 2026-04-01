@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { ThemePickerModal } from './ThemePickerModal'
 import { LanguageDropdown } from './LanguageDropdown'
 import { useNavigate } from 'react-router-dom'
-import { dummyUser } from '@/pages/user/data'
 
 import logo from '@/assets/images/logo.png'
 import { APP_CONFIG } from '@/config/app.config'

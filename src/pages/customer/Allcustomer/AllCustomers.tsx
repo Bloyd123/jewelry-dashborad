@@ -13,22 +13,15 @@ import type { CustomerStatistics } from '@/components/customer/analytics'
 import { useNavigate } from 'react-router-dom'
 import { usePermissionCheck } from '@/hooks/auth/usePermissions'
 import { useCustomerAnalytics } from '@/hooks/customer'
+import { useGetAdvancedAnalyticsQuery } from '@/store/api/customerApi'
 // TYPES & INTERFACES
 
 export interface AllCustomersProps {
   className?: string
 }
 
-// MOCK DATA (Replace with actual API data)
 
-const MOCK_STATISTICS: CustomerStatistics = {
-  totalCustomers: 1247,
-  activeCustomers: 892,
-  vipCustomers: 156,
-  totalOutstanding: 234500,
-  totalLoyaltyPoints: 45670,
-  avgLifetimeValue: 45230,
-}
+
 
 // MAIN COMPONENT
 
@@ -39,13 +32,20 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   // Redux State
   const { currentShopId } = useAuth()
 
+const { analytics, isLoading, refetch } = useCustomerAnalytics(currentShopId || '')
+const {
+  data:       advancedAnalytics,
+  isLoading:  isAdvancedLoading,
+  refetch:    refetchAdvanced,
+} = useGetAdvancedAnalyticsQuery(
+  { shopId: currentShopId! },
+  { skip: !currentShopId }
+)
   // Local UI State
   const [activeTab, setActiveTab] = useState('table')
-  const { analytics, isLoading, refetch } = useCustomerAnalytics(
-    currentShopId || ''
-  )
   const { can } = usePermissionCheck()
   // HANDLERS
+
 
   const handleAddCustomer = () => {
     console.log('Add New Customer clicked')
@@ -54,8 +54,9 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
   }
 
   const handleRefreshAnalytics = () => {
-    refetch()
-  }
+  refetch()
+  refetchAdvanced()
+}
 
   // TAB CONFIGURATION
 
@@ -143,12 +144,15 @@ export const AllCustomers: React.FC<AllCustomersProps> = ({ className }) => {
           <TabsContent value="analytics" className="focus-visible:outline-none">
             <div className="mt-4">
               {currentShopId ? (
-                <CustomerAnalytics
-                  shopId={currentShopId}
-                  statistics={analytics}
-                  loading={isLoading}
-                  onRefresh={handleRefreshAnalytics}
-                />
+<CustomerAnalytics
+  shopId={currentShopId}
+  statistics={{
+    ...analytics,           // basic stats - totalCustomers, activeCustomers etc
+    ...advancedAnalytics,   // advanced - growthData, retentionData, topCustomers etc
+  }}
+  loading={isLoading || isAdvancedLoading}
+  onRefresh={handleRefreshAnalytics}
+/>
               ) : null}
             </div>
           </TabsContent>

@@ -1,0 +1,357 @@
+{
+  "user": {
+    "form": {
+      "cancelTitle": "बदलाव रद्द करें?",
+      "cancelDescription": "आपके पास सहेजे नहीं गए बदलाव हैं। क्या आप वाकई उन्हें रद्द करना चाहते हैं?",
+      "saveTitle": "उपयोगकर्ता बनाएं?",
+      "saveDescription": "क्या आप वाकई इस उपयोगकर्ता को बनाना चाहते हैं?",
+      "updateTitle": "उपयोगकर्ता अपडेट करें?",
+      "updateDescription": "क्या आप वाकई इस उपयोगकर्ता को अपडेट करना चाहते हैं?",
+      "validationError": "सत्यापन विफल",
+      "validationErrorDescription": "सहेजने से पहले कृपया त्रुटियाँ ठीक करें"
+    },
+    "validationError": "सत्यापन त्रुटि",
+    "validationErrorDescription": "कुछ फ़ील्ड अमान्य हैं। कृपया जांचें और पुनः प्रयास करें।",
+    "userCreated": "उपयोगकर्ता बनाया गया",
+    "userUpdated": "उपयोगकर्ता अपडेट किया गया",
+    "userCreatedDescription": "उपयोगकर्ता सफलतापूर्वक बनाया गया है",
+    "addUser": "नया उपयोगकर्ता जोड़ें",
+    "editUser": "उपयोगकर्ता संपादित करें",
+    "addUserDescription": "उचित भूमिकाओं और अनुमतियों के साथ एक नया उपयोगकर्ता खाता बनाएं",
+    "editUserDescription": "उपयोगकर्ता की जानकारी और अनुमतियाँ अपडेट करें",
+
+    "basicInformation": "बुनियादी जानकारी",
+    "roleAndPermissions": "भूमिका और अनुमतियाँ",
+    "contactInformation": "संपर्क जानकारी",
+    "employeeInformation": "कर्मचारी जानकारी",
+    "salesInformation": "बिक्री जानकारी",
+    "preferences": "प्राथमिकताएं",
+
+    "username": "उपयोगकर्ता नाम",
+    "usernamePlaceholder": "john_doe",
+    "usernameHelpText": "3-30 वर्ण, केवल अक्षर, अंक और अंडरस्कोर",
+
+    "email": "ईमेल पता",
+    "emailPlaceholder": "john.doe@example.com",
+
+    "password": "पासवर्ड",
+    "passwordPlaceholder": "पासवर्ड दर्ज करें",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "confirmPasswordPlaceholder": "पासवर्ड दोबारा दर्ज करें",
+    "passwordsMatch": "पासवर्ड मेल खाते हैं",
+
+    "passwordStrength": {
+      "weak": "कमज़ोर",
+      "medium": "मध्यम",
+      "strong": "मज़बूत"
+    },
+
+    "firstName": "पहला नाम",
+    "firstNamePlaceholder": "राहुल",
+    "lastName": "अंतिम नाम",
+    "lastNamePlaceholder": "शर्मा",
+
+    "role": "उपयोगकर्ता भूमिका",
+    "selectRole": "एक भूमिका चुनें",
+    "roles": {
+      "superAdmin": "सुपर एडमिन",
+      "orgAdmin": "संगठन एडमिन",
+      "shopAdmin": "दुकान एडमिन",
+      "manager": "प्रबंधक",
+      "staff": "स्टाफ",
+      "accountant": "लेखाकार",
+      "viewer": "दर्शक"
+    },
+
+    "roleDescriptions": {
+      "superAdmin": "पूर्ण सिस्टम पहुँच। सभी संगठनों, दुकानों और उपयोगकर्ताओं का प्रबंधन कर सकते हैं।",
+      "orgAdmin": "संगठन के भीतर सेटिंग्स, दुकानों और उपयोगकर्ताओं का प्रबंधन कर सकते हैं।",
+      "shopAdmin": "दुकान संचालन, इन्वेंटरी, बिक्री और दुकान-स्तरीय उपयोगकर्ताओं का प्रबंधन कर सकते हैं।",
+      "manager": "सीमित प्रशासनिक पहुँच के साथ दुकान संचालन की निगरानी कर सकते हैं।",
+      "staff": "बिक्री और इन्वेंटरी प्रबंधन जैसे दैनिक कार्य कर सकते हैं।",
+      "accountant": "वित्तीय रिकॉर्ड और रिपोर्ट देख और प्रबंधित कर सकते हैं।",
+      "viewer": "दुकान डेटा और रिपोर्ट तक केवल पढ़ने की पहुँच।"
+    },
+
+    "organization": "संगठन",
+    "selectOrganization": "संगठन चुनें",
+
+    "primaryShop": "प्राथमिक दुकान",
+    "selectShop": "प्राथमिक दुकान चुनें",
+    "primaryShopHelpText": "डिफ़ॉल्ट दुकान जहाँ यह उपयोगकर्ता काम करेगा",
+
+    "rolePermissions": "भूमिका अनुमतियाँ",
+    "permissions": {
+      "fullSystemAccess": "सभी संगठनों में पूर्ण सिस्टम पहुँच",
+      "manageAllOrganizations": "संगठन बनाएं और प्रबंधित करें",
+      "manageOrganization": "संगठन की सेटिंग्स और उपयोगकर्ताओं का प्रबंधन करें",
+      "createShops": "दुकानें बनाएं और प्रबंधित करें",
+      "manageShop": "पूर्ण दुकान प्रबंधन पहुँच",
+      "viewReports": "रिपोर्ट देखें और बनाएं",
+      "limitedAccess": "भूमिका-विशिष्ट सीमित पहुँच"
+    },
+
+    "phone": "फ़ोन नंबर",
+    "phoneHelpText": "10 अंकों का मोबाइल नंबर",
+
+    "designation": "पद",
+    "designationPlaceholder": "स्टोर प्रबंधक",
+
+    "department": "विभाग",
+    "selectDepartment": "विभाग चुनें",
+    "departments": {
+      "sales": "बिक्री",
+      "purchase": "खरीद",
+      "inventory": "इन्वेंटरी",
+      "accounts": "लेखा",
+      "management": "प्रबंधन",
+      "workshop": "कार्यशाला",
+      "qualityCheck": "गुणवत्ता जाँच",
+      "customerService": "ग्राहक सेवा",
+      "other": "अन्य"
+    },
+
+    "employeeId": "कर्मचारी आईडी",
+    "employeeIdPlaceholder": "EMP001",
+    "employeeIdHelpText": "अद्वितीय कर्मचारी पहचानकर्ता",
+
+    "joiningDate": "जुड़ने की तारीख",
+    "selectDate": "तारीख चुनें",
+
+    "salesInfoNotApplicable": "बिक्री जानकारी केवल बिक्री विभाग के कर्मचारियों के लिए लागू है",
+    "salesInfoDescription": "प्रदर्शन ट्रैकिंग के लिए बिक्री लक्ष्य और कमीशन दरें निर्धारित करें",
+
+    "salesTarget": "मासिक बिक्री लक्ष्य",
+    "salesTargetHelpText": "प्रति माह INR में लक्ष्य बिक्री राशि",
+
+    "commissionRate": "कमीशन दर",
+    "commissionRateHelpText": "बिक्री पर कमीशन प्रतिशत (0-100%)",
+
+    "salesPerformanceTracking": "बिक्री प्रदर्शन ट्रैकिंग",
+    "salesPerformanceDescription": "इन लक्ष्यों का उपयोग प्रदर्शन ट्रैक करने और प्रोत्साहन की गणना करने के लिए किया जाएगा",
+
+    "preferencesDescription": "उपयोगकर्ता इंटरफ़ेस और सिस्टम प्राथमिकताएं कस्टमाइज़ करें",
+
+    "language": "भाषा",
+    "selectLanguage": "भाषा चुनें",
+    "languages": {
+      "english": "English",
+      "hindi": "हिन्दी (Hindi)",
+      "marathi": "मराठी (Marathi)",
+      "gujarati": "ગુજરાતી (Gujarati)",
+      "tamil": "தமிழ் (Tamil)",
+      "telugu": "తెలుగు (Telugu)"
+    },
+
+    "theme": "थीम",
+    "selectTheme": "थीम चुनें",
+    "themes": {
+      "light": "लाइट",
+      "dark": "डार्क",
+      "auto": "ऑटो (सिस्टम)"
+    },
+
+    "currency": "मुद्रा",
+    "selectCurrency": "मुद्रा चुनें",
+
+    "dateFormat": "दिनांक प्रारूप",
+    "selectDateFormat": "प्रारूप चुनें",
+
+    "timezone": "समय क्षेत्र",
+    "selectTimezone": "समय क्षेत्र चुनें",
+
+    "notifications": "सूचनाएं",
+    "notificationsDescription": "पुश सूचनाएं और ईमेल अलर्ट सक्षम करें"
+  },
+  "userProfile": {
+    "title": "उपयोगकर्ता प्रोफ़ाइल",
+    "backToDashboard": "डैशबोर्ड पर वापस जाएं",
+    "emailVerified": "ईमेल सत्यापित",
+    "salesTarget": "बिक्री लक्ष्य",
+    "commission": "कमीशन",
+    "lastLogin": "अंतिम लॉगिन",
+    "target": "लक्ष्य",
+    "role": "भूमिका",
+
+    "tabs": {
+      "personal": "व्यक्तिगत जानकारी",
+      "security": "सुरक्षा",
+      "preferences": "प्राथमिकताएं",
+      "shopAccess": "दुकान पहुँच",
+      "performance": "प्रदर्शन",
+      "activity": "गतिविधि लॉग"
+    },
+
+    "personalInfo": {
+      "title": "व्यक्तिगत जानकारी",
+      "profilePicture": "प्रोफ़ाइल फ़ोटो",
+      "profilePictureDesc": "अपनी प्रोफ़ाइल फ़ोटो अपडेट करें",
+      "changePhoto": "फ़ोटो बदलें",
+      "removePhoto": "फ़ोटो हटाएं",
+      "basicInfo": "बुनियादी जानकारी",
+      "basicInfoDesc": "आपका नाम, ईमेल और संपर्क विवरण",
+      "username": "उपयोगकर्ता नाम",
+      "email": "ईमेल",
+      "firstName": "पहला नाम",
+      "lastName": "अंतिम नाम",
+      "phone": "फ़ोन नंबर",
+      "professionalInfo": "पेशेवर जानकारी",
+      "professionalInfoDesc": "नौकरी का पद और विभाग विवरण",
+      "designation": "पद",
+      "department": "विभाग",
+      "employeeId": "कर्मचारी आईडी",
+      "joiningDate": "जुड़ने की तारीख"
+    },
+
+    "security": {
+      "enabled": "सक्षम",
+      "2faEnabled": "दो-कारक प्रमाणीकरण सक्षम",
+      "2faEnabledSuccess": "दो-कारक प्रमाणीकरण सफलतापूर्वक सक्षम किया गया है",
+      "disabled": "अक्षम",
+      "passwordChanged": "पासवर्ड सफलतापूर्वक बदला गया",
+      "passwordChangedSuccess": "आपका पासवर्ड सफलतापूर्वक अपडेट किया गया है",
+      "2faDisabled": "दो-कारक प्रमाणीकरण अक्षम",
+      "2faDisabledSuccess": "दो-कारक प्रमाणीकरण सफलतापूर्वक अक्षम किया गया है",
+      "logoutAllConfirmTitle": "सभी डिवाइस से लॉगआउट करें?",
+      "logoutAllConfirmDesc": "इससे हर डिवाइस पर आपके सभी सक्रिय सत्र समाप्त हो जाएंगे, जिसमें यह भी शामिल है। आपको सभी डिवाइस पर फिर से लॉगिन करना होगा।",
+      "logoutAllConfirm": "हाँ, सभी से लॉगआउट करें",
+      "logoutAllSuccess": "सफलतापूर्वक लॉगआउट हो गए",
+      "logoutAllSuccessDesc": "आप सभी डिवाइस से लॉगआउट हो गए हैं। लॉगिन पृष्ठ पर भेजा जा रहा है...",
+      "loggingOut": "लॉगआउट हो रहा है...",
+      "revoking": "रद्द किया जा रहा है...",
+      "noActiveSessions": "कोई सक्रिय सत्र नहीं मिला",
+      "sessionRevoked": "सत्र रद्द किया गया",
+      "sessionRevokedSuccess": "सत्र सफलतापूर्वक रद्द किया गया है",
+      "title": "सुरक्षा सेटिंग्स",
+      "verificationStatus": "सत्यापन स्थिति",
+      "verificationStatusDesc": "आपके खाते के सत्यापन विवरण",
+      "emailVerified": "ईमेल पता",
+      "phoneVerified": "फ़ोन नंबर",
+      "verifyNow": "अभी सत्यापित करें",
+      "changePassword": "पासवर्ड बदलें",
+      "changePasswordDesc": "अपना खाता पासवर्ड अपडेट करें",
+      "currentPassword": "वर्तमान पासवर्ड",
+      "newPassword": "नया पासवर्ड",
+      "confirmPassword": "पासवर्ड की पुष्टि करें",
+      "updatePassword": "पासवर्ड अपडेट करें",
+      "twoFactorAuth": "दो-कारक प्रमाणीकरण",
+      "twoFactorAuthDesc": "अपने खाते में सुरक्षा की एक अतिरिक्त परत जोड़ें",
+      "twoFactorStatus": "दो-कारक प्रमाणीकरण",
+      "twoFactorStatusDesc": "2FA से अपना खाता सुरक्षित करें",
+      "enableTwoFactor": "दो-कारक प्रमाणीकरण सक्षम करें",
+      "activeSessions": "सक्रिय सत्र",
+      "activeSessionsDesc": "अपने सक्रिय लॉगिन सत्रों का प्रबंधन करें",
+      "currentDevice": "वर्तमान डिवाइस",
+      "lastActive": "अंतिम सक्रिय",
+      "active": "सक्रिय",
+      "revoke": "रद्द करें",
+      "logoutAllDevices": "सभी डिवाइस से लॉगआउट करें"
+    },
+
+    "preferences": {
+      "title": "प्राथमिकताएं",
+      "languageRegion": "भाषा और क्षेत्र",
+      "languageRegionDesc": "अपनी भाषा और समय क्षेत्र प्राथमिकताएं सेट करें",
+      "language": "भाषा",
+      "timezone": "समय क्षेत्र",
+      "formatSettings": "प्रारूप सेटिंग्स",
+      "formatSettingsDesc": "दिनांक और मुद्रा प्रदर्शन कस्टमाइज़ करें",
+      "currency": "मुद्रा",
+      "dateFormat": "दिनांक प्रारूप",
+      "appearance": "दिखावट",
+      "appearanceDesc": "रूप और अनुभव कस्टमाइज़ करें",
+      "theme": "थीम",
+      "lightMode": "लाइट मोड",
+      "darkMode": "डार्क मोड",
+      "autoMode": "ऑटो (सिस्टम)",
+      "notifications": "सूचनाएं",
+      "notificationsDesc": "अपनी सूचना प्राथमिकताएं प्रबंधित करें",
+      "enableNotifications": "सूचनाएं सक्षम करें",
+      "enableNotificationsDesc": "अपने खाते की गतिविधि के बारे में अपडेट प्राप्त करें"
+    },
+
+    "shopAccess": {
+      "title": "दुकान पहुँच",
+      "primaryShop": "प्राथमिक दुकान",
+      "primaryShopDesc": "आपका डिफ़ॉल्ट कार्यस्थान",
+      "shopCode": "दुकान कोड",
+      "noPrimaryShop": "कोई प्राथमिक दुकान नहीं दी गई",
+      "accessPermissions": "पहुँच और अनुमतियाँ",
+      "accessPermissionsDesc": "आपकी दुकान पहुँच और अनुमतियों का विवरण",
+      "noShopAccess": "कोई दुकान पहुँच नहीं दी गई",
+      "role": "भूमिका",
+      "permissions": "अनुमतियाँ",
+      "inventory": "इन्वेंटरी",
+      "sales": "बिक्री",
+      "purchase": "खरीद",
+      "view": "देखें",
+      "create": "बनाएं",
+      "edit": "संपादित करें",
+      "delete": "हटाएं"
+    },
+
+    "performance": {
+      "title": "प्रदर्शन",
+      "salesTarget": "बिक्री लक्ष्य",
+      "commissionRate": "कमीशन दर",
+      "vsLastMonth": "पिछले माह की तुलना में",
+      "salesPerformance": "बिक्री प्रदर्शन",
+      "salesPerformanceDesc": "आपकी बिक्री आंकड़े और उपलब्धियाँ",
+      "totalSales": "कुल बिक्री",
+      "vsTarget": "लक्ष्य की तुलना में",
+      "commissionsEarned": "अर्जित कमीशन",
+      "thisMonth": "इस माह",
+      "dealsCompleted": "पूर्ण सौदे",
+      "avgDealSize": "औसत सौदा आकार",
+      "perTransaction": "प्रति लेनदेन",
+      "achievements": "उपलब्धियाँ और मील के पत्थर",
+      "achievementsDesc": "आपकी उपलब्धियाँ और पुरस्कार",
+      "topPerformer": "शीर्ष प्रदर्शनकर्ता",
+      "topPerformerDesc": "Q4 2024 में प्राप्त",
+      "targetAchieved": "लक्ष्य प्राप्त",
+      "targetAchievedDesc": "दिसंबर में 100% लक्ष्य पूर्ण"
+    },
+
+    "activityLogs": {
+      "title": "गतिविधि लॉग",
+      "filters": "फ़िल्टर",
+      "actionType": "क्रिया प्रकार",
+      "allActions": "सभी क्रियाएं",
+      "login": "लॉगिन",
+      "logout": "लॉगआउट",
+      "profileUpdate": "प्रोफ़ाइल अपडेट",
+      "dateRange": "दिनांक सीमा",
+      "today": "आज",
+      "last7Days": "पिछले 7 दिन",
+      "last30Days": "पिछले 30 दिन",
+      "allTime": "सभी समय",
+      "applyFilters": "फ़िल्टर लागू करें",
+      "recentActivity": "हालिया गतिविधि",
+      "recentActivityDesc": "आपकी हालिया खाता गतिविधि और बदलाव",
+      "noActivity": "कोई गतिविधि लॉग नहीं मिला",
+      "profile_update": "प्रोफ़ाइल अपडेट"
+    }
+  },
+
+  "roles": {
+    "super_admin": "सुपर एडमिन",
+    "org_admin": "संगठन एडमिन",
+    "shop_admin": "दुकान एडमिन",
+    "manager": "प्रबंधक",
+    "staff": "स्टाफ",
+    "accountant": "लेखाकार",
+    "viewer": "दर्शक"
+  },
+
+  "departments": {
+    "sales": "बिक्री",
+    "purchase": "खरीद",
+    "inventory": "इन्वेंटरी",
+    "accounts": "लेखा",
+    "management": "प्रबंधन",
+    "workshop": "कार्यशाला",
+    "quality_check": "गुणवत्ता जाँच",
+    "customer_service": "ग्राहक सेवा",
+    "other": "अन्य"
+  }
+}

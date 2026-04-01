@@ -9,11 +9,7 @@ import {
   useGetRevenueVsExpensesQuery,
 } from '@/store/api/salesApi'
 import type { ShopStatistics } from '@/types/shop.types'
-import type { StatisticsData } from '@/pages/sales/SalesDetails/SalesDetailsPage'
-
-// ─────────────────────────────────────────────
-// TRANSFORMER
-// ─────────────────────────────────────────────
+import type { StatisticsData }  from '@/components/shop/ShopDetailsPage/tabs/StatisticsTab'
 const transformToStatisticsData = (
   raw: ShopStatistics,
   salesAnalytics: any,

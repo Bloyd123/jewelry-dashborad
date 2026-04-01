@@ -1,0 +1,173 @@
+{
+  "purchase": {
+    "huid": "HUID नंबर",
+    "isHallmarked": "हॉलमार्क्ड",
+    "description": "आइटम विवरण",
+    "descriptionPlaceholder": "आइटम का विवरण दर्ज करें...",
+    "tags": "टैग्स",
+    "tagsPlaceholder": "टाइप करें और Enter दबाकर टैग जोड़ें",
+    "editPurchase": "खरीदारी संपादित करें",
+    "addPurchaseDescription": "नया खरीद आदेश बनाएं",
+    "editPurchaseDescription": "खरीद आदेश का विवरण अपडेट करें",
+
+    "basicInformation": "मूल जानकारी",
+    "addItems": "आइटम जोड़ें",
+    "paymentDetails": "भुगतान विवरण",
+    "additionalInfo": "अतिरिक्त जानकारी",
+    "review": "समीक्षा करें एवं सबमिट करें",
+
+    "supplier": "आपूर्तिकर्ता",
+    "selectSupplier": "आपूर्तिकर्ता चुनें",
+    "purchaseDate": "खरीदारी की तारीख",
+    "purchaseType": "खरीदारी का प्रकार",
+
+    "types": {
+      "newStock": "नया स्टॉक",
+      "oldGold": "पुराना सोना",
+      "exchange": "एक्सचेंज",
+      "consignment": "कॉन्साइनमेंट",
+      "repairReturn": "मरम्मत रिटर्न",
+      "sample": "सैंपल"
+    },
+
+    "addNewItem": "नया आइटम जोड़ें",
+    "addedItems": "जोड़े गए आइटम",
+    "productName": "उत्पाद का नाम",
+    "metalType": "धातु का प्रकार",
+    "purity": "शुद्धता",
+    "grossWeight": "ग्रॉस वजन (ग्राम)",
+    "stoneWeight": "पत्थर वजन (ग्राम)",
+    "netWeight": "नेट वजन (ग्राम)",
+    "ratePerGram": "प्रति ग्राम दर",
+    "makingCharges": "मेकिंग चार्ज",
+    "stoneCharges": "पत्थर चार्ज",
+    "otherCharges": "अन्य चार्ज",
+    "itemTotal": "आइटम कुल",
+    "addItem": "आइटम जोड़ें",
+
+    "metals": {
+      "gold": "सोना",
+      "silver": "चांदी",
+      "platinum": "प्लैटिनम",
+      "diamond": "हीरा",
+      "mixed": "मिश्रित"
+    },
+
+    "paymentMode": "भुगतान मोड",
+    "paidAmount": "भुगतान की गई राशि",
+    "paymentTerms": "भुगतान शर्तें",
+    "dueDate": "बकाया तिथि",
+
+    "paymentModes": {
+      "cash": "नकद",
+      "card": "कार्ड",
+      "upi": "UPI",
+      "cheque": "चेक",
+      "bankTransfer": "बैंक ट्रांसफर",
+      "credit": "क्रेडिट"
+    },
+
+    "expectedDeliveryDate": "अपेक्षित डिलीवरी तिथि",
+    "deliveryAddress": "डिलीवरी पता",
+    "notes": "नोट्स",
+    "internalNotes": "आंतरिक नोट्स",
+
+    "orderSummary": "आदेश सारांश",
+    "subtotal": "उप-कुल",
+    "cgst": "CGST",
+    "sgst": "SGST",
+    "grandTotal": "ग्रैंड टोटल",
+    "paid": "भुगतान किया गया",
+    "due": "बकाया",
+    "purchaseDetails": "खरीदारी विवरण",
+    "items": "आइटम",
+    "title": "खरीदारी",
+    "subtitle": "खरीद आदेश और चालान प्रबंधित करें",
+    "addPurchase": "खरीदारी जोड़ें",
+    "filters": {
+      "searchPlaceholder": "खरीद संख्या या आपूर्तिकर्ता नाम द्वारा खोजें...",
+      "supplier": "आपूर्तिकर्ता",
+      "status": "खरीदारी स्थिति",
+      "paymentStatus": "भुगतान स्थिति",
+      "dateRange": "तारीख सीमा",
+      "purchaseType": "खरीदारी का प्रकार",
+      "approvalStatus": "स्वीकृति स्थिति"
+    },
+    "status": {
+      "draft": "ड्राफ्ट",
+      "pending": "लंबित",
+      "ordered": "आदेश दिया गया",
+      "received": "प्राप्त किया गया",
+      "partialReceived": "आंशिक प्राप्त",
+      "completed": "पूरा हुआ",
+      "cancelled": "रद्द किया गया",
+      "returned": "वापस किया गया"
+    },
+    "paymentStatus": {
+      "paid": "भुगतान किया गया",
+      "partial": "आंशिक",
+      "unpaid": "भुगतान बाकी",
+      "overdue": "समय सीमा समाप्त"
+    },
+    "type": {
+      "newStock": "नया स्टॉक",
+      "oldGold": "पुराना सोना",
+      "exchange": "एक्सचेंज",
+      "consignment": "कॉन्साइनमेंट",
+      "repairReturn": "मरम्मत रिटर्न",
+      "sample": "सैंपल"
+    },
+    "approvalStatus": {
+      "pending": "लंबित",
+      "approved": "स्वीकृत",
+      "rejected": "अस्वीकृत"
+    }
+  },
+
+  "forms": {
+    "selectDate": "तारीख चुनें"
+  },
+  "filters": {
+    "filters": "फिल्टर",
+    "moreFilters": "अधिक फिल्टर",
+    "advancedFilters": "उन्नत फिल्टर",
+    "clearAll": "सभी साफ करें",
+    "clearAdvanced": "उन्नत साफ करें",
+    "selectDateRange": "तारीख सीमा चुनें",
+    "title": "खरीदारी फिल्टर करें"
+  },
+  "table": {
+    "purchaseNumber": "खरीद संख्या",
+    "supplier": "आपूर्तिकर्ता",
+    "purchaseDate": "खरीदारी तिथि",
+    "purchaseType": "प्रकार",
+    "items": "आइटम",
+    "totalAmount": "कुल राशि",
+    "paymentStatus": "भुगतान स्थिति",
+    "status": "स्थिति",
+    "approval": "स्वीकृति",
+    "paid": "भुगतान/बकाया",
+    "delivery": "डिलीवरी",
+    "noPurchases": "कोई खरीदारी नहीं मिली",
+    "selectedCount": "{{count}} चयनित",
+    "ariaLabel": "खरीदारी तालिका"
+  },
+  "actions": {
+    "viewDetails": "विवरण देखें",
+    "edit": "संपादित करें",
+    "receive": "प्राप्त किया गया मार्क करें",
+    "addPayment": "भुगतान जोड़ें",
+    "approve": "स्वीकृत करें",
+    "reject": "अस्वीकृत करें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "bulkApprove": "बल्क स्वीकृति",
+    "export": "निर्यात",
+    "print": "प्रिंट",
+    "exportPDF": "PDF के रूप में निर्यात करें",
+    "exportExcel": "Excel के रूप में निर्यात करें",
+    "sendEmail": "ईमेल भेजें",
+    "generateReport": "रिपोर्ट जनरेट करें",
+    "bulkDelete": "बल्क डिलीट"
+  }
+}

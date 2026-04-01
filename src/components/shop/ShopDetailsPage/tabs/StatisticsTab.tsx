@@ -27,16 +27,6 @@ import { DonutChart } from '@/components/ui/charts/DonutChart'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { Separator } from '@/components/ui/layout/Separator'
 import { cn } from '@/lib/utils'
-import {
-  mockSalesTrendData,
-  mockRevenueTrendData,
-  mockInventoryData,
-  mockTopProducts,
-  mockSalesByCategoryData,
-  mockSalesByPaymentMethodData,
-  mockMonthlyComparisonData,
-  mockRecentTransactions,
-} from '@/pages/shops/dummyStatistics'
 
 //
 // TYPES & INTERFACES
@@ -338,13 +328,13 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
           </div>
           <LineChart
             data={
-              statistics.salesTrend
-                ? statistics.salesTrend.labels.map((label, idx) => ({
-                    month: label,
-                    sales: statistics.salesTrend!.data[idx],
-                  }))
-                : mockSalesTrendData
-            }
+  statistics.salesTrend
+    ? statistics.salesTrend.labels.map((label, idx) => ({
+        month: label,
+        sales: statistics.salesTrend!.data[idx],
+      }))
+    : []
+}
             lines={[
               {
                 dataKey: 'sales',
@@ -374,7 +364,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
             </p>
           </div>
           <AreaChart
-            data={statistics.revenueTrend || mockRevenueTrendData}
+          data={statistics.revenueTrend || []}
             areas={[
               {
                 dataKey: 'revenue',
@@ -433,7 +423,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               {t('shops.statistics.salesByCategory')}
             </h4>
             <DonutChart
-              data={statistics.salesByCategory || mockSalesByCategoryData}
+            data={statistics.salesByCategory || []}
               dataKey="value"
               nameKey="name"
               height={280}
@@ -458,9 +448,8 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
               {t('shops.statistics.salesByPaymentMethod')}
             </h4>
             <DonutChart
-              data={
-                statistics.salesByPaymentMethod || mockSalesByPaymentMethodData
-              }
+                data={statistics.salesByPaymentMethod || []}
+        
               dataKey="value"
               nameKey="name"
               height={280}
@@ -501,7 +490,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
 
         <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
           <BarChart
-            data={statistics.monthlyComparison || mockMonthlyComparisonData}
+            data={statistics.monthlyComparison || []}
             bars={[
               {
                 dataKey: 'currentYear',
@@ -547,15 +536,15 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
         </div>
 
         <DataTable
-          data={statistics.topProducts || mockTopProducts}
+        data={statistics.topProducts || []}
           columns={[
             {
               id: 'rank',
               header: t('shops.statistics.rank'),
               cell: ({ row }) => {
-                const index = (
-                  statistics.topProducts || mockTopProducts
-                ).indexOf(row)
+const index = (
+  statistics.topProducts || []
+).indexOf(row)
                 return (
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-accent">
@@ -670,7 +659,7 @@ const StatisticsTab: React.FC<StatisticsTabProps> = ({
         </div>
 
         <DataTable
-          data={statistics.recentTransactions || mockRecentTransactions}
+        data={statistics.recentTransactions || []}
           columns={[
             {
               id: 'orderNumber',

@@ -12,7 +12,8 @@ import {
   Languages,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { dummyUser } from '@/pages/user/data'
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
 import { useTheme } from '@/hooks/useTheme'
 import { useAppDispatch } from '@/store/hooks'
 import { cycleTheme } from '@/store/slices/uiSlice'
@@ -22,6 +23,8 @@ import { LanguageDropdown } from './LanguageDropdown'
 export const DesktopNavbar = () => {
   const { mode } = useTheme()
   const dispatch = useAppDispatch()
+  const user = useAppSelector(selectUserProfile)
+
   const [showSearch, setShowSearch] = useState(false)
   const [showThemePicker, setShowThemePicker] = useState(false)
   const [showLanguageMenu, setShowLanguageMenu] = useState(false)
@@ -113,15 +116,21 @@ export const DesktopNavbar = () => {
           {/* User Profile */}
           <button
             onClick={() => navigate('/userprofile')}
-            className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-bg-secondary"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors "
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white">
               <User size={16} />
             </div>
             <div className="hidden text-left xl:block">
-              <p className="text-sm font-medium text-text-primary">
-                {dummyUser.fullName}
-              </p>
+<div className="hidden text-left xl:block leading-tight">
+  <p className="text-sm font-medium text-text-primary">
+    {user?.fullName || 'User'}
+  </p>
+
+  <p className="text-xs text-text-tertiary capitalize mt-0.5">
+    {user?.role?.replace('_', ' ') || ''}
+  </p>
+</div>
               {/* <p className="text-xs text-text-tertiary">Admin</p> */}
             </div>
           </button>

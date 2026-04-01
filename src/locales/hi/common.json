@@ -1,5 +1,68 @@
 {
+  "common": {
+    "selectShopFirst": "कृपया पहले एक दुकान चुनें",
+    "selectOption": "एक विकल्प चुनें",
+    "create": "बनाएं",
+    "delete": "हटाएं",
+    "pageOfPages": "पृष्ठ {{page}} कुल {{pages}} में से",
+    "loading": "लोड हो रहा है...",
+    "noResults": "कोई परिणाम नहीं मिला",
+    "goBack": "वापस जाएं",
+    "selectDate": "तारीख चुनें",
+    "active": "सक्रिय",
+    "inactive": "निष्क्रिय",
+    "verified": "सत्यापित",
+    "edit": "संपादित करें",
+    "saveChanges": "बदलाव सहेजें",
+    "settings": "सेटिंग्स",
+    "clearSelection": "चयन साफ करें",
+    "all": "सभी",
+    "apply": "लागू करें",
+    "clear": "साफ करें",
+    "search": "खोजें",
+    "filters": {
+      "minYear": "न्यूनतम वर्ष",
+      "maxYear": "अधिकतम वर्ष"
+    },
+    "status": "स्थिति",
+    "step": "चरण",
+    "of": "का",
+    "next": "अगला",
+    "yesDiscard": "हाँ, रद्द करें",
+    "noKeepEditing": "नहीं, संपादन जारी रखें",
+    "yesSave": "हाँ, सहेजें",
+    "previous": "पिछला",
+    "save": "सहेजें",
+    "update": "अपडेट करें",
+    "cancel": "रद्द करें",
+    "close": "बंद करें",
+    "add": "जोड़ें",
+    "browse": "फ़ाइलें ब्राउज़ करें",
+    "other": "अन्य",
+    "by": "द्वारा",
+    "saving": "सहेजा जा रहा है...",
+    "required": "यह फ़ील्ड आवश्यक है",
+    "continue": "जारी रखें",
+    "back": "वापस",
+    "copied": "कॉपी किया गया!",
+    "dismiss": "खारिज करें"
+  },
+  "alert": {
+    "success": "सफलता",
+    "error": "त्रुटि",
+    "warning": "चेतावनी",
+    "info": "जानकारी",
+    "defaultTitle": "नोटिफिकेशन"
+  },
+  "authAlert": {
+    "accessDenied": {
+      "title": "प्रवेश अस्वीकृत",
+      "description": "आपके पास इस पृष्ठ को एक्सेस करने की अनुमति नहीं है। यदि आपको लगता है कि यह गलती है तो कृपया अपने एडमिनिस्ट्रेटर से संपर्क करें।"
+    }
+  },
   "sidebar": {
+    "purchaseDetail": "खरीदारी विवरण",
+    "registeruser": "उपयोगकर्ता पंजीकरण",
     "dashboard": "डैशबोर्ड",
     "metalRates": "धातु दरें",
 
@@ -23,9 +86,9 @@
     "addProduct": "उत्पाद जोड़ें",
     "productdetail": "उत्पाद विवरण",
 
-    "purchases": "खरीद",
-    "allPurchases": "सभी खरीद",
-    "addPurchase": "खरीद जोड़ें",
+    "purchases": "खरीदारी",
+    "allPurchases": "सभी खरीदारी",
+    "addPurchase": "खरीदारी जोड़ें",
 
     "sales": "बिक्री",
     "allSales": "सभी बिक्री",
@@ -38,44 +101,45 @@
   },
   "noInternet": {
     "title": "इंटरनेट कनेक्शन नहीं है",
-    "description": "कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।",
+    "description": "कृपया अपना इंटरनेट कनेक्शन चेक करें और पुनः प्रयास करें।",
     "retryButton": "कनेक्शन पुनः प्रयास करें"
   },
   "commontext": {
     "Home": "होम"
   },
+
   "ui": {
     "datatable": {
       "table": "डेटा तालिका",
-      "actions": "क्रियाएँ",
-      "rowActions": "पंक्ति क्रियाएँ",
+      "actions": "क्रियाएं",
+      "rowActions": "पंक्ति क्रियाएं",
       "selectAll": "सभी चुनें",
       "selectRow": "पंक्ति चुनें",
       "expandRow": "पंक्ति विस्तार करें",
       "collapseRow": "पंक्ति संकुचित करें",
-      "noData": "कोई डेटा उपलब्ध नहीं",
+      "noData": "कोई डेटा उपलब्ध नहीं है",
       "loading": "डेटा लोड हो रहा है...",
       "firstPage": "पहला पृष्ठ",
       "previousPage": "पिछला पृष्ठ",
       "nextPage": "अगला पृष्ठ",
       "lastPage": "अंतिम पृष्ठ",
-      "rowsPerPage": "प्रति पृष्ठ पंक्तियाँ",
-      "showingItems": "{{start}}-{{end}} में से {{total}} दिखा रहा है",
-      "pageOf": "पृष्ठ {{current}} / {{total}}",
+      "rowsPerPage": "प्रति पृष्ठ पंक्तियां",
+      "showingItems": "दिखाया जा रहा है {{start}}-{{end}} कुल {{total}} में से",
+      "pageOf": "पृष्ठ {{current}} कुल {{total}} में से",
       "search": "खोजें...",
-      "filter": "फ़िल्टर",
-      "clearFilters": "फ़िल्टर साफ़ करें",
+      "filter": "फिल्टर",
+      "clearFilters": "फिल्टर साफ करें",
       "sort": "क्रमबद्ध करें",
       "sortAscending": "आरोही क्रम",
       "sortDescending": "अवरोही क्रम",
-      "clearSort": "क्रम हटाएँ",
+      "clearSort": "क्रम साफ करें",
       "selectedCount": "{{count}} चयनित",
       "exportSelected": "चयनित निर्यात करें",
-      "deleteSelected": "चयनित हटाएँ",
+      "deleteSelected": "चयनित हटाएं",
       "view": "देखें",
       "edit": "संपादित करें",
-      "delete": "हटाएँ",
-      "more": "और"
+      "delete": "हटाएं",
+      "more": "अधिक"
     }
   }
 }
