@@ -73,7 +73,7 @@ if (isLoading || !supplier) {
           <SupplierFinancialTab supplier={supplier} />
         )}
         {activeTab === 'documents' && (
-          <SupplierDocumentsTab supplier={supplier} />
+          <SupplierDocumentsTab supplier={supplier} onRefetch={refetch} />
         )}
         {activeTab === 'activity' && (<SupplierActivityTab supplier={supplier} />    )}
       </div>

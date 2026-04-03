@@ -1,6 +1,9 @@
 // FILE: components/dashboard/components/SalesChart.tsx
 
 import { BarChart3 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { ROUTE_PATHS } from '@/constants/routePaths'
 
 // ─────────────────────────────────────────────
 // TYPES
@@ -33,6 +36,9 @@ export const SalesChart = ({
   startDate,
   endDate,
 }: SalesChartProps) => {
+  const { t }    = useTranslation()
+  const navigate = useNavigate()
+
   const totalRevenue      = salesAnalytics?.totalAmount       || 0
   const totalOrders       = salesAnalytics?.totalSales        || 0
   const averageOrderValue = salesAnalytics?.averageOrderValue || 0
@@ -44,15 +50,18 @@ export const SalesChart = ({
         <div>
           <h3 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
             <BarChart3 size={20} className="text-accent" />
-            Sales Overview
+            {t('dashboard.salesChart.title')}
           </h3>
           <p className="mt-1 text-sm text-text-tertiary">
             {startDate} — {endDate}
           </p>
         </div>
 
-        <button className="text-sm text-accent hover:underline">
-          View All
+        <button
+          className="text-sm text-accent hover:underline"
+          onClick={() => navigate(ROUTE_PATHS.SALES.LIST)}
+        >
+          {t('dashboard.salesChart.viewAll')}
         </button>
       </div>
 
@@ -66,19 +75,25 @@ export const SalesChart = ({
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-lg bg-bg-secondary p-4">
-            <p className="text-xs text-text-tertiary">Total Revenue</p>
+            <p className="text-xs text-text-tertiary">
+              {t('dashboard.salesChart.totalRevenue')}
+            </p>
             <p className="mt-1 text-lg font-bold text-text-primary">
               {formatCurrency(totalRevenue)}
             </p>
           </div>
           <div className="rounded-lg bg-bg-secondary p-4">
-            <p className="text-xs text-text-tertiary">Total Orders</p>
+            <p className="text-xs text-text-tertiary">
+              {t('dashboard.salesChart.totalOrders')}
+            </p>
             <p className="mt-1 text-lg font-bold text-text-primary">
               {totalOrders.toLocaleString('en-IN')}
             </p>
           </div>
           <div className="rounded-lg bg-bg-secondary p-4">
-            <p className="text-xs text-text-tertiary">Avg Order Value</p>
+            <p className="text-xs text-text-tertiary">
+              {t('dashboard.salesChart.avgOrderValue')}
+            </p>
             <p className="mt-1 text-lg font-bold text-text-primary">
               {formatCurrency(Math.round(averageOrderValue))}
             </p>
@@ -89,7 +104,9 @@ export const SalesChart = ({
       {/* Summary */}
       <div className="mt-6 flex items-center justify-between border-t border-border-primary pt-4">
         <div>
-          <p className="text-sm text-text-tertiary">Total Revenue</p>
+          <p className="text-sm text-text-tertiary">
+            {t('dashboard.salesChart.totalRevenue')}
+          </p>
           {isLoading ? (
             <div className="h-7 w-28 animate-pulse rounded bg-bg-secondary" />
           ) : (
@@ -99,7 +116,9 @@ export const SalesChart = ({
           )}
         </div>
         <div className="text-right">
-          <p className="text-sm text-text-tertiary">Avg Order Value</p>
+          <p className="text-sm text-text-tertiary">
+            {t('dashboard.salesChart.avgOrderValue')}
+          </p>
           {isLoading ? (
             <div className="h-7 w-24 animate-pulse rounded bg-bg-secondary" />
           ) : (

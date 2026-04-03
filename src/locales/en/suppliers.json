@@ -1,5 +1,51 @@
 {
   "suppliers": {
+    "financial": {
+      "noPayments": "No payments found",
+      "mode": "Mode",
+      "addPaymentModal": {
+        "title": "Add Payment",
+        "amount": "Amount",
+        "paymentMode": "Payment Mode",
+        "selectPaymentMode": "Select payment mode",
+        "paymentDate": "Payment Date",
+        "transactionId": "Transaction ID",
+        "transactionIdPlaceholder": "e.g. UTR123456789",
+        "notes": "Notes",
+        "notesPlaceholder": "e.g. Partial payment for invoice",
+        "submit": "Record Payment",
+        "errors": {
+          "amount": "Please enter a valid amount greater than 0",
+          "paymentMode": "Please select a payment mode",
+          "paymentDate": "Please select a payment date"
+        }
+      },
+      "table": {
+        "mode": "Mode",
+        "status": "Status"
+      }
+    },
+    "documents": {
+      "noDocuments": "No documents uploaded",
+      "documentType": "Document Type",
+      "selectDocumentType": "Select document type",
+      "documentNumber": "Document Number",
+      "documentNumberPlaceholder": "e.g. 27AAAAA0000A1Z5",
+      "documentUrl": "Document URL",
+      "addDocumentDesc": "Upload a new business document",
+      "certifications": {
+        "noCertifications": "No certifications found",
+        "certificationType": "Certification Type",
+        "selectType": "Select certification type",
+        "certificateNumber": "Certificate Number",
+        "issuedBy": "Issued By",
+        "issueDate": "Issue Date",
+        "expiryDate": "Expiry Date",
+        "documentUrl": "Document URL",
+        "addCertificateDesc": "Add a new certification"
+      }
+    },
+
     "errors": {
   "validationFailed": "Validation Failed",
   "pleaseFillRequired": "Please fill all required fields"
@@ -454,6 +500,7 @@
       "selectDate": "Select date"
     },
     "common": {
+    "optional": "Optional",
       "updating": "Updating...",
       "processing": "Processing...",
       "deleting": "Deleting...",

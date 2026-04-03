@@ -4,10 +4,8 @@ import { Package, Eye } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATHS, buildRoute } from '@/constants/routePaths'
 import type { Sale } from '@/types/sale.types'
+import { useTranslation } from 'react-i18next'
 
-// ─────────────────────────────────────────────
-// TYPES
-// ─────────────────────────────────────────────
 interface RecentOrdersProps {
   orders:    Sale[]
   isLoading: boolean
@@ -65,7 +63,7 @@ const SkeletonRow = () => (
 // ─────────────────────────────────────────────
 export const RecentOrders = ({ orders, isLoading }: RecentOrdersProps) => {
   const navigate = useNavigate()
-
+  const { t } = useTranslation()
   return (
     <div className="card">
       {/* Header */}
@@ -73,16 +71,16 @@ export const RecentOrders = ({ orders, isLoading }: RecentOrdersProps) => {
         <div>
           <h3 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
             <Package size={20} className="text-accent" />
-            Recent Orders
+            {t('dashboard.recentOrders.title')}
           </h3>
-          <p className="mt-1 text-sm text-text-tertiary">Latest transactions</p>
+          <p className="mt-1 text-sm text-text-tertiary">{t('dashboard.recentOrders.subtitle')}</p>
         </div>
 
         <button
           className="text-sm text-accent hover:underline"
           onClick={() => navigate(ROUTE_PATHS.SALES.LIST)}
         >
-          View All Orders
+         {t('dashboard.recentOrders.viewAll')}
         </button>
       </div>
 
@@ -91,7 +89,13 @@ export const RecentOrders = ({ orders, isLoading }: RecentOrdersProps) => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-border-primary">
-              {['Order ID', 'Customer', 'Product', 'Amount', 'Status', 'Date', 'Action'].map(
+              {[    t('dashboard.recentOrders.columns.orderId'),
+    t('dashboard.recentOrders.columns.customer'),
+    t('dashboard.recentOrders.columns.product'),
+    t('dashboard.recentOrders.columns.amount'),
+    t('dashboard.recentOrders.columns.status'),
+    t('dashboard.recentOrders.columns.date'),
+    t('dashboard.recentOrders.columns.action')].map(
                 col => (
                   <th
                     key={col}
@@ -109,7 +113,7 @@ export const RecentOrders = ({ orders, isLoading }: RecentOrdersProps) => {
             ) : orders.length === 0 ? (
               <tr>
                 <td colSpan={7} className="py-8 text-center text-sm text-text-tertiary">
-                  No recent orders found
+                    {t('dashboard.recentOrders.noOrders')}
                 </td>
               </tr>
             ) : (

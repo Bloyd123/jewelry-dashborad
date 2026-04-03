@@ -25,10 +25,8 @@ interface StatCardProps {
   icon:      React.ReactNode
   isLoading: boolean
 }
+import { useTranslation } from 'react-i18next'
 
-// ─────────────────────────────────────────────
-// STAT CARD
-// ─────────────────────────────────────────────
 const StatCard = ({ title, value, icon, isLoading }: StatCardProps) => {
   return (
     <div className="card transition-shadow hover:shadow-md">
@@ -70,24 +68,25 @@ interface DashboardStatsProps {
 }
 
 export const DashboardStats = ({ stats, isLoading }: DashboardStatsProps) => {
+    const { t } = useTranslation()
   const cards = [
     {
-      title: 'Total Revenue',
+      title: t('dashboard.stats.totalRevenue'),
       value: formatCurrency(stats.totalRevenue),
       icon:  <DollarSign size={24} />,
     },
     {
-      title: 'Total Orders',
+      title: t('dashboard.stats.totalOrders'),
       value: formatNumber(stats.totalOrders),
       icon:  <ShoppingBag size={24} />,
     },
     {
-      title: 'Products',
+      title: t('dashboard.stats.products'),
       value: formatNumber(stats.totalProducts),
       icon:  <Package size={24} />,
     },
     {
-      title: 'Customers',
+      title: t('dashboard.stats.customers'),
       value: formatNumber(stats.totalCustomers),
       icon:  <Users size={24} />,
     },

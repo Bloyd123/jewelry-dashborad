@@ -1,32 +1,34 @@
-//
-// FILE: src/components/sales/SalesTable/SalesTable.tsx
-// Main Sales Table Component
-//
-
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { DataTable } from '@/components/ui/data-display/DataTable'
 import { salesTableColumns } from './SalesTableColumns'
 import { getSalesRowActions, BulkActionsBar } from './SalesTableActions'
-import { dummySales } from '@/pages/sales/data'
+import { useSalesList } from '@/hooks/sales'
+import { useSaleActions } from '@/hooks/sales'
 import type { Sale } from '@/types/sale.types'
 import { SalesFilters } from '@/components/sales/SalesFilters'
 import type { SalesFilterValues } from '@/components/sales/SalesFilters/SalesFilters.tsx'
-
-//
-// MAIN COMPONENT
-//
-
+import type { SaleStatus, PaymentStatus, SaleType } from '@/types/sale.types'
+import { useGetCustomersQuery } from '@/store/api/customerApi'
 export const SalesTable: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { shopId } = useParams<{ shopId: string }>()
+const { data: customersData } = useGetCustomersQuery(
+  { shopId: shopId ?? '', limit: 100 },
+  { skip: !shopId }
+)
 
-  // STATE
-
-  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(
-    new Set()
-  )
+// customers transform karo CustomerFilter ke format mein
+const customers = (customersData?.data?.customers || []).map(c => ({
+  _id:          c._id,
+  customerName: c.fullName || `${c.firstName} ${c.lastName}`,
+  customerCode: c.customerCode,
+  phone:        c.phone,
+}))
+  // ── State ─────────────────────────────────
+  const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
   const [filters, setFilters] = useState<SalesFilterValues>({
     search: '',
     customerId: undefined,
@@ -34,207 +36,154 @@ export const SalesTable: React.FC = () => {
     status: undefined,
     paymentStatus: undefined,
     saleType: undefined,
-    paymentMode: undefined, // ADD THIS
-    dateRange: undefined, // CHANGED from startDate/endDate
-    amountRange: undefined, // CHANGED from minAmount/maxAmount
+    paymentMode: undefined,
+    dateRange: undefined,
+    amountRange: undefined,
   })
 
-  // FILTERED DATA
+  // ── Real API ──────────────────────────────
+const {
+  sales,
+  isLoading,
+  pagination,
+  setPage,
+  setSearch,
+  setStatus,
+  setPaymentStatus,
+  setSaleType,
+  refetch,
+} = useSalesList(shopId ?? '', {
+  search:        filters.search,
+  status:        filters.status as SaleStatus | undefined,
+  paymentStatus: filters.paymentStatus as PaymentStatus | undefined,
+  saleType:      filters.saleType as SaleType | undefined,
+  customerId:    filters.customerId,
+  salesPerson:   filters.salesPerson,
+})
 
-  // Add these handler functions before RENDER section
-  const handleFiltersChange = (newFilters: SalesFilterValues) => {
-    setFilters(newFilters)
-    console.log('Filters changed:', newFilters)
-  }
+  const {
+    deleteSale,
+    cancelSale,
+    completeSale,
+    deliverSale,
+    printInvoice,
+  } = useSaleActions(shopId ?? '')
 
-  const handleClearAllFilters = () => {
-    setFilters({
-      search: '',
-      customerId: undefined,
-      salesPerson: undefined,
-      status: undefined,
-      paymentStatus: undefined,
-      saleType: undefined,
-      paymentMode: undefined,
-      dateRange: undefined,
-      amountRange: undefined,
-    })
-  }
+  // ── Filter Handlers ───────────────────────
+const handleFiltersChange = (newFilters: SalesFilterValues) => {
+  setFilters(newFilters)
+  setSearch(newFilters.search || '')
+  if (newFilters.status !== filters.status)
+    setStatus((newFilters.status as SaleStatus) || '')
+  if (newFilters.paymentStatus !== filters.paymentStatus)
+    setPaymentStatus((newFilters.paymentStatus as PaymentStatus) || '')
+  if (newFilters.saleType !== filters.saleType)
+    setSaleType((newFilters.saleType as SaleType) || '')
+}
 
-  const filteredSales = useMemo(() => {
-    let result = [...dummySales]
+const handleClearAllFilters = () => {
+  setFilters({
+    search: '',
+    customerId: undefined,
+    salesPerson: undefined,
+    status: undefined,
+    paymentStatus: undefined,
+    saleType: undefined,
+    paymentMode: undefined,
+    dateRange: undefined,
+    amountRange: undefined,
+  })
+  setSearch('')
+  setStatus('' as SaleStatus)
+  setPaymentStatus('' as PaymentStatus)
+  setSaleType('' as SaleType)
+}
 
-    // Search filter
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
-      result = result.filter(
-        s =>
-          s.invoiceNumber.toLowerCase().includes(searchLower) ||
-          s.customerDetails.customerName.toLowerCase().includes(searchLower) ||
-          s.customerDetails.phone.includes(searchLower) ||
-          s.customerDetails.customerCode.toLowerCase().includes(searchLower)
-      )
-    }
+  // ── Row Handlers ──────────────────────────
+  const handleViewDetails = (sale: Sale) =>
+    navigate(`/shops/${shopId}/sales/${sale._id}`)
 
-    // Customer filter
-    if (filters.customerId) {
-      result = result.filter(s => s.customerId === filters.customerId)
-    }
-
-    // Status filter
-    if (filters.status) {
-      result = result.filter(s => s.status === filters.status)
-    }
-
-    // Payment status filter
-    if (filters.paymentStatus) {
-      result = result.filter(
-        s => s.payment.paymentStatus === filters.paymentStatus
-      )
-    }
-
-    // Sale type filter
-    if (filters.saleType) {
-      result = result.filter(s => s.saleType === filters.saleType)
-    }
-
-    return result
-  }, [dummySales, filters])
-
-  // HANDLERS
-
-  const handleViewDetails = (sale: Sale) => {
-    console.log('View Details:', sale)
-    navigate(`/sales/${sale._id}`)
-  }
-
-  const handleEdit = (sale: Sale) => {
-    console.log('Edit Sale:', sale)
-    navigate(`/sales/edit/${sale._id}`)
-  }
+  const handleEdit = (sale: Sale) =>
+    navigate(`/shops/${shopId}/sales/${sale._id}/edit`)
 
   const handleAddPayment = (sale: Sale) => {
-    console.log('Add Payment:', sale)
     // TODO: Open payment modal
+    console.log('Add Payment:', sale._id)
   }
 
-  const handleDeliver = (sale: Sale) => {
-    console.log('Mark as Delivered:', sale)
-    // TODO: Open delivery modal
+  const handleDeliver = async (sale: Sale) => {
+    await deliverSale(sale._id, { deliveryType: 'immediate' })
   }
 
-  const handleComplete = (sale: Sale) => {
-    console.log('Complete Sale:', sale)
-    // TODO: Show confirmation
+  const handleComplete = async (sale: Sale) => {
+    await completeSale(sale._id)
   }
 
   const handleReturn = (sale: Sale) => {
-    console.log('Return Sale:', sale)
     // TODO: Open return modal
+    console.log('Return Sale:', sale._id)
   }
 
-  const handleCancel = (sale: Sale) => {
-    console.log('Cancel Sale:', sale)
-    // TODO: Show reason modal and cancel
+  const handleCancel = async (sale: Sale) => {
+    await cancelSale(sale._id, 'Cancelled by user')
   }
 
-  const handlePrint = (sale: Sale) => {
-    console.log('Print Invoice:', sale)
-    // TODO: Open print dialog
+  const handlePrint = async (sale: Sale) => {
+    await printInvoice(sale._id)
   }
 
-  const handleDelete = (sale: Sale) => {
-    console.log('Delete Sale:', sale)
-    // TODO: Show confirmation and delete
+  const handleDelete = async (sale: Sale) => {
+    await deleteSale(sale._id)
   }
 
-  // Bulk Actions
+  // ── Bulk Handlers ─────────────────────────
+  const selectedSales = useMemo(
+    () => sales.filter(s => selectedRows.has(s._id)),
+    [sales, selectedRows]
+  )
+
   const handleBulkViewDetails = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    if (selected.length === 1) {
-      handleViewDetails(selected[0])
-    }
+    if (selectedSales.length === 1) handleViewDetails(selectedSales[0])
   }
 
   const handleBulkEdit = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    if (selected.length === 1) {
-      handleEdit(selected[0])
-    }
+    if (selectedSales.length === 1) handleEdit(selectedSales[0])
   }
 
-  const handleBulkPrint = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    console.log('Bulk Print:', selected)
-    // TODO: Print all selected invoices
-  }
+  const handleBulkPrint = () => console.log('Bulk Print:', selectedSales)
+  const handleBulkExport = () => console.log('Bulk Export:', selectedSales)
+  const handleBulkSendInvoice = () => console.log('Bulk Send Invoice:', selectedSales)
+  const handleBulkReminders = () => console.log('Bulk Reminders:', selectedSales)
+  const handleBulkDelete = () => console.log('Bulk Delete:', selectedSales)
+  const handleClearSelection = () => setSelectedRows(new Set())
 
-  const handleBulkExport = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    console.log('Bulk Export:', selected)
-    // TODO: Export selected sales
-  }
-
-  const handleBulkSendInvoice = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    console.log('Bulk Send Invoice:', selected)
-    // TODO: Send invoices to customers
-  }
-
-  const handleBulkReminders = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    console.log('Bulk Send Reminders:', selected)
-    // TODO: Send payment reminders
-  }
-
-  const handleBulkDelete = () => {
-    const selected = filteredSales.filter(s => selectedRows.has(s._id))
-    console.log('Bulk Delete:', selected)
-    // TODO: Show confirmation and bulk delete
-  }
-
-  const handleClearSelection = () => {
-    setSelectedRows(new Set())
-  }
-
-  // ROW ACTIONS
-
+  // ── Row Actions ───────────────────────────
   const rowActions = useMemo(
-    () =>
-      getSalesRowActions(
-        handleViewDetails,
-        handleEdit,
-        handleAddPayment,
-        handleDeliver,
-        handleComplete,
-        handleReturn,
-        handleCancel,
-        handlePrint,
-        handleDelete
-      ),
-    []
+    () => getSalesRowActions(
+      handleViewDetails,
+      handleEdit,
+      handleAddPayment,
+      handleDeliver,
+      handleComplete,
+      handleReturn,
+      handleCancel,
+      handlePrint,
+      handleDelete
+    ),
+    [shopId]
   )
 
-  // SELECTED SALES
-
-  const selectedSales = useMemo(() => {
-    return filteredSales.filter(sale => selectedRows.has(sale._id))
-  }, [filteredSales, selectedRows])
-
-  // RENDER
-
+  // ── RENDER ────────────────────────────────
   return (
     <div className="w-full space-y-4">
-      {/* TODO: Add SalesFilters component here */}
-      <SalesFilters
-        filters={filters}
-        onFiltersChange={handleFiltersChange}
-        onClearAll={handleClearAllFilters}
-        customers={[]} // TODO: Pass actual customers data
-        salesPersons={[]} // TODO: Pass actual sales persons data
-      />
+<SalesFilters
+  filters={filters}
+  onFiltersChange={handleFiltersChange}
+  onClearAll={handleClearAllFilters}
+  customers={customers}
+  salesPersons={[]}     // ← abhi empty rakhdo
+/>
 
-      {/* Bulk Actions Bar */}
       {selectedRows.size > 0 && (
         <BulkActionsBar
           selectedCount={selectedRows.size}
@@ -250,24 +199,24 @@ export const SalesTable: React.FC = () => {
         />
       )}
 
-      {/* DataTable */}
-      <DataTable
-        data={filteredSales}
-        columns={salesTableColumns}
-        // Sorting
-        sorting={{
-          enabled: true,
-        }}
-        // Pagination
-        pagination={{
-          enabled: true,
-          pageSize: 20,
-          pageSizeOptions: [10, 20, 50, 100],
-          showPageSizeSelector: true,
-          showPageInfo: true,
-          showFirstLastButtons: true,
-        }}
-        // Selection
+<DataTable
+  data={sales}
+  columns={salesTableColumns}
+  loading={{ isLoading: isLoading }}
+  sorting={{ enabled: true }}
+  pagination={{
+    enabled: true,
+    pageSize: pagination.limit,
+    pageSizeOptions: [10, 20, 50, 100],
+    showPageSizeSelector: true,
+    showPageInfo: true,
+    showFirstLastButtons: true,
+    pageIndex: pagination.page - 1,        // ← currentPage nahi, pageIndex
+    totalItems: pagination.total,
+    onPaginationChange: (newPagination) => {  // ← onPageChange nahi, onPaginationChange
+      setPage(newPagination.pageIndex + 1)   // ← 0-indexed to 1-indexed
+    },
+  }}
         selection={{
           enabled: true,
           selectedRows,
@@ -275,17 +224,12 @@ export const SalesTable: React.FC = () => {
           getRowId: row => row._id,
           selectAllEnabled: true,
         }}
-        // Row Actions
         rowActions={{
           enabled: true,
           actions: rowActions,
           position: 'end',
         }}
-        // Empty State
-        emptyState={{
-          message: t('table.noSales'),
-        }}
-        // Style
+        emptyState={{ message: t('table.noSales') }}
         style={{
           variant: 'default',
           size: 'md',
@@ -297,13 +241,8 @@ export const SalesTable: React.FC = () => {
           shadow: true,
           fullWidth: true,
         }}
-        // Row Click
-        onRowClick={sale => {
-          console.log('Row clicked:', sale)
-        }}
-        // Get Row ID
+        onRowClick={sale => handleViewDetails(sale)}
         getRowId={row => row._id}
-        // Test ID
         testId="sales-table"
         ariaLabel={t('table.ariaLabel')}
       />

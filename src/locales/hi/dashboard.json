@@ -1,0 +1,60 @@
+{
+  "dashboard": {
+    "title": "डैशबोर्ड",
+    "welcomeMessage": "वापस स्वागत है! आज क्या हो रहा है, यहाँ देखिए।",
+    "dateRange": {
+      "last7Days": "पिछले 7 दिन",
+      "last30Days": "पिछले 30 दिन",
+      "last3Months": "पिछले 3 महीने",
+      "lastYear": "पिछले 1 वर्ष"
+    },
+    "stats": {
+      "totalRevenue": "कुल राजस्व",
+      "totalOrders": "कुल ऑर्डर",
+      "products": "उत्पाद",
+      "customers": "ग्राहक"
+    },
+    "salesChart": {
+      "title": "विक्रय अवलोकन",
+      "subtitle": "साप्ताहिक विक्रय प्रदर्शन",
+      "viewAll": "सभी देखें",
+      "totalRevenue": "कुल राजस्व",
+      "totalOrders": "कुल ऑर्डर",
+      "avgOrderValue": "औसत ऑर्डर मूल्य"
+    },
+    "topProducts": {
+      "title": "टॉप उत्पाद",
+      "subtitle": "इस अवधि में सबसे ज्यादा बिकने वाले",
+      "noData": "कोई विक्रय डेटा उपलब्ध नहीं है"
+    },
+    "recentOrders": {
+      "title": "हाल के ऑर्डर",
+      "subtitle": "नवीनतम लेन-देन",
+      "viewAll": "सभी ऑर्डर देखें",
+      "noOrders": "कोई हाल का ऑर्डर नहीं मिला",
+      "columns": {
+        "orderId": "ऑर्डर आईडी",
+        "customer": "ग्राहक",
+        "product": "उत्पाद",
+        "amount": "राशि",
+        "status": "स्थिति",
+        "date": "तिथि",
+        "action": "कार्रवाई"
+      }
+    },
+    "quickActions": {
+      "title": "त्वरित कार्रवाइयाँ",
+      "addSale": "विक्रय जोड़ें",
+      "addPurchase": "खरीद जोड़ें",
+      "addProduct": "उत्पाद जोड़ें",
+      "generateReport": "रिपोर्ट जनरेट करें"
+    },
+    "stockAlerts": {
+      "title": "कम स्टॉक अलर्ट",
+      "viewAll": "सभी कम स्टॉक देखें",
+      "allStocked": "सभी उत्पाद अच्छी तरह स्टॉक किए गए हैं 🎉",
+      "current": "वर्तमान",
+      "min": "न्यूनतम"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "welcomeMessage": "Welcome back! Here's what's happening today.",
+    "dateRange": {
+      "last7Days": "Last 7 days",
+      "last30Days": "Last 30 days",
+      "last3Months": "Last 3 months",
+      "lastYear": "Last year"
+    },
+    "stats": {
+      "totalRevenue": "Total Revenue",
+      "totalOrders": "Total Orders",
+      "products": "Products",
+      "customers": "Customers"
+    },
+    "salesChart": {
+      "title": "Sales Overview",
+      "subtitle": "Weekly sales performance",
+      "viewAll": "View All",
+      "totalRevenue": "Total Revenue",
+      "totalOrders": "Total Orders",
+      "avgOrderValue": "Avg Order Value"
+    },
+    "topProducts": {
+      "title": "Top Products",
+      "subtitle": "Best selling this period",
+      "noData": "No sales data available"
+    },
+    "recentOrders": {
+      "title": "Recent Orders",
+      "subtitle": "Latest transactions",
+      "viewAll": "View All Orders",
+      "noOrders": "No recent orders found",
+      "columns": {
+        "orderId": "Order ID",
+        "customer": "Customer",
+        "product": "Product",
+        "amount": "Amount",
+        "status": "Status",
+        "date": "Date",
+        "action": "Action"
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "addSale": "Add Sale",
+      "addPurchase": "Add Purchase",
+      "addProduct": "Add Product",
+      "generateReport": "Generate Report"
+    },
+    "stockAlerts": {
+      "title": "Low Stock Alerts",
+      "viewAll": "View All Low Stock",
+      "allStocked": "All products are well stocked 🎉",
+      "current": "Current",
+      "min": "Min"
+    }
+  }
+}

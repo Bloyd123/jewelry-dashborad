@@ -12,7 +12,7 @@ import product from './product.json'
 import payment from './payment.json'
 import user from './user.json'
 import auth from './auth.json'
-// import dashboard from './dashboard.json'
+import dashboard from './dashboard.json'
 // import inventory from './inventory.json'
 // import masters from './masters.json'
 // import parties from './parties.json'
@@ -35,7 +35,7 @@ export default {
   ...purchase,
   ...payment,
   ...user,
-  // ...dashboard,
+  ...dashboard,
   //   ...inventory,
   //   ...masters,
   //   ...parties,

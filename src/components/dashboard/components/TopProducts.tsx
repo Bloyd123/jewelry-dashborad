@@ -1,6 +1,7 @@
 // FILE: components/dashboard/components/TopProducts.tsx
 
 import { TrendingUp } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import type { TopProduct } from '@/store/api/salesApi'
 
 // ─────────────────────────────────────────────
@@ -32,16 +33,18 @@ const metalColors: Record<string, string> = {
 // COMPONENT
 // ─────────────────────────────────────────────
 export const TopProducts = ({ products, isLoading }: TopProductsProps) => {
+  const { t } = useTranslation()
+
   return (
     <div className="card">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h3 className="flex items-center gap-2 text-lg font-semibold text-text-primary">
             <TrendingUp size={20} className="text-accent" />
-            Top Products
+            {t('dashboard.topProducts.title')}
           </h3>
           <p className="mt-1 text-sm text-text-tertiary">
-            Best selling this period
+            {t('dashboard.topProducts.subtitle')}
           </p>
         </div>
       </div>
@@ -60,7 +63,7 @@ export const TopProducts = ({ products, isLoading }: TopProductsProps) => {
           ))
         ) : products.length === 0 ? (
           <p className="py-4 text-center text-sm text-text-tertiary">
-            No sales data available
+            {t('dashboard.topProducts.noData')}
           </p>
         ) : (
           products.map((product, index) => (
@@ -71,13 +74,13 @@ export const TopProducts = ({ products, isLoading }: TopProductsProps) => {
               </div>
 
               {/* Info */}
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-text-primary">
                   {product.productName}
                 </p>
                 <div className="mt-0.5 flex items-center gap-2">
                   <span className="text-xs text-text-tertiary">
-                    {product.totalQuantity} sales
+                    {product.totalQuantity} {t('dashboard.topProducts.sales')}
                   </span>
                   <span
                     className={`rounded px-1.5 py-0.5 text-xs font-medium ${
@@ -90,7 +93,7 @@ export const TopProducts = ({ products, isLoading }: TopProductsProps) => {
               </div>
 
               {/* Revenue */}
-              <div className="text-right shrink-0">
+              <div className="shrink-0 text-right">
                 <p className="text-sm font-semibold text-text-primary">
                   {formatCurrency(product.totalRevenue)}
                 </p>

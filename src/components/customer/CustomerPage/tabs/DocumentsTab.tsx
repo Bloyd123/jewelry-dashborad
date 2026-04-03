@@ -1,11 +1,17 @@
 // FILE: src/components/customer/CustomerPage/tabs/DocumentsTab.tsx
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileText, Eye, Upload, Image as ImageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Label } from '@/components/ui/label'
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from '@/components/ui/overlay/Modal'
 import type { Customer } from '@/types/customer.types'
 import { useCustomerDocuments } from '@/hooks/customer'
 import { useAuth } from '@/hooks/auth'
@@ -13,6 +19,15 @@ import { useAuth } from '@/hooks/auth'
 interface DocumentsTabProps {
   customer: Customer
 }
+
+const DOCUMENT_TYPES = [
+  'aadhar',
+  'pan',
+  'passport',
+  'driving_license',
+  'voter_id',
+  'other',
+]
 
 export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
   const { t } = useTranslation()
@@ -22,6 +37,31 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
     currentShopId!,
     customer._id
   )
+
+  // Upload Modal State
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
+  const [uploadForm, setUploadForm] = useState({
+    documentType: 'aadhar',
+    documentUrl:  '',
+    documentNumber: '',
+  })
+  const [isUploading, setIsUploading] = useState(false)
+
+  const handleUploadSubmit = async () => {
+    // TODO: API call here baad mein
+    setIsUploading(true)
+    console.log('Upload:', uploadForm)
+    setTimeout(() => {
+      setIsUploading(false)
+      setIsUploadModalOpen(false)
+      setUploadForm({ documentType: 'aadhar', documentUrl: '', documentNumber: '' })
+    }, 1000)
+  }
+
+  const handleUploadClose = () => {
+    setIsUploadModalOpen(false)
+    setUploadForm({ documentType: 'aadhar', documentUrl: '', documentNumber: '' })
+  }
 
   if (isLoading) {
     return (
@@ -45,14 +85,18 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
               {t('customerDocuments.uploadDescription')}
             </p>
           </div>
-          <Button variant="default" className="gap-2">
+          <Button
+            variant="default"
+            className="gap-2"
+            onClick={() => setIsUploadModalOpen(true)}
+          >
             <Upload className="h-4 w-4" />
             {t('customerDocuments.upload')}
           </Button>
         </div>
       </div>
 
-      {/* KYC Section - Customer model se aata hai */}
+      {/* KYC Section */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerDocuments.kycDocuments')}
@@ -109,7 +153,7 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
         </div>
       </div>
 
-      {/* Uploaded Documents - REAL DATA */}
+      {/* Uploaded Documents */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary p-6">
         <h3 className="mb-4 text-lg font-semibold text-text-primary">
           {t('customerDocuments.uploadedDocuments')}
@@ -171,6 +215,103 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ customer }) => {
           </div>
         )}
       </div>
+
+      {/* Upload Modal */}
+      <Modal
+        open={isUploadModalOpen}
+        onOpenChange={setIsUploadModalOpen}
+        size="md"
+      >
+        <ModalHeader
+          title="customerDocuments.uploadModal.title"
+          description="customerDocuments.uploadModal.description"
+        />
+
+        <ModalBody>
+          <div className="space-y-4">
+
+            {/* Document Type */}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-sm text-text-primary">
+                {t('customerDocuments.uploadModal.documentType')}
+                <span className="ml-1 text-status-error">*</span>
+              </Label>
+              <select
+                value={uploadForm.documentType}
+                onChange={e =>
+                  setUploadForm(prev => ({ ...prev, documentType: e.target.value }))
+                }
+                className="w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary focus:border-accent focus:outline-none"
+              >
+                {DOCUMENT_TYPES.map(type => (
+                  <option key={type} value={type}>
+                    {t(`customerDocuments.types.${type}`)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Document Number */}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-sm text-text-primary">
+                {t('customerDocuments.uploadModal.documentNumber')}
+              </Label>
+              <input
+                type="text"
+                value={uploadForm.documentNumber}
+                onChange={e =>
+                  setUploadForm(prev => ({ ...prev, documentNumber: e.target.value }))
+                }
+                placeholder={t('customerDocuments.uploadModal.documentNumberPlaceholder')}
+                className="w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+              />
+            </div>
+
+            {/* Document URL */}
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-sm text-text-primary">
+                {t('customerDocuments.uploadModal.documentUrl')}
+                <span className="ml-1 text-status-error">*</span>
+              </Label>
+              <input
+                type="url"
+                value={uploadForm.documentUrl}
+                onChange={e =>
+                  setUploadForm(prev => ({ ...prev, documentUrl: e.target.value }))
+                }
+                placeholder="https://..."
+                className="w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+              />
+              <p className="text-xs text-text-tertiary">
+                {t('customerDocuments.uploadModal.documentUrlHint')}
+              </p>
+            </div>
+
+          </div>
+        </ModalBody>
+
+        <ModalFooter align="right">
+          <Button
+            variant="outline"
+            onClick={handleUploadClose}
+            disabled={isUploading}
+          >
+            {t('common.cancel')}
+          </Button>
+          <Button
+            variant="default"
+            onClick={handleUploadSubmit}
+            disabled={!uploadForm.documentUrl || isUploading}
+            className="gap-2"
+          >
+            <Upload className="h-4 w-4" />
+            {isUploading
+              ? t('customerDocuments.uploadModal.uploading')
+              : t('customerDocuments.uploadModal.upload')}
+          </Button>
+        </ModalFooter>
+      </Modal>
+
     </div>
   )
 }

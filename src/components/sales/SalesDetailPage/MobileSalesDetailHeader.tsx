@@ -4,7 +4,6 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Settings,
   Receipt,
   ChevronLeft,
   Package,
@@ -18,12 +17,12 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import { Tabs } from '@/components/ui/navigation/Tabs/Tabs'
 import type { Sale } from '@/types/sale.types'
-import { dummySales } from '@/pages/sales/data'
 
 // COMPONENT PROPS
 
 interface MobileSalesDetailHeaderProps {
   saleId?: string
+  sale?: Sale
   activeTab?: string
   onTabChange?: (tab: string) => void
   onBackClick?: () => void
@@ -37,6 +36,7 @@ export const MobileSalesDetailHeader: React.FC<
   MobileSalesDetailHeaderProps
 > = ({
   saleId,
+  sale,
   activeTab = 'overview',
   onTabChange,
   onBackClick,
@@ -45,11 +45,6 @@ export const MobileSalesDetailHeader: React.FC<
 }) => {
   const { t } = useTranslation()
   const [currentTab, setCurrentTab] = useState(activeTab)
-
-  // Get sale data from dummy data
-  const sale: Sale = saleId
-    ? dummySales.find(s => s._id === saleId) || dummySales[0]
-    : dummySales[0]
 
   // Handle tab change
   const handleTabChange = (tab: string) => {
@@ -91,34 +86,25 @@ export const MobileSalesDetailHeader: React.FC<
   // Get status badge variant
   const getStatusVariant = (status: string) => {
     switch (status) {
-      case 'completed':
-        return 'success'
+      case 'completed':  return 'success'
       case 'cancelled':
-      case 'returned':
-        return 'error'
+      case 'returned':   return 'error'
       case 'confirmed':
-      case 'delivered':
-        return 'info'
+      case 'delivered':  return 'info'
       case 'draft':
-      case 'pending':
-        return 'warning'
-      default:
-        return 'default'
+      case 'pending':    return 'warning'
+      default:           return 'default'
     }
   }
 
   // Get payment status badge variant
   const getPaymentStatusVariant = (status: string) => {
     switch (status) {
-      case 'paid':
-        return 'success'
+      case 'paid':    return 'success'
       case 'unpaid':
-      case 'overdue':
-        return 'error'
-      case 'partial':
-        return 'warning'
-      default:
-        return 'default'
+      case 'overdue': return 'error'
+      case 'partial': return 'warning'
+      default:        return 'default'
     }
   }
 
@@ -140,6 +126,9 @@ export const MobileSalesDetailHeader: React.FC<
       year: 'numeric',
     })
   }
+
+  // No sale data
+  if (!sale) return null
 
   return (
     <div className="space-y-0">
@@ -198,16 +187,14 @@ export const MobileSalesDetailHeader: React.FC<
                   </span>
                 </div>
 
-                {/* Badges - Mobile Compact */}
+                {/* Badges */}
                 <div className="flex flex-wrap items-center gap-1.5">
                   <Badge variant={getStatusVariant(sale.status)} size="sm">
                     {t(`sales.status.${sale.status}`)}
                   </Badge>
 
                   <Badge
-                    variant={getPaymentStatusVariant(
-                      sale.payment.paymentStatus
-                    )}
+                    variant={getPaymentStatusVariant(sale.payment.paymentStatus)}
                     size="sm"
                   >
                     {t(`sales.paymentStatus.${sale.payment.paymentStatus}`)}

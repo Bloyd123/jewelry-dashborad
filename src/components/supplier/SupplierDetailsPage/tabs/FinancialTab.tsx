@@ -8,27 +8,36 @@ import {
   AlertCircle,
   Plus,
   Download,
+  FileSpreadsheet,
+  FileText,
 } from 'lucide-react'
 import { StatCard } from '@/components/ui/data-display/StatCard/StatCard'
 import { DataTable } from '@/components/ui/data-display/DataTable/DataTable'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable/DataTable.types'
 import { SupplierManagementModal } from '@/components/supplier/SupplierManagementModal'
 import type { ManagementAction } from '@/components/supplier/SupplierManagementModal/SupplierManagementModal.types'
 import type { Supplier } from '@/types/supplier.types'
 import type { Payment } from '@/types/payment.types'
-
-// ─── HOOKS ──────────────────────────────────────────────────────────────────
-import { useSupplierPayments } from '@/hooks/payment/usePaymentsList'
+import { useSupplierPayments } from '@/hooks/payment'
 import { usePaymentActions } from '@/hooks/payment/usePaymentActions'
 import { useAuth } from '@/hooks/auth'
+import AddPaymentModal from '@/components/supplier/SupplierDetailsPage/AddPaymentModal'
 
-// ─── PROPS ──────────────────────────────────────────────────────────────────
+// ─── PROPS ───────────────────────────────────────────────────────────────────
+
 interface SupplierFinancialTabProps {
   supplier: Supplier
 }
 
-// ─── MAIN COMPONENT ─────────────────────────────────────────────────────────
+// ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
+
 const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier }) => {
   const { t } = useTranslation()
   const { currentShopId } = useAuth()
@@ -37,17 +46,18 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
   // ── State ────────────────────────────────────────────────────────────────
   const [isManagementModalOpen, setIsManagementModalOpen] = useState(false)
   const [managementAction, setManagementAction] = useState<ManagementAction | null>(null)
+  const [isAddPaymentOpen, setIsAddPaymentOpen] = useState(false)
   const [page, setPage] = useState(1)
   const limit = 10
 
   // ── Real API ─────────────────────────────────────────────────────────────
-  const { payments, pagination, isLoading } = useSupplierPayments(
+  const { payments, pagination, isLoading, refetch } = useSupplierPayments(
     shopId,
     supplier._id,
     { page, limit }
   )
 
-  const { createPayment, isCreating } = usePaymentActions(shopId)
+  const { bulkExport, isBulkExporting } = usePaymentActions(shopId)
 
   // ── Handlers ─────────────────────────────────────────────────────────────
   const handleManagementSuccess = () => {
@@ -55,11 +65,11 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
     setManagementAction(null)
   }
 
-  const handleAddPayment = async () => {
-    // Payment modal open hoga — abhi direct create nahi karte
-    // Future mein AddPaymentModal banana hoga
-    setManagementAction('update-balance')
-    setIsManagementModalOpen(true)
+  const handleExport = async (format: 'excel' | 'csv') => {
+    await bulkExport({
+      format,
+      paymentIds: payments.map((p: Payment) => p._id),
+    })
   }
 
   // ── Formatters ───────────────────────────────────────────────────────────
@@ -123,9 +133,7 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
       header: 'suppliers.financial.table.mode',
       accessorKey: 'paymentMode',
       cell: ({ value }) => (
-        <span className="text-sm capitalize text-text-secondary">
-          {value}
-        </span>
+        <span className="text-sm capitalize text-text-secondary">{value}</span>
       ),
       sortable: true,
     },
@@ -136,9 +144,7 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
       cell: ({ value, row }) => {
         const isReceipt = row.transactionType === 'receipt'
         return (
-          <span
-            className={`font-semibold ${isReceipt ? 'text-status-success' : 'text-status-error'}`}
-          >
+          <span className={`font-semibold ${isReceipt ? 'text-status-success' : 'text-status-error'}`}>
             {isReceipt ? '+' : '-'}
             {formatCurrency(value)}
           </span>
@@ -318,22 +324,52 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
         </div>
       </div>
 
-      {/* Payment History Table — REAL API */}
+      {/* Payment History Table */}
       <div className="rounded-lg border border-border-primary bg-bg-secondary">
         <div className="flex items-center justify-between border-b border-border-primary px-6 py-4">
           <h3 className="text-lg font-semibold text-text-primary">
             {t('suppliers.financial.paymentHistory')}
           </h3>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="gap-2">
-              <Download className="h-4 w-4" />
-              <span>{t('suppliers.financial.export')}</span>
-            </Button>
+
+            {/* Export Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  disabled={isBulkExporting || payments.length === 0}
+                  className="gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  <span>{t('suppliers.financial.export')}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => handleExport('excel')}
+                  disabled={isBulkExporting}
+                  className="gap-2"
+                >
+                  <FileSpreadsheet className="h-4 w-4 text-status-success" />
+                  <span>Export as Excel (.xlsx)</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => handleExport('csv')}
+                  disabled={isBulkExporting}
+                  className="gap-2"
+                >
+                  <FileText className="h-4 w-4 text-status-info" />
+                  <span>Export as CSV</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Add Payment */}
             <Button
               variant="default"
               size="sm"
-              onClick={handleAddPayment}
-              disabled={isCreating}
+              onClick={() => setIsAddPaymentOpen(true)}
               className="gap-2"
             >
               <Plus className="h-4 w-4" />
@@ -342,11 +378,11 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
           </div>
         </div>
 
-<DataTable
-  data={payments}
-  columns={paymentColumns}
-  loading={{ isLoading }}
-  pagination={{
+        <DataTable
+          data={payments}
+          columns={paymentColumns}
+          loading={{isLoading}}
+   pagination={{
     enabled: true,
     pageIndex: page - 1,
     pageSize: limit,
@@ -360,11 +396,17 @@ const SupplierFinancialTab: React.FC<SupplierFinancialTabProps> = ({ supplier })
   }}
           sorting={{ enabled: true }}
           style={{ hoverEffect: true, zebraStripes: false }}
-          emptyState={{
-            message: t('suppliers.financial.noPayments'),
-          }}
+          emptyState={{ message: t('suppliers.financial.noPayments') }}
         />
       </div>
+
+      {/* Add Payment Modal */}
+      <AddPaymentModal
+        open={isAddPaymentOpen}
+        onOpenChange={setIsAddPaymentOpen}
+        supplier={supplier}
+        onSuccess={refetch}
+      />
 
       {/* Management Modal */}
       <SupplierManagementModal

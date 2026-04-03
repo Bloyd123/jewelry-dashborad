@@ -7,29 +7,37 @@ import ItemsTab from '@/components/sales/SalesDetailPage/tabs/ItemsTab'
 import PaymentsTab from '@/components/sales/SalesDetailPage/tabs/PaymentsTab'
 import HistoryTab from '@/components/sales/SalesDetailPage/tabs/HistoryTab'
 import DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
-import { useGetSaleByIdQuery } from '@/store/api/salesApi'
-import { useGetSalePaymentsQuery } from '@/store/api/salesApi'
-import { usePrintInvoiceMutation, useSendInvoiceMutation } from '@/store/api/salesApi'
-import { useNotification } from '@/hooks/useNotification'
+import { useSaleById } from '@/hooks/sales/useSaleById'
+import { useSalePayments } from '@/hooks/sales/useSalePayments'
+import { useSaleActions } from '@/hooks/sales/useSaleActions'
+import type { AddPaymentRequest } from '@/types/sale.types'
 
 export const SalesDetailsPage: React.FC = () => {
   const { shopId, saleId } = useParams<{ shopId: string; saleId: string }>()
   const navigate = useNavigate()
-  const { showSuccess, showError } = useNotification()
   const [activeTab, setActiveTab] = useState('overview')
 
-  // ── Real API ──────────────────────────────
+  // ── Hooks ─────────────────────────────────
   const {
-    data: sale,
+    sale,
+    documents,
     isLoading,
     error,
-  } = useGetSaleByIdQuery(
-    { shopId: shopId ?? '', saleId: saleId ?? '' },
-    { skip: !shopId || !saleId }
-  )
+    refetch,
+  } = useSaleById(shopId ?? '', saleId ?? '')
 
-  const [printInvoice, { isLoading: isPrinting }] = usePrintInvoiceMutation()
-  const [sendInvoice, { isLoading: isSending }] = useSendInvoiceMutation()
+  const {
+    payments,
+    addPayment,
+    isAddingPayment,
+  } = useSalePayments(shopId ?? '', saleId ?? '')
+const {
+  printInvoice,
+  deleteSale,
+  isPrinting,
+  isDeleting,
+} = useSaleActions(shopId ?? '')
+
 
   // ── Loading ───────────────────────────────
   if (isLoading) {
@@ -51,31 +59,31 @@ export const SalesDetailsPage: React.FC = () => {
   }
 
   // ── Handlers ──────────────────────────────
-  const handleBackClick = () => navigate(`/shops/${shopId}/sales`)
+  const handleBackClick = () =>
+    navigate(`/shops/${shopId}/sales`)
 
   const handleEditClick = () =>
     navigate(`/shops/${shopId}/sales/${saleId}/edit`)
 
-  const handleDeleteClick = () => {
-    // TODO: show confirm dialog
-    console.log('Delete sale:', saleId)
-  }
+const handleDeleteClick = async () => {
+  const result = await deleteSale(saleId!)   // ← saleId pass karo
+  if (result.success) navigate(`/shops/${shopId}/sales`)
+}
 
-  const handlePrintClick = async () => {
-    try {
-      await printInvoice({ shopId: shopId!, saleId: saleId! }).unwrap()
-      showSuccess('Invoice printed successfully', 'Print')
-    } catch {
-      showError('Failed to print invoice', 'Error')
-    }
-  }
+const handlePrintClick = async () => {
+  await printInvoice(saleId!)   // ← saleId pass karo
+}
 
-  const handleSendClick = async () => {
-    // TODO: open send modal for method/recipient selection
+  const handleSendClick = () => {
+    // TODO: open send modal
     console.log('Send invoice:', sale.invoiceNumber)
   }
 
   const handleTabChange = (tab: string) => setActiveTab(tab)
+
+  const handleAddPayment = async (paymentData: Partial<any>) => {
+    await addPayment(paymentData as AddPaymentRequest)
+  }
 
   // ── Tab Content ───────────────────────────
   const renderTabContent = () => {
@@ -104,6 +112,7 @@ export const SalesDetailsPage: React.FC = () => {
               payment={sale.payment}
               invoiceNumber={sale.invoiceNumber}
               saleId={sale._id}
+              onAddPayment={handleAddPayment}
             />
           </div>
         )
@@ -112,7 +121,7 @@ export const SalesDetailsPage: React.FC = () => {
         return (
           <div className="p-6">
             <DocumentsTab
-              documents={sale.documents}
+              documents={documents}
               saleId={sale._id}
             />
           </div>
@@ -136,16 +145,17 @@ export const SalesDetailsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-bg-primary">
-      <SalesDetailHeader
-        saleId={sale._id}
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-        onBackClick={handleBackClick}
-        onEditClick={handleEditClick}
-        onDeleteClick={handleDeleteClick}
-        onPrintClick={handlePrintClick}
-        onSendClick={handleSendClick}
-      />
+<SalesDetailHeader
+  saleId={sale._id}
+  sale={sale}          // ← add karo
+  activeTab={activeTab}
+  onTabChange={handleTabChange}
+  onBackClick={handleBackClick}
+  onEditClick={handleEditClick}
+  onDeleteClick={handleDeleteClick}
+  onPrintClick={handlePrintClick}
+  onSendClick={handleSendClick}
+/>
       {renderTabContent()}
     </div>
   )

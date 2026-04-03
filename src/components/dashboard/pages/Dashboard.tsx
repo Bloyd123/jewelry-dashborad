@@ -9,6 +9,7 @@ import { StockAlerts } from '../components/StockAlerts'
 import { TopProducts } from '../components/TopProducts'
 import { useAuth } from '@/hooks/auth'
 import { useDashboard } from '@/hooks/dashboard/Dashboard'
+import { useTranslation } from 'react-i18next'
 
 // ─────────────────────────────────────────────
 // Date range options
@@ -35,6 +36,7 @@ const getDateRange = (range: string) => {
 // COMPONENT
 // ─────────────────────────────────────────────
 export const Dashboard = () => {
+    const { t } = useTranslation()
   const { currentShopId } = useAuth()
   const [selectedRange, setSelectedRange] = useState('7')
 
@@ -51,9 +53,9 @@ const dashboard = useDashboard(currentShopId ?? '', {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-text-primary">Dashboard</h1>
+          <h1 className="text-3xl font-bold text-text-primary">{t('dashboard.title')}</h1>
           <p className="mt-1 text-text-secondary">
-            Welcome back! Here's what's happening today.
+       {t('dashboard.welcomeMessage')}
           </p>
         </div>
 
@@ -63,10 +65,10 @@ const dashboard = useDashboard(currentShopId ?? '', {
           value={selectedRange}
           onChange={(e) => setSelectedRange(e.target.value)}
         >
-          <option value="7">Last 7 days</option>
-          <option value="30">Last 30 days</option>
-          <option value="90">Last 3 months</option>
-          <option value="365">Last year</option>
+          <option value="7">{t('dashboard.dateRange.last7Days')}</option>
+          <option value="30">{t('dashboard.dateRange.last30Days')}</option>
+          <option value="90">{t('dashboard.dateRange.last3Months')}</option>
+          <option value="365">{t('dashboard.dateRange.lastYear')}</option>
         </select>
       </div>
 

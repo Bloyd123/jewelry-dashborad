@@ -4,22 +4,15 @@ import { AlertTriangle } from 'lucide-react'
 import type { Product } from '@/types/product.types'
 import { useNavigate } from 'react-router-dom'
 import { ROUTE_PATHS } from '@/constants/routePaths'
+import { useTranslation } from 'react-i18next'
 
 // ─────────────────────────────────────────────
 // TYPES
 // ─────────────────────────────────────────────
-// interface LowStockProduct {
-//   _id:         string
-//   name:        string
-//   productCode: string
-//   stock: {
-//     quantity:     number
-//     reorderLevel: number
-//     status:       string
-//   }
-// }
-
-type LowStockProduct = Pick<Product, '_id' | 'name' | 'productCode' | 'stock' | 'pricing' | 'primaryImage' | 'categoryId' | 'subCategoryId'>
+type LowStockProduct = Pick<
+  Product,
+  '_id' | 'name' | 'productCode' | 'stock' | 'pricing' | 'primaryImage' | 'categoryId' | 'subCategoryId'
+>
 
 interface StockAlertsProps {
   products:  LowStockProduct[]
@@ -30,6 +23,7 @@ interface StockAlertsProps {
 // COMPONENT
 // ─────────────────────────────────────────────
 export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
+  const { t }    = useTranslation()
   const navigate = useNavigate()
 
   return (
@@ -37,7 +31,7 @@ export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
       <div className="mb-4 flex items-center gap-2">
         <AlertTriangle size={20} className="text-status-warning" />
         <h3 className="text-lg font-semibold text-text-primary">
-          Low Stock Alerts
+          {t('dashboard.stockAlerts.title')}
         </h3>
         {!isLoading && products.length > 0 && (
           <span className="ml-auto rounded-full bg-status-warning/10 px-2 py-0.5 text-xs font-medium text-status-warning">
@@ -53,7 +47,7 @@ export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
           ))
         ) : products.length === 0 ? (
           <p className="py-4 text-center text-sm text-text-tertiary">
-            All products are well stocked 🎉
+            {t('dashboard.stockAlerts.allStocked')}
           </p>
         ) : (
           products.slice(0, 5).map(product => (
@@ -66,10 +60,10 @@ export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
               </p>
               <div className="flex items-center justify-between text-xs">
                 <span className="text-text-tertiary">
-                  Current: {product.stock.quantity}
+                  {t('dashboard.stockAlerts.current')}: {product.stock.quantity}
                 </span>
                 <span className="font-medium text-status-warning">
-                  Min: {product.stock.reorderLevel ?? 0}
+                  {t('dashboard.stockAlerts.min')}: {product.stock.reorderLevel ?? 0}
                 </span>
               </div>
             </div>
@@ -81,7 +75,7 @@ export const StockAlerts = ({ products, isLoading }: StockAlertsProps) => {
         className="bg-status-warning/10 hover:bg-status-warning/20 mt-4 w-full rounded-lg px-4 py-2 text-sm font-medium text-status-warning transition-colors"
         onClick={() => navigate(ROUTE_PATHS.PRODUCTS.LIST)}
       >
-        View All Low Stock
+        {t('dashboard.stockAlerts.viewAll')}
       </button>
     </div>
   )
