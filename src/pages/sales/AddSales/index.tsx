@@ -5,85 +5,41 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { SaleForm } from '@/components/sales/SalesForm'
 import type { SaleFormData } from '@/components/sales/SalesForm'
 
-// EXAMPLE 1: Create New Sale Page
-
-export const CreateSalePage = () => {
-  const navigate = useNavigate()
-  const { shopId } = useParams<{ shopId: string }>()
-
-  const handleSuccess = () => {
-    // Navigate to sales list or show success message
-    navigate(`/shops/${shopId}/sales`)
-  }
-
-  const handleCancel = () => {
-    // Navigate back or show confirmation dialog
-    navigate(`/shops/${shopId}/sales`)
-  }
-
-  return (
-    <SaleForm
-      mode="create"
-      shopId={shopId!}
-      onSuccess={handleSuccess}
-      onCancel={handleCancel}
-    />
-  )
-}
-
-// EXAMPLE 2: Edit Existing Sale Page
+import { useSaleById } from'@/hooks/sales'
 
 export const EditSalePage = () => {
   const navigate = useNavigate()
   const { shopId, saleId } = useParams<{ shopId: string; saleId: string }>()
-  const [loading, setLoading] = useState(true)
-  const [initialData, setInitialData] = useState<Partial<SaleFormData>>()
 
-  // Fetch sale data on mount
-  useEffect(() => {
-    const fetchSale = async () => {
-      try {
-        // Replace with actual API call
-        const response = await fetch(`/api/shops/${shopId}/sales/${saleId}`)
-        const data = await response.json()
+  // ── Real API ──────────────────────────────
+  const { sale, isLoading } = useSaleById(shopId ?? '', saleId ?? '')
 
-        // Transform API data to form format
-        setInitialData({
-          customerId: data.customerId,
-          saleType: data.saleType,
-          saleDate: data.saleDate,
-          items: data.items,
-          oldGoldExchange: data.oldGoldExchange,
-          payment: {
-            paymentMode: data.payment.paymentMode,
-            paidAmount: data.payment.paidAmount,
-            dueDate: data.payment.dueDate,
-          },
-          delivery: data.delivery,
-          notes: data.notes,
-          tags: data.tags,
-        })
-      } catch (error) {
-        console.error('Failed to fetch sale:', error)
-      } finally {
-        setLoading(false)
+  const initialData = sale
+    ? {
+        customerId: sale.customerId,
+        saleType:   sale.saleType,
+        saleDate:   sale.saleDate,
+        items:      sale.items,
+        oldGoldExchange: sale.oldGoldExchange,
+        payment: {
+          paymentMode: sale.payment.paymentMode,
+          paidAmount:  sale.payment.paidAmount,
+          dueDate:     sale.payment.dueDate,
+        },
+        delivery: sale.delivery,
+        notes:    sale.notes,
+        tags:     sale.tags,
       }
-    }
+    : undefined
 
-    fetchSale()
-  }, [shopId, saleId])
-
-  const handleSuccess = () => {
+  const handleSuccess = () =>
     navigate(`/shops/${shopId}/sales/${saleId}`)
-  }
 
-  const handleCancel = () => {
+  const handleCancel = () =>
     navigate(`/shops/${shopId}/sales/${saleId}`)
-  }
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
+  if (isLoading) return <div>Loading...</div>
+  if (!sale)     return <div>Sale not found</div>
 
   return (
     <SaleForm

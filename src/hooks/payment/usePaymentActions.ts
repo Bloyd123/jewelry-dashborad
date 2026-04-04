@@ -258,21 +258,20 @@ export const usePaymentActions = (shopId: string) => {
   // ─────────────────────────────────────────────
   // BULK RECONCILE
   // ─────────────────────────────────────────────
-  const bulkReconcile = useCallback(
-    async (data: BulkReconcileRequest) => {
-      try {
-        const result = await bulkReconcileMutation({ shopId, ...data }).unwrap()
-        showSuccess(
-  `${result.data.processedCount} payments reconciled`,
-        )
-        return { success: true, data: result }
-      } catch (error: any) {
-        handleError(error)
-        return { success: false, error: error.data?.message }
-      }
-    },
-    [bulkReconcileMutation, shopId, handleError, showSuccess]
-  )
+// ✅ AFTER
+const bulkReconcile = useCallback(
+  async (data: BulkReconcileRequest) => {
+    try {
+      const result = await bulkReconcileMutation({ shopId, ...data }).unwrap()
+    showSuccess(`${result.data.processedCount} payments reconciled`, 'Bulk Reconciled')
+      return { success: true, data: result }
+    } catch (error: any) {
+      handleError(error)
+      return { success: false, error: error.data?.message }
+    }
+  },
+  [bulkReconcileMutation, shopId, handleError, showSuccess]
+)
 
   // ─────────────────────────────────────────────
   // BULK EXPORT

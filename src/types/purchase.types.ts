@@ -46,6 +46,7 @@ export type ApprovalStatus = 'pending' | 'approved' | 'rejected'
 export interface IPurchaseItem {
   _id?: string
   productId?: string | null
+   purityPercentage?: number  
   productCode?: string
   productName: string
   category?: string
@@ -54,6 +55,8 @@ export interface IPurchaseItem {
   grossWeight: number
   stoneWeight: number
   netWeight: number
+    wastagePercentage?: number   // Add karo
+  wastageWeight?: number       // Add karo
   weightUnit: string
   quantity: number
   ratePerGram: number

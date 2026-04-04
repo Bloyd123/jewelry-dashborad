@@ -337,7 +337,7 @@ export const {
   useGetProductsQuery,
   useGetProductByIdQuery,
   useSearchProductsQuery,
-  useLazyLazySearchProductsQuery,
+  useLazySearchProductsQuery,
   useGetLowStockProductsQuery,
   useGetProductAnalyticsQuery,
   useGetProductHistoryQuery,
@@ -345,7 +345,6 @@ export const {
   // Lazy queries (manual trigger)
   useLazyGetProductsQuery,
   useLazyGetProductByIdQuery,
-  useLazySearchProductsQuery,
   useLazyGetLowStockProductsQuery,
 
   // Mutations

@@ -153,6 +153,7 @@ const handleConfirmedSubmit = async () => {
       onChange: handleChange,
       onBlur: handleBlur,
       disabled: isLoading,
+        shopId,
     }
 
     switch (STEPS[currentStep].id) {

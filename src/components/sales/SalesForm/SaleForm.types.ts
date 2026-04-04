@@ -90,6 +90,7 @@ export interface FormSectionProps {
   onChange: (name: string, value: any) => void
   onBlur?: (name: string) => void
   disabled?: boolean
+   shopId?: string  
 }
 
 

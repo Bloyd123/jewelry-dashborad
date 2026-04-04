@@ -10,12 +10,31 @@ import DocumentsTab from '@/components/sales/SalesDetailPage/tabs/DocumentsTab'
 import { useSaleById } from '@/hooks/sales/useSaleById'
 import { useSalePayments } from '@/hooks/sales/useSalePayments'
 import { useSaleActions } from '@/hooks/sales/useSaleActions'
+import { useNotification } from '@/hooks/useNotification'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
 import type { AddPaymentRequest } from '@/types/sale.types'
+import { useTranslation } from 'react-i18next'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from '@/components/ui/overlay/Modal'
+import { ConfirmDialog } from '@/components/ui/overlay/Dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useDeleteSaleMutation } from '@/store/api/salesApi'
 
 export const SalesDetailsPage: React.FC = () => {
   const { shopId, saleId } = useParams<{ shopId: string; saleId: string }>()
   const navigate = useNavigate()
+    const { t } = useTranslation()
+  
   const [activeTab, setActiveTab] = useState('overview')
+  const [isSendModalOpen, setIsSendModalOpen] = useState(false)
+const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+const [sendMethod, setSendMethod] = useState<'email' | 'sms' | 'whatsapp'>('email')
+const [sendRecipient, setSendRecipient] = useState('')
+const [isSending, setIsSending] = useState(false)
+  const { showSuccess, showError } = useNotification()
+  const { handleError } = useErrorHandler()
 
   // ── Hooks ─────────────────────────────────
   const {
@@ -35,6 +54,7 @@ const {
   printInvoice,
   deleteSale,
   isPrinting,
+  sendInvoice,
   isDeleting,
 } = useSaleActions(shopId ?? '')
 
@@ -65,19 +85,35 @@ const {
   const handleEditClick = () =>
     navigate(`/shops/${shopId}/sales/${saleId}/edit`)
 
-const handleDeleteClick = async () => {
-  const result = await deleteSale(saleId!)   // ← saleId pass karo
-  if (result.success) navigate(`/shops/${shopId}/sales`)
-}
+const handleDeleteClick = () => setIsDeleteDialogOpen(true)
 
 const handlePrintClick = async () => {
   await printInvoice(saleId!)   // ← saleId pass karo
 }
-
-  const handleSendClick = () => {
-    // TODO: open send modal
-    console.log('Send invoice:', sale.invoiceNumber)
+const handleSendConfirm = async () => {
+  setIsSending(true)
+  try {
+    await sendInvoice(saleId!, {
+      method: sendMethod,
+      recipient: sendRecipient,
+    })
+    showSuccess('Invoice sent successfully', 'Sent')
+    setIsSendModalOpen(false)
+  } catch {
+    showError('Failed to send invoice', 'Error')
+  } finally {
+    setIsSending(false)
   }
+}
+const handleDeleteConfirm = async () => {
+  const result = await deleteSale(saleId!)
+  if (result.success) navigate(`/shops/${shopId}/sales`)
+}
+
+const handleSendClick = () => {
+  setSendRecipient(sale.customerDetails.email || sale.customerDetails.phone || '')
+  setIsSendModalOpen(true)
+}
 
   const handleTabChange = (tab: string) => setActiveTab(tab)
 
@@ -157,6 +193,81 @@ const handlePrintClick = async () => {
   onSendClick={handleSendClick}
 />
       {renderTabContent()}
+      {/* Send Invoice Modal */}
+<Modal
+  open={isSendModalOpen}
+  onOpenChange={setIsSendModalOpen}
+  size="sm"
+>
+  <ModalHeader
+    title="sales.common.sendInvoice"
+    description="sales.common.sendInvoiceDescription"
+  />
+  <ModalBody>
+    <div className="space-y-4">
+      {/* Method */}
+      <div className="space-y-2">
+        <Label>{t('sales.common.sendVia')}</Label>
+        <Select
+          value={sendMethod}
+          onValueChange={val => setSendMethod(val as 'email' | 'sms' | 'whatsapp')}
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="email">Email</SelectItem>
+            <SelectItem value="sms">SMS</SelectItem>
+            <SelectItem value="whatsapp">WhatsApp</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Recipient */}
+      <div className="space-y-2">
+        <Label>{t('sales.common.recipient')}</Label>
+        <Input
+          value={sendRecipient}
+          onChange={e => setSendRecipient(e.target.value)}
+          placeholder={
+            sendMethod === 'email'
+              ? 'customer@email.com'
+              : '+91-9876543210'
+          }
+        />
+      </div>
+    </div>
+  </ModalBody>
+  <ModalFooter>
+    <Button
+      variant="outline"
+      onClick={() => setIsSendModalOpen(false)}
+      disabled={isSending}
+    >
+      {t('common.cancel')}
+    </Button>
+    <Button
+      onClick={handleSendConfirm}
+      disabled={isSending || !sendRecipient}
+    >
+      {isSending ? t('common.sending') : t('sales.common.send')}
+    </Button>
+  </ModalFooter>
+</Modal>
+
+{/* Delete Confirmation */}
+<ConfirmDialog
+  open={isDeleteDialogOpen}
+  onOpenChange={setIsDeleteDialogOpen}
+  variant="danger"
+  title={t('sales.common.deleteSale')}
+  description={t('sales.common.deleteSaleDescription')}
+  confirmLabel={t('common.delete')}
+  cancelLabel={t('common.cancel')}
+  onConfirm={handleDeleteConfirm}
+  onCancel={() => setIsDeleteDialogOpen(false)}
+  loading={isDeleting}
+/>
     </div>
   )
 }

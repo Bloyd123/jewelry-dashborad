@@ -56,6 +56,8 @@ export interface SaleItem {
   productId?: string | null
   productName: string
   productCode?: string
+    wastagePercentage?: number   // Add karo
+  wastageWeight?: number       // Add karo
   category?: string
   hsnCode?: string
   metalType: MetalType
@@ -71,11 +73,11 @@ export interface SaleItem {
   makingChargesType: MakingChargesType
   otherCharges: number
   taxableAmount: number
-  gstPercentage: number
-  cgst: number
-  sgst: number
-  igst: number
-  totalGst: number
+gstPercentage: number  // 0 bhi ho sakta hai non-GST shops ke liye
+cgst: number
+sgst: number
+igst: number
+totalGst: number
   discount: {
     type: DiscountType
     value: number

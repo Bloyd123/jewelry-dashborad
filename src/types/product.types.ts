@@ -8,20 +8,13 @@ export enum MetalType {
   MIXED = 'mixed',
 }
 
-export enum MetalPurity {
-  K24 = '24K',
-  K22 = '22K',
-  K18 = '18K',
-  K14 = '14K',
-  K10 = '10K',
-  P916 = '916',
-  P999 = '999',
-  P925 = '925',
-  P850 = '850',
-  P950 = '950',
-  OTHER = 'other',
-}
-
+export type MetalPurity = string
+// Common purities as constants for UI dropdowns
+export const COMMON_PURITIES = {
+  GOLD:     ['24K', '22K', '18K', '14K', '10K', '916', '750', '585'],
+  SILVER:   ['999', '925', '900', '835', '800'],
+  PLATINUM: ['950', '900', '850'],
+} as const
 export enum MetalColor {
   YELLOW = 'yellow',
   WHITE = 'white',
@@ -100,8 +93,8 @@ export enum DiscountType {
 
 export interface ProductMetal {
   type: MetalType
-  purity: MetalPurity
-  purityPercentage?: number
+  purity: string           // Free text - enum nahi
+  purityPercentage?: number | null  // Custom purity ke liye
   color?: MetalColor
 }
 
@@ -110,11 +103,12 @@ export interface ProductWeight {
   stoneWeight?: number
   netWeight?: number
   wastage?: {
-    percentage?: number
-    weight?: number
+    percentage?: number  // Shop setting se aata hai
+    weight?: number      // Auto calculate hota hai
   }
   unit?: WeightUnit
 }
+// Koi change nahi - already sahi hai ✅
 
 export interface ProductStone {
   _id?: string
@@ -150,6 +144,7 @@ export interface ProductDiscount {
 }
 
 export interface ProductGST {
+  enabled?: boolean    // Non-GST shops ke liye
   percentage?: number
   amount?: number
 }
@@ -167,6 +162,15 @@ export interface ProductPricing {
   sellingPrice: number
   mrp?: number
   discount?: ProductDiscount
+  // Metal Rate Manual fix
+  isCustomRate?: boolean
+  customRateNote?: string | null
+  // Wastage info
+  wastage?: {
+    percentage?: number
+    weight?: number
+    value?: number
+  }
 }
 
 export interface ProductStock {
@@ -404,29 +408,36 @@ export interface CreateProductInput {
   categoryId: string
   subCategoryId?: string
   productType?: ProductType
-  metal: {
-    type: MetalType
-    purity: MetalPurity
-    color?: MetalColor
-    purityPercentage?: number
+metal: {
+  type: MetalType
+  purity: string           // Free text
+  purityPercentage?: number // Custom purity ke liye
+  color?: MetalColor
+}
+weight: {
+  grossWeight: number
+  stoneWeight?: number
+  unit?: WeightUnit
+  wastage?: {
+    percentage?: number  // User manually de sakta hai
   }
-  weight: {
-    grossWeight: number
-    stoneWeight?: number
-    unit?: WeightUnit
-  }
+}
   makingCharges?: {
     type?: MakingChargesType
     value?: number
   }
-  pricing: {
-    sellingPrice: number
-    costPrice?: number
-    mrp?: number
-    otherCharges?: number
-    gst?: { percentage?: number }
-    discount?: { type?: DiscountType; value?: number }
+pricing: {
+  sellingPrice: number
+  costPrice?: number
+  mrp?: number
+  otherCharges?: number
+  customRate?: number        // Manual metal rate
+  gst?: {
+    enabled?: boolean        // GST optional
+    percentage?: number
   }
+  discount?: { type?: DiscountType; value?: number }
+}
   stock?: {
     quantity?: number
     unit?: 'piece' | 'pair' | 'set' | 'gram' | 'kg'
@@ -496,7 +507,7 @@ export interface GetProductsInput {
   sort?: string
   category?: string
   metalType?: MetalType
-  purity?: MetalPurity
+purity?: string
   status?: ProductStatus
   saleStatus?: SaleStatus
   minPrice?: number

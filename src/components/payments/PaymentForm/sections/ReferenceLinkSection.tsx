@@ -1,8 +1,6 @@
-// FILE: src/components/payment/PaymentForm/sections/ReferenceLinkSection.tsx
-// Reference Link Section (Link to Sale/Purchase Invoice)
 import { useState, useMemo } from 'react'
-import { useSalePayments } from '@/hooks/payment/usePaymentsList'
-import { usePurchasePayments } from '@/hooks/payment/usePaymentsList'
+import { useGetSalesQuery } from '@/store/api/salesApi'
+import { useGetPurchasesQuery } from '@/store/api/purchaseApi'
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect/FormSelect'
 import { Search, ExternalLink, Info } from 'lucide-react'
@@ -11,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import type { FormSectionProps } from '../PaymentForm.types'
 import { useAuth } from '@/hooks/auth'
 
-
 export const ReferenceLinkSection = ({
   data,
   errors,
@@ -19,64 +16,81 @@ export const ReferenceLinkSection = ({
   onBlur,
   disabled = false,
 }: FormSectionProps) => {
-
-
-
-
-  
   const { t } = useTranslation()
   const { currentShopId } = useAuth()
   const shopId = currentShopId || ''
   const [searchQuery, setSearchQuery] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedInvoice, setSelectedInvoice] = useState<any>(null)
-  
-  const { payments: salePayments, isLoading: isLoadingSales } = useSalePayments(
-    shopId,
-    data.partyId ?? ''
-  )
 
-  const { payments: purchasePayments, isLoading: isLoadingPurchases } = usePurchasePayments(
+const { data: salesData, isLoading: isLoadingSales } = useGetSalesQuery(
+  {
     shopId,
-    data.partyId ?? ''
-  )
+    customerId: data.partyId,
+    paymentStatus: 'partial' as any,  // backend filter handle karega
+  },
+  { skip: !data.partyId || data.referenceType !== 'sale' }
+)
+
+const { data: purchasesData, isLoading: isLoadingPurchases } = useGetPurchasesQuery(
+  {
+    shopId,
+    supplierId: data.partyId,
+    paymentStatus: 'partial' as any,
+  },
+  { skip: !data.partyId || data.referenceType !== 'purchase' }
+)
+
   const isSearching = isLoadingSales || isLoadingPurchases
+
   const referenceTypeOptions = [
-    { value: 'none', label: t('payment.noReference') },
-    { value: 'sale', label: t('payment.saleInvoice') },
-    { value: 'purchase', label: t('payment.purchaseInvoice') },
+    { value: 'none',              label: t('payment.noReference') },
+    { value: 'sale',              label: t('payment.saleInvoice') },
+    { value: 'purchase',          label: t('payment.purchaseInvoice') },
     { value: 'scheme_enrollment', label: t('payment.schemeEnrollment') },
-    { value: 'order', label: t('payment.order') },
+    { value: 'order',             label: t('payment.order') },
   ]
 
+  const availableInvoices = useMemo(() => {
+    if (data.referenceType === 'sale') {
+      const sales = salesData?.data?.sales || []
+      return sales.map(s => ({
+        id:     s._id,
+        type:   'sale',
+        number: s.invoiceNumber,
+        date:   s.saleDate,
+        total:  s.financials.grandTotal,
+        paid:   s.payment.paidAmount,
+        due:    s.payment.dueAmount,
+        items:  s.customerDetails?.customerName || '',
+      }))
+    }
 
-const availableInvoices = useMemo(() => {
-  const raw = data.referenceType === 'sale'
-    ? salePayments
-    : data.referenceType === 'purchase'
-      ? purchasePayments
-      : []
+    if (data.referenceType === 'purchase') {
+      const purchases = purchasesData?.data?.purchases || []
+      return purchases.map(p => ({
+        id:     p._id,
+        type:   'purchase',
+        number: p.purchaseNumber,
+        date:   p.purchaseDate,
+        total:  p.financials.grandTotal,
+        paid:   p.payment.paidAmount,
+        due:    p.payment.dueAmount,
+        items:  p.supplierDetails?.supplierName || '',
+      }))
+    }
 
-  return raw.map(p => ({
-    id:    p._id,
-    type:  data.referenceType,
-    number: p.reference?.referenceNumber || p.paymentNumber,
-    date:   p.paymentDate,
-    total:  p.amount,
-    paid:   p.status === 'completed' ? p.amount : 0,
-    due:    p.status === 'completed' ? 0 : p.amount,
-    items:  p.notes || '',
-  }))
-}, [salePayments, purchasePayments, data.referenceType])
+    return []
+  }, [salesData, purchasesData, data.referenceType])
 
-const filteredInvoices = useMemo(() => {
-  if (!searchQuery) return availableInvoices
-  return availableInvoices.filter(
-    invoice =>
-      invoice.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      invoice.items.toLowerCase().includes(searchQuery.toLowerCase())
-  )
-}, [availableInvoices, searchQuery])
+  const filteredInvoices = useMemo(() => {
+    if (!searchQuery) return availableInvoices
+    return availableInvoices.filter(
+      invoice =>
+        invoice.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        invoice.items.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  }, [availableInvoices, searchQuery])
 
   const handleReferenceTypeChange = (name: string, value: string) => {
     onChange(name, value)
@@ -102,7 +116,6 @@ const filteredInvoices = useMemo(() => {
 
   return (
     <div className="space-y-4">
-      {/* Reference Type */}
       <FormSelect
         name="referenceType"
         label={t('payment.linkThisPaymentTo')}
@@ -115,7 +128,6 @@ const filteredInvoices = useMemo(() => {
         options={referenceTypeOptions}
       />
 
-      {/* Invoice Search (Only if sale or purchase selected) */}
       {(data.referenceType === 'sale' || data.referenceType === 'purchase') && (
         <div className="space-y-2">
           <Label className="text-text-primary">
@@ -141,53 +153,51 @@ const filteredInvoices = useMemo(() => {
               className="h-12 w-full rounded-lg border border-border-primary bg-bg-secondary pl-10 pr-4 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
             />
 
-            {/* Invoice Suggestions */}
-{showSuggestions && (
-  <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
-    {isSearching ? (
-      <div className="p-3 text-center text-sm text-text-secondary">
-        {t('common.loading')}...
-      </div>
-    ) : filteredInvoices.length === 0 ? (
-      <div className="p-3 text-center text-sm text-text-secondary">
-        {t('payment.noInvoicesFound')}
-      </div>
-    ) : (
-      filteredInvoices.map(invoice => (
-                  <button
-                    key={invoice.id}
-                    type="button"
-                    onClick={() => handleSelectInvoice(invoice)}
-                    className="w-full border-b border-border-secondary p-3 text-left transition-colors hover:bg-bg-tertiary"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <p className="font-semibold text-text-primary">
-                          {invoice.number}
-                        </p>
-                        <p className="text-sm text-text-secondary">
-                          {new Date(invoice.date).toLocaleDateString()} | ₹
-                          {invoice.total.toLocaleString('en-IN')}
-                        </p>
-                        <p className="text-xs text-text-tertiary">
-                          {invoice.items}
-                        </p>
+            {showSuggestions && (
+              <div className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg border border-border-primary bg-bg-secondary shadow-lg">
+                {isSearching ? (
+                  <div className="p-3 text-center text-sm text-text-secondary">
+                    {t('common.loading')}...
+                  </div>
+                ) : filteredInvoices.length === 0 ? (
+                  <div className="p-3 text-center text-sm text-text-secondary">
+                    {t('payment.noInvoicesFound')}
+                  </div>
+                ) : (
+                  filteredInvoices.map(invoice => (
+                    <button
+                      key={invoice.id}
+                      type="button"
+                      onClick={() => handleSelectInvoice(invoice)}
+                      className="w-full border-b border-border-secondary p-3 text-left transition-colors hover:bg-bg-tertiary"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="font-semibold text-text-primary">
+                            {invoice.number}
+                          </p>
+                          <p className="text-sm text-text-secondary">
+                            {new Date(invoice.date).toLocaleDateString()} | ₹
+                            {invoice.total.toLocaleString('en-IN')}
+                          </p>
+                          <p className="text-xs text-text-tertiary">
+                            {invoice.items}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-xs text-text-tertiary">Due</p>
+                          <p className="font-semibold text-status-error">
+                            ₹{invoice.due.toLocaleString('en-IN')}
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-xs text-text-tertiary">Due</p>
-                        <p className="font-semibold text-status-error">
-                          ₹{invoice.due.toLocaleString('en-IN')}
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-))
-    )}
-  </div>
-)}
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
           </div>
 
-          {/* No Invoices Found */}
           {searchQuery.length >= 2 && filteredInvoices.length === 0 && (
             <div className="flex items-center gap-2 text-sm text-text-secondary">
               <Info className="h-4 w-4" />
@@ -195,7 +205,6 @@ const filteredInvoices = useMemo(() => {
             </div>
           )}
 
-          {/* Recent Unpaid Invoices Hint */}
           {!searchQuery && availableInvoices.length > 0 && (
             <p className="text-sm text-text-secondary">
               {t('payment.recentUnpaidInvoices')}: {availableInvoices.length}
@@ -204,7 +213,6 @@ const filteredInvoices = useMemo(() => {
         </div>
       )}
 
-      {/* Selected Invoice Card */}
       {selectedInvoice && (
         <div className="border-accent/30 bg-accent/5 space-y-3 rounded-lg border-2 p-4">
           <div className="flex items-start justify-between">
@@ -246,7 +254,6 @@ const filteredInvoices = useMemo(() => {
             </Button>
           </div>
 
-          {/* Auto-fill Amount Button */}
           <Button
             type="button"
             variant="outline"

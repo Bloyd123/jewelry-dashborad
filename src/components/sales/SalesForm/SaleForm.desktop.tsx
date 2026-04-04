@@ -147,13 +147,14 @@ const result =
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <CustomerSection
-                data={formData}
-                errors={errors}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isLoading}
-              />
+<CustomerSection
+  data={formData}
+  errors={errors}
+  onChange={handleChange}
+  onBlur={handleBlur}
+  disabled={isLoading}
+  shopId={shopId}      // ← add karo
+/>
             </CardContent>
           </Card>
 
@@ -165,13 +166,13 @@ const result =
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ItemsSection
-                data={formData}
-                errors={errors}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isLoading}
-              />
+<ItemsSection
+  data={formData}
+  errors={errors}
+  onChange={handleChange}
+  onBlur={handleBlur}
+  disabled={isLoading}
+/>
             </CardContent>
           </Card>
 

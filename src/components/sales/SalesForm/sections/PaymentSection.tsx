@@ -32,12 +32,32 @@ export const PaymentSection = ({
     })
   }
 
-  // Mock calculations (replace with actual logic)
-  const subtotal = 176491
-  const oldGoldValue = data.oldGoldExchange?.hasExchange ? 90000 : 0
-  const netPayable = subtotal - oldGoldValue
-  const paidAmount = payment.paidAmount || 0
-  const dueAmount = netPayable - paidAmount
+// Real calculations from form data
+const subtotal = (data.items || []).reduce((sum, item) => {
+  const netWeight    = item.grossWeight - item.stoneWeight
+  const metalValue   = netWeight * item.ratePerGram
+  const makingValue  = item.makingChargesType === 'per_gram'
+    ? item.makingCharges * netWeight
+    : item.makingCharges
+  const gross        = metalValue + item.stoneValue + makingValue + item.otherCharges
+  const discountAmt  = item.discount.type === 'percentage'
+    ? (gross * item.discount.value) / 100
+    : item.discount.value
+  const taxable      = gross - discountAmt
+  const gst          = (taxable * item.gstPercentage) / 100
+  return sum + taxable + gst
+}, 0)
+
+const oldGoldValue = data.oldGoldExchange?.hasExchange
+  ? (data.oldGoldExchange.items || []).reduce(
+      (sum, item) => sum + (item.grossWeight - item.stoneWeight) * item.ratePerGram,
+      0
+    )
+  : 0
+
+const netPayable  = subtotal - oldGoldValue
+const paidAmount  = payment.paidAmount || 0
+const dueAmount   = netPayable - paidAmount
 
   return (
     <div className="space-y-4">
