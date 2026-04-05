@@ -17,9 +17,9 @@ import { validateForgotPasswordForm } from '@/validators/forgotPasswordValidatio
 const ForgotPasswordForm: React.FC = () => {
   const navigate = useNavigate()
   const { showSuccess, showError } = useNotification()
+  const { handleError } = useErrorHandler()
   const { forgotPassword } = useAuth()
 
-  const { handleError } = useErrorHandler()
   const { t } = useTranslation()
   const [formData, setFormData] = useState<ForgotPasswordFormState>({
     email: '',

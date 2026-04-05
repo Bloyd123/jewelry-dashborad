@@ -7,6 +7,28 @@ import type { SaleFormData } from '@/components/sales/SalesForm'
 
 import { useSaleById } from'@/hooks/sales'
 
+export const CreateSalePage = () => {
+  const navigate = useNavigate()
+  const { shopId } = useParams<{ shopId: string }>()
+
+  const handleSuccess = () =>
+    navigate(`/shops/${shopId}/sales`)
+
+  const handleCancel = () =>
+    navigate(`/shops/${shopId}/sales`)
+
+  return (
+    <SaleForm
+      mode="create"
+      shopId={shopId!}
+      onSuccess={handleSuccess}
+      onCancel={handleCancel}
+    />
+  )
+}
+
+export default CreateSalePage
+
 export const EditSalePage = () => {
   const navigate = useNavigate()
   const { shopId, saleId } = useParams<{ shopId: string; saleId: string }>()

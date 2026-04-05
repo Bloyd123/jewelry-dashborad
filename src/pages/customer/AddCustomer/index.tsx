@@ -69,7 +69,9 @@ preferences: customer.preferences ? {
 
     // Source & Referral
     source: customer.source,
-    referredBy: customer.referredBy || '',
+  referredBy: typeof customer.referredBy === 'object' 
+      ? customer.referredBy?._id 
+      : customer.referredBy || '',
 
     // Additional Info
     notes: customer.notes || '',

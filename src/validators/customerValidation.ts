@@ -225,15 +225,15 @@ phone: z
     ])
     .optional(),
 
-  referredBy: z
+referredBy: z
     .string()
     .optional()
-    .transform(val => (val === '' ? undefined : val)) // ✅ Convert empty string to undefined
+    .or(z.literal(''))
+    .transform(val => (val === '' ? undefined : val))
     .refine(
-      val => !val || val.length === 24, // MongoDB ObjectId is 24 chars
+      val => !val || val.length === 24,
       { message: 'Invalid customer reference ID' }
     ),
-
   // Additional Info
   notes: z
     .string()
