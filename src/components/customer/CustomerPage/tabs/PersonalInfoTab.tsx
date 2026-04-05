@@ -133,7 +133,7 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
           </div>
         )}
 
-        {customer.source && (
+{customer.source && (
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs text-text-secondary">
               {t('customerProfile.source')}
@@ -141,6 +141,35 @@ export const PersonalInfoTab: React.FC<PersonalInfoTabProps> = ({
             <p className="text-sm font-medium capitalize text-text-primary">
               {customer.source.replace('_', ' ')}
             </p>
+          </div>
+        )}
+
+{customer.source === 'referral' && customer.referredBy != null && (
+          <div className="flex flex-col gap-1.5 md:col-span-2">
+            <Label className="text-xs text-text-secondary">
+              {t('customerProfile.referredBy')}
+            </Label>
+            <div className="flex items-center gap-3 rounded-lg border border-border-secondary bg-bg-primary px-3 py-2">
+              <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent/10">
+                <User className="h-4 w-4 text-accent" />
+              </div>
+              <div className="min-w-0 flex-1">
+                {typeof customer.referredBy === 'object' ? (
+                  <>
+                    <p className="text-sm font-medium text-text-primary">
+                      {`${customer.referredBy.firstName} ${customer.referredBy.lastName || ''}`.trim()}
+                    </p>
+                    <p className="text-xs text-text-tertiary">
+                      {customer.referredBy.customerCode} • {customer.referredBy.phone}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-sm font-medium text-text-primary">
+                    {t('customerProfile.referredByUnknown')}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>

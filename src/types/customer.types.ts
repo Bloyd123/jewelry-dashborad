@@ -86,8 +86,15 @@ export interface Customer {
   preferences?: CustomerPreferences
 
   // Source & Referral
+// Source & Referral
   source?: CustomerSource
-  referredBy?: ID
+  referredBy?: ID | {
+    _id: ID
+    firstName: string
+    lastName?: string
+    customerCode: string
+    phone: string
+  } | null
 
   // Additional Info
   notes?: string

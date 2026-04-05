@@ -127,6 +127,17 @@ export default function CustomerFormMobile({
     }
   }
   const handleSubmit = async () => {
+if (formData.source === 'referral' && !formData.referredBy) {
+      setErrors(prev => ({
+        ...prev,
+        referredBy: t('customer.referredByRequired'),
+      }))
+      showError(
+        t('customer.referredByRequired'),
+        t('customer.errors.validationFailed')
+      )
+      return
+    }
     try {
       createCustomerSchema.parse(formData)
     } catch (error: any) {

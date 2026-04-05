@@ -63,7 +63,39 @@ export const customerTableColumns: DataTableColumn<Customer>[] = [
       </div>
     ),
   },
+ {
+    id: 'address',
+    header: 'customer.table.address',
+    accessorKey: 'address',
+    sortable: false,
+    width: '180px',
+    cell: ({ row }) => {
+      const parts = [
+        row.address?.street,
+        row.address?.city,
+        row.address?.state,
+      ].filter(Boolean)
 
+      if (parts.length === 0) {
+        return <span className="text-xs text-text-tertiary">—</span>
+      }
+
+      return (
+        <div className="flex flex-col">
+          {row.address?.street && (
+            <span className="text-sm text-text-primary truncate max-w-[160px]">
+              {row.address.street}
+            </span>
+          )}
+          {(row.address?.city || row.address?.state) && (
+            <span className="text-xs text-text-tertiary">
+              {[row.address?.city, row.address?.state].filter(Boolean).join(', ')}
+            </span>
+          )}
+        </div>
+      )
+    },
+  },
   {
     id: 'phone',
     header: 'customer.table.phone',

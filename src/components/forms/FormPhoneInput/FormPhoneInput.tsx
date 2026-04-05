@@ -4,7 +4,7 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Phone, AlertCircle, Info } from 'lucide-react'
-
+import React from 'react'
 interface FormPhoneInputProps {
   name: string
   label?: string
@@ -18,6 +18,7 @@ interface FormPhoneInputProps {
   className?: string
   countryCode?: string
   helpText?: string
+  suffix?: React.ReactNode
 }
 
 export const FormPhoneInput = ({
@@ -33,6 +34,7 @@ export const FormPhoneInput = ({
   className = '',
   countryCode = '+91',
   helpText,
+  suffix,
 }: FormPhoneInputProps) => {
   const handleChange = (val: string) => {
     // Only allow numbers
@@ -59,7 +61,7 @@ export const FormPhoneInput = ({
           <span className="text-border-primary">|</span>
         </div>
 
-        <Input
+<Input
           id={name}
           name={name}
           type="tel"
@@ -70,8 +72,13 @@ export const FormPhoneInput = ({
           disabled={disabled}
           required={required}
           maxLength={10}
-          className={`border-border-primary bg-bg-secondary pl-24 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${error ? 'border-status-error focus:border-status-error focus:ring-status-error' : ''} `}
+          className={`border-border-primary bg-bg-secondary pl-24 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${suffix ? 'pr-10' : ''} ${error ? 'border-status-error focus:border-status-error focus:ring-status-error' : ''} `}
         />
+        {suffix && (
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+            {suffix}
+          </div>
+        )}
       </div>
 
       <div className="text-xs text-text-tertiary">{value.length}/10 digits</div>

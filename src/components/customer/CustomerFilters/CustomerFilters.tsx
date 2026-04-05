@@ -30,6 +30,7 @@ export interface CustomerFilterValues {
   balance?: string
   vipOnly?: string
   dateRange?: DateRange
+    city?: string   
 }
 
 interface CustomerFiltersProps {

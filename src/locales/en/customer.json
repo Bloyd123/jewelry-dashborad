@@ -10,6 +10,10 @@
     "searchPlaceholder": "Search by name, phone, or code...",
     "empty": "No customers found",
     "deleteConfirm": "Are you sure you want to delete {{name}}?",
+    "sameAsPhone": "Same as Phone",
+"searchReferredBy": "Search customer by name or phone...",
+"noCustomerFound": "No customer found",
+
 
     "success": {
       "created": "Customer created successfully",
@@ -220,6 +224,7 @@
       "dateRange": "Date Range"
     },
     "table": {
+    "address": "Address",
       "ariaLabel": "Customer table",
       "customerCode": "Customer Code",
       "fullName": "Full Name",
