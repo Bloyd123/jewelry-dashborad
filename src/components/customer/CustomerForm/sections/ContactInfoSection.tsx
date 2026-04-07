@@ -43,7 +43,7 @@ export const ContactInfoSection = ({
         disabled={disabled}
         suffix={
           data.phone ? (
-            <Button
+            <button
               type="button"
               onClick={handleCopyPhone}
               disabled={disabled}
@@ -55,7 +55,7 @@ export const ContactInfoSection = ({
               ) : (
                 <Copy className="h-4 w-4" />
               )}
-            </Button>
+            </button>
           ) : null
         }
       />
@@ -82,14 +82,14 @@ export const ContactInfoSection = ({
           disabled={disabled}
         />
         {data.phone && (
-          <Button
+          <button
             type="button"
             onClick={handleSameAsPhone}
             disabled={disabled}
             className="text-xs text-accent hover:text-accent/80 hover:underline transition-colors pl-1"
           >
             + {t('customer.sameAsPhone')}
-          </Button>
+          </button>
         )}
       </div>
 

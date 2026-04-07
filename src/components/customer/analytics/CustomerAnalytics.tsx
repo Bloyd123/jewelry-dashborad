@@ -30,6 +30,11 @@ import { DataTable } from '@/components/ui/data-display/DataTable'
 import { Separator } from '@/components/ui/layout/Separator'
 import { cn } from '@/lib/utils'
 
+interface TrendValue {
+  value: number
+  direction: 'up' | 'down'
+}
+
 export interface CustomerStatistics {
   totalCustomers: number
   activeCustomers: number
@@ -37,8 +42,16 @@ export interface CustomerStatistics {
   totalOutstanding: number
   totalLoyaltyPoints: number
   avgLifetimeValue: number
-    growthRate?: number        // NEW
-  retentionRate?: number  
+  growthRate?: number
+  retentionRate?: number
+  trends?: {
+    totalCustomers?:     TrendValue
+    activeCustomers?:    TrendValue
+    vipCustomers?:       TrendValue
+    totalOutstanding?:   TrendValue
+    totalLoyaltyPoints?: TrendValue
+    avgLifetimeValue?:   TrendValue
+  }
   growthData?: Array<{
     month: string
     customers: number
@@ -84,7 +97,15 @@ export interface CustomerStatistics {
     revenue: number
     averageOrderValue: number
   }>
-  recentEvents?: Array<{
+recentEvents?: Array<{
+    _id: string
+    customerCode: string
+    customerName: string
+    eventType: 'anniversary' | 'birthday' | 'signup'
+    date: string
+    daysUntil: number
+  }>
+  upcomingEvents?: Array<{
     _id: string
     customerCode: string
     customerName: string
@@ -216,19 +237,18 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
       </div>
 
       <StatCardGrid columns={4} gap="md">
-        <StatCard
+<StatCard
           title={t('customer.analytics.totalCustomers')}
           value={formatNumber(statistics.totalCustomers)}
           icon={Users}
           variant="default"
           size="md"
-          trend={{
-            value: 12,
-            direction: 'up',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.totalCustomersDesc')}
+          trend={statistics.trends?.totalCustomers ? {
+            value:     statistics.trends.totalCustomers.value,
+            direction: statistics.trends.totalCustomers.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
         <StatCard
@@ -238,13 +258,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           variant="success"
           size="md"
           subtitle={`${activePercentage}% ${t('customer.analytics.ofTotal')}`}
-          trend={{
-            value: 8,
-            direction: 'up',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.activeCustomersDesc')}
+          trend={statistics.trends?.activeCustomers ? {
+            value:     statistics.trends.activeCustomers.value,
+            direction: statistics.trends.activeCustomers.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
         <StatCard
@@ -254,13 +273,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           variant="warning"
           size="md"
           subtitle={`${vipPercentage}% ${t('customer.analytics.ofTotal')}`}
-          trend={{
-            value: 5,
-            direction: 'up',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.vipCustomersDesc')}
+          trend={statistics.trends?.vipCustomers ? {
+            value:     statistics.trends.vipCustomers.value,
+            direction: statistics.trends.vipCustomers.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
         <StatCard
@@ -269,13 +287,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           icon={TrendingUp}
           variant="info"
           size="md"
-          trend={{
-            value: 15,
-            direction: 'up',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.avgLifetimeValueDesc')}
+          trend={statistics.trends?.avgLifetimeValue ? {
+            value:     statistics.trends.avgLifetimeValue.value,
+            direction: statistics.trends.avgLifetimeValue.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
         <StatCard
@@ -284,13 +301,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           icon={DollarSign}
           variant="error"
           size="md"
-          trend={{
-            value: 3,
-            direction: 'down',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.totalOutstandingDesc')}
+          trend={statistics.trends?.totalOutstanding ? {
+            value:     statistics.trends.totalOutstanding.value,
+            direction: statistics.trends.totalOutstanding.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
         <StatCard
@@ -299,13 +315,12 @@ export const CustomerAnalytics: React.FC<CustomerAnalyticsProps> = ({
           icon={Gift}
           variant="success"
           size="md"
-          trend={{
-            value: 20,
-            direction: 'up',
-            label: t('customer.analytics.vsLastMonth'),
-            showIcon: true,
-          }}
-          description={t('customer.analytics.totalLoyaltyPointsDesc')}
+          trend={statistics.trends?.totalLoyaltyPoints ? {
+            value:     statistics.trends.totalLoyaltyPoints.value,
+            direction: statistics.trends.totalLoyaltyPoints.direction,
+            label:     t('customer.analytics.vsLastMonth'),
+            showIcon:  true,
+          } : undefined}
         />
 
 <StatCard
@@ -777,12 +792,12 @@ data={statistics.segmentationData?.byCategory || []}
               </div>
             </div>
             <div className="divide-y divide-border-secondary">
-              {(statistics.recentEvents || []).length === 0 ? (
+              {(statistics.upcomingEvents || statistics.recentEvents || []).length === 0 ? (
   <div className="p-4 text-center text-sm text-text-tertiary">
     No upcoming events
   </div>
 ) : (
-              (statistics.recentEvents || []).map(event => {
+             (statistics.upcomingEvents || statistics.recentEvents || []).map(event => {
                 const eventIcons = {
                   anniversary: '💍',
                   birthday: '🎂',

@@ -1,11 +1,11 @@
 // FILE: src/components/supplier/SupplierForm/sections/ContactInfoSection.tsx
 
-
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput/FormInput'
 import { FormPhoneInput } from '@/components/forms/FormPhoneInput/FormPhoneInput'
 import type { SectionProps } from '../SupplierForm.types'
-
+import { Copy, Check } from 'lucide-react'
 export const ContactInfoSection = ({
   data,
   errors,
@@ -14,12 +14,25 @@ export const ContactInfoSection = ({
   disabled,
 }: SectionProps) => {
   const { t } = useTranslation()
-
+  const [copied, setCopied] = useState(false)
   const handleNestedChange = (field: string, value: any) => {
     onChange('contactPerson', {
       ...data.contactPerson,
       [field]: value,
     })
+  }
+    const handleCopyPhone = async () => {
+    const phone = data.contactPerson?.phone
+    if (!phone) return
+    await navigator.clipboard.writeText(phone)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const handleSameAsPhone = () => {
+    const phone = data.contactPerson?.phone
+    if (!phone) return
+    handleNestedChange('whatsappNumber', phone)
   }
 
   return (
@@ -65,7 +78,7 @@ export const ContactInfoSection = ({
         maxLength={100}
       />
 
-      <FormPhoneInput
+<FormPhoneInput
         name="contactPerson.phone"
         label={t('suppliers.phone')}
         value={data.contactPerson?.phone || ''}
@@ -75,7 +88,25 @@ export const ContactInfoSection = ({
         placeholder="9876543210"
         required
         disabled={disabled}
+        suffix={
+          data.contactPerson?.phone ? (
+            <button
+              type="button"
+              onClick={handleCopyPhone}
+              disabled={disabled}
+              className="flex items-center justify-center bg-transparent border-none outline-none p-0 text-text-tertiary hover:text-text-primary transition-colors"
+              title={t('common.copy')}
+            >
+              {copied ? (
+                <Check className="h-4 w-4 text-status-success" />
+              ) : (
+                <Copy className="h-4 w-4" />
+              )}
+            </button>
+          ) : null
+        }
       />
+
       <FormPhoneInput
         name="contactPerson.alternatePhone"
         label={t('suppliers.alternatePhone')}
@@ -86,16 +117,29 @@ export const ContactInfoSection = ({
         placeholder="9876543210"
         disabled={disabled}
       />
-      <FormPhoneInput
-        name="contactPerson.whatsappNumber"
-        label={t('suppliers.whatsappNumber')}
-        value={data.contactPerson?.whatsappNumber || ''}
-        onChange={(_, val) => handleNestedChange('whatsappNumber', val)}
-        onBlur={onBlur}
-        error={errors['contactPerson.whatsappNumber']}
-        placeholder="9876543210"
-        disabled={disabled}
-      />
+
+      <div className="space-y-1">
+        <FormPhoneInput
+          name="contactPerson.whatsappNumber"
+          label={t('suppliers.whatsappNumber')}
+          value={data.contactPerson?.whatsappNumber || ''}
+          onChange={(_, val) => handleNestedChange('whatsappNumber', val)}
+          onBlur={onBlur}
+          error={errors['contactPerson.whatsappNumber']}
+          placeholder="9876543210"
+          disabled={disabled}
+        />
+        {data.contactPerson?.phone && (
+          <button
+            type="button"
+            onClick={handleSameAsPhone}
+            disabled={disabled}
+            className="bg-transparent border-none outline-none text-xs text-accent hover:text-accent/80 hover:underline transition-colors pl-1 cursor-pointer disabled:opacity-50"
+          >
+            + {t('customer.sameAsPhone')}
+          </button>
+        )}
+      </div>
 
       <FormInput
         name="contactPerson.email"

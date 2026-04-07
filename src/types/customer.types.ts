@@ -321,14 +321,23 @@ export interface CustomerListResponse {
     summary: CustomerAnalytics
   }
   meta: {
-    pagination: {
-      page: number
-      limit: number
-      total: number
-      pages: number
-      hasNext: boolean
-      hasPrev: boolean
-    }
+pagination: {
+        page: number
+        limit: number
+        total: number
+        pages: number
+        hasNext: boolean
+        hasPrev: boolean
+        // backend aliases
+        currentPage?: number
+        totalDocs?: number
+        totalPages?: number
+        hasNextPage?: boolean
+        hasPrevPage?: boolean
+        nextPage?: number | null
+        prevPage?: number | null
+        skip?: number
+      }
   }
 }
 export interface CustomerResponse {

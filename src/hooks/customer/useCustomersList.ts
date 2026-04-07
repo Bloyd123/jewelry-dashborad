@@ -23,7 +23,18 @@ export const useCustomersList = (
   // Memoized computed values
   const customers = useMemo(() => data?.data?.customers || [], [data])
   const summary = useMemo(() => data?.data?.summary, [data])
-  const pagination = useMemo(() => data?.meta?.pagination, [data])
+ const pagination = useMemo(() => {
+    const p = data?.meta?.pagination
+    if (!p) return undefined
+    return {
+      page:    p.currentPage  ?? p.page    ?? 1,
+      pages:   p.totalPages   ?? p.pages   ?? 1,
+      total:   p.totalDocs    ?? p.total   ?? 0,
+      limit:   p.limit        ?? 10,
+      hasNext: p.hasNextPage  ?? p.hasNext ?? false,
+      hasPrev: p.hasPrevPage  ?? p.hasPrev ?? false,
+    }
+  }, [data])
 
   return {
     // Data
