@@ -1,0 +1,269 @@
+{
+  "girvi": {
+    "title": "Girvi (Pledge)",
+    "subtitle": "Manage all pawn and pledge records",
+
+    "createGirvi": "Create Girvi",
+    "editGirvi": "Edit Girvi",
+    "viewGirvi": "View Girvi",
+    "createGirviDescription": "Record a new item pledge and issue loan",
+    "editGirviDescription": "Update girvi details",
+    "viewGirviDescription": "View girvi details",
+
+    "girviSummary": "Girvi Summary",
+    "summary": "Summary",
+
+    "confirmCreate": "Confirm Create Girvi",
+    "confirmCreateDescription": "Are you sure you want to create this girvi? Cash will be disbursed to the customer.",
+    "confirmUpdate": "Confirm Update",
+    "confirmUpdateDescription": "Are you sure you want to update this girvi?",
+    "confirmRelease": "Confirm Release",
+    "confirmReleaseDescription": "You are about to release this girvi. Net amount to be received: ₹{{amount}}. This action cannot be undone.",
+
+    "deleteConfirm": "Are you sure you want to delete this girvi? This action cannot be undone.",
+
+    "printSlip": "Print Girvi Slip",
+
+    "errors": {
+      "errorTitle": "Girvi Error",
+      "createFailed": "Failed to create girvi",
+      "updateFailed": "Failed to update girvi",
+      "deleteFailed": "Failed to delete girvi",
+      "releaseFailed": "Failed to release girvi",
+      "fetchFailed": "Failed to fetch girvi details",
+      "cannotDeleteActive": "Cannot delete an active girvi. Please release it first.",
+      "cannotUpdateReleased": "Cannot update a released girvi."
+    },
+
+    "success": {
+      "created": "Girvi created successfully",
+      "createdTitle": "Girvi Created",
+      "updated": "Girvi updated successfully",
+      "updatedTitle": "Girvi Updated",
+      "deleted": "Girvi deleted successfully",
+      "deletedTitle": "Girvi Deleted",
+      "released": "Girvi released successfully",
+      "releasedTitle": "Girvi Released"
+    },
+
+    "customerDetails": "Customer Details",
+    "selectCustomer": "Select Customer",
+    "searchCustomerPlaceholder": "Search by name or phone...",
+    "noCustomersFound": "No customers found",
+    "addNewCustomer": "Add New Customer",
+    "customer": "Customer",
+
+    "pledgeItems": "Pledge Items",
+    "newItem": "New Item",
+    "addItem": "Add Item",
+    "itemsCount": "item(s)",
+    "items": "Items",
+
+    "itemName": "Item Name",
+    "itemNamePlaceholder": "e.g. Gold Necklace, Silver Bangles",
+    "itemType": "Item Type",
+    "description": "Description",
+    "descriptionPlaceholder": "Optional description",
+    "quantity": "Quantity",
+    "condition": "Condition",
+
+    "weightDetails": "Weight Details",
+    "grossWeight": "Gross Weight",
+    "lessWeight": "Less Weight",
+    "netWeight": "Net Weight",
+    "totalGrossWeight": "Total Gross",
+    "totalNetWeight": "Total Net",
+    "totalApproxValue": "Total Approx Value",
+
+    "purityValue": "Purity & Value",
+    "tunch": "Tunch",
+    "purity": "Purity",
+    "ratePerGram": "Rate / Gram",
+    "approxValue": "Approx Value",
+    "userGivenValue": "Override Value",
+    "overrideHint": "(optional — overrides calculated value)",
+    "overridePlaceholder": "Enter if different from calculated",
+    "finalValue": "Final Value",
+
+    "financialDetails": "Financial Details",
+    "principalAmount": "Principal Amount",
+    "principal": "Principal",
+    "loanToValueRatio": "Loan to Value Ratio",
+    "interestRate": "Interest Rate",
+    "interestType": "Interest Type",
+    "calculationBasis": "Calculation Basis",
+    "interest": "Interest",
+    "amountDue": "Amount Due",
+
+    "paymentModeAtJama": "Payment Mode (Cash Given to Customer)",
+    "paymentModeHint": "How was the loan amount disbursed to the customer?",
+    "paymentMode": "Payment Mode",
+    "transactionRefPlaceholder": "UPI ID / Cheque No / Bank Ref",
+    "upiIdPlaceholder": "Enter UPI ID",
+    "chequeNumberPlaceholder": "Enter cheque number",
+
+    "basicInfo": "Basic Information",
+    "girviDate": "Girvi Date",
+    "dueDate": "Due Date",
+    "gracePeriodDays": "Grace Period (Days)",
+    "gracePeriodHint": "Extra days allowed after due date before marking overdue",
+    "girviSlipNumber": "Girvi Slip Number",
+    "girviSlipNumberPlaceholder": "Enter physical slip number",
+    "witnessName": "Witness Name",
+    "witnessNamePlaceholder": "Enter witness name",
+    "dates": "Dates",
+    "due": "Due",
+
+    "additionalDetails": "Additional Details",
+    "activityTimeline": "Activity Timeline",
+
+    "interestCalculator": "Interest Calculator",
+    "calculateUpTo": "Calculate Up To",
+    "calculate": "Calculate",
+    "days": "Days",
+    "months": "Months",
+    "applyToReleaseForm": "Apply to Release Form",
+
+    "releaseDetails": "Release Details",
+    "releaseGirvi": "Release Girvi",
+    "releaseInterestType": "Interest Type for Release",
+    "interestReceived": "Interest Received (₹)",
+    "principalReceived": "Principal Received (₹)",
+    "discountGiven": "Discount Given (₹)",
+    "netAmountReceived": "Net Amount Received",
+    "paymentDate": "Payment Date",
+    "remarksPlaceholder": "Optional remarks about this release",
+
+    "searchPlaceholder": "Search by girvi number or customer...",
+    "allStatuses": "All Statuses",
+    "overdueOnly": "Overdue Only",
+
+    "stats": {
+      "active": "Active Girvis",
+      "overdue": "Overdue",
+      "outstanding": "Total Outstanding",
+      "amountDue": "Total Amount Due"
+    },
+
+    "table": {
+      "girviNumber": "Girvi No.",
+      "girviDate": "Date",
+      "customer": "Customer",
+      "items": "Items",
+      "principal": "Principal",
+      "amountDue": "Amount Due",
+      "dueDate": "Due Date",
+      "status": "Status",
+      "noGirvis": "No girvi records found",
+      "ariaLabel": "Girvi records table"
+    },
+
+    "actions": {
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "release": "Release",
+      "calculateInterest": "Calculate Interest",
+      "delete": "Delete",
+      "export": "Export",
+      "exportSelected": "Export Selected"
+    },
+
+    "status": {
+      "active": "Active",
+      "released": "Released",
+      "transferred": "Transferred",
+      "partial_released": "Partial Released",
+      "overdue": "Overdue",
+      "auctioned": "Auctioned"
+    },
+
+    "itemType": {
+      "gold": "Gold",
+      "silver": "Silver",
+      "diamond": "Diamond",
+      "platinum": "Platinum",
+      "other": "Other"
+    },
+
+    "itemCondition": {
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor"
+    },
+
+    "interestTypeLabel": {
+      "simple": "Simple Interest",
+      "compound": "Compound Interest"
+    },
+
+    "calculationBasisLabel": {
+      "monthly": "Monthly",
+      "daily": "Daily"
+    },
+
+    "paymentModeLabel": {
+      "cash": "Cash",
+      "upi": "UPI",
+      "bank_transfer": "Bank Transfer",
+      "cheque": "Cheque"
+    }
+  },
+
+  "common": {
+    "notes": "Notes",
+    "notesPlaceholder": "Add any additional notes...",
+    "tags": "Tags",
+    "addTagPlaceholder": "Type a tag and press Enter",
+    "tagHint": "Press Enter or click Add to add a tag. Press Backspace to remove the last tag.",
+    "add": "Add",
+    "attachments": "Attachments",
+    "dropFilesHere": "Drop files here or click to browse",
+    "supportedFormats": "Supported: PDF, JPG, PNG, DOC, DOCX — Max 5MB each",
+    "browse": "Browse Files",
+    "noActivityYet": "No activity recorded yet",
+    "by": "by",
+    "step": "Step",
+    "of": "of",
+    "saving": "Saving...",
+    "calculating": "Calculating...",
+    "save": "Save",
+    "update": "Update",
+    "create": "Create",
+    "cancel": "Cancel",
+    "close": "Close",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "previous": "Previous",
+    "next": "Next",
+    "clearAll": "Clear All",
+    "clearSelection": "Clear Selection",
+    "searching": "Searching",
+    "loading": "Loading..."
+  },
+
+  "activity": {
+    "created": "Created",
+    "updated": "Updated",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "deleted": "Deleted",
+    "receiptGenerated": "Receipt Generated",
+    "receiptSent": "Receipt Sent",
+    "reconciled": "Reconciled",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "released": "Released",
+    "paymentReceived": "Payment Received",
+    "statusChanged": "Status Changed"
+  },
+
+  "validation": {
+    "failed": "Validation Failed",
+    "pleaseFillRequired": "Please fill in all required fields"
+  },
+
+  "table": {
+    "selectedCount": "{{count}} selected"
+  }
+}

@@ -62,6 +62,9 @@ export interface Customer {
   dateOfBirth?: string // ISO8601 format: YYYY-MM-DD
   gender?: Gender
   anniversaryDate?: string // ISO8601 format: YYYY-MM-DD
+    jaati?: string
+  relationType?: 'son_of' | 'husband_of' | 'daughter_of' | 'wife_of' | 'other'
+  relationName?: string
   address?: Address
 
   aadharNumber?: string 

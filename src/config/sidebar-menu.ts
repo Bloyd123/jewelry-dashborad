@@ -23,6 +23,8 @@ import {
   Building2,
   TrendingUp,
   Truck,
+  Gem,
+    ArrowRightLeft,
 } from 'lucide-react'
 import type { MenuItem } from '@/types/menu'
 import { ROUTES } from '@/config/routes.config'
@@ -57,6 +59,11 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     url: ROUTES.metalRates,
     icon: TrendingUp,
   },
+  {
+  title: t('sidebar.openingBalance'),
+  url: ROUTES.openingBalance,
+  icon: Wallet,
+},
   {
     title: t('sidebar.customers'),
     icon: Users,
@@ -166,6 +173,38 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       // { title: t('sidebar.reports'), url: ROUTES.salesReports },
     ],
   },
+  {
+  title: t('sidebar.girvi'),
+  icon: Gem,
+  items: [
+    {
+      title: t('sidebar.allGirvi'),
+      url: ROUTES.girviList,
+      icon: ClipboardList,
+    },
+    {
+      title: t('sidebar.addGirvi'),
+      url: ROUTES.girviAdd,
+      icon: UserPlus,
+    },
+  ],
+},
+{
+  title: t('sidebar.girviTransfer'),
+  icon: ArrowRightLeft,
+  items: [
+    {
+      title: t('sidebar.allGirviTransfers'),
+      url: ROUTES.girviTransferList,
+      icon: ClipboardList,
+    },
+    {
+      title: t('sidebar.addGirviTransfer'),
+      url: ROUTES.girviTransferAdd,
+      icon: UserPlus,
+    },
+  ],
+},
   {
     title: t('sidebar.payments'),
     icon: CreditCard,

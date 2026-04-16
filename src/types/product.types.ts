@@ -102,6 +102,8 @@ export interface ProductWeight {
   grossWeight: number
   stoneWeight?: number
   netWeight?: number
+    // Fine Weight = Net Weight × (Purity%/100)
+  fineWeight?: number
   wastage?: {
     percentage?: number  // Shop setting se aata hai
     weight?: number      // Auto calculate hota hai

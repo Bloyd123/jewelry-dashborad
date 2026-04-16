@@ -1,0 +1,97 @@
+{
+    "openingBalance": {
+
+  "title": "Opening Balance",
+  "description": "Set your shop's opening balances before starting transactions",
+  "openingDate": "Opening Date",
+  "saveDraft": "Save Draft",
+  "confirm": "Confirm & Lock",
+  "confirmedWarning": "Opening balance is confirmed and locked. Use adjustment entries to make changes.",
+  "confirmDialog": "Are you sure? Once confirmed, this cannot be edited.",
+  "notes": "Notes",
+  "notesPlaceholder": "Any additional notes...",
+  "step": "Step",
+  "next": "Next",
+  "previous": "Previous",
+ 
+  "tabs": {
+    "cash": "Cash & Bank",
+    "party": "Party Balances",
+    "metal": "Metal Balances",
+    "stock": "Stock Balance"
+  },
+ 
+  "status": {
+    "title": "Setup Status",
+    "not_started": "Not Started",
+    "draft": "Draft",
+    "confirmed": "Confirmed",
+    "cashBalance": "Cash & Bank",
+    "partyBalances": "Party Balances",
+    "metalBalances": "Metal Balances",
+    "stockBalance": "Stock Balance",
+    "openingDate": "Opening Date"
+  },
+ 
+  "cash": {
+    "cashInHand": "Cash in Hand",
+    "amount": "Amount (₹)",
+    "bankAccounts": "Bank Accounts",
+    "addBank": "Add Bank",
+    "noBanks": "No bank accounts added",
+    "bank": "Bank",
+    "bankName": "Bank Name",
+    "accountNumber": "Account Number",
+    "balance": "Balance (₹)",
+    "totalBank": "Total Bank",
+    "grandTotal": "Total Cash & Bank"
+  },
+ 
+  "party": {
+    "searchCustomer": "Search Customer",
+    "searchSupplier": "Search Supplier",
+    "noResults": "No results found",
+    "customer": "Customer",
+    "supplier": "Supplier",
+    "theyOwe": "They Owe Us",
+    "weOwe": "We Owe Them",
+    "type": "Party Type",
+    "direction": "Direction",
+    "name": "Party Name",
+    "namePlaceholder": "Enter party name",
+    "amount": "Amount (₹)",
+    "notes": "Notes",
+    "notesPlaceholder": "Optional notes",
+    "addParty": "Add Party",
+    "noParties": "No party balances added",
+    "party": "Party",
+    "theyOweTotal": "They Owe Us",
+    "weOweTotal": "We Owe Them"
+  },
+ 
+  "metal": {
+    "gold": "Gold",
+    "silver": "Silver",
+    "platinum": "Platinum",
+    "gram": "Gram",
+    "tola": "Tola",
+    "kg": "KG",
+    "type": "Metal Type",
+    "weight": "Weight",
+    "unit": "Unit",
+    "purity": "Purity",
+    "referenceRate": "Reference Rate (₹/g)",
+    "addMetal": "Add Metal Balance",
+    "noMetals": "No metal balances added"
+  },
+ 
+  "stock": {
+    "totalValue": "Total Stock Value",
+    "totalStockValue": "Total Stock Value (₹)",
+    "totalValueHint": "Approximate total value of all your existing stock",
+    "metalWise": "Metal-wise Stock (Optional)",
+    "metalWiseHint": "Enter approximate metal stock details",
+    "value": "Value (₹)"
+  }
+}
+}

@@ -13,7 +13,8 @@ import payment from './payment.json'
 import user from './user.json'
 import auth from './auth.json'
 import dashboard from './dashboard.json'
-// import inventory from './inventory.json'
+import openingBalance from './openingBalance.json'
+import girvi from './girvi.json'
 // import masters from './masters.json'
 // import parties from './parties.json'
 import purchase from './purchase.json'
@@ -36,7 +37,8 @@ export default {
   ...payment,
   ...user,
   ...dashboard,
-  //   ...inventory,
+    ...openingBalance,
+    ...girvi,
   //   ...masters,
   //   ...parties,
   //   ...purchase,

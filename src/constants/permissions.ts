@@ -1298,6 +1298,22 @@ export const PERMISSION_GROUPS: PermissionGroup[] = [
         label: 'Delete Rate',
         description: 'Remove rate records',
       },
+      // Opening Balance
+{
+  key: 'canViewOpeningBalance',
+  label: 'View Opening Balance',
+  description: 'View opening balance setup',
+},
+{
+  key: 'canManageOpeningBalance',
+  label: 'Manage Opening Balance',
+  description: 'Create and update opening balance',
+},
+{
+  key: 'canConfirmOpeningBalance',
+  label: 'Confirm Opening Balance',
+  description: 'Confirm and lock opening balance',
+},
     ],
   },
 
@@ -1331,7 +1347,27 @@ export const PERMISSION_GROUPS: PermissionGroup[] = [
       },
     ],
   },
-
+  {
+    category: 'girvi',
+    label: 'Girvi Management',
+    description: 'Manage girvi (pledge) loans and cashbook',
+    permissions: [
+      { key: 'canCreateGirvi',             label: 'Create Girvi',              description: 'Create new girvi records'         },
+      { key: 'canViewGirvi',               label: 'View Girvi',                description: 'View girvi list'                  },
+      { key: 'canUpdateGirvi',             label: 'Update Girvi',              description: 'Edit girvi details'               },
+      { key: 'canDeleteGirvi',             label: 'Delete Girvi',              description: 'Remove girvi records'             },
+      { key: 'canReleaseGirvi',            label: 'Release Girvi',             description: 'Release pledged items'            },
+      { key: 'canTransferGirvi',           label: 'Transfer Girvi',            description: 'Transfer girvi to another shop'   },
+      { key: 'canReturnGirviTransfer',     label: 'Return Girvi Transfer',     description: 'Return a transferred girvi'       },
+      { key: 'canCancelGirviTransfer',     label: 'Cancel Girvi Transfer',     description: 'Cancel a girvi transfer'          },
+      { key: 'canAddGirviPayment',         label: 'Add Girvi Payment',         description: 'Record partial payments'          },
+      { key: 'canDeleteGirviPayment',      label: 'Delete Girvi Payment',      description: 'Remove payment records'           },
+      { key: 'canManageGirvi',             label: 'Manage Girvi',              description: 'Full girvi management'            },
+      { key: 'canViewGirviCashbook',       label: 'View Girvi Cashbook',       description: 'View girvi cashbook'              },
+      { key: 'canCreateGirviCashbookEntry',label: 'Create Cashbook Entry',     description: 'Add cashbook entries'             },
+      { key: 'canDeleteGirviCashbookEntry',label: 'Delete Cashbook Entry',     description: 'Remove cashbook entries'          },
+    ],
+  },
   {
     category: 'system',
     label: 'System Administration',

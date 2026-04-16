@@ -66,6 +66,16 @@ export const baseApi = createApi({
   'CashCollection',
   'ReferencePayments',
   'Refunds',
+  // Opening Balance Module
+'OpeningBalance',
+'OpeningBalanceStatus',
+'GirviStats',
+'GirviList',
+'Girvi',
+'GirviPartyInterest',
+'Girvi',
+'GirviTransferList',
+'GirviTransfer'
   ],
 
   endpoints: () => ({}),

@@ -291,6 +291,21 @@ export interface ShopPermissions {
   // Advanced Features
   canManageHallmarking: boolean
   canManageOldGold: boolean
+  // Girvi Management
+  canCreateGirvi: boolean
+  canViewGirvi: boolean
+  canUpdateGirvi: boolean
+  canDeleteGirvi: boolean
+  canReleaseGirvi: boolean
+  canTransferGirvi: boolean
+  canReturnGirviTransfer: boolean
+  canCancelGirviTransfer: boolean
+  canAddGirviPayment: boolean
+  canDeleteGirviPayment: boolean
+  canManageGirvi: boolean
+  canViewGirviCashbook: boolean
+  canCreateGirviCashbookEntry: boolean
+  canDeleteGirviCashbookEntry: boolean
 
   // System
   canManageSettings: boolean
@@ -326,7 +341,7 @@ export type PermissionCategory =
   | 'advanced'
   | 'system'
   | 'composite'
-
+  | 'girvi'
 /**
  * Permission Group (for organized display)
  */

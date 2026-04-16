@@ -58,6 +58,8 @@ export interface SaleItem {
   productCode?: string
     wastagePercentage?: number   // Add karo
   wastageWeight?: number       // Add karo
+    // Fine Weight = Net Weight × (Tunch/100)
+  fineWeight?: number
   category?: string
   hsnCode?: string
   metalType: MetalType

@@ -4,7 +4,34 @@ const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
 const AUTH_BASE = `${BASE_URL}/auth`
+export const GIRVI_TRANSFER_ENDPOINTS = {
+  // Girvi-level transfer routes
+  // Base: /api/v1/shops/:shopId/girvi/:girviId/transfers
 
+  TRANSFER_OUT:       `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers`,
+  GET_BY_GIRVI:       `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers`,
+  GET_BY_ID:          `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId`,
+  PARTY_INTEREST:     `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId/party-interest`,
+  TRANSFER_RETURN:    `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId/return`,
+  CANCEL_TRANSFER:    `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId/cancel`,
+
+  // Shop-level transfer routes
+  // Base: /api/v1/shops/:shopId/girvi-transfers
+  GET_SHOP_TRANSFERS: `${BASE_URL}/shops/:shopId/girvi-transfers`,
+}
+export const GIRVI_ENDPOINTS = {
+  STATISTICS:    `${BASE_URL}/shops/:shopId/girvi/statistics`,
+ 
+  CREATE:        `${BASE_URL}/shops/:shopId/girvi`,
+  GET_ALL:       `${BASE_URL}/shops/:shopId/girvi`,
+  GET_BY_ID:     `${BASE_URL}/shops/:shopId/girvi/:girviId`,
+  UPDATE:        `${BASE_URL}/shops/:shopId/girvi/:girviId`,
+  DELETE:        `${BASE_URL}/shops/:shopId/girvi/:girviId`,
+ 
+  CALCULATE_INTEREST: `${BASE_URL}/shops/:shopId/girvi/:girviId/interest`,
+ 
+  RELEASE:       `${BASE_URL}/shops/:shopId/girvi/:girviId/release`,
+}
 export const AUTH_ENDPOINTS = {
   REGISTER: `${AUTH_BASE}/register`,
 ACTIVITY_LOGS: `${AUTH_BASE}/activity-logs`,
@@ -34,6 +61,13 @@ ACTIVITY_LOGS: `${AUTH_BASE}/activity-logs`,
   LOGIN_2FA: `${AUTH_BASE}/login/2fa`,
   LOGIN_BACKUP_CODE: `${AUTH_BASE}/login/backup-code`,
 }
+export const OPENING_BALANCE_ENDPOINTS = {
+  GET_STATUS:  `${BASE_URL}/shops/:shopId/opening-balance/status`,
+  GET:         `${BASE_URL}/shops/:shopId/opening-balance`,
+  CREATE_UPDATE: `${BASE_URL}/shops/:shopId/opening-balance`,
+  CONFIRM:     `${BASE_URL}/shops/:shopId/opening-balance/confirm`,
+}
+
 export const SALE_ENDPOINTS = {
   GET_ALL:          `${BASE_URL}/shops/:shopId/sales`,
   GET_BY_ID:        `${BASE_URL}/shops/:shopId/sales/:saleId`,
@@ -187,7 +221,7 @@ export const SUPPLIER_ENDPOINTS = {
   CREATE: `${BASE_URL}/suppliers`,
   UPDATE: `${BASE_URL}/suppliers/:id`,
   DELETE: `${BASE_URL}/suppliers/:id`,
-  SEARCH: `${BASE_URL}/suppliers/search`,
+  SEARCH: `${BASE_URL}/suppliers`,
 
   RESTORE: `${BASE_URL}/suppliers/:id/restore`,
   UPDATE_RATING: `${BASE_URL}/suppliers/:id/rating`,

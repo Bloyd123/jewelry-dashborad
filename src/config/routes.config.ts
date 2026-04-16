@@ -89,6 +89,15 @@ const SalesTable = lazy(() =>
     default: m.SalesTable,
   }))
 )
+const GirviTransferListPage = lazy(() =>
+  import('@/pages/girviTransfer/GirviTransferListPage')
+)
+const AddGirviTransferPage = lazy(() =>
+  import('@/pages/girviTransfer/AddGirviTransferPage')
+)
+const GirviTransferDetailPage = lazy(() =>
+  import('@/pages/girviTransfer/GirviTransferDetailPage')
+)
 const CreateSalePage = lazy(() => 
   import('@/pages/sales/AddSales').then(m => ({ default: m.CreateSalePage }))
 )
@@ -115,7 +124,20 @@ const MetalRatesDashboardPage = lazy(() =>
     default: m.MetalRatesDashboardPage,
   }))
 )
-
+const OpeningBalancePage = lazy(() =>
+  import('@/components/openingBalance/OpeningBalancePage').then(m => ({
+    default: m.OpeningBalancePage,
+  }))
+)
+const GirviListPage = lazy(() =>
+  import('@/pages/girvi/GirviListPage').then(m => ({ default: m.GirviListPage }))
+)
+const GirviFormPage = lazy(() =>
+  import('@/pages/girvi/GirviFormPage').then(m => ({ default: m.GirviFormPage }))
+)
+const GirviDetailPage = lazy(() =>
+  import('@/pages/girvi/GirviDetailPage').then(m => ({ default: m.GirviDetailPage }))
+)
 // User Pages
 const UserProfile = lazy(() => import('@/pages/user/page'))
 const AddUser = lazy(() => import('@/pages/user/AddUser'))
@@ -439,7 +461,63 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canGetCurrentRate',
     title: 'Metal Rates',
   },
-
+// OPENING BALANCE
+{
+  path: ROUTE_PATHS.OPENING_BALANCE,
+  element: OpeningBalancePage,
+  requiresAuth: true,
+  requiredRoles: ['super_admin', 'org_admin', 'shop_admin', 'manager', 'accountant'],
+  title: 'Opening Balance',
+},
+ {
+    path: ROUTE_PATHS.GIRVI.LIST,
+    element: GirviListPage,
+    requiresAuth: true,
+    permission: 'canViewGirvi',
+    title: 'Girvi',
+  },
+  {
+    path: ROUTE_PATHS.GIRVI.ADD,
+    element: GirviFormPage,
+    requiresAuth: true,
+    permission: 'canCreateGirvi',
+    title: 'Create Girvi',
+  },
+  {
+    path: ROUTE_PATHS.GIRVI.EDIT,
+    element: GirviFormPage,
+    requiresAuth: true,
+    permission: 'canUpdateGirvi',
+    title: 'Edit Girvi',
+  },
+  {
+    path: ROUTE_PATHS.GIRVI.DETAIL,
+    element: GirviDetailPage,
+    requiresAuth: true,
+    permission: 'canViewGirvi',
+    title: 'Girvi Details',
+  },
+{
+  path: ROUTE_PATHS.GIRVI_TRANSFER.LIST,
+  element: GirviTransferListPage,
+  requiresAuth: true,
+  permission: 'canTransferGirvi',
+  title: 'Girvi Transfers',
+},
+{
+  path: ROUTE_PATHS.GIRVI_TRANSFER.ADD,
+  element: AddGirviTransferPage,
+  requiresAuth: true,
+  permission: 'canTransferGirvi',
+  title: 'Add Girvi Transfer',
+},
+{
+  path: ROUTE_PATHS.GIRVI_TRANSFER.DETAIL,
+  element: GirviTransferDetailPage,
+  requiresAuth: true,
+  permission: 'canTransferGirvi',
+  title: 'Girvi Transfer Details',
+},
   // 
   // USER PROFILE
   // 
@@ -507,4 +585,10 @@ purchaseDetail: ROUTE_PATHS.PURCHASES.DETAIL,
 
   // Metal Rates
   metalRates: ROUTE_PATHS.METAL_RATES,
+openingBalance: ROUTE_PATHS.OPENING_BALANCE,
+  girviList: ROUTE_PATHS.GIRVI.LIST,
+  girviAdd: ROUTE_PATHS.GIRVI.ADD,
+  girviTransferList:   ROUTE_PATHS.GIRVI_TRANSFER.LIST,
+girviTransferAdd:    ROUTE_PATHS.GIRVI_TRANSFER.ADD,
+girviTransferDetail: ROUTE_PATHS.GIRVI_TRANSFER.DETAIL,
 } as const

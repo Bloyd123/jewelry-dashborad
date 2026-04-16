@@ -57,6 +57,9 @@ export interface IPurchaseItem {
   netWeight: number
     wastagePercentage?: number   // Add karo
   wastageWeight?: number       // Add karo
+    // Fine Weight - actual pure metal weight
+  // Net Weight × (Tunch/100)
+  fineWeight?: number
   weightUnit: string
   quantity: number
   ratePerGram: number

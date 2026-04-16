@@ -60,12 +60,30 @@
       "description": "You don't have permission to access this page. Please contact your administrator if you believe this is an error."
     }
   },
+  "girvi": {
+  "title": "Girvi Management",
+  "subtitle": "Manage pledge loans",
+  "createGirvi": "New Girvi",
+  "releaseGirvi": "Release",
+  "stats": {
+    "active": "Active",
+    "overdue": "Overdue",
+    "outstanding": "Outstanding",
+    "amountDue": "Amount Due"
+  }
+},
   "sidebar": {
+    "girviTransfer": "Girvi Transfer",
+"allGirviTransfers": "All Transfers",
+"addGirviTransfer": "Add Transfer",
+      "girvi": "Girvi",
+  "allGirvi": "All Girvi",
+  "addGirvi": "New Girvi",
     "purchaseDetail":"Purchase Details",
     "registeruser": "User Register",
     "dashboard": "Dashboard",
     "metalRates": "Metal Rates",
-
+  "openingBalance": "Opening Balance",
     "customers": "Customers",
     "addCustomer": "Add Customer",
     "Allcustomer": "All Customers",
