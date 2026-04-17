@@ -95,20 +95,22 @@ export const ROUTE_PATHS = {
   // Metal Rates
   METAL_RATES: '/metal-rates',
 OPENING_BALANCE: '/opening-balance',
-  // Girvi Routes
-  GIRVI: {
-    ROOT: '/shops/:shopId/girvi',
-    LIST: '/shops/:shopId/girvi',
-    ADD: '/shops/:shopId/girvi/new',
-    EDIT: '/shops/:shopId/girvi/edit/:girviId',
-    DETAIL: '/shops/:shopId/girvi/:girviId',
-    RELEASE: '/shops/:shopId/girvi/:girviId/release',
-  },
+GIRVI: {
+  ROOT: '/shops/:shopId/girvi',
+  LIST: '/shops/:shopId/girvi',
+  ADD: '/shops/:shopId/girvi/new',
+  EDIT: '/shops/:shopId/girvi/edit/:girviId',
+  DETAIL: '/shops/:shopId/girvi/:girviId',
+  RELEASE: '/shops/:shopId/girvi/:girviId/release',
+  PAYMENTS: '/shops/:shopId/girvi/:girviId/payments',
+  SHOP_PAYMENTS: '/shops/:shopId/girvi-payments',
+},
   GIRVI_TRANSFER: {
   LIST:   '/shops/:shopId/girvi/:girviId/transfers',
   ADD:    '/shops/:shopId/girvi/:girviId/transfers/new',
   DETAIL: '/shops/:shopId/girvi/:girviId/transfers/:transferId',
 },
+GIRVI_CASHBOOK: '/shops/:shopId/girvi-cashbook',
   // User Profile
   USER_PROFILE: '/userprofile',
 
@@ -124,13 +126,16 @@ export const buildRoute = {
   add:    (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/new`,
   detail: (shopId: string, girviId: string, transferId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/${transferId}`,
 },
-    girvi: {
-    list: (shopId: string) => `/shops/${shopId}/girvi`,
-    detail: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}`,
-    edit: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/edit/${girviId}`,
-    release: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/release`,
-    add: (shopId: string) => `/shops/${shopId}/girvi/new`,
-  },
+girviCashbook: (shopId: string) => `/shops/${shopId}/girvi-cashbook`,
+girvi: {
+  list: (shopId: string) => `/shops/${shopId}/girvi`,
+  detail: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}`,
+  edit: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/edit/${girviId}`,
+  release: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/release`,
+  add: (shopId: string) => `/shops/${shopId}/girvi/new`,
+  payments: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/payments`,
+  shopPayments: (shopId: string) => `/shops/${shopId}/girvi-payments`,
+},
   customer: {
     detail: (id: string) => `/customers/${id}`,
     edit: (id: string) => `/customers/edit/${id}`,

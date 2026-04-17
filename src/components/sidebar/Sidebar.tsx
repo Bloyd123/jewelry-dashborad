@@ -9,13 +9,13 @@ import { SidebarFooter } from '../layout/sidebar/SidebarFooter'
 import { getMenuItems } from '@/config/sidebar-menu'
 import { useSidebar } from '@/hooks/useSidebar'
 import { useMemo } from 'react'
-
+import { useAuth } from '@/hooks/auth'
 export const Sidebar = () => {
   const { isCollapsed } = useSidebar()
   const { t, i18n } = useTranslation()
 
-  // const menuItems = getMenuItems(t) // Get translated menu items
-  const menuItems = useMemo(() => getMenuItems(t), [t, i18n.language])
+const { currentShopId } = useAuth()
+const menuItems = useMemo(() => getMenuItems(t, currentShopId ?? ''), [t, i18n.language, currentShopId])
 
   return (
     <aside

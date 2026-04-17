@@ -1,5 +1,4 @@
 // FILE: src/components/girvi/GirviForm/sections/ItemsSection.tsx
-// Dynamic pledge items — add/edit/remove with live weight & value calculations
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -8,11 +7,11 @@ import type { GirviFormSectionProps, GirviItemFormData } from '../GirviForm.type
 import { recalcItem, createBlankItem } from '../GirviForm.utils'
 
 const ITEM_TYPES = [
-  { value: 'gold',     label: '🥇 Gold',     color: 'text-amber-600' },
-  { value: 'silver',   label: '⚪ Silver',   color: 'text-gray-500'  },
-  { value: 'diamond',  label: '💎 Diamond',  color: 'text-blue-500'  },
-  { value: 'platinum', label: '⬜ Platinum', color: 'text-gray-400'  },
-  { value: 'other',    label: '📦 Other',    color: 'text-text-secondary' },
+  { value: 'gold',     label: 'Gold',     color: 'text-amber-600' },
+  { value: 'silver',   label: 'Silver',   color: 'text-gray-500'  },
+  { value: 'diamond',  label: 'Diamond',  color: 'text-blue-500'  },
+  { value: 'platinum', label: 'Platinum', color: 'text-gray-400'  },
+  { value: 'other',    label: 'Other',    color: 'text-text-secondary' },
 ]
 
 const CONDITIONS = [
@@ -150,7 +149,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
             </div>
           </div>
 
-          {/* Row 3: Weights */}
           <div className="rounded-lg bg-bg-tertiary p-4">
             <div className="mb-3 flex items-center gap-2">
               <Scale className="h-4 w-4 text-text-secondary" />
@@ -200,7 +198,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
             </div>
           </div>
 
-          {/* Row 4: Purity & Value */}
           <div className="rounded-lg bg-bg-tertiary p-4">
             <p className="mb-3 text-sm font-semibold text-text-primary">{t('girvi.purityValue')}</p>
 
@@ -258,7 +255,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
               </div>
             </div>
 
-            {/* Override value */}
             <div className="mt-3 space-y-1">
               <label className="text-xs font-medium text-text-secondary">
                 {t('girvi.userGivenValue')} (₹){' '}
@@ -276,7 +272,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
               />
             </div>
 
-            {/* Final Value */}
             {(item.finalValue !== undefined && item.finalValue > 0) && (
               <div className="mt-3 flex items-center justify-between rounded-lg bg-accent/10 px-4 py-2">
                 <span className="text-sm font-medium text-text-primary">{t('girvi.finalValue')}</span>
@@ -287,7 +282,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
             )}
           </div>
 
-          {/* Row 5: Condition */}
           <div className="space-y-2">
             <label className="text-sm font-medium text-text-primary">{t('girvi.condition')}</label>
             <div className="flex gap-3">
@@ -319,8 +313,6 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
     </div>
   )
 }
-
-// ── Items Section ──────────────────────────────────────────────────────────────
 
 export const ItemsSection = ({
   data,
@@ -357,7 +349,6 @@ export const ItemsSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Items List */}
       {items.map((item, index) => (
         <ItemRow
           key={index}
@@ -371,7 +362,6 @@ export const ItemsSection = ({
         />
       ))}
 
-      {/* Add Item Button */}
       {!disabled && (
         <button
           type="button"
@@ -384,10 +374,8 @@ export const ItemsSection = ({
       )}
 
       {errors.items && (
-        <p className="text-sm text-status-error">⚠️ {errors.items}</p>
+        <p className="text-sm text-status-error">{errors.items}</p>
       )}
-
-      {/* Totals Summary Bar */}
       {items.length > 0 && totalGross > 0 && (
         <div className="grid grid-cols-3 gap-3 rounded-lg bg-bg-tertiary p-4">
           <div className="text-center">

@@ -138,6 +138,15 @@ const GirviFormPage = lazy(() =>
 const GirviDetailPage = lazy(() =>
   import('@/pages/girvi/GirviDetailPage').then(m => ({ default: m.GirviDetailPage }))
 )
+const GirviCashbookPage = lazy(() =>
+  import('@/pages/girviCashbook/GirviCashbookPage')
+)
+const GirviPaymentPage = lazy(() =>
+  import('@/pages/girvi/GirviPaymentPage').then(m => ({ default: m.GirviPaymentPage }))
+)
+const GirviShopPaymentsPage = lazy(() =>
+  import('@/pages/girvi/GirviShopPaymentsPage').then(m => ({ default: m.GirviShopPaymentsPage }))
+)
 // User Pages
 const UserProfile = lazy(() => import('@/pages/user/page'))
 const AddUser = lazy(() => import('@/pages/user/AddUser'))
@@ -497,6 +506,20 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canViewGirvi',
     title: 'Girvi Details',
   },
+  {
+  path: ROUTE_PATHS.GIRVI.PAYMENTS,
+  element: GirviPaymentPage,
+  requiresAuth: true,
+  permission: 'canAddGirviPayment',
+  title: 'Girvi Payments',
+},
+{
+  path: ROUTE_PATHS.GIRVI.SHOP_PAYMENTS,
+  element: GirviShopPaymentsPage,
+  requiresAuth: true,
+  permission: 'canViewGirvi',
+  title: 'Shop Girvi Payments',
+},
 {
   path: ROUTE_PATHS.GIRVI_TRANSFER.LIST,
   element: GirviTransferListPage,
@@ -517,6 +540,13 @@ export const protectedRoutes: RouteConfig[] = [
   requiresAuth: true,
   permission: 'canTransferGirvi',
   title: 'Girvi Transfer Details',
+},
+{
+  path: ROUTE_PATHS.GIRVI_CASHBOOK,
+  element: GirviCashbookPage,
+  requiresAuth: true,
+  permission: 'canViewGirviCashbook',
+  title: 'Girvi Cashbook',
 },
   // 
   // USER PROFILE
@@ -588,7 +618,10 @@ purchaseDetail: ROUTE_PATHS.PURCHASES.DETAIL,
 openingBalance: ROUTE_PATHS.OPENING_BALANCE,
   girviList: ROUTE_PATHS.GIRVI.LIST,
   girviAdd: ROUTE_PATHS.GIRVI.ADD,
+  girviPayments:     ROUTE_PATHS.GIRVI.PAYMENTS,
+girviShopPayments: ROUTE_PATHS.GIRVI.SHOP_PAYMENTS,
   girviTransferList:   ROUTE_PATHS.GIRVI_TRANSFER.LIST,
 girviTransferAdd:    ROUTE_PATHS.GIRVI_TRANSFER.ADD,
 girviTransferDetail: ROUTE_PATHS.GIRVI_TRANSFER.DETAIL,
+girviCashbook:       ROUTE_PATHS.GIRVI_CASHBOOK,
 } as const

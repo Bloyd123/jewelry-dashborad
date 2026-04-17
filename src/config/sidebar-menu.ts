@@ -1,6 +1,5 @@
 // FILE: config/sidebar-menu.ts
-// Sidebar Menu Configuration
-
+import { buildRoute } from '@/constants/routePaths'
 import {
   LayoutDashboard,
   ClipboardList,
@@ -24,13 +23,13 @@ import {
   TrendingUp,
   Truck,
   Gem,
-    ArrowRightLeft,
+  BookOpen,
+  ArrowRightLeft,
 } from 'lucide-react'
 import type { MenuItem } from '@/types/menu'
 import { ROUTES } from '@/config/routes.config'
-// MENU ITEMS FUNCTION (For i18n support)
 
-export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
+export const getMenuItems = (t: (key: string) => string, shopId: string = ''): MenuItem[] => [
   {
     title: t('sidebar.dashboard'),
     url: ROUTES.dashboard,
@@ -41,29 +40,16 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
     url: ROUTES.addUser,
     icon: LayoutDashboard,
   },
-  // {
-  //   title: t('sidebar.stock'),
-  //   url: ROUTES.stock,
-  //   icon: Package,
-  // },
-  // {
-  //   title: t('sidebar.payments'),
-  //   icon: Wallet,
-  //   items: [
-  //     { title: t('sidebar.paymentHistory'), url: ROUTES.paymentHistory },
-  //     { title: t('sidebar.paymentEntry'), url: ROUTES.paymentEntry },
-  //   ],
-  // },
   {
     title: t('sidebar.metalRates'),
     url: ROUTES.metalRates,
     icon: TrendingUp,
   },
   {
-  title: t('sidebar.openingBalance'),
-  url: ROUTES.openingBalance,
-  icon: Wallet,
-},
+    title: t('sidebar.openingBalance'),
+    url: ROUTES.openingBalance,
+    icon: Wallet,
+  },
   {
     title: t('sidebar.customers'),
     icon: Users,
@@ -150,13 +136,11 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
         url: ROUTES.addPurchase,
         icon: ShoppingBag,
       },
-          {
-      title: t('sidebar.purchaseDetail'),
-      url: ROUTES.purchaseDetail,  
-      icon: Info,
-    },
-      // { title: t('sidebar.suppliers'), url: ROUTES.suppliers },
-      // { title: t('sidebar.reports'), url: ROUTES.purchaseReports },
+      {
+        title: t('sidebar.purchaseDetail'),
+        url: ROUTES.purchaseDetail,
+        icon: Info,
+      },
     ],
   },
   {
@@ -170,41 +154,50 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
         url: ROUTES.detailsales,
         icon: FileText,
       },
-      // { title: t('sidebar.reports'), url: ROUTES.salesReports },
     ],
   },
   {
-  title: t('sidebar.girvi'),
-  icon: Gem,
-  items: [
-    {
-      title: t('sidebar.allGirvi'),
-      url: ROUTES.girviList,
-      icon: ClipboardList,
-    },
-    {
-      title: t('sidebar.addGirvi'),
-      url: ROUTES.girviAdd,
-      icon: UserPlus,
-    },
-  ],
-},
-{
-  title: t('sidebar.girviTransfer'),
-  icon: ArrowRightLeft,
-  items: [
-    {
-      title: t('sidebar.allGirviTransfers'),
-      url: ROUTES.girviTransferList,
-      icon: ClipboardList,
-    },
-    {
-      title: t('sidebar.addGirviTransfer'),
-      url: ROUTES.girviTransferAdd,
-      icon: UserPlus,
-    },
-  ],
-},
+    title: t('sidebar.girvi'),
+    icon: Gem,
+    items: [
+      {
+        title: t('sidebar.allGirvi'),
+        url: buildRoute.girvi.list(shopId),       // ✅ fixed
+        icon: ClipboardList,
+      },
+      {
+        title: t('sidebar.addGirvi'),
+        url: buildRoute.girvi.add(shopId),        // ✅ fixed
+        icon: UserPlus,
+      },
+      {
+        title: t('sidebar.girviShopPayments'),
+        url: buildRoute.girvi.shopPayments(shopId), // ✅ fixed
+        icon: Wallet,
+      },
+    ],
+  },
+  {
+    title: t('sidebar.girviTransfer'),
+    icon: ArrowRightLeft,
+    items: [
+      {
+        title: t('sidebar.allGirviTransfers'),
+        url: ROUTES.girviTransferList,            // ⚠️ still has :shopId/:girviId — needs girviId too, leave as is
+        icon: ClipboardList,
+      },
+      {
+        title: t('sidebar.addGirviTransfer'),
+        url: ROUTES.girviTransferAdd,             // ⚠️ same — needs girviId, leave as is
+        icon: UserPlus,
+      },
+    ],
+  },
+  {
+    title: t('sidebar.girviCashbook'),
+    url: buildRoute.girviCashbook(shopId),        // ✅ fixed
+    icon: BookOpen,
+  },
   {
     title: t('sidebar.payments'),
     icon: CreditCard,
@@ -221,22 +214,4 @@ export const getMenuItems = (t: (key: string) => string): MenuItem[] => [
       },
     ],
   },
-
-  // {
-  //   title: t('sidebar.oldGold'),
-  //   icon: Coins,
-  //   items: [
-  //     { title: t('sidebar.allOldGoldPurchases'), url: ROUTES.oldGoldPurchases },
-  //     {
-  //       title: t('sidebar.addOldGoldPurchase'),
-  //       url: ROUTES.addOldGoldPurchase,
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   title: t('sidebar.customOrders'),
-  //   icon: Wrench,
-  //   items: [{ title: t('sidebar.allCustomOrders'), url: ROUTES.customOrders }],
-  // },
 ]

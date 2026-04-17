@@ -1,12 +1,9 @@
 // FILE: src/components/girvi/GirviForm/sections/InterestSection.tsx
-// Interest Rate, Type, Basis, LTV + Payment Mode at Jama time
 
 import { useTranslation } from 'react-i18next'
 import { TrendingUp, Percent, CreditCard, Banknote, Smartphone, Building2, FileText } from 'lucide-react'
 import type { GirviFormSectionProps } from '../GirviForm.types'
 import { calcLoanToValue, numberToWords } from '../GirviForm.utils'
-
-// Payment modes for Girvi — subset only (no card/wallet)
 const GIRVI_PAYMENT_MODES = [
   { value: 'cash',          icon: Banknote,   label: 'Cash' },
   { value: 'upi',           icon: Smartphone, label: 'UPI' },
@@ -23,7 +20,6 @@ export const InterestSection = ({
 }: GirviFormSectionProps) => {
   const { t } = useTranslation()
 
-  // Compute LTV live
   const totalApproxValue = (data.items || []).reduce(
     (sum, item) => sum + (item.finalValue ?? 0),
     0
@@ -36,7 +32,6 @@ export const InterestSection = ({
   return (
     <div className="space-y-6">
 
-      {/* ── Principal Amount ─────────────────────────────── */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
           {t('girvi.principalAmount')}
@@ -67,7 +62,6 @@ export const InterestSection = ({
           </p>
         )}
 
-        {/* LTV Badge */}
         {ltv !== null && (
           <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${
             ltv > 80
@@ -83,11 +77,10 @@ export const InterestSection = ({
         )}
 
         {errors.principalAmount && (
-          <p className="text-sm text-status-error">⚠️ {errors.principalAmount}</p>
+          <p className="text-sm text-status-error">{errors.principalAmount}</p>
         )}
       </div>
 
-      {/* ── Interest Rate ────────────────────────────────── */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
           {t('girvi.interestRate')}
@@ -116,7 +109,7 @@ export const InterestSection = ({
           </div>
         </div>
         {errors.interestRate && (
-          <p className="text-sm text-status-error">⚠️ {errors.interestRate}</p>
+          <p className="text-sm text-status-error">{errors.interestRate}</p>
         )}
       </div>
 
@@ -153,7 +146,6 @@ export const InterestSection = ({
           </div>
         </div>
 
-        {/* Calculation Basis */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-text-primary">
             {t('girvi.calculationBasis')}
@@ -184,7 +176,6 @@ export const InterestSection = ({
         </div>
       </div>
 
-      {/* ── Payment Mode (cash given to customer at jama) ─── */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
           {t('girvi.paymentModeAtJama')}
@@ -221,7 +212,6 @@ export const InterestSection = ({
           ))}
         </div>
 
-        {/* Transaction Reference (shown for non-cash) */}
         {data.paymentMode && data.paymentMode !== 'cash' && (
           <input
             type="text"
@@ -242,7 +232,7 @@ export const InterestSection = ({
         )}
 
         {errors.paymentMode && (
-          <p className="text-sm text-status-error">⚠️ {errors.paymentMode}</p>
+          <p className="text-sm text-status-error">{errors.paymentMode}</p>
         )}
       </div>
     </div>

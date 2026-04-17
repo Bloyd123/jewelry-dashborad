@@ -1,6 +1,4 @@
 // FILE: src/validators/girviValidation.ts
-// Girvi Module - Zod Validation Schemas
-// Mirrors backend express-validator rules exactly
 
 import { z } from 'zod'
 
@@ -159,9 +157,6 @@ export const createGirviSchema = z.object({
 
 export type CreateGirviInput = z.infer<typeof createGirviSchema>
 
-// ─── Update Girvi Schema ───────────────────────────────────────────────────────
-// Only fields the backend allows to be updated
-// Backend BLOCKS: status, girviNumber, customerId, principalAmount
 
 export const updateGirviSchema = z.object({
   interestRate: z
@@ -215,7 +210,6 @@ export const updateGirviSchema = z.object({
 
 export type UpdateGirviInput = z.infer<typeof updateGirviSchema>
 
-// ─── Release Girvi Schema ──────────────────────────────────────────────────────
 
 export const releaseGirviSchema = z.object({
   releaseInterestType: z.enum(['simple', 'compound'], {
@@ -260,7 +254,6 @@ export const releaseGirviSchema = z.object({
 
 export type ReleaseGirviInput = z.infer<typeof releaseGirviSchema>
 
-// ─── Interest Calculation Params Schema ────────────────────────────────────────
 
 export const calculateInterestSchema = z.object({
   toDate: z
@@ -274,3 +267,105 @@ export const calculateInterestSchema = z.object({
 })
 
 export type CalculateInterestInput = z.infer<typeof calculateInterestSchema>
+export const addGirviPaymentSchema = z
+  .object({
+    paymentType: z.enum(
+      ['interest_only', 'principal_partial', 'principal_full', 'interest_principal', 'release_payment'],
+      { error: 'Payment type is required' }
+    ),
+ 
+    interestType: z.enum(['simple', 'compound'], {
+      error: 'Interest type is required',
+    }),
+ 
+    interestFrom: z
+      .string()
+      .refine((d) => !d || !isNaN(Date.parse(d)), 'Invalid interest from date')
+      .optional(),
+ 
+    interestTo: z
+      .string()
+      .refine((d) => !d || !isNaN(Date.parse(d)), 'Invalid interest to date')
+      .optional(),
+ 
+    interestReceived: z
+      .number({ error: 'Interest received is required' })
+      .min(0, 'Interest received cannot be negative'),
+ 
+    principalReceived: z
+      .number({ error: 'Principal received is required' })
+      .min(0, 'Principal received cannot be negative'),
+ 
+    discountGiven: z
+      .number({ error: 'Discount must be a number' })
+      .min(0, 'Discount cannot be negative')
+      .optional()
+      .default(0),
+ 
+    paymentDate: z
+      .string()
+      .min(1, 'Payment date is required')
+      .refine((d) => !isNaN(Date.parse(d)), 'Invalid payment date'),
+ 
+    paymentMode: z.enum(['cash', 'upi', 'bank_transfer', 'cheque'], {
+      error: 'Payment mode is required',
+    }),
+ 
+    transactionReference: z
+      .string()
+      .trim()
+      .max(200, 'Reference cannot exceed 200 characters')
+      .optional(),
+ 
+    remarks: z
+      .string()
+      .trim()
+      .max(500, 'Remarks cannot exceed 500 characters')
+      .optional(),
+  })
+  .refine(
+    (data) => data.interestReceived > 0 || data.principalReceived > 0,
+    {
+      message: 'At least one of interest received or principal received must be greater than 0',
+      path:    ['interestReceived'],
+    }
+  )
+ 
+export type AddGirviPaymentInput = z.infer<typeof addGirviPaymentSchema>
+ 
+ 
+export const getGirviPaymentsSchema = z.object({
+  page: z
+    .number()
+    .int()
+    .min(1)
+    .optional(),
+ 
+  limit: z
+    .number()
+    .int()
+    .min(1)
+    .max(100)
+    .optional(),
+ 
+  paymentType: z
+    .enum(['interest_only', 'principal_partial', 'principal_full', 'interest_principal', 'release_payment'])
+    .optional(),
+ 
+  paymentMode: z
+    .enum(['cash', 'upi', 'bank_transfer', 'cheque'])
+    .optional(),
+ 
+  startDate: z
+    .string()
+    .refine((d) => !d || !isNaN(Date.parse(d)), 'Invalid start date')
+    .optional(),
+ 
+  endDate: z
+    .string()
+    .refine((d) => !d || !isNaN(Date.parse(d)), 'Invalid end date')
+    .optional(),
+})
+ 
+export type GetGirviPaymentsInput = z.infer<typeof getGirviPaymentsSchema>
+ 

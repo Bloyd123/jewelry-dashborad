@@ -1,0 +1,114 @@
+{
+  "girviCashbook": {
+    "title": "Girvi Cashbook",
+    "subtitle": "Track all girvi cash flows",
+
+    "entryType": {
+      "girvi_jama": "Girvi Jama",
+      "interest_received": "Interest Received",
+      "principal_received": "Principal Received",
+      "release_received": "Release Received",
+      "discount_given": "Discount Given",
+      "transfer_out": "Transfer Out",
+      "transfer_in": "Transfer In",
+      "transfer_return_in": "Transfer Return In",
+      "transfer_return_out": "Transfer Return Out"
+    },
+
+    "flowType": {
+      "inflow": "Inflow",
+      "outflow": "Outflow"
+    },
+
+    "paymentMode": {
+      "cash": "Cash",
+      "upi": "UPI",
+      "bank_transfer": "Bank Transfer",
+      "cheque": "Cheque"
+    },
+
+    "summary": {
+      "daily": "Daily Summary",
+      "monthly": "Monthly Summary",
+      "yearly": "Yearly Summary",
+      "balance": "Current Balance",
+      "totalInflow": "Total Inflow",
+      "totalOutflow": "Total Outflow",
+      "netFlow": "Net Flow",
+      "totalInterest": "Total Interest",
+      "totalPrincipal": "Total Principal",
+      "totalDiscount": "Total Discount",
+      "openingBalance": "Opening Balance",
+      "closingBalance": "Closing Balance",
+      "newGirviCount": "New Girvis",
+      "releaseCount": "Releases",
+      "totalEntries": "Total Entries"
+    },
+
+    "table": {
+      "entryNumber": "Entry No.",
+      "entryDate": "Date",
+      "entryType": "Entry Type",
+      "flowType": "Flow",
+      "amount": "Amount",
+      "paymentMode": "Mode",
+      "girviNumber": "Girvi No.",
+      "customerName": "Customer",
+      "openingBalance": "Opening",
+      "closingBalance": "Closing",
+      "remarks": "Remarks"
+    },
+
+    "form": {
+      "title": "Manual Entry",
+      "entryType": "Entry Type",
+      "flowType": "Flow Type",
+      "amount": "Amount (₹)",
+      "paymentMode": "Payment Mode",
+      "transactionRef": "Transaction Reference",
+      "entryDate": "Entry Date",
+      "girviId": "Girvi (Optional)",
+      "customerId": "Customer (Optional)",
+      "principalAmount": "Principal Amount",
+      "interestAmount": "Interest Amount",
+      "discountAmount": "Discount Amount",
+      "remarks": "Remarks",
+      "remarksPlaceholder": "Additional remarks...",
+      "submit": "Create Entry",
+      "breakdown": "Breakdown (Optional)"
+    },
+
+    "filters": {
+      "entryType": "Entry Type",
+      "flowType": "Flow Type",
+      "paymentMode": "Payment Mode",
+      "dateRange": "Date Range",
+      "searchPlaceholder": "Search entries...",
+      "girviId": "Girvi",
+      "customerId": "Customer"
+    },
+
+    "list": {
+      "title": "Cashbook Entries",
+      "subtitle": "All girvi cashbook transactions"
+    },
+
+    "detail": {
+      "notFound": "Entry not found"
+    },
+
+    "errors": {
+      "fetchFailed": "Failed to load cashbook entries",
+      "createFailed": "Failed to create entry",
+      "deleteFailed": "Failed to delete entry"
+    },
+
+    "success": {
+      "created": "Entry created successfully",
+      "deleted": "Entry deleted successfully"
+    },
+
+    "confirmDelete": "Delete Entry?",
+    "confirmDeleteDesc": "Are you sure you want to delete this entry? This action cannot be undone."
+  }
+}

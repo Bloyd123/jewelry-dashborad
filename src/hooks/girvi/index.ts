@@ -10,3 +10,9 @@ export {
 }                                                 from './useGirviList'
 export { useGirviById }                           from './useGirviById'
 export { useGirviInterest, useGirviInterestLazy } from './useGirviInterest'
+export { useGirviPaymentActions }                 from './useGirviPaymentActions'
+export {
+  useGirviPayments,
+  useGirviPaymentById,
+  useShopGirviPayments,
+}                                                 from './useGirviPayments'

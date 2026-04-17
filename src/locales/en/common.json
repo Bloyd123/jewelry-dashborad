@@ -73,6 +73,8 @@
   }
 },
   "sidebar": {
+      "girviShopPayments": "Girvi Payments",
+  "girviCashbook": "Girvi Cashbook",
     "girviTransfer": "Girvi Transfer",
 "allGirviTransfers": "All Transfers",
 "addGirviTransfer": "Add Transfer",

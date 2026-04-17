@@ -1,7 +1,4 @@
 // FILE: src/types/girvi.types.ts
-// Girvi (Pawn/Pledge) Module - Complete TypeScript Type Definitions
-
-// ─── Enums / Unions ────────────────────────────────────────────────────────────
 
 export type GirviStatus =
   | 'active'
@@ -24,8 +21,6 @@ export type GirviInterestType = 'simple' | 'compound'
 
 export type GirviCalculationBasis = 'monthly' | 'daily'
 
-// NOTE: Girvi paymentMode is a SUBSET of payment.types PaymentMode
-// No 'card' or 'wallet' here — backend only accepts these four
 export type GirviPaymentMode = 'cash' | 'upi' | 'bank_transfer' | 'cheque'
 
 export type GirviPaymentType =
@@ -54,8 +49,6 @@ export type GirviCashbookEntryType =
 
 export type GirviCashbookFlowType = 'inflow' | 'outflow'
 
-// ─── Sub-Interfaces ────────────────────────────────────────────────────────────
-
 export interface GirviItem {
   _id: string
   itemName: string
@@ -63,20 +56,17 @@ export interface GirviItem {
   description?: string
   quantity: number
 
-  // Weight
   grossWeight: number
   lessWeight: number
   netWeight: number
 
-  // Purity & Rate
-  tunch?: number         // purity % e.g. 91.6 for 22K
+  tunch?: number         // purity % e.g. 91.6 
   purity?: string        // e.g. '22K', '18K', '92.5', '999'
   ratePerGram?: number   // today's market rate in INR
 
-  // Value
   approxValue?: number     // auto-calc: netWeight × (tunch/100) × ratePerGram
-  userGivenValue?: number  // override value given by user
-  finalValue?: number      // userGivenValue || approxValue
+  userGivenValue?: number  
+  finalValue?: number
 
   condition: GirviItemCondition
 }
@@ -127,23 +117,20 @@ export interface GirviCustomer {
   }
 }
 
-// ─── Main Girvi Interface ──────────────────────────────────────────────────────
 
 export interface Girvi {
   _id: string
   organizationId: string
   shopId: string
   girviNumber: string
-  customerId: string | GirviCustomer  // populated or ObjectId string
+  customerId: string | GirviCustomer  
   status: GirviStatus
 
-  // Items
   items: GirviItem[]
   totalGrossWeight: number
   totalNetWeight: number
   totalApproxValue: number
 
-  // Financial
   principalAmount: number
   loanToValueRatio?: number
   interestRate: number
@@ -153,7 +140,6 @@ export interface Girvi {
   dueDate?: string
   gracePeriodDays: number
 
-  // Running Balance
   totalPrincipalPaid: number
   totalInterestPaid: number
   totalDiscountGiven: number
@@ -162,31 +148,26 @@ export interface Girvi {
   lastInterestCalcDate?: string
   totalAmountDue: number
 
-  // Transfer
   isTransferred: boolean
   currentHolderType: 'shop' | 'external_party'
   transferredToParty?: GirviTransferredToParty
   transferInterestRate?: number
   transferInterestType?: GirviInterestType
 
-  // Release
   releaseDate?: string
   releasedBy?: string | GirviUser
   releaseNotes?: string
   releaseSummary?: GirviReleaseSummary
 
-  // Misc
   girviSlipNumber?: string
   witnessName?: string
   notes?: string
   internalNotes?: string
   documents?: GirviDocument[]
 
-  // Virtuals (computed by backend)
   isOverdue?: boolean
   daysElapsed?: number
 
-  // Audit
   createdBy?: string | GirviUser
   updatedBy?: string | GirviUser
   createdAt: string
@@ -194,7 +175,6 @@ export interface Girvi {
   deletedAt?: string
 }
 
-// ─── GirviPayment Interface ────────────────────────────────────────────────────
 
 export interface GirviPayment {
   _id: string
@@ -221,7 +201,6 @@ export interface GirviPayment {
   paymentMode: GirviPaymentMode
   transactionReference?: string
 
-  // Balance snapshot
   principalBefore: number
   principalAfter: number
   outstandingBefore: number
@@ -233,8 +212,6 @@ export interface GirviPayment {
   updatedAt: string
   deletedAt?: string
 }
-
-// ─── GirviCashbook Interface ───────────────────────────────────────────────────
 
 export interface GirviCashbookEntry {
   _id: string
@@ -274,7 +251,6 @@ export interface GirviCashbookEntry {
   deletedAt?: string
 }
 
-// ─── GirviStatistics Interface ─────────────────────────────────────────────────
 
 export interface GirviStatistics {
   totalGirvis: number
@@ -290,7 +266,6 @@ export interface GirviStatistics {
   avgInterestRate: number
 }
 
-// ─── Interest Calculation Response ────────────────────────────────────────────
 
 export interface GirviInterestCalculation {
   girviId: string
@@ -324,7 +299,6 @@ export interface GirviInterestCalculation {
   }
 }
 
-// ─── API Request Types ─────────────────────────────────────────────────────────
 
 export interface CreateGirviItemInput {
   itemName: string
@@ -355,7 +329,7 @@ export interface CreateGirviRequest {
   witnessName?: string
   notes?: string
   internalNotes?: string
-  paymentMode?: GirviPaymentMode   // for cashbook entry on creation
+  paymentMode?: GirviPaymentMode   
   transactionReference?: string
 }
 
@@ -369,8 +343,6 @@ export interface UpdateGirviRequest {
   witnessName?: string
   notes?: string
   internalNotes?: string
-  // These are BLOCKED by backend validation — do not send:
-  // status, girviNumber, customerId, principalAmount
 }
 
 export interface ReleaseGirviRequest {
@@ -401,7 +373,6 @@ export interface GetInterestCalculationParams {
   interestType?: GirviInterestType
 }
 
-// ─── API Response Types ────────────────────────────────────────────────────────
 
 export interface GirviResponse {
   success: boolean
@@ -454,41 +425,33 @@ export interface GirviInterestCalculationResponse {
   }
 }
 
-// ─── Form Data Type (for React forms) ─────────────────────────────────────────
 
 export interface GirviFormData {
-  // Customer
   customerId: string
   customerName?: string
   customerPhone?: string
 
-  // Items (managed as an array in form state)
   items: CreateGirviItemInput[]
 
-  // Financial
   principalAmount: number | string
   loanToValueRatio?: number | string
   interestRate: number | string
   interestType: GirviInterestType
   calculationBasis: GirviCalculationBasis
 
-  // Dates
   girviDate: string
   dueDate?: string
   gracePeriodDays?: number | string
 
-  // Payment at time of jama
   paymentMode: GirviPaymentMode
   transactionReference?: string
 
-  // Misc
   girviSlipNumber?: string
   witnessName?: string
   notes?: string
   internalNotes?: string
 }
 
-// ─── Constants / Labels ───────────────────────────────────────────────────────
 
 export const GIRVI_STATUS_LABELS: Record<GirviStatus, string> = {
   active:            'Active',
@@ -536,4 +499,135 @@ export const GIRVI_PAYMENT_TYPE_LABELS: Record<GirviPaymentType, string> = {
   principal_full:     'Full Principal',
   interest_principal: 'Interest + Principal',
   release_payment:    'Release Payment',
+}
+export interface GirviPaymentFormData {
+  paymentType:  GirviPaymentType
+  interestType: GirviInterestType
+ 
+  interestFrom?: string
+  interestTo?:   string
+ 
+  interestReceived:  number | string
+  principalReceived: number | string
+  discountGiven:     number | string
+ 
+  paymentDate:          string
+  paymentMode:          GirviPaymentMode
+  transactionReference?: string
+  remarks?:             string
+}
+ 
+ 
+export interface AddGirviPaymentRequest {
+  paymentType:          GirviPaymentType
+  interestType:         GirviInterestType
+  interestFrom?:        string
+  interestTo?:          string
+  interestReceived:     number
+  principalReceived:    number
+  discountGiven?:       number
+  paymentDate:          string
+  paymentMode:          GirviPaymentMode
+  transactionReference?: string
+  remarks?:             string
+}
+ 
+export interface GetGirviPaymentsFilters {
+  page?:        number
+  limit?:       number
+  sort?:        string
+  paymentType?: GirviPaymentType
+  paymentMode?: GirviPaymentMode
+  startDate?:   string
+  endDate?:     string
+}
+ 
+export interface GetShopGirviPaymentsFilters {
+  page?:        number
+  limit?:       number
+  sort?:        string
+  paymentType?: GirviPaymentType
+  paymentMode?: GirviPaymentMode
+  customerId?:  string
+  startDate?:   string
+  endDate?:     string
+}
+ 
+ 
+export interface GirviPaymentSummary {
+  totalInterestReceived:  number
+  totalPrincipalReceived: number
+  totalDiscountGiven:     number
+  totalNetReceived:       number
+  paymentCount:           number
+}
+ 
+export interface GirviShopPaymentSummary {
+  totalInterestReceived:  number
+  totalPrincipalReceived: number
+  totalDiscountGiven:     number
+  totalNetReceived:       number
+  totalPayments:          number
+  cashPayments:           number
+  upiPayments:            number
+}
+ 
+export interface GirviBalanceSnapshot {
+  outstandingPrincipal: number
+  totalInterestPaid:    number
+  totalPrincipalPaid:   number
+  totalDiscountGiven:   number
+  totalAmountDue:       number
+  status:               GirviStatus
+}
+ 
+export interface AddGirviPaymentResponse {
+  success: boolean
+  message: string
+  data: {
+    payment:      GirviPayment
+    updatedGirvi: GirviBalanceSnapshot
+  }
+}
+ 
+export interface GirviPaymentsListResponse {
+  success: boolean
+  message: string
+  data: {
+    payments: GirviPayment[]
+    summary:  GirviPaymentSummary
+  }
+  pagination: {
+    currentPage:  number
+    totalPages:   number
+    totalItems:   number
+    itemsPerPage: number
+    hasNextPage:  boolean
+    hasPrevPage:  boolean
+  }
+}
+ 
+export interface GirviPaymentResponse {
+  success: boolean
+  message: string
+  data: {
+    payment: GirviPayment
+  }
+}
+ 
+export interface GirviShopPaymentsListResponse {
+  success: boolean
+  message: string
+  data: {
+    payments: GirviPayment[]
+    summary:  GirviShopPaymentSummary
+  }
+  pagination: {
+    currentPage:  number
+    totalPages:   number
+    totalItems:   number
+    itemsPerPage: number
+    hasNextPage:  boolean
+    hasPrevPage:  boolean
+  }
 }

@@ -5,7 +5,7 @@ import type { Girvi } from '@/types/girvi.types'
 export interface GirviFormProps {
   initialData?: Partial<GirviFormData>
   shopId: string
-  girviId?: string          // for edit mode
+  girviId?: string          
   onSuccess?: () => void
   onCancel?: () => void
   mode?: 'create' | 'edit' | 'view'

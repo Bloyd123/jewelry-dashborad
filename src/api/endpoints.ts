@@ -4,8 +4,31 @@ const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
 const AUTH_BASE = `${BASE_URL}/auth`
+export const GIRVI_CASHBOOK_ENDPOINTS = {
+  // Base: /api/v1/shops/:shopId/girvi-cashbook
+
+  GET_ALL:         `/api/v1/shops/:shopId/girvi-cashbook`,
+  GET_BY_ID:       `/api/v1/shops/:shopId/girvi-cashbook/:entryId`,
+  CREATE:          `/api/v1/shops/:shopId/girvi-cashbook`,
+  DELETE:          `/api/v1/shops/:shopId/girvi-cashbook/:entryId`,
+
+  GET_BALANCE:     `/api/v1/shops/:shopId/girvi-cashbook/balance`,
+  DAILY_SUMMARY:   `/api/v1/shops/:shopId/girvi-cashbook/summary/daily`,
+  MONTHLY_SUMMARY: `/api/v1/shops/:shopId/girvi-cashbook/summary/monthly`,
+  YEARLY_SUMMARY:  `/api/v1/shops/:shopId/girvi-cashbook/summary/yearly`,
+
+  GIRVI_CASHBOOK:  `/api/v1/shops/:shopId/girvi-cashbook/girvi/:girviId`,
+}
+export const GIRVI_PAYMENT_ENDPOINTS = {
+  ADD:        `${BASE_URL}/shops/:shopId/girvi/:girviId/payments`,
+  GET_ALL:    `${BASE_URL}/shops/:shopId/girvi/:girviId/payments`,
+  GET_BY_ID:  `${BASE_URL}/shops/:shopId/girvi/:girviId/payments/:paymentId`,
+  DELETE:     `${BASE_URL}/shops/:shopId/girvi/:girviId/payments/:paymentId`,
+ 
+  // Route: GET /shops/:shopId/girvi-payments
+  SHOP_ALL:   `${BASE_URL}/shops/:shopId/girvi-payments`,
+}
 export const GIRVI_TRANSFER_ENDPOINTS = {
-  // Girvi-level transfer routes
   // Base: /api/v1/shops/:shopId/girvi/:girviId/transfers
 
   TRANSFER_OUT:       `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers`,
@@ -15,7 +38,6 @@ export const GIRVI_TRANSFER_ENDPOINTS = {
   TRANSFER_RETURN:    `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId/return`,
   CANCEL_TRANSFER:    `${BASE_URL}/shops/:shopId/girvi/:girviId/transfers/:transferId/cancel`,
 
-  // Shop-level transfer routes
   // Base: /api/v1/shops/:shopId/girvi-transfers
   GET_SHOP_TRANSFERS: `${BASE_URL}/shops/:shopId/girvi-transfers`,
 }

@@ -1,0 +1,194 @@
+{
+  "girviTransfer": {
+    "title": "Girvi Transfers",
+    "subtitle": "Manage all girvi transfers",
+
+    "tabs": {
+      "overview": "Overview",
+      "partyInterest": "Party Interest",
+      "return": "Return"
+    },
+
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "returned": "Returned",
+      "cancelled": "Cancelled"
+    },
+
+    "type": {
+      "outgoing": "Outgoing",
+      "incoming": "Incoming",
+      "return": "Return"
+    },
+
+    "partyType": {
+      "shop": "Our Shop",
+      "external": "External Party"
+    },
+
+    "interestType": {
+      "simple": "Simple",
+      "compound": "Compound"
+    },
+
+    "paymentMode": {
+      "cash": "Cash",
+      "upi": "UPI",
+      "bankTransfer": "Bank Transfer",
+      "cheque": "Cheque"
+    },
+
+    "form": {
+      "title": "Transfer Girvi",
+      "subtitle": "Transfer this girvi to another party",
+      "submit": "Transfer Girvi",
+      "outstanding": "Outstanding"
+    },
+
+    "fromParty": {
+      "title": "From Party (Our Side)",
+      "name": "Party Name",
+      "namePlaceholder": "Our Shop Name",
+      "type": "Party Type",
+      "phone": "Phone",
+      "address": "Address",
+      "addressPlaceholder": "Shop address"
+    },
+
+    "toParty": {
+      "title": "To Party (Receiving Side)",
+      "name": "Party Name",
+      "namePlaceholder": "Receiving party name",
+      "type": "Party Type",
+      "phone": "Phone",
+      "address": "Address",
+      "addressPlaceholder": "Party address",
+      "interestRate": "Interest Rate (% per month)",
+      "interestType": "Interest Type",
+      "infoText": "This party will charge interest on the principal amount given to them. Enter their interest rate carefully."
+    },
+
+    "financials": {
+      "title": "Transfer Financials",
+      "transferDate": "Transfer Date",
+      "partyPrincipal": "Amount Given to Party (₹)",
+      "ourInterest": "Our Interest Till Transfer (₹)",
+      "ourInterestType": "Our Interest Type",
+      "transferAmount": "Transfer Settlement Amount (₹)",
+      "commission": "Commission (₹)",
+      "paymentMode": "Payment Mode",
+      "transactionRef": "Transaction Reference",
+      "notes": "Notes",
+      "notesPlaceholder": "Any additional notes..."
+    },
+
+    "review": {
+      "title": "Transfer Summary",
+      "fromParty": "From",
+      "toParty": "To",
+      "partyPrincipal": "Party Principal",
+      "partyInterestRate": "Party Interest Rate",
+      "ourInterest": "Our Interest Till Transfer",
+      "transferAmount": "Settlement Amount",
+      "commission": "Commission",
+      "transferDate": "Transfer Date",
+      "paymentMode": "Payment Mode",
+      "warning": "Once transferred, the girvi status will change to Transferred. The party will manage this girvi until returned."
+    },
+
+    "overview": {
+      "title": "Transfer Overview",
+      "partyPrincipal": "Party Principal",
+      "transferAmount": "Settlement",
+      "partyInterest": "Party Interest Rate",
+      "transferDate": "Transfer Date",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "financials": "Financial Breakdown",
+      "items": "Pledged Items"
+    },
+
+    "partyInterest": {
+      "calculator": "Party Interest Calculator",
+      "calculateUpTo": "Calculate Up To Date",
+      "calculate": "Calculate",
+      "days": "Days Elapsed",
+      "interestCalc": "Interest Calculated",
+      "totalPayable": "Total Payable to Party",
+      "breakdown": "Calculation Breakdown"
+    },
+
+    "return": {
+      "title": "Transfer Return",
+      "returned": "Transfer has been returned",
+      "initiateReturn": "Initiate Return",
+      "returnDesc": "Return this transfer to restore girvi status back to active.",
+      "returnWarning": "This will restore girvi to active status with party interest added to outstanding amount.",
+      "processReturn": "Process Return",
+      "details": "Return Details",
+      "form": "Return Details",
+      "returnDate": "Return Date",
+      "partyInterest": "Party Interest Charged",
+      "returnAmount": "Total Return Amount",
+      "paymentMode": "Payment Mode",
+      "transactionRef": "Transaction Reference",
+      "reason": "Return Reason",
+      "reasonPlaceholder": "Reason for return",
+      "remarks": "Remarks",
+      "remarksPlaceholder": "Additional remarks...",
+      "submit": "Process Return",
+      "confirmTitle": "Process Return?",
+      "confirmDesc": "This will restore the girvi to active status with party interest added to outstanding amount."
+    },
+
+    "calculator": {
+      "title": "Calculate Party Interest",
+      "toDate": "Calculate Till Date",
+      "calculate": "Calculate",
+      "useThisAmount": "Use This Amount"
+    },
+
+    "filters": {
+      "status": "Status",
+      "transferType": "Transfer Type",
+      "dateRange": "Date Range",
+      "searchPlaceholder": "Search transfers..."
+    },
+
+    "list": {
+      "title": "Girvi Transfers",
+      "subtitle": "Manage all girvi transfers"
+    },
+
+    "detail": {
+      "notFound": "Transfer not found",
+      "toParty": "To",
+      "date": "Date"
+    },
+
+    "common": {
+      "backToList": "Back to Transfers",
+      "back": "Back"
+    },
+
+    "confirmTransfer": "Confirm Transfer?",
+    "confirmTransferDesc": "Are you sure you want to transfer this girvi? This action will change girvi status to Transferred.",
+    "confirmCancel": "Cancel Transfer?",
+    "confirmCancelDesc": "Are you sure you want to cancel this transfer?",
+
+    "errors": {
+      "pleaseFillRequired": "Please fill all required fields",
+      "validationFailed": "Validation Failed",
+      "girviIdRequired": "Girvi ID is required",
+      "fetchFailed": "Failed to load transfer",
+      "fetchFailedDesc": "Something went wrong while loading the transfer."
+    },
+
+    "success": {
+      "transferred": "Girvi transferred successfully",
+      "returned": "Transfer returned successfully",
+      "cancelled": "Transfer cancelled successfully"
+    }
+  }
+}

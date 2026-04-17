@@ -208,6 +208,69 @@
       "cheque": "Cheque"
     }
   },
+  "girviPayment": {
+  "addPayment":             "Add Payment",
+  "newPayment":             "New Payment",
+  "paymentHistory":         "Payment History",
+  "noPaymentsYet":          "No payments recorded yet",
+  "shopPaymentsTitle":      "Girvi Payments",
+  "shopPaymentsSubtitle":   "All payment receipts across all girvis",
+ 
+  "paymentType":            "Payment Type",
+  "interestCalculation":    "Interest Calculation",
+  "calculateAndFill":       "Calculate & Auto-fill Interest",
+  "interestFrom":           "Interest From",
+  "interestTo":             "Interest To",
+  "days":                   "Days",
+  "interestAmount":         "Interest Amount",
+ 
+  "interestReceived":       "Interest Received (₹)",
+  "principalReceived":      "Principal Received (₹)",
+  "discountGiven":          "Discount Given (₹)",
+  "netReceived":            "Net Amount Received",
+  "interest":               "Interest",
+  "principal":              "Principal",
+  "discount":               "Discount",
+ 
+  "paymentDate":            "Payment Date",
+  "paymentMode":            "Payment Mode",
+  "upiRefPlaceholder":      "Enter UPI ID / Transaction ID",
+  "chequeNoPlaceholder":    "Enter cheque number",
+  "bankRefPlaceholder":     "Enter bank transaction reference",
+  "remarksPlaceholder":     "Optional remarks",
+ 
+  "outstandingPrincipal":   "Outstanding Principal",
+  "interestRate":           "Interest Rate",
+  "totalDue":               "Total Amount Due",
+ 
+  "totalInterestReceived":  "Total Interest Received",
+  "totalPrincipalReceived": "Total Principal Received",
+  "totalDiscountGiven":     "Total Discount Given",
+  "totalNetReceived":       "Total Net Received",
+  "paymentsRecorded":       "payments recorded",
+ 
+  "confirmAdd":             "Confirm Payment",
+  "confirmAddDescription":  "Are you sure you want to record this payment? Net amount: ₹{{amount}}",
+  "confirmDelete":          "Delete Payment",
+  "confirmDeleteDescription": "Delete payment {{receipt}} (₹{{amount}})? This will reverse the girvi balance. This cannot be undone.",
+ 
+  "allTypes":               "All Payment Types",
+  "allModes":               "All Payment Modes",
+ 
+  "table": {
+    "receipt":   "Receipt No.",
+    "date":      "Date",
+    "girvi":     "Girvi",
+    "customer":  "Customer",
+    "type":      "Type",
+    "interest":  "Interest",
+    "principal": "Principal",
+    "net":       "Net Amount",
+    "mode":      "Mode",
+    "noPayments": "No payments found",
+    "ariaLabel": "Girvi shop payments table"
+  }
+},
 
   "common": {
     "notes": "Notes",

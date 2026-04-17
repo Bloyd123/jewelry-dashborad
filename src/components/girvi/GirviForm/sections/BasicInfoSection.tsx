@@ -1,5 +1,4 @@
 // FILE: src/components/girvi/GirviForm/sections/BasicInfoSection.tsx
-// Basic Info: Girvi Date, Due Date, Grace Period, Slip Number, Witness
 
 import { useTranslation } from 'react-i18next'
 import { FormDatePicker } from '@/components/forms/FormDatePicker/FormDatePicker'
@@ -43,8 +42,6 @@ export const BasicInfoSection = ({
           minDate={data.girviDate ? new Date(data.girviDate) : new Date()}
         />
       </div>
-
-      {/* Grace Period */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
           {t('girvi.gracePeriodDays')}
@@ -67,14 +64,13 @@ export const BasicInfoSection = ({
           />
         </div>
         {errors.gracePeriodDays && (
-          <p className="text-sm text-status-error">⚠️ {errors.gracePeriodDays}</p>
+          <p className="text-sm text-status-error"> {errors.gracePeriodDays}</p>
         )}
         <p className="text-xs text-text-tertiary">
           {t('girvi.gracePeriodHint')}
         </p>
       </div>
 
-      {/* Girvi Slip Number + Witness Name */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-2">
           <label className="text-sm font-medium text-text-primary">

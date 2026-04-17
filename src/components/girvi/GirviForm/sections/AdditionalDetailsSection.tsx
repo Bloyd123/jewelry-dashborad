@@ -1,25 +1,9 @@
-// FILE: src/components/shared/sections/AdditionalDetailsSection.tsx
-// Reusable Additional Details Section (Notes, Tags, Attachments)
-// Used in: PaymentForm, GirviForm, and any future module forms
+// FILE: src/components/girvi/GirviForm/sections/AdditionalDetailsSection.tsx
 
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Upload, X, FileText, Tag } from 'lucide-react'
-
-// ─── Props Interface ───────────────────────────────────────────────────────────
-
-interface AdditionalDetailsSectionProps {
-  data: {
-    notes?: string
-    tags?: string[]
-    attachments?: File[]
-    [key: string]: any
-  }
-  errors: Record<string, string>
-  onChange: (name: string, value: any) => void
-  onBlur?: (name: string) => void
-  disabled?: boolean
-}
+import { Upload, X, FileText, Tag, Lock } from 'lucide-react'
+import type { GirviFormSectionProps } from '../GirviForm.types'
 
 export const AdditionalDetailsSection = ({
   data,
@@ -27,11 +11,10 @@ export const AdditionalDetailsSection = ({
   onChange,
   onBlur,
   disabled = false,
-}: AdditionalDetailsSectionProps) => {
+}: GirviFormSectionProps) => {
   const { t } = useTranslation()
   const [tagInput, setTagInput] = useState('')
 
-  // ── Tag Handlers ──────────────────────────────────────────────────────────────
 
   const handleAddTag = () => {
     const trimmed = tagInput.trim()
@@ -59,7 +42,6 @@ export const AdditionalDetailsSection = ({
     }
   }
 
-  // ── File Handlers ─────────────────────────────────────────────────────────────
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -79,32 +61,37 @@ export const AdditionalDetailsSection = ({
     if (files.length) onChange('attachments', [...(data.attachments || []), ...files])
   }
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
   const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024)        return `${bytes} B`
+    if (bytes < 1024) return `${bytes} B`
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
   }
 
-  const notesLength = (data.notes || '').length
+  const notesLength         = (data.notes         || '').length
+  const internalNotesLength = (data.internalNotes  || '').length
 
   return (
     <div className="space-y-6">
 
-      {/* ── Notes ──────────────────────────────────────────────────────────────── */}
       <div className="space-y-2">
-        <label htmlFor="notes" className="text-sm font-medium text-text-primary">
-          {t('common.notes')}
+        <label htmlFor="girvi-notes" className="text-sm font-medium text-text-primary">
+          {t('girvi.notes')}
         </label>
+        <p className="text-xs text-text-tertiary">{t('girvi.notesHint')}</p>
 
         <textarea
-          id="notes"
+          id="girvi-notes"
           name="notes"
           value={data.notes || ''}
           onChange={e => onChange('notes', e.target.value)}
           onBlur={() => onBlur?.('notes')}
           disabled={disabled}
-          placeholder={t('common.notesPlaceholder')}
-          rows={4}
+          placeholder={t('girvi.notesPlaceholder')}
+          rows={3}
           maxLength={1000}
           className={`w-full resize-none rounded-lg border bg-bg-secondary px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${
             errors.notes ? 'border-status-error' : 'border-border-primary'
@@ -112,24 +99,57 @@ export const AdditionalDetailsSection = ({
         />
 
         <div className="flex items-center justify-between">
-          {errors.notes ? (
-            <p className="text-sm text-status-error">⚠️ {errors.notes}</p>
-          ) : (
-            <span />
-          )}
+          {errors.notes
+            ? <p className="text-sm text-status-error">{errors.notes}</p>
+            : <span />
+          }
           <span className={`text-xs ${notesLength > 900 ? 'text-status-warning' : 'text-text-tertiary'}`}>
             {notesLength}/1000
           </span>
         </div>
       </div>
 
-      {/* ── Tags ───────────────────────────────────────────────────────────────── */}
+      <div className="space-y-2">
+        <label htmlFor="girvi-internal-notes" className="flex items-center gap-2 text-sm font-medium text-text-primary">
+          <Lock className="h-3.5 w-3.5 text-text-tertiary" />
+          {t('girvi.internalNotes')}
+          <span className="rounded-full bg-bg-tertiary px-2 py-0.5 text-xs text-text-tertiary">
+            {t('girvi.staffOnly')}
+          </span>
+        </label>
+        <p className="text-xs text-text-tertiary">{t('girvi.internalNotesHint')}</p>
+
+        <textarea
+          id="girvi-internal-notes"
+          name="internalNotes"
+          value={data.internalNotes || ''}
+          onChange={e => onChange('internalNotes', e.target.value)}
+          onBlur={() => onBlur?.('internalNotes')}
+          disabled={disabled}
+          placeholder={t('girvi.internalNotesPlaceholder')}
+          rows={3}
+          maxLength={1000}
+          className={`w-full resize-none rounded-lg border bg-bg-secondary px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${
+            errors.internalNotes ? 'border-status-error' : 'border-border-primary'
+          }`}
+        />
+
+        <div className="flex items-center justify-between">
+          {errors.internalNotes
+            ? <p className="text-sm text-status-error">⚠️ {errors.internalNotes}</p>
+            : <span />
+          }
+          <span className={`text-xs ${internalNotesLength > 900 ? 'text-status-warning' : 'text-text-tertiary'}`}>
+            {internalNotesLength}/1000
+          </span>
+        </div>
+      </div>
+
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
-          {t('common.tags')}
+          {t('girvi.tags')}
         </label>
 
-        {/* Tag Input Row */}
         <div className="flex gap-2">
           <div className="relative flex-1">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -141,7 +161,7 @@ export const AdditionalDetailsSection = ({
               onChange={e => setTagInput(e.target.value)}
               onKeyDown={handleTagKeyDown}
               disabled={disabled}
-              placeholder={t('common.addTagPlaceholder')}
+              placeholder={t('girvi.addTagPlaceholder')}
               maxLength={50}
               className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
             />
@@ -156,9 +176,8 @@ export const AdditionalDetailsSection = ({
           </button>
         </div>
 
-        <p className="text-xs text-text-tertiary">{t('common.tagHint')}</p>
+        <p className="text-xs text-text-tertiary">{t('girvi.tagHint')}</p>
 
-        {/* Tags Display */}
         {(data.tags || []).length > 0 && (
           <div className="flex flex-wrap gap-2">
             {(data.tags || []).map((tag, index) => (
@@ -183,28 +202,26 @@ export const AdditionalDetailsSection = ({
         )}
       </div>
 
-      {/* ── Attachments ────────────────────────────────────────────────────────── */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-text-primary">
-          {t('common.attachments')}
+          {t('girvi.attachments')}
         </label>
+        <p className="text-xs text-text-tertiary">{t('girvi.attachmentsHint')}</p>
 
-        {/* Drop Zone */}
         {!disabled && (
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            className="group rounded-lg border-2 border-dashed border-border-primary bg-bg-secondary p-6 text-center transition-all hover:border-accent hover:bg-accent/5"
+            className="group cursor-pointer rounded-lg border-2 border-dashed border-border-primary bg-bg-secondary p-6 text-center transition-all hover:border-accent hover:bg-accent/5"
           >
             <Upload className="mx-auto h-10 w-10 text-text-tertiary group-hover:text-accent" />
             <p className="mt-2 text-sm font-medium text-text-primary">
-              {t('common.dropFilesHere')}
+              {t('girvi.dropFilesHere')}
             </p>
             <p className="mt-1 text-xs text-text-tertiary">
-              {t('common.supportedFormats')}
+              {t('girvi.supportedFormats')}
             </p>
-
-            <label className="mt-4 inline-block cursor-pointer rounded-lg bg-bg-tertiary px-4 py-2 text-sm font-medium text-text-primary hover:bg-bg-tertiary/80 transition-colors">
+            <label className="mt-4 inline-block cursor-pointer rounded-lg bg-bg-tertiary px-4 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-bg-tertiary/80">
               {t('common.browse')}
               <input
                 type="file"
@@ -216,8 +233,6 @@ export const AdditionalDetailsSection = ({
             </label>
           </div>
         )}
-
-        {/* Uploaded Files List */}
         {(data.attachments || []).length > 0 && (
           <div className="space-y-2">
             {(data.attachments || []).map((file, index) => (
@@ -243,7 +258,7 @@ export const AdditionalDetailsSection = ({
                   <button
                     type="button"
                     onClick={() => handleRemoveFile(index)}
-                    className="ml-2 flex-shrink-0 rounded-lg p-1.5 text-status-error hover:bg-status-error/10 transition-colors"
+                    className="ml-2 flex-shrink-0 rounded-lg p-1.5 text-status-error transition-colors hover:bg-status-error/10"
                     aria-label={`Remove ${file.name}`}
                   >
                     <X className="h-4 w-4" />

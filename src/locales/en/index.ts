@@ -15,6 +15,7 @@ import auth from './auth.json'
 import dashboard from './dashboard.json'
 import openingBalance from './openingBalance.json'
 import girvi from './girvi.json'
+import griviTransfer from './girviTransfer.json'
 // import masters from './masters.json'
 // import parties from './parties.json'
 import purchase from './purchase.json'
@@ -39,6 +40,7 @@ export default {
   ...dashboard,
     ...openingBalance,
     ...girvi,
+    ...griviTransfer,
   //   ...masters,
   //   ...parties,
   //   ...purchase,

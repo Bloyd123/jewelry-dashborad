@@ -12,7 +12,6 @@ import { createGirviSchema } from '@/validators/girviValidation'
 import { buildGirviPayload, calcFormTotals, calcLoanToValue } from './GirviForm.utils'
 import type { GirviFormProps, GirviFormData } from './GirviForm.types'
 
-// Sections
 import { BasicInfoSection }       from './sections/BasicInfoSection'
 import { CustomerSection }        from './sections/CustomerSection'
 import { ItemsSection }           from './sections/ItemsSection'
@@ -99,7 +98,6 @@ export default function GirviFormDesktop({
     }
   }
 
-  // Live summary calculations
   const totals   = calcFormTotals(formData.items || [])
   const principal = parseFloat(String(formData.principalAmount || 0))
   const ltv       = totals.totalApproxValue > 0
@@ -107,8 +105,7 @@ export default function GirviFormDesktop({
     : null
 
   return (
-    <div className="min-h-screen bg-bg-primary">
-      {/* Header */}
+    <div className=" bg-bg-primary">
       <div className="border-b border-border-primary bg-bg-secondary px-6 py-4">
         <h1 className="text-2xl font-bold text-text-primary">
           {mode === 'create' ? t('girvi.createGirvi') : mode === 'edit' ? t('girvi.editGirvi') : t('girvi.viewGirvi')}
@@ -118,16 +115,13 @@ export default function GirviFormDesktop({
         </p>
       </div>
 
-      {/* 2-Column Layout */}
-      <div className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-3 lg:items-start">
 
-        {/* LEFT COLUMN (2/3) */}
         <div className="space-y-6 lg:col-span-2">
 
-          {/* 1. Customer */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
-              <CardTitle className="text-text-primary">1️⃣ {t('girvi.customerDetails')}</CardTitle>
+              <CardTitle className="text-text-primary"> {t('girvi.customerDetails')}</CardTitle>
             </CardHeader>
             <CardContent>
               <CustomerSection
@@ -140,10 +134,9 @@ export default function GirviFormDesktop({
             </CardContent>
           </Card>
 
-          {/* 2. Pledge Items */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
-              <CardTitle className="text-text-primary">2️⃣ {t('girvi.pledgeItems')}</CardTitle>
+              <CardTitle className="text-text-primary">{t('girvi.pledgeItems')}</CardTitle>
             </CardHeader>
             <CardContent>
               <ItemsSection
@@ -156,10 +149,9 @@ export default function GirviFormDesktop({
             </CardContent>
           </Card>
 
-          {/* 3. Financial / Interest */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
-              <CardTitle className="text-text-primary">3️⃣ {t('girvi.financialDetails')}</CardTitle>
+              <CardTitle className="text-text-primary">{t('girvi.financialDetails')}</CardTitle>
             </CardHeader>
             <CardContent>
               <InterestSection
@@ -172,10 +164,9 @@ export default function GirviFormDesktop({
             </CardContent>
           </Card>
 
-          {/* 4. Basic Info (dates, slip number) */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
-              <CardTitle className="text-text-primary">4️⃣ {t('girvi.basicInfo')}</CardTitle>
+              <CardTitle className="text-text-primary"> {t('girvi.basicInfo')}</CardTitle>
             </CardHeader>
             <CardContent>
               <BasicInfoSection
@@ -188,10 +179,9 @@ export default function GirviFormDesktop({
             </CardContent>
           </Card>
 
-          {/* 5. Additional Details — reused from payment module */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
-              <CardTitle className="text-text-primary">5️⃣ {t('girvi.additionalDetails')}</CardTitle>
+              <CardTitle className="text-text-primary"> {t('girvi.additionalDetails')}</CardTitle>
             </CardHeader>
             <CardContent>
               <AdditionalDetailsSection
@@ -203,12 +193,10 @@ export default function GirviFormDesktop({
               />
             </CardContent>
           </Card>
-
-          {/* 6. Activity Timeline (view/edit only) — reused from payment module */}
           {mode !== 'create' && (
             <Card className="border-border-primary bg-bg-secondary">
               <CardHeader>
-                <CardTitle className="text-text-primary">6️⃣ {t('girvi.activityTimeline')}</CardTitle>
+                <CardTitle className="text-text-primary"> {t('girvi.activityTimeline')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <ActivityTimelineSection activities={[]} />
@@ -217,16 +205,13 @@ export default function GirviFormDesktop({
           )}
         </div>
 
-        {/* RIGHT COLUMN (1/3) — sticky summary */}
         <div className="space-y-6 lg:sticky lg:top-6">
 
-          {/* Summary Card */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">{t('girvi.girviSummary')}</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Customer */}
               {formData.customerName && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.customer')}</p>
@@ -236,8 +221,6 @@ export default function GirviFormDesktop({
                   )}
                 </div>
               )}
-
-              {/* Items summary */}
               {(formData.items?.length ?? 0) > 0 && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.pledgeItems')}</p>
@@ -254,7 +237,6 @@ export default function GirviFormDesktop({
                 </div>
               )}
 
-              {/* Principal */}
               {principal > 0 && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.principalAmount')}</p>
@@ -269,7 +251,6 @@ export default function GirviFormDesktop({
                 </div>
               )}
 
-              {/* Interest */}
               {formData.interestRate && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.interest')}</p>
@@ -279,16 +260,15 @@ export default function GirviFormDesktop({
                 </div>
               )}
 
-              {/* Dates */}
               {formData.girviDate && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.dates')}</p>
                   <p className="text-sm text-text-primary">
-                    📅 {new Date(formData.girviDate).toLocaleDateString('en-IN')}
+                    {new Date(formData.girviDate).toLocaleDateString('en-IN')}
                   </p>
                   {formData.dueDate && (
                     <p className="text-sm text-text-secondary">
-                      ⏰ {t('girvi.due')}: {new Date(formData.dueDate).toLocaleDateString('en-IN')}
+                       {t('girvi.due')}: {new Date(formData.dueDate).toLocaleDateString('en-IN')}
                     </p>
                   )}
                 </div>
@@ -296,7 +276,6 @@ export default function GirviFormDesktop({
             </CardContent>
           </Card>
 
-          {/* Action Buttons */}
           <Card className="border-border-primary bg-bg-secondary">
             <CardContent className="space-y-3 p-4">
               {mode !== 'view' ? (
@@ -334,7 +313,6 @@ export default function GirviFormDesktop({
         </div>
       </div>
 
-      {/* Confirm Dialog */}
       <ConfirmDialog
         open={showConfirmDialog}
         onOpenChange={setShowConfirm}
