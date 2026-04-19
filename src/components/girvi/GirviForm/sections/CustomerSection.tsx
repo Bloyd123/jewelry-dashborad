@@ -146,13 +146,25 @@ const payload = {
     onChange('customerName', name)
     onChange('customerPhone', editableFields.phone)
 
-    setSelectedCustomer((prev: any) => ({
-      ...prev,
-      ...payload,
-    }))
+// ─── AFTER ────────────────────────────────────────────────
 
-    setIsEditingFields(false)
-    showSuccess('Customer updated successfully', 'Success')
+setSelectedCustomer((prev: any) => ({
+  ...prev,
+  ...payload,
+  address: {
+    ...(prev.address || {}),
+    city: editableFields.address || undefined,
+  },
+}))
+
+// ─── AFTER ────────────────────────────────────────────────
+
+setEditableFields(prev => prev ? {
+  ...prev,
+  address: editableFields.address,
+} : prev)
+setIsEditingFields(false)
+showSuccess('Customer updated successfully', 'Success')
   } else {
     showError(result.error || 'Failed to update customer', 'Error')
   }
@@ -435,19 +447,35 @@ if (result.success && result.data) {
             </div>
           </div>
 
-          <div className="space-y-1">
-            <label className="text-xs font-medium text-text-secondary">
-              {t('customer.jaati')}
-            </label>
-            <input
-              type="text"
-              value={quickAddForm.jaati}
-              onChange={e => setQuickAddForm(f => ({ ...f, jaati: e.target.value }))}
-              placeholder="e.g. Agrawal, Soni, Jain..."
-              maxLength={100}
-              className="h-9 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
-            />
-          </div>
+
+<div className="grid grid-cols-2 gap-3">
+  <div className="space-y-1">
+    <label className="text-xs font-medium text-text-secondary">
+      {t('customer.jaati')}
+    </label>
+    <input
+      type="text"
+      value={quickAddForm.jaati}
+      onChange={e => setQuickAddForm(f => ({ ...f, jaati: e.target.value }))}
+      placeholder="e.g. Agrawal, Soni, Jain..."
+      maxLength={100}
+      className="h-9 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+    />
+  </div>
+  <div className="space-y-1">
+    <label className="text-xs font-medium text-text-secondary">
+      City
+    </label>
+    <input
+      type="text"
+      value={quickAddForm.city}
+      onChange={e => setQuickAddForm(f => ({ ...f, city: e.target.value }))}
+      placeholder="e.g. Bareilly, Agra..."
+      maxLength={50}
+      className="h-9 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+    />
+  </div>
+</div>
 
           {quickAddError && (
             <p className="text-sm text-status-error">⚠ {quickAddError}</p>

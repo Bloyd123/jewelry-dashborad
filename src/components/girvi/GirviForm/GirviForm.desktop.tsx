@@ -19,7 +19,76 @@ import { ItemsSection }           from './sections/ItemsSection'
 import { InterestSection }        from './sections/InterestSection'
 import { AdditionalDetailsSection } from '@/components/girvi/GirviForm/sections/AdditionalDetailsSection'
 import { ActivityTimelineSection }  from '@//components/girvi/GirviForm/sections/ActivityTimelineSection'
+import { Phone, Mail, MapPin } from 'lucide-react'
 
+const RELATION_LABELS: Record<string, string> = {
+  son_of:      'S/O',
+  daughter_of: 'D/O',
+  husband_of:  'H/O',
+  wife_of:     'W/O',
+  other:       'Rel.',
+}
+
+const CustomerViewCard = ({ customer }: { customer: any }) => {
+  if (!customer) return null
+
+  const fullName = `${customer.firstName || ''} ${customer.lastName || ''}`.trim()
+  const relationLabel = customer.relationType
+    ? RELATION_LABELS[customer.relationType] ?? 'Rel.'
+    : null
+
+  return (
+    <div className="rounded-lg border border-accent/30 bg-accent/5 p-4">
+      {/* Avatar + Name */}
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-lg font-bold text-white">
+          {customer.firstName?.[0]?.toUpperCase()}
+          {customer.lastName?.[0]?.toUpperCase()}
+        </div>
+        <div>
+          <p className="font-bold text-text-primary">{fullName}</p>
+          {customer.customerCode && (
+            <p className="text-xs text-text-tertiary">#{customer.customerCode}</p>
+          )}
+        </div>
+      </div>
+
+      {/* Details Grid */}
+      <div className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+        {customer.phone && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <Phone className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.phone}
+          </p>
+        )}
+        {customer.email && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <Mail className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.email}
+          </p>
+        )}
+        {customer.relationName && relationLabel && (
+          <p className="text-text-secondary">
+            <span className="font-medium text-text-primary">{relationLabel}</span>{' '}
+            {customer.relationName}
+          </p>
+        )}
+        {customer.jaati && (
+          <p className="text-text-secondary">
+            Jaati:{' '}
+            <span className="font-medium text-text-primary">{customer.jaati}</span>
+          </p>
+        )}
+        {customer.address?.city && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.address.city}
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
 export default function GirviFormDesktop({
   initialData = {},
   shopId,
@@ -124,21 +193,36 @@ export default function GirviFormDesktop({
 
         <div className="space-y-6 lg:col-span-2">
 
-          <Card className="border-border-primary bg-bg-secondary">
-            <CardHeader>
-              <CardTitle className="text-text-primary"> {t('girvi.customerDetails')}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CustomerSection
-                data={formData}
-                errors={errors}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isLoading || mode === 'view'}
-              />
-            </CardContent>
-          </Card>
 
+<Card className="border-border-primary bg-bg-secondary">
+  <CardHeader>
+    <CardTitle className="text-text-primary">{t('girvi.customerDetails')}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    {mode === 'view' ? (
+      <CustomerViewCard
+        customer={
+          formData.customerId && typeof formData.customerId === 'object'
+            ? formData.customerId
+            : {
+                firstName:    formData.customerName?.split(' ')[0],
+                lastName:     formData.customerName?.split(' ').slice(1).join(' '),
+                phone:        formData.customerPhone,
+                email:        formData.customerEmail,
+              }
+        }
+      />
+    ) : (
+      <CustomerSection
+        data={formData}
+        errors={errors}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        disabled={isLoading}
+      />
+    )}
+  </CardContent>
+</Card>
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">{t('girvi.pledgeItems')}</CardTitle>

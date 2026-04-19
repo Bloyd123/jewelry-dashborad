@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button }          from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Save, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Save, X, Loader2, ChevronLeft, ChevronRight, Phone, Mail, MapPin } from 'lucide-react'
 import { ConfirmDialog }   from '@/components/ui/overlay/Dialog/ConfirmDialog'
     import { useGirviActions } from '@/hooks/girvi/useGirviActions'
 import { useNotification } from '@/hooks/useNotification'
@@ -18,7 +18,72 @@ import { ItemsSection }             from './sections/ItemsSection'
 import { InterestSection }          from './sections/InterestSection'
 import { BasicInfoSection }         from './sections/BasicInfoSection'
 import { AdditionalDetailsSection } from '@/components/payments/PaymentForm/sections/AdditionalDetailsSection'
+const RELATION_LABELS: Record<string, string> = {
+  son_of:      'S/O',
+  daughter_of: 'D/O',
+  husband_of:  'H/O',
+  wife_of:     'W/O',
+  other:       'Rel.',
+}
 
+const CustomerViewCard = ({ customer }: { customer: any }) => {
+  if (!customer) return null
+
+  const fullName = `${customer.firstName || ''} ${customer.lastName || ''}`.trim()
+  const relationLabel = customer.relationType
+    ? RELATION_LABELS[customer.relationType] ?? 'Rel.'
+    : null
+
+  return (
+    <div className="rounded-lg border border-accent/30 bg-accent/5 p-4">
+      <div className="flex items-center gap-3">
+        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-accent text-lg font-bold text-white">
+          {customer.firstName?.[0]?.toUpperCase()}
+          {customer.lastName?.[0]?.toUpperCase()}
+        </div>
+        <div>
+          <p className="font-bold text-text-primary">{fullName}</p>
+          {customer.customerCode && (
+            <p className="text-xs text-text-tertiary">#{customer.customerCode}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+        {customer.phone && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <Phone className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.phone}
+          </p>
+        )}
+        {customer.email && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <Mail className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.email}
+          </p>
+        )}
+        {customer.relationName && relationLabel && (
+          <p className="text-text-secondary">
+            <span className="font-medium text-text-primary">{relationLabel}</span>{' '}
+            {customer.relationName}
+          </p>
+        )}
+        {customer.jaati && (
+          <p className="text-text-secondary">
+            Jaati:{' '}
+            <span className="font-medium text-text-primary">{customer.jaati}</span>
+          </p>
+        )}
+        {customer.address?.city && (
+          <p className="flex items-center gap-2 text-text-secondary">
+            <MapPin className="h-3.5 w-3.5 flex-shrink-0 text-text-tertiary" />
+            {customer.address.city}
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
 const STEPS = [
   { id: 'customer',    label: 'Customer'    },
   { id: 'items',       label: 'Pledge Items'},
@@ -118,7 +183,23 @@ createGirviSchema.parse({
 
   const renderStep = () => {
     switch (STEPS[currentStep].id) {
-      case 'customer':   return <CustomerSection   {...sectionProps} />
+        case 'customer':
+          return mode === 'view' ? (
+            <CustomerViewCard
+              customer={
+                formData.customerId && typeof formData.customerId === 'object'
+                  ? formData.customerId
+                  : {
+                      firstName:  formData.customerName?.split(' ')[0],
+                      lastName:   formData.customerName?.split(' ').slice(1).join(' '),
+                      phone:      formData.customerPhone,
+                      email:      formData.customerEmail,
+                    }
+              }
+            />
+          ) : (
+            <CustomerSection {...sectionProps} />
+          )
       case 'items':      return <ItemsSection      {...sectionProps} />
       case 'financial':  return <InterestSection   {...sectionProps} />
       case 'basic-info': return <BasicInfoSection  {...sectionProps} />

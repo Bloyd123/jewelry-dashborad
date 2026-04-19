@@ -13,6 +13,9 @@
     "sameAsPhone": "Same as Phone",
 "searchReferredBy": "Search customer by name or phone...",
 "noCustomerFound": "No customer found",
+"relationName": "Relation Name",
+"relationType": "Relation Type", 
+"jaati": "Jaati / Caste",
 
 
     "success": {
