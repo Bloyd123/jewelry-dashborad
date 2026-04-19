@@ -52,7 +52,9 @@ export const GIRVI_ENDPOINTS = {
  
   CALCULATE_INTEREST: `${BASE_URL}/shops/:shopId/girvi/:girviId/interest`,
  
-  RELEASE:       `${BASE_URL}/shops/:shopId/girvi/:girviId/release`,
+   RELEASE:         `${BASE_URL}/shops/:shopId/girvi/:girviId/release`,
+  PARTIAL_RELEASE: `${BASE_URL}/shops/:shopId/girvi/:girviId/partial-release`,
+  RENEW:           `${BASE_URL}/shops/:shopId/girvi/:girviId/renew`,
 }
 export const AUTH_ENDPOINTS = {
   REGISTER: `${AUTH_BASE}/register`,

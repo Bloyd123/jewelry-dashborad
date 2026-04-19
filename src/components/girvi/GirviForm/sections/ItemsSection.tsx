@@ -108,7 +108,7 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
 
             <div className="space-y-1">
               <label className="text-sm font-medium text-text-primary">
-                {t('girvi.itemType')} <span className="text-status-error">*</span>
+                {t('girvi.itemType1')} <span className="text-status-error">*</span>
               </label>
               <select
                 value={item.itemType}
@@ -165,7 +165,12 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
                   value={item.grossWeight}
                   min={0}
                   step={0.001}
-                  onChange={e => handleFieldChange('grossWeight', e.target.value)}
+                  onChange={e =>
+  handleFieldChange(
+    'grossWeight',
+    e.target.value === '' ? '' : Number(e.target.value)
+  )
+}
                   disabled={disabled}
                   placeholder="0.000"
                   className={`h-10 w-full rounded-lg border bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary ${
@@ -182,7 +187,12 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
                   value={item.lessWeight}
                   min={0}
                   step={0.001}
-                  onChange={e => handleFieldChange('lessWeight', e.target.value)}
+                  onChange={e =>
+  handleFieldChange(
+    'lessWeight',
+    e.target.value === '' ? 0 : Number(e.target.value)
+  )
+}
                   disabled={disabled}
                   placeholder="0.000"
                   className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
@@ -210,7 +220,12 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
                   min={0}
                   max={100}
                   step={0.1}
-                  onChange={e => handleFieldChange('tunch', e.target.value)}
+                 onChange={e =>
+  handleFieldChange(
+    'tunch',
+    e.target.value === '' ? undefined : Number(e.target.value)
+  )
+}
                   disabled={disabled}
                   placeholder="91.6"
                   className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
@@ -237,7 +252,12 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
                   value={item.ratePerGram ?? ''}
                   min={0}
                   step={1}
-                  onChange={e => handleFieldChange('ratePerGram', e.target.value)}
+                  onChange={e =>
+  handleFieldChange(
+    'ratePerGram',
+    e.target.value === '' ? undefined : Number(e.target.value)
+  )
+}
                   disabled={disabled}
                   placeholder="6500"
                   className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"

@@ -1,5 +1,56 @@
 {
   "girvi": {
+     "partialRelease":      "Partial Release",
+  "partialReleaseDetails": "Partial Release Details",
+  "renewGirvi":          "Renew Girvi",
+  "renewalDetails":      "Renewal Details",
+ 
+  "step1SelectItems":    "Select Items to Release",
+  "step3PaymentDetails": "Payment Details",
+  "selected":            "selected",
+  "available":           "available",
+  "activeItems":         "active items",
+  "noActiveItems":       "No active items to release",
+  "selectedItemsValue":  "Selected items value",
+  "totalItemsValue":     "Total Items Value",
+ 
+  "interestPaid":        "Interest Paid (₹)",
+  "principalPaid":       "Principal Paid (₹)",
+  "netReceived":         "Net Amount Received",
+  "newPrincipal":        "New Principal",
+  "releaseDate":         "Release Date",
+  "renewalDate":         "Renewal Date",
+  "newDueDate":          "New Due Date",
+  "currentDueDate":      "Current Due Date",
+  "renewalDates":        "Renewal Dates",
+  "paymentDetails":      "Payment Details",
+  "changeInterestRate":  "Change Interest Rate",
+  "newInterestRatePlaceholder": "Enter new rate",
+ 
+  "partialReleaseRemarksPlaceholder": "Remarks about this partial release",
+  "renewalRemarksPlaceholder":        "Remarks about this renewal",
+ 
+  "confirmPartialRelease": "Confirm Partial Release",
+  "confirmPartialReleaseDescription": "Release {{count}} item(s)? Net amount to receive: ₹{{amount}}. Girvi will continue for remaining items.",
+  "confirmRenewal":        "Confirm Renewal",
+  "confirmRenewalDescription": "Renew girvi till {{dueDate}}? Net amount to receive: ₹{{amount}}.",
+ 
+  "activity": {
+    "created":           "Girvi created",
+    "updated":           "Girvi updated",
+    "released":          "Girvi fully released",
+    "deleted":           "Girvi deleted",
+    "paymentAdded":      "Payment received",
+    "paymentDeleted":    "Payment reversed",
+    "interestCalculated": "Interest calculated",
+    "transferred":       "Transferred to party",
+    "transferReturned":  "Transfer returned",
+    "statusChanged":     "Status changed",
+    "overdueMarked":     "Marked as overdue",
+    "discountGiven":     "Discount given"
+  },
+ 
+  "noActivityYet": "No activity recorded yet",
     "title": "Girvi (Pledge)",
     "subtitle": "Manage all pawn and pledge records",
 
@@ -61,7 +112,7 @@
 
     "itemName": "Item Name",
     "itemNamePlaceholder": "e.g. Gold Necklace, Silver Bangles",
-    "itemType": "Item Type",
+    "itemType1": "Item Type",
     "description": "Description",
     "descriptionPlaceholder": "Optional description",
     "quantity": "Quantity",

@@ -64,7 +64,16 @@ export default function GirviFormDesktop({
           grossWeight: parseFloat(String(item.grossWeight || 0)),
           lessWeight:  parseFloat(String(item.lessWeight  || 0)),
           quantity:    Number(item.quantity) || 1,
-        })),
+tunch: item.tunch !== '' && item.tunch !== undefined
+  ? Number(item.tunch)
+  : undefined,
+ratePerGram: item.ratePerGram ? Number(item.ratePerGram) : undefined,
+approxValue: item.approxValue ? Number(item.approxValue) : undefined,
+
+userGivenValue: item.userGivenValue !== '' 
+  ? Number(item.userGivenValue) 
+  : undefined,
+}))
       })
     } catch (error: any) {
       const validationErrors: Record<string, string> = {}
@@ -215,9 +224,9 @@ export default function GirviFormDesktop({
               {formData.customerName && (
                 <div>
                   <p className="text-xs text-text-tertiary">{t('girvi.customer')}</p>
-                  <p className="font-semibold text-text-primary">👤 {formData.customerName}</p>
+                  <p className="font-semibold text-text-primary">{formData.customerName}</p>
                   {formData.customerPhone && (
-                    <p className="text-sm text-text-secondary">📱 {formData.customerPhone}</p>
+                    <p className="text-sm text-text-secondary"> {formData.customerPhone}</p>
                   )}
                 </div>
               )}

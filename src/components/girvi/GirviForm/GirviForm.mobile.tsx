@@ -64,12 +64,22 @@ export default function GirviFormMobile({
         ...formData,
         principalAmount: parseFloat(String(formData.principalAmount)),
         interestRate:    parseFloat(String(formData.interestRate)),
-        items: (formData.items || []).map(item => ({
-          ...item,
-          grossWeight: parseFloat(String(item.grossWeight || 0)),
-          lessWeight:  parseFloat(String(item.lessWeight  || 0)),
-          quantity:    Number(item.quantity) || 1,
-        })),
+items: (formData.items || []).map(item => ({
+  ...item,
+  grossWeight: parseFloat(String(item.grossWeight || 0)),
+  lessWeight:  parseFloat(String(item.lessWeight  || 0)),
+  quantity:    Number(item.quantity) || 1,
+
+tunch: item.tunch !== '' && item.tunch !== undefined
+  ? Number(item.tunch)
+  : undefined,
+ratePerGram: item.ratePerGram ? Number(item.ratePerGram) : undefined,
+approxValue: item.approxValue ? Number(item.approxValue) : undefined,
+
+userGivenValue: item.userGivenValue !== '' 
+  ? Number(item.userGivenValue) 
+  : undefined,
+}))
       })
     } catch (error: any) {
       const validationErrors: Record<string, string> = {}

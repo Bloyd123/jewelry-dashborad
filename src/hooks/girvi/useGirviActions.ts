@@ -1,28 +1,33 @@
 // FILE: src/features/girvi/hooks/useGirviActions.ts
-
 import { useCallback } from 'react'
 import {
   useCreateGirviMutation,
   useUpdateGirviMutation,
   useDeleteGirviMutation,
   useReleaseGirviMutation,
+  usePartialReleaseGirviMutation,
+  useRenewGirviMutation,
 } from '@/store/api/girviApi'
-import { useErrorHandler }  from '@/hooks/useErrorHandler'
-import { useNotification }  from '@/hooks/useNotification'
+import { useErrorHandler } from '@/hooks/useErrorHandler'
+import { useNotification } from '@/hooks/useNotification'
 import type {
   CreateGirviRequest,
   UpdateGirviRequest,
   ReleaseGirviRequest,
+  PartialReleaseRequest,
+  RenewalRequest,
 } from '@/types/girvi.types'
 
 export const useGirviActions = (shopId: string) => {
   const { handleError } = useErrorHandler()
   const { showSuccess } = useNotification()
 
-  const [createMutation,  createState]  = useCreateGirviMutation()
-  const [updateMutation,  updateState]  = useUpdateGirviMutation()
-  const [deleteMutation,  deleteState]  = useDeleteGirviMutation()
-  const [releaseMutation, releaseState] = useReleaseGirviMutation()
+  const [createMutation,         createState]         = useCreateGirviMutation()
+  const [updateMutation,         updateState]         = useUpdateGirviMutation()
+  const [deleteMutation,         deleteState]         = useDeleteGirviMutation()
+  const [releaseMutation,        releaseState]        = useReleaseGirviMutation()
+  const [partialReleaseMutation, partialReleaseState] = usePartialReleaseGirviMutation()
+  const [renewMutation,          renewState]          = useRenewGirviMutation()
 
   // CREATE GIRVI (Jama)
   const createGirvi = useCallback(
@@ -65,7 +70,6 @@ export const useGirviActions = (shopId: string) => {
   )
 
   // DELETE GIRVI (soft delete)
-  // Backend only allows if status is released/auctioned
   const deleteGirvi = useCallback(
     async (girviId: string) => {
       try {
@@ -80,8 +84,7 @@ export const useGirviActions = (shopId: string) => {
     [deleteMutation, shopId, handleError, showSuccess]
   )
 
-  // RELEASE GIRVI
-  // PATCH endpoint — returns girvi + payment + releaseSummary
+  // PATCH /girvi/:girviId/release
   const releaseGirvi = useCallback(
     async (
       girviId: string,
@@ -103,20 +106,73 @@ export const useGirviActions = (shopId: string) => {
     [releaseMutation, shopId, handleError, showSuccess]
   )
 
+  // PATCH /girvi/:girviId/partial-release
+  const partialRelease = useCallback(
+    async (
+      girviId: string,
+      data: PartialReleaseRequest,
+      setErrors?: (errors: Record<string, string>) => void
+    ) => {
+      try {
+        const result = await partialReleaseMutation({ shopId, girviId, ...data }).unwrap()
+        const { releasedItems, netAmountReceived } = result.partialReleaseSummary
+        showSuccess(
+          `${releasedItems.length} item(s) released. ₹${netAmountReceived.toLocaleString('en-IN')} received`,
+          'Partial Release Done'
+        )
+        return { success: true, data: result }
+      } catch (error: any) {
+        handleError(error, setErrors)
+        return { success: false, error: error.data?.message }
+      }
+    },
+    [partialReleaseMutation, shopId, handleError, showSuccess]
+  )
+
+  // RENEWAL
+  // PATCH /girvi/:girviId/renew
+  const renewGirvi = useCallback(
+    async (
+      girviId: string,
+      data: RenewalRequest,
+      setErrors?: (errors: Record<string, string>) => void
+    ) => {
+      try {
+        const result = await renewMutation({ shopId, girviId, ...data }).unwrap()
+        showSuccess(
+          `Girvi renewed till ${new Date(result.renewalSummary.newDueDate).toLocaleDateString('en-IN')}`,
+          'Girvi Renewed'
+        )
+        return { success: true, data: result }
+      } catch (error: any) {
+        handleError(error, setErrors)
+        return { success: false, error: error.data?.message }
+      }
+    },
+    [renewMutation, shopId, handleError, showSuccess]
+  )
+
   return {
     createGirvi,
     updateGirvi,
     deleteGirvi,
     releaseGirvi,
+    partialRelease,
+    renewGirvi,
 
-    isCreating:  createState.isLoading,
-    isUpdating:  updateState.isLoading,
-    isDeleting:  deleteState.isLoading,
-    isReleasing: releaseState.isLoading,
+    isCreating:         createState.isLoading,
+    isUpdating:         updateState.isLoading,
+    isDeleting:         deleteState.isLoading,
+    isReleasing:        releaseState.isLoading,
+    isPartialReleasing: partialReleaseState.isLoading,
+    isRenewing:         renewState.isLoading,
+
     isMutating:
-      createState.isLoading  ||
-      updateState.isLoading  ||
-      deleteState.isLoading  ||
-      releaseState.isLoading,
+      createState.isLoading         ||
+      updateState.isLoading         ||
+      deleteState.isLoading         ||
+      releaseState.isLoading        ||
+      partialReleaseState.isLoading ||
+      renewState.isLoading,
   }
 }

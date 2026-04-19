@@ -68,10 +68,12 @@ export const useCustomerActions = (shopId: string) => {
             setErrors(validationErrors)
           }
         }
-        return {
-          success: false,
-          error: error.data?.message || 'Failed to create customer',
-        }
+const actualError =
+  error.data?.errors?.[0]?.detail ||   
+  error.data?.message ||               
+  'Failed to create customer'
+
+return { success: false, error: actualError }
       }
     },
     [createMutation, shopId]

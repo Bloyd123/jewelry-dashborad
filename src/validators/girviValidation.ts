@@ -209,7 +209,99 @@ export const updateGirviSchema = z.object({
 })
 
 export type UpdateGirviInput = z.infer<typeof updateGirviSchema>
-
+ 
+export const partialReleaseSchema = z.object({
+  releasedItems: z
+    .array(
+      z.object({
+        itemId: z
+          .string()
+          .min(1, 'Item ID is required')
+          .regex(/^[a-f\d]{24}$/i, 'Invalid item ID'),
+        releasedQuantity: z
+          .number({ error: 'Released quantity is required',  })
+          .int('Quantity must be a whole number')
+          .min(1, 'Released quantity must be at least 1'),
+      })
+    )
+    .min(1, 'At least one item must be selected for release'),
+ 
+  interestPaid: z
+    .number({ error: 'Interest paid is required', })
+    .min(0, 'Interest paid cannot be negative'),
+ 
+  principalPaid: z
+    .number({ error: 'Principal paid is required' })
+    .min(0, 'Principal paid cannot be negative'),
+ 
+  discountGiven: z
+    .number({ error: 'Discount must be a number' })
+    .min(0, 'Discount cannot be negative')
+    .optional()
+    .default(0),
+ 
+  releaseDate: z
+    .string()
+    .min(1, 'Release date is required')
+    .refine((d) => !isNaN(Date.parse(d)), 'Invalid release date'),
+ 
+  paymentMode: z.enum(['cash', 'upi', 'bank_transfer', 'cheque'], {
+    error: 'Payment mode is required',
+  }),
+ 
+  remarks: z
+    .string()
+    .trim()
+    .max(500, 'Remarks cannot exceed 500 characters')
+    .optional(),
+})
+ 
+export type PartialReleaseInput = z.infer<typeof partialReleaseSchema>
+ 
+ 
+export const renewalSchema = z.object({
+  interestPaid: z
+    .number({ error: 'Interest paid is required',  })
+    .min(0, 'Interest paid cannot be negative'),
+ 
+  principalPaid: z
+    .number({ error: 'Principal paid must be a number' })
+    .min(0, 'Principal paid cannot be negative')
+    .optional()
+    .default(0),
+ 
+  discountGiven: z
+    .number({ error: 'Discount must be a number' })
+    .min(0, 'Discount cannot be negative')
+    .optional()
+    .default(0),
+ 
+  newDueDate: z
+    .string()
+    .min(1, 'New due date is required')
+    .refine((d) => !isNaN(Date.parse(d)), 'Invalid new due date'),
+ 
+  renewalDate: z
+    .string()
+    .min(1, 'Renewal date is required')
+    .refine((d) => !isNaN(Date.parse(d)), 'Invalid renewal date'),
+ 
+  newInterestRate: z
+    .number({ error: 'Interest rate must be a number' })
+    .min(0, 'Interest rate cannot be negative')
+    .optional(),
+ 
+  paymentMode: z.enum(['cash', 'upi', 'bank_transfer', 'cheque'], {
+    error: 'Payment mode is required',
+  }),
+ 
+  remarks: z
+    .string()
+    .trim()
+    .max(500, 'Remarks cannot exceed 500 characters')
+    .optional(),
+})
+ export type RenewalInput = z.infer<typeof renewalSchema>
 
 export const releaseGirviSchema = z.object({
   releaseInterestType: z.enum(['simple', 'compound'], {

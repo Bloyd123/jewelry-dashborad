@@ -14,6 +14,7 @@ export type GirviItemType =
   | 'diamond'
   | 'platinum'
   | 'other'
+export type GirviItemStatus = 'active' | 'partial_released' | 'released'
 
 export type GirviItemCondition = 'good' | 'fair' | 'poor'
 
@@ -67,6 +68,10 @@ export interface GirviItem {
   approxValue?: number     // auto-calc: netWeight × (tunch/100) × ratePerGram
   userGivenValue?: number  
   finalValue?: number
+  itemStatus?: GirviItemStatus
+  releasedQuantity?: number
+  itemReleaseDate?: string
+  itemPrincipalRecovered?: number
 
   condition: GirviItemCondition
 }
@@ -154,6 +159,8 @@ export interface Girvi {
   transferInterestRate?: number
   transferInterestType?: GirviInterestType
 
+  renewals?: GirviRenewalRecord[]
+  partialReleases?: GirviPartialReleaseRecord[]
   releaseDate?: string
   releasedBy?: string | GirviUser
   releaseNotes?: string
@@ -492,6 +499,123 @@ export const GIRVI_ITEM_CONDITION_LABELS: Record<GirviItemCondition, string> = {
   fair: 'Fair',
   poor: 'Poor',
 }
+export interface GirviPartialReleaseRecord {
+  _id?:       string
+  releaseDate: string
+  releasedItems: Array<{
+    itemId:           string
+    itemName:         string
+    releasedQuantity: number
+    itemValue:        number
+  }>
+  interestPaid:           number
+  principalPaid:          number
+  discountGiven:          number
+  netAmountReceived:      number
+  principalBeforeRelease: number
+  principalAfterRelease:  number
+  remainingItemsValue:    number
+  paymentMode:            GirviPaymentMode
+  receiptNumber:          string
+  remarks?:               string
+  releasedBy?:            string
+}
+ 
+export interface GirviRenewalRecord {
+  _id?:            string
+  renewalDate:     string
+  previousDueDate?: string
+  newDueDate:      string
+  interestPaid:    number
+  principalPaid:   number
+  discountGiven:   number
+  newPrincipal:    number
+  newInterestRate?: number
+  paymentMode:     GirviPaymentMode
+  receiptNumber:   string
+  remarks?:        string
+  renewedBy?:      string
+}
+ 
+ 
+export interface PartialReleaseReleasedItem {
+  itemId:           string
+  releasedQuantity: number
+}
+ 
+export interface PartialReleaseRequest {
+  releasedItems:  PartialReleaseReleasedItem[]
+  interestPaid:   number
+  principalPaid:  number
+  discountGiven?: number
+  releaseDate:    string
+  paymentMode:    GirviPaymentMode
+  remarks?:       string
+}
+ 
+export interface PartialReleaseSummary {
+  releasedItems: Array<{
+    itemId:           string
+    itemName:         string
+    releasedQuantity: number
+    itemValue:        number
+  }>
+  totalValueReleased:  number
+  remainingItemsValue: number
+  principalBefore:     number
+  principalAfter:      number
+  interestPaid:        number
+  principalPaid:       number
+  discountGiven:       number
+  netAmountReceived:   number
+  receiptNumber:       string
+}
+ 
+ 
+export interface RenewalRequest {
+  interestPaid:     number
+  principalPaid?:   number
+  discountGiven?:   number
+  newDueDate:       string
+  renewalDate:      string
+  newInterestRate?: number
+  paymentMode:      GirviPaymentMode
+  remarks?:         string
+}
+ 
+export interface RenewalSummary {
+  previousDueDate:  string
+  newDueDate:       string
+  previousPrincipal: number
+  newPrincipal:     number
+  interestPaid:     number
+  principalPaid:    number
+  discountGiven:    number
+  netAmountReceived: number
+  receiptNumber:    string
+  renewalCount:     number
+}
+ 
+ 
+export interface PartialReleaseResponse {
+  success: boolean
+  message: string
+  data: {
+    girvi:                 Girvi
+    payment:               GirviPayment
+    partialReleaseSummary: PartialReleaseSummary
+  }
+}
+ 
+export interface RenewalResponse {
+  success: boolean
+  message: string
+  data: {
+    girvi:         Girvi
+    payment:       GirviPayment
+    renewalSummary: RenewalSummary
+  }
+}
 
 export const GIRVI_PAYMENT_TYPE_LABELS: Record<GirviPaymentType, string> = {
   interest_only:      'Interest Only',
@@ -500,6 +624,7 @@ export const GIRVI_PAYMENT_TYPE_LABELS: Record<GirviPaymentType, string> = {
   interest_principal: 'Interest + Principal',
   release_payment:    'Release Payment',
 }
+ 
 export interface GirviPaymentFormData {
   paymentType:  GirviPaymentType
   interestType: GirviInterestType
