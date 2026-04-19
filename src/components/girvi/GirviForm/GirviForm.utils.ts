@@ -76,35 +76,50 @@ export const createBlankItem = (): GirviItemFormData => ({
 })
 
 
+// ─── AFTER ────────────────────────────────────────────────
+
+// Helpers — NaN ko undefined/fallback mein convert karo
+export const safeFloat = (val: any, fallback?: number): number | undefined => {
+  const n = parseFloat(String(val ?? ''))
+  if (isNaN(n)) return fallback
+  return n
+}
+
+export const safeInt = (val: any, fallback?: number): number | undefined => {
+  const n = parseInt(String(val ?? ''))
+  if (isNaN(n)) return fallback
+  return n
+}
+
 export const buildGirviPayload = (d: Partial<GirviFormData>) => ({
-  customerId:          d.customerId!,
+  customerId:           d.customerId!,
   items: (d.items || []).map((item) => ({
-    itemName:        item.itemName,
-    itemType:        item.itemType,
-    description:     item.description,
-    quantity:        Number(item.quantity) || 1,
-    grossWeight:     parseFloat(String(item.grossWeight || 0)),
-    lessWeight:      parseFloat(String(item.lessWeight  || 0)),
-    tunch:           item.tunch       ? parseFloat(String(item.tunch))       : undefined,
-    purity:          item.purity,
-    ratePerGram:     item.ratePerGram ? parseFloat(String(item.ratePerGram)) : undefined,
-    userGivenValue:  item.userGivenValue ? parseFloat(String(item.userGivenValue)) : undefined,
-    condition:       item.condition,
+    itemName:         item.itemName,
+    itemType:         item.itemType,
+    description:      item.description,
+    quantity:         safeInt(item.quantity, 1)!,
+    grossWeight:      safeFloat(item.grossWeight, 0)!,
+    lessWeight:       safeFloat(item.lessWeight,  0)!,
+    tunch:            safeFloat(item.tunch),
+    purity:           item.purity,
+    ratePerGram:      safeFloat(item.ratePerGram),
+    userGivenValue:   safeFloat(item.userGivenValue),
+    condition:        item.condition,
   })),
-  principalAmount:     parseFloat(String(d.principalAmount || 0)),
-  loanToValueRatio:    d.loanToValueRatio ? parseFloat(String(d.loanToValueRatio)) : undefined,
-  interestRate:        parseFloat(String(d.interestRate || 0)),
-  interestType:        d.interestType        || 'simple',
-  calculationBasis:    d.calculationBasis    || 'monthly',
-  girviDate:           d.girviDate!,
-  dueDate:             d.dueDate,
-  gracePeriodDays:     d.gracePeriodDays ? Number(d.gracePeriodDays) : undefined,
-  paymentMode:         d.paymentMode || 'cash',
+  principalAmount:      safeFloat(d.principalAmount, 0)!,
+  loanToValueRatio:     safeFloat(d.loanToValueRatio),
+  interestRate:         safeFloat(d.interestRate, 0)!,
+  interestType:         d.interestType     || 'simple',
+  calculationBasis:     d.calculationBasis || 'monthly',
+  girviDate:            d.girviDate!,
+  dueDate:              d.dueDate,
+  gracePeriodDays:      safeInt(d.gracePeriodDays),
+  paymentMode:          d.paymentMode || 'cash',
   transactionReference: d.transactionReference,
-  girviSlipNumber:     d.girviSlipNumber,
-  witnessName:         d.witnessName,
-  notes:               d.notes,
-  internalNotes:       d.internalNotes,
+  girviSlipNumber:      d.girviSlipNumber,
+  witnessName:          d.witnessName,
+  notes:                d.notes,
+  internalNotes:        d.internalNotes,
 })
 
 const ones  = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']

@@ -9,7 +9,8 @@ import { ConfirmDialog }    from '@/components/ui/overlay/Dialog/ConfirmDialog'
 import { useGirviActions }  from '@/hooks/girvi/useGirviActions'
 import { useNotification }  from '@/hooks/useNotification'
 import { createGirviSchema } from '@/validators/girviValidation'
-import { buildGirviPayload, calcFormTotals, calcLoanToValue } from './GirviForm.utils'
+
+import { buildGirviPayload, calcFormTotals, calcLoanToValue, safeFloat, safeInt } from './GirviForm.utils'
 import type { GirviFormProps, GirviFormData } from './GirviForm.types'
 
 import { BasicInfoSection }       from './sections/BasicInfoSection'
@@ -55,26 +56,21 @@ export default function GirviFormDesktop({
 
   const handleSubmit = async () => {
     try {
-      createGirviSchema.parse({
-        ...formData,
-        principalAmount: parseFloat(String(formData.principalAmount)),
-        interestRate:    parseFloat(String(formData.interestRate)),
-        items: (formData.items || []).map(item => ({
-          ...item,
-          grossWeight: parseFloat(String(item.grossWeight || 0)),
-          lessWeight:  parseFloat(String(item.lessWeight  || 0)),
-          quantity:    Number(item.quantity) || 1,
-tunch: item.tunch !== '' && item.tunch !== undefined
-  ? Number(item.tunch)
-  : undefined,
-ratePerGram: item.ratePerGram ? Number(item.ratePerGram) : undefined,
-approxValue: item.approxValue ? Number(item.approxValue) : undefined,
-
-userGivenValue: item.userGivenValue !== '' 
-  ? Number(item.userGivenValue) 
-  : undefined,
-}))
-      })
+  createGirviSchema.parse({
+  ...formData,
+  principalAmount: safeFloat(formData.principalAmount, 0),
+  interestRate:    safeFloat(formData.interestRate, 0),
+  items: (formData.items || []).map(item => ({
+    ...item,
+    grossWeight:    safeFloat(item.grossWeight, 0),
+    lessWeight:     safeFloat(item.lessWeight,  0),
+    quantity:       safeInt(item.quantity, 1),
+    tunch:          safeFloat(item.tunch),
+    ratePerGram:    safeFloat(item.ratePerGram),
+    approxValue:    safeFloat(item.approxValue),
+    userGivenValue: safeFloat(item.userGivenValue),
+  }))
+})
     } catch (error: any) {
       const validationErrors: Record<string, string> = {}
       error.issues?.forEach((err: any) => {
