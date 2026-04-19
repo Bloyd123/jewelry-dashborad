@@ -1,6 +1,6 @@
 // FILE: src/components/girvi/GirviForm/GirviForm.mobile.tsx
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button }          from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -9,8 +9,7 @@ import { ConfirmDialog }   from '@/components/ui/overlay/Dialog/ConfirmDialog'
     import { useGirviActions } from '@/hooks/girvi/useGirviActions'
 import { useNotification } from '@/hooks/useNotification'
 import { createGirviSchema } from '@/validators/girviValidation'
-
-import { buildGirviPayload, calcFormTotals, calcLoanToValue, safeFloat, safeInt } from './GirviForm.utils'
+import { buildCreateGirviPayload, buildUpdateGirviPayload, calcFormTotals, calcLoanToValue, safeFloat, safeInt } from './GirviForm.utils'
 import type { GirviFormProps, GirviFormData } from './GirviForm.types'
 
 import { CustomerSection }          from './sections/CustomerSection'
@@ -102,14 +101,26 @@ export default function GirviFormMobile({
 }: GirviFormProps) {
   const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
-  const [formData, setFormData] = useState<Partial<GirviFormData>>({
+
+  const defaults: Partial<GirviFormData> = {
     interestType:     'simple',
     calculationBasis: 'monthly',
     paymentMode:      'cash',
     girviDate:        new Date().toISOString(),
     items:            [{ itemName: '', itemType: 'gold', quantity: 1, grossWeight: '' as any, lessWeight: 0, condition: 'good' }],
+  }
+
+  const [formData, setFormData] = useState<Partial<GirviFormData>>({
+    ...defaults,
     ...initialData,
   })
+
+  // initialData baad mein aaye (edit mode async fetch) toh sync karo
+  useEffect(() => {
+    if (Object.keys(initialData).length > 0) {
+      setFormData({ ...defaults, ...initialData })
+    }
+  }, [initialData])
   const [errors,            setErrors]     = useState<Record<string, string>>({})
   const [showConfirmDialog, setShowConfirm] = useState(false)
 
@@ -124,23 +135,25 @@ export default function GirviFormMobile({
 
   const handleBlur = (name: string) => {}
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
+  // Edit mode mein sirf basic check — createGirviSchema skip karo
+  if (mode !== 'edit') {
     try {
-createGirviSchema.parse({
-  ...formData,
-  principalAmount: safeFloat(formData.principalAmount, 0),
-  interestRate:    safeFloat(formData.interestRate, 0),
-  items: (formData.items || []).map(item => ({
-    ...item,
-    grossWeight:    safeFloat(item.grossWeight, 0),
-    lessWeight:     safeFloat(item.lessWeight,  0),
-    quantity:       safeInt(item.quantity, 1),
-    tunch:          safeFloat(item.tunch),
-    ratePerGram:    safeFloat(item.ratePerGram),
-    approxValue:    safeFloat(item.approxValue),
-    userGivenValue: safeFloat(item.userGivenValue),
-  }))
-})
+      createGirviSchema.parse({
+        ...formData,
+        principalAmount: safeFloat(formData.principalAmount, 0),
+        interestRate:    safeFloat(formData.interestRate, 0),
+        items: (formData.items || []).map(item => ({
+          ...item,
+          grossWeight:    safeFloat(item.grossWeight, 0),
+          lessWeight:     safeFloat(item.lessWeight,  0),
+          quantity:       safeInt(item.quantity, 1),
+          tunch:          safeFloat(item.tunch),
+          ratePerGram:    safeFloat(item.ratePerGram),
+          approxValue:    safeFloat(item.approxValue),
+          userGivenValue: safeFloat(item.userGivenValue),
+        }))
+      })
     } catch (error: any) {
       const validationErrors: Record<string, string> = {}
       error.issues?.forEach((err: any) => {
@@ -154,16 +167,16 @@ createGirviSchema.parse({
       )
       return
     }
-    setShowConfirm(true)
   }
+  setShowConfirm(true)
+}
 
-  const handleConfirmedSubmit = async () => {
-    const payload      = buildGirviPayload(formData)
-    const setFormErrors = (apiErrors: Record<string, string>) => setErrors(apiErrors)
+const handleConfirmedSubmit = async () => {
+  const setFormErrors = (apiErrors: Record<string, string>) => setErrors(apiErrors)
 
-    const result = mode === 'edit' && girviId
-      ? await updateGirvi(girviId, payload, setFormErrors)
-      : await createGirvi(payload as any, setFormErrors)
+  const result = mode === 'edit' && girviId
+    ? await updateGirvi(girviId, buildUpdateGirviPayload(formData), setFormErrors)
+    : await createGirvi(buildCreateGirviPayload(formData) as any, setFormErrors)
 
     if (result.success) {
       setShowConfirm(false)
@@ -183,23 +196,24 @@ createGirviSchema.parse({
 
   const renderStep = () => {
     switch (STEPS[currentStep].id) {
-        case 'customer':
-          return mode === 'view' ? (
-            <CustomerViewCard
-              customer={
-                formData.customerId && typeof formData.customerId === 'object'
-                  ? formData.customerId
-                  : {
-                      firstName:  formData.customerName?.split(' ')[0],
-                      lastName:   formData.customerName?.split(' ').slice(1).join(' '),
-                      phone:      formData.customerPhone,
-                      email:      formData.customerEmail,
-                    }
-              }
-            />
-          ) : (
-            <CustomerSection {...sectionProps} />
-          )
+      case 'customer':
+        return mode === 'view' ? (
+          <CustomerViewCard
+            customer={{
+              firstName:    formData.customerName?.split(' ')[0] ?? '',
+              lastName:     formData.customerName?.split(' ').slice(1).join(' ') ?? '',
+              phone:        formData.customerPhone,
+              email:        formData.customerEmail,
+              customerCode: formData._customerMeta?.customerCode,
+              relationType: formData._customerMeta?.relationType,
+              relationName: formData._customerMeta?.relationName,
+              jaati:        formData._customerMeta?.jaati,
+              address:      formData._customerMeta?.address,
+            }}
+          />
+        ) : (
+          <CustomerSection {...sectionProps} />
+        )
       case 'items':      return <ItemsSection      {...sectionProps} />
       case 'financial':  return <InterestSection   {...sectionProps} />
       case 'basic-info': return <BasicInfoSection  {...sectionProps} />

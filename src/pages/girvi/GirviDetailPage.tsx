@@ -5,6 +5,7 @@ import { Edit, Unlock, ArrowLeft, Trash2, RefreshCw } from 'lucide-react'
 import { GirviForm }    from '@/components/girvi/GirviForm'
 import { useGirviById } from '@/hooks/girvi/useGirviById'
 import { useAuth as useAuthDetail } from '@/hooks/auth'
+ import { mapGirviToFormData } from '@/components/girvi/GirviForm/GirviForm.mappers'
  
 export const GirviDetailPage = () => {
   const { t }                = useTranslationDetail()
@@ -87,13 +88,13 @@ export const GirviDetailPage = () => {
         </div>
       </div>
  
-      <GirviForm
-        shopId={shopId!}
-        girviId={girviId}
-        mode="view"
-        initialData={girvi as any}
-        onCancel={() => navigate(`/shops/${shopId}/girvi`)}
-      />
+<GirviForm
+  shopId={shopId!}
+  girviId={girviId}
+  mode="view"
+  initialData={mapGirviToFormData(girvi)}
+  onCancel={() => navigate(`/shops/${shopId}/girvi`)}
+/>
     </div>
   )
 }

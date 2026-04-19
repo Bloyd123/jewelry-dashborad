@@ -1,5 +1,5 @@
 // FILE: src/components/girvi/GirviForm/sections/CustomerSection.tsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Search, UserPlus, Phone, Mail, MapPin, X,
@@ -72,6 +72,28 @@ export const CustomerSection = ({
   // Editable selected-customer state
   const [editableFields,  setEditableFields]   = useState<EditableCustomerFields | null>(null)
   const [isEditingFields, setIsEditingFields]  = useState(false)
+
+  // Edit/view mode: initialData se customer pre-populate karo
+  useEffect(() => {
+    if (data.customerId && data.customerName && !selectedCustomer) {
+      const meta = data._customerMeta ?? {}
+      const customer = {
+        _id:          data.customerId,
+        firstName:    data.customerName.split(' ')[0] ?? '',
+        lastName:     data.customerName.split(' ').slice(1).join(' ') ?? '',
+        phone:        data.customerPhone ?? '',
+        email:        data.customerEmail ?? '',
+        customerCode: meta.customerCode,
+        relationType: meta.relationType,
+        relationName: meta.relationName,
+        jaati:        meta.jaati,
+        address:      meta.address,
+      }
+      setSelectedCustomer(customer)
+      setEditableFields(buildEditable(customer))
+      setSearchQuery(data.customerName)
+    }
+  }, [data.customerId])
 
   // Quick Add state
   const [showQuickAdd,  setShowQuickAdd]  = useState(false)

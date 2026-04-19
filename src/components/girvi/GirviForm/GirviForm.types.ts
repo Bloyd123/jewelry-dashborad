@@ -43,6 +43,13 @@ export interface GirviFormData {
   customerName?: string
   customerPhone?: string
   customerEmail?: string
+  _customerMeta?: {
+    customerCode?: string
+    relationType?: string
+    relationName?: string
+    jaati?: string
+    address?: { city?: string }
+  }
 
   items: GirviItemFormData[]
 

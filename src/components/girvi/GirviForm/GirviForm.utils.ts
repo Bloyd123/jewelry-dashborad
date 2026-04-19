@@ -91,7 +91,7 @@ export const safeInt = (val: any, fallback?: number): number | undefined => {
   return n
 }
 
-export const buildGirviPayload = (d: Partial<GirviFormData>) => ({
+export const buildCreateGirviPayload = (d: Partial<GirviFormData>) => ({
   customerId:           d.customerId!,
   items: (d.items || []).map((item) => ({
     itemName:         item.itemName,
@@ -122,6 +122,21 @@ export const buildGirviPayload = (d: Partial<GirviFormData>) => ({
   internalNotes:        d.internalNotes,
 })
 
+// Update ke liye — sirf allowed fields
+export const buildUpdateGirviPayload = (d: Partial<GirviFormData>) => ({
+  interestRate:      safeFloat(d.interestRate, 0)!,
+  interestType:      d.interestType     || 'simple',
+  calculationBasis:  d.calculationBasis || 'monthly',
+  dueDate:           d.dueDate,
+  gracePeriodDays:   safeInt(d.gracePeriodDays),
+  girviSlipNumber:   d.girviSlipNumber,
+  witnessName:       d.witnessName,
+  notes:             d.notes,
+  internalNotes:     d.internalNotes,
+})
+
+// Backward compat ke liye — create payload hi return karta hai
+export const buildGirviPayload = buildCreateGirviPayload
 const ones  = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
 const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
 const tens  = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
