@@ -125,14 +125,18 @@ const { createCustomer, updateCustomer, isCreating } = useCustomerActions(shopId
 const handleApplyEdits = async () => {
   if (!editableFields || !selectedCustomer?._id) return
 
-  const payload = {
-    firstName: editableFields.firstName,
-    lastName: editableFields.lastName,
-    phone: editableFields.phone,
-    relationType: editableFields.relationType,
-    relationName: editableFields.relationName,
-    jaati: editableFields.jaati,
-  }
+
+const payload = {
+  firstName:    editableFields.firstName,
+  lastName:     editableFields.lastName,
+  phone:        editableFields.phone,
+  relationType: editableFields.relationType,
+  relationName: editableFields.relationName,
+  jaati:        editableFields.jaati,
+  address: {
+    city: editableFields.address || undefined,
+  },
+}
 
   const result = await updateCustomer(selectedCustomer._id, payload)
 
@@ -624,6 +628,17 @@ if (result.success && result.data) {
                     className="h-9 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
+                  <div className="space-y-1">
+    <label className="text-xs font-medium text-text-secondary">City</label>
+    <input
+      type="text"
+      value={editableFields.address}
+      onChange={e => setEditableFields(f => f ? { ...f, address: e.target.value } : f)}
+      placeholder="e.g. Bareilly, Agra..."
+      maxLength={50}
+      className="h-9 w-full rounded-lg border border-border-primary bg-bg-secondary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+    />
+  </div>
               </div>
 
               <div className="flex gap-2 pt-1">
