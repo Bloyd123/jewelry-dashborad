@@ -76,9 +76,7 @@ export const createBlankItem = (): GirviItemFormData => ({
 })
 
 
-// ─── AFTER ────────────────────────────────────────────────
 
-// Helpers — NaN ko undefined/fallback mein convert karo
 export const safeFloat = (val: any, fallback?: number): number | undefined => {
   const n = parseFloat(String(val ?? ''))
   if (isNaN(n)) return fallback
@@ -122,7 +120,6 @@ export const buildCreateGirviPayload = (d: Partial<GirviFormData>) => ({
   internalNotes:        d.internalNotes,
 })
 
-// Update ke liye — sirf allowed fields
 export const buildUpdateGirviPayload = (d: Partial<GirviFormData>) => ({
   interestRate:      safeFloat(d.interestRate, 0)!,
   interestType:      d.interestType     || 'simple',
@@ -135,7 +132,6 @@ export const buildUpdateGirviPayload = (d: Partial<GirviFormData>) => ({
   internalNotes:     d.internalNotes,
 })
 
-// Backward compat ke liye — create payload hi return karta hai
 export const buildGirviPayload = buildCreateGirviPayload
 const ones  = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
 const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']

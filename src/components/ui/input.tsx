@@ -17,6 +17,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           'border-border-primary bg-bg-secondary text-text-primary placeholder:text-text-tertiary',
           'focus-visible:outline-none focus-visible:ring-accent focus-visible:ring-offset-2',
           'disabled:cursor-not-allowed disabled:bg-bg-tertiary disabled:opacity-50',
+          // Hide number input spinners across all browsers
+          '[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none',
           className
         )}
         ref={ref}

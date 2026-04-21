@@ -3,6 +3,10 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Upload, X, FileText, Tag, Lock } from 'lucide-react'
+import { Input }    from '@/components/ui/input'
+import { Label }    from '@/components/ui/label'
+import { Button }   from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
 import type { GirviFormSectionProps } from '../GirviForm.types'
 
 export const AdditionalDetailsSection = ({
@@ -15,7 +19,7 @@ export const AdditionalDetailsSection = ({
   const { t } = useTranslation()
   const [tagInput, setTagInput] = useState('')
 
-
+  // ── Tag handlers ────────────────────────────────────────────────────────────
   const handleAddTag = () => {
     const trimmed = tagInput.trim()
     if (!trimmed) return
@@ -42,7 +46,7 @@ export const AdditionalDetailsSection = ({
     }
   }
 
-
+  // ── File handlers ────────────────────────────────────────────────────────────
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
     if (!files.length) return
@@ -71,19 +75,17 @@ export const AdditionalDetailsSection = ({
     return `${(bytes / (1024 * 1024)).toFixed(2)} MB`
   }
 
-  const notesLength         = (data.notes         || '').length
-  const internalNotesLength = (data.internalNotes  || '').length
+  const notesLength         = (data.notes        || '').length
+  const internalNotesLength = (data.internalNotes || '').length
 
   return (
     <div className="space-y-6">
 
-      <div className="space-y-2">
-        <label htmlFor="girvi-notes" className="text-sm font-medium text-text-primary">
-          {t('girvi.notes')}
-        </label>
+      {/* ── Notes ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="girvi-notes">{t('girvi.notes')}</Label>
         <p className="text-xs text-text-tertiary">{t('girvi.notesHint')}</p>
-
-        <textarea
+        <Textarea
           id="girvi-notes"
           name="notes"
           value={data.notes || ''}
@@ -93,11 +95,8 @@ export const AdditionalDetailsSection = ({
           placeholder={t('girvi.notesPlaceholder')}
           rows={3}
           maxLength={1000}
-          className={`w-full resize-none rounded-lg border bg-bg-secondary px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${
-            errors.notes ? 'border-status-error' : 'border-border-primary'
-          }`}
+          className={`resize-none ${errors.notes ? 'border-status-error' : ''}`}
         />
-
         <div className="flex items-center justify-between">
           {errors.notes
             ? <p className="text-sm text-status-error">{errors.notes}</p>
@@ -109,17 +108,17 @@ export const AdditionalDetailsSection = ({
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="girvi-internal-notes" className="flex items-center gap-2 text-sm font-medium text-text-primary">
+      {/* ── Internal Notes ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="girvi-internal-notes" className="flex items-center gap-2">
           <Lock className="h-3.5 w-3.5 text-text-tertiary" />
           {t('girvi.internalNotes')}
           <span className="rounded-full bg-bg-tertiary px-2 py-0.5 text-xs text-text-tertiary">
             {t('girvi.staffOnly')}
           </span>
-        </label>
+        </Label>
         <p className="text-xs text-text-tertiary">{t('girvi.internalNotesHint')}</p>
-
-        <textarea
+        <Textarea
           id="girvi-internal-notes"
           name="internalNotes"
           value={data.internalNotes || ''}
@@ -129,11 +128,8 @@ export const AdditionalDetailsSection = ({
           placeholder={t('girvi.internalNotesPlaceholder')}
           rows={3}
           maxLength={1000}
-          className={`w-full resize-none rounded-lg border bg-bg-secondary px-4 py-3 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${
-            errors.internalNotes ? 'border-status-error' : 'border-border-primary'
-          }`}
+          className={`resize-none ${errors.internalNotes ? 'border-status-error' : ''}`}
         />
-
         <div className="flex items-center justify-between">
           {errors.internalNotes
             ? <p className="text-sm text-status-error">⚠️ {errors.internalNotes}</p>
@@ -145,17 +141,15 @@ export const AdditionalDetailsSection = ({
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
-          {t('girvi.tags')}
-        </label>
-
+      {/* ── Tags ── */}
+      <div className="space-y-1.5">
+        <Label>{t('girvi.tags')}</Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <Tag className="h-4 w-4 text-text-tertiary" />
             </div>
-            <input
+            <Input
               type="text"
               value={tagInput}
               onChange={e => setTagInput(e.target.value)}
@@ -163,19 +157,18 @@ export const AdditionalDetailsSection = ({
               disabled={disabled}
               placeholder={t('girvi.addTagPlaceholder')}
               maxLength={50}
-              className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary pl-10 pr-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
+              className="pl-10"
             />
           </div>
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={handleAddTag}
             disabled={disabled || !tagInput.trim()}
-            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {t('common.add')}
-          </button>
+          </Button>
         </div>
-
         <p className="text-xs text-text-tertiary">{t('girvi.tagHint')}</p>
 
         {(data.tags || []).length > 0 && (
@@ -202,10 +195,8 @@ export const AdditionalDetailsSection = ({
         )}
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
-          {t('girvi.attachments')}
-        </label>
+      <div className="space-y-1.5">
+        <Label>{t('girvi.attachments')}</Label>
         <p className="text-xs text-text-tertiary">{t('girvi.attachmentsHint')}</p>
 
         {!disabled && (
@@ -233,6 +224,7 @@ export const AdditionalDetailsSection = ({
             </label>
           </div>
         )}
+
         {(data.attachments || []).length > 0 && (
           <div className="space-y-2">
             {(data.attachments || []).map((file, index) => (
@@ -253,16 +245,17 @@ export const AdditionalDetailsSection = ({
                     </p>
                   </div>
                 </div>
-
                 {!disabled && (
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    size="icon"
                     onClick={() => handleRemoveFile(index)}
-                    className="ml-2 flex-shrink-0 rounded-lg p-1.5 text-status-error transition-colors hover:bg-status-error/10"
+                    className="ml-2 flex-shrink-0 text-status-error hover:bg-status-error/10 hover:text-status-error"
                     aria-label={`Remove ${file.name}`}
                   >
                     <X className="h-4 w-4" />
-                  </button>
+                  </Button>
                 )}
               </div>
             ))}

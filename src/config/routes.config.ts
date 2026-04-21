@@ -135,6 +135,15 @@ const GirviListPage = lazy(() =>
 const GirviFormPage = lazy(() =>
   import('@/pages/girvi/GirviFormPage').then(m => ({ default: m.GirviFormPage }))
 )
+const GirviReleasePage = lazy(() =>
+  import('@/pages/girvi/GirviReleasePage').then(m => ({ default: m.GirviReleasePage }))
+)
+const GirviPartialReleasePage = lazy(() =>
+  import('@/pages/girvi/GirviPartialReleasePage').then(m => ({ default: m.GirviPartialReleasePage }))
+)
+const GirviRenewalPage = lazy(() =>
+  import('@/pages/girvi/GirviRenewalPage').then(m => ({ default: m.GirviRenewalPage }))
+)
 const GirviDetailPage = lazy(() =>
   import('@/pages/girvi/GirviDetailPage').then(m => ({ default: m.GirviDetailPage }))
 )
@@ -500,12 +509,34 @@ export const protectedRoutes: RouteConfig[] = [
     title: 'Edit Girvi',
   },
   {
+  path: ROUTE_PATHS.GIRVI.RELEASE,
+  element: GirviReleasePage,
+  requiresAuth: true,
+  permission: 'canReleaseGirvi',
+  title: 'Release Girvi',
+},
+{
+  path: ROUTE_PATHS.GIRVI.PARTIAL_RELEASE,
+  element: GirviPartialReleasePage,
+  requiresAuth: true,
+  permission: 'canReleaseGirvi',
+  title: 'Partial Release Girvi',
+},
+{
+  path: ROUTE_PATHS.GIRVI.RENEW,
+  element: GirviRenewalPage,
+  requiresAuth: true,
+  permission: 'canRenewGirvi',
+  title: 'Renew Girvi',
+},
+  {
     path: ROUTE_PATHS.GIRVI.DETAIL,
     element: GirviDetailPage,
     requiresAuth: true,
     permission: 'canViewGirvi',
     title: 'Girvi Details',
   },
+  
   {
   path: ROUTE_PATHS.GIRVI.PAYMENTS,
   element: GirviPaymentPage,

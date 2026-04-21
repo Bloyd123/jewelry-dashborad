@@ -1,6 +1,5 @@
 // FILE: src/components/girvi/GirviForm/GirviForm.types.ts
 
-import type { Girvi } from '@/types/girvi.types'
 
 export interface GirviFormProps {
   initialData?: Partial<GirviFormData>
@@ -27,13 +26,13 @@ export interface GirviItemFormData {
   quantity: number
   grossWeight: number | string
   lessWeight: number | string
-  netWeight?: number          // computed: grossWeight - lessWeight
+  netWeight?: number
   tunch?: number | string
   purity?: string
   ratePerGram?: number | string
-  approxValue?: number        // computed: netWeight × (tunch/100) × ratePerGram
+  approxValue?: number        
   userGivenValue?: number | string
-  finalValue?: number         // computed: userGivenValue || approxValue
+  finalValue?: number         
   condition: 'good' | 'fair' | 'poor'
 }
 

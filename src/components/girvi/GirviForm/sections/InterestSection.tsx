@@ -1,14 +1,17 @@
 // FILE: src/components/girvi/GirviForm/sections/InterestSection.tsx
 
 import { useTranslation } from 'react-i18next'
-import { TrendingUp, Percent, CreditCard, Banknote, Smartphone, Building2, FileText } from 'lucide-react'
+import { TrendingUp, Percent, Banknote, Smartphone, Building2, FileText } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import type { GirviFormSectionProps } from '../GirviForm.types'
 import { calcLoanToValue, numberToWords } from '../GirviForm.utils'
+
 const GIRVI_PAYMENT_MODES = [
-  { value: 'cash',          icon: Banknote,   label: 'Cash' },
-  { value: 'upi',           icon: Smartphone, label: 'UPI' },
+  { value: 'cash',          icon: Banknote,   label: 'Cash'     },
+  { value: 'upi',           icon: Smartphone, label: 'UPI'      },
   { value: 'bank_transfer', icon: Building2,  label: 'Transfer' },
-  { value: 'cheque',        icon: FileText,   label: 'Cheque' },
+  { value: 'cheque',        icon: FileText,   label: 'Cheque'   },
 ]
 
 export const InterestSection = ({
@@ -24,25 +27,25 @@ export const InterestSection = ({
     (sum, item) => sum + (item.finalValue ?? 0),
     0
   )
-  const principal = parseFloat(String(data.principalAmount || 0))
-  const ltv = totalApproxValue > 0 ? calcLoanToValue(principal, totalApproxValue) : null
-
+  const principal     = parseFloat(String(data.principalAmount || 0))
+  const ltv           = totalApproxValue > 0 ? calcLoanToValue(principal, totalApproxValue) : null
   const amountInWords = principal > 0 ? numberToWords(principal) : ''
 
   return (
     <div className="space-y-6">
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+      {/* ── Principal Amount ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="principalAmount">
           {t('girvi.principalAmount')}
           <span className="ml-1 text-status-error">*</span>
-        </label>
-
+        </Label>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
             <span className="text-lg font-semibold text-text-secondary">₹</span>
           </div>
-          <input
+          <Input
+            id="principalAmount"
             type="text"
             name="principalAmount"
             value={data.principalAmount || ''}
@@ -50,18 +53,12 @@ export const InterestSection = ({
             onBlur={() => onBlur?.('principalAmount')}
             disabled={disabled}
             placeholder="0.00"
-            className={`h-14 w-full rounded-lg border bg-bg-secondary pl-10 pr-4 text-xl font-bold text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary ${
-              errors.principalAmount ? 'border-status-error' : 'border-border-primary'
-            }`}
+            className={`h-14 pl-10 text-xl font-bold ${errors.principalAmount ? 'border-status-error' : ''}`}
           />
         </div>
-
         {amountInWords && (
-          <p className="text-sm italic text-text-secondary">
-            {amountInWords}
-          </p>
+          <p className="text-sm italic text-text-secondary">{amountInWords}</p>
         )}
-
         {ltv !== null && (
           <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${
             ltv > 80
@@ -75,22 +72,23 @@ export const InterestSection = ({
             {ltv > 80 && ' — High Risk'}
           </div>
         )}
-
         {errors.principalAmount && (
           <p className="text-sm text-status-error">{errors.principalAmount}</p>
         )}
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+      {/* ── Interest Rate ── */}
+      <div className="space-y-1.5">
+        <Label htmlFor="interestRate">
           {t('girvi.interestRate')}
           <span className="ml-1 text-status-error">*</span>
-        </label>
+        </Label>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <TrendingUp className="h-4 w-4 text-text-tertiary" />
           </div>
-          <input
+          <Input
+            id="interestRate"
             type="number"
             name="interestRate"
             value={data.interestRate || ''}
@@ -100,12 +98,10 @@ export const InterestSection = ({
             onBlur={() => onBlur?.('interestRate')}
             disabled={disabled}
             placeholder="e.g. 2.5"
-            className={`h-10 w-full rounded-lg border bg-bg-secondary pl-10 pr-16 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary ${
-              errors.interestRate ? 'border-status-error' : 'border-border-primary'
-            }`}
+            className={`pl-10 pr-24 ${errors.interestRate ? 'border-status-error' : ''}`}
           />
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-            <span className="text-sm text-text-tertiary">% / month</span>
+            <span className="text-xs text-text-tertiary sm:text-sm">% / month</span>
           </div>
         </div>
         {errors.interestRate && (
@@ -113,19 +109,20 @@ export const InterestSection = ({
         )}
       </div>
 
-      {/* ── Interest Type + Calculation Basis ────────────── */}
+      {/* ── Interest Type + Calculation Basis ──
+           Mobile : stacked (1 col)
+           md+    : side by side (2 col)
+      ── */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
         {/* Interest Type */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-text-primary">
-            {t('girvi.interestType')}
-          </label>
-          <div className="flex gap-3">
+        <div className="space-y-1.5">
+          <Label>{t('girvi.interestType')}</Label>
+          <div className="flex gap-2 sm:gap-3">
             {(['simple', 'compound'] as const).map(type => (
               <label
                 key={type}
-                className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 p-3 transition-all ${
+                className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 p-2.5 sm:p-3 transition-all ${
                   data.interestType === type
                     ? 'bg-accent/10 border-accent text-accent'
                     : 'border-border-primary bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
@@ -140,21 +137,20 @@ export const InterestSection = ({
                   disabled={disabled}
                   className="sr-only"
                 />
-                <span className="text-sm font-medium capitalize">{type}</span>
+                <span className="text-xs font-medium capitalize sm:text-sm">{type}</span>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-text-primary">
-            {t('girvi.calculationBasis')}
-          </label>
-          <div className="flex gap-3">
+        {/* Calculation Basis */}
+        <div className="space-y-1.5">
+          <Label>{t('girvi.calculationBasis')}</Label>
+          <div className="flex gap-2 sm:gap-3">
             {(['monthly', 'daily'] as const).map(basis => (
               <label
                 key={basis}
-                className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 p-3 transition-all ${
+                className={`flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 p-2.5 sm:p-3 transition-all ${
                   data.calculationBasis === basis
                     ? 'bg-accent/10 border-accent text-accent'
                     : 'border-border-primary bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
@@ -169,41 +165,45 @@ export const InterestSection = ({
                   disabled={disabled}
                   className="sr-only"
                 />
-                <span className="text-sm font-medium capitalize">{basis}</span>
+                <span className="text-xs font-medium capitalize sm:text-sm">{basis}</span>
               </label>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+      {/* ── Payment Mode ──
+           Mobile : 2×2 grid
+           sm+    : 4 in a row
+      ── */}
+      <div className="space-y-1.5">
+        <Label>
           {t('girvi.paymentModeAtJama')}
           <span className="ml-1 text-status-error">*</span>
-        </label>
+        </Label>
         <p className="text-xs text-text-tertiary">{t('girvi.paymentModeHint')}</p>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
           {GIRVI_PAYMENT_MODES.map(mode => (
             <button
               key={mode.value}
               type="button"
               onClick={() => onChange('paymentMode', mode.value)}
               disabled={disabled}
-              className={`flex flex-col items-center justify-center gap-2 rounded-lg border-2 p-4 transition-all ${
+              className={`flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 p-3 sm:gap-2 sm:p-4 transition-all ${
                 data.paymentMode === mode.value
                   ? 'bg-accent/10 border-accent'
                   : 'hover:border-accent/50 border-border-primary bg-bg-secondary hover:bg-bg-tertiary'
               } ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
             >
-              <div className={`flex h-10 w-10 items-center justify-center rounded-full ${
+              <div className={`flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10 ${
                 data.paymentMode === mode.value
                   ? 'bg-accent text-white'
                   : 'bg-bg-tertiary text-text-secondary'
               }`}>
-                <mode.icon className="h-5 w-5" />
+                <mode.icon className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
-              <span className={`text-sm font-medium ${
+              <span className={`text-xs font-medium sm:text-sm ${
                 data.paymentMode === mode.value ? 'text-accent' : 'text-text-primary'
               }`}>
                 {mode.label}
@@ -212,8 +212,9 @@ export const InterestSection = ({
           ))}
         </div>
 
+        {/* Transaction reference — shown when non-cash */}
         {data.paymentMode && data.paymentMode !== 'cash' && (
-          <input
+          <Input
             type="text"
             name="transactionReference"
             value={data.transactionReference || ''}
@@ -227,7 +228,7 @@ export const InterestSection = ({
                 ? t('girvi.chequeNumberPlaceholder')
                 : t('girvi.transactionRefPlaceholder')
             }
-            className="mt-2 h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-4 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
+            className="mt-2"
           />
         )}
 

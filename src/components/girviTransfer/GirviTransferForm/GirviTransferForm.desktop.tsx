@@ -58,6 +58,7 @@ export default function GirviTransferFormDesktop({
         type:    formData.fromPartyType,
       },
       toParty: {
+         supplierId:   formData.toPartySupplierId, 
         name:         formData.toPartyName,
         phone:        formData.toPartyPhone,
         address:      formData.toPartyAddress,

@@ -5,6 +5,7 @@ import { Edit, Unlock, ArrowLeft, Trash2, RefreshCw } from 'lucide-react'
 import { GirviForm }    from '@/components/girvi/GirviForm'
 import { useGirviById } from '@/hooks/girvi/useGirviById'
 import { useAuth as useAuthDetail } from '@/hooks/auth'
+import { buildRoute } from '@/constants/routePaths'
  import { mapGirviToFormData } from '@/components/girvi/GirviForm/GirviForm.mappers'
  
 export const GirviDetailPage = () => {
@@ -33,10 +34,10 @@ export const GirviDetailPage = () => {
       </div>
     )
   }
- 
+
   return (
-    <div className="space-y-4 p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+<div className="flex flex-col">
+    <div className="flex-shrink-0 flex flex-wrap items-center justify-between gap-3 border-b border-border-primary bg-bg-secondary px-6 py-3">
         <ButtonDetail variant="ghost" onClick={() => navigate(-1)} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
           {t('common.back')}
@@ -45,7 +46,7 @@ export const GirviDetailPage = () => {
         <div className="flex flex-wrap items-center gap-2">
           {canRelease && isManager && (
             <ButtonDetail
-              onClick={() => navigate(`/shops/${shopId}/girvi/${girviId}/release`)}
+            onClick={() => navigate(buildRoute.girvi.release(shopId!, girviId!))}
               className="gap-2"
             >
               <Unlock className="h-4 w-4" />
@@ -56,7 +57,7 @@ export const GirviDetailPage = () => {
           {canPartialRelease && isManager && activeItemCount > 1 && (
             <ButtonDetail
               variant="outline"
-              onClick={() => navigate(`/shops/${shopId}/girvi/${girviId}/partial-release`)}
+     onClick={() => navigate(buildRoute.girvi.partialRelease(shopId!, girviId!))}
               className="gap-2"
             >
               <Unlock className="h-4 w-4" />
@@ -67,7 +68,7 @@ export const GirviDetailPage = () => {
           {canRenew && isManager && (
             <ButtonDetail
               variant="outline"
-              onClick={() => navigate(`/shops/${shopId}/girvi/${girviId}/renew`)}
+              onClick={() => navigate(buildRoute.girvi.renew(shopId!, girviId!))}
               className="gap-2"
             >
               <RefreshCw className="h-4 w-4" />

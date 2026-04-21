@@ -2,7 +2,8 @@
 
 import { useTranslation } from 'react-i18next'
 import { FormDatePicker } from '@/components/forms/FormDatePicker/FormDatePicker'
-import { FormInput }      from '@/components/forms/FormInput/FormInput'
+import { Input }          from '@/components/ui/input'
+import { Label }          from '@/components/ui/label'
 import { Calendar, Hash, User } from 'lucide-react'
 import type { GirviFormSectionProps } from '../GirviForm.types'
 
@@ -17,7 +18,6 @@ export const BasicInfoSection = ({
 
   return (
     <div className="space-y-4">
-      {/* Girvi Date + Due Date side by side */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <FormDatePicker
           name="girviDate"
@@ -42,15 +42,18 @@ export const BasicInfoSection = ({
           minDate={data.girviDate ? new Date(data.girviDate) : new Date()}
         />
       </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+
+      {/* Grace Period Days */}
+      <div className="space-y-1.5">
+        <Label htmlFor="gracePeriodDays">
           {t('girvi.gracePeriodDays')}
-        </label>
+        </Label>
         <div className="relative">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <Calendar className="h-4 w-4 text-text-tertiary" />
           </div>
-          <input
+          <Input
+            id="gracePeriodDays"
             type="number"
             name="gracePeriodDays"
             value={data.gracePeriodDays ?? 0}
@@ -58,13 +61,11 @@ export const BasicInfoSection = ({
             onChange={e => onChange('gracePeriodDays', parseInt(e.target.value) || 0)}
             onBlur={() => onBlur?.('gracePeriodDays')}
             disabled={disabled}
-            className={`h-10 w-full rounded-lg border bg-bg-secondary pl-10 pr-4 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary disabled:text-text-tertiary ${
-              errors.gracePeriodDays ? 'border-status-error' : 'border-border-primary'
-            }`}
+            className={`pl-10 ${errors.gracePeriodDays ? 'border-status-error' : ''}`}
           />
         </div>
         {errors.gracePeriodDays && (
-          <p className="text-sm text-status-error"> {errors.gracePeriodDays}</p>
+          <p className="text-sm text-status-error">{errors.gracePeriodDays}</p>
         )}
         <p className="text-xs text-text-tertiary">
           {t('girvi.gracePeriodHint')}
@@ -72,15 +73,17 @@ export const BasicInfoSection = ({
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-text-primary">
+        {/* Girvi Slip Number */}
+        <div className="space-y-1.5">
+          <Label htmlFor="girviSlipNumber">
             {t('girvi.girviSlipNumber')}
-          </label>
+          </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <Hash className="h-4 w-4 text-text-tertiary" />
             </div>
-            <input
+            <Input
+              id="girviSlipNumber"
               type="text"
               name="girviSlipNumber"
               value={data.girviSlipNumber || ''}
@@ -89,20 +92,22 @@ export const BasicInfoSection = ({
               disabled={disabled}
               placeholder={t('girvi.girviSlipNumberPlaceholder')}
               maxLength={100}
-              className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary pl-10 pr-4 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
+              className="pl-10"
             />
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-text-primary">
+        {/* Witness Name */}
+        <div className="space-y-1.5">
+          <Label htmlFor="witnessName">
             {t('girvi.witnessName')}
-          </label>
+          </Label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <User className="h-4 w-4 text-text-tertiary" />
             </div>
-            <input
+            <Input
+              id="witnessName"
               type="text"
               name="witnessName"
               value={data.witnessName || ''}
@@ -111,7 +116,7 @@ export const BasicInfoSection = ({
               disabled={disabled}
               placeholder={t('girvi.witnessNamePlaceholder')}
               maxLength={100}
-              className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary pl-10 pr-4 text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent disabled:bg-bg-tertiary"
+              className="pl-10"
             />
           </div>
         </div>

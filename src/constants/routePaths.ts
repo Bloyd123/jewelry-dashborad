@@ -102,6 +102,8 @@ GIRVI: {
   EDIT: '/shops/:shopId/girvi/edit/:girviId',
   DETAIL: '/shops/:shopId/girvi/:girviId',
   RELEASE: '/shops/:shopId/girvi/:girviId/release',
+    PARTIAL_RELEASE: '/shops/:shopId/girvi/:girviId/partial-release', 
+  RENEW: '/shops/:shopId/girvi/:girviId/renew',                     
   PAYMENTS: '/shops/:shopId/girvi/:girviId/payments',
   SHOP_PAYMENTS: '/shops/:shopId/girvi-payments',
 },
@@ -128,13 +130,15 @@ export const buildRoute = {
 },
 girviCashbook: (shopId: string) => `/shops/${shopId}/girvi-cashbook`,
 girvi: {
-  list: (shopId: string) => `/shops/${shopId}/girvi`,
-  detail: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}`,
-  edit: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/edit/${girviId}`,
-  release: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/release`,
-  add: (shopId: string) => `/shops/${shopId}/girvi/new`,
-  payments: (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/payments`,
-  shopPayments: (shopId: string) => `/shops/${shopId}/girvi-payments`,
+  list:          (shopId: string) => `/shops/${shopId}/girvi`,
+  detail:        (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}`,
+  edit:          (shopId: string, girviId: string) => `/shops/${shopId}/girvi/edit/${girviId}`,
+  release:       (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/release`,
+  partialRelease:(shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/partial-release`, // NEW
+  renew:         (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/renew`,           // NEW
+  add:           (shopId: string) => `/shops/${shopId}/girvi/new`,
+  payments:      (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/payments`,
+  shopPayments:  (shopId: string) => `/shops/${shopId}/girvi-payments`,
 },
   customer: {
     detail: (id: string) => `/customers/${id}`,

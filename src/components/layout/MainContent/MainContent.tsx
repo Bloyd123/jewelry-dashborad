@@ -14,19 +14,23 @@ export const MainContent = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-bg-primary">
-      {/* Sidebar - Fixed Position */}
+      {/* Sidebar - Fixed */}
       <div className="fixed left-0 top-0 z-30 h-screen">
         {isMobile ? <MobileSidebar /> : <Sidebar />}
       </div>
 
-      {/* Main Content Area - With Dynamic Margin */}
+      {/* Main Area - overflow-hidden yahan, scroll sirf main mein */}
       <div
-        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${isMobile ? 'ml-0' : isCollapsed ? 'ml-20' : 'ml-64'} `}
+        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${
+          isMobile ? 'ml-0' : isCollapsed ? 'ml-20' : 'ml-64'
+        }`}
       >
-        {/* Navbar */}
-        <Navbar />
+        {/* Navbar - shrink na ho */}
+        <div className="flex-shrink-0">
+          <Navbar />
+        </div>
 
-        {/* Page Content - Outlet renders child routes */}
+        {/* ✅ Sirf yahi scroll kare */}
         <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>

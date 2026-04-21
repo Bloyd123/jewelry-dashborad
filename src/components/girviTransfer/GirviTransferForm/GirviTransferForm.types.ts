@@ -14,6 +14,7 @@ export interface GirviTransferFormData {
   fromPartyType?:   PartyType
 
   // To Party
+  toPartySupplierId?:  string  
   toPartyName:         string
   toPartyPhone?:       string
   toPartyAddress?:     string
