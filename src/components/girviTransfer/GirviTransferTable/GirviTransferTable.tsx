@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useCallback } from 'react'
 import { useTranslation }   from 'react-i18next'
 import { useNavigate }      from 'react-router-dom'
+import { buildRoute } from '@/constants/routePaths'
 import { DataTable }        from '@/components/ui/data-display/DataTable'
 import { ConfirmDialog }    from '@/components/ui/overlay/Dialog/ConfirmDialog'
 import type { ConfirmDialogVariant } from '@/components/ui/overlay/Dialog/ConfirmDialog'
@@ -56,23 +57,40 @@ export const GirviTransferTable: React.FC<GirviTransferTableProps> = ({
     setConfirmDialog(prev => ({ ...prev, open: false }))
   }
 
-  const handleViewDetails = useCallback((transfer: IGirviTransfer) => {
-    navigate(`/girvi/${transfer.girviId}/transfers/${transfer._id}`)
-  }, [navigate])
+const handleViewDetails = useCallback((transfer: IGirviTransfer) => {
+  detail: (shopId: string, transferId: string) => 
+  `/shops/${shopId}/girvi-transfers/${transferId}`
+}, [navigate, shopId])
 
-  const handleReturn = useCallback((transfer: IGirviTransfer) => {
-    navigate(`/girvi/${transfer.girviId}/transfers/${transfer._id}?action=return`)
-  }, [navigate])
+const handleReturn = useCallback((transfer: IGirviTransfer) => {
+  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id) + '?action=return')
+}, [navigate, shopId])
+const [cancelTarget, setCancelTarget] = useState<{
+  girviId: string
+  transferId: string
+} | null>(null)
 
-  const handleCancel = useCallback((transfer: IGirviTransfer) => {
-    const { cancelTransfer } = useGirviTransferActions(shopId, String(transfer.girviId), transfer._id)
-    openConfirm(
-      t('girviTransfer.confirmCancel', 'Cancel Transfer?'),
-      t('girviTransfer.confirmCancelDesc', `Cancel ${transfer.transferNumber}?`),
-      'danger',
-      async () => { await cancelTransfer() }
-    )
-  }, [shopId, openConfirm, t])
+const { cancelTransfer } = useGirviTransferActions(
+  shopId,
+  cancelTarget?.girviId || '',
+  cancelTarget?.transferId || ''
+)
+
+const handleCancel = useCallback((transfer: IGirviTransfer) => {
+  const gId = typeof transfer.girviId === 'object'
+    ? (transfer.girviId as any)._id
+    : String(transfer.girviId)
+
+  setCancelTarget({ girviId: gId, transferId: transfer._id })
+
+  openConfirm(
+    t('girviTransfer.confirmCancel', 'Cancel Transfer?'),
+    t('girviTransfer.confirmCancelDesc', `Cancel ${transfer.transferNumber}?`),
+    'danger',
+    async () => { await cancelTransfer() }
+  )
+}, [openConfirm, t, cancelTransfer])
+
 
   const rowActions = useMemo(
     () => getGirviTransferRowActions(handleViewDetails, handleReturn, handleCancel),
@@ -116,9 +134,9 @@ export const GirviTransferTable: React.FC<GirviTransferTableProps> = ({
           shadow:       true,
           fullWidth:    true,
         }}
-        onRowClick={transfer =>
-          navigate(`/girvi/${transfer.girviId}/transfers/${transfer._id}`)
-        }
+onRowClick={transfer => {
+  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id))
+}}
         getRowId={row => row._id}
         testId="girvi-transfer-table"
       />

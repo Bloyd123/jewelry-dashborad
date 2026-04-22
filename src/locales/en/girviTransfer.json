@@ -72,7 +72,7 @@
     "financials": {
       "title": "Transfer Financials",
       "transferDate": "Transfer Date",
-      "partyPrincipal": "Amount Given to Party (₹)",
+      "partyPrincipal": "Amount Received from Party (₹)",
       "ourInterest": "Our Interest Till Transfer (₹)",
       "ourInterestType": "Our Interest Type",
       "transferAmount": "Transfer Settlement Amount (₹)",

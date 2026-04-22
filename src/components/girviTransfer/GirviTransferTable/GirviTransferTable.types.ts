@@ -6,5 +6,5 @@ export type { IGirviTransfer as GirviTransfer }
 
 export interface GirviTransferTableProps {
   shopId:   string
-  girviId?: string   // agar specific girvi ke transfers chahiye
+  girviId?: string   
 }

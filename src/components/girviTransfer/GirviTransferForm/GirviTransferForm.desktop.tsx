@@ -1,6 +1,6 @@
 // FILE: src/components/girviTransfer/GirviTransferForm/GirviTransferForm.desktop.tsx
-
-import { useState }       from 'react'
+import { useState, useEffect } from 'react'
+import { useGirviInterest }    from '@/hooks/girvi/useGirviInterest'
 import { useTranslation } from 'react-i18next'
 import { Button }         from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -26,16 +26,30 @@ export default function GirviTransferFormDesktop({
   const { showError }  = useNotification()
 
   const [showConfirm, setShowConfirm] = useState(false)
-  const [formData, setFormData] = useState<Partial<GirviTransferFormData>>({
-    fromPartyType:       'shop',
-    toPartyType:         'external',
-    toPartyInterestType: 'simple',
-    ourInterestType:     'simple',
-    paymentMode:         'cash',
-    transferDate:        new Date().toISOString().split('T')[0],
-    partyPrincipalAmount: girviInfo?.outstandingPrincipal ?? 0,
-    ourInterestTillTransfer: 0,
-  })
+const { interestCalculated } = useGirviInterest(shopId, girviId, {
+  toDate: new Date().toISOString().split('T')[0],
+})
+
+const [formData, setFormData] = useState<Partial<GirviTransferFormData>>({
+  fromPartyType:           'shop',
+  toPartyType:             'external',
+  toPartyInterestType:     'simple',
+  ourInterestType:         'simple',
+  paymentMode:             'cash',
+  transferDate:            new Date().toISOString().split('T')[0],
+  partyPrincipalAmount:    girviInfo?.outstandingPrincipal ?? 0,
+  ourInterestTillTransfer: 0,
+})
+
+// ← Yeh add karo useState ke baad
+useEffect(() => {
+  if (interestCalculated) {
+    setFormData(prev => ({
+      ...prev,
+      ourInterestTillTransfer: interestCalculated,
+    }))
+  }
+}, [interestCalculated])
   const [errors,  setErrors]  = useState<Record<string, string>>({})
 
   const { transferOut, isTransferringOut } =
@@ -136,6 +150,7 @@ export default function GirviTransferFormDesktop({
     errors,
     onChange: handleChange,
     disabled: isTransferringOut,
+      shopId, 
   }
 
   return (

@@ -8,18 +8,71 @@ import { useAuth }        from '@/hooks/auth'
 import { useGirviTransferById } from '@/hooks/girviTransfer'
 import { GirviTransferDetailHeader } from './GirviTransferDetailHeader'
 import { OverviewTab, PartyInterestTab, ReturnTab } from './tabs'
+import { useGirviById } from '@/hooks/girvi/useGirviById'
+
+const GirviInfoBar = ({ shopId, girviId }: { shopId: string; girviId: string }) => {
+  const { girvi } = useGirviById(shopId, girviId)
+  if (!girvi) return null
+
+  const customer = typeof girvi.customerId === 'object'
+    ? (girvi.customerId as any)
+    : null
+
+  return (
+    <div className="mx-4 mt-3 flex items-center gap-3 rounded-lg border border-accent/30 bg-accent/5 px-4 py-2.5 md:mx-6">
+      {/* Avatar */}
+      <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">
+        {customer?.firstName?.[0]?.toUpperCase() ?? 'G'}
+      </div>
+
+      {/* Info */}
+      <div className="flex flex-1 flex-wrap items-center gap-x-4 gap-y-0.5 text-sm">
+        <span className="font-semibold text-text-primary">
+          {girvi.girviNumber}
+        </span>
+        {customer && (
+          <span className="text-text-secondary">
+            {customer.firstName} {customer.lastName || ''}
+          </span>
+        )}
+        {customer?.phone && (
+          <span className="text-text-tertiary">📱 {customer.phone}</span>
+        )}
+        <span className="font-medium text-accent">
+          ₹{Number(girvi.outstandingPrincipal || 0).toLocaleString('en-IN')} outstanding
+        </span>
+      </div>
+
+      {/* Status badge */}
+      <span className={`flex-shrink-0 rounded px-2 py-0.5 text-xs font-medium capitalize
+        ${girvi.status === 'transferred'
+          ? 'bg-status-info/10 text-status-info'
+          : 'bg-status-success/10 text-status-success'
+        }`}
+      >
+        {girvi.status}
+      </span>
+    </div>
+  )
+}
 
 export default function GirviTransferDetailPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const navigate   = useNavigate()
-  const { girviId, transferId } = useParams<{ girviId: string; transferId: string }>()
-  const { t }      = useTranslation()
-  const { currentShopId } = useAuth()
-  const shopId = currentShopId || ''
 
-  const { transfer, isLoading, error } =
-    useGirviTransferById(shopId, girviId!, transferId!)
+  const { t } = useTranslation()
+const { currentShopId } = useAuth()
+const { shopId: shopIdParam, transferId } =
+  useParams<{ shopId: string; transferId: string }>()
+const shopId = shopIdParam || currentShopId || ''
 
+const { transfer, isLoading, error } =
+  useGirviTransferById(shopId, undefined, transferId!)
+const girviId = transfer?.girviId
+  ? typeof transfer.girviId === 'object'
+    ? (transfer.girviId as any)._id
+    : String(transfer.girviId)
+  : ''
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -52,6 +105,8 @@ export default function GirviTransferDetailPage() {
         onTabChange={setActiveTab}
         onBackClick={() => navigate(-1)}
       />
+        {/* Selected Girvi Info Bar */}
+    {girviId && <GirviInfoBar shopId={shopId} girviId={girviId} />}
 
       <div className="px-4 py-6 md:px-6">
         {activeTab === 'overview' && (

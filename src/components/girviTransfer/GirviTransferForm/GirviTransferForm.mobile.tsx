@@ -142,6 +142,7 @@ export default function GirviTransferFormMobile({
     errors,
     onChange: handleChange,
     disabled: isTransferringOut,
+      shopId, 
   }
 
   const renderStep = () => {

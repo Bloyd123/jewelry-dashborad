@@ -53,7 +53,7 @@ export const TransferFinancialsSection = ({
           {/* Party Principal Amount */}
           <FormInput
             name="partyPrincipalAmount"
-            label={t('girviTransfer.financials.partyPrincipal', 'Amount Given to Party (₹)')}
+            label={t('girviTransfer.financials.partyPrincipal', 'Amount Received from Party (₹)')}
             type="number"
             value={data.partyPrincipalAmount || 0}
             onChange={(name, value) => onChange(name, Number(value) || 0)}

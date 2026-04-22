@@ -164,6 +164,7 @@ export const ToPartySection = ({
         </h3>
 
         {/* ── Supplier Search ─────────────────────────────────────────────── */}
+        {data.toPartyType === 'shop' && (
         <div className="mb-4 space-y-1.5">
           <Label className="text-xs text-text-secondary">
             {t('girviTransfer.toParty.searchSupplier', 'Search Existing Supplier (Optional)')}
@@ -278,9 +279,10 @@ export const ToPartySection = ({
             </button>
           )}
         </div>
+        )}
 
         {/* ── Quick Add Supplier Form ─────────────────────────────────────── */}
-        {showQuickAdd && !disabled && (
+       {data.toPartyType === 'shop' && showQuickAdd && !disabled && (
           <div className="mb-4 rounded-lg border border-accent/30 bg-accent/5 p-4 space-y-3">
             <p className="text-sm font-semibold text-text-primary flex items-center gap-2">
               <UserPlus className="h-4 w-4 text-accent" />
@@ -414,15 +416,19 @@ export const ToPartySection = ({
             onBlur={onBlur}
             error={errors.toPartyName}
             required
-            disabled={disabled || !!selectedSupplier}
+            disabled={disabled || (data.toPartyType === 'shop' && !!selectedSupplier)}
             placeholder={t('girviTransfer.toParty.namePlaceholder', 'Receiving party name')}
           />
 
           <FormSelect
             name="toPartyType"
             label={t('girviTransfer.toParty.type', 'Party Type')}
-            value={data.toPartyType || 'external'}
-            onChange={onChange}
+             value={data.toPartyType || 'external'}
+             onChange={(name, value) => {
+    onChange(name, value)
+    // Type change hone par selection clear karo
+    handleClear()
+  }}
             onBlur={onBlur}
             options={partyTypeOptions}
             disabled={disabled}
@@ -435,7 +441,7 @@ export const ToPartySection = ({
             onChange={onChange}
             onBlur={onBlur}
             error={errors.toPartyPhone}
-            disabled={disabled || !!selectedSupplier}
+              disabled={disabled || (data.toPartyType === 'shop' && !!selectedSupplier)}
             placeholder="9876543210"
           />
 
@@ -445,7 +451,7 @@ export const ToPartySection = ({
             value={data.toPartyAddress || ''}
             onChange={onChange}
             onBlur={onBlur}
-            disabled={disabled || !!selectedSupplier}
+            disabled={disabled || (data.toPartyType === 'shop' && !!selectedSupplier)}
             placeholder={t('girviTransfer.toParty.addressPlaceholder', 'Party address')}
           />
 

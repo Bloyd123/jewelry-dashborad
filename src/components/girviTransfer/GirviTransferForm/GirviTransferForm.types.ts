@@ -7,6 +7,7 @@ import type {
 } from '@/types/girviTransfer.types'
 
 export interface GirviTransferFormData {
+   girviId?: string
   // From Party
   fromPartyName:    string
   fromPartyPhone?:  string
@@ -57,4 +58,5 @@ export interface FormSectionProps {
   onChange:  (name: string, value: any) => void
   onBlur?:   (name: string) => void
   disabled?: boolean
+   shopId?:   string 
 }

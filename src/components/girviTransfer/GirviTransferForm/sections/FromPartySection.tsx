@@ -1,18 +1,28 @@
 // FILE: src/components/girviTransfer/GirviTransferForm/sections/FromPartySection.tsx
-
+import { useEffect }      from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormInput }   from '@/components/forms/FormInput/FormInput'
 import { FormSelect }  from '@/components/forms/FormSelect/FormSelect'
 import type { FormSectionProps } from '../GirviTransferForm.types'
-
+import { useShopById }    from '@/hooks/shop/useShopById'
 export const FromPartySection = ({
   data,
   errors,
   onChange,
   onBlur,
   disabled,
+    shopId,  
 }: FormSectionProps) => {
   const { t } = useTranslation()
+    const { shop } = useShopById(shopId)
+
+  useEffect(() => {
+    if (!shop) return
+   onChange('fromPartyName', shop.name || '')
+    onChange('fromPartyPhone',   shop.phone      || '')
+    onChange('fromPartyAddress', shop.address?.street || '')
+    onChange('fromPartyType',    'shop')
+  }, [shop?._id])
 
   const partyTypeOptions = [
     { value: 'shop',     label: t('girviTransfer.partyType.shop',     'Our Shop') },
@@ -35,11 +45,11 @@ export const FromPartySection = ({
             onBlur={onBlur}
             error={errors.fromPartyName}
             required
-            disabled={disabled}
+            disabled={true}
             placeholder={t('girviTransfer.fromParty.namePlaceholder', 'Our Shop Name')}
           />
 
-          <FormSelect
+          {/* <FormSelect
             name="fromPartyType"
             label={t('girviTransfer.fromParty.type', 'Party Type')}
             value={data.fromPartyType || 'shop'}
@@ -47,7 +57,7 @@ export const FromPartySection = ({
             onBlur={onBlur}
             options={partyTypeOptions}
             disabled={disabled}
-          />
+          /> */}
 
           <FormInput
             name="fromPartyPhone"
@@ -56,7 +66,7 @@ export const FromPartySection = ({
             onChange={onChange}
             onBlur={onBlur}
             error={errors.fromPartyPhone}
-            disabled={disabled}
+            disabled={true}
             placeholder="9876543210"
           />
 
@@ -66,7 +76,7 @@ export const FromPartySection = ({
             value={data.fromPartyAddress || ''}
             onChange={onChange}
             onBlur={onBlur}
-            disabled={disabled}
+            disabled={true}
             placeholder={t('girviTransfer.fromParty.addressPlaceholder', 'Shop address')}
           />
         </div>

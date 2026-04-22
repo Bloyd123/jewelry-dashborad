@@ -7,6 +7,7 @@ import { DataTable }      from '@/components/ui/data-display/DataTable'
 import { useAuth }        from '@/hooks/auth'
 import { useGirviList }   from '@/hooks/girvi/useGirviList'
 import { useGirviActions } from '@/hooks/girvi/useGirviActions'
+import { buildRoute } from '@/constants/routePaths'
 import { girviTableColumns }                        from './GirviTableColumns'
 import { getGirviRowActions, GirviBulkActionsBar }  from './GirviTableActions'
 import type { Girvi } from '@/types/girvi.types'
@@ -92,6 +93,7 @@ export const GirviTable: React.FC = () => {
   const handleEdit      = (g: Girvi) => navigate(`/shops/${shopId}/girvi/edit/${g._id}`)
   const handleRelease   = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}/release`)
   const handleCalculate = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}?tab=interest`)
+  const handleTransfer = (g: Girvi) => navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))
   const handleDelete    = async (g: Girvi) => {
     if (window.confirm(t('girvi.deleteConfirm'))) {
       await deleteGirvi(g._id)
@@ -112,13 +114,13 @@ export const GirviTable: React.FC = () => {
     [selectedRows, girvis]
   )
 
-  const rowActions = useMemo(
-    () => getGirviRowActions(
-      handleView, handleEdit, handleRelease, handleCalculate, handleDelete,
-      userRole ?? 'staff'
-    ),
-    [userRole]
-  )
+const rowActions = useMemo(
+  () => getGirviRowActions(
+    handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer,
+    userRole ?? 'staff'
+  ),
+  [userRole]
+)
 
   return (
     <div className="w-full space-y-4">
