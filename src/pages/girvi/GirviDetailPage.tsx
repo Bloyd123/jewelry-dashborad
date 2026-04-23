@@ -1,5 +1,6 @@
-import { useNavigate as useNavigateDetail, useParams as useParamsDetail } from 'react-router-dom'
+import { useNavigate as useNavigateDetail, useParams as useParamsDetail, useSearchParams } from 'react-router-dom'
 import { useTranslation as useTranslationDetail } from 'react-i18next'
+import { useRef, useEffect ,useState} from 'react'
 import { Button as ButtonDetail } from '@/components/ui/button'
 import { Edit, Unlock, ArrowLeft, Trash2, RefreshCw } from 'lucide-react'
 import { GirviForm }    from '@/components/girvi/GirviForm'
@@ -7,13 +8,28 @@ import { useGirviById } from '@/hooks/girvi/useGirviById'
 import { useAuth as useAuthDetail } from '@/hooks/auth'
 import { buildRoute } from '@/constants/routePaths'
  import { mapGirviToFormData } from '@/components/girvi/GirviForm/GirviForm.mappers'
- 
+ import { Dialog } from '@/components/ui/overlay/Dialog/Dialog'
+ import {InterestCalculator } from "@/components/girvi/GirviRelease/InterestCalculator.tsx"
 export const GirviDetailPage = () => {
   const { t }                = useTranslationDetail()
   const navigate             = useNavigateDetail()
   const { shopId, girviId }  = useParamsDetail()
   const { userRole }         = useAuthDetail()
- 
+  
+ const [searchParams]       = useSearchParams()
+const [showInterestModal, setShowInterestModal] = useState(
+  searchParams.get('tab') === 'interest'
+)
+  // tab=interest hone par activity timeline section pe scroll
+  const interestSectionRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (searchParams.get('tab') === 'interest' && interestSectionRef.current) {
+      setTimeout(() => {
+        interestSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 500)  // wait for page to render
+    }
+  }, [searchParams])
   const {
     girvi,
     isLoading,
@@ -89,12 +105,28 @@ export const GirviDetailPage = () => {
         </div>
       </div>
  
+<Dialog
+  open={showInterestModal}
+  onOpenChange={setShowInterestModal}
+  title="girvi.interestCalculator"
+  closeOnOutsideClick
+  contentClassName="max-w-2xl"
+>
+  <div className="px-6 pb-6">
+    <InterestCalculator
+      shopId={shopId!}
+      girviId={girviId!}
+    />
+  </div>
+</Dialog>
+
 <GirviForm
   shopId={shopId!}
   girviId={girviId}
   mode="view"
   initialData={mapGirviToFormData(girvi)}
   onCancel={() => navigate(`/shops/${shopId}/girvi`)}
+  scrollToInterest={searchParams.get('tab') === 'interest'}
 />
     </div>
   )

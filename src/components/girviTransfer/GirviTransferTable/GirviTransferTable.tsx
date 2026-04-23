@@ -58,8 +58,7 @@ export const GirviTransferTable: React.FC<GirviTransferTableProps> = ({
   }
 
 const handleViewDetails = useCallback((transfer: IGirviTransfer) => {
-  detail: (shopId: string, transferId: string) => 
-  `/shops/${shopId}/girvi-transfers/${transferId}`
+  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id))
 }, [navigate, shopId])
 
 const handleReturn = useCallback((transfer: IGirviTransfer) => {
@@ -134,9 +133,9 @@ const handleCancel = useCallback((transfer: IGirviTransfer) => {
           shadow:       true,
           fullWidth:    true,
         }}
-onRowClick={transfer => {
-  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id))
-}}
+// onRowClick={transfer => {
+//   navigate(buildRoute.girviTransfer.detail(shopId, transfer._id))
+// }}
         getRowId={row => row._id}
         testId="girvi-transfer-table"
       />

@@ -107,10 +107,11 @@ GIRVI: {
   PAYMENTS: '/shops/:shopId/girvi/:girviId/payments',
   SHOP_PAYMENTS: '/shops/:shopId/girvi-payments',
 },
-  GIRVI_TRANSFER: {
-  LIST:   '/shops/:shopId/girvi/:girviId/transfers',
-  ADD:    '/shops/:shopId/girvi/:girviId/transfers/new',
-  DETAIL: '/shops/:shopId/girvi/:girviId/transfers/:transferId',
+GIRVI_TRANSFER: {
+  LIST:           '/shops/:shopId/girvi/:girviId/transfers',
+  ADD:            '/shops/:shopId/girvi-transfers/new',           // sidebar ke liye — bina girviId
+  ADD_FOR_GIRVI:  '/shops/:shopId/girvi/:girviId/transfers/new',  // table action ke liye — girviId ke saath
+  DETAIL:         '/shops/:shopId/girvi/:girviId/transfers/:transferId',
 },
 GIRVI_CASHBOOK: '/shops/:shopId/girvi-cashbook',
   // User Profile
@@ -123,10 +124,11 @@ GIRVI_CASHBOOK: '/shops/:shopId/girvi-cashbook',
 // Route Builder Utilities
 
 export const buildRoute = {
-  girviTransfer: {
-  list:   (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers`,
-  add:    (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/new`,
-  detail: (shopId: string, girviId: string, transferId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/${transferId}`,
+girviTransfer: {
+  list:         (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers`,
+  add:          (shopId: string) => `/shops/${shopId}/girvi-transfers/new`,                                    // sidebar
+  addForGirvi:  (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/new`,        // table action
+  detail:       (shopId: string, transferId: string) => `/shops/${shopId}/girvi-transfers/${transferId}`,
 },
 girviCashbook: (shopId: string) => `/shops/${shopId}/girvi-cashbook`,
 girvi: {

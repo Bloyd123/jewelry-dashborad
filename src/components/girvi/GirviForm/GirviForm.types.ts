@@ -8,6 +8,7 @@ export interface GirviFormProps {
   onSuccess?: () => void
   onCancel?: () => void
   mode?: 'create' | 'edit' | 'view'
+   scrollToInterest?: boolean  
 }
 
 export interface GirviFormSectionProps {

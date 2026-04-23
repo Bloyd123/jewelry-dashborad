@@ -4,27 +4,27 @@ import { useState }               from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation }         from 'react-i18next'
 import { useAuth }                from '@/hooks/auth'
+import { buildRoute }             from '@/constants/routePaths'
 import { GirviTransferForm }      from '@/components/girviTransfer/GirviTransferForm'
 import { GirviSection }           from '@/components/girviTransfer/GirviTransferForm/sections/GirviSection'
 
 export default function AddGirviTransferPage() {
-  const navigate          = useNavigate()
+  const navigate                = useNavigate()
   const { girviId: urlGirviId } = useParams<{ girviId?: string }>()
-  const { t }             = useTranslation()
-  const { currentShopId } = useAuth()
-  const shopId            = currentShopId || ''
+  const { t }                   = useTranslation()
+  const { currentShopId }       = useAuth()
+  const shopId                  = currentShopId || ''
 
-  // Selected girvi info — from URL pre-select or manual search
   const [selectedGirviInfo, setSelectedGirviInfo] = useState<{
-    girviId:             string
-    girviNumber:         string
-    principalAmount:     number
+    girviId:              string
+    girviNumber:          string
+    principalAmount:      number
     outstandingPrincipal: number
-    interestRate:        number
-    interestType:        string
-    customerName:        string
-    customerPhone:       string
-  } | null>(urlGirviId ? null : null)  // null until girvi is confirmed
+    interestRate:         number
+    interestType:         string
+    customerName:         string
+    customerPhone:        string
+  } | null>(null)
 
   if (!shopId) {
     return (
@@ -34,35 +34,32 @@ export default function AddGirviTransferPage() {
     )
   }
 
-  // If girviId comes from URL and girvi is already confirmed → show form directly
-  // If no girviId in URL → show GirviSection search first, then form after selection
-  const girviId = selectedGirviInfo?.girviId || urlGirviId || ''
+  const girviId = urlGirviId || selectedGirviInfo?.girviId || ''
 
   return (
     <div className="container mx-auto max-w-7xl p-4 md:p-6">
 
-      {/* ── Step 1: Girvi Search (only when no girviId in URL) ──────────── */}
+      {/* Girvi Search — sirf tab jab URL mein girviId nahi (sidebar flow) */}
       {!urlGirviId && (
         <div className="mb-6">
           <GirviSection
             data={{}}
             errors={{}}
             onChange={() => {}}
-            initialGirviId={urlGirviId}
             onGirviSelected={info => {
               if (info.girviId) setSelectedGirviInfo(info)
-              else             setSelectedGirviInfo(null)
+              else              setSelectedGirviInfo(null)
             }}
           />
         </div>
       )}
 
-      {/* ── Step 2: Transfer Form (shown after girvi is selected) ────────── */}
+      {/* Transfer Form — girviId available hone ke baad */}
       {girviId ? (
         <GirviTransferForm
           shopId={shopId}
           girviId={girviId}
-          onSuccess={() => navigate(`/girvi/${girviId}`)}
+          onSuccess={() => navigate(buildRoute.girvi.list(shopId))}
           onCancel={() => navigate(-1)}
           girviInfo={selectedGirviInfo ? {
             girviNumber:          selectedGirviInfo.girviNumber,
@@ -73,7 +70,6 @@ export default function AddGirviTransferPage() {
           } : undefined}
         />
       ) : (
-        /* Placeholder when no girvi selected yet (only in manual-search mode) */
         !urlGirviId && (
           <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border-primary py-16 text-center">
             <p className="text-lg font-medium text-text-secondary">

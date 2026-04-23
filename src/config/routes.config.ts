@@ -526,7 +526,7 @@ export const protectedRoutes: RouteConfig[] = [
   path: ROUTE_PATHS.GIRVI.RENEW,
   element: GirviRenewalPage,
   requiresAuth: true,
-  permission: 'canRenewGirvi',
+  permission: 'canReleaseGirvi',  
   title: 'Renew Girvi',
 },
   {
@@ -560,6 +560,13 @@ export const protectedRoutes: RouteConfig[] = [
 },
 {
   path: ROUTE_PATHS.GIRVI_TRANSFER.ADD,
+  element: AddGirviTransferPage,
+  requiresAuth: true,
+  permission: 'canTransferGirvi',
+  title: 'Add Girvi Transfer',
+},
+{
+  path: ROUTE_PATHS.GIRVI_TRANSFER.ADD_FOR_GIRVI,
   element: AddGirviTransferPage,
   requiresAuth: true,
   permission: 'canTransferGirvi',

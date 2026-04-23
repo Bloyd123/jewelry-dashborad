@@ -188,7 +188,7 @@ export const getMenuItems = (t: (key: string) => string, shopId: string = ''): M
       },
       {
         title: t('sidebar.addGirviTransfer'),
-        url: ROUTES.girviTransferAdd,             // ⚠️ same — needs girviId, leave as is
+      url: buildRoute.girviTransfer.add(shopId),             // ⚠️ same — needs girviId, leave as is
         icon: UserPlus,
       },
     ],

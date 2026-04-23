@@ -93,7 +93,8 @@ export const GirviTable: React.FC = () => {
   const handleEdit      = (g: Girvi) => navigate(`/shops/${shopId}/girvi/edit/${g._id}`)
   const handleRelease   = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}/release`)
   const handleCalculate = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}?tab=interest`)
-  const handleTransfer = (g: Girvi) => navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))
+  const handleTransfer = (g: Girvi) => 
+  navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))  // ✅ ab exist karta hai
   const handleDelete    = async (g: Girvi) => {
     if (window.confirm(t('girvi.deleteConfirm'))) {
       await deleteGirvi(g._id)
@@ -178,7 +179,7 @@ const rowActions = useMemo(
           shadow: true,
           fullWidth: true,
         }}
-        onRowClick={g => handleView(g)}
+        // onRowClick={g => handleView(g)}
         getRowId={row => row._id}
         testId="girvi-table"
         ariaLabel={t('girvi.table.ariaLabel')}

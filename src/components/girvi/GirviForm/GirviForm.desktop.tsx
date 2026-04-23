@@ -1,6 +1,6 @@
 // FILE: src/components/girvi/GirviForm/GirviForm.desktop.tsx
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'  
 import { useTranslation } from 'react-i18next'
 import { Button }           from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -96,7 +96,17 @@ export default function GirviFormDesktop({
   onSuccess,
   onCancel,
   mode = 'create',
+    scrollToInterest = false,
 }: GirviFormProps) {
+  const interestCardRef = useRef<HTMLDivElement>(null)  // ✅ new
+
+  useEffect(() => {
+    if (scrollToInterest && interestCardRef.current) {
+      setTimeout(() => {
+        interestCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 500)
+    }
+  }, [scrollToInterest])  // ✅ new
   const { t } = useTranslation()
 
   const defaults: Partial<GirviFormData> = {
@@ -250,7 +260,7 @@ const handleConfirmedSubmit = async () => {
               />
             </CardContent>
           </Card>
-
+<div ref={interestCardRef}> 
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary">{t('girvi.financialDetails')}</CardTitle>
@@ -265,7 +275,7 @@ const handleConfirmedSubmit = async () => {
               />
             </CardContent>
           </Card>
-
+</div>
           <Card className="border-border-primary bg-bg-secondary">
             <CardHeader>
               <CardTitle className="text-text-primary"> {t('girvi.basicInfo')}</CardTitle>
