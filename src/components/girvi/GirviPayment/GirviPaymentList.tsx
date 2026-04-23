@@ -1,14 +1,18 @@
 // FILE: src/components/girvi/GirviPayment/GirviPaymentList.tsx
-import { useTranslation } from 'react-i18next'
+
+import { useTranslation }   from 'react-i18next'
 import { Trash2, Receipt, ChevronDown, ChevronUp } from 'lucide-react'
-import { useState } from 'react'
-import { Badge }  from '@/components/ui/data-display/Badge'
-import { Button } from '@/components/ui/button'
-import { ConfirmDialog } from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useState }         from 'react'
+import { Badge }            from '@/components/ui/data-display/Badge'
+import { Button }           from '@/components/ui/button'
+import { Skeleton }         from '@/components/ui/loader'
+import { Pagination }       from '@/components/ui/navigation/Pagination'
+import { ConfirmDialog }    from '@/components/ui/overlay/Dialog/ConfirmDialog'
 import { useGirviPayments }       from '@/hooks/girvi/useGirviPayments'
 import { useGirviPaymentActions } from '@/hooks/girvi/useGirviPaymentActions'
 import { GirviPaymentSummaryCard } from './GirviPaymentSummaryCard'
 import type { GirviPayment } from '@/types/girvi.types'
+
 
 const TYPE_VARIANTS: Record<string, any> = {
   interest_only:      'info',
@@ -37,6 +41,7 @@ const formatDate = (d: string) =>
   new Intl.DateTimeFormat('en-IN', {
     day: '2-digit', month: 'short', year: 'numeric',
   }).format(new Date(d))
+
 
 const PaymentRow = ({
   payment,
@@ -79,7 +84,7 @@ const PaymentRow = ({
           {canDelete && (
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); onDelete(payment) }}
+              onClick={e => { e.stopPropagation(); onDelete(payment) }}
               disabled={isDeleting}
               className="rounded-lg p-1.5 text-status-error hover:bg-status-error/10 disabled:opacity-50"
               aria-label="Delete payment"
@@ -88,7 +93,7 @@ const PaymentRow = ({
             </button>
           )}
           {expanded
-            ? <ChevronUp className="h-4 w-4 text-text-tertiary" />
+            ? <ChevronUp   className="h-4 w-4 text-text-tertiary" />
             : <ChevronDown className="h-4 w-4 text-text-tertiary" />
           }
         </div>
@@ -158,6 +163,23 @@ const PaymentRow = ({
 }
 
 
+const PaymentListSkeleton = () => (
+  <div className="space-y-3">
+    {[1, 2, 3].map(i => (
+      <div key={i} className="rounded-lg border border-border-primary bg-bg-secondary p-4">
+        <div className="flex items-center gap-3">
+          <Skeleton variant="circular" width="36px" height="36px" />
+          <div className="space-y-2">
+            <Skeleton variant="text" width="120px" />
+            <Skeleton variant="text" width="80px"  />
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+)
+
+
 interface GirviPaymentListProps {
   shopId:    string
   girviId:   string
@@ -188,15 +210,7 @@ export const GirviPaymentList = ({
     setPendingDelete(null)
   }
 
-  if (isLoading) {
-    return (
-      <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-16 animate-pulse rounded-lg bg-bg-tertiary" />
-        ))}
-      </div>
-    )
-  }
+  if (isLoading) return <PaymentListSkeleton />
 
   if (!payments.length) {
     return (
@@ -212,7 +226,7 @@ export const GirviPaymentList = ({
       <GirviPaymentSummaryCard summary={summary} />
 
       <div className="space-y-2">
-        {payments.map((payment) => (
+        {payments.map(payment => (
           <PaymentRow
             key={payment._id}
             payment={payment}
@@ -224,32 +238,20 @@ export const GirviPaymentList = ({
       </div>
 
       {pagination && pagination.totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => goToPage(pagination.currentPage - 1)}
-            disabled={!pagination.hasPrevPage}
-          >
-            {t('common.previous')}
-          </Button>
-          <span className="text-sm text-text-secondary">
-            {pagination.currentPage} / {pagination.totalPages}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => goToPage(pagination.currentPage + 1)}
-            disabled={!pagination.hasNextPage}
-          >
-            {t('common.next')}
-          </Button>
-        </div>
+        <Pagination
+          currentPage={pagination.currentPage}
+          totalPages={pagination.totalPages}
+          onPageChange={goToPage}
+          showFirstLast={false}
+          showPageSize={false}
+          showPageInfo={false}
+          size="sm"
+        />
       )}
 
       <ConfirmDialog
         open={!!pendingDelete}
-        onOpenChange={(open) => { if (!open) setPendingDelete(null) }}
+        onOpenChange={open => { if (!open) setPendingDelete(null) }}
         title={t('girviPayment.confirmDelete')}
         description={t('girviPayment.confirmDeleteDescription', {
           receipt: pendingDelete?.receiptNumber,

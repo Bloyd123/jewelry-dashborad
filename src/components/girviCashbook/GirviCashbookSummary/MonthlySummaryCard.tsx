@@ -1,11 +1,19 @@
 // FILE: src/components/girviCashbook/GirviCashbookSummary/MonthlySummaryCard.tsx
 
-import React, { useState } from 'react'
-import { useTranslation }  from 'react-i18next'
+import React, { useState }  from 'react'
+import { useTranslation }   from 'react-i18next'
 import { BarChart2, TrendingUp, TrendingDown, Loader2 } from 'lucide-react'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
 import { Label }            from '@/components/ui/label'
+import { Input }            from '@/components/ui/input'
 import { Badge }            from '@/components/ui/data-display/Badge/Badge'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useMonthlySummary } from '@/hooks/girviCashbook'
 import { ENTRY_TYPE_LABELS } from '@/validators/girviCashbookValidation'
 
@@ -14,19 +22,20 @@ interface MonthlySummaryCardProps {
 }
 
 const MONTH_NAMES = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
+  'January', 'February', 'March',     'April',
+  'May',     'June',     'July',      'August',
+  'September','October', 'November',  'December',
 ]
 
 export const MonthlySummaryCard: React.FC<MonthlySummaryCardProps> = ({ shopId }) => {
-  const { t }    = useTranslation()
-  const now      = new Date()
+  const { t }   = useTranslation()
+  const now     = new Date()
   const [year,  setYear]  = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth() + 1)
 
   const { summary, isLoading } = useMonthlySummary(shopId, year, month)
 
-  // ── Safe numbers — undefined aaye toh 0 use karo ─────────────────────────
+  // Safe numbers — undefined aaye toh 0 use karo
   const safe = (val: number | undefined) => val ?? 0
 
   return (
@@ -38,23 +47,33 @@ export const MonthlySummaryCard: React.FC<MonthlySummaryCardProps> = ({ shopId }
           <BarChart2 className="h-4 w-4 text-accent" />
           {t('girviCashbook.summary.monthly', 'Monthly Summary')}
         </h3>
+
         <div className="flex items-center gap-2">
-          <select
-            value={month}
-            onChange={e => setMonth(Number(e.target.value))}
-            className="rounded-md border border-border-primary bg-bg-primary px-2 py-1 text-xs text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
+          {/* Month Select */}
+          <Select
+            value={String(month)}
+            onValueChange={val => setMonth(Number(val))}
           >
-            {MONTH_NAMES.map((name, idx) => (
-              <option key={idx + 1} value={idx + 1}>{name}</option>
-            ))}
-          </select>
-          <input
+            <SelectTrigger className="h-8 w-[120px] text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {MONTH_NAMES.map((name, idx) => (
+                <SelectItem key={idx + 1} value={String(idx + 1)}>
+                  {name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* Year Input */}
+          <Input
             type="number"
             value={year}
             onChange={e => setYear(Number(e.target.value))}
             min={2000}
             max={2100}
-            className="w-20 rounded-md border border-border-primary bg-bg-primary px-2 py-1 text-xs text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
+            className="h-8 w-20 text-xs"
           />
         </div>
       </div>
@@ -66,7 +85,7 @@ export const MonthlySummaryCard: React.FC<MonthlySummaryCardProps> = ({ shopId }
         </div>
       )}
 
-      {/* No data */}
+      {/* No Data */}
       {!isLoading && !summary && (
         <p className="py-4 text-center text-sm text-text-tertiary">
           No data for this period
@@ -205,7 +224,7 @@ export const MonthlySummaryCard: React.FC<MonthlySummaryCardProps> = ({ shopId }
                     {summary.dailyBreakdown.map(item => (
                       <tr
                         key={item._id}
-                        className="hover:bg-bg-tertiary transition-colors"
+                        className="transition-colors hover:bg-bg-tertiary"
                       >
                         <td className="py-1.5 pr-3 font-medium text-text-primary">
                           {item._id}

@@ -1,30 +1,35 @@
 // FILE: src/components/girvi/GirviPayment/GirviPaymentForm.tsx
-import { useState, useEffect } from 'react'
-import { useTranslation }      from 'react-i18next'
+
+import { useState, useEffect }     from 'react'
+import { useTranslation }          from 'react-i18next'
 import { Loader2, Calculator, Banknote, Smartphone, Building2, FileText, RefreshCw } from 'lucide-react'
-import { Button }              from '@/components/ui/button'
+import { Button }                  from '@/components/ui/button'
+import { Input }                   from '@/components/ui/input'
+import { Label }                   from '@/components/ui/label'
+import { Textarea }                from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ConfirmDialog }       from '@/components/ui/overlay/Dialog/ConfirmDialog'
-import { useGirviPaymentActions } from '@/hooks/girvi/useGirviPaymentActions'
-import { useGirviInterestLazy }   from '@/hooks/girvi/useGirviInterest'
-import { addGirviPaymentSchema }  from '@/validators/girviValidation'
+import { ConfirmDialog }           from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useGirviPaymentActions }  from '@/hooks/girvi/useGirviPaymentActions'
+import { useGirviInterestLazy }    from '@/hooks/girvi/useGirviInterest'
+import { addGirviPaymentSchema }   from '@/validators/girviValidation'
 import type { GirviPaymentFormProps, GirviPaymentFormData } from './GirviPaymentForm.types'
 import type { GirviInterestType, GirviPaymentType } from '@/types/girvi.types'
 
 
 const PAYMENT_TYPES: { value: GirviPaymentType; label: string; desc: string }[] = [
-  { value: 'interest_only',      label: 'Interest Only',       desc: 'Pay only interest'            },
-  { value: 'principal_partial',  label: 'Partial Principal',   desc: 'Partial principal repayment'  },
-  { value: 'principal_full',     label: 'Full Principal',      desc: 'Close the loan'               },
+  { value: 'interest_only',      label: 'Interest Only',        desc: 'Pay only interest'           },
+  { value: 'principal_partial',  label: 'Partial Principal',    desc: 'Partial principal repayment' },
+  { value: 'principal_full',     label: 'Full Principal',       desc: 'Close the loan'              },
   { value: 'interest_principal', label: 'Interest + Principal', desc: 'Pay both together'           },
 ]
 
 const PAYMENT_MODES = [
-  { value: 'cash',          icon: Banknote,   label: 'Cash'     },
-  { value: 'upi',           icon: Smartphone, label: 'UPI'      },
-  { value: 'bank_transfer', icon: Building2,  label: 'Bank'     },
-  { value: 'cheque',        icon: FileText,   label: 'Cheque'   },
+  { value: 'cash',          icon: Banknote,   label: 'Cash'   },
+  { value: 'upi',           icon: Smartphone, label: 'UPI'    },
+  { value: 'bank_transfer', icon: Building2,  label: 'Bank'   },
+  { value: 'cheque',        icon: FileText,   label: 'Cheque' },
 ]
+
 
 export const GirviPaymentForm = ({
   shopId,
@@ -55,8 +60,9 @@ export const GirviPaymentForm = ({
   const [errors,      setErrors]      = useState<Record<string, string>>({})
   const [showConfirm, setShowConfirm] = useState(false)
 
-  const { addPayment, isAdding } = useGirviPaymentActions(shopId)
+  const { addPayment, isAdding }               = useGirviPaymentActions(shopId)
   const { calculate, calculation, isCalculating } = useGirviInterestLazy(shopId, girviId)
+
 
   useEffect(() => {
     if (formData.paymentType === 'principal_full' && girviBalance) {
@@ -67,9 +73,10 @@ export const GirviPaymentForm = ({
     }
   }, [formData.paymentType, girviBalance])
 
+
   const onChange = (name: string, value: any) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-    if (errors[name]) setErrors((prev) => { const n = { ...prev }; delete n[name]; return n })
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) setErrors(prev => { const n = { ...prev }; delete n[name]; return n })
   }
 
   const handleCalculateInterest = async () => {
@@ -128,12 +135,14 @@ export const GirviPaymentForm = ({
     }
   }
 
-  const interest   = parseFloat(String(formData.interestReceived  || 0))
-  const principal  = parseFloat(String(formData.principalReceived || 0))
-  const discount   = parseFloat(String(formData.discountGiven     || 0))
-  const netAmount  = Math.max(0, interest + principal - discount)
+
+  const interest  = parseFloat(String(formData.interestReceived  || 0))
+  const principal = parseFloat(String(formData.principalReceived || 0))
+  const discount  = parseFloat(String(formData.discountGiven     || 0))
+  const netAmount = Math.max(0, interest + principal - discount)
 
   const err = (field: string) => errors[field]
+
 
   return (
     <div className="space-y-5">
@@ -162,9 +171,9 @@ export const GirviPaymentForm = ({
       )}
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+        <Label>
           {t('girviPayment.paymentType')} <span className="text-status-error">*</span>
-        </label>
+        </Label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {PAYMENT_TYPES.map((pt) => (
             <label
@@ -201,6 +210,7 @@ export const GirviPaymentForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 pb-4">
+
           <div className="flex gap-3">
             {(['simple', 'compound'] as const).map((type) => (
               <label
@@ -226,21 +236,25 @@ export const GirviPaymentForm = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-text-secondary">{t('girviPayment.interestFrom')}</label>
-              <input
+              <Label className="text-xs font-medium text-text-secondary">
+                {t('girviPayment.interestFrom')}
+              </Label>
+              <Input
                 type="date"
                 value={formData.interestFrom}
-                onChange={(e) => onChange('interestFrom', e.target.value)}
-                className="h-9 w-full rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
+                onChange={e => onChange('interestFrom', e.target.value)}
+                className="h-9"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-text-secondary">{t('girviPayment.interestTo')}</label>
-              <input
+              <Label className="text-xs font-medium text-text-secondary">
+                {t('girviPayment.interestTo')}
+              </Label>
+              <Input
                 type="date"
                 value={formData.interestTo}
-                onChange={(e) => onChange('interestTo', e.target.value)}
-                className="h-9 w-full rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
+                onChange={e => onChange('interestTo', e.target.value)}
+                className="h-9"
               />
             </div>
           </div>
@@ -296,20 +310,21 @@ export const GirviPaymentForm = ({
           },
         ].map((field) => (
           <div key={field.name} className="space-y-1">
-            <label className="text-sm font-medium text-text-primary">
-              {field.label}{field.required && <span className="ml-1 text-status-error">*</span>}
-            </label>
+            <Label>
+              {field.label}
+              {field.required && <span className="ml-1 text-status-error">*</span>}
+            </Label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">₹</span>
-              <input
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">
+                ₹
+              </span>
+              <Input
                 type="number"
                 value={(formData as any)[field.name]}
                 min={0}
                 step={0.01}
-                onChange={(e) => onChange(field.name, e.target.value)}
-                className={`h-10 w-full rounded-lg border bg-bg-secondary pl-7 pr-3 text-text-primary focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent ${
-                  err(field.name) ? 'border-status-error' : 'border-border-primary'
-                }`}
+                onChange={e => onChange(field.name, e.target.value)}
+                className={`pl-7 ${err(field.name) ? 'border-status-error' : ''}`}
               />
             </div>
             {field.hint && <p className="text-xs text-text-tertiary">{field.hint}</p>}
@@ -331,25 +346,23 @@ export const GirviPaymentForm = ({
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+        <Label>
           {t('girviPayment.paymentDate')} <span className="text-status-error">*</span>
-        </label>
-        <input
+        </Label>
+        <Input
           type="date"
           value={formData.paymentDate}
           max={today}
-          onChange={(e) => onChange('paymentDate', e.target.value)}
-          className={`h-10 w-full rounded-lg border bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none ${
-            err('paymentDate') ? 'border-status-error' : 'border-border-primary'
-          }`}
+          onChange={e => onChange('paymentDate', e.target.value)}
+          className={err('paymentDate') ? 'border-status-error' : ''}
         />
         {err('paymentDate') && <p className="text-sm text-status-error">{err('paymentDate')}</p>}
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-text-primary">
+        <Label>
           {t('girviPayment.paymentMode')} <span className="text-status-error">*</span>
-        </label>
+        </Label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {PAYMENT_MODES.map((mode) => (
             <button
@@ -363,11 +376,15 @@ export const GirviPaymentForm = ({
               }`}
             >
               <div className={`flex h-9 w-9 items-center justify-center rounded-full ${
-                formData.paymentMode === mode.value ? 'bg-accent text-white' : 'bg-bg-tertiary text-text-secondary'
+                formData.paymentMode === mode.value
+                  ? 'bg-accent text-white'
+                  : 'bg-bg-tertiary text-text-secondary'
               }`}>
                 <mode.icon className="h-4 w-4" />
               </div>
-              <span className={`text-xs font-medium ${formData.paymentMode === mode.value ? 'text-accent' : 'text-text-primary'}`}>
+              <span className={`text-xs font-medium ${
+                formData.paymentMode === mode.value ? 'text-accent' : 'text-text-primary'
+              }`}>
                 {mode.label}
               </span>
             </button>
@@ -375,30 +392,30 @@ export const GirviPaymentForm = ({
         </div>
 
         {formData.paymentMode !== 'cash' && (
-          <input
+          <Input
             type="text"
             value={formData.transactionReference}
-            onChange={(e) => onChange('transactionReference', e.target.value)}
+            onChange={e => onChange('transactionReference', e.target.value)}
             placeholder={
               formData.paymentMode === 'upi'    ? t('girviPayment.upiRefPlaceholder')
               : formData.paymentMode === 'cheque' ? t('girviPayment.chequeNoPlaceholder')
               : t('girviPayment.bankRefPlaceholder')
             }
             maxLength={200}
-            className="mt-2 h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+            className="mt-2"
           />
         )}
       </div>
 
       <div className="space-y-1">
-        <label className="text-sm font-medium text-text-primary">{t('common.remarks')}</label>
-        <textarea
+        <Label>{t('common.remarks')}</Label>
+        <Textarea
           value={formData.remarks}
-          onChange={(e) => onChange('remarks', e.target.value)}
+          onChange={e => onChange('remarks', e.target.value)}
           placeholder={t('girviPayment.remarksPlaceholder')}
           rows={2}
           maxLength={500}
-          className="w-full resize-none rounded-lg border border-border-primary bg-bg-secondary px-4 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+          className="resize-none"
         />
       </div>
 
@@ -415,6 +432,7 @@ export const GirviPaymentForm = ({
           }
         </Button>
       </div>
+
       <ConfirmDialog
         open={showConfirm}
         onOpenChange={setShowConfirm}

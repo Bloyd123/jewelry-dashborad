@@ -1,10 +1,11 @@
 // FILE: src/components/girviCashbook/GirviCashbookSummary/YearlySummaryCard.tsx
 
-import React, { useState } from 'react'
-import { useTranslation }  from 'react-i18next'
+import React, { useState }  from 'react'
+import { useTranslation }   from 'react-i18next'
 import { TrendingUp, TrendingDown, Loader2 } from 'lucide-react'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
-import { Label }           from '@/components/ui/label'
+import { Label }            from '@/components/ui/label'
+import { Input }            from '@/components/ui/input'
 import { useYearlySummary } from '@/hooks/girviCashbook'
 
 interface YearlySummaryCardProps {
@@ -12,8 +13,9 @@ interface YearlySummaryCardProps {
 }
 
 const MONTH_NAMES = [
-  'Jan','Feb','Mar','Apr','May','Jun',
-  'Jul','Aug','Sep','Oct','Nov','Dec',
+  'Jan', 'Feb', 'Mar', 'Apr',
+  'May', 'Jun', 'Jul', 'Aug',
+  'Sep', 'Oct', 'Nov', 'Dec',
 ]
 
 export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) => {
@@ -27,26 +29,30 @@ export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) 
 
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-text-primary flex items-center gap-2">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-text-primary">
           <TrendingUp className="h-4 w-4 text-accent" />
           {t('girviCashbook.summary.yearly', 'Yearly Summary')}
         </h3>
-        <input
+
+        {/* Year Input */}
+        <Input
           type="number"
           value={year}
           onChange={e => setYear(Number(e.target.value))}
           min={2000}
           max={2100}
-          className="w-24 rounded-md border border-border-primary bg-bg-primary px-2 py-1 text-xs text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
+          className="h-8 w-24 text-xs"
         />
       </div>
 
+      {/* Loading */}
       {isLoading ? (
         <div className="flex justify-center py-4">
           <Loader2 className="h-6 w-6 animate-spin text-accent" />
         </div>
       ) : summary ? (
         <>
+          {/* Stat Cards */}
           <StatCardGrid columns={2}>
             <StatCard
               title={t('girviCashbook.summary.totalInflow', 'Total Inflow')}
@@ -64,6 +70,7 @@ export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) 
             />
           </StatCardGrid>
 
+          {/* Main Stats */}
           <div className="space-y-2 border-t border-border-secondary pt-3">
             {[
               {
@@ -112,6 +119,7 @@ export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) 
             ))}
           </div>
 
+          {/* Monthly Breakdown */}
           {summary.monthlyBreakdown && summary.monthlyBreakdown.length > 0 && (
             <div className="space-y-2 border-t border-border-secondary pt-3">
               <Label className="text-xs text-text-secondary">
@@ -135,7 +143,7 @@ export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) 
                     {summary.monthlyBreakdown.map(item => (
                       <tr
                         key={item.month}
-                        className="hover:bg-bg-tertiary transition-colors"
+                        className="transition-colors hover:bg-bg-tertiary"
                       >
                         <td className="py-1.5 pr-3 font-medium text-text-primary">
                           {MONTH_NAMES[item.month - 1]}
@@ -165,7 +173,7 @@ export const YearlySummaryCard: React.FC<YearlySummaryCardProps> = ({ shopId }) 
           )}
         </>
       ) : (
-        <p className="text-center text-sm text-text-tertiary py-4">
+        <p className="py-4 text-center text-sm text-text-tertiary">
           No data for this year
         </p>
       )}

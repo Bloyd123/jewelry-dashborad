@@ -1,13 +1,21 @@
 // FILE: src/components/girvi/GirviShopPayments/GirviShopPaymentsTable.tsx
- 
-import React, { useState }   from 'react'
+
+import React, { useState, useMemo } from 'react'
 import { useTranslation as useTranslationTable } from 'react-i18next'
 import { DataTable }         from '@/components/ui/data-display/DataTable'
 import { useShopGirviPayments } from '@/hooks/girvi/useGirviPayments'
 import { GirviPaymentSummaryCard } from '../GirviPayment/GirviPaymentSummaryCard'
 import type { GirviPaymentType, GirviPaymentMode } from '@/types/girvi.types'
- import {girviShopPaymentsColumns } from './GirviShopPaymentsColumns'
- 
+import { girviShopPaymentsColumns } from './GirviShopPaymentsColumns'
+
+import { Input }       from '@/components/ui/input'
+import { FilterBar }   from '@/components/ui/filters/FilterBar'
+import { FilterChips } from '@/components/ui/filters/FilterChips'
+import { TypeFilter }  from '@/components/ui/filters/TypeFilter'
+import type { ActiveFilter } from '@/components/ui/filters/FilterChips'
+import type { FilterOption } from '@/components/ui/filters/TypeFilter'
+
+
 interface ShopPaymentFilters {
   paymentType?: string
   paymentMode?: string
@@ -15,7 +23,24 @@ interface ShopPaymentFilters {
   startDate?:   string
   endDate?:     string
 }
- 
+
+
+const PAYMENT_TYPE_OPTIONS: FilterOption[] = [
+  { value: 'interest_only',      label: 'Interest Only'        },
+  { value: 'principal_partial',  label: 'Partial Principal'    },
+  { value: 'principal_full',     label: 'Full Principal'       },
+  { value: 'interest_principal', label: 'Interest + Principal' },
+  { value: 'release_payment',    label: 'Release Payment'      },
+]
+
+const PAYMENT_MODE_OPTIONS: FilterOption[] = [
+  { value: 'cash',          label: 'Cash'          },
+  { value: 'upi',           label: 'UPI'           },
+  { value: 'bank_transfer', label: 'Bank Transfer' },
+  { value: 'cheque',        label: 'Cheque'        },
+]
+
+
 const ShopPaymentFilterBar = ({
   filters,
   onChange,
@@ -26,70 +51,92 @@ const ShopPaymentFilterBar = ({
   onClear:  () => void
 }) => {
   const { t } = useTranslationTable()
- 
+
+  const activeFilters: ActiveFilter[] = useMemo(() => {
+    const chips: ActiveFilter[] = []
+    if (filters.paymentType) chips.push({ id: 'paymentType', label: t('girviPayment.type'), value: filters.paymentType })
+    if (filters.paymentMode) chips.push({ id: 'paymentMode', label: t('girviPayment.mode'), value: filters.paymentMode })
+    if (filters.startDate)   chips.push({ id: 'startDate',   label: t('common.from'),        value: filters.startDate   })
+    if (filters.endDate)     chips.push({ id: 'endDate',     label: t('common.to'),          value: filters.endDate     })
+    return chips
+  }, [filters, t])
+
+  const handleRemoveChip = (id: string) => {
+    const updated = { ...filters }
+    if (id === 'paymentType') delete updated.paymentType
+    if (id === 'paymentMode') delete updated.paymentMode
+    if (id === 'startDate')   delete updated.startDate
+    if (id === 'endDate')     delete updated.endDate
+    onChange(updated)
+  }
+
+  const hasActiveFilters = activeFilters.length > 0
+
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-border-primary bg-bg-secondary p-3">
-      <select
-        value={filters.paymentType || ''}
-        onChange={(e) => onChange({ ...filters, paymentType: e.target.value || undefined })}
-        className="h-9 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
+    <div className="space-y-3">
+      <FilterBar
+        hasActiveFilters={hasActiveFilters}
+        onClearAll={onClear}
+        showClearButton={hasActiveFilters}
       >
-        <option value="">{t('girviPayment.allTypes')}</option>
-        <option value="interest_only">Interest Only</option>
-        <option value="principal_partial">Partial Principal</option>
-        <option value="principal_full">Full Principal</option>
-        <option value="interest_principal">Interest + Principal</option>
-        <option value="release_payment">Release Payment</option>
-      </select>
- 
-      <select
-        value={filters.paymentMode || ''}
-        onChange={(e) => onChange({ ...filters, paymentMode: e.target.value || undefined })}
-        className="h-9 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
-      >
-        <option value="">{t('girviPayment.allModes')}</option>
-        <option value="cash">Cash</option>
-        <option value="upi">UPI</option>
-        <option value="bank_transfer">Bank Transfer</option>
-        <option value="cheque">Cheque</option>
-      </select>
- 
-      <input
-        type="date"
-        value={filters.startDate || ''}
-        onChange={(e) => onChange({ ...filters, startDate: e.target.value || undefined })}
-        className="h-9 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
-      />
- 
-      <input
-        type="date"
-        value={filters.endDate || ''}
-        onChange={(e) => onChange({ ...filters, endDate: e.target.value || undefined })}
-        className="h-9 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
-      />
- 
-      {(filters.paymentType || filters.paymentMode || filters.startDate || filters.endDate) && (
-        <button onClick={onClear} className="text-sm text-text-tertiary hover:text-text-primary">
-          {t('common.clearAll')}
-        </button>
+        <TypeFilter
+          options={PAYMENT_TYPE_OPTIONS}
+          value={filters.paymentType}
+          onChange={val => onChange({ ...filters, paymentType: val })}
+          placeholder={t('girviPayment.allTypes')}
+          showAllOption
+          allOptionLabel={t('girviPayment.allTypes')}
+        />
+
+        <TypeFilter
+          options={PAYMENT_MODE_OPTIONS}
+          value={filters.paymentMode}
+          onChange={val => onChange({ ...filters, paymentMode: val })}
+          placeholder={t('girviPayment.allModes')}
+          showAllOption
+          allOptionLabel={t('girviPayment.allModes')}
+        />
+
+        <Input
+          type="date"
+          value={filters.startDate || ''}
+          onChange={e => onChange({ ...filters, startDate: e.target.value || undefined })}
+          className="h-9 w-40"
+        />
+
+        <Input
+          type="date"
+          value={filters.endDate || ''}
+          onChange={e => onChange({ ...filters, endDate: e.target.value || undefined })}
+          className="h-9 w-40"
+        />
+      </FilterBar>
+
+      {hasActiveFilters && (
+        <FilterChips
+          filters={activeFilters}
+          onRemove={handleRemoveChip}
+          onClearAll={onClear}
+        />
       )}
     </div>
   )
 }
- 
+
+
 interface GirviShopPaymentsTableProps {
   shopId: string
 }
- 
+
 export const GirviShopPaymentsTable: React.FC<GirviShopPaymentsTableProps> = ({ shopId }) => {
   const { t } = useTranslationTable()
   const [filterState, setFilterState] = useState<ShopPaymentFilters>({})
- 
+
   const {
     payments, summary, pagination,
     isLoading, updateFilters, resetFilters, goToPage,
   } = useShopGirviPayments(shopId, {})
- 
+
   const handleFilterChange = (newFilters: ShopPaymentFilters) => {
     setFilterState(newFilters)
     updateFilters({
@@ -100,7 +147,7 @@ export const GirviShopPaymentsTable: React.FC<GirviShopPaymentsTableProps> = ({ 
       endDate:     newFilters.endDate,
     })
   }
- 
+
   return (
     <div className="space-y-4">
       {summary && (
@@ -114,13 +161,13 @@ export const GirviShopPaymentsTable: React.FC<GirviShopPaymentsTableProps> = ({ 
           }}
         />
       )}
- 
+
       <ShopPaymentFilterBar
         filters={filterState}
         onChange={handleFilterChange}
         onClear={() => { setFilterState({}); resetFilters() }}
       />
- 
+
       <DataTable
         data={payments}
         loading={{ isLoading }}
@@ -153,5 +200,5 @@ export const GirviShopPaymentsTable: React.FC<GirviShopPaymentsTableProps> = ({ 
     </div>
   )
 }
- 
+
 GirviShopPaymentsTable.displayName = 'GirviShopPaymentsTable'

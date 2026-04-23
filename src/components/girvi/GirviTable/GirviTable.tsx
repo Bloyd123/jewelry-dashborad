@@ -12,13 +12,34 @@ import { girviTableColumns }                        from './GirviTableColumns'
 import { getGirviRowActions, GirviBulkActionsBar }  from './GirviTableActions'
 import type { Girvi } from '@/types/girvi.types'
 
+import { Input }          from '@/components/ui/input'
+import { Button }         from '@/components/ui/button'
+import { Label }          from '@/components/ui/label'
+import { Switch }         from '@/components/ui/switch'
+import { StatusFilter }   from '@/components/ui/filters/StatusFilter'
+import { FilterBar }      from '@/components/ui/filters/FilterBar'
+import { FilterChips }    from '@/components/ui/filters/FilterChips'
+import type { ActiveFilter } from '@/components/ui/filters/FilterChips'
+import type { StatusOption } from '@/components/ui/filters/StatusFilter'
+
+
 interface GirviFilterState {
   search?: string
   status?: string
   overdueOnly?: boolean
 }
 
-const FilterBar = ({
+
+const STATUS_OPTIONS: StatusOption[] = [
+  { value: 'active',      label: 'Active',      variant: 'active',    showDot: true },
+  { value: 'overdue',     label: 'Overdue',     variant: 'inactive',  showDot: true },
+  { value: 'released',    label: 'Released',    variant: 'completed', showDot: true },
+  { value: 'transferred', label: 'Transferred', variant: 'pending',   showDot: true },
+  { value: 'auctioned',   label: 'Auctioned',   variant: 'inactive',  showDot: true },
+]
+
+
+const GirviFilterBar = ({
   filters,
   onChange,
   onClear,
@@ -29,43 +50,64 @@ const FilterBar = ({
 }) => {
   const { t } = useTranslation()
 
+  const activeFilters: ActiveFilter[] = useMemo(() => {
+    const chips: ActiveFilter[] = []
+    if (filters.search)     chips.push({ id: 'search',      label: t('girvi.search'),      value: filters.search })
+    if (filters.status)     chips.push({ id: 'status',      label: t('girvi.status'),      value: filters.status })
+    if (filters.overdueOnly) chips.push({ id: 'overdueOnly', label: t('girvi.overdueOnly'), value: t('common.yes') })
+    return chips
+  }, [filters, t])
+
+  const handleRemoveChip = (id: string) => {
+    const updated = { ...filters }
+    if (id === 'search')      delete updated.search
+    if (id === 'status')      delete updated.status
+    if (id === 'overdueOnly') delete updated.overdueOnly
+    onChange(updated)
+  }
+
+  const hasActiveFilters = activeFilters.length > 0
+
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-lg border border-border-primary bg-bg-secondary p-3">
-      <input
-        type="text"
-        value={filters.search || ''}
-        onChange={e => onChange({ ...filters, search: e.target.value })}
-        placeholder={t('girvi.searchPlaceholder')}
-        className="h-9 w-56 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
-      />
-
-      <select
-        value={filters.status || ''}
-        onChange={e => onChange({ ...filters, status: e.target.value || undefined })}
-        className="h-9 rounded-lg border border-border-primary bg-bg-primary px-3 text-sm text-text-primary focus:border-accent focus:outline-none"
+    <div className="space-y-3">
+      <FilterBar
+        hasActiveFilters={hasActiveFilters}
+        onClearAll={onClear}
+        showClearButton={hasActiveFilters}
       >
-        <option value="">{t('girvi.allStatuses')}</option>
-        <option value="active">Active</option>
-        <option value="overdue">Overdue</option>
-        <option value="released">Released</option>
-        <option value="transferred">Transferred</option>
-        <option value="auctioned">Auctioned</option>
-      </select>
-
-      <label className="flex cursor-pointer items-center gap-2 text-sm text-text-primary">
-        <input
-          type="checkbox"
-          checked={!!filters.overdueOnly}
-          onChange={e => onChange({ ...filters, overdueOnly: e.target.checked })}
-          className="rounded"
+        <Input
+          type="text"
+          value={filters.search || ''}
+          onChange={e => onChange({ ...filters, search: e.target.value })}
+          placeholder={t('girvi.searchPlaceholder')}
+          className="h-9 w-56"
         />
-        {t('girvi.overdueOnly')}
-      </label>
 
-      {(filters.search || filters.status || filters.overdueOnly) && (
-        <button onClick={onClear} className="text-sm text-text-tertiary hover:text-text-primary">
-          {t('common.clearAll')}
-        </button>
+        <StatusFilter
+          value={filters.status}
+          onChange={val => onChange({ ...filters, status: val })}
+          options={STATUS_OPTIONS}
+          showAllOption
+        />
+
+        <div className="flex items-center gap-2">
+          <Switch
+            id="overdue-switch"
+            checked={!!filters.overdueOnly}
+            onCheckedChange={checked => onChange({ ...filters, overdueOnly: checked })}
+          />
+          <Label htmlFor="overdue-switch" className="cursor-pointer text-sm">
+            {t('girvi.overdueOnly')}
+          </Label>
+        </div>
+      </FilterBar>
+
+      {hasActiveFilters && (
+        <FilterChips
+          filters={activeFilters}
+          onRemove={handleRemoveChip}
+          onClearAll={onClear}
+        />
       )}
     </div>
   )
@@ -93,8 +135,7 @@ export const GirviTable: React.FC = () => {
   const handleEdit      = (g: Girvi) => navigate(`/shops/${shopId}/girvi/edit/${g._id}`)
   const handleRelease   = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}/release`)
   const handleCalculate = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}?tab=interest`)
-  const handleTransfer = (g: Girvi) => 
-  navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))  // ✅ ab exist karta hai
+  const handleTransfer  = (g: Girvi) => navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))
   const handleDelete    = async (g: Girvi) => {
     if (window.confirm(t('girvi.deleteConfirm'))) {
       await deleteGirvi(g._id)
@@ -115,17 +156,17 @@ export const GirviTable: React.FC = () => {
     [selectedRows, girvis]
   )
 
-const rowActions = useMemo(
-  () => getGirviRowActions(
-    handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer,
-    userRole ?? 'staff'
-  ),
-  [userRole]
-)
+  const rowActions = useMemo(
+    () => getGirviRowActions(
+      handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer,
+      userRole ?? 'staff'
+    ),
+    [userRole]
+  )
 
   return (
     <div className="w-full space-y-4">
-      <FilterBar
+      <GirviFilterBar
         filters={filters}
         onChange={handleFilterChange}
         onClear={() => { setFilters({}); resetFilters() }}
@@ -179,7 +220,6 @@ const rowActions = useMemo(
           shadow: true,
           fullWidth: true,
         }}
-        // onRowClick={g => handleView(g)}
         getRowId={row => row._id}
         testId="girvi-table"
         ariaLabel={t('girvi.table.ariaLabel')}

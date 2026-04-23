@@ -1,18 +1,19 @@
 // FILE: src/components/girviCashbook/GirviCashbookSummary/DailySummaryCard.tsx
 
-import React, { useState } from 'react'
-import { useTranslation }  from 'react-i18next'
+import React, { useState }  from 'react'
+import { useTranslation }   from 'react-i18next'
 import { Calendar, TrendingUp, TrendingDown, Loader2 } from 'lucide-react'
 import { StatCard, StatCardGrid } from '@/components/ui/data-display/StatCard'
-import { Label }           from '@/components/ui/label'
-import { useDailySummary } from '@/hooks/girviCashbook'
+import { Label }            from '@/components/ui/label'
+import { Input }            from '@/components/ui/input'
+import { useDailySummary }  from '@/hooks/girviCashbook'
 
 interface DailySummaryCardProps {
   shopId: string
 }
 
 export const DailySummaryCard: React.FC<DailySummaryCardProps> = ({ shopId }) => {
-  const { t } = useTranslation()
+  const { t }   = useTranslation()
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
 
   const { summary, isLoading } = useDailySummary(shopId, date)
@@ -20,17 +21,16 @@ export const DailySummaryCard: React.FC<DailySummaryCardProps> = ({ shopId }) =>
   return (
     <div className="space-y-4 rounded-lg border border-border-primary bg-bg-secondary p-5">
 
-      {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-text-primary flex items-center gap-2">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-text-primary">
           <Calendar className="h-4 w-4 text-accent" />
           {t('girviCashbook.summary.daily', 'Daily Summary')}
         </h3>
-        <input
+        <Input
           type="date"
           value={date}
           onChange={e => setDate(e.target.value)}
-          className="rounded-md border border-border-primary bg-bg-primary px-2 py-1 text-xs text-text-primary focus:outline-none focus:ring-1 focus:ring-accent"
+          className="h-8 w-auto text-xs"
         />
       </div>
 
@@ -109,7 +109,7 @@ export const DailySummaryCard: React.FC<DailySummaryCardProps> = ({ shopId }) =>
           </div>
         </>
       ) : (
-        <p className="text-center text-sm text-text-tertiary py-4">
+        <p className="py-4 text-center text-sm text-text-tertiary">
           No data for this date
         </p>
       )}
