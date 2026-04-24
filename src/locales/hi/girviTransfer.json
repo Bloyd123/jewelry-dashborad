@@ -1,0 +1,194 @@
+{
+  "girviTransfer": {
+    "title": "गिरवी हस्तांतरण",
+    "subtitle": "सभी गिरवी हस्तांतरण प्रबंधित करें",
+
+    "tabs": {
+      "overview": "अवलोकन",
+      "partyInterest": "पार्टी ब्याज",
+      "return": "वापसी"
+    },
+
+    "status": {
+      "pending": "लंबित",
+      "completed": "पूर्ण",
+      "returned": "वापस किया गया",
+      "cancelled": "रद्द किया गया"
+    },
+
+    "type": {
+      "outgoing": "जावक",
+      "incoming": "आवक",
+      "return": "वापसी"
+    },
+
+    "partyType": {
+      "shop": "हमारी दुकान",
+      "external": "बाहरी पार्टी"
+    },
+
+    "interestType": {
+      "simple": "साधारण",
+      "compound": "चक्रवृद्धि"
+    },
+
+    "paymentMode": {
+      "cash": "नकद",
+      "upi": "UPI",
+      "bankTransfer": "बैंक हस्तांतरण",
+      "cheque": "चेक"
+    },
+
+    "form": {
+      "title": "गिरवी हस्तांतरित करें",
+      "subtitle": "इस गिरवी को किसी अन्य पार्टी को हस्तांतरित करें",
+      "submit": "गिरवी हस्तांतरित करें",
+      "outstanding": "बकाया"
+    },
+
+    "fromParty": {
+      "title": "प्रेषक पार्टी (हमारी ओर से)",
+      "name": "पार्टी का नाम",
+      "namePlaceholder": "हमारी दुकान का नाम",
+      "type": "पार्टी प्रकार",
+      "phone": "फ़ोन",
+      "address": "पता",
+      "addressPlaceholder": "दुकान का पता"
+    },
+
+    "toParty": {
+      "title": "प्राप्तकर्ता पार्टी (प्राप्त करने वाली ओर)",
+      "name": "पार्टी का नाम",
+      "namePlaceholder": "प्राप्तकर्ता पार्टी का नाम",
+      "type": "पार्टी प्रकार",
+      "phone": "फ़ोन",
+      "address": "पता",
+      "addressPlaceholder": "पार्टी का पता",
+      "interestRate": "ब्याज दर (% प्रति माह)",
+      "interestType": "ब्याज प्रकार",
+      "infoText": "यह पार्टी उन्हें दी गई मूलधन राशि पर ब्याज लेगी। उनकी ब्याज दर सावधानी से दर्ज करें।"
+    },
+
+    "financials": {
+      "title": "हस्तांतरण वित्तीय विवरण",
+      "transferDate": "हस्तांतरण तिथि",
+      "partyPrincipal": "पार्टी से प्राप्त राशि (₹)",
+      "ourInterest": "हस्तांतरण तक हमारा ब्याज (₹)",
+      "ourInterestType": "हमारा ब्याज प्रकार",
+      "transferAmount": "हस्तांतरण निपटान राशि (₹)",
+      "commission": "कमीशन (₹)",
+      "paymentMode": "भुगतान विधि",
+      "transactionRef": "लेनदेन संदर्भ",
+      "notes": "नोट्स",
+      "notesPlaceholder": "कोई अतिरिक्त नोट्स..."
+    },
+
+    "review": {
+      "title": "हस्तांतरण सारांश",
+      "fromParty": "प्रेषक",
+      "toParty": "प्राप्तकर्ता",
+      "partyPrincipal": "पार्टी मूलधन",
+      "partyInterestRate": "पार्टी ब्याज दर",
+      "ourInterest": "हस्तांतरण तक हमारा ब्याज",
+      "transferAmount": "निपटान राशि",
+      "commission": "कमीशन",
+      "transferDate": "हस्तांतरण तिथि",
+      "paymentMode": "भुगतान विधि",
+      "warning": "एक बार हस्तांतरित होने के बाद, गिरवी की स्थिति हस्तांतरित में बदल जाएगी। पार्टी इस गिरवी को वापस होने तक प्रबंधित करेगी।"
+    },
+
+    "overview": {
+      "title": "हस्तांतरण अवलोकन",
+      "partyPrincipal": "पार्टी मूलधन",
+      "transferAmount": "निपटान",
+      "partyInterest": "पार्टी ब्याज दर",
+      "transferDate": "हस्तांतरण तिथि",
+      "fromParty": "प्रेषक पार्टी",
+      "toParty": "प्राप्तकर्ता पार्टी",
+      "financials": "वित्तीय विवरण",
+      "items": "गिरवी वस्तुएं"
+    },
+
+    "partyInterest": {
+      "calculator": "पार्टी ब्याज कैलकुलेटर",
+      "calculateUpTo": "तिथि तक गणना करें",
+      "calculate": "गणना करें",
+      "days": "बीते हुए दिन",
+      "interestCalc": "गणना किया गया ब्याज",
+      "totalPayable": "पार्टी को कुल देय",
+      "breakdown": "गणना विवरण"
+    },
+
+    "return": {
+      "title": "हस्तांतरण वापसी",
+      "returned": "हस्तांतरण वापस कर दिया गया है",
+      "initiateReturn": "वापसी शुरू करें",
+      "returnDesc": "गिरवी की स्थिति सक्रिय में वापस लाने के लिए इस हस्तांतरण को वापस करें।",
+      "returnWarning": "यह गिरवी को सक्रिय स्थिति में वापस करेगा और पार्टी ब्याज बकाया राशि में जोड़ा जाएगा।",
+      "processReturn": "वापसी प्रक्रिया करें",
+      "details": "वापसी विवरण",
+      "form": "वापसी विवरण",
+      "returnDate": "वापसी तिथि",
+      "partyInterest": "पार्टी द्वारा लगाया गया ब्याज",
+      "returnAmount": "कुल वापसी राशि",
+      "paymentMode": "भुगतान विधि",
+      "transactionRef": "लेनदेन संदर्भ",
+      "reason": "वापसी का कारण",
+      "reasonPlaceholder": "वापसी का कारण",
+      "remarks": "टिप्पणी",
+      "remarksPlaceholder": "अतिरिक्त टिप्पणी...",
+      "submit": "वापसी प्रक्रिया करें",
+      "confirmTitle": "वापसी प्रक्रिया करें?",
+      "confirmDesc": "यह गिरवी को सक्रिय स्थिति में वापस करेगा और पार्टी ब्याज बकाया राशि में जोड़ा जाएगा।"
+    },
+
+    "calculator": {
+      "title": "पार्टी ब्याज की गणना करें",
+      "toDate": "तिथि तक गणना करें",
+      "calculate": "गणना करें",
+      "useThisAmount": "यह राशि उपयोग करें"
+    },
+
+    "filters": {
+      "status": "स्थिति",
+      "transferType": "हस्तांतरण प्रकार",
+      "dateRange": "तिथि सीमा",
+      "searchPlaceholder": "हस्तांतरण खोजें..."
+    },
+
+    "list": {
+      "title": "गिरवी हस्तांतरण",
+      "subtitle": "सभी गिरवी हस्तांतरण प्रबंधित करें"
+    },
+
+    "detail": {
+      "notFound": "हस्तांतरण नहीं मिला",
+      "toParty": "प्राप्तकर्ता",
+      "date": "तिथि"
+    },
+
+    "common": {
+      "backToList": "हस्तांतरण सूची पर वापस जाएं",
+      "back": "वापस"
+    },
+
+    "confirmTransfer": "हस्तांतरण की पुष्टि करें?",
+    "confirmTransferDesc": "क्या आप वाकई इस गिरवी को हस्तांतरित करना चाहते हैं? यह क्रिया गिरवी की स्थिति हस्तांतरित में बदल देगी।",
+    "confirmCancel": "हस्तांतरण रद्द करें?",
+    "confirmCancelDesc": "क्या आप वाकई इस हस्तांतरण को रद्द करना चाहते हैं?",
+
+    "errors": {
+      "pleaseFillRequired": "कृपया सभी आवश्यक फ़ील्ड भरें",
+      "validationFailed": "सत्यापन विफल",
+      "girviIdRequired": "गिरवी ID आवश्यक है",
+      "fetchFailed": "हस्तांतरण लोड करने में विफल",
+      "fetchFailedDesc": "हस्तांतरण लोड करते समय कुछ गलत हो गया।"
+    },
+
+    "success": {
+      "transferred": "गिरवी सफलतापूर्वक हस्तांतरित की गई",
+      "returned": "हस्तांतरण सफलतापूर्वक वापस किया गया",
+      "cancelled": "हस्तांतरण सफलतापूर्वक रद्द किया गया"
+    }
+  }
+}

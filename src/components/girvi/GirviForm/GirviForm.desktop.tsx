@@ -201,7 +201,7 @@ const handleConfirmedSubmit = async () => {
     : null
 
   return (
-<div className="bg-bg-primary">
+<div className="min-h-full bg-bg-primary">
       <div className="border-b border-border-primary bg-bg-secondary px-6 py-4">
         <h1 className="text-2xl font-bold text-text-primary">
           {mode === 'create' ? t('girvi.createGirvi') : mode === 'edit' ? t('girvi.editGirvi') : t('girvi.viewGirvi')}

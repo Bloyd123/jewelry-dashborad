@@ -13,6 +13,10 @@ import payment from './payment.json'
 import user from './user.json'
 import auth from './auth.json'
 import dashboard from './dashboard.json'
+import girvi from './girvi.json'
+import griviTransfer from './girviTransfer.json'
+import girvicashbook from './girviCashbook.json'
+
 // import inventory from './inventory.json'
 // import masters from './masters.json'
 // import parties from './parties.json'
@@ -36,6 +40,9 @@ export default {
   ...payment,
   ...user,
   ...dashboard,
+  ...girvi,
+  ...griviTransfer,
+  ...girvicashbook,
   //   ...inventory,
   //   ...masters,
   //   ...parties,

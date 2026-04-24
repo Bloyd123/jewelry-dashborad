@@ -1,33 +1,35 @@
 // FILE: src/components/girvi/GirviRelease/GirviRenewalForm.tsx
 
-import { useState }             from 'react'
-import { useTranslation }       from 'react-i18next'
+import { useState }           from 'react'
+import { useTranslation }     from 'react-i18next'
 import { Loader2, RefreshCw, TrendingUp } from 'lucide-react'
-import { Button }               from '@/components/ui/button'
+import { Button }             from '@/components/ui/button'
+import { Input }              from '@/components/ui/input'
+import { Label }              from '@/components/ui/label'
+import { Switch }             from '@/components/ui/switch'
+import { Textarea }           from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ConfirmDialog }        from '@/components/ui/overlay/Dialog/ConfirmDialog'
-import { useGirviActions }      from '@/hooks/girvi/useGirviActions'
-import { InterestCalculator }   from './InterestCalculator'
-import { renewalSchema }        from '@/validators/girviValidation'
+import { ConfirmDialog }      from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useGirviActions }    from '@/hooks/girvi/useGirviActions'
+import { InterestCalculator } from './InterestCalculator'
+import { renewalSchema }      from '@/validators/girviValidation'
 import type { GirviPaymentMode, RenewalSummary } from '@/types/girvi.types'
-
 
 interface GirviRenewalFormProps {
   shopId:   string
   girviId:  string
   girviBalance?: {
-    outstandingPrincipal: number
-    totalAmountDue:       number
-    interestRate:         number
-    interestType:         string
-    dueDate?:             string
+    outstandingPrincipal:  number
+    totalAmountDue:        number
+    interestRate:          number
+    interestType:          string
+    dueDate?:              string
     lastInterestCalcDate?: string
-    girviDate:            string
+    girviDate:             string
   }
   onSuccess?: (summary: RenewalSummary) => void
   onCancel?:  () => void
 }
-
 
 const PAYMENT_MODES: { value: GirviPaymentMode; label: string }[] = [
   { value: 'cash',          label: ' Cash'  },
@@ -36,7 +38,6 @@ const PAYMENT_MODES: { value: GirviPaymentMode; label: string }[] = [
   { value: 'cheque',        label: 'Cheque'},
 ]
 
-
 export const GirviRenewalForm = ({
   shopId,
   girviId,
@@ -44,10 +45,9 @@ export const GirviRenewalForm = ({
   onSuccess,
   onCancel,
 }: GirviRenewalFormProps) => {
-  const { t }   = useTranslation()
-  const today   = new Date().toISOString().split('T')[0]
+  const { t } = useTranslation()
+  const today = new Date().toISOString().split('T')[0]
 
-  // Default new due date = 3 months from today
   const defaultNewDueDate = new Date()
   defaultNewDueDate.setMonth(defaultNewDueDate.getMonth() + 3)
   const defaultDueDateStr = defaultNewDueDate.toISOString().split('T')[0]
@@ -60,26 +60,25 @@ export const GirviRenewalForm = ({
   const [newInterestRate, setNewInterestRate] = useState(
     girviBalance?.interestRate ? String(girviBalance.interestRate) : ''
   )
-  const [changeRate,      setChangeRate]      = useState(false)
-  const [paymentMode,     setPaymentMode]     = useState<GirviPaymentMode>('cash')
-  const [transactionRef,  setTransactionRef]  = useState('')
-  const [remarks,         setRemarks]         = useState('')
-  const [errors,          setErrors]          = useState<Record<string, string>>({})
-  const [showConfirm,     setShowConfirm]     = useState(false)
+  const [changeRate,     setChangeRate]     = useState(false)
+  const [paymentMode,    setPaymentMode]    = useState<GirviPaymentMode>('cash')
+  const [transactionRef, setTransactionRef] = useState('')
+  const [remarks,        setRemarks]        = useState('')
+  const [errors,         setErrors]         = useState<Record<string, string>>({})
+  const [showConfirm,    setShowConfirm]    = useState(false)
 
   const { renewGirvi, isRenewing } = useGirviActions(shopId)
 
-  // ── Auto-fill from calculator ────────────────────────────────────────────
+  // ── Calculator apply ──────────────────────────────────────────────────────
 
   const handleCalculatorApply = (data: {
     interestCalculated: number
-    interestType: any
-    toDate: string
+    interestType:       any
+    toDate:             string
   }) => {
     setInterestPaid(String(data.interestCalculated))
     setRenewalDate(data.toDate)
   }
-
 
   const netAmount = Math.max(
     0,
@@ -93,6 +92,7 @@ export const GirviRenewalForm = ({
     (girviBalance?.outstandingPrincipal || 0) - parseFloat(principalPaid || '0')
   )
 
+  // ── Submit ────────────────────────────────────────────────────────────────
 
   const handleSubmit = () => {
     try {
@@ -130,9 +130,11 @@ export const GirviRenewalForm = ({
         discountGiven:   parseFloat(discountGiven || '0') || undefined,
         newDueDate,
         renewalDate,
-        newInterestRate: changeRate && newInterestRate ? parseFloat(newInterestRate) : undefined,
+        newInterestRate: changeRate && newInterestRate
+          ? parseFloat(newInterestRate)
+          : undefined,
         paymentMode,
-        remarks:         remarks || undefined,
+        remarks: remarks || undefined,
       },
       setFormErrors
     )
@@ -148,6 +150,7 @@ export const GirviRenewalForm = ({
   return (
     <div className="space-y-6">
 
+      {/* Balance Summary */}
       {girviBalance && (
         <div className="grid grid-cols-3 gap-3 rounded-lg bg-bg-tertiary p-4">
           <div className="text-center">
@@ -174,12 +177,14 @@ export const GirviRenewalForm = ({
         </div>
       )}
 
+      {/* Interest Calculator */}
       <InterestCalculator
         shopId={shopId}
         girviId={girviId}
         onApply={handleCalculatorApply}
       />
 
+      {/* Renewal Dates */}
       <Card className="border-border-primary bg-bg-secondary">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold text-text-primary">
@@ -188,64 +193,65 @@ export const GirviRenewalForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 pb-4">
+
+          {/* Dates */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-sm font-medium text-text-primary">
+              <Label>
                 {t('girvi.renewalDate')} <span className="text-status-error">*</span>
-              </label>
-              <input
+              </Label>
+              <Input
                 type="date"
                 value={renewalDate}
                 max={today}
-                onChange={(e) => setRenewalDate(e.target.value)}
-                className={`h-10 w-full rounded-lg border bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none ${
-                  err('renewalDate') ? 'border-status-error' : 'border-border-primary'
-                }`}
+                onChange={e => setRenewalDate(e.target.value)}
+                className={err('renewalDate') ? 'border-status-error' : ''}
               />
-              {err('renewalDate') && <p className="text-xs text-status-error"> {err('renewalDate')}</p>}
+              {err('renewalDate') && (
+                <p className="text-xs text-status-error">{err('renewalDate')}</p>
+              )}
             </div>
-
             <div className="space-y-1">
-              <label className="text-sm font-medium text-text-primary">
+              <Label>
                 {t('girvi.newDueDate')} <span className="text-status-error">*</span>
-              </label>
-              <input
+              </Label>
+              <Input
                 type="date"
                 value={newDueDate}
                 min={today}
-                onChange={(e) => setNewDueDate(e.target.value)}
-                className={`h-10 w-full rounded-lg border bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none ${
-                  err('newDueDate') ? 'border-status-error' : 'border-border-primary'
-                }`}
+                onChange={e => setNewDueDate(e.target.value)}
+                className={err('newDueDate') ? 'border-status-error' : ''}
               />
-              {err('newDueDate') && <p className="text-xs text-status-error">{err('newDueDate')}</p>}
+              {err('newDueDate') && (
+                <p className="text-xs text-status-error">{err('newDueDate')}</p>
+              )}
             </div>
           </div>
 
+          {/* Change Interest Rate Toggle */}
           <div className="space-y-2">
-            <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-text-primary">
-              <input
-                type="checkbox"
+            <div className="flex items-center gap-2">
+              <Switch
+                id="change-rate-switch"
                 checked={changeRate}
-                onChange={(e) => setChangeRate(e.target.checked)}
-                className="rounded"
+                onCheckedChange={setChangeRate}
               />
-              <TrendingUp className="h-4 w-4 text-text-tertiary" />
-              {t('girvi.changeInterestRate')}
-            </label>
+              <Label htmlFor="change-rate-switch" className="flex cursor-pointer items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-text-tertiary" />
+                {t('girvi.changeInterestRate')}
+              </Label>
+            </div>
 
             {changeRate && (
               <div className="relative">
-                <input
+                <Input
                   type="number"
                   value={newInterestRate}
                   min={0}
                   step={0.1}
-                  onChange={(e) => setNewInterestRate(e.target.value)}
+                  onChange={e => setNewInterestRate(e.target.value)}
                   placeholder={t('girvi.newInterestRatePlaceholder')}
-                  className={`h-10 w-full rounded-lg border bg-bg-secondary pr-20 pl-4 text-text-primary focus:border-accent focus:outline-none ${
-                    err('newInterestRate') ? 'border-status-error' : 'border-border-primary'
-                  }`}
+                  className={`pr-24 ${err('newInterestRate') ? 'border-status-error' : ''}`}
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                   <span className="text-sm text-text-tertiary">% / month</span>
@@ -256,6 +262,7 @@ export const GirviRenewalForm = ({
         </CardContent>
       </Card>
 
+      {/* Payment Details */}
       <Card className="border-border-primary bg-bg-secondary">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold text-text-primary">
@@ -263,36 +270,40 @@ export const GirviRenewalForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 pb-4">
-          {/* Amounts */}
+
+          {/* Amount Fields */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {[
               { label: t('girvi.interestPaid'),  value: interestPaid,  set: setInterestPaid,  required: true,  name: 'interestPaid'  },
               { label: t('girvi.principalPaid'), value: principalPaid, set: setPrincipalPaid, required: false, name: 'principalPaid' },
               { label: t('girvi.discountGiven'), value: discountGiven, set: setDiscountGiven, required: false, name: 'discountGiven' },
-            ].map((field) => (
+            ].map(field => (
               <div key={field.name} className="space-y-1">
-                <label className="text-sm font-medium text-text-primary">
+                <Label>
                   {field.label}
                   {field.required && <span className="ml-1 text-status-error">*</span>}
-                </label>
+                </Label>
                 <div className="relative">
-                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">₹</span>
-                  <input
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">
+                    ₹
+                  </span>
+                  <Input
                     type="number"
                     value={field.value}
                     min={0}
                     step={0.01}
-                    onChange={(e) => field.set(e.target.value)}
-                    className={`h-10 w-full rounded-lg border bg-bg-secondary pl-7 pr-3 text-text-primary focus:border-accent focus:outline-none ${
-                      err(field.name) ? 'border-status-error' : 'border-border-primary'
-                    }`}
+                    onChange={e => field.set(e.target.value)}
+                    className={`pl-7 ${err(field.name) ? 'border-status-error' : ''}`}
                   />
                 </div>
-                {err(field.name) && <p className="text-xs text-status-error"> {err(field.name)}</p>}
+                {err(field.name) && (
+                  <p className="text-xs text-status-error">{err(field.name)}</p>
+                )}
               </div>
             ))}
           </div>
 
+          {/* Net + New Principal */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-center justify-between rounded-lg bg-accent/10 px-4 py-2">
               <span className="text-sm text-text-secondary">{t('girvi.netReceived')}</span>
@@ -304,12 +315,13 @@ export const GirviRenewalForm = ({
             </div>
           </div>
 
+          {/* Payment Mode */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-text-primary">
+            <Label>
               {t('girvi.paymentMode')} <span className="text-status-error">*</span>
-            </label>
+            </Label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {PAYMENT_MODES.map((mode) => (
+              {PAYMENT_MODES.map(mode => (
                 <label
                   key={mode.value}
                   className={`flex cursor-pointer items-center justify-center rounded-lg border-2 py-2.5 text-sm font-medium transition-all ${
@@ -332,35 +344,48 @@ export const GirviRenewalForm = ({
             </div>
 
             {paymentMode !== 'cash' && (
-              <input
+              <Input
                 type="text"
                 value={transactionRef}
-                onChange={(e) => setTransactionRef(e.target.value)}
+                onChange={e => setTransactionRef(e.target.value)}
                 placeholder={t('girvi.transactionRefPlaceholder')}
                 maxLength={200}
-                className="mt-2 h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+                className="mt-2"
               />
             )}
           </div>
 
-          <textarea
+          {/* Remarks */}
+          <Textarea
             value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
+            onChange={e => setRemarks(e.target.value)}
             placeholder={t('girvi.renewalRemarksPlaceholder')}
             rows={2}
             maxLength={500}
-            className="w-full resize-none rounded-lg border border-border-primary bg-bg-secondary px-4 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+            className="resize-none"
           />
         </CardContent>
       </Card>
 
+      {/* Actions */}
       <div className="flex gap-3">
         {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isRenewing} className="flex-1">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isRenewing}
+            className="flex-1"
+          >
             {t('common.cancel')}
           </Button>
         )}
-        <Button type="button" onClick={handleSubmit} disabled={isRenewing} className="flex-1">
+        <Button
+          type="button"
+          onClick={handleSubmit}
+          disabled={isRenewing}
+          className="flex-1"
+        >
           {isRenewing
             ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" />{t('common.saving')}</>
             : <><RefreshCw className="mr-2 h-4 w-4" />{t('girvi.renewGirvi')}</>
@@ -368,13 +393,14 @@ export const GirviRenewalForm = ({
         </Button>
       </div>
 
+      {/* Confirm Dialog */}
       <ConfirmDialog
         open={showConfirm}
         onOpenChange={setShowConfirm}
         title={t('girvi.confirmRenewal')}
         description={t('girvi.confirmRenewalDescription', {
-          amount:   netAmount.toLocaleString('en-IN'),
-          dueDate:  new Date(newDueDate).toLocaleDateString('en-IN'),
+          amount:  netAmount.toLocaleString('en-IN'),
+          dueDate: new Date(newDueDate).toLocaleDateString('en-IN'),
         })}
         variant="info"
         confirmLabel={t('girvi.renewGirvi')}

@@ -1,16 +1,18 @@
 // FILE: src/components/girvi/GirviRelease/GirviPartialReleaseForm.tsx
-// PATCH /shops/:shopId/girvi/:girviId/partial-release
 
-import { useState, useMemo }     from 'react'
-import { useTranslation }        from 'react-i18next'
+import { useState, useMemo }  from 'react'
+import { useTranslation }     from 'react-i18next'
 import { Loader2, Package, CheckSquare, Square } from 'lucide-react'
-import { Button }                from '@/components/ui/button'
+import { Button }             from '@/components/ui/button'
+import { Input }              from '@/components/ui/input'
+import { Label }              from '@/components/ui/label'
+import { Textarea }           from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { ConfirmDialog }         from '@/components/ui/overlay/Dialog/ConfirmDialog'
-import { useGirviActions }       from '@/hooks/girvi/useGirviActions'
-import { useGirviInterestLazy }  from '@/hooks/girvi/useGirviInterest'
-import { partialReleaseSchema }  from '@/validators/girviValidation'
-import { InterestCalculator }    from './InterestCalculator'
+import { ConfirmDialog }      from '@/components/ui/overlay/Dialog/ConfirmDialog'
+import { useGirviActions }    from '@/hooks/girvi/useGirviActions'
+import { useGirviInterestLazy } from '@/hooks/girvi/useGirviInterest'
+import { partialReleaseSchema } from '@/validators/girviValidation'
+import { InterestCalculator } from './InterestCalculator'
 import type { GirviItem, GirviPaymentMode, PartialReleaseSummary } from '@/types/girvi.types'
 
 // ─── Props ─────────────────────────────────────────────────────────────────────
@@ -18,7 +20,7 @@ import type { GirviItem, GirviPaymentMode, PartialReleaseSummary } from '@/types
 interface GirviPartialReleaseFormProps {
   shopId:    string
   girviId:   string
-  items:     GirviItem[]          // active items only — pass activeItems from useGirviById
+  items:     GirviItem[]
   girviBalance?: {
     outstandingPrincipal: number
     accruedInterest:      number
@@ -34,10 +36,10 @@ interface GirviPartialReleaseFormProps {
 // ─── Payment Modes ────────────────────────────────────────────────────────────
 
 const PAYMENT_MODES: { value: GirviPaymentMode; label: string }[] = [
-  { value: 'cash',          label: '💵 Cash'     },
-  { value: 'upi',           label: '📲 UPI'      },
-  { value: 'bank_transfer', label: '🏦 Bank'     },
-  { value: 'cheque',        label: '📄 Cheque'   },
+  { value: 'cash',          label: '💵 Cash'   },
+  { value: 'upi',           label: '📲 UPI'    },
+  { value: 'bank_transfer', label: '🏦 Bank'   },
+  { value: 'cheque',        label: '📄 Cheque' },
 ]
 
 // ─── Component ─────────────────────────────────────────────────────────────────
@@ -50,36 +52,31 @@ export const GirviPartialReleaseForm = ({
   onSuccess,
   onCancel,
 }: GirviPartialReleaseFormProps) => {
-  const { t }   = useTranslation()
-  const today   = new Date().toISOString().split('T')[0]
+  const { t } = useTranslation()
+  const today = new Date().toISOString().split('T')[0]
 
-  // ── Item selection state ───────────────────────────────────────────────────
-  // Map of itemId → releasedQuantity (0 = not selected)
-  const [selectedItems, setSelectedItems] = useState<Record<string, number>>({})
-
-  // ── Form state ─────────────────────────────────────────────────────────────
-  const [interestPaid,      setInterestPaid]      = useState('')
-  const [principalPaid,     setPrincipalPaid]     = useState('')
-  const [discountGiven,     setDiscountGiven]     = useState('0')
-  const [releaseDate,       setReleaseDate]       = useState(today)
-  const [paymentMode,       setPaymentMode]       = useState<GirviPaymentMode>('cash')
-  const [transactionRef,    setTransactionRef]    = useState('')
-  const [remarks,           setRemarks]           = useState('')
-  const [errors,            setErrors]            = useState<Record<string, string>>({})
-  const [showConfirm,       setShowConfirm]       = useState(false)
+  const [selectedItems,  setSelectedItems]  = useState<Record<string, number>>({})
+  const [interestPaid,   setInterestPaid]   = useState('')
+  const [principalPaid,  setPrincipalPaid]  = useState('')
+  const [discountGiven,  setDiscountGiven]  = useState('0')
+  const [releaseDate,    setReleaseDate]    = useState(today)
+  const [paymentMode,    setPaymentMode]    = useState<GirviPaymentMode>('cash')
+  const [transactionRef, setTransactionRef] = useState('')
+  const [remarks,        setRemarks]        = useState('')
+  const [errors,         setErrors]         = useState<Record<string, string>>({})
+  const [showConfirm,    setShowConfirm]    = useState(false)
 
   const { partialRelease, isPartialReleasing } = useGirviActions(shopId)
   const { calculate, isCalculating }           = useGirviInterestLazy(shopId, girviId)
 
-  // ── Item selection helpers ─────────────────────────────────────────────────
+  // ── Item selection helpers ────────────────────────────────────────────────
 
   const toggleItem = (item: GirviItem) => {
-    setSelectedItems((prev) => {
+    setSelectedItems(prev => {
       const next = { ...prev }
       if (next[item._id]) {
         delete next[item._id]
       } else {
-        // Default: release all available quantity for that item
         const available = item.quantity - (item.releasedQuantity || 0)
         next[item._id] = available
       }
@@ -88,12 +85,10 @@ export const GirviPartialReleaseForm = ({
   }
 
   const setItemQty = (itemId: string, qty: number) => {
-    setSelectedItems((prev) => ({ ...prev, [itemId]: qty }))
+    setSelectedItems(prev => ({ ...prev, [itemId]: qty }))
   }
 
   const selectedCount = Object.values(selectedItems).filter(q => q > 0).length
-
-  // ── Value of selected items ────────────────────────────────────────────────
 
   const selectedValue = useMemo(() => {
     return items.reduce((sum, item) => {
@@ -104,12 +99,12 @@ export const GirviPartialReleaseForm = ({
     }, 0)
   }, [items, selectedItems])
 
-  // ── Auto-fill interest from calculator ────────────────────────────────────
+  // ── Calculator apply ──────────────────────────────────────────────────────
 
   const handleCalculatorApply = async (data: {
     interestCalculated: number
-    interestType: any
-    toDate: string
+    interestType:       any
+    toDate:             string
   }) => {
     setInterestPaid(String(data.interestCalculated))
     setReleaseDate(data.toDate)
@@ -119,12 +114,12 @@ export const GirviPartialReleaseForm = ({
 
   const netAmount = Math.max(
     0,
-    parseFloat(interestPaid   || '0') +
-    parseFloat(principalPaid  || '0') -
-    parseFloat(discountGiven  || '0')
+    parseFloat(interestPaid  || '0') +
+    parseFloat(principalPaid || '0') -
+    parseFloat(discountGiven || '0')
   )
 
-  // ── Validation + Submit ───────────────────────────────────────────────────
+  // ── Submit ────────────────────────────────────────────────────────────────
 
   const handleSubmit = () => {
     const releasedItemsPayload = Object.entries(selectedItems)
@@ -133,10 +128,10 @@ export const GirviPartialReleaseForm = ({
 
     try {
       partialReleaseSchema.parse({
-        releasedItems:  releasedItemsPayload,
-        interestPaid:   parseFloat(interestPaid  || '0'),
-        principalPaid:  parseFloat(principalPaid || '0'),
-        discountGiven:  parseFloat(discountGiven || '0'),
+        releasedItems: releasedItemsPayload,
+        interestPaid:  parseFloat(interestPaid  || '0'),
+        principalPaid: parseFloat(principalPaid || '0'),
+        discountGiven: parseFloat(discountGiven || '0'),
         releaseDate,
         paymentMode,
       })
@@ -163,13 +158,13 @@ export const GirviPartialReleaseForm = ({
     const result = await partialRelease(
       girviId,
       {
-        releasedItems:  releasedItemsPayload,
-        interestPaid:   parseFloat(interestPaid  || '0'),
-        principalPaid:  parseFloat(principalPaid || '0'),
-        discountGiven:  parseFloat(discountGiven || '0'),
+        releasedItems: releasedItemsPayload,
+        interestPaid:  parseFloat(interestPaid  || '0'),
+        principalPaid: parseFloat(principalPaid || '0'),
+        discountGiven: parseFloat(discountGiven || '0'),
         releaseDate,
         paymentMode,
-        remarks:        remarks || undefined,
+        remarks:       remarks || undefined,
       },
       setFormErrors
     )
@@ -185,7 +180,7 @@ export const GirviPartialReleaseForm = ({
   return (
     <div className="space-y-6">
 
-      {/* ── Current Balance ──────────────────────────────────────────────── */}
+      {/* Balance Summary */}
       {girviBalance && (
         <div className="grid grid-cols-3 gap-3 rounded-lg bg-bg-tertiary p-4">
           <div className="text-center">
@@ -209,7 +204,7 @@ export const GirviPartialReleaseForm = ({
         </div>
       )}
 
-      {/* ── Step 1: Select Items ─────────────────────────────────────────── */}
+      {/* Step 1: Select Items */}
       <Card className="border-border-primary bg-bg-secondary">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-sm font-semibold text-text-primary">
@@ -226,11 +221,10 @@ export const GirviPartialReleaseForm = ({
           {items.length === 0 ? (
             <p className="text-sm text-text-tertiary">{t('girvi.noActiveItems')}</p>
           ) : (
-            items.map((item) => {
+            items.map(item => {
               const isSelected  = !!selectedItems[item._id]
               const available   = item.quantity - (item.releasedQuantity || 0)
               const selectedQty = selectedItems[item._id] || 0
-              const perUnit     = (item.finalValue || item.approxValue || 0) / item.quantity
 
               return (
                 <div
@@ -242,7 +236,6 @@ export const GirviPartialReleaseForm = ({
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    {/* Checkbox */}
                     <button
                       type="button"
                       onClick={() => toggleItem(item)}
@@ -254,29 +247,26 @@ export const GirviPartialReleaseForm = ({
                       }
                     </button>
 
-                    {/* Item info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-text-primary truncate">{item.itemName}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-medium text-text-primary">{item.itemName}</p>
                       <p className="text-xs text-text-tertiary capitalize">
                         {item.itemType}
-                        {item.purity ? ` · ${item.purity}` : ''}
+                        {item.purity      ? ` · ${item.purity}`      : ''}
                         {item.grossWeight ? ` · ${item.grossWeight}g` : ''}
                       </p>
                     </div>
 
-                    {/* Value */}
-                    <div className="text-right flex-shrink-0">
+                    <div className="flex-shrink-0 text-right">
                       <p className="text-sm font-semibold text-text-primary">
-                        ₹{((item.finalValue || item.approxValue || 0)).toLocaleString('en-IN')}
+                        ₹{(item.finalValue || item.approxValue || 0).toLocaleString('en-IN')}
                       </p>
                       <p className="text-xs text-text-tertiary">
                         {available} {t('girvi.available')}
                       </p>
                     </div>
 
-                    {/* Qty selector when selected AND multiple qty */}
                     {isSelected && available > 1 && (
-                      <div className="flex items-center gap-1.5 ml-2">
+                      <div className="ml-2 flex items-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => setItemQty(item._id, Math.max(1, selectedQty - 1))}
@@ -302,7 +292,6 @@ export const GirviPartialReleaseForm = ({
             })
           )}
 
-          {/* Selected value summary */}
           {selectedCount > 0 && (
             <div className="flex justify-between rounded-lg bg-accent/10 px-4 py-2 text-sm">
               <span className="text-text-secondary">{t('girvi.selectedItemsValue')}</span>
@@ -318,14 +307,14 @@ export const GirviPartialReleaseForm = ({
         </CardContent>
       </Card>
 
-      {/* ── Step 2: Interest Calculator ──────────────────────────────────── */}
+      {/* Step 2: Interest Calculator */}
       <InterestCalculator
         shopId={shopId}
         girviId={girviId}
         onApply={handleCalculatorApply}
       />
 
-      {/* ── Step 3: Payment Details ───────────────────────────────────────── */}
+      {/* Step 3: Payment Details */}
       <Card className="border-border-primary bg-bg-secondary">
         <CardHeader className="pb-3">
           <CardTitle className="text-sm font-semibold text-text-primary">
@@ -333,34 +322,37 @@ export const GirviPartialReleaseForm = ({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 pb-4">
-          {/* Amount breakdown */}
+
+          {/* Amount Fields */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {[
               { label: t('girvi.interestPaid'),  value: interestPaid,  set: setInterestPaid,  required: true  },
               { label: t('girvi.principalPaid'), value: principalPaid, set: setPrincipalPaid, required: true  },
               { label: t('girvi.discountGiven'), value: discountGiven, set: setDiscountGiven, required: false },
-            ].map((field) => (
+            ].map(field => (
               <div key={field.label} className="space-y-1">
-                <label className="text-sm font-medium text-text-primary">
+                <Label>
                   {field.label}
                   {field.required && <span className="ml-1 text-status-error">*</span>}
-                </label>
+                </Label>
                 <div className="relative">
-                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">₹</span>
-                  <input
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-sm text-text-tertiary">
+                    ₹
+                  </span>
+                  <Input
                     type="number"
                     value={field.value}
                     min={0}
                     step={0.01}
-                    onChange={(e) => field.set(e.target.value)}
-                    className="h-10 w-full rounded-lg border border-border-primary bg-bg-secondary pl-7 pr-3 text-text-primary focus:border-accent focus:outline-none"
+                    onChange={e => field.set(e.target.value)}
+                    className="pl-7"
                   />
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Net amount */}
+          {/* Net Amount */}
           <div className="flex items-center justify-between rounded-lg bg-accent/10 px-4 py-3">
             <span className="font-medium text-text-primary">{t('girvi.netReceived')}</span>
             <span className="text-xl font-bold text-accent">
@@ -370,28 +362,28 @@ export const GirviPartialReleaseForm = ({
 
           {/* Release Date */}
           <div className="space-y-1">
-            <label className="text-sm font-medium text-text-primary">
+            <Label>
               {t('girvi.releaseDate')} <span className="text-status-error">*</span>
-            </label>
-            <input
+            </Label>
+            <Input
               type="date"
               value={releaseDate}
               max={today}
-              onChange={(e) => setReleaseDate(e.target.value)}
-              className={`h-10 w-full rounded-lg border bg-bg-secondary px-3 text-text-primary focus:border-accent focus:outline-none ${
-                err('releaseDate') ? 'border-status-error' : 'border-border-primary'
-              }`}
+              onChange={e => setReleaseDate(e.target.value)}
+              className={err('releaseDate') ? 'border-status-error' : ''}
             />
-            {err('releaseDate') && <p className="text-sm text-status-error">⚠️ {err('releaseDate')}</p>}
+            {err('releaseDate') && (
+              <p className="text-sm text-status-error">⚠️ {err('releaseDate')}</p>
+            )}
           </div>
 
           {/* Payment Mode */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-text-primary">
+            <Label>
               {t('girvi.paymentMode')} <span className="text-status-error">*</span>
-            </label>
+            </Label>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {PAYMENT_MODES.map((mode) => (
+              {PAYMENT_MODES.map(mode => (
                 <label
                   key={mode.value}
                   className={`flex cursor-pointer items-center justify-center rounded-lg border-2 py-2.5 text-sm font-medium transition-all ${
@@ -413,35 +405,40 @@ export const GirviPartialReleaseForm = ({
               ))}
             </div>
 
-            {/* Transaction ref for non-cash */}
             {paymentMode !== 'cash' && (
-              <input
+              <Input
                 type="text"
                 value={transactionRef}
-                onChange={(e) => setTransactionRef(e.target.value)}
+                onChange={e => setTransactionRef(e.target.value)}
                 placeholder={t('girvi.transactionRefPlaceholder')}
                 maxLength={200}
-                className="mt-2 h-10 w-full rounded-lg border border-border-primary bg-bg-secondary px-4 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+                className="mt-2"
               />
             )}
           </div>
 
           {/* Remarks */}
-          <textarea
+          <Textarea
             value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
+            onChange={e => setRemarks(e.target.value)}
             placeholder={t('girvi.partialReleaseRemarksPlaceholder')}
             rows={2}
             maxLength={500}
-            className="w-full resize-none rounded-lg border border-border-primary bg-bg-secondary px-4 py-2 text-sm text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
+            className="resize-none"
           />
         </CardContent>
       </Card>
 
-      {/* ── Actions ─────────────────────────────────────────────────────────── */}
+      {/* Actions */}
       <div className="flex gap-3">
         {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel} disabled={isPartialReleasing} className="flex-1">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onCancel}
+            disabled={isPartialReleasing}
+            className="flex-1"
+          >
             {t('common.cancel')}
           </Button>
         )}
@@ -458,7 +455,7 @@ export const GirviPartialReleaseForm = ({
         </Button>
       </div>
 
-      {/* ── Confirm Dialog ─────────────────────────────────────────────────── */}
+      {/* Confirm Dialog */}
       <ConfirmDialog
         open={showConfirm}
         onOpenChange={setShowConfirm}

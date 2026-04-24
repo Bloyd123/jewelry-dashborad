@@ -1,0 +1,114 @@
+{
+  "girviCashbook": {
+    "title": "गिरवी कैशबुक",
+    "subtitle": "सभी गिरवी नकद प्रवाह ट्रैक करें",
+
+    "entryType": {
+      "girvi_jama": "गिरवी जमा",
+      "interest_received": "ब्याज प्राप्त",
+      "principal_received": "मूलधन प्राप्त",
+      "release_received": "रिलीज़ प्राप्त",
+      "discount_given": "छूट दी गई",
+      "transfer_out": "हस्तांतरण बाहर",
+      "transfer_in": "हस्तांतरण अंदर",
+      "transfer_return_in": "हस्तांतरण वापसी अंदर",
+      "transfer_return_out": "हस्तांतरण वापसी बाहर"
+    },
+
+    "flowType": {
+      "inflow": "आवक",
+      "outflow": "जावक"
+    },
+
+    "paymentMode": {
+      "cash": "नकद",
+      "upi": "UPI",
+      "bank_transfer": "बैंक हस्तांतरण",
+      "cheque": "चेक"
+    },
+
+    "summary": {
+      "daily": "दैनिक सारांश",
+      "monthly": "मासिक सारांश",
+      "yearly": "वार्षिक सारांश",
+      "balance": "वर्तमान शेष",
+      "totalInflow": "कुल आवक",
+      "totalOutflow": "कुल जावक",
+      "netFlow": "शुद्ध प्रवाह",
+      "totalInterest": "कुल ब्याज",
+      "totalPrincipal": "कुल मूलधन",
+      "totalDiscount": "कुल छूट",
+      "openingBalance": "प्रारंभिक शेष",
+      "closingBalance": "समापन शेष",
+      "newGirviCount": "नई गिरवी",
+      "releaseCount": "रिलीज़",
+      "totalEntries": "कुल प्रविष्टियाँ"
+    },
+
+    "table": {
+      "entryNumber": "प्रविष्टि नं.",
+      "entryDate": "तिथि",
+      "entryType": "प्रविष्टि प्रकार",
+      "flowType": "प्रवाह",
+      "amount": "राशि",
+      "paymentMode": "विधि",
+      "girviNumber": "गिरवी नं.",
+      "customerName": "ग्राहक",
+      "openingBalance": "प्रारंभिक",
+      "closingBalance": "समापन",
+      "remarks": "टिप्पणी"
+    },
+
+    "form": {
+      "title": "मैनुअल प्रविष्टि",
+      "entryType": "प्रविष्टि प्रकार",
+      "flowType": "प्रवाह प्रकार",
+      "amount": "राशि (₹)",
+      "paymentMode": "भुगतान विधि",
+      "transactionRef": "लेनदेन संदर्भ",
+      "entryDate": "प्रविष्टि तिथि",
+      "girviId": "गिरवी (वैकल्पिक)",
+      "customerId": "ग्राहक (वैकल्पिक)",
+      "principalAmount": "मूलधन राशि",
+      "interestAmount": "ब्याज राशि",
+      "discountAmount": "छूट राशि",
+      "remarks": "टिप्पणी",
+      "remarksPlaceholder": "अतिरिक्त टिप्पणी...",
+      "submit": "प्रविष्टि बनाएं",
+      "breakdown": "विवरण (वैकल्पिक)"
+    },
+
+    "filters": {
+      "entryType": "प्रविष्टि प्रकार",
+      "flowType": "प्रवाह प्रकार",
+      "paymentMode": "भुगतान विधि",
+      "dateRange": "तिथि सीमा",
+      "searchPlaceholder": "प्रविष्टियाँ खोजें...",
+      "girviId": "गिरवी",
+      "customerId": "ग्राहक"
+    },
+
+    "list": {
+      "title": "कैशबुक प्रविष्टियाँ",
+      "subtitle": "सभी गिरवी कैशबुक लेनदेन"
+    },
+
+    "detail": {
+      "notFound": "प्रविष्टि नहीं मिली"
+    },
+
+    "errors": {
+      "fetchFailed": "कैशबुक प्रविष्टियाँ लोड करने में विफल",
+      "createFailed": "प्रविष्टि बनाने में विफल",
+      "deleteFailed": "प्रविष्टि हटाने में विफल"
+    },
+
+    "success": {
+      "created": "प्रविष्टि सफलतापूर्वक बनाई गई",
+      "deleted": "प्रविष्टि सफलतापूर्वक हटाई गई"
+    },
+
+    "confirmDelete": "प्रविष्टि हटाएं?",
+    "confirmDeleteDesc": "क्या आप वाकई इस प्रविष्टि को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।"
+  }
+}
