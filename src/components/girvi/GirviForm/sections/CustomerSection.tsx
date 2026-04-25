@@ -83,6 +83,7 @@ export const CustomerSection = ({
   errors,
   onChange,
   disabled = false,
+    mode,
 }: GirviFormSectionProps) => {
   const { t } = useTranslation()
   const { currentShopId } = useAuth()
@@ -240,18 +241,19 @@ export const CustomerSection = ({
         </Label>
 
         <div className="relative">
-          <SearchBar
-            value={searchQuery}
-            onChange={val => {
-              setSearchQuery(val)
-              setShowSuggestions(val.length >= 2)
-              if (selectedCustomer) handleClear()
-            }}
-            placeholder={t('girvi.searchCustomerPlaceholder')}
-            disabled={disabled}
-            debounceMs={300}
-            className={errors.customerId ? '[&_input]:border-status-error' : ''}
-          />
+<SearchBar
+  value={searchQuery}
+  onChange={val => {
+    setSearchQuery(val)
+    setShowSuggestions(val.length >= 2)
+    if (selectedCustomer) handleClear()
+  }}
+  placeholder={t('girvi.searchCustomerPlaceholder')}
+  disabled={disabled}
+  debounceMs={300}
+  showClearButton={mode !== 'edit'}
+  className={errors.customerId ? '[&_input]:border-status-error' : ''}
+/>
 
 
           {/* ── Suggestions Dropdown ── */}

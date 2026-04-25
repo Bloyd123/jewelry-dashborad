@@ -236,13 +236,13 @@ const handleConfirmedSubmit = async () => {
     }}
   />
 ) : (
-  <CustomerSection
-    data={formData}
-    errors={errors}
-    onChange={handleChange}
-    onBlur={handleBlur}
-    disabled={isLoading}
-  />
+<CustomerSection
+  data={formData}
+  errors={errors}
+  onChange={handleChange}
+  onBlur={handleBlur}
+  disabled={isLoading || mode === 'edit'}
+/>
 )}
   </CardContent>
 </Card>
@@ -251,13 +251,13 @@ const handleConfirmedSubmit = async () => {
               <CardTitle className="text-text-primary">{t('girvi.pledgeItems')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <ItemsSection
-                data={formData}
-                errors={errors}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isLoading || mode === 'view'}
-              />
+<ItemsSection
+  data={formData}
+  errors={errors}
+  onChange={handleChange}
+  onBlur={handleBlur}
+  disabled={isLoading || mode === 'view' || mode === 'edit'}
+/>
             </CardContent>
           </Card>
 <div ref={interestCardRef}> 
@@ -266,13 +266,14 @@ const handleConfirmedSubmit = async () => {
               <CardTitle className="text-text-primary">{t('girvi.financialDetails')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <InterestSection
-                data={formData}
-                errors={errors}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isLoading || mode === 'view'}
-              />
+<InterestSection
+  data={formData}
+  errors={errors}
+  onChange={handleChange}
+  onBlur={handleBlur}
+  disabled={isLoading || mode === 'view'}
+  mode={mode}
+/>
             </CardContent>
           </Card>
 </div>

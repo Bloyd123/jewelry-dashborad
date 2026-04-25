@@ -186,13 +186,14 @@ const handleConfirmedSubmit = async () => {
     }
   }
 
-  const sectionProps = {
-    data:     formData,
-    errors,
-    onChange: handleChange,
-    onBlur:   handleBlur,
-    disabled: isLoading || mode === 'view',
-  }
+const sectionProps = {
+  data:     formData,
+  errors,
+  onChange: handleChange,
+  onBlur:   handleBlur,
+  disabled: isLoading || mode === 'view',
+  mode,
+}
 
   const renderStep = () => {
     switch (STEPS[currentStep].id) {
@@ -212,9 +213,13 @@ const handleConfirmedSubmit = async () => {
             }}
           />
         ) : (
-          <CustomerSection {...sectionProps} />
+          <CustomerSection 
+          {...sectionProps} 
+          disabled={isLoading || mode === 'edit'}
+
+          />
         )
-      case 'items':      return <ItemsSection      {...sectionProps} />
+      case 'items':      return <ItemsSection      {...sectionProps} disabled={isLoading || mode === 'view' || mode === 'edit'}/>
       case 'financial':  return <InterestSection   {...sectionProps} />
       case 'basic-info': return <BasicInfoSection  {...sectionProps} />
       case 'additional': return <AdditionalDetailsSection {...sectionProps} />

@@ -136,6 +136,7 @@ export const GirviTable: React.FC = () => {
   const handleRelease   = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}/release`)
   const handleCalculate = (g: Girvi) => navigate(`/shops/${shopId}/girvi/${g._id}?tab=interest`)
   const handleTransfer  = (g: Girvi) => navigate(buildRoute.girviTransfer.addForGirvi(shopId, g._id))
+  const handlePayments  = (g: Girvi) => navigate(buildRoute.girvi.payments(shopId, g._id))
   const handleDelete    = async (g: Girvi) => {
     if (window.confirm(t('girvi.deleteConfirm'))) {
       await deleteGirvi(g._id)
@@ -156,9 +157,9 @@ export const GirviTable: React.FC = () => {
     [selectedRows, girvis]
   )
 
-  const rowActions = useMemo(
+const rowActions = useMemo(
     () => getGirviRowActions(
-      handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer,
+      handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer, handlePayments,
       userRole ?? 'staff'
     ),
     [userRole]

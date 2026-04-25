@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { Eye, Edit, Unlock, Trash2, Calculator, MoreVertical, Download, ArrowRightLeft } from 'lucide-react'
+import { Eye, Edit, Unlock, Trash2, Calculator, MoreVertical, Download, ArrowRightLeft, Receipt } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
@@ -19,6 +19,7 @@ export const getGirviRowActions = (
   onCalculate: (g: Girvi) => void,
   onDelete:    (g: Girvi) => void,
   onTransfer:  (g: Girvi) => void,
+  onPayments:  (g: Girvi) => void,
   userRole: string
 ): RowAction<Girvi>[] => {
   const isAdmin   = ['super_admin', 'org_admin', 'shop_admin'].includes(userRole)
@@ -48,6 +49,13 @@ export const getGirviRowActions = (
       variant: 'default',
       hidden: row => row.status !== 'active' && row.status !== 'overdue',
     },
+    {
+  label:   'girvi.actions.payments',
+  icon:    <Receipt className="h-4 w-4" />,
+  onClick: onPayments,
+  variant: 'default',
+  hidden: row => row.status === 'active' || row.status === 'overdue' ? false : false,
+},
     {
       label:   'girvi.actions.release',
       icon:    <Unlock className="h-4 w-4" />,

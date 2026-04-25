@@ -17,6 +17,7 @@ export interface GirviFormSectionProps {
   onChange: (name: string, value: any) => void
   onBlur?: (name: string) => void
   disabled?: boolean
+  mode?: 'create' | 'edit' | 'view'
 }
 
 

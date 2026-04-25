@@ -20,6 +20,7 @@ export const InterestSection = ({
   onChange,
   onBlur,
   disabled = false,
+  mode,
 }: GirviFormSectionProps) => {
   const { t } = useTranslation()
 
@@ -44,15 +45,15 @@ export const InterestSection = ({
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
             <span className="text-lg font-semibold text-text-secondary">₹</span>
           </div>
-          <Input
-            id="principalAmount"
-            type="text"
-            name="principalAmount"
-            value={data.principalAmount || ''}
-            onChange={e => onChange('principalAmount', e.target.value.replace(/[^0-9.]/g, ''))}
-            onBlur={() => onBlur?.('principalAmount')}
-            disabled={disabled}
-            placeholder="0.00"
+<Input
+  id="principalAmount"
+  type="text"
+  name="principalAmount"
+  value={data.principalAmount || ''}
+  onChange={e => onChange('principalAmount', e.target.value.replace(/[^0-9.]/g, ''))}
+  onBlur={() => onBlur?.('principalAmount')}
+  disabled={disabled || mode === 'edit'}
+  placeholder="0.00"
             className={`h-14 pl-10 text-xl font-bold ${errors.principalAmount ? 'border-status-error' : ''}`}
           />
         </div>

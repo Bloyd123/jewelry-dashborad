@@ -17,11 +17,12 @@ export interface SearchBarProps {
   className?: string
   disabled?: boolean
   autoFocus?: boolean
+  showClearButton?: boolean
 }
 
 export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
   (
-    {
+{
       value,
       onChange,
       placeholder,
@@ -30,6 +31,7 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
       className,
       disabled = false,
       autoFocus = false,
+      showClearButton = true,
     },
     ref
   ) => {
@@ -86,7 +88,7 @@ export const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(
           autoFocus={autoFocus}
           className="pl-9 pr-9"
         />
-        {localValue && (
+{localValue && showClearButton && (
           <Button
             type="button"
             variant="ghost"
