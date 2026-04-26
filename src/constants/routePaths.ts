@@ -128,7 +128,7 @@ girviTransfer: {
   list:         (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers`,
   add:          (shopId: string) => `/shops/${shopId}/girvi-transfers/new`,                                    // sidebar
   addForGirvi:  (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/new`,        // table action
-  detail:       (shopId: string, transferId: string) => `/shops/${shopId}/girvi-transfers/${transferId}`,
+detail: (shopId: string, girviId: string, transferId: string) => `/shops/${shopId}/girvi/${girviId}/transfers/${transferId}`,
 },
 girviCashbook: (shopId: string) => `/shops/${shopId}/girvi-cashbook`,
 girvi: {

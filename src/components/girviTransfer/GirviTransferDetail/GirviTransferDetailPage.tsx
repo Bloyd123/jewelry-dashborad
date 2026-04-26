@@ -1,7 +1,7 @@
 // FILE: src/components/girviTransfer/GirviTransferDetail/GirviTransferDetailPage.tsx
 
 import { useState }      from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Loader2 }        from 'lucide-react'
 import { useAuth }        from '@/hooks/auth'
@@ -57,22 +57,25 @@ const GirviInfoBar = ({ shopId, girviId }: { shopId: string; girviId: string }) 
 }
 
 export default function GirviTransferDetailPage() {
-  const [activeTab, setActiveTab] = useState('overview')
+   const [searchParams]  = useSearchParams()
+  const [activeTab, setActiveTab] = useState(
+    searchParams.get('action') === 'return' ? 'return' : 'overview'
+  )
   const navigate   = useNavigate()
 
   const { t } = useTranslation()
 const { currentShopId } = useAuth()
-const { shopId: shopIdParam, transferId } =
-  useParams<{ shopId: string; transferId: string }>()
+const { shopId: shopIdParam, girviId: girviIdParam, transferId } =
+  useParams<{ shopId: string; girviId: string; transferId: string }>()
 const shopId = shopIdParam || currentShopId || ''
 
 const { transfer, isLoading, error } =
-  useGirviTransferById(shopId, undefined, transferId!)
-const girviId = transfer?.girviId
+  useGirviTransferById(shopId, girviIdParam, transferId!)
+const girviId = girviIdParam || (transfer?.girviId
   ? typeof transfer.girviId === 'object'
     ? (transfer.girviId as any)._id
     : String(transfer.girviId)
-  : ''
+  : '')
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">

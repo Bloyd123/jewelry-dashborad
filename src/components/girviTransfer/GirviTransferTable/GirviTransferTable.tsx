@@ -56,13 +56,18 @@ export const GirviTransferTable: React.FC<GirviTransferTableProps> = ({
     setIsConfirming(false)
     setConfirmDialog(prev => ({ ...prev, open: false }))
   }
-
 const handleViewDetails = useCallback((transfer: IGirviTransfer) => {
-  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id))
+  const gId = typeof transfer.girviId === 'object'
+    ? (transfer.girviId as any)._id
+    : String(transfer.girviId)
+  navigate(buildRoute.girviTransfer.detail(shopId, gId, transfer._id))
 }, [navigate, shopId])
 
 const handleReturn = useCallback((transfer: IGirviTransfer) => {
-  navigate(buildRoute.girviTransfer.detail(shopId, transfer._id) + '?action=return')
+  const gId = typeof transfer.girviId === 'object'
+    ? (transfer.girviId as any)._id
+    : String(transfer.girviId)
+  navigate(buildRoute.girviTransfer.detail(shopId, gId, transfer._id) + '?action=return')
 }, [navigate, shopId])
 const [cancelTarget, setCancelTarget] = useState<{
   girviId: string
