@@ -49,7 +49,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:          'entryNumber',
-    header:      'table.entryNumber',
+    header:      'girviCashbook.table.entryNumber',
     accessorKey: 'entryNumber',
     sortable:    true,
     width:       '160px',
@@ -67,7 +67,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:          'entryType',
-    header:      'table.entryType',
+    header:      'girviCashbook.table.entryType',
     accessorKey: 'entryType',
     sortable:    true,
     width:       '170px',
@@ -83,7 +83,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:          'flowType',
-    header:      'table.flowType',
+    header:      'girviCashbook.table.flowType',
     accessorKey: 'flowType',
     sortable:    true,
     align:       'center',
@@ -108,7 +108,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:          'amount',
-    header:      'table.amount',
+    header:      'girviCashbook.table.amount',
     accessorKey: 'amount',
     sortable:    true,
     align:       'right',
@@ -127,7 +127,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:          'paymentMode',
-    header:      'table.paymentMode',
+    header:      'girviCashbook.table.paymentMode',
     accessorKey: 'paymentMode',
     sortable:    false,
     width:       '120px',
@@ -140,7 +140,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:       'girviCustomer',
-    header:   'table.girviCustomer',
+    header:   'girviCashbook.table.girviCustomer',
     sortable: false,
     width:    '180px',
     cell: ({ row }) => (
@@ -169,7 +169,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:       'breakdown',
-    header:   'table.breakdown',
+    header:   'girviCashbook.table.breakdown',
     sortable: false,
     width:    '160px',
     cell: ({ row }) => {
@@ -193,7 +193,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
 
   {
     id:       'balance',
-    header:   'table.balance',
+    header:   'girviCashbook.table.balance',
     sortable: false,
     align:    'right',
     width:    '150px',
@@ -212,7 +212,7 @@ export const girviCashbookTableColumns: DataTableColumn<IGirviCashbookEntry>[] =
   // 9. Remarks
   {
     id:          'remarks',
-    header:      'table.remarks',
+    header:      'girviCashbook.table.remarks',
     accessorKey: 'remarks',
     sortable:    false,
     width:       '160px',

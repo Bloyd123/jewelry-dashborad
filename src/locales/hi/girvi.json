@@ -196,6 +196,8 @@
       "ariaLabel": "गिरवी रिकॉर्ड तालिका"
     },
     "actions": {
+            "payments": "भुगतान",
+    "transfer": "ट्रांसफर",
       "viewDetails": "विवरण देखें",
       "edit": "संपादित करें",
       "release": "रिलीज़ करें",

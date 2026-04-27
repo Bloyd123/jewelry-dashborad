@@ -39,6 +39,7 @@
       "cheque": "Cheque"
     },
 
+
     "form": {
       "title": "Transfer Girvi",
       "subtitle": "Transfer this girvi to another party",
@@ -189,6 +190,18 @@
       "transferred": "Girvi transferred successfully",
       "returned": "Transfer returned successfully",
       "cancelled": "Transfer cancelled successfully"
+    },
+
+    "table": {
+      "transferNumber": "Transfer Number",
+      "transferType": "Transfer Type",
+      "fromParty": "From Party",
+      "toParty": "To Party",
+      "transferDate": "Transfer Date",
+      "partyPrincipal": "Party Principal",
+      "transferAmount": "Transfer Amount",
+      "returnInfo": "Return Info",
+      "status": "Status"
     }
   }
 }

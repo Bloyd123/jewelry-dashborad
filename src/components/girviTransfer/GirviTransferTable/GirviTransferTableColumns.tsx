@@ -41,7 +41,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 1. Transfer Number
   {
     id:          'transferNumber',
-    header:      'table.transferNumber',
+    header:      'girviTransfer.table.transferNumber',
     accessorKey: 'transferNumber',
     sortable:    true,
     width:       '160px',
@@ -64,7 +64,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 2. Transfer Type
   {
     id:          'transferType',
-    header:      'table.transferType',
+    header:      'girviTransfer.table.transferType',
     accessorKey: 'transferType',
     sortable:    true,
     width:       '120px',
@@ -78,7 +78,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 3. From Party
   {
     id:          'fromParty',
-    header:      'table.fromParty',
+    header:      'girviTransfer.table.fromParty',
     accessorKey: 'fromParty.name',
     sortable:    false,
     width:       '160px',
@@ -95,7 +95,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 4. To Party
   {
     id:          'toParty',
-    header:      'table.toParty',
+    header:      'girviTransfer.table.toParty',
     accessorKey: 'toParty.name',
     sortable:    false,
     width:       '160px',
@@ -112,7 +112,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 5. Transfer Date
   {
     id:          'transferDate',
-    header:      'table.transferDate',
+    header:      'girviTransfer.table.transferDate',
     accessorKey: 'transferDate',
     sortable:    true,
     width:       '130px',
@@ -126,7 +126,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 6. Party Principal
   {
     id:          'partyPrincipalAmount',
-    header:      'table.partyPrincipal',
+    header:      'girviTransfer.table.partyPrincipal',
     accessorKey: 'partyPrincipalAmount',
     sortable:    true,
     align:       'right',
@@ -146,7 +146,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 7. Transfer Amount
   {
     id:          'transferAmount',
-    header:      'table.transferAmount',
+    header:      'girviTransfer.table.transferAmount',
     accessorKey: 'transferAmount',
     sortable:    true,
     align:       'right',
@@ -161,7 +161,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 8. Return Info
   {
     id:       'returnInfo',
-    header:   'table.returnInfo',
+    header:   'girviTransfer.table.returnInfo',
     sortable: false,
     width:    '140px',
     cell: ({ row }) => {
@@ -187,7 +187,7 @@ export const girviTransferTableColumns: DataTableColumn<IGirviTransfer>[] = [
   // 9. Status
   {
     id:          'status',
-    header:      'table.status',
+    header:      'girviTransfer.table.status',
     accessorKey: 'status',
     sortable:    true,
     width:       '120px',

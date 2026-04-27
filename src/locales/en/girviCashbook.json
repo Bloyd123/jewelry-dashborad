@@ -46,6 +46,9 @@
     },
 
     "table": {
+    "girviCustomer": "Girvi / Customer",
+    "breakdown": "Breakdown",
+    "balance": "Balance",
       "entryNumber": "Entry No.",
       "entryDate": "Date",
       "entryType": "Entry Type",

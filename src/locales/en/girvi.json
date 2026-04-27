@@ -227,6 +227,8 @@
       "viewDetails": "View Details",
       "edit": "Edit",
       "release": "Release",
+          "payments": "Payments",
+    "transfer": "Transfer",
       "calculateInterest": "Calculate Interest",
       "delete": "Delete",
       "export": "Export",
@@ -391,6 +393,7 @@
     "pleaseFillRequired": "Please fill in all required fields"
   },
 
+    
   "table": {
     "selectedCount": "{{count}} selected"
   }

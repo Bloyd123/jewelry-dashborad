@@ -108,10 +108,10 @@ export const GirviReturnForm: React.FC<GirviReturnFormProps> = ({
         shopId={shopId}
         girviId={girviId}
         transferId={transferId}
-        onUseAmount={(amount, _days) => {
-          handleChange('partyInterestCharged', amount)
-          handleChange('returnAmount', amount)
-        }}
+onUseAmount={(interest, _days, totalPayable) => {
+  handleChange('partyInterestCharged', interest)
+  handleChange('returnAmount', totalPayable)
+}}
       />
 
       {/* Return Form */}

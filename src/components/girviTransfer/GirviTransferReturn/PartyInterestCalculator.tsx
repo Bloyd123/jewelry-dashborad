@@ -11,7 +11,7 @@ interface PartyInterestCalculatorProps {
   shopId:      string
   girviId:     string
   transferId:  string
-  onUseAmount: (amount: number, days: number) => void
+  onUseAmount: (interest: number, days: number, totalPayable: number) => void
 }
 
 export const PartyInterestCalculator: React.FC<PartyInterestCalculatorProps> = ({
@@ -71,7 +71,11 @@ export const PartyInterestCalculator: React.FC<PartyInterestCalculatorProps> = (
             size="sm"
             variant="outline"
             className="mt-2 w-full"
-            onClick={() => onUseAmount(calculation.partyInterestCalculated, calculation.days)}
+            onClick={() => onUseAmount(
+  calculation.partyInterestCalculated,
+  calculation.days,
+  calculation.totalPayableToParty
+)}
           >
             {t('girviTransfer.calculator.useThisAmount', 'Use This Amount')}
           </Button>
