@@ -98,6 +98,7 @@ const AddGirviTransferPage = lazy(() =>
 const GirviTransferDetailPage = lazy(() =>
   import('@/pages/girviTransfer/GirviTransferDetailPage')
 )
+const BugReportPage = lazy(() => import('@/pages/bugReport/BugReportPage'))
 const CreateSalePage = lazy(() => 
   import('@/pages/sales/AddSales').then(m => ({ default: m.CreateSalePage }))
 )
@@ -240,6 +241,12 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canViewDashboard',
     title: 'Dashboard',
   },
+  {
+  path: '/bug-report',
+  element: BugReportPage,
+  requiresAuth: true,
+  title: 'Bug Report',
+},
 
   // 
   // USERS
@@ -613,7 +620,7 @@ export const ROUTES = {
 
   // Main
   dashboard: ROUTE_PATHS.DASHBOARD,
-
+bugReport:ROUTE_PATHS.BUG_REPORT,
   // Users
   addUser: ROUTE_PATHS.USERS.ADD,
   editUser: ROUTE_PATHS.USERS.EDIT,

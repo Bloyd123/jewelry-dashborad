@@ -4,6 +4,9 @@ const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
 const AUTH_BASE = `${BASE_URL}/auth`
+export const BUG_REPORT_ENDPOINTS = {
+  CREATE: `${BASE_URL}/bug-reports`,
+}
 export const GIRVI_CASHBOOK_ENDPOINTS = {
   // Base: /api/v1/shops/:shopId/girvi-cashbook
 

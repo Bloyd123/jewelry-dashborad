@@ -1,0 +1,66 @@
+{
+  "bugReport": {
+    "title": "Report a Bug",
+    "subtitle": "Help us improve by reporting issues",
+    "reportBug": "Report Bug",
+    "submit": "Submit Report",
+    "submitting": "Submitting...",
+    "submitSuccess": "Bug report submitted!",
+    "submitError": "Failed to submit bug report",
+    "ticket": "Ticket",
+    "ticketCreated": "Your ticket has been created",
+    "submitAnother": "Submit Another",
+    "successTitle": "Report Submitted!",
+    "successDesc": "We will look into this issue as soon as possible.",
+    "criticalWarning": "Critical bugs are reviewed immediately by the team.",
+ 
+    "form": {
+      "title": "Bug Title",
+      "titlePlaceholder": "Brief summary of the issue",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the bug in detail...",
+      "category": "Category",
+      "severity": "Severity",
+      "priority": "Priority",
+      "stepsToReproduce": "Steps to Reproduce",
+      "stepsPlaceholder": "1. Go to...\n2. Click on...\n3. See error",
+      "expectedBehavior": "Expected Behavior",
+      "expectedPlaceholder": "What should happen?",
+      "actualBehavior": "Actual Behavior",
+      "actualPlaceholder": "What actually happened?",
+      "pageUrl": "Page URL",
+      "moduleName": "Module Name",
+      "moduleNamePlaceholder": "e.g. Customer, Sales, Inventory",
+      "appVersion": "App Version",
+      "reporterInfo": "Reporter Information (Optional)",
+      "reporterDesc": "Your info helps us follow up if needed.",
+      "reporterName": "Your Name",
+      "reporterNamePlaceholder": "John Doe",
+      "reporterEmail": "Your Email"
+    },
+ 
+    "categories": {
+      "ui": "UI / Display",
+      "functional": "Functional",
+      "performance": "Performance",
+      "data": "Data / Content",
+      "crash": "App Crash",
+      "security": "Security",
+      "other": "Other"
+    },
+ 
+    "severity": {
+      "critical": "🔴 Critical",
+      "high": "🟠 High",
+      "medium": "🟡 Medium",
+      "low": "🟢 Low"
+    },
+ 
+    "priority": {
+      "urgent": "🚨 Urgent",
+      "high": "High",
+      "normal": "Normal",
+      "low": "Low"
+    }
+  }
+}

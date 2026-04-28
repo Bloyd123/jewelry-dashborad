@@ -73,6 +73,7 @@
   }
 },
   "sidebar": {
+     "bugReport": "Report a Bug",
       "girviShopPayments": "Girvi Payments",
   "girviCashbook": "Girvi Cashbook",
     "girviTransfer": "Girvi Transfer",

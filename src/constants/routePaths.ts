@@ -15,7 +15,8 @@ export const ROUTE_PATHS = {
 
   // Core Routes
   DASHBOARD: '/dashboard',
-
+  bugReport: '/bug-report',
+BUG_REPORT: '/bug-report',
   // Customer Routes
   CUSTOMERS: {
     ROOT: '/customers',

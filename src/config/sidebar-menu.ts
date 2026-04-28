@@ -19,6 +19,7 @@ import {
   CreditCard,
   Building,
   Users,
+Bug ,
   Building2,
   TrendingUp,
   Truck,
@@ -214,4 +215,9 @@ export const getMenuItems = (t: (key: string) => string, shopId: string = ''): M
       },
     ],
   },
+  {
+  title: t('sidebar.bugReport'),
+  url: ROUTES.bugReport,
+  icon: Bug,
+},
 ]

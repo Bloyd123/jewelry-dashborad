@@ -22,6 +22,8 @@ import girvicashbook from './girviCashbook.json'
 import purchase from './purchase.json'
 // import reports from './reports.json'
 import sales from './sales.json'
+import bugReport from './bugReport.json'
+
 // import settings from './settings.json'
 // import validation from './validation.json'
 
@@ -40,6 +42,7 @@ export default {
   ...user,
   ...dashboard,
     ...openingBalance,
+    ...bugReport,
     ...girvi,
     ...griviTransfer,
     ...girvicashbook,
