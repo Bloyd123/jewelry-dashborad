@@ -49,20 +49,23 @@ export interface BugReport {
 export interface CreateBugReportInput {
   title: string
   description: string
-  category?: BugCategory
-  severity?: BugSeverity
-  priority?: BugPriority
+  category?: string
+  severity?: string
+  priority?: string
   stepsToReproduce?: string
   expectedBehavior?: string
   actualBehavior?: string
   pageUrl?: string
   moduleName?: string
   appVersion?: string
-  screenshots?: BugScreenshot[]
   reporterName?: string
   reporterEmail?: string
   reporterRole?: string
-  shopId?: string
+  screenshots?: {           // 👈 yeh add hua
+    url: string
+    filename: string
+    fileId: string
+  }[]
 }
 
 export interface CreateBugReportResponse {

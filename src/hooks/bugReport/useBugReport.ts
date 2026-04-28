@@ -19,11 +19,13 @@ export const useBugReport = () => {
       setErrors?: (errors: Record<string, string>) => void
     ) => {
       try {
+        
         const result = await createMutation(data).unwrap()
         showSuccess(
           'bugReport.submitSuccess',
           `bugReport.ticketCreated`
         )
+        
         return { success: true, data: result }
       } catch (error: any) {
         handleError(error, setErrors)

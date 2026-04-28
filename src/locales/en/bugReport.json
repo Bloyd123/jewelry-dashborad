@@ -36,7 +36,10 @@
       "reporterDesc": "Your info helps us follow up if needed.",
       "reporterName": "Your Name",
       "reporterNamePlaceholder": "John Doe",
-      "reporterEmail": "Your Email"
+      "reporterEmail": "Your Email",
+        "screenshots": "Screenshots",
+  "screenshotsPlaceholder": "Click to upload images (JPG, PNG, WebP)",
+  "screenshotsDesc": "Attach screenshots to help explain the issue"
     },
  
     "categories": {
@@ -61,6 +64,13 @@
       "high": "High",
       "normal": "Normal",
       "low": "Low"
-    }
+    },
+    "sections": {
+  "bugDetails": "Bug Details",
+  "classification": "Classification",
+  "environment": "Environment"
+},
+
+"uploading": "Uploading..."
   }
 }
