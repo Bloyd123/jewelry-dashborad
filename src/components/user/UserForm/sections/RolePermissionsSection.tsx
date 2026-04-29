@@ -1,7 +1,7 @@
 // FILE: src/components/user/UserForm/sections/RolePermissionsSection.tsx
 // Role & Permissions Section - Role, Organization, Shop
 //  UPDATED: Uses new Redux architecture (authSlice + userSlice)
-
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'
 import { AlertCircle } from 'lucide-react'
@@ -26,15 +26,26 @@ export const RolePermissionsSection = ({
   const shopIds = useAppSelector(selectShopIds)
 
   // Role options
-  const roleOptions = [
-    // { value: 'super_admin', label: t('user.roles.superAdmin') },
-    { value: 'org_admin', label: t('user.roles.orgAdmin') },
+const roleOptions = useMemo(() => {
+  if (currentUser?.role === 'super_admin') {
+    return [
+      { value: 'org_admin', label: t('user.roles.orgAdmin') },
+      { value: 'shop_admin', label: t('user.roles.shopAdmin') },
+      { value: 'manager', label: t('user.roles.manager') },
+      { value: 'staff', label: t('user.roles.staff') },
+      { value: 'accountant', label: t('user.roles.accountant') },
+      { value: 'viewer', label: t('user.roles.viewer') },
+    ]
+  }
+  // org_admin aur shop_admin ke liye — org_admin nahi dikhega
+  return [
     { value: 'shop_admin', label: t('user.roles.shopAdmin') },
     { value: 'manager', label: t('user.roles.manager') },
     { value: 'staff', label: t('user.roles.staff') },
     { value: 'accountant', label: t('user.roles.accountant') },
     { value: 'viewer', label: t('user.roles.viewer') },
   ]
+}, [currentUser?.role, t])
 
   // TODO: Replace with actual API when ready
   // const { data: organizations = [] } = useGetOrganizationsQuery()
@@ -67,12 +78,15 @@ export const RolePermissionsSection = ({
   // }))
 
   // Show/hide fields based on role
-  const showOrganization = data.role && data.role !== 'super_admin'
-  const showShop =
-    data.role &&
-    ['shop_admin', 'manager', 'staff', 'accountant', 'viewer'].includes(
-      data.role
-    )
+  // super_admin kabhi organization select nahi karega
+// org_admin bana raha hai toh org auto-assign hogi currentUser se
+// super_admin ab exist hi nahi karta frontend mein
+const showOrganization =
+  data.role &&
+  currentUser?.role === 'super_admin' // sirf super_admin org assign kar sakta hai
+const showShop =
+  data.role &&
+  ['shop_admin', 'manager', 'staff', 'accountant', 'viewer'].includes(data.role)
 
   // Get role description
   const getRoleDescription = (role: string) => {
@@ -156,18 +170,7 @@ export const RolePermissionsSection = ({
             {t('user.rolePermissions')}
           </h4>
           <ul className="space-y-1 text-sm text-text-secondary">
-            {data.role === 'super_admin' && (
-              <>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  {t('user.permissions.fullSystemAccess')}
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-                  {t('user.permissions.manageAllOrganizations')}
-                </li>
-              </>
-            )}
+
             {data.role === 'org_admin' && (
               <>
                 <li className="flex items-center gap-2">

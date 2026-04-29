@@ -4,6 +4,16 @@ const API_VERSION = '/v1'
 const BASE_URL = `${API_BASE}${API_VERSION}`
 
 const AUTH_BASE = `${BASE_URL}/auth`
+export const USER_ENDPOINTS = {
+  GET_ALL:        `${BASE_URL}/users`,
+  GET_BY_ID:      `${BASE_URL}/users/:userId`,
+  UPDATE:         `${BASE_URL}/users/:userId`,
+  DELETE:         `${BASE_URL}/users/:userId`,
+  ACTIVATE:       `${BASE_URL}/users/:userId/activate`,
+  DEACTIVATE:     `${BASE_URL}/users/:userId/deactivate`,
+  RESET_PASSWORD: `${BASE_URL}/users/:userId/reset-password`,
+}
+ 
 export const BUG_REPORT_ENDPOINTS = {
   CREATE: `${BASE_URL}/bug-reports`,
   UPLOAD_SCREENSHOTS: `${BASE_URL}/upload/screenshots`,

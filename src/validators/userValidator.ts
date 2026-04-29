@@ -55,7 +55,6 @@ const phoneSchema = z
  * Role Validation Schema
  */
 const roleSchema = z.enum([
-  'super_admin',
   'org_admin',
   'shop_admin',
   'manager',
@@ -153,19 +152,6 @@ export const createUserSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
-  .refine(
-    data => {
-      // Super admin cannot have organization or shop
-      if (data.role === 'super_admin') {
-        return !data.organizationId && !data.primaryShop
-      }
-      return true
-    },
-    {
-      message: 'Super admin cannot have organization or shop assignments',
-      path: ['role'],
-    }
-  )
   .refine(
     data => {
       // Org admin must have organization

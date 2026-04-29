@@ -1,5 +1,59 @@
 {
   "user": {
+     "page": {
+      "title": "User Management",
+      "subtitle": "Manage all users, roles and permissions"
+    },
+    "tabs": {
+      "table": "All Users"
+    },
+    "table": {
+      "name": "Name",
+      "username": "Username",
+      "phone": "Phone",
+      "role": "Role",
+      "department": "Department",
+      "emailVerified": "Email Status",
+      "status": "Status",
+      "lastLogin": "Last Login",
+      "joinedAt": "Joined",
+      "ariaLabel": "Users table"
+    },
+    "filters": {
+      "searchPlaceholder": "Search by name, email, username...",
+      "allRoles": "All Roles",
+      "allDepartments": "All Departments",
+      "allStatus": "All Status"
+    },
+    "actions": {
+      "addNew": "Add New User",
+      "add": "Add",
+      "viewDetails": "View Details",
+      "edit": "Edit",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "resetPassword": "Reset Password",
+      "delete": "Delete",
+      "exportSelected": "Export Selected",
+      "sendEmail": "Send Email",
+      "bulkDelete": "Bulk Delete"
+    },
+    "deleteConfirm": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+    "deactivateConfirm": "Are you sure you want to deactivate {{name}}?",
+    "deleteSuccess": "User Deleted",
+    "deleteSuccessDesc": "User has been deleted successfully.",
+    "activateSuccess": "User Activated",
+    "activateSuccessDesc": "User is now active.",
+    "deactivateSuccess": "User Deactivated",
+    "deactivateSuccessDesc": "User has been deactivated.",
+    "resetPasswordSuccess": "Password Reset",
+    "resetPasswordSuccessDesc": "Password has been reset successfully.",
+    "updateSuccess": "User Updated",
+    "updateSuccessDesc": "User details have been updated.",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Min 6 characters",
+    "confirmNewPassword": "Confirm Password",
+      "confirmNewPasswordPlaceholder": "Re-enter password",
     "form": {
       "cancelTitle": "Discard Changes?",
       "cancelDescription": "You have unsaved changes. Are you sure you want to discard them?",

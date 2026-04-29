@@ -20,6 +20,8 @@ import { useAuth } from '@/hooks/auth'
 import { useNotification } from '@/hooks/useNotification'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { RegisterRequest } from '@/types'
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
 
 const STEPS = [
   { id: 'basic', label: 'Basic Info' },
@@ -49,6 +51,7 @@ export default function UserFormMobile({
   const [showSaveDialog, setShowSaveDialog] = useState(false)
 
   const { register } = useAuth()
+  const currentUser = useAppSelector(selectUserProfile)
   const { showSuccess, showError } = useNotification()
   const { handleError } = useErrorHandler()
 
@@ -327,7 +330,13 @@ export default function UserFormMobile({
           // If valid, proceed with API call
           setIsLoading(true)
           try {
-            const result = await register(formData as RegisterRequest)
+            // org_admin bana raha hai — organizationId auto set karo
+const payload: RegisterRequest = {
+  ...formData,
+  organizationId: formData.organizationId || currentUser?.organizationId || '',
+} as RegisterRequest
+
+const result = await register(payload)
             if (result.success) {
               showSuccess(
                 mode === 'create'

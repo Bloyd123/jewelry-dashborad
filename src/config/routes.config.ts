@@ -142,6 +142,9 @@ const GirviReleasePage = lazy(() =>
 const GirviPartialReleasePage = lazy(() =>
   import('@/pages/girvi/GirviPartialReleasePage').then(m => ({ default: m.GirviPartialReleasePage }))
 )
+const AllUsersPage = lazy(() =>
+  import('@/pages/user/AllUsers/AllUsers').then(m => ({ default: m.AllUsers }))
+)
 const GirviRenewalPage = lazy(() =>
   import('@/pages/girvi/GirviRenewalPage').then(m => ({ default: m.GirviRenewalPage }))
 )
@@ -241,6 +244,13 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canViewDashboard',
     title: 'Dashboard',
   },
+ { 
+  path: ROUTE_PATHS.USERS.LIST, 
+  element: AllUsersPage, 
+  requiresAuth: true,
+  permission: 'canViewUsers',
+  title: 'All Users',
+},
   {
   path: '/bug-report',
   element: BugReportPage,
@@ -622,8 +632,9 @@ export const ROUTES = {
   dashboard: ROUTE_PATHS.DASHBOARD,
 bugReport:ROUTE_PATHS.BUG_REPORT,
   // Users
-  addUser: ROUTE_PATHS.USERS.ADD,
-  editUser: ROUTE_PATHS.USERS.EDIT,
+userList: ROUTE_PATHS.USERS.LIST,  
+addUser:  ROUTE_PATHS.USERS.ADD,
+editUser: ROUTE_PATHS.USERS.EDIT,
 
   // Customers
   addCustomer: ROUTE_PATHS.CUSTOMERS.ADD,

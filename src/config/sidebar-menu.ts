@@ -36,11 +36,22 @@ export const getMenuItems = (t: (key: string) => string, shopId: string = ''): M
     url: ROUTES.dashboard,
     icon: LayoutDashboard,
   },
-  {
-    title: t('sidebar.registeruser'),
-    url: ROUTES.addUser,
-    icon: LayoutDashboard,
-  },
+{
+  title: t('sidebar.users'),
+  icon: Users,
+  items: [
+    {
+      title: t('sidebar.allUsers'),
+      url: ROUTES.userList,
+      icon: UserCheck,
+    },
+    {
+      title: t('sidebar.registeruser'),
+      url: ROUTES.addUser,
+      icon: UserPlus,
+    },
+  ],
+},
   {
     title: t('sidebar.metalRates'),
     url: ROUTES.metalRates,

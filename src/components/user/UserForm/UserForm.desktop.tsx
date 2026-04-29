@@ -20,6 +20,8 @@ import { useAuth } from '@/hooks/auth'
 import { useNotification } from '@/hooks/useNotification'
 import { useErrorHandler } from '@/hooks/useErrorHandler'
 import { RegisterRequest } from '@/types'
+import { useAppSelector } from '@/store/hooks'
+import { selectUserProfile } from '@/store/slices/userSlice'
 
 export default function UserFormDesktop({
   initialData = {},
@@ -38,6 +40,7 @@ export default function UserFormDesktop({
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showSaveDialog, setShowSaveDialog] = useState(false)
   const { register } = useAuth()
+  const currentUser = useAppSelector(selectUserProfile)
   const { showSuccess, showError } = useNotification()
   const { handleError } = useErrorHandler()
 
@@ -89,7 +92,13 @@ export default function UserFormDesktop({
 
     try {
       // API Call
-      const result = await register(formData as RegisterRequest)
+  // org_admin bana raha hai — organizationId auto set karo
+const payload: RegisterRequest = {
+  ...formData,
+  organizationId: formData.organizationId || currentUser?.organizationId || '',
+} as RegisterRequest
+
+const result = await register(payload)
 
       if (result.success) {
         showSuccess(
@@ -320,7 +329,13 @@ export default function UserFormDesktop({
         onConfirm={async () => {
           setIsLoading(true)
           try {
-            const result = await register(formData as RegisterRequest)
+           // org_admin bana raha hai — organizationId auto set karo
+const payload: RegisterRequest = {
+  ...formData,
+  organizationId: formData.organizationId || currentUser?.organizationId || '',
+} as RegisterRequest
+
+const result = await register(payload)
             if (result.success) {
               showSuccess(
                 mode === 'create'
