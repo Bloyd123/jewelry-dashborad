@@ -1,6 +1,6 @@
 // FILE: src/components/user/UserTable/UserTable.tsx
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { DataTable } from '@/components/ui/data-display/DataTable'
@@ -14,7 +14,6 @@ import type { UserFilterValues } from '@/components/user/UserFilters/UserFilters
 import { useUsersList } from '@/hooks/user/useUsersList'
 import { useUserActions } from '@/hooks/user/useUserActions'
 import { usePermissionCheck } from '@/hooks/auth/usePermissions'
-import { buildRoute } from '@/constants/routePaths'
 import type { User } from '@/types/user.types'
 
 export const UserTable: React.FC = () => {
@@ -58,39 +57,40 @@ export const UserTable: React.FC = () => {
     adminResetPassword, isResettingPassword,
   } = useUserActions()
 
-  // ── Handlers ───────────────────────────────────────────
-  const handleViewDetails = (user: User) =>
-    navigate(`/users/${user._id}`)
+// AFTER
+const handleViewDetails = useCallback((user: User) =>
+  navigate(`/users/${user._id}`), [navigate])
 
-  const handleEdit = (user: User) =>
-    navigate(`/users/edit/${user._id}`)
+const handleEdit = useCallback((user: User) =>
+  navigate(`/users/edit/${user._id}`), [navigate])
 
-  const handleActivate = async (user: User) => {
-    await activateUser(user._id)
-  }
+const handleActivate = useCallback(async (user: User) => {
+  await activateUser(user._id)
+}, [activateUser])
 
-  const handleDeactivate = (user: User) =>
-    setDeactivateDialog({ open: true, user })
+const handleDeactivate = useCallback((user: User) =>
+  setDeactivateDialog({ open: true, user }), [])
 
-  const handleConfirmDeactivate = async () => {
-    if (!deactivateDialog.user) return
-    await deactivateUser(deactivateDialog.user._id)
-    setDeactivateDialog({ open: false, user: null })
-  }
+const handleDelete = useCallback((user: User) =>
+  setDeleteDialog({ open: true, user }), [])
 
-  const handleDelete = (user: User) =>
-    setDeleteDialog({ open: true, user })
+const handleResetPassword = useCallback((user: User) =>
+  setResetPwdDialog({ open: true, user, password: '', confirm: '' }), [])
+// AFTER
+const handleConfirmDelete = async () => {
+  if (!deleteDialog.user) return
+  await deleteUser(deleteDialog.user._id)
+  setDeleteDialog({ open: false, user: null })
+}
 
-  const handleConfirmDelete = async () => {
-    if (!deleteDialog.user) return
-    await deleteUser(deleteDialog.user._id)
-    setDeleteDialog({ open: false, user: null })
-  }
+const handleConfirmDeactivate = async () => {
+  if (!deactivateDialog.user) return
+  await deactivateUser(deactivateDialog.user._id)
+  setDeactivateDialog({ open: false, user: null })
+}
 
-  const handleResetPassword = (user: User) =>
-    setResetPwdDialog({ open: true, user, password: '', confirm: '' })
+const handleConfirmResetPassword = async () => {
 
-  const handleConfirmResetPassword = async () => {
     if (!resetPwdDialog.user || !resetPwdDialog.password) return
     if (resetPwdDialog.password !== resetPwdDialog.confirm) return
     await adminResetPassword(resetPwdDialog.user._id, resetPwdDialog.password)
@@ -106,18 +106,19 @@ export const UserTable: React.FC = () => {
   const handleClearSelection = () => setSelectedRows(new Set())
 
   // ── Row Actions ────────────────────────────────────────
-  const rowActions = useMemo(
-    () =>
-      getUserRowActions(
-        handleViewDetails,
-        can('canEditUsers') ? handleEdit : () => {},
-        handleActivate,
-        can('canEditUsers') ? handleDeactivate : () => {},
-        can('canEditUsers') ? handleResetPassword : () => {},
-        can('canDeleteUsers') ? handleDelete : () => {}
-      ),
-    [can]
-  )
+// AFTER
+const rowActions = useMemo(
+  () =>
+    getUserRowActions(
+      handleViewDetails,
+      can('canEditUsers') ? handleEdit : () => {},
+      handleActivate,
+      can('canEditUsers') ? handleDeactivate : () => {},
+      can('canEditUsers') ? handleResetPassword : () => {},
+      can('canDeleteUsers') ? handleDelete : () => {}
+    ),
+  [can, handleViewDetails, handleEdit, handleActivate, handleDeactivate, handleResetPassword, handleDelete]
+)
 
   return (
     <div className="w-full space-y-4">

@@ -38,15 +38,16 @@ const [filters, setFilters] = useState<CustomerFilterValues>({
   })
   const navigate = useNavigate()
   const { can } = usePermissionCheck()
+  const [currentPage, setCurrentPage] = useState(1)
   
   const { currentShopId } = useAuth()
   
   const { deleteCustomer, isDeleting, blacklistCustomer, removeBlacklist, isBlacklisting, addLoyaltyPoints, isAddingLoyalty } = useCustomerActions(currentShopId!)
-  const { customers, pagination, isLoading, error } = useCustomersList(
-    currentShopId!,
-    {
-      page: 1,
-      limit: 10,
+const { customers, pagination, isLoading, error } = useCustomersList(
+  currentShopId!,
+  {
+    page: currentPage,
+    limit: 10,
       search: filters.search || undefined,
       customerType: filters.customerType as
         | 'retail'
@@ -228,14 +229,18 @@ const handleConfirmRemoveBlacklist = async () => {
         sorting={{
           enabled: true,
         }}
-        pagination={{
-          enabled: true,
-          pageSize: 10,
-          pageSizeOptions: [10, 20, 50],
-          showPageSizeSelector: true,
-          showPageInfo: true,
-          showFirstLastButtons: true,
-        }}
+  pagination={{
+    enabled: true,
+    pageSize: 10,
+    pageIndex: currentPage - 1,
+totalItems: pagination?.total,
+totalPages: pagination?.pages,
+    pageSizeOptions: [10, 20, 50],
+    showPageSizeSelector: true,
+    showPageInfo: true,
+    showFirstLastButtons: true,
+    onPaginationChange: ({ pageIndex }) => setCurrentPage(pageIndex + 1),
+  }}
         selection={{
           enabled: true,
           selectedRows,

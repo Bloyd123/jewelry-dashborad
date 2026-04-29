@@ -151,7 +151,7 @@ const showShop =
         <FormSelect
           name="primaryShop"
           label={t('user.primaryShop')}
-          value={data.primaryShop || currentShopId || ''}
+      value={data.primaryShop || ''}
           onChange={onChange}
           onBlur={onBlur}
           error={errors.primaryShop}

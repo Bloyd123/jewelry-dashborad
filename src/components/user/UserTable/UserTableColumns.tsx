@@ -6,8 +6,10 @@ import { Badge } from '@/components/ui/data-display/Badge/Badge'
 import type { DataTableColumn } from '@/components/ui/data-display/DataTable'
 import type { User } from '@/types/user.types'
 
-const formatDate = (dateString: string | Date): string => {
+const formatDate = (dateString: string | Date | null | undefined): string => {
+  if (!dateString) return '—'
   const date = new Date(dateString)
+  if (isNaN(date.getTime())) return '—'
   return new Intl.DateTimeFormat('en-IN', {
     day: '2-digit',
     month: 'short',

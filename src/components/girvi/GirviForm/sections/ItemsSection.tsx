@@ -153,14 +153,15 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="space-y-1.5">
               <Label htmlFor={`quantity-${index}`}>{t('girvi.quantity')}</Label>
-              <Input
-                id={`quantity-${index}`}
-                type="number"
-                value={item.quantity}
-                min={1}
-                onChange={e => handleFieldChange('quantity', parseInt(e.target.value) || 1)}
-                disabled={disabled}
-              />
+<Input
+  id={`quantity-${index}`}
+  type="number"
+  value={item.quantity === 1 ? '' : item.quantity}
+  min={1}
+  onChange={e => handleFieldChange('quantity', parseInt(e.target.value) || 1)}
+  disabled={disabled}
+placeholder="Qty"
+/>
             </div>
             <div className="space-y-1.5 sm:col-span-2">
               <Label htmlFor={`description-${index}`}>{t('girvi.description')}</Label>

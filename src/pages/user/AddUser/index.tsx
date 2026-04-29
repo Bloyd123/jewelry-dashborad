@@ -80,7 +80,7 @@ const mockUser = useMemo((): any => {
     <UserForm
       organizationId={organizationId} // Now type-safe (string | undefined)
       userId={userId}
-      initialData={initialData}
+initialData={initialData ?? { primaryShop: defaultPrimaryShop }}
       onSuccess={() => {
         navigate('/users')
       }}

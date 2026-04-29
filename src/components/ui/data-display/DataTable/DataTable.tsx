@@ -214,25 +214,29 @@ export const DataTable = <T extends Record<string, any>>({
     [pagination]
   )
 
-  const paginatedData = useMemo(() => {
-    if (!pagination?.enabled) return filteredData
+const paginatedData = useMemo(() => {
+  if (!pagination?.enabled) return filteredData
 
-    const currentPagination = {
-      pageIndex: pagination.pageIndex ?? internalState.pagination.pageIndex,
-      pageSize: pagination.pageSize ?? internalState.pagination.pageSize,
-    }
+  // If server-side pagination (onPaginationChange provided), don't slice — data is already the current page
+  if (pagination.onPaginationChange) return filteredData
 
-    const start = currentPagination.pageIndex * currentPagination.pageSize
-    const end = start + currentPagination.pageSize
+  const currentPagination = {
+    pageIndex: pagination.pageIndex ?? internalState.pagination.pageIndex,
+    pageSize: pagination.pageSize ?? internalState.pagination.pageSize,
+  }
 
-    return filteredData.slice(start, end)
-  }, [filteredData, pagination, internalState.pagination])
+  const start = currentPagination.pageIndex * currentPagination.pageSize
+  const end = start + currentPagination.pageSize
 
-  const totalPages = useMemo(() => {
-    if (!pagination?.enabled) return 1
-    const pageSize = pagination.pageSize ?? internalState.pagination.pageSize
-    return Math.ceil(filteredData.length / pageSize)
-  }, [filteredData.length, pagination, internalState.pagination.pageSize])
+  return filteredData.slice(start, end)
+}, [filteredData, pagination, internalState.pagination])
+
+const totalPages = useMemo(() => {
+  if (!pagination?.enabled) return 1
+  if (pagination.totalPages) return pagination.totalPages  // ← use server value
+  const pageSize = pagination.pageSize ?? internalState.pagination.pageSize
+  return Math.ceil(filteredData.length / pageSize)
+}, [filteredData.length, pagination, internalState.pagination.pageSize])
 
   // SELECTION
 
