@@ -12,21 +12,25 @@ import { useCurrentUser, useShopAccesses } from '@/hooks/auth'
  * HELPER: Convert User to Form Data
  */
 const convertUserToFormData = (user: User): Partial<CreateUserInput> => {
+  // super_admin ko form mein edit nahi kar sakte
+  const allowedRoles = ['org_admin', 'shop_admin', 'manager', 'staff', 'accountant', 'viewer'] as const
+  type AllowedRole = typeof allowedRoles[number]
+
   return {
     username: user.username,
     email: user.email,
-    // Password fields are empty for edit mode (user should set new password if needed)
     password: '',
     confirmPassword: '',
     firstName: user.firstName,
     lastName: user.lastName,
     phone: user.phone,
 
-    // Role & Access
-    role: user.role,
+    // Role & Access — super_admin ko undefined karo
+    role: allowedRoles.includes(user.role as AllowedRole)
+      ? (user.role as AllowedRole)
+      : undefined,
     organizationId: user.organizationId || undefined,
     primaryShop: user.primaryShop || undefined,
-
     // Employee Info
     designation: user.designation,
     department: user.department,
