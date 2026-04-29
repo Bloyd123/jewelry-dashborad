@@ -17,6 +17,8 @@ export const baseApi = createApi({
       'CustomerActivity',   
   'CustomerDocuments',  
   'CustomerLoyalty', 
+
+  
     'User',
   'UserList',   
 
