@@ -1,5 +1,4 @@
 // FILE: layouts/MainContent/MainContent.tsx
-// Dashboard Layout with Sidebar + Navbar (FIXED)
 
 import { Outlet } from 'react-router-dom'
 import { Sidebar, MobileSidebar } from '@/components/layout/sidebar'
@@ -19,18 +18,15 @@ export const MainContent = () => {
         {isMobile ? <MobileSidebar /> : <Sidebar />}
       </div>
 
-      {/* Main Area - overflow-hidden yahan, scroll sirf main mein */}
       <div
         className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${
           isMobile ? 'ml-0' : isCollapsed ? 'ml-20' : 'ml-64'
         }`}
       >
-        {/* Navbar - shrink na ho */}
         <div className="flex-shrink-0">
           <Navbar />
         </div>
 
-        {/* ✅ Sirf yahi scroll kare */}
         <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>

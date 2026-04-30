@@ -23,6 +23,7 @@ interface FormInputProps {
   step?: number | string
   helpText?: string
   showCharCount?: boolean
+    readOnly?: boolean 
 }
 
 export const FormInput = ({
@@ -44,6 +45,7 @@ export const FormInput = ({
   step,
   helpText,
   showCharCount = false,
+    readOnly = false, 
 }: FormInputProps) => {
   return (
     <div className={`space-y-2 ${className}`}>
@@ -66,6 +68,7 @@ export const FormInput = ({
         required={required}
         maxLength={maxLength}
         minLength={minLength}
+        readOnly={readOnly} 
         min={min}
         max={max}
         step={step}

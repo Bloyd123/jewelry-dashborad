@@ -22,6 +22,7 @@ export interface FormSectionProps {
   data: Partial<CreateUserInput>
   errors: Record<string, string>
   onChange: (name: string, value: any) => void
-  onBlur?: (name: string) => void
+  onBlur: (name: string) => void
   disabled?: boolean
+  mode?: 'create' | 'edit'  // ← add karo
 }

@@ -23,7 +23,6 @@ import { useCustomerActions } from '@/hooks/customer/useCustomerActions'
 import { useNotification }    from '@/hooks/useNotification'
 import type { GirviFormSectionProps } from '../GirviForm.types'
 
-// ── Constants ──────────────────────────────────────────────────────────────────
 
 const RELATION_LABELS: Record<string, string> = {
   son_of:      'S/O',
@@ -40,8 +39,6 @@ const RELATION_OPTIONS = [
   { value: 'wife_of',     label: 'W/O (Wife of)'     },
   { value: 'other',       label: 'Other'              },
 ]
-
-// ── Types ──────────────────────────────────────────────────────────────────────
 
 interface QuickAddForm {
   firstName:    string
@@ -76,8 +73,6 @@ interface EditableCustomerFields {
   address:      string
 }
 
-// ── Component ──────────────────────────────────────────────────────────────────
-
 export const CustomerSection = ({
   data,
   errors,
@@ -102,7 +97,6 @@ export const CustomerSection = ({
   const { customers, isLoading }                       = useCustomersList(shopId, { search: searchQuery, limit: 20 })
   const { createCustomer, updateCustomer, isCreating } = useCustomerActions(shopId)
 
-  // ── Sync initialData (edit mode) ────────────────────────────────────────────
   useEffect(() => {
     if (data.customerId && data.customerName && !selectedCustomer) {
       const meta     = data._customerMeta ?? {}
@@ -124,7 +118,6 @@ export const CustomerSection = ({
     }
   }, [data.customerId])
 
-  // ── Helpers ──────────────────────────────────────────────────────────────────
   const buildEditable = (customer: any): EditableCustomerFields => ({
     firstName:    customer.firstName     || '',
     lastName:     customer.lastName      || '',
@@ -136,7 +129,6 @@ export const CustomerSection = ({
     address:      customer.address?.city || '',
   })
 
-  // ── Handlers ─────────────────────────────────────────────────────────────────
   const handleSelectCustomer = (customer: any) => {
     const name = `${customer.firstName} ${customer.lastName || ''}`.trim()
     setSelectedCustomer(customer)
@@ -229,7 +221,6 @@ export const CustomerSection = ({
     }
   }
 
-  // ── Render ───────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-4">
 

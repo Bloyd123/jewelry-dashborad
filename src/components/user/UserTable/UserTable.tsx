@@ -115,9 +115,8 @@ const rowActions = useMemo(
       handleActivate,
       can('canEditUsers') ? handleDeactivate : () => {},
       can('canEditUsers') ? handleResetPassword : () => {},
-      can('canDeleteUsers') ? handleDelete : () => {}
     ),
-  [can, handleViewDetails, handleEdit, handleActivate, handleDeactivate, handleResetPassword, handleDelete]
+  [can, handleViewDetails, handleEdit, handleActivate, handleDeactivate, handleResetPassword]
 )
 
   return (
@@ -140,7 +139,6 @@ const rowActions = useMemo(
           onEdit={() => selectedUsers.length === 1 && handleEdit(selectedUsers[0])}
           onActivate={() => selectedUsers.forEach(u => activateUser(u._id))}
           onDeactivate={() => selectedUsers.length === 1 && handleDeactivate(selectedUsers[0])}
-          onDelete={() => selectedUsers.length === 1 && handleDelete(selectedUsers[0])}
           onClearSelection={handleClearSelection}
         />
       )}
@@ -188,7 +186,7 @@ const rowActions = useMemo(
           shadow: true,
           fullWidth: true,
         }}
-        onRowClick={user => navigate(`/users/${user._id}`)}
+        // onRowClick={user => navigate(`/users/${user._id}`)}
         getRowId={row => row._id}
         testId="user-table"
         ariaLabel={t('user.table.ariaLabel')}
@@ -230,13 +228,14 @@ const rowActions = useMemo(
         variant="info"
         confirmLabel={t('user.actions.resetPassword')}
         cancelLabel={t('common.cancel')}
-        onConfirm={handleConfirmResetPassword}
         loading={isResettingPassword}
-        disabled={
-          !resetPwdDialog.password ||
-          resetPwdDialog.password !== resetPwdDialog.confirm ||
-          resetPwdDialog.password.length < 6
-        }
+onConfirm={
+  !resetPwdDialog.password ||
+  resetPwdDialog.password !== resetPwdDialog.confirm ||
+  resetPwdDialog.password.length < 6
+    ? undefined
+    : handleConfirmResetPassword
+}
       >
         <div className="space-y-3 px-6 pb-2">
           <div>

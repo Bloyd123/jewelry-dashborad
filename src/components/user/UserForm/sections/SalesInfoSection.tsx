@@ -1,5 +1,4 @@
 // FILE: src/components/user/UserForm/sections/SalesInfoSection.tsx
-// Sales Information Section - Sales Target, Commission Rate
 
 import { useTranslation } from 'react-i18next'
 import { FormInput } from '@/components/forms/FormInput'
@@ -14,8 +13,6 @@ export const SalesInfoSection = ({
   disabled,
 }: FormSectionProps) => {
   const { t } = useTranslation()
-
-  // Show sales fields only for sales-related roles
   const showSalesFields =
     data.role &&
     ['shop_admin', 'manager', 'staff'].includes(data.role) &&
@@ -37,8 +34,6 @@ export const SalesInfoSection = ({
         <TrendingUp className="h-4 w-4" />
         <span>{t('user.salesInfoDescription')}</span>
       </div>
-
-      {/* Sales Target */}
       <FormInput
         name="salesTarget"
         label={t('user.salesTarget')}
@@ -52,8 +47,6 @@ export const SalesInfoSection = ({
         min={0}
         helpText={t('user.salesTargetHelpText')}
       />
-
-      {/* Commission Rate */}
       <div className="relative">
         <FormInput
           name="commissionRate"
@@ -72,8 +65,6 @@ export const SalesInfoSection = ({
         />
         <Percent className="absolute right-3 top-9 h-4 w-4 text-text-tertiary" />
       </div>
-
-      {/* Info Box */}
       <div className="rounded-md border border-border-secondary bg-bg-secondary p-4">
         <h4 className="mb-2 text-sm font-medium text-text-primary">
           {t('user.salesPerformanceTracking')}

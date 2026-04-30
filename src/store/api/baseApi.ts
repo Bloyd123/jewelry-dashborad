@@ -20,7 +20,8 @@ export const baseApi = createApi({
 
   
     'User',
-  'UserList',   
+  'UserList',  
+  'UserActivity', 
 
     // Product Module
     'Product',

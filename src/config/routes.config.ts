@@ -118,7 +118,7 @@ const PaymentTable = lazy(() =>
     default: m.PaymentTable,
   }))
 )
-
+const UserDetailPage = lazy(() => import('@/pages/user/UserDetail'))
 // Metal Rates
 const MetalRatesDashboardPage = lazy(() =>
   import('@/pages/metal-rates/MetalRatesDashboard').then(m => ({
@@ -261,6 +261,13 @@ export const protectedRoutes: RouteConfig[] = [
   // 
   // USERS
   // 
+  {
+  path: ROUTE_PATHS.USERS.DETAIL,
+  element: UserDetailPage,
+  requiresAuth: true,
+  permission: 'canViewUsers',
+  title: 'User Details',
+},
   {
     path: ROUTE_PATHS.USERS.ADD,
     element: AddUser,

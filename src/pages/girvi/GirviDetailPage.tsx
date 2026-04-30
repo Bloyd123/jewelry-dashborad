@@ -20,14 +20,13 @@ export const GirviDetailPage = () => {
 const [showInterestModal, setShowInterestModal] = useState(
   searchParams.get('tab') === 'interest'
 )
-  // tab=interest hone par activity timeline section pe scroll
   const interestSectionRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (searchParams.get('tab') === 'interest' && interestSectionRef.current) {
       setTimeout(() => {
         interestSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 500)  // wait for page to render
+      }, 500)  
     }
   }, [searchParams])
   const {

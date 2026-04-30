@@ -14,7 +14,9 @@ export const BasicInfoSection = ({
   onChange,
   onBlur,
   disabled,
+   mode,  
 }: FormSectionProps) => {
+    const isEdit = mode === 'edit'
   const { t } = useTranslation()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -47,9 +49,11 @@ export const BasicInfoSection = ({
         error={errors.username}
         placeholder={t('user.usernamePlaceholder')}
         required
-        disabled={disabled}
         maxLength={30}
-        helpText={t('user.usernameHelpText')}
+        disabled={disabled || isEdit}  // ← readonly in edit
+        readOnly={isEdit}
+   helpText={isEdit ? t('user.cannotChange') : t('user.usernameHelpText')}
+
       />
 
       {/* Email */}
@@ -63,10 +67,12 @@ export const BasicInfoSection = ({
         error={errors.email}
         placeholder={t('user.emailPlaceholder')}
         required
-        disabled={disabled}
+                disabled={disabled || isEdit}  // ← readonly in edit
+        readOnly={isEdit}
       />
 
       {/* Password */}
+            {!isEdit && (
       <div className="relative">
         <FormInput
           name="password"
@@ -125,8 +131,9 @@ export const BasicInfoSection = ({
           </div>
         )}
       </div>
-
+     )}
       {/* Confirm Password */}
+          {!isEdit && (
       <div className="relative">
         <FormInput
           name="confirmPassword"
@@ -163,6 +170,7 @@ export const BasicInfoSection = ({
             </div>
           )}
       </div>
+          )}
 
       {/* First Name */}
       <FormInput

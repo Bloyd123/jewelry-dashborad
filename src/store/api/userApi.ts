@@ -84,6 +84,13 @@ export const userManagementApi = baseApi.injectEndpoints({
       transformResponse: (response: UserResponse) => response.data.user,
       providesTags: (result, error, userId) => [{ type: 'User' as const, id: userId }],
     }),
+getUserActivityLogs: build.query<any, { userId: string; action?: string; dateRange?: string }>({
+  query: ({ userId, action, dateRange }) => ({
+    url: replacePathParams(USER_ENDPOINTS.ACTIVITY_LOGS, { userId }),
+    params: { action, dateRange },
+  }),
+  providesTags: ['UserActivity'],
+}),
 
     // ── UPDATE USER ────────────────────────────────────────
     updateUser: build.mutation<User, UpdateUserInput>({
@@ -151,6 +158,7 @@ export const userManagementApi = baseApi.injectEndpoints({
 export const {
   useGetAllUsersQuery,
   useGetUserByIdQuery,
+   useGetUserActivityLogsQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
   useActivateUserMutation,

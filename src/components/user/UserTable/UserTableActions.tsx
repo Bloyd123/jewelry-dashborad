@@ -3,7 +3,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  Eye, Edit, Trash2, UserCheck, UserX,
+  Eye, Edit,  UserCheck, UserX,
   KeyRound, MoreVertical,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,7 +21,6 @@ export const getUserRowActions = (
   onActivate:        (user: User) => void,
   onDeactivate:      (user: User) => void,
   onResetPassword:   (user: User) => void,
-  onDelete:          (user: User) => void,
 ): RowAction<User>[] => [
   {
     label: 'user.actions.viewDetails',
@@ -55,12 +54,6 @@ export const getUserRowActions = (
     onClick: onResetPassword,
     variant: 'default',
   },
-  {
-    label: 'user.actions.delete',
-    icon: <Trash2 className="h-4 w-4" />,
-    onClick: onDelete,
-    variant: 'destructive',
-  },
 ]
 
 // ── Bulk Actions Bar ───────────────────────────────────────
@@ -71,7 +64,6 @@ interface BulkActionsBarProps {
   onEdit:          () => void
   onActivate:      () => void
   onDeactivate:    () => void
-  onDelete:        () => void
   onClearSelection: () => void
 }
 
@@ -82,7 +74,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
   onEdit,
   onActivate,
   onDeactivate,
-  onDelete,
   onClearSelection,
 }) => {
   const { t } = useTranslation()
@@ -142,15 +133,6 @@ export const BulkActionsBar: React.FC<BulkActionsBarProps> = ({
           </Button>
         )}
 
-        <Button
-          variant="destructive"
-          size="sm"
-          onClick={onDelete}
-          className="h-9 gap-1 whitespace-nowrap text-xs sm:gap-2 sm:text-sm"
-        >
-          <Trash2 className="h-4 w-4" />
-          <span className="hidden sm:inline">{t('user.actions.delete')}</span>
-        </Button>
 
         {/* More dropdown */}
         <DropdownMenu>

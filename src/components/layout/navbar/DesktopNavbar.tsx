@@ -1,5 +1,4 @@
 // FILE: layout/navbar/DesktopNavbar.tsx
-// Desktop Navbar with Theme Picker Modal
 
 import {
   Bell,
@@ -37,7 +36,6 @@ export const DesktopNavbar = () => {
   return (
     <>
       <header className="flex h-16 items-center justify-between border-b border-border-primary bg-header-primary px-6">
-        {/* Left Section - Search */}
         <div className="flex flex-1 items-center gap-4">
           {showSearch ? (
             <div className="flex max-w-md flex-1 items-center gap-2">

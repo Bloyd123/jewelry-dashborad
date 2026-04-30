@@ -28,7 +28,8 @@ BUG_REPORT: '/bug-report',
   USERS: {
     ADD: '/users/add',
     LIST: '/users',
-    EDIT: '/users/edit/:id',
+  EDIT: '/users/edit/:userId', 
+   DETAIL: '/users/:userId', 
   },
   // Shop Routes
   SHOPS: {
@@ -142,6 +143,10 @@ girvi: {
   add:           (shopId: string) => `/shops/${shopId}/girvi/new`,
   payments:      (shopId: string, girviId: string) => `/shops/${shopId}/girvi/${girviId}/payments`,
   shopPayments:  (shopId: string) => `/shops/${shopId}/girvi-payments`,
+},
+user: {
+  detail: (id: string) => `/users/${id}`,
+  edit: (id: string) => `/users/edit/${id}`,
 },
   customer: {
     detail: (id: string) => `/customers/${id}`,

@@ -109,6 +109,7 @@ export default function UserFormMobile({
       onChange: handleChange,
       onBlur: handleBlur,
       disabled: isLoading,
+      mode, 
     }
 
     switch (STEPS[currentStep].id) {

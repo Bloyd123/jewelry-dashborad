@@ -12,6 +12,7 @@ export const USER_ENDPOINTS = {
   ACTIVATE:       `${BASE_URL}/users/:userId/activate`,
   DEACTIVATE:     `${BASE_URL}/users/:userId/deactivate`,
   RESET_PASSWORD: `${BASE_URL}/users/:userId/reset-password`,
+    ACTIVITY_LOGS:  `${BASE_URL}/users/:userId/activity-logs`,
 }
  
 export const BUG_REPORT_ENDPOINTS = {

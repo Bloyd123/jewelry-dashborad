@@ -1,6 +1,4 @@
 // FILE: src/components/user/UserForm/sections/RolePermissionsSection.tsx
-// Role & Permissions Section - Role, Organization, Shop
-//  UPDATED: Uses new Redux architecture (authSlice + userSlice)
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FormSelect } from '@/components/forms/FormSelect'
@@ -17,15 +15,15 @@ export const RolePermissionsSection = ({
   onChange,
   onBlur,
   disabled,
+   mode, 
 }: FormSectionProps) => {
+    const isEdit = mode === 'edit'
   const { t } = useTranslation()
 
-  //  NEW: Get data from correct slices
   const currentUser = useAppSelector(selectUserProfile)
   const currentShopId = useAppSelector(selectCurrentShopId)
   const shopIds = useAppSelector(selectShopIds)
 
-  // Role options
 const roleOptions = useMemo(() => {
   if (currentUser?.role === 'super_admin') {
     return [
@@ -37,7 +35,6 @@ const roleOptions = useMemo(() => {
       { value: 'viewer', label: t('user.roles.viewer') },
     ]
   }
-  // org_admin aur shop_admin ke liye — org_admin nahi dikhega
   return [
     { value: 'shop_admin', label: t('user.roles.shopAdmin') },
     { value: 'manager', label: t('user.roles.manager') },
@@ -116,7 +113,7 @@ const showShop =
           placeholder={t('user.selectRole')}
           options={roleOptions}
           required
-          disabled={disabled}
+            disabled={disabled || isEdit} 
         />
 
         {/* Role Description */}
