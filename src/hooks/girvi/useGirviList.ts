@@ -49,7 +49,7 @@ export const useGirviList = (
   return {
     girvis:     data?.data?.girvis     ?? [],
     stats:      data?.data?.stats,
-    pagination: data?.pagination,
+     pagination: data?.meta?.pagination,
     isLoading:  isLoading || isFetching,
     error,
     filters,

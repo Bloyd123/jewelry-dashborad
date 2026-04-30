@@ -256,7 +256,7 @@ const handleConfirmedSubmit = async () => {
   errors={errors}
   onChange={handleChange}
   onBlur={handleBlur}
-  disabled={isLoading || mode === 'view' || mode === 'edit'}
+   disabled={isLoading || mode === 'view'}
 />
             </CardContent>
           </Card>

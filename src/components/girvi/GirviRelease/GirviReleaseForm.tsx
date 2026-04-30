@@ -7,6 +7,8 @@ import { Button as ButtonRelease }    from '@/components/ui/button'
 import { Input }                      from '@/components/ui/input'
 import { Label }                      from '@/components/ui/label'
 import { Textarea }                   from '@/components/ui/textarea'
+import { FormDatePicker } from '@/components/forms/FormDatePicker'
+
 import {
   Card as CardRelease,
   CardContent as CardContentRelease,
@@ -42,7 +44,7 @@ export const GirviReleaseForm = ({
     interestReceived:     '',
     principalReceived:    String(outstandingPrincipal || ''),
     discountGiven:        '0',
-    paymentDate:          new Date().toISOString().split('T')[0],
+  paymentDate: new Date().toISOString(),
     paymentMode:          'cash' as const,
     transactionReference: '',
     remarks:              '',
@@ -204,20 +206,15 @@ export const GirviReleaseForm = ({
 
           {/* Payment Date */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-1">
-              <Label>
-                {t('girvi.paymentDate')} <span className="text-status-error">*</span>
-              </Label>
-              <Input
-                type="date"
-                value={formData.paymentDate}
-                onChange={e => onChange('paymentDate', e.target.value)}
-                className={errors.paymentDate ? 'border-status-error' : ''}
-              />
-              {errors.paymentDate && (
-                <p className="text-xs text-status-error">{errors.paymentDate}</p>
-              )}
-            </div>
+<FormDatePicker
+  name="paymentDate"
+  label={t('girvi.paymentDate')}
+  value={formData.paymentDate}
+  onChange={(name, value) => onChange(name, value)}
+  maxDate={new Date()}
+  error={errors.paymentDate}
+  required
+/>
           </div>
 
           {/* Payment Mode */}

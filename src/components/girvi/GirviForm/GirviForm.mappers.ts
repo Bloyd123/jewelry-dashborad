@@ -30,7 +30,8 @@ export const mapGirviToFormData = (girvi: any): Partial<GirviFormData> => {
   const customerEmail = customer?.email ?? girvi.customerEmail ?? ''
 
   // Items map karo
-  const items: GirviItemFormData[] = (girvi.items ?? []).map((item: any) => ({
+const items: GirviItemFormData[] = (girvi.items ?? []).map((item: any) => ({
+  _id:            item._id?.toString(),
     itemName:       item.itemName       ?? '',
     itemType:       item.itemType       ?? 'gold',
     description:    item.description    ?? '',

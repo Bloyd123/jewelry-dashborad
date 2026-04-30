@@ -22,6 +22,7 @@ export interface GirviFormSectionProps {
 
 
 export interface GirviItemFormData {
+  _id?: string
   itemName: string
   itemType: 'gold' | 'silver' | 'diamond' | 'platinum' | 'other'
   description?: string
@@ -32,9 +33,9 @@ export interface GirviItemFormData {
   tunch?: number | string
   purity?: string
   ratePerGram?: number | string
-  approxValue?: number        
+  approxValue?: number
   userGivenValue?: number | string
-  finalValue?: number         
+  finalValue?: number
   condition: 'good' | 'fair' | 'poor'
 }
 

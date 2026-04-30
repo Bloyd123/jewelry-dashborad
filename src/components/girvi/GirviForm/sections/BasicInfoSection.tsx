@@ -13,6 +13,7 @@ export const BasicInfoSection = ({
   onChange,
   onBlur,
   disabled = false,
+  mode,
 }: GirviFormSectionProps) => {
   const { t } = useTranslation()
 
@@ -27,7 +28,7 @@ export const BasicInfoSection = ({
           onBlur={onBlur}
           error={errors.girviDate}
           required
-          disabled={disabled}
+          disabled={disabled || mode === 'edit'}
           maxDate={new Date()}
         />
 

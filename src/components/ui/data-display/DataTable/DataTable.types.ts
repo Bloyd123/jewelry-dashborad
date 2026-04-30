@@ -1,9 +1,5 @@
 // FILE: src/components/ui/data-display/DataTable/DataTable.types.ts
-// DataTable TypeScript Types & Interfaces
-
 import { ReactNode } from 'react'
-
-// COLUMN DEFINITION
 
 export interface DataTableColumn<T = any> {
   id: string
@@ -77,8 +73,6 @@ export interface FilteringConfig {
   onGlobalFilterChange?: (value: string) => void
 }
 
-// SELECTION
-
 export interface SelectionConfig<T = any> {
   enabled?: boolean
   selectedRows?: Set<string | number>
@@ -86,8 +80,6 @@ export interface SelectionConfig<T = any> {
   getRowId?: (row: T, index: number) => string | number
   selectAllEnabled?: boolean
 }
-
-// ROW ACTIONS
 
 export interface RowAction<T = any> {
   label: string | ReactNode
@@ -108,8 +100,6 @@ export interface RowActionsConfig<T = any> {
   width?: string | number
 }
 
-// LOADING & EMPTY STATES
-
 export interface LoadingConfig {
   isLoading?: boolean
   loadingRows?: number
@@ -124,8 +114,6 @@ export interface EmptyStateConfig {
     onClick: () => void
   }
 }
-
-// STYLING & LAYOUT
 
 export interface StyleConfig {
   variant?: 'default' | 'bordered' | 'striped' | 'compact'
@@ -147,8 +135,6 @@ export interface StyleConfig {
   cellClassName?: string
 }
 
-// RESPONSIVE CONFIG
-
 export interface ResponsiveConfig {
   enabled?: boolean
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl'
@@ -160,14 +146,10 @@ export interface ResponsiveConfig {
   }
 }
 
-// MAIN DATATABLE PROPS
-
 export interface DataTableProps<T = any> {
-  // Required
   data: T[]
   columns: DataTableColumn<T>[]
 
-  // Optional Configurations
   sorting?: SortingConfig
   pagination?: PaginationConfig
   filtering?: FilteringConfig
@@ -177,13 +159,10 @@ export interface DataTableProps<T = any> {
   emptyState?: EmptyStateConfig
   style?: StyleConfig
   responsive?: ResponsiveConfig
-
-  // Row Events
   onRowClick?: (row: T, index: number) => void
   onRowDoubleClick?: (row: T, index: number) => void
   onRowContextMenu?: (row: T, index: number, event: React.MouseEvent) => void
 
-  // Custom Components
   customHeader?: ReactNode
   customFooter?: ReactNode
   rowExpansion?: {
@@ -193,20 +172,17 @@ export interface DataTableProps<T = any> {
     onExpandedChange?: (expandedIds: Set<string | number>) => void
   }
 
-  // Virtualization (for large datasets)
   virtualization?: {
     enabled: boolean
     rowHeight?: number
     overscan?: number
   }
 
-  // Misc
   getRowId?: (row: T, index: number) => string | number
   testId?: string
   ariaLabel?: string
 }
 
-// INTERNAL STATE (for component use)
 
 export interface DataTableInternalState {
   sorting: SortingState[]
@@ -218,7 +194,6 @@ export interface DataTableInternalState {
   columnVisibility: Record<string, boolean>
 }
 
-// HELPER TYPES
 
 export type DataTableInstance<T = any> = {
   data: T[]

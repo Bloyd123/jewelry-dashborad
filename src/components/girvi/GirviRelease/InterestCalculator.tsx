@@ -6,7 +6,10 @@ import { Calculator, RefreshCw } from 'lucide-react'
 import { Button }         from '@/components/ui/button'
 import { Input }          from '@/components/ui/input'
 import { Label }          from '@/components/ui/label'
+import { FormDatePicker } from '@/components/forms/FormDatePicker'
+
 import {
+  
   Select,
   SelectContent,
   SelectItem,
@@ -32,7 +35,8 @@ export const InterestCalculator = ({
   onApply,
 }: InterestCalculatorProps) => {
   const { t } = useTranslation()
-  const [toDate,       setToDate]       = useState(new Date().toISOString().split('T')[0])
+
+  const [toDate, setToDate] = useState(new Date().toISOString())
   const [interestType, setInterestType] = useState<GirviInterestType>('simple')
 
   const { calculate, calculation, isCalculating, hasCalculation } =
@@ -55,12 +59,12 @@ export const InterestCalculator = ({
           <Label className="text-xs font-medium text-text-secondary">
             {t('girvi.calculateUpTo')}
           </Label>
-          <Input
-            type="date"
-            value={toDate}
-            onChange={e => setToDate(e.target.value)}
-            className="h-9"
-          />
+<FormDatePicker
+  name="toDate"
+  value={toDate}
+  onChange={(name, value) => setToDate(value)}
+  maxDate={new Date()}
+/>
         </div>
 
         {/* Interest Type */}

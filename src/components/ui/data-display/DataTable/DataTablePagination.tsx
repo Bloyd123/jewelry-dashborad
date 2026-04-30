@@ -1,5 +1,4 @@
 // FILE: src/components/ui/data-display/DataTable/DataTablePagination.tsx
-// DataTable Pagination Controls
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,8 +19,6 @@ import {
 } from '@/components/ui/select'
 import type { PaginationState } from './DataTable.types'
 
-// PAGINATION PROPS
-
 export interface DataTablePaginationProps {
   pageIndex: number
   pageSize: number
@@ -35,8 +32,6 @@ export interface DataTablePaginationProps {
   className?: string
   compact?: boolean
 }
-
-// PAGINATION COMPONENT
 
 export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
   pageIndex,
@@ -53,13 +48,11 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  // Calculate display values
   const startItem = totalItems === 0 ? 0 : pageIndex * pageSize + 1
   const endItem = Math.min((pageIndex + 1) * pageSize, totalItems)
   const hasPreviousPage = pageIndex > 0
   const hasNextPage = pageIndex < totalPages - 1
 
-  // Handlers
   const handleFirstPage = () => {
     onPaginationChange({ pageIndex: 0, pageSize })
   }
@@ -91,8 +84,6 @@ export const DataTablePagination: React.FC<DataTablePaginationProps> = ({
       onPaginationChange({ pageIndex: page, pageSize })
     }
   }
-
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const delta = 2
     const range: number[] = []

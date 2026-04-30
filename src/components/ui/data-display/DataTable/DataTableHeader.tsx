@@ -1,6 +1,4 @@
 // FILE: src/components/ui/data-display/DataTable/DataTableHeader.tsx
-// DataTable Header with Sorting Support
-
 import { useTranslation } from 'react-i18next'
 import { ArrowUp, ArrowDown, ChevronsUpDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -10,7 +8,6 @@ import type {
   SortDirection,
 } from './DataTable.types'
 
-// HEADER CELL PROPS
 
 interface DataTableHeaderCellProps<T = any> {
   column: DataTableColumn<T>
@@ -20,8 +17,6 @@ interface DataTableHeaderCellProps<T = any> {
   width?: string | number
   className?: string
 }
-
-// HEADER CELL COMPONENT
 
 export const DataTableHeaderCell = <T,>({
   column,
@@ -106,8 +101,6 @@ export const DataTableHeaderCell = <T,>({
   )
 }
 
-// HEADER ROW PROPS
-
 interface DataTableHeaderProps<T = any> {
   columns: DataTableColumn<T>[]
   sortingState?: SortingState[]
@@ -122,7 +115,6 @@ interface DataTableHeaderProps<T = any> {
   stickyHeader?: boolean
 }
 
-// HEADER ROW COMPONENT
 
 export const DataTableHeader = <T,>({
   columns,
@@ -154,7 +146,6 @@ export const DataTableHeader = <T,>({
       )}
     >
       <tr className="border-b border-border-primary">
-        {/* Selection Column */}
         {selectionEnabled && (
           <th className="w-12 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center">
             <input
@@ -172,14 +163,12 @@ export const DataTableHeader = <T,>({
           </th>
         )}
 
-        {/* Actions Column - Start */}
         {actionsEnabled && actionsPosition === 'start' && (
           <th className="w-20 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center text-sm font-semibold text-text-primary">
             {t('ui.datatable.actions')}
           </th>
         )}
 
-        {/* Data Columns */}
         {columns.map(column => (
           <DataTableHeaderCell
             key={column.id}
@@ -191,7 +180,6 @@ export const DataTableHeader = <T,>({
           />
         ))}
 
-        {/* Actions Column - End */}
         {actionsEnabled && actionsPosition === 'end' && (
           <th className="w-20 border-b border-border-primary bg-bg-secondary px-4 py-3 text-center text-sm font-semibold text-text-primary">
             {t('ui.datatable.actions')}

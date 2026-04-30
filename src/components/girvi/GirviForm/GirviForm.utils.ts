@@ -122,14 +122,24 @@ export const buildCreateGirviPayload = (d: Partial<GirviFormData>) => ({
 
 export const buildUpdateGirviPayload = (d: Partial<GirviFormData>) => ({
   interestRate:      safeFloat(d.interestRate, 0)!,
-  interestType:      d.interestType     || 'simple',
-  calculationBasis:  d.calculationBasis || 'monthly',
+  interestType:      d.interestType || 'simple',
   dueDate:           d.dueDate,
   gracePeriodDays:   safeInt(d.gracePeriodDays),
   girviSlipNumber:   d.girviSlipNumber,
   witnessName:       d.witnessName,
   notes:             d.notes,
   internalNotes:     d.internalNotes,
+  items: (d.items || []).map(item => ({
+    _id:            (item as any)._id,
+    itemName:       item.itemName,
+    itemType:       item.itemType,
+    description:    item.description,
+    condition:      item.condition,
+    purity:         item.purity,
+    tunch:          safeFloat(item.tunch),
+    ratePerGram:    safeFloat(item.ratePerGram),
+    userGivenValue: safeFloat(item.userGivenValue),
+  })),
 })
 
 export const buildGirviPayload = buildCreateGirviPayload

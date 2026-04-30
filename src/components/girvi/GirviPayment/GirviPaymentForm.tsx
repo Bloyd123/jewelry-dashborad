@@ -14,6 +14,8 @@ import { useGirviInterestLazy }    from '@/hooks/girvi/useGirviInterest'
 import { addGirviPaymentSchema }   from '@/validators/girviValidation'
 import type { GirviPaymentFormProps, GirviPaymentFormData } from './GirviPaymentForm.types'
 import type { GirviInterestType, GirviPaymentType } from '@/types/girvi.types'
+import { FormDatePicker } from '@/components/forms/FormDatePicker'
+
 
 
 const PAYMENT_TYPES: { value: GirviPaymentType; label: string; desc: string }[] = [
@@ -39,19 +41,19 @@ export const GirviPaymentForm = ({
   onCancel,
 }: GirviPaymentFormProps) => {
   const { t } = useTranslation()
-  const today = new Date().toISOString().split('T')[0]
+  
 
   const [formData, setFormData] = useState<GirviPaymentFormData>({
     paymentType:          'interest_only',
     interestType:         girviBalance?.interestType ?? 'simple',
-    interestFrom:         girviBalance?.lastInterestCalcDate
-                            ? new Date(girviBalance.lastInterestCalcDate).toISOString().split('T')[0]
-                            : today,
-    interestTo:           today,
+  interestFrom: girviBalance?.lastInterestCalcDate
+    ? new Date(girviBalance.lastInterestCalcDate).toISOString()
+    : new Date().toISOString(),
+     interestTo:   new Date().toISOString(),
     interestReceived:     '',
     principalReceived:    '',
     discountGiven:        '0',
-    paymentDate:          today,
+  paymentDate:  new Date().toISOString(),
     paymentMode:          'cash',
     transactionReference: '',
     remarks:              '',
@@ -234,30 +236,22 @@ export const GirviPaymentForm = ({
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <Label className="text-xs font-medium text-text-secondary">
-                {t('girviPayment.interestFrom')}
-              </Label>
-              <Input
-                type="date"
-                value={formData.interestFrom}
-                onChange={e => onChange('interestFrom', e.target.value)}
-                className="h-9"
-              />
-            </div>
-            <div className="space-y-1">
-              <Label className="text-xs font-medium text-text-secondary">
-                {t('girviPayment.interestTo')}
-              </Label>
-              <Input
-                type="date"
-                value={formData.interestTo}
-                onChange={e => onChange('interestTo', e.target.value)}
-                className="h-9"
-              />
-            </div>
-          </div>
+<div className="grid grid-cols-2 gap-3">
+  <FormDatePicker
+    name="interestFrom"
+    label={t('girviPayment.interestFrom')}
+    value={formData.interestFrom}
+    onChange={(name, value) => onChange(name, value)}
+    maxDate={new Date()}
+  />
+  <FormDatePicker
+    name="interestTo"
+    label={t('girviPayment.interestTo')}
+    value={formData.interestTo}
+    onChange={(name, value) => onChange(name, value)}
+    maxDate={new Date()}
+  />
+</div>
 
           <Button
             type="button"
@@ -345,19 +339,15 @@ export const GirviPaymentForm = ({
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label>
-          {t('girviPayment.paymentDate')} <span className="text-status-error">*</span>
-        </Label>
-        <Input
-          type="date"
-          value={formData.paymentDate}
-          max={today}
-          onChange={e => onChange('paymentDate', e.target.value)}
-          className={err('paymentDate') ? 'border-status-error' : ''}
-        />
-        {err('paymentDate') && <p className="text-sm text-status-error">{err('paymentDate')}</p>}
-      </div>
+<FormDatePicker
+  name="paymentDate"
+  label={t('girviPayment.paymentDate')}
+  value={formData.paymentDate}
+  onChange={(name, value) => onChange(name, value)}
+  maxDate={new Date()}
+  error={err('paymentDate')}
+  required
+/>
 
       <div className="space-y-2">
         <Label>

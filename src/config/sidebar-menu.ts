@@ -75,12 +75,7 @@ export const getMenuItems = (t: (key: string) => string, shopId: string = ''): M
         title: t('sidebar.Allcustomer'),
         url: ROUTES.Allcustomer,
         icon: UserCheck,
-      },
-      {
-        title: t('sidebar.customerdetail'),
-        url: ROUTES.customerdetail,
-        icon: Info,
-      },
+      }
     ],
   },
   {

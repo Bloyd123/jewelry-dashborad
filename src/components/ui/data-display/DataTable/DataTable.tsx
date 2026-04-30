@@ -233,9 +233,9 @@ const paginatedData = useMemo(() => {
 
 const totalPages = useMemo(() => {
   if (!pagination?.enabled) return 1
-  if (pagination.totalPages) return pagination.totalPages  // ← use server value
+  if (pagination.totalPages) return pagination.totalPages
   const pageSize = pagination.pageSize ?? internalState.pagination.pageSize
-  return Math.ceil(filteredData.length / pageSize)
+  return Math.ceil((pagination.totalItems ?? filteredData.length) / pageSize)
 }, [filteredData.length, pagination, internalState.pagination.pageSize])
 
   // SELECTION

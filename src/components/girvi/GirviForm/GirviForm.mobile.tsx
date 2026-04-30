@@ -219,7 +219,7 @@ const sectionProps = {
 
           />
         )
-      case 'items':      return <ItemsSection      {...sectionProps} disabled={isLoading || mode === 'view' || mode === 'edit'}/>
+      case 'items':      return <ItemsSection      {...sectionProps}  disabled={isLoading || mode === 'view'}/>
       case 'financial':  return <InterestSection   {...sectionProps} />
       case 'basic-info': return <BasicInfoSection  {...sectionProps} />
       case 'additional': return <AdditionalDetailsSection {...sectionProps} />

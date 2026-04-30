@@ -13,7 +13,6 @@ import { getGirviRowActions, GirviBulkActionsBar }  from './GirviTableActions'
 import type { Girvi } from '@/types/girvi.types'
 
 import { Input }          from '@/components/ui/input'
-import { Button }         from '@/components/ui/button'
 import { Label }          from '@/components/ui/label'
 import { Switch }         from '@/components/ui/switch'
 import { StatusFilter }   from '@/components/ui/filters/StatusFilter'
@@ -52,8 +51,8 @@ const GirviFilterBar = ({
 
   const activeFilters: ActiveFilter[] = useMemo(() => {
     const chips: ActiveFilter[] = []
-    if (filters.search)     chips.push({ id: 'search',      label: t('girvi.search'),      value: filters.search })
-    if (filters.status)     chips.push({ id: 'status',      label: t('girvi.status'),      value: filters.status })
+    if (filters.search)      chips.push({ id: 'search',      label: t('girvi.search'),      value: filters.search })
+    if (filters.status)      chips.push({ id: 'status',      label: t('girvi.status'),      value: filters.status })
     if (filters.overdueOnly) chips.push({ id: 'overdueOnly', label: t('girvi.overdueOnly'), value: t('common.yes') })
     return chips
   }, [filters, t])
@@ -123,11 +122,7 @@ export const GirviTable: React.FC = () => {
   const [selectedRows, setSelectedRows] = useState<Set<string | number>>(new Set())
   const [filters,      setFilters]      = useState<GirviFilterState>({})
 
-  const { girvis, pagination, isLoading, updateFilters, resetFilters } = useGirviList(shopId, {
-    search:      filters.search,
-    status:      filters.status as any,
-    overdueOnly: filters.overdueOnly,
-  })
+  const { girvis, pagination, isLoading, updateFilters, resetFilters, goToPage } = useGirviList(shopId)
 
   const { deleteGirvi } = useGirviActions(shopId)
 
@@ -146,7 +141,7 @@ export const GirviTable: React.FC = () => {
   const handleFilterChange = (newFilters: GirviFilterState) => {
     setFilters(newFilters)
     updateFilters({
-      search:      newFilters.search || undefined,
+      search:      newFilters.search      || undefined,
       status:      newFilters.status as any || undefined,
       overdueOnly: newFilters.overdueOnly,
     })
@@ -157,7 +152,7 @@ export const GirviTable: React.FC = () => {
     [selectedRows, girvis]
   )
 
-const rowActions = useMemo(
+  const rowActions = useMemo(
     () => getGirviRowActions(
       handleView, handleEdit, handleRelease, handleCalculate, handleDelete, handleTransfer, handlePayments,
       userRole ?? 'staff'
@@ -192,10 +187,14 @@ const rowActions = useMemo(
         pagination={{
           enabled: true,
           pageSize: 20,
+          pageIndex: (pagination?.currentPage ?? 1) - 1,
+          totalItems: pagination?.totalDocs,
+          totalPages: pagination?.totalPages,
           pageSizeOptions: [10, 20, 50],
           showPageSizeSelector: true,
           showPageInfo: true,
           showFirstLastButtons: true,
+          onPaginationChange: ({ pageIndex }) => goToPage(pageIndex + 1),
         }}
         selection={{
           enabled: true,

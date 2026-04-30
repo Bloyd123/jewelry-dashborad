@@ -127,7 +127,7 @@ export const InterestSection = ({
                   data.interestType === type
                     ? 'bg-accent/10 border-accent text-accent'
                     : 'border-border-primary bg-bg-secondary text-text-secondary hover:bg-bg-tertiary'
-                } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+                } ${disabled || mode === 'edit' ? 'cursor-not-allowed opacity-50' : ''}`}
               >
                 <input
                   type="radio"
@@ -135,7 +135,7 @@ export const InterestSection = ({
                   value={type}
                   checked={data.interestType === type}
                   onChange={() => onChange('interestType', type)}
-                  disabled={disabled}
+                  disabled={disabled || mode === 'edit'}
                   className="sr-only"
                 />
                 <span className="text-xs font-medium capitalize sm:text-sm">{type}</span>
@@ -185,29 +185,29 @@ export const InterestSection = ({
         <p className="text-xs text-text-tertiary">{t('girvi.paymentModeHint')}</p>
 
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3">
-          {GIRVI_PAYMENT_MODES.map(mode => (
+          {GIRVI_PAYMENT_MODES.map(pm => (
             <button
-              key={mode.value}
+              key={pm.value}
               type="button"
-              onClick={() => onChange('paymentMode', mode.value)}
-              disabled={disabled}
+              onClick={() => onChange('paymentMode', pm.value)}
+             disabled={disabled || mode === 'edit'}
               className={`flex flex-col items-center justify-center gap-1.5 rounded-lg border-2 p-3 sm:gap-2 sm:p-4 transition-all ${
-                data.paymentMode === mode.value
+                data.paymentMode === pm.value
                   ? 'bg-accent/10 border-accent'
                   : 'hover:border-accent/50 border-border-primary bg-bg-secondary hover:bg-bg-tertiary'
-              } ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+              } ${disabled || mode === 'edit' ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
             >
               <div className={`flex h-8 w-8 items-center justify-center rounded-full sm:h-10 sm:w-10 ${
-                data.paymentMode === mode.value
+                data.paymentMode === pm.value
                   ? 'bg-accent text-white'
                   : 'bg-bg-tertiary text-text-secondary'
               }`}>
-                <mode.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                <pm.icon className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
               <span className={`text-xs font-medium sm:text-sm ${
-                data.paymentMode === mode.value ? 'text-accent' : 'text-text-primary'
+                data.paymentMode === pm.value ? 'text-accent' : 'text-text-primary'
               }`}>
-                {mode.label}
+                {pm.label}
               </span>
             </button>
           ))}

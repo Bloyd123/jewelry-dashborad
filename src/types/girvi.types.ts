@@ -396,13 +396,18 @@ export interface GirvisListResponse {
     girvis: Girvi[]
     stats: GirviStatistics
   }
-  pagination: {
-    currentPage: number
-    totalPages: number
-    totalItems: number
-    itemsPerPage: number
-    hasNextPage: boolean
-    hasPrevPage: boolean
+  meta: {
+    pagination: {
+      totalDocs: number
+      totalPages: number
+      currentPage: number
+      limit: number
+      hasNextPage: boolean
+      hasPrevPage: boolean
+      nextPage: number | null
+      prevPage: number | null
+      skip: number
+    }
   }
 }
 

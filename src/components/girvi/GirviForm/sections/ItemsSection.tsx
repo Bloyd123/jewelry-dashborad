@@ -33,16 +33,17 @@ const CONDITIONS = [
 // ── ItemRow ────────────────────────────────────────────────────────────────────
 
 interface ItemRowProps {
-  item:      GirviItemFormData
-  index:     number
-  errors:    Record<string, string>
-  onChange:  (index: number, field: keyof GirviItemFormData, value: any) => void
-  onRemove:  (index: number) => void
-  disabled:  boolean
+  item: GirviItemFormData
+  index: number
+  errors: Record<string, string>
+  onChange: (index: number, field: keyof GirviItemFormData, value: any) => void
+  onRemove: (index: number) => void
+  disabled: boolean
   canRemove: boolean
+  mode?: 'create' | 'edit' | 'view'
 }
 
-const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove }: ItemRowProps) => {
+const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove, mode }: ItemRowProps) => {
   const { t }        = useTranslation()
   const [expanded, setExpanded] = useState(index === 0)
 
@@ -159,7 +160,7 @@ const ItemRow = ({ item, index, errors, onChange, onRemove, disabled, canRemove 
   value={item.quantity === 1 ? '' : item.quantity}
   min={1}
   onChange={e => handleFieldChange('quantity', parseInt(e.target.value) || 1)}
-  disabled={disabled}
+  disabled={disabled || mode === 'edit'}
 placeholder="Qty"
 />
             </div>
@@ -200,7 +201,7 @@ placeholder="Qty"
                   min={0}
                   step={0.001}
                   onChange={e => handleFieldChange('grossWeight', e.target.value === '' ? '' : Number(e.target.value))}
-                  disabled={disabled}
+                    disabled={disabled || mode === 'edit'}
                   placeholder="0.000"
                   className={err('grossWeight') ? 'border-status-error' : ''}
                 />
@@ -217,7 +218,7 @@ placeholder="Qty"
                   min={0}
                   step={0.001}
                   onChange={e => handleFieldChange('lessWeight', e.target.value === '' ? 0 : Number(e.target.value))}
-                  disabled={disabled}
+                  disabled={disabled || mode === 'edit'}
                   placeholder="0.000"
                 />
               </div>
@@ -361,13 +362,8 @@ placeholder="Qty"
 }
 
 // ── ItemsSection ───────────────────────────────────────────────────────────────
-
 export const ItemsSection = ({
-  data,
-  errors,
-  onChange,
-  onBlur,
-  disabled = false,
+  data, errors, onChange, onBlur, disabled = false, mode,
 }: GirviFormSectionProps) => {
   const { t } = useTranslation()
   const items: GirviItemFormData[] = data.items || []
@@ -388,19 +384,19 @@ export const ItemsSection = ({
   return (
     <div className="space-y-4">
 
-      {items.map((item, index) => (
-        <ItemRow
-          key={index}
-          item={item}
-          index={index}
-          errors={errors}
-          onChange={handleItemChange}
-          onRemove={handleRemoveItem}
-          disabled={disabled}
-          canRemove={items.length > 1}
-        />
-      ))}
-
+{items.map((item, index) => (
+  <ItemRow
+    key={index}
+    item={item}
+    index={index}
+    errors={errors}
+    onChange={handleItemChange}
+    onRemove={handleRemoveItem}
+    disabled={disabled}
+    canRemove={items.length > 1}
+    mode={mode}
+  />
+))}
       {/* Add Item button */}
       {!disabled && (
         <button

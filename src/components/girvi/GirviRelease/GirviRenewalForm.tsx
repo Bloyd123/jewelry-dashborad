@@ -14,6 +14,8 @@ import { useGirviActions }    from '@/hooks/girvi/useGirviActions'
 import { InterestCalculator } from './InterestCalculator'
 import { renewalSchema }      from '@/validators/girviValidation'
 import type { GirviPaymentMode, RenewalSummary } from '@/types/girvi.types'
+import { FormDatePicker } from '@/components/forms/FormDatePicker'
+
 
 interface GirviRenewalFormProps {
   shopId:   string
@@ -46,17 +48,16 @@ export const GirviRenewalForm = ({
   onCancel,
 }: GirviRenewalFormProps) => {
   const { t } = useTranslation()
-  const today = new Date().toISOString().split('T')[0]
 
   const defaultNewDueDate = new Date()
-  defaultNewDueDate.setMonth(defaultNewDueDate.getMonth() + 3)
-  const defaultDueDateStr = defaultNewDueDate.toISOString().split('T')[0]
+defaultNewDueDate.setMonth(defaultNewDueDate.getMonth() + 3)
+
+const [renewalDate, setRenewalDate] = useState(new Date().toISOString())
+const [newDueDate,  setNewDueDate]  = useState(defaultNewDueDate.toISOString())
 
   const [interestPaid,    setInterestPaid]    = useState('')
   const [principalPaid,   setPrincipalPaid]   = useState('0')
   const [discountGiven,   setDiscountGiven]   = useState('0')
-  const [renewalDate,     setRenewalDate]     = useState(today)
-  const [newDueDate,      setNewDueDate]      = useState(defaultDueDateStr)
   const [newInterestRate, setNewInterestRate] = useState(
     girviBalance?.interestRate ? String(girviBalance.interestRate) : ''
   )
@@ -196,36 +197,24 @@ export const GirviRenewalForm = ({
 
           {/* Dates */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <Label>
-                {t('girvi.renewalDate')} <span className="text-status-error">*</span>
-              </Label>
-              <Input
-                type="date"
-                value={renewalDate}
-                max={today}
-                onChange={e => setRenewalDate(e.target.value)}
-                className={err('renewalDate') ? 'border-status-error' : ''}
-              />
-              {err('renewalDate') && (
-                <p className="text-xs text-status-error">{err('renewalDate')}</p>
-              )}
-            </div>
-            <div className="space-y-1">
-              <Label>
-                {t('girvi.newDueDate')} <span className="text-status-error">*</span>
-              </Label>
-              <Input
-                type="date"
-                value={newDueDate}
-                min={today}
-                onChange={e => setNewDueDate(e.target.value)}
-                className={err('newDueDate') ? 'border-status-error' : ''}
-              />
-              {err('newDueDate') && (
-                <p className="text-xs text-status-error">{err('newDueDate')}</p>
-              )}
-            </div>
+<FormDatePicker
+  name="renewalDate"
+  label={t('girvi.renewalDate')}
+  value={renewalDate}
+  onChange={(name, value) => setRenewalDate(value)}
+  maxDate={new Date()}
+  error={err('renewalDate')}
+  required
+/>
+<FormDatePicker
+  name="newDueDate"
+  label={t('girvi.newDueDate')}
+  value={newDueDate}
+  onChange={(name, value) => setNewDueDate(value)}
+  minDate={new Date()}
+  error={err('newDueDate')}
+  required
+/>
           </div>
 
           {/* Change Interest Rate Toggle */}
