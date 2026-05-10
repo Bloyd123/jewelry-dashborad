@@ -89,7 +89,8 @@ export const baseApi = createApi({
 'GirviCashbookEntry',
 'GirviCashbookList',
 'GirviCashbookBalance',
-'GirviCashbookSummary'
+'GirviCashbookSummary',
+'GirviCashbookAnalytics'
   ],
 
   endpoints: () => ({}),

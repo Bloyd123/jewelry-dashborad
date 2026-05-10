@@ -33,6 +33,7 @@ export const GIRVI_CASHBOOK_ENDPOINTS = {
   YEARLY_SUMMARY:  `/api/v1/shops/:shopId/girvi-cashbook/summary/yearly`,
 
   GIRVI_CASHBOOK:  `/api/v1/shops/:shopId/girvi-cashbook/girvi/:girviId`,
+  ANALYTICS: `${BASE_URL}/shops/:shopId/girvi-cashbook/analytics`,
 }
 export const GIRVI_PAYMENT_ENDPOINTS = {
   ADD:        `${BASE_URL}/shops/:shopId/girvi/:girviId/payments`,

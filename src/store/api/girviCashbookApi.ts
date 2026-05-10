@@ -1,4 +1,9 @@
 // FILE: src/store/api/girviCashbookApi.ts
+// ─────────────────────────────────────────────────────────────────────────────
+// CHANGES: Sirf yeh 2 cheezein add karni hain existing file mein:
+//   1. getAnalytics endpoint (injectEndpoints ke andar)
+//   2. useGetGirviCashbookAnalyticsQuery export
+// ─────────────────────────────────────────────────────────────────────────────
 
 import { baseApi }  from './baseApi'
 import { GIRVI_CASHBOOK_ENDPOINTS } from '@/api/endpoints'
@@ -15,6 +20,11 @@ import type {
   ICurrentBalance,
   IGirviCashbookData,
 } from '@/types/girviCashbook.types'
+// ── NEW IMPORT ────────────────────────────────────────────────────────────────
+import type {
+  IGirviCashbookAnalytics,
+  IGirviCashbookAnalyticsResponse,
+} from '@/components/girviCashbook/analytics'
 
 // ─── Input Types ──────────────────────────────────────────────────────────────
 
@@ -86,9 +96,10 @@ export const girviCashbookApi = baseApi.injectEndpoints({
       }),
       transformResponse: (res: IGirviCashbookEntryResponse) => res.data.entry,
       invalidatesTags: (_result, _error, { shopId }) => [
-        { type: 'GirviCashbookList',    id: shopId },
-        { type: 'GirviCashbookBalance', id: shopId },
-        { type: 'GirviCashbookSummary', id: shopId },
+        { type: 'GirviCashbookList',      id: shopId },
+        { type: 'GirviCashbookBalance',   id: shopId },
+        { type: 'GirviCashbookSummary',   id: shopId },
+        { type: 'GirviCashbookAnalytics', id: shopId }, // ← NEW
       ],
     }),
 
@@ -99,10 +110,11 @@ export const girviCashbookApi = baseApi.injectEndpoints({
         method: 'DELETE',
       }),
       invalidatesTags: (_result, _error, { shopId, entryId }) => [
-        { type: 'GirviCashbookEntry',   id: entryId },
-        { type: 'GirviCashbookList',    id: shopId },
-        { type: 'GirviCashbookBalance', id: shopId },
-        { type: 'GirviCashbookSummary', id: shopId },
+        { type: 'GirviCashbookEntry',     id: entryId },
+        { type: 'GirviCashbookList',      id: shopId },
+        { type: 'GirviCashbookBalance',   id: shopId },
+        { type: 'GirviCashbookSummary',   id: shopId },
+        { type: 'GirviCashbookAnalytics', id: shopId }, // ← NEW
       ],
     }),
 
@@ -166,6 +178,18 @@ export const girviCashbookApi = baseApi.injectEndpoints({
         { type: 'GirviCashbookList', id: `girvi-${girviId}` },
       ],
     }),
+
+    // ── ✅ NEW: Get Analytics ─────────────────────────────────────────────────
+    getGirviCashbookAnalytics: build.query<IGirviCashbookAnalytics, ShopInput>({
+      query: ({ shopId }) => ({
+        url: replacePathParams(GIRVI_CASHBOOK_ENDPOINTS.ANALYTICS, { shopId }),
+      }),
+      transformResponse: (res: IGirviCashbookAnalyticsResponse) => res.data,
+      providesTags: (_result, _error, { shopId }) => [
+        { type: 'GirviCashbookAnalytics', id: shopId },
+      ],
+    }),
+
   }),
 })
 
@@ -180,4 +204,5 @@ export const {
   useGetMonthlySummaryQuery,
   useGetYearlySummaryQuery,
   useGetGirviCashbookQuery,
+  useGetGirviCashbookAnalyticsQuery, // ← NEW
 } = girviCashbookApi

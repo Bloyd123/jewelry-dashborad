@@ -1,14 +1,18 @@
-// FILE: src/pages/girviCashbook/GirviCashbookPage.tsx
-
 import { useState }       from 'react'
 import { useTranslation } from 'react-i18next'
-import { PlusCircle, X }  from 'lucide-react'
+import { PlusCircle }     from 'lucide-react'
 import { Button }         from '@/components/ui/button'
 import { Drawer }         from '@/components/ui/overlay/Drawer'
 import { useAuth }        from '@/hooks/auth'
 import { Tabs }           from '@/components/ui/navigation/Tabs/Tabs'
-import { BarChart2, Calendar, TrendingUp, BookOpen } from 'lucide-react'
-
+import {
+  BarChart2,
+  Calendar,
+  TrendingUp,
+  BookOpen,
+  LineChart, // ← analytics tab icon
+} from 'lucide-react'
+ 
 import { GirviCashbookTable }   from '@/components/girviCashbook/GirviCashbookTable'
 import { GirviCashbookFilters } from '@/components/girviCashbook/GirviCashbookFilters'
 import { ManualEntryForm }      from '@/components/girviCashbook/GirviCashbookForm'
@@ -19,28 +23,41 @@ import {
   YearlySummaryCard,
 } from '@/components/girviCashbook/GirviCashbookSummary'
 import type { GirviCashbookFilterValues } from '@/components/girviCashbook/GirviCashbookFilters'
-
-type ActiveTab = 'entries' | 'daily' | 'monthly' | 'yearly'
-
+ 
+import { GirviCashbookAnalytics } from '@/components/girviCashbook/analytics'
+import { useGetGirviCashbookAnalyticsQuery } from '@/store/api/girviCashbookApi'
+ 
+ 
+type ActiveTab = 'entries' | 'daily' | 'monthly' | 'yearly' | 'analytics' 
+ 
 export default function GirviCashbookPage() {
-  const { t }      = useTranslation()
+  const { t }             = useTranslation()
   const { currentShopId } = useAuth()
-  const shopId     = currentShopId || ''
-
-  const [activeTab,   setActiveTab]   = useState<ActiveTab>('entries')
-  const [showForm,    setShowForm]    = useState(false)
-
+  const shopId            = currentShopId || ''
+ 
+  const [activeTab, setActiveTab] = useState<ActiveTab>('entries')
+  const [showForm,  setShowForm]  = useState(false)
+ 
   const [filters, setFilters] = useState<GirviCashbookFilterValues>({
-    search:     '',
-    entryType:  undefined,
-    flowType:   undefined,
-    dateRange:  undefined,
+    search:    '',
+    entryType: undefined,
+    flowType:  undefined,
+    dateRange: undefined,
   })
-
+ 
+  const {
+    data:       analyticsData,
+    isLoading:  analyticsLoading,
+    refetch:    refetchAnalytics,
+  } = useGetGirviCashbookAnalyticsQuery(
+    { shopId },
+    { skip: !shopId || activeTab !== 'analytics' } 
+  )
+ 
   const handleClearAll = () => setFilters({
     search: '', entryType: undefined, flowType: undefined, dateRange: undefined,
   })
-
+ 
   const tabItems = [
     {
       value: 'entries',
@@ -62,8 +79,13 @@ export default function GirviCashbookPage() {
       label: t('girviCashbook.tabs.yearly', 'Yearly'),
       icon:  <TrendingUp className="h-4 w-4" />,
     },
+    {
+      value: 'analytics',
+      label: t('girviCashbook.tabs.analytics', 'Analytics'),
+      icon:  <LineChart  className="h-4 w-4" />,
+    },
   ]
-
+ 
   if (!shopId) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -73,10 +95,10 @@ export default function GirviCashbookPage() {
       </div>
     )
   }
-
+ 
   return (
     <div className="container mx-auto space-y-6 p-4 md:p-6">
-
+ 
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-text-primary md:text-3xl">
@@ -95,9 +117,9 @@ export default function GirviCashbookPage() {
           {t('girviCashbook.addEntry', 'Add Entry')}
         </Button>
       </div>
-
+ 
       <BalanceCard shopId={shopId} />
-
+ 
       <div className="overflow-x-auto">
         <Tabs
           tabs={tabItems}
@@ -107,7 +129,8 @@ export default function GirviCashbookPage() {
           size="md"
         />
       </div>
-
+ 
+ 
       {activeTab === 'entries' && (
         <div className="space-y-4">
           <GirviCashbookFilters
@@ -118,25 +141,33 @@ export default function GirviCashbookPage() {
           <GirviCashbookTable shopId={shopId} />
         </div>
       )}
-
+ 
       {activeTab === 'daily' && (
         <div className="max-w-2xl">
           <DailySummaryCard shopId={shopId} />
         </div>
       )}
-
+ 
       {activeTab === 'monthly' && (
         <div className="max-w-2xl">
           <MonthlySummaryCard shopId={shopId} />
         </div>
       )}
-
+ 
       {activeTab === 'yearly' && (
         <div className="max-w-3xl">
           <YearlySummaryCard shopId={shopId} />
         </div>
       )}
-
+      {activeTab === 'analytics' && (
+        <GirviCashbookAnalytics
+          shopId={shopId}
+          statistics={analyticsData}
+          loading={analyticsLoading}
+          onRefresh={refetchAnalytics}
+        />
+      )}
+ 
       <Drawer
         open={showForm}
         onOpenChange={setShowForm}
@@ -146,12 +177,12 @@ export default function GirviCashbookPage() {
       >
         <ManualEntryForm
           shopId={shopId}
-          onSuccess={() => {
-            setShowForm(false)
-          }}
+          onSuccess={() => setShowForm(false)}
           onCancel={() => setShowForm(false)}
         />
       </Drawer>
+ 
     </div>
   )
 }
+ 
