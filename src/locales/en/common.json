@@ -73,6 +73,9 @@
   }
 },
   "sidebar": {
+        "schemes":    "Schemes",
+    "allSchemes": "All Schemes",
+    "addScheme":  "Add Scheme",
     "users": "Users",
     "allUsers": "All Users",
      "bugReport": "Report a Bug",

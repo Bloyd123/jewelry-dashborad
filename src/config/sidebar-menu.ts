@@ -16,6 +16,7 @@ import {
   UserCheck,
   PackagePlus,
   Info,
+    Coins, 
   CreditCard,
   Building,
   Users,
@@ -204,6 +205,23 @@ export const getMenuItems = (t: (key: string) => string, shopId: string = ''): M
     title: t('sidebar.girviCashbook'),
     url: buildRoute.girviCashbook(shopId),        // ✅ fixed
     icon: BookOpen,
+  },
+  // After — schemes add karo payments se pehle:
+  {
+    title: t('sidebar.schemes'),
+    icon: Coins,
+    items: [
+      {
+        title: t('sidebar.allSchemes'),
+        url: ROUTES.schemeList,
+        icon: ClipboardList,
+      },
+      {
+        title: t('sidebar.addScheme'),
+        url: ROUTES.addScheme,
+        icon: UserPlus,
+      },
+    ],
   },
   {
     title: t('sidebar.payments'),

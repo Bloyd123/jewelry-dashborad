@@ -100,8 +100,8 @@ export interface UpiDetail {
 }
 
 // BUSINESS HOURS
-
 export interface TimeSlot {
+  isOpen: boolean
   open: string // Format: "HH:MM" (24-hour)
   close: string
 }

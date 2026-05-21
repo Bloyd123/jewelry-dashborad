@@ -16,7 +16,14 @@ import { cn } from '@/lib/utils'
 export interface StatusOption {
   value: string
   label: string
-  variant?: 'active' | 'inactive' | 'pending' | 'completed' | 'cancelled'
+  variant?:
+  | 'active'
+  | 'inactive'
+  | 'pending'
+  | 'completed'
+  | 'cancelled'
+  | 'warning'
+  | 'error'
   showDot?: boolean
 }
 

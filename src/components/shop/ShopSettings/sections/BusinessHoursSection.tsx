@@ -43,13 +43,14 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
     const currentDay = data[day]
 
     // Ensure currentDay exists
-    if (!currentDay) {
-      onChange(day, {
-        open: field === 'open' ? value : '10:00',
-        close: field === 'close' ? value : '21:00',
-      })
-      return
-    }
+if (!currentDay) {
+  onChange(day, {
+    isOpen: true,
+    open: field === 'open' ? value : '10:00',
+    close: field === 'close' ? value : '21:00',
+  })
+  return
+}
 
     onChange(day, {
       ...currentDay,
@@ -57,27 +58,26 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
     })
   }
 
-  const handleDayClosedChange = (
-    day: keyof Omit<BusinessHours, 'holidays'>,
-    closed: boolean
-  ) => {
-    const currentDay = data[day]
+const handleDayClosedChange = (
+  day: keyof Omit<BusinessHours, 'holidays'>,
+  isOpen: boolean
+) => {
+  const currentDay = data[day]
 
-    if (!currentDay) {
-      onChange(day, {
-        open: '10:00',
-        close: '21:00',
-      })
-      return
-    }
-
-    // For shop.types.ts TimeSlot format (no 'closed' field)
-    // We just keep open/close times
+  if (!currentDay) {
     onChange(day, {
-      open: currentDay.open,
-      close: currentDay.close,
+      isOpen,
+      open: '10:00',
+      close: '21:00',
     })
+    return
   }
+
+  onChange(day, {
+    ...currentDay,
+    isOpen,
+  })
+}
 
   const handleCopyToAllDays = () => {
     const mondayHours = data.monday
@@ -148,58 +148,79 @@ export const BusinessHoursSection: React.FC<BusinessHoursSectionProps> = ({
         {/* Days Table */}
         <div className="overflow-hidden rounded-lg border border-border-primary">
           <table className="w-full">
-            <thead className="bg-bg-tertiary">
-              <tr>
-                <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
-                  {t('shops.settings.businessHours.day')}
-                </th>
-                <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
-                  {t('shops.settings.businessHours.openingTime')}
-                </th>
-                <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
-                  {t('shops.settings.businessHours.closingTime')}
-                </th>
-              </tr>
-            </thead>
+<thead className="bg-bg-tertiary">
+  <tr>
+    <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
+      {t('shops.settings.businessHours.day')}
+    </th>
+    {/* ✅ NEW */}
+    <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
+      {t('shops.settings.businessHours.status')}
+    </th>
+    <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
+      {t('shops.settings.businessHours.openingTime')}
+    </th>
+    <th className="border-b border-border-primary px-4 py-3 text-left text-sm font-semibold text-text-primary">
+      {t('shops.settings.businessHours.closingTime')}
+    </th>
+  </tr>
+</thead>
             <tbody>
-              {days.map((day, index) => {
-                const dayData = data[day] || { open: '10:00', close: '21:00' }
+{days.map((day, index) => {
+  const dayData = data[day] || { isOpen: true, open: '10:00', close: '21:00' }  
+  const isOpen = dayData.isOpen ?? true                                           // ✅ NEW
 
-                return (
-                  <tr
-                    key={day}
-                    className={
-                      index !== days.length - 1
-                        ? 'border-b border-border-primary'
-                        : ''
-                    }
-                  >
-                    <td className="px-4 py-3 text-sm font-medium capitalize text-text-primary">
-                      {t(`shops.settings.businessHours.days.${day}`)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <input
-                        type="time"
-                        value={dayData.open}
-                        onChange={e =>
-                          handleDayChange(day, 'open', e.target.value)
-                        }
-                        className="w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary"
-                      />
-                    </td>
-                    <td className="px-4 py-3">
-                      <input
-                        type="time"
-                        value={dayData.close}
-                        onChange={e =>
-                          handleDayChange(day, 'close', e.target.value)
-                        }
-                        className="w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary"
-                      />
-                    </td>
-                  </tr>
-                )
-              })}
+  return (
+    <tr
+      key={day}
+      className={`${index !== days.length - 1 ? 'border-b border-border-primary' : ''} ${!isOpen ? 'opacity-60' : ''}`}  // ✅ band ho toh dim karo
+    >
+      <td className="px-4 py-3 text-sm font-medium capitalize text-text-primary">
+        {t(`shops.settings.businessHours.days.${day}`)}
+      </td>
+
+      {/* ✅ NEW — Toggle column */}
+      <td className="px-4 py-3">
+        <button
+          type="button"
+          onClick={() => handleDayClosedChange(day, !isOpen)}
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+            isOpen ? 'bg-status-success' : 'bg-border-primary'
+          }`}
+        >
+          <span
+            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+              isOpen ? 'translate-x-6' : 'translate-x-1'
+            }`}
+          />
+        </button>
+      </td>
+
+      <td className="px-4 py-3">
+        <input
+          type="time"
+          value={dayData.open}
+          disabled={!isOpen}                                                       // ✅ NEW
+          onChange={e => handleDayChange(day, 'open', e.target.value)}
+          className={`w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary ${
+            !isOpen ? 'cursor-not-allowed opacity-40' : ''                         // ✅ NEW
+          }`}
+        />
+      </td>
+      <td className="px-4 py-3">
+        <input
+          type="time"
+          value={dayData.close}
+          disabled={!isOpen}                                                       // ✅ NEW
+          onChange={e => handleDayChange(day, 'close', e.target.value)}
+          className={`w-full rounded-md border border-border-primary bg-bg-secondary px-3 py-2 text-sm text-text-primary ${
+            !isOpen ? 'cursor-not-allowed opacity-40' : ''                         // ✅ NEW
+          }`}
+        />
+      </td>
+    </tr>
+  )
+})}
             </tbody>
           </table>
         </div>

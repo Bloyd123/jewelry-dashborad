@@ -70,6 +70,7 @@ export type BusinessHours = ShopBusinessHours
 
 // Create a compatible DayHours type
 export interface DayHours {
+  isOpen: boolean
   open: string
   close: string
 }

@@ -321,6 +321,7 @@
         "title": "Business Hours",
         "dayWiseSchedule": "Day-wise Schedule",
         "copyMondayToAll": "Copy Monday to all days",
+        	"status":"Status",
         "day": "Day",
         "openingTime": "Opening Time",
         "closingTime": "Closing Time",

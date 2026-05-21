@@ -17,7 +17,7 @@ import openingBalance from './openingBalance.json'
 import girvi from './girvi.json'
 import griviTransfer from './girviTransfer.json'
 import girvicashbook from './girviCashbook.json'
-// import masters from './masters.json'
+import scheme from './scheme.json'
 // import parties from './parties.json'
 import purchase from './purchase.json'
 // import reports from './reports.json'
@@ -46,6 +46,7 @@ export default {
     ...girvi,
     ...griviTransfer,
     ...girvicashbook,
+    ...scheme,
   //   ...masters,
   //   ...parties,
   //   ...purchase,

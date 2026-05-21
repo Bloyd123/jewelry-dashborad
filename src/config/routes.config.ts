@@ -11,6 +11,13 @@ import type { PermissionKey, UserRole } from '@/types'
 // LAZY LOADED COMPONENTS
 // 
 
+const AllSchemesPage = lazy(() =>
+  import('@/pages/scheme/AllSchemes/AllSchemes').then(m => ({
+    default: m.AllSchemes,
+  }))
+)
+const AddSchemePage    = lazy(() => import('@/pages/scheme/AddScheme'))
+const SchemeDetailPage = lazy(() => import('@/pages/scheme/SchemeDetail'))
 // Auth Pages
 const LoginPage = lazy(() => import('@/components/auth/login/pages'))
 const ForgotPasswordPage = lazy(() => import('@/components/auth/forgotpassword/pages'))
@@ -410,7 +417,34 @@ export const protectedRoutes: RouteConfig[] = [
     permission: 'canGetSingleSupplier',
     title: 'Supplier Details',
   },
-
+{
+  path:        ROUTE_PATHS.SCHEMES.LIST,
+  element:     AllSchemesPage,
+  requiresAuth:true,
+  permission:  'canViewSchemes',
+  title:       'Schemes',
+},
+{
+  path:        ROUTE_PATHS.SCHEMES.ADD,
+  element:     AddSchemePage,
+  requiresAuth:true,
+  permission:  'canManageSchemes',
+  title:       'Add Scheme',
+},
+{
+  path:        ROUTE_PATHS.SCHEMES.EDIT,
+  element:     AddSchemePage,
+  requiresAuth:true,
+  permission:  'canManageSchemes',
+  title:       'Edit Scheme',
+},
+{
+  path:        ROUTE_PATHS.SCHEMES.DETAIL,
+  element:     SchemeDetailPage,
+  requiresAuth:true,
+  permission:  'canViewSchemes',
+  title:       'Scheme Details',
+},
   // 
   // PURCHASES
   // 
@@ -687,4 +721,8 @@ girviShopPayments: ROUTE_PATHS.GIRVI.SHOP_PAYMENTS,
 girviTransferAdd:    ROUTE_PATHS.GIRVI_TRANSFER.ADD,
 girviTransferDetail: ROUTE_PATHS.GIRVI_TRANSFER.DETAIL,
 girviCashbook:       ROUTE_PATHS.GIRVI_CASHBOOK,
+
+schemeList:   ROUTE_PATHS.SCHEMES.LIST,
+addScheme:    ROUTE_PATHS.SCHEMES.ADD,
+schemeDetail: ROUTE_PATHS.SCHEMES.DETAIL,
 } as const

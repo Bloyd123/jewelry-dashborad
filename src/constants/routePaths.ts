@@ -12,6 +12,7 @@ export const ROUTE_PATHS = {
     RESEND_VERIFICATION: '/resend-verification',
     VERIFICATION_SUCCESS: '/verification-success',
   },
+  
 
   // Core Routes
   DASHBOARD: '/dashboard',
@@ -116,6 +117,15 @@ GIRVI_TRANSFER: {
   DETAIL:         '/shops/:shopId/girvi/:girviId/transfers/:transferId',
 },
 GIRVI_CASHBOOK: '/shops/:shopId/girvi-cashbook',
+// SCHEME Routes add karo ROUTE_PATHS mein:
+
+SCHEMES: {
+  ROOT:   '/schemes',
+  LIST:   '/schemes',
+  ADD:    '/schemes/add',
+  EDIT:   '/schemes/edit/:schemeId',
+  DETAIL: '/schemes/:schemeId',
+},
   // User Profile
   USER_PROFILE: '/userprofile',
 
@@ -180,6 +190,13 @@ user: {
     detail: (id: string) => `/orders/${id}`,
     edit: (id: string) => `/orders/edit/${id}`,
   },
+  // buildRoute mein add karo:
+
+scheme: {
+  list:   ()          => '/schemes',
+  detail: (id: string) => `/schemes/${id}`,
+  edit:   (id: string) => `/schemes/edit/${id}`,
+},
 }
 
 // Route Metadata Types
