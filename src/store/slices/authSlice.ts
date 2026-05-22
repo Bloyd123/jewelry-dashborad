@@ -120,7 +120,11 @@ export const login = createAsyncThunk<
     return response.data
   } catch (error: any) {
     console.error(' [authSlice] Login failed:', error)
-    return rejectWithValue(error?.message || 'Login failed')
+return rejectWithValue(
+  error?.response?.data?.message || 
+  error?.message || 
+  'Login failed'
+)
   }
 })
 
@@ -162,7 +166,12 @@ export const complete2FALogin = createAsyncThunk<
       return response.data
     } catch (error: any) {
       console.error(' [authSlice] 2FA verification failed:', error)
-      return rejectWithValue(error?.message || '2FA verification failed')
+    // complete2FALogin thunk - same fix
+return rejectWithValue(
+  error?.response?.data?.message || 
+  error?.message || 
+  '2FA verification failed'
+)
     }
   }
 )
