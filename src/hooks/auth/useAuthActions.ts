@@ -29,21 +29,15 @@ import * as authService from '@/api/services/authService'
 export const useAuthActions = () => {
   const dispatch = useAppDispatch()
 
-  const login = useCallback(
-    async (credentials: LoginRequest) => {
-      try {
-        console.log('[useAuth] Login started:', credentials.email)
-        const result = await dispatch(loginAction(credentials)).unwrap()
-        console.log(' [useAuth] Login successful')
-
-        return { success: true, data: result }
-      } catch (error: any) {
-        console.error(' [useAuth] Login failed:', error)
-        throw error
-      }
-    },
-    [dispatch]
-  )
+const login = useCallback(async (credentials: LoginRequest) => {
+  try {
+    const result = await dispatch(loginAction(credentials)).unwrap()
+    return { success: true, data: result }
+  } catch (error: any) {
+    console.error(' [useAuth] Login failed:', error)
+    throw typeof error === 'string' ? new Error(error) : error
+  }
+}, [dispatch])
 
   const register = useCallback(async (userData: RegisterRequest) => {
     try {
