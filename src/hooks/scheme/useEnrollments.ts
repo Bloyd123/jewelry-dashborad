@@ -9,10 +9,6 @@ import {
   useGetMaturedEnrollmentsQuery,
   useGetCustomerSchemeSummaryQuery,
 } from '@/store/api/schemeApi'
-
-// ─────────────────────────────────────────────
-// SCHEME ENROLLMENTS
-// ─────────────────────────────────────────────
 export const useSchemeEnrollments = (
   shopId: string,
   schemeId: string,
@@ -47,9 +43,6 @@ export const useSchemeEnrollments = (
   }
 }
 
-// ─────────────────────────────────────────────
-// CUSTOMER ENROLLMENTS
-// ─────────────────────────────────────────────
 export const useCustomerEnrollments = (
   shopId: string,
   customerId: string,

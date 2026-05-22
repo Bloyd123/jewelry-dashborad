@@ -314,6 +314,8 @@ export interface UpdateSchemeInput {
 }
 
 export interface GetSchemesInput {
+    search?:         string        
+  approvalStatus?: ApprovalStatus 
   shopId: string
   page?: number
   limit?: number

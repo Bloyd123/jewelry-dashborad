@@ -28,7 +28,7 @@ export const SchemeStatusFilter = React.forwardRef<
     {
       value:   'draft',
       label:   t('scheme.status.draft'),
-      variant: 'default',
+      variant: 'pending',
       showDot: true,
     },
     {

@@ -12,4 +12,5 @@ export interface SchemeFilterValues {
   isFeatured?: string
   startDate?:  string
   endDate?:    string
+    approvalStatus?: ApprovalStatus 
 }

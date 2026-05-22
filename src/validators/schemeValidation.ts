@@ -23,7 +23,7 @@ export const createSchemeSchema = z.object({
     'advance_booking',
     'festival_scheme',
     'custom',
-  ], { required_error: 'Scheme type is required' }),
+ ] as const, { message: 'Scheme type is required' }), 
 
   // Duration
   duration: z.object({

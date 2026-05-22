@@ -54,7 +54,7 @@ const [showEnrollModal, setShowEnrollModal] = useState(false)
     redemptionMode: string
   }>({ open: false, enrollment: null, redemptionMode: 'cash' })
 
-  const { enrollments, pagination, isLoading } = useSchemeEnrollments(
+  const { enrollments, pagination, isLoading,refetch  } = useSchemeEnrollments(
     shopId,
     scheme._id,
     { page: currentPage, limit: 10, status: statusFilter }
