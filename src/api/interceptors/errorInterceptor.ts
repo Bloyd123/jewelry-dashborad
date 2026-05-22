@@ -21,7 +21,8 @@ export const errorInterceptor = (error: AxiosError<any>) => {
 
   const { status, data } = error.response
 
-  const messageKey = data?.messageKey || data?.message
+const messageKey = data?.messageKey  // sirf actual messageKey, message nahi
+const backendMessage = data?.message  // alag rakh
   getErrorKeyByStatus(status)
 
   const errors = data?.errors
@@ -32,8 +33,11 @@ export const errorInterceptor = (error: AxiosError<any>) => {
     case 422:
       throw new ValidationError(messageKey, errors, validationErrors)
 
-    case 401:
-      throw new AuthError(messageKey, errors)
+    case 401: {
+      const err = new AuthError(messageKey, errors)
+      if (backendMessage) err.message = backendMessage
+      throw err
+    }
 
     case 403:
       throw new PermissionError(messageKey, errors)
