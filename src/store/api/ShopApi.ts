@@ -74,15 +74,15 @@ export const shopApi = baseApi.injectEndpoints({
         { type: 'ShopList', id: 'LIST' },
       ],
     }),
-    updateShopSettings: build.mutation<
-      { success: boolean; message: string; data: Shop },
-      { id: string } & ShopSettingsUpdatePayload
-    >({
-      query: ({ id, settings }) => ({
-        url: SHOP_ENDPOINTS.UPDATE_SETTINGS.replace(':id', id),
-        method: 'PATCH',
-        body: { settings },
-      }),
+updateShopSettings: build.mutation<
+  { success: boolean; message: string; data: Shop },
+  { id: string; settings: any; businessHours?: any }
+>({
+  query: ({ id, settings, businessHours }) => ({
+    url: SHOP_ENDPOINTS.UPDATE_SETTINGS.replace(':id', id),
+    method: 'PATCH',
+    body: { settings, businessHours },
+  }),
       invalidatesTags: (result, error, { id }) => [{ type: 'Shop', id }],
     }),
 getShopActivityLogs: build.query<ActivityLogListResponse, ActivityLogQueryParams>({

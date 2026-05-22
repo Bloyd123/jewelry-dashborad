@@ -12,13 +12,17 @@ export const useShopSettings = (shopId: string) => {
 
   const [updateSettingsMutation, updateState] = useUpdateShopSettingsMutation()
 
-  const updateSettings = useCallback(
-    async (
-      settings: ShopSettingsUpdatePayload['settings'],
-      setErrors?: (errors: Record<string, string>) => void
-    ) => {
-      try {
-        const result = await updateSettingsMutation({ id: shopId, settings }).unwrap()
+const updateSettings = useCallback(
+  async (
+    payload: { settings: any; businessHours?: any },
+    setErrors?: (errors: Record<string, string>) => void
+  ) => {
+    try {
+      const result = await updateSettingsMutation({ 
+        id: shopId, 
+        settings: payload.settings,
+        businessHours: payload.businessHours,
+      }).unwrap()
         showSuccess('Shop settings updated successfully', 'Settings Saved')
         return { success: true, data: result.data }
       } catch (error: any) {

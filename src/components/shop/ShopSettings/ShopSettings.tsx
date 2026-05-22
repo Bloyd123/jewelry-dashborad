@@ -34,6 +34,7 @@ interface ShopSettingsProps {
 type SettingsTab = 'general' | 'gst' | 'hours' | 'features'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+const padTime = (t: string) => t && t.length === 4 ? '0' + t : t  // "5:00" → "05:00"
 
 const mapBackendBusinessHours = (backendHours: any) => {
   if (!backendHours) return null
@@ -44,11 +45,12 @@ const mapBackendBusinessHours = (backendHours: any) => {
   days.forEach(day => {
     const d = backendHours[day]
     if (d) {
-      mapped[day] = {
-        isOpen: d.isOpen ?? true,
-        open:   d.openTime  || d.open  || '10:00',
-        close:  d.closeTime || d.close || '20:00',
-      }
+
+mapped[day] = {
+  isOpen: d.isOpen ?? true,
+  open:   padTime(d.openTime  || d.open  || '10:00'),
+  close:  padTime(d.closeTime || d.close || '20:00'),
+}
     } else {
       mapped[day] = { isOpen: true, open: '10:00', close: '20:00' }
     }
@@ -86,7 +88,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
 }) => {
   const { t } = useTranslation()
   const { updateSettings, isUpdating: isUpdatingSettings } = useShopSettings(shop._id)
-
+console.log('[ShopSettings] shop.businessHours:', JSON.stringify(shop.businessHours, null, 2))
   const [activeTab, setActiveTab] = useState<SettingsTab>('general')
   const [errors,    setErrors]    = useState<Record<string, string>>({})
 
@@ -134,6 +136,7 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
       displayReverseCharge:   true,
       enableEInvoice:         false,
     },
+    
     businessHours: mapBackendBusinessHours(shop.businessHours) || {
       monday:    { isOpen: true, open: '10:00', close: '21:00' },
       tuesday:   { isOpen: true, open: '10:00', close: '21:00' },
@@ -205,12 +208,20 @@ export const ShopSettings: React.FC<ShopSettingsProps> = ({
     }))
   }
 
-  const handleSave = async () => {
-    const payload = {
-      ...formData,
-      businessHours: mapFrontendToBackend(formData.businessHours),
-    }
-    const result = await updateSettings(payload as any, setErrors)
+const handleSave = async () => {
+  const payload = {
+    settings: {
+      currency:          formData.generalSettings.currency,
+      language:          formData.generalSettings.language,
+      timezone:          formData.generalSettings.timezone,
+      defaultWeightUnit: formData.generalSettings.defaultWeightUnit,
+      enableGST:         formData.gstSettings.enableGST,
+      gstRates:          formData.gstSettings.gstRates,
+      acceptedPaymentModes: formData.generalSettings.acceptedPaymentMethods,
+    },
+    businessHours: mapFrontendToBackend(formData.businessHours),
+  }
+  const result = await updateSettings(payload as any, setErrors)
     if (result.success) onClose()
   }
 
